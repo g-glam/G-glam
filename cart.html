@@ -48,7 +48,6 @@ body{
 }
 </style>
 </head>
-
 <body>
 
 <h1>🛒 سلة التسوق</h1>
@@ -119,6 +118,19 @@ function removeItem(index){
 }
 
 function openMessenger(){
+
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    let message = "الطلب:\n";
+
+    cart.forEach(item => {
+        message += "- " + item.name + " (" + item.price + " DA)\n";
+    });
+
+    navigator.clipboard.writeText(message);
+
+    alert("تم نسخ الطلب. افتح Messenger ثم اضغط لصق (Paste) وأرسل الرسالة.");
+
     window.open(
         "https://www.messenger.com/t/543507055501751/",
         "_blank"
