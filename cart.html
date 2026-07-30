@@ -7,7 +7,7 @@
 
 <style>
 body{
-    font-family:Arial,sans-serif;
+    font-family: Arial, sans-serif;
     padding:20px;
     background:#f8f8f8;
 }
@@ -48,6 +48,7 @@ body{
 }
 </style>
 </head>
+
 <body>
 
 <h1>🛒 سلة التسوق</h1>
@@ -59,8 +60,6 @@ body{
 <button onclick="openMessenger()" class="order-btn">
 💬 اطلب الآن
 </button>
-
-<br>
 
 <a href="index.html" class="back-btn">
 ⬅ العودة للمتجر
@@ -79,11 +78,11 @@ function displayCart(){
 
     if(cart.length === 0){
         container.innerHTML = "<p>السلة فارغة</p>";
-        document.getElementById('total').innerText = "";
+        document.getElementById("total").innerText = "";
         return;
     }
 
-    cart.forEach((item,index) => {
+    cart.forEach((item,index)=>{
 
         total += item.price;
 
@@ -96,12 +95,11 @@ function displayCart(){
             onclick="removeItem(${index})">
             حذف المنتج
             </button>
-
         </div>
         `;
     });
 
-    document.getElementById('total').innerText =
+    document.getElementById("total").innerText =
     "المجموع: " + total + " DA";
 }
 
@@ -110,7 +108,7 @@ function removeItem(index){
     cart.splice(index,1);
 
     localStorage.setItem(
-        'cart',
+        "cart",
         JSON.stringify(cart)
     );
 
@@ -121,19 +119,21 @@ function openMessenger(){
 
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    let message = "الطلب:\n";
+    let orderText = "المنتجات المطلوبة:\n\n";
 
-    cart.forEach(item => {
-        message += "- " + item.name + " (" + item.price + " DA)\n";
+    cart.forEach(item=>{
+        orderText += "- " + item.name +
+        " (" + item.price + " DA)\n";
     });
 
-    navigator.clipboard.writeText(message);
-
-    alert("تم نسخ الطلب. افتح Messenger ثم اضغط لصق (Paste) وأرسل الرسالة.");
+    prompt(
+      "انسخ الطلب من هنا ثم أرسله في Messenger:",
+      orderText
+    );
 
     window.open(
-        "https://www.messenger.com/t/543507055501751/",
-        "_blank"
+      "https://www.messenger.com/t/543507055501751/",
+      "_blank"
     );
 }
 
