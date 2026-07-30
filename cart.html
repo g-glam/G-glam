@@ -20,6 +20,15 @@ body{
     box-shadow:0 0 5px rgba(0,0,0,.1);
 }
 
+.delete-btn{
+    background:red;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
 a{
     display:inline-block;
     margin-top:15px;
@@ -39,14 +48,20 @@ a{
 <script>
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-let container = document.getElementById('cart-items');
-let total = 0;
+function displayCart(){
 
-if(cart.length === 0){
-    container.innerHTML = "<p>السلة فارغة</p>";
-}else{
+    let container = document.getElementById('cart-items');
+    container.innerHTML = "";
 
-    cart.forEach(item => {
+    let total = 0;
+
+    if(cart.length === 0){
+        container.innerHTML = "<p>السلة فارغة</p>";
+        document.getElementById('total').innerText = "";
+        return;
+    }
+
+    cart.forEach((item,index) => {
 
         total += item.price;
 
@@ -54,6 +69,12 @@ if(cart.length === 0){
         <div class="item">
             <h3>${item.name}</h3>
             <p>${item.price} DA</p>
+
+            <button class="delete-btn"
+            onclick="removeItem(${index})">
+            حذف المنتج
+            </button>
+
         </div>
         `;
     });
@@ -61,6 +82,20 @@ if(cart.length === 0){
     document.getElementById('total').innerText =
     "المجموع: " + total + " DA";
 }
+
+function removeItem(index){
+
+    cart.splice(index,1);
+
+    localStorage.setItem(
+        'cart',
+        JSON.stringify(cart)
+    );
+
+    displayCart();
+}
+
+displayCart();
 </script>
 
 </body>
