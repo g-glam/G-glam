@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>سلة التسوق</title>
 
 <style>
-
 body{
 font-family:Arial,sans-serif;
-padding:20px;
 background:#f8f8f8;
+padding:20px;
 }
 
 .item{
@@ -25,8 +22,8 @@ box-shadow:0 0 5px rgba(0,0,0,.1);
 
 input,select{
 width:100%;
-padding:12px;
-margin:6px 0;
+padding:10px;
+margin:5px 0;
 border:1px solid #ddd;
 border-radius:8px;
 box-sizing:border-box;
@@ -49,8 +46,8 @@ padding:12px;
 border-radius:8px;
 cursor:pointer;
 width:100%;
-margin-top:10px;
 font-size:16px;
+margin-top:10px;
 }
 
 .back-btn{
@@ -59,9 +56,7 @@ margin-top:15px;
 text-decoration:none;
 color:black;
 }
-
 </style>
-
 </head>
 
 <body>
@@ -70,7 +65,7 @@ color:black;
 
 <div id="cart-items"></div>
 
-<h3 id="total"></h3>
+<h3 id="productsTotal">0 DA</h3>
 
 <h2>معلومات الزبون</h2>
 
@@ -78,16 +73,27 @@ color:black;
 
 <input type="text" id="phone" placeholder="رقم الهاتف">
 
-<input type="text" id="wilaya" placeholder="الولاية">
+<select id="wilaya">
+<option value="">اختر الولاية</option>
+</select>
 
 <input type="text" id="commune" placeholder="البلدية">
 
-<input type="text" id="address" placeholder="العنوان">
+<input type="text" id="address" placeholder="العنوان الكامل">
 
 <select id="deliveryType">
-<option value="المنزل">التوصيل للمنزل</option>
-<option value="المكتب">التوصيل للمكتب</option>
+<option value="">نوع التوصيل</option>
+<option value="إلى المكتب">إلى المكتب</option>
+<option value="إلى باب المنزل">إلى باب المنزل</option>
 </select>
+
+<h3 id="deliveryPrice">
+سعر التوصيل: --
+</h3>
+
+<h2 id="finalTotal">
+المجموع النهائي: --
+</h2>
 
 <button onclick="sendOrder()" class="order-btn">
 📦 إرسال الطلب
@@ -101,62 +107,43 @@ color:black;
 
 <script>
 
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
+const SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbzgEMuUVkrHmurIp3cU-EmBL612FlF52wvLTlXfVupbrEhFtlx2l_E-gvLWfwnNIv0taQ/exec";
+
+let cart =
+JSON.parse(localStorage.getItem("cart")) || [];
+
+let tarifs = {};
+let productsTotal = 0;
+let deliveryCost = 0;
 
 function displayCart(){
 
 let container =
-document.getElementById('cart-items');
+document.getElementById("cart-items");
 
 container.innerHTML = "";
 
-let total = 0;
-
-if(cart.length === 0){
-
-container.innerHTML =
-"<p>السلة فارغة</p>";
-
-document.getElementById("total")
-.innerText = "";
-
-return;
-
-}
+productsTotal = 0;
 
 cart.forEach((item,index)=>{
 
-let qty =
-item.quantity || 1;
+let qty = item.quantity || 1;
+let total = item.price * qty;
 
-let itemTotal =
-item.price * qty;
-
-total += itemTotal;
+productsTotal += total;
 
 container.innerHTML += `
 <div class="item">
-
 <h3>${item.name}</h3>
-
 <p>
-
-الكمية: ${qty}
-<br>
-
-سعر الوحدة: ${item.price} DA
-<br>
-
-الإجمالي: ${itemTotal} DA
-
+الكمية: ${qty}<br>
+الإجمالي: ${total} DA
 </p>
 
-<button
-class="delete-btn"
+<button class="delete-btn"
 onclick="removeItem(${index})">
-
-حذف المنتج
-
+حذف
 </button>
 
 </div>
@@ -164,9 +151,12 @@ onclick="removeItem(${index})">
 
 });
 
-document.getElementById("total")
+document.getElementById("productsTotal")
 .innerText =
-"المجموع الكلي: " + total + " DA";
+"مجموع المنتجات: " +
+productsTotal + " DA";
+
+updateFinalTotal();
 
 }
 
@@ -183,101 +173,134 @@ displayCart();
 
 }
 
-function sendOrder(){
+fetch(SCRIPT_URL + "?action=prices")
+.then(r=>r.json())
+.then(data=>{
 
-let name =
-document.getElementById("name").value;
+tarifs = data;
 
-let phone =
-document.getElementById("phone").value;
+const select =
+document.getElementById("wilaya");
+
+Object.keys(data).forEach(w=>{
+
+let option =
+document.createElement("option");
+
+option.value = w;
+option.textContent = w;
+
+select.appendChild(option);
+
+});
+
+});
+
+document.getElementById("wilaya")
+.addEventListener(
+"change",
+updateDelivery
+);
+
+document.getElementById("deliveryType")
+.addEventListener(
+"change",
+updateDelivery
+);
+
+function updateDelivery(){
 
 let wilaya =
 document.getElementById("wilaya").value;
 
-let commune =
-document.getElementById("commune").value;
-
-let address =
-document.getElementById("address").value;
-
-let deliveryType =
+let type =
 document.getElementById("deliveryType").value;
 
-if(
-!name ||
-!phone ||
-!wilaya ||
-!commune ||
-!address
-){
-
-alert("يرجى ملء جميع المعلومات");
-
+if(!wilaya || !type || !tarifs[wilaya]){
 return;
+}
+
+deliveryCost =
+type === "إلى المكتب"
+? Number(tarifs[wilaya].toOffice)
+: Number(tarifs[wilaya].toHome);
+
+document.getElementById("deliveryPrice")
+.innerText =
+"سعر التوصيل: " +
+deliveryCost +
+" DA";
+
+updateFinalTotal();
 
 }
 
+function updateFinalTotal(){
+
+document.getElementById("finalTotal")
+.innerText =
+"المجموع النهائي: " +
+(productsTotal + deliveryCost)
++ " DA";
+
+}
+
+function sendOrder(){
+
 let products = "";
 
-let total = 0;
-
 cart.forEach(item=>{
-
-let qty =
-item.quantity || 1;
-
-let itemTotal =
-item.price * qty;
-
-total += itemTotal;
 
 products +=
 item.name +
 " | الكمية: " +
-qty +
-" | الإجمالي: " +
-itemTotal +
-" DA\n";
+(item.quantity || 1)
++ "\n";
 
 });
 
-fetch(
-"https://script.google.com/macros/s/AKfycbzgEMuUVkrHmurIp3cU-EmBL612FlF52wvLTlXfVupbrEhFtlx2l_E-gvLWfwnNIv0taQ/exec",
-{
+fetch(SCRIPT_URL,{
 method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
 body:JSON.stringify({
 
-name:name,
-phone:phone,
-wilaya:wilaya,
-commune:commune,
-address:address,
-deliveryType:deliveryType,
-deliveryPrice:0,
-total:total,
-products:products
+name:
+document.getElementById("name").value,
+
+phone:
+document.getElementById("phone").value,
+
+wilaya:
+document.getElementById("wilaya").value,
+
+commune:
+document.getElementById("commune").value,
+
+address:
+document.getElementById("address").value,
+
+deliveryType:
+document.getElementById("deliveryType").value,
+
+deliveryPrice:
+deliveryCost,
+
+total:
+productsTotal + deliveryCost,
+
+products:
+products
 
 })
-}
-)
-.then(response=>response.text())
+})
+.then(r=>r.text())
 .then(data=>{
 
-alert("تم إرسال الطلب بنجاح ✅");
+alert("تم إرسال الطلب بنجاح");
 
 localStorage.removeItem("cart");
 
-window.location.href="index.html";
-
-})
-.catch(error=>{
-
-alert("فشل إرسال الطلب");
-
-console.log(error);
+window.location.href =
+"index.html";
 
 });
 
