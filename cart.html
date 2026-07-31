@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>سلة التسوق</title>
 
 <style>
@@ -13,29 +15,39 @@ background:#f8f8f8;
 padding:20px;
 }
 
-.item{
-background:white;
-padding:10px;
-margin-bottom:10px;
-border-radius:8px;
-box-shadow:0 0 5px rgba(0,0,0,.1);
+h1,h2,h3{
+text-align:center;
 }
 
-input,select{
+.item{
+background:white;
+padding:15px;
+margin-bottom:15px;
+border-radius:12px;
+box-shadow:0 0 8px rgba(0,0,0,.1);
+}
+
+.item h3{
+margin:0 0 10px;
+}
+
+input,
+select{
 width:100%;
-padding:10px;
-margin:5px 0;
+padding:12px;
+margin:6px 0;
 border:1px solid #ddd;
 border-radius:8px;
 box-sizing:border-box;
+font-size:16px;
 }
 
 .delete-btn{
 background:red;
 color:white;
 border:none;
-padding:8px 12px;
-border-radius:5px;
+padding:10px;
+border-radius:8px;
 cursor:pointer;
 }
 
@@ -43,19 +55,30 @@ cursor:pointer;
 background:#0084ff;
 color:white;
 border:none;
-padding:12px;
-border-radius:8px;
+padding:14px;
+border-radius:10px;
 cursor:pointer;
 width:100%;
-font-size:16px;
-margin-top:10px;
+font-size:18px;
+margin-top:15px;
 }
 
 .back-btn{
-display:inline-block;
-margin-top:15px;
+display:block;
+text-align:center;
+margin-top:20px;
 text-decoration:none;
 color:black;
+font-size:18px;
+}
+
+#deliveryPrice,
+#productsTotal,
+#finalTotal{
+font-weight:bold;
+font-size:22px;
+text-align:center;
+margin-top:15px;
 }
 
 </style>
@@ -67,26 +90,56 @@ color:black;
 
 <div id="cart-items"></div>
 
-<h3 id="productsTotal">0 DA</h3>
+<h3 id="productsTotal">
+مجموع المنتجات: 0 DA
+</h3>
 
 <h2>معلومات الزبون</h2>
 
-<input type="text" id="name" placeholder="الاسم واللقب">
+<input
+type="text"
+id="name"
+placeholder="الاسم واللقب"
+required>
 
-<input type="text" id="phone" placeholder="رقم الهاتف">
+<input
+type="text"
+id="phone"
+placeholder="رقم الهاتف"
+required>
 
 <select id="wilaya">
-<option value="">اختر الولاية</option>
+<option value="">
+اختر الولاية
+</option>
 </select>
 
-<input type="text" id="commune" placeholder="البلدية">
+<input
+type="text"
+id="commune"
+placeholder="البلدية"
+required>
 
-<input type="text" id="address" placeholder="العنوان الكامل">
+<input
+type="text"
+id="address"
+placeholder="العنوان الكامل"
+required>
 
 <select id="deliveryType">
-<option value="">نوع التوصيل</option>
-<option value="إلى المكتب">إلى المكتب</option>
-<option value="إلى باب المنزل">إلى باب المنزل</option>
+
+<option value="">
+نوع التوصيل
+</option>
+
+<option value="إلى المكتب">
+إلى المكتب
+</option>
+
+<option value="إلى باب المنزل">
+إلى باب المنزل
+</option>
+
 </select>
 
 <h3 id="deliveryPrice">
@@ -97,35 +150,48 @@ color:black;
 المجموع النهائي: --
 </h2>
 
-<button onclick="sendOrder()" class="order-btn">
+<button
+onclick="sendOrder()"
+class="order-btn">
+
 📦 إرسال الطلب
+
 </button>
 
-<a href="index.html" class="back-btn">
+<a href="index.html"
+class="back-btn">
+
 ⬅ العودة للمتجر
+
 </a>
 
 <script>
-  const SCRIPT_URL =
+
+const SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbzgEMuUVkrHmurIp3cU-EmBL612FlF52wvLTlXfVupbrEhFtlx2l_E-gvLWfwnNIv0taQ/exec";
 
 let cart =
-JSON.parse(localStorage.getItem("cart")) || [];
+JSON.parse(
+localStorage.getItem("cart")
+) || [];
 
 let tarifs = {};
+
 let productsTotal = 0;
+
 let deliveryCost = 0;
 
 function displayCart(){
 
 let container =
-document.getElementById("cart-items");
+document.getElementById(
+"cart-items"
+);
 
 container.innerHTML = "";
 
 productsTotal = 0;
-
-if(cart.length === 0){
+  if(cart.length === 0){
 
 container.innerHTML =
 "<p>السلة فارغة</p>";
@@ -145,22 +211,29 @@ item.price * qty;
 productsTotal += itemTotal;
 
 container.innerHTML += `
+
 <div class="item">
 
 <h3>${item.name}</h3>
 
 <p>
-الكمية: ${qty}<br>
+الكمية: ${qty}
+<br>
+سعر الوحدة: ${item.price} DA
+<br>
 الإجمالي: ${itemTotal} DA
 </p>
 
 <button
 class="delete-btn"
 onclick="removeItem(${index})">
-حذف
+
+حذف المنتج
+
 </button>
 
 </div>
+
 `;
 
 });
@@ -189,38 +262,54 @@ displayCart();
 
 }
 
-fetch(SCRIPT_URL + "?action=prices")
+fetch(
+SCRIPT_URL + "?action=prices"
+)
 .then(response => response.json())
 .then(data => {
 
-tarifs = data;
-
 let wilayaSelect =
-document.getElementById("wilaya");
+document.getElementById(
+"wilaya"
+);
 
-wilayaSelect.innerHTML =
-'<option value="">اختر الولاية</option>';
+data.forEach(item => {
 
-Object.keys(data).forEach(wilaya => {
+tarifs[item.wilaya] = {
+
+toOffice:item.toOffice,
+toHome:item.toHome
+
+};
 
 let option =
-document.createElement("option");
+document.createElement(
+"option"
+);
 
-option.value = wilaya;
-option.textContent = wilaya;
+option.value =
+item.wilaya;
 
-wilayaSelect.appendChild(option);
+option.textContent =
+item.wilaya;
+
+wilayaSelect.appendChild(
+option
+);
 
 });
 
 });
-  document.getElementById("wilaya")
+
+document
+.getElementById("wilaya")
 .addEventListener(
 "change",
 updateDelivery
 );
 
-document.getElementById("deliveryType")
+document
+.getElementById("deliveryType")
 .addEventListener(
 "change",
 updateDelivery
@@ -229,10 +318,14 @@ updateDelivery
 function updateDelivery(){
 
 let wilaya =
-document.getElementById("wilaya").value;
+document.getElementById(
+"wilaya"
+).value;
 
 let type =
-document.getElementById("deliveryType").value;
+document.getElementById(
+"deliveryType"
+).value;
 
 if(
 !wilaya ||
@@ -244,8 +337,14 @@ return;
 
 deliveryCost =
 type === "إلى المكتب"
-? Number(tarifs[wilaya].toOffice)
-: Number(tarifs[wilaya].toHome);
+?
+Number(
+tarifs[wilaya].toOffice
+)
+:
+Number(
+tarifs[wilaya].toHome
+);
 
 document.getElementById(
 "deliveryPrice"
@@ -273,7 +372,7 @@ function sendOrder(){
 
 let products = "";
 
-cart.forEach(item=>{
+cart.forEach(item => {
 
 products +=
 item.name +
@@ -283,48 +382,72 @@ item.name +
 
 });
 
-fetch(SCRIPT_URL,{
+fetch(
+SCRIPT_URL,
+{
 method:"POST",
 headers:{
-"Content-Type":"application/json"
+"Content-Type":
+"application/json"
 },
 body:JSON.stringify({
 
 name:
-document.getElementById("name").value,
+document.getElementById(
+"name"
+).value,
 
 phone:
-document.getElementById("phone").value,
+document.getElementById(
+"phone"
+).value,
 
 wilaya:
-document.getElementById("wilaya").value,
+document.getElementById(
+"wilaya"
+).value,
 
 commune:
-document.getElementById("commune").value,
+document.getElementById(
+"commune"
+).value,
 
 address:
-document.getElementById("address").value,
+document.getElementById(
+"address"
+).value,
 
 deliveryType:
-document.getElementById("deliveryType").value,
+document.getElementById(
+"deliveryType"
+).value,
 
 deliveryPrice:
 deliveryCost,
 
 total:
-productsTotal + deliveryCost,
+productsTotal +
+deliveryCost,
 
 products:
 products
 
 })
-})
-.then(response => response.text())
+
+}
+)
+.then(response =>
+response.text()
+)
 .then(data => {
 
-alert("تم إرسال الطلب بنجاح");
+alert(
+"تم إرسال الطلب بنجاح"
+);
 
-localStorage.removeItem("cart");
+localStorage.removeItem(
+"cart"
+);
 
 window.location.href =
 "index.html";
@@ -332,7 +455,9 @@ window.location.href =
 })
 .catch(error => {
 
-alert("حدث خطأ أثناء الإرسال");
+alert(
+"حدث خطأ أثناء الإرسال"
+);
 
 console.log(error);
 
