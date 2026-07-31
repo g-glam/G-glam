@@ -6,6 +6,7 @@
 <title>سلة التسوق</title>
 
 <style>
+
 body{
 font-family:Arial,sans-serif;
 background:#f8f8f8;
@@ -56,6 +57,7 @@ margin-top:15px;
 text-decoration:none;
 color:black;
 }
+
 </style>
 </head>
 
@@ -99,15 +101,12 @@ color:black;
 📦 إرسال الطلب
 </button>
 
-<br>
-
 <a href="index.html" class="back-btn">
 ⬅ العودة للمتجر
 </a>
 
 <script>
-
-const SCRIPT_URL =
+  const SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbzgEMuUVkrHmurIp3cU-EmBL612FlF52wvLTlXfVupbrEhFtlx2l_E-gvLWfwnNIv0taQ/exec";
 
 let cart =
@@ -126,22 +125,37 @@ container.innerHTML = "";
 
 productsTotal = 0;
 
+if(cart.length === 0){
+
+container.innerHTML =
+"<p>السلة فارغة</p>";
+
+return;
+
+}
+
 cart.forEach((item,index)=>{
 
-let qty = item.quantity || 1;
-let total = item.price * qty;
+let qty =
+item.quantity || 1;
 
-productsTotal += total;
+let itemTotal =
+item.price * qty;
+
+productsTotal += itemTotal;
 
 container.innerHTML += `
 <div class="item">
+
 <h3>${item.name}</h3>
+
 <p>
 الكمية: ${qty}<br>
-الإجمالي: ${total} DA
+الإجمالي: ${itemTotal} DA
 </p>
 
-<button class="delete-btn"
+<button
+class="delete-btn"
 onclick="removeItem(${index})">
 حذف
 </button>
@@ -151,10 +165,12 @@ onclick="removeItem(${index})">
 
 });
 
-document.getElementById("productsTotal")
-.innerText =
+document.getElementById(
+"productsTotal"
+).innerText =
 "مجموع المنتجات: " +
-productsTotal + " DA";
+productsTotal +
+" DA";
 
 updateFinalTotal();
 
@@ -174,29 +190,31 @@ displayCart();
 }
 
 fetch(SCRIPT_URL + "?action=prices")
-.then(r=>r.json())
-.then(data=>{
+.then(response => response.json())
+.then(data => {
 
 tarifs = data;
 
-const select =
+let wilayaSelect =
 document.getElementById("wilaya");
 
-Object.keys(data).forEach(w=>{
+wilayaSelect.innerHTML =
+'<option value="">اختر الولاية</option>';
+
+Object.keys(data).forEach(wilaya => {
 
 let option =
 document.createElement("option");
 
-option.value = w;
-option.textContent = w;
+option.value = wilaya;
+option.textContent = wilaya;
 
-select.appendChild(option);
-
-});
+wilayaSelect.appendChild(option);
 
 });
 
-document.getElementById("wilaya")
+});
+  document.getElementById("wilaya")
 .addEventListener(
 "change",
 updateDelivery
@@ -216,7 +234,11 @@ document.getElementById("wilaya").value;
 let type =
 document.getElementById("deliveryType").value;
 
-if(!wilaya || !type || !tarifs[wilaya]){
+if(
+!wilaya ||
+!type ||
+!tarifs[wilaya]
+){
 return;
 }
 
@@ -225,8 +247,9 @@ type === "إلى المكتب"
 ? Number(tarifs[wilaya].toOffice)
 : Number(tarifs[wilaya].toHome);
 
-document.getElementById("deliveryPrice")
-.innerText =
+document.getElementById(
+"deliveryPrice"
+).innerText =
 "سعر التوصيل: " +
 deliveryCost +
 " DA";
@@ -237,11 +260,12 @@ updateFinalTotal();
 
 function updateFinalTotal(){
 
-document.getElementById("finalTotal")
-.innerText =
+document.getElementById(
+"finalTotal"
+).innerText =
 "المجموع النهائي: " +
-(productsTotal + deliveryCost)
-+ " DA";
+(productsTotal + deliveryCost) +
+" DA";
 
 }
 
@@ -254,13 +278,16 @@ cart.forEach(item=>{
 products +=
 item.name +
 " | الكمية: " +
-(item.quantity || 1)
-+ "\n";
+(item.quantity || 1) +
+"\n";
 
 });
 
 fetch(SCRIPT_URL,{
 method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
 body:JSON.stringify({
 
 name:
@@ -292,8 +319,8 @@ products
 
 })
 })
-.then(r=>r.text())
-.then(data=>{
+.then(response => response.text())
+.then(data => {
 
 alert("تم إرسال الطلب بنجاح");
 
@@ -301,6 +328,13 @@ localStorage.removeItem("cart");
 
 window.location.href =
 "index.html";
+
+})
+.catch(error => {
+
+alert("حدث خطأ أثناء الإرسال");
+
+console.log(error);
 
 });
 
