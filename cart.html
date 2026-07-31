@@ -10,45 +10,54 @@
 <style>
 
 body{
-    font-family:Arial,sans-serif;
-    padding:20px;
-    background:#f8f8f8;
+font-family:Arial,sans-serif;
+padding:20px;
+background:#f8f8f8;
 }
 
 .item{
-    background:white;
-    padding:10px;
-    margin-bottom:10px;
-    border-radius:8px;
-    box-shadow:0 0 5px rgba(0,0,0,.1);
+background:white;
+padding:10px;
+margin-bottom:10px;
+border-radius:8px;
+box-shadow:0 0 5px rgba(0,0,0,.1);
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin:6px 0;
+border:1px solid #ddd;
+border-radius:8px;
+box-sizing:border-box;
 }
 
 .delete-btn{
-    background:red;
-    color:white;
-    border:none;
-    padding:8px 12px;
-    border-radius:5px;
-    cursor:pointer;
+background:red;
+color:white;
+border:none;
+padding:8px 12px;
+border-radius:5px;
+cursor:pointer;
 }
 
 .order-btn{
-    background:#0084ff;
-    color:white;
-    border:none;
-    padding:12px;
-    border-radius:8px;
-    cursor:pointer;
-    width:100%;
-    margin-top:10px;
-    font-size:16px;
+background:#0084ff;
+color:white;
+border:none;
+padding:12px;
+border-radius:8px;
+cursor:pointer;
+width:100%;
+margin-top:10px;
+font-size:16px;
 }
 
 .back-btn{
-    display:inline-block;
-    margin-top:15px;
-    text-decoration:none;
-    color:black;
+display:inline-block;
+margin-top:15px;
+text-decoration:none;
+color:black;
 }
 
 </style>
@@ -63,8 +72,25 @@ body{
 
 <h3 id="total"></h3>
 
-<button onclick="openMessenger()" class="order-btn">
-💬 اطلب الآن
+<h2>معلومات الزبون</h2>
+
+<input type="text" id="name" placeholder="الاسم واللقب">
+
+<input type="text" id="phone" placeholder="رقم الهاتف">
+
+<input type="text" id="wilaya" placeholder="الولاية">
+
+<input type="text" id="commune" placeholder="البلدية">
+
+<input type="text" id="address" placeholder="العنوان">
+
+<select id="deliveryType">
+<option value="المنزل">التوصيل للمنزل</option>
+<option value="المكتب">التوصيل للمكتب</option>
+</select>
+
+<button onclick="sendOrder()" class="order-btn">
+📦 إرسال الطلب
 </button>
 
 <br>
@@ -79,116 +105,182 @@ let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 function displayCart(){
 
-    let container =
-    document.getElementById('cart-items');
+let container =
+document.getElementById('cart-items');
 
-    container.innerHTML = "";
+container.innerHTML = "";
 
-    let total = 0;
+let total = 0;
 
-    if(cart.length === 0){
+if(cart.length === 0){
 
-        container.innerHTML =
-        "<p>السلة فارغة</p>";
+container.innerHTML =
+"<p>السلة فارغة</p>";
 
-        document.getElementById("total")
-        .innerText = "";
+document.getElementById("total")
+.innerText = "";
 
-        return;
-    }
+return;
 
-    cart.forEach((item,index)=>{
+}
 
-        let qty =
-        item.quantity || 1;
+cart.forEach((item,index)=>{
 
-        let itemTotal =
-        item.price * qty;
+let qty =
+item.quantity || 1;
 
-        total += itemTotal;
+let itemTotal =
+item.price * qty;
 
-        container.innerHTML += `
-        <div class="item">
+total += itemTotal;
 
-            <h3>${item.name}</h3>
+container.innerHTML += `
+<div class="item">
 
-            <p>
-            الكمية: ${qty}
-            <br>
-            سعر الوحدة: ${item.price} DA
-            <br>
-            الإجمالي: ${itemTotal} DA
-            </p>
+<h3>${item.name}</h3>
 
-            <button
-            class="delete-btn"
-            onclick="removeItem(${index})">
-            حذف المنتج
-            </button>
+<p>
 
-        </div>
-        `;
-    });
+الكمية: ${qty}
+<br>
 
-    document.getElementById("total")
-    .innerText =
-    "المجموع الكلي: " + total + " DA";
+سعر الوحدة: ${item.price} DA
+<br>
+
+الإجمالي: ${itemTotal} DA
+
+</p>
+
+<button
+class="delete-btn"
+onclick="removeItem(${index})">
+
+حذف المنتج
+
+</button>
+
+</div>
+`;
+
+});
+
+document.getElementById("total")
+.innerText =
+"المجموع الكلي: " + total + " DA";
+
 }
 
 function removeItem(index){
 
-    cart.splice(index,1);
+cart.splice(index,1);
 
-    localStorage.setItem(
-        "cart",
-        JSON.stringify(cart)
-    );
+localStorage.setItem(
+"cart",
+JSON.stringify(cart)
+);
 
-    displayCart();
+displayCart();
+
 }
 
-function openMessenger(){
+function sendOrder(){
 
-    let cart =
-    JSON.parse(
-    localStorage.getItem('cart')
-    ) || [];
+let name =
+document.getElementById("name").value;
 
-    let orderText =
-    "المنتجات المطلوبة:\n\n";
+let phone =
+document.getElementById("phone").value;
 
-    let total = 0;
+let wilaya =
+document.getElementById("wilaya").value;
 
-    cart.forEach(item=>{
+let commune =
+document.getElementById("commune").value;
 
-        let qty =
-        item.quantity || 1;
+let address =
+document.getElementById("address").value;
 
-        let itemTotal =
-        item.price * qty;
+let deliveryType =
+document.getElementById("deliveryType").value;
 
-        total += itemTotal;
+if(
+!name ||
+!phone ||
+!wilaya ||
+!commune ||
+!address
+){
 
-        orderText +=
-        "- " + item.name +
-        "\nالكمية: " + qty +
-        "\nسعر الوحدة: " + item.price + " DA" +
-        "\nالإجمالي: " + itemTotal + " DA\n\n";
-    });
+alert("يرجى ملء جميع المعلومات");
 
-    orderText +=
-    "المجموع الكلي: " +
-    total + " DA";
+return;
 
-    prompt(
-      "انسخ الطلب من هنا ثم أرسله في Messenger:",
-      orderText
-    );
+}
 
-    window.open(
-      "https://www.messenger.com/t/543507055501751/",
-      "_blank"
-    );
+let products = "";
+
+let total = 0;
+
+cart.forEach(item=>{
+
+let qty =
+item.quantity || 1;
+
+let itemTotal =
+item.price * qty;
+
+total += itemTotal;
+
+products +=
+item.name +
+" | الكمية: " +
+qty +
+" | الإجمالي: " +
+itemTotal +
+" DA\n";
+
+});
+
+fetch(
+"https://script.google.com/macros/s/AKfycbzgEMuUVkrHmurIp3cU-EmBL612FlF52wvLTlXfVupbrEhFtlx2l_E-gvLWfwnNIv0taQ/exec",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+
+name:name,
+phone:phone,
+wilaya:wilaya,
+commune:commune,
+address:address,
+deliveryType:deliveryType,
+deliveryPrice:0,
+total:total,
+products:products
+
+})
+}
+)
+.then(response=>response.text())
+.then(data=>{
+
+alert("تم إرسال الطلب بنجاح ✅");
+
+localStorage.removeItem("cart");
+
+window.location.href="index.html";
+
+})
+.catch(error=>{
+
+alert("فشل إرسال الطلب");
+
+console.log(error);
+
+});
+
 }
 
 displayCart();
