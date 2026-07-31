@@ -51,6 +51,16 @@ h1{
     line-height:1.8;
 }
 
+select,
+input{
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    border:1px solid #ddd;
+    border-radius:8px;
+    box-sizing:border-box;
+}
+
 button{
     background:#ff4fc3;
     color:white;
@@ -66,72 +76,80 @@ button{
 
 </head>
 
-
 <body>
-
 
 <div class="product">
 
-
 <div class="images">
 
-<img src="images - 2026-07-30T173830.069.jpeg" 
+<img src="images - 2026-07-30T173830.069.jpeg"
 alt="Concealer Ruby Rose">
 
-<img src="26715561330a184cf40.jpg" 
+<img src="26715561330a184cf40.jpg"
 alt="Concealer Ruby Rose">
 
-<img src="images - 2026-07-30T173056.527.jpeg" 
+<img src="images - 2026-07-30T173056.527.jpeg"
 alt="Concealer Ruby Rose">
 
 </div>
-
-
 
 <h1>
 Concealer Ruby Rose خافي العيوب
 </h1>
 
-
 <div class="price">
 Prix : 150 DA
 </div>
-
-
 
 <div class="description">
 
 <h3>الوصف :</h3>
 
 خافي عيوب Ruby Rose Flawless Collection ✨
+
 <br><br>
 
 ✔ تغطية عالية لإخفاء الهالات والعيوب
+
 <br>
 
 ✔ قوام خفيف وسهل الدمج
+
 <br>
 
 ✔ لمسة طبيعية تدوم طويلًا
+
 <br>
 
 ✔ متوفر بـ 3 درجات تناسب مختلف ألوان البشرة
 
 </div>
 
-
-
 <br>
 
+<label><b>اختيار اللون:</b></label>
+
+<select id="color">
+    <option>01 Beige</option>
+    <option>02 Natural</option>
+    <option>03 Honey</option>
+</select>
+
+<label><b>الكمية:</b></label>
+
+<input
+type="number"
+id="quantity"
+value="1"
+min="1">
+
+<br>
 
 <button onclick="addToCart()">
 🛒 أضف إلى السلة
 </button>
 
-
 </div>
-
-
 
 <script>
 
@@ -139,25 +157,31 @@ function addToCart(){
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+let color =
+document.getElementById("color").value;
+
+let quantity =
+parseInt(
+document.getElementById("quantity").value
+);
 
 cart.push({
 name:"Concealer Ruby Rose",
-price:150
+price:150,
+color:color,
+quantity:quantity
 });
-
 
 localStorage.setItem(
 "cart",
 JSON.stringify(cart)
 );
 
-
 alert("تمت إضافة المنتج إلى السلة");
 
 }
 
 </script>
-
 
 </body>
 </html>
