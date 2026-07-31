@@ -6,8 +6,9 @@
 <title>سلة التسوق</title>
 
 <style>
+
 body{
-    font-family: Arial, sans-serif;
+    font-family:Arial,sans-serif;
     padding:20px;
     background:#f8f8f8;
 }
@@ -46,6 +47,7 @@ body{
     margin-top:15px;
     text-decoration:none;
 }
+
 </style>
 </head>
 
@@ -61,6 +63,8 @@ body{
 💬 اطلب الآن
 </button>
 
+<br>
+
 <a href="index.html" class="back-btn">
 ⬅ العودة للمتجر
 </a>
@@ -71,36 +75,74 @@ let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 function displayCart(){
 
-    let container = document.getElementById('cart-items');
+    let container =
+    document.getElementById('cart-items');
+
     container.innerHTML = "";
 
     let total = 0;
 
     if(cart.length === 0){
-        container.innerHTML = "<p>السلة فارغة</p>";
-        document.getElementById("total").innerText = "";
+
+        container.innerHTML =
+        "<p>السلة فارغة</p>";
+
+        document.getElementById("total")
+        .innerText = "";
+
         return;
     }
 
     cart.forEach((item,index)=>{
 
-        total += item.price;
+        let quantity =
+        item.quantity || 1;
+
+        let color =
+        item.color || "غير محدد";
+
+        let itemTotal =
+        item.price * quantity;
+
+        total += itemTotal;
 
         container.innerHTML += `
-        <div class="item">
-            <h3>${item.name}</h3>
-            <p>${item.price} DA</p>
 
-            <button class="delete-btn"
+        <div class="item">
+
+            <h3>${item.name}</h3>
+
+            <p>
+            السعر: ${item.price} DA
+            </p>
+
+            <p>
+            اللون: ${color}
+            </p>
+
+            <p>
+            الكمية: ${quantity}
+            </p>
+
+            <p>
+            المجموع: ${itemTotal} DA
+            </p>
+
+            <button
+            class="delete-btn"
             onclick="removeItem(${index})">
+
             حذف المنتج
+
             </button>
+
         </div>
+
         `;
     });
 
     document.getElementById("total").innerText =
-    "المجموع: " + total + " DA";
+    "المجموع الكلي: " + total + " DA";
 }
 
 function removeItem(index){
@@ -117,13 +159,33 @@ function removeItem(index){
 
 function openMessenger(){
 
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let cart =
+    JSON.parse(
+    localStorage.getItem('cart')
+    ) || [];
 
-    let orderText = "المنتجات المطلوبة:\n\n";
+    let orderText =
+    "المنتجات المطلوبة:\n\n";
 
     cart.forEach(item=>{
-        orderText += "- " + item.name +
-        " (" + item.price + " DA)\n";
+
+        let quantity =
+        item.quantity || 1;
+
+        let color =
+        item.color || "غير محدد";
+
+        orderText +=
+
+        "- " + item.name +
+
+        "\nاللون: " + color +
+
+        "\nالكمية: " + quantity +
+
+        "\nالسعر: " + item.price + " DA" +
+
+        "\n-----------------\n";
     });
 
     prompt(
