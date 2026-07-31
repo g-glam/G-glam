@@ -27,19 +27,13 @@ border-radius:12px;
 box-shadow:0 0 8px rgba(0,0,0,.1);
 }
 
-.item h3{
-margin:0 0 10px;
-}
-
-input,
-select{
+input,select{
 width:100%;
 padding:12px;
 margin:6px 0;
 border:1px solid #ddd;
 border-radius:8px;
 box-sizing:border-box;
-font-size:16px;
 }
 
 .delete-btn{
@@ -63,25 +57,8 @@ font-size:18px;
 margin-top:15px;
 }
 
-.back-btn{
-display:block;
-text-align:center;
-margin-top:20px;
-text-decoration:none;
-color:black;
-font-size:18px;
-}
-
-#deliveryPrice,
-#productsTotal,
-#finalTotal{
-font-weight:bold;
-font-size:22px;
-text-align:center;
-margin-top:15px;
-}
-
 </style>
+
 </head>
 
 <body>
@@ -96,36 +73,17 @@ margin-top:15px;
 
 <h2>معلومات الزبون</h2>
 
-<input
-type="text"
-id="name"
-placeholder="الاسم واللقب"
-required>
+<input type="text" id="name" placeholder="الاسم واللقب">
 
-<input
-type="text"
-id="phone"
-placeholder="رقم الهاتف"
-required>
+<input type="text" id="phone" placeholder="رقم الهاتف">
 
 <select id="wilaya">
-<option value="">
-اختر الولاية
-</option>
+<option value="">اختر الولاية</option>
 </select>
 
-<input
-type="text"
-id="commune"
-placeholder="البلدية"
-required>
+<input type="text" id="commune" placeholder="البلدية">
 
-<input
-type="text"
-id="address"
-placeholder="العنوان الكامل"
-required>
-
+<input type="text" id="address" placeholder="العنوان الكامل">
 <select id="deliveryType">
 
 <option value="">
@@ -153,17 +111,8 @@ required>
 <button
 onclick="sendOrder()"
 class="order-btn">
-
 📦 إرسال الطلب
-
 </button>
-
-<a href="index.html"
-class="back-btn">
-
-⬅ العودة للمتجر
-
-</a>
 
 <script>
 
@@ -176,9 +125,7 @@ localStorage.getItem("cart")
 ) || [];
 
 let tarifs = {};
-
 let productsTotal = 0;
-
 let deliveryCost = 0;
 
 function displayCart(){
@@ -196,9 +143,7 @@ productsTotal = 0;
 container.innerHTML =
 "<p>السلة فارغة</p>";
 
-return;
-
-}
+}else{
 
 cart.forEach((item,index)=>{
 
@@ -217,19 +162,14 @@ container.innerHTML += `
 <h3>${item.name}</h3>
 
 <p>
-الكمية: ${qty}
-<br>
-سعر الوحدة: ${item.price} DA
-<br>
+الكمية: ${qty}<br>
 الإجمالي: ${itemTotal} DA
 </p>
 
 <button
 class="delete-btn"
 onclick="removeItem(${index})">
-
-حذف المنتج
-
+حذف
 </button>
 
 </div>
@@ -237,6 +177,8 @@ onclick="removeItem(${index})">
 `;
 
 });
+
+}
 
 document.getElementById(
 "productsTotal"
@@ -268,48 +210,32 @@ SCRIPT_URL + "?action=prices"
 .then(response => response.json())
 .then(data => {
 
+tarifs = data;
+
 let wilayaSelect =
-document.getElementById(
-"wilaya"
-);
+document.getElementById("wilaya");
 
-data.forEach(item => {
-
-tarifs[item.wilaya] = {
-
-toOffice:item.toOffice,
-toHome:item.toHome
-
-};
+Object.keys(data).forEach(wilaya => {
 
 let option =
-document.createElement(
-"option"
-);
+document.createElement("option");
 
-option.value =
-item.wilaya;
+option.value = wilaya;
+option.textContent = wilaya;
 
-option.textContent =
-item.wilaya;
-
-wilayaSelect.appendChild(
-option
-);
+wilayaSelect.appendChild(option);
 
 });
 
 });
 
-document
-.getElementById("wilaya")
+document.getElementById("wilaya")
 .addEventListener(
 "change",
 updateDelivery
 );
 
-document
-.getElementById("deliveryType")
+document.getElementById("deliveryType")
 .addEventListener(
 "change",
 updateDelivery
@@ -318,33 +244,19 @@ updateDelivery
 function updateDelivery(){
 
 let wilaya =
-document.getElementById(
-"wilaya"
-).value;
+document.getElementById("wilaya").value;
 
 let type =
-document.getElementById(
-"deliveryType"
-).value;
+document.getElementById("deliveryType").value;
 
-if(
-!wilaya ||
-!type ||
-!tarifs[wilaya]
-){
+if(!wilaya || !type || !tarifs[wilaya]){
 return;
 }
 
 deliveryCost =
 type === "إلى المكتب"
-?
-Number(
-tarifs[wilaya].toOffice
-)
-:
-Number(
-tarifs[wilaya].toHome
-);
+? Number(tarifs[wilaya].toOffice)
+: Number(tarifs[wilaya].toHome);
 
 document.getElementById(
 "deliveryPrice"
@@ -368,7 +280,16 @@ document.getElementById(
 
 }
 
-function sendOrder(){
+displayCart();
+  function sendOrder(){
+
+if(cart.length === 0){
+
+alert("السلة فارغة");
+
+return;
+
+}
 
 let products = "";
 
@@ -386,10 +307,12 @@ fetch(
 SCRIPT_URL,
 {
 method:"POST",
+
 headers:{
 "Content-Type":
 "application/json"
 },
+
 body:JSON.stringify({
 
 name:
@@ -464,8 +387,6 @@ console.log(error);
 });
 
 }
-
-displayCart();
 
 </script>
 
