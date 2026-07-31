@@ -210,6 +210,30 @@ SCRIPT_URL + "?action=prices"
 .then(response => response.json())
 .then(data => {
 
+console.log(data);
+
+tarifs = data;
+
+let wilayaSelect =
+document.getElementById("wilaya");
+
+Object.keys(data).forEach(wilaya => {
+
+let option =
+document.createElement("option");
+
+option.value = wilaya;
+option.textContent = wilaya;
+
+wilayaSelect.appendChild(option);
+
+});
+})
+.catch(error => {
+console.log(error);
+alert(error);
+});
+
 tarifs = data;
 
 let wilayaSelect =
