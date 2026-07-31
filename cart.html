@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>سلة التسوق</title>
 
 <style>
@@ -46,9 +48,11 @@ body{
     display:inline-block;
     margin-top:15px;
     text-decoration:none;
+    color:black;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -95,53 +99,39 @@ function displayCart(){
 
     cart.forEach((item,index)=>{
 
-        let quantity =
+        let qty =
         item.quantity || 1;
 
-        let color =
-        item.color || "غير محدد";
-
         let itemTotal =
-        item.price * quantity;
+        item.price * qty;
 
         total += itemTotal;
 
         container.innerHTML += `
-
         <div class="item">
 
             <h3>${item.name}</h3>
 
             <p>
-            السعر: ${item.price} DA
-            </p>
-
-            <p>
-            اللون: ${color}
-            </p>
-
-            <p>
-            الكمية: ${quantity}
-            </p>
-
-            <p>
-            المجموع: ${itemTotal} DA
+            الكمية: ${qty}
+            <br>
+            سعر الوحدة: ${item.price} DA
+            <br>
+            الإجمالي: ${itemTotal} DA
             </p>
 
             <button
             class="delete-btn"
             onclick="removeItem(${index})">
-
             حذف المنتج
-
             </button>
 
         </div>
-
         `;
     });
 
-    document.getElementById("total").innerText =
+    document.getElementById("total")
+    .innerText =
     "المجموع الكلي: " + total + " DA";
 }
 
@@ -167,26 +157,28 @@ function openMessenger(){
     let orderText =
     "المنتجات المطلوبة:\n\n";
 
+    let total = 0;
+
     cart.forEach(item=>{
 
-        let quantity =
+        let qty =
         item.quantity || 1;
 
-        let color =
-        item.color || "غير محدد";
+        let itemTotal =
+        item.price * qty;
+
+        total += itemTotal;
 
         orderText +=
-
         "- " + item.name +
-
-        "\nاللون: " + color +
-
-        "\nالكمية: " + quantity +
-
-        "\nالسعر: " + item.price + " DA" +
-
-        "\n-----------------\n";
+        "\nالكمية: " + qty +
+        "\nسعر الوحدة: " + item.price + " DA" +
+        "\nالإجمالي: " + itemTotal + " DA\n\n";
     });
+
+    orderText +=
+    "المجموع الكلي: " +
+    total + " DA";
 
     prompt(
       "انسخ الطلب من هنا ثم أرسله في Messenger:",
