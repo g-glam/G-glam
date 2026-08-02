@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>لوحة تحكم G-Glam</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+display:flex;
+background:#f5f5f5;
+}
+
+.sidebar{
+width:250px;
+height:100vh;
+background:#111;
+color:white;
+padding:20px;
+position:fixed;
+right:0;
+top:0;
+}
+
+.logo{
+font-size:22px;
+font-weight:bold;
+margin-bottom:30px;
+text-align:center;
+}
+
+.menu a{
+display:block;
+color:white;
+text-decoration:none;
+padding:15px;
+border-radius:10px;
+margin-bottom:10px;
+background:#1f1f1f;
+}
+
+.menu a:hover{
+background:#333;
+}
+
+.content{
+margin-right:270px;
+padding:20px;
+width:100%;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 0 10px rgba(0,0,0,.1);
+text-align:center;
+}
+
+.card h2{
+font-size:30px;
+margin-top:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<div class="logo">
+G-Glam Admin
+</div>
+
+<div class="menu">
+
+<a href="dashboard.html">
+🏠 الرئيسية
+</a>
+
+<a href="orders.html">
+📦 الطلبات
+</a>
+
+<a href="products.html">
+🛍 المنتجات
+</a>
+
+<a href="add-product.html">
+➕ إضافة منتج
+</a>
+
+<a href="#" id="logoutBtn">
+🚪 تسجيل الخروج
+</a>
+
+</div>
+
+</div>
+
+<div class="content">
+
+<h1>
+لوحة التحكم
+</h1>
+
+<br>
+
+<div class="cards">
+
+<div class="card">
+عدد الطلبات
+<h2 id="ordersCount">0</h2>
+</div>
+
+<div class="card">
+عدد المنتجات
+<h2 id="productsCount">0</h2>
+</div>
+
+</div>
+
+</div>
+
+<script type="module">
+
+if(
+localStorage.getItem("adminLogged")
+!=="true"
+){
+
+window.location.href=
+"login.html";
+
+}
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+getDocs
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+
+apiKey:"AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+
+authDomain:"g-glam.firebaseapp.com",
+
+projectId:"g-glam",
+
+storageBucket:"g-glam.firebasestorage.app",
+
+messagingSenderId:"997228419719",
+
+appId:"1:997228419719:web:f9d88de7ea2c6f457e3622",
+
+measurementId:"G-WX1K1F83F6"
+
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
+async function loadStats(){
+
+const orders =
+await getDocs(
+collection(db,"orders")
+);
+
+document.getElementById(
+"ordersCount"
+).innerText =
+orders.size;
+
+const products =
+await getDocs(
+collection(db,"products")
+);
+
+document.getElementById(
+"productsCount"
+).innerText =
+products.size;
+
+}
+
+loadStats();
+
+document
+.getElementById("logoutBtn")
+.addEventListener(
+"click",
+()=>{
+
+localStorage.removeItem(
+"adminLogged"
+);
+
+window.location.href=
+"login.html";
+
+}
+);
+
+</script>
+
+</body>
+</html>
