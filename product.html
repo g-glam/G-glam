@@ -2,14 +2,10 @@
 <html lang="ar" dir="rtl">
 
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>
-G-Glam | تفاصيل المنتج
-</title>
+<title>G-Glam | تفاصيل المنتج</title>
 
 <style>
 
@@ -18,123 +14,94 @@ box-sizing:border-box;
 }
 
 body{
-
 font-family:Arial,sans-serif;
 background:#f8f8f8;
 margin:0;
 padding:15px;
-
 }
 
 .container{
-
 max-width:700px;
 margin:auto;
 background:white;
 padding:20px;
 border-radius:15px;
 box-shadow:0 0 10px rgba(0,0,0,.1);
-
 }
 
 .back-btn{
-
 display:block;
 margin-bottom:15px;
 text-decoration:none;
 color:#333;
 font-size:16px;
-
 }
 
 .gallery-container{
-
 overflow-x:auto;
 scroll-snap-type:x mandatory;
-display:flex;
-gap:10px;
 margin-bottom:15px;
-
 }
 
 .gallery-container::-webkit-scrollbar{
-
-display:none;
-
+height:5px;
 }
 
 .gallery-track{
-
 display:flex;
 gap:10px;
-
 }
 
 .gallery-track img{
-
 width:85%;
 flex-shrink:0;
-scroll-snap-align:center;
 border-radius:12px;
+scroll-snap-align:center;
 display:block;
-
 }
 
 h1{
-
 font-size:25px;
 margin-bottom:10px;
-
 }
 
 .price{
-
 font-size:24px;
 font-weight:bold;
 color:#ff4fc3;
 margin-bottom:15px;
-
 }
-
+  
 .description{
-
 line-height:1.8;
 margin-bottom:20px;
 color:#555;
-
 }
 
 .box-title{
-
 font-weight:bold;
 margin-bottom:8px;
-
 }
 
 select,
 input{
-
 width:100%;
 padding:12px;
 margin-bottom:15px;
 border:1px solid #ddd;
 border-radius:8px;
 font-size:16px;
-
 }
-  
-.qty-box{
 
+.qty-box{
 display:flex;
 justify-content:center;
 align-items:center;
 gap:15px;
 margin-bottom:15px;
-
 }
 
 .qty-btn{
-
 width:40px;
 height:40px;
 border:none;
@@ -143,18 +110,14 @@ color:white;
 border-radius:50%;
 font-size:22px;
 cursor:pointer;
-
 }
 
 #quantity{
-
 width:70px;
 text-align:center;
-
 }
 
 button{
-
 width:100%;
 padding:15px;
 border:none;
@@ -163,31 +126,23 @@ background:#ff4fc3;
 color:white;
 font-size:18px;
 cursor:pointer;
-
 }
 
 button:hover{
-
 opacity:.9;
-
 }
 
 .qty-box span{
-
 font-size:20px;
 font-weight:bold;
-
 }
 
 .order-btn{
-
 margin-top:10px;
 background:#111;
-
 }
 
 </style>
-
 </head>
 
 <body>
@@ -203,8 +158,8 @@ background:#111;
 <div class="gallery-container">
 
 <div
-class="gallery-track"
-id="galleryTrack">
+id="galleryTrack"
+class="gallery-track">
 
 </div>
 
@@ -334,6 +289,89 @@ let currentProduct = null;
 
 let quantity = 1;
   
+async function loadProduct(){
+
+if(!productId){
+
+document.body.innerHTML =
+"<h2>لم يتم اختيار المنتج</h2>";
+
+return;
+
+}
+
+const productRef =
+
+doc(
+db,
+"products",
+productId
+);
+
+const productSnap =
+
+await getDoc(productRef);
+
+if(!productSnap.exists()){
+
+document.body.innerHTML =
+"<h2>المنتج غير موجود</h2>";
+
+return;
+
+}
+
+currentProduct =
+productSnap.data();
+
+document.getElementById(
+"productName"
+).textContent =
+currentProduct.name;
+
+document.getElementById(
+"productPrice"
+).textContent =
+currentProduct.price + " DA";
+
+document.getElementById(
+"productDescription"
+).textContent =
+currentProduct.description || "";
+
+const galleryTrack =
+document.getElementById(
+"galleryTrack"
+);
+
+galleryTrack.innerHTML = "";
+
+const images =
+
+currentProduct.images &&
+currentProduct.images.length
+
+? currentProduct.images
+
+: [currentProduct.image];
+
+images.forEach(img => {
+
+galleryTrack.innerHTML += `
+
+<img src="${img}" alt="product">
+
+`;
+
+});
+
+const colors =
+document.getElementById(
+"productColors"
+);
+
+colors.innerHTML = "";
+  
 if(
 
 currentProduct.colors &&
@@ -358,9 +396,7 @@ ${color}
 
 }else{
 
-colors.innerHTML =
-
-`
+colors.innerHTML = `
 
 <option>
 
@@ -438,11 +474,15 @@ name:currentProduct.name,
 price:currentProduct.price,
 
 image:
+
 currentProduct.image ||
 
-(currentProduct.images
+(
+currentProduct.images &&
+currentProduct.images.length
 ? currentProduct.images[0]
-: ""),
+: ""
+),
 
 color:color,
 
@@ -450,8 +490,8 @@ quantity:quantity
 
 });
 
-}
-
+  }
+  
 localStorage.setItem(
 
 "cart",
@@ -461,7 +501,9 @@ JSON.stringify(cart)
 );
 
 alert(
+
 "تمت إضافة المنتج إلى السلة 🛒"
+
 );
 
 };
@@ -471,10 +513,11 @@ alert(
 window.goToCart = function(){
 
 window.location.href =
+
 "cart.html";
 
 };
-
+  
 </script>
 
 </body>
