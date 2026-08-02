@@ -7,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>الطلبات - G-Glam</title>
+<title>طلبات G-Glam</title>
 
 <style>
 
@@ -15,6 +15,7 @@ body{
 font-family:Arial,sans-serif;
 background:#f5f5f5;
 padding:20px;
+margin:0;
 }
 
 h1{
@@ -26,6 +27,7 @@ table{
 width:100%;
 border-collapse:collapse;
 background:white;
+box-shadow:0 0 10px rgba(0,0,0,.1);
 }
 
 th,
@@ -44,6 +46,12 @@ tr:nth-child(even){
 background:#f9f9f9;
 }
 
+select{
+padding:8px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
 </style>
 
 </head>
@@ -51,7 +59,7 @@ background:#f9f9f9;
 <body>
 
 <h1>
-📦 الطلبات
+📦 إدارة الطلبات
 </h1>
 
 <table>
@@ -70,6 +78,10 @@ background:#f9f9f9;
 
 <th>المنتجات</th>
 
+<th>الحالة</th>
+
+<th>تحديث</th>
+
 </tr>
 
 </thead>
@@ -79,6 +91,7 @@ background:#f9f9f9;
 </tbody>
 
 </table>
+
 <script type="module">
 
 import { initializeApp }
@@ -87,10 +100,11 @@ from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 import {
 getFirestore,
 collection,
-getDocs
+getDocs,
+doc,
+updateDoc
 }
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-
 
 const firebaseConfig = {
 
@@ -114,11 +128,9 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-
-async function loadOrders(){
-
 const table =
 document.getElementById("ordersTable");
+  async function loadOrders(){
 
 table.innerHTML = "";
 
@@ -133,15 +145,17 @@ const order = orderDoc.data();
 
 let productsText = "";
 
-if(order.items){
+if(order.products){
 
-order.items.forEach(item=>{
+order.products.forEach(product=>{
 
 productsText +=
-item.name +
-" × " +
-(item.quantity || 1) +
-"<br>";
+(product.name || "") +
+"<br>اللون: " +
+(product.color || "-") +
+"<br>الكمية: " +
+(product.quantity || 1) +
+"<hr>";
 
 });
 
@@ -161,6 +175,47 @@ table.innerHTML += `
 
 <td>${productsText}</td>
 
+<td>
+${order.status || "جديد"}
+</td>
+
+<td>
+
+<select
+onchange="window.updateStatus(
+'${orderDoc.id}',
+this.value
+)">
+
+<option value="جديد"
+${order.status==="جديد"?"selected":""}>
+جديد
+</option>
+
+<option value="تم التأكيد"
+${order.status==="تم التأكيد"?"selected":""}>
+تم التأكيد
+</option>
+
+<option value="تم الشحن"
+${order.status==="تم الشحن"?"selected":""}>
+تم الشحن
+</option>
+
+<option value="تم التسليم"
+${order.status==="تم التسليم"?"selected":""}>
+تم التسليم
+</option>
+
+<option value="ملغي"
+${order.status==="ملغي"?"selected":""}>
+ملغي
+</option>
+
+</select>
+
+</td>
+
 </tr>
 
 `;
@@ -170,7 +225,37 @@ table.innerHTML += `
 }
 
 loadOrders();
-  </script>
+  window.updateStatus = async function(
+orderId,
+newStatus
+){
+
+try{
+
+await updateDoc(
+doc(db,"orders",orderId),
+{
+status:newStatus
+}
+);
+
+alert(
+"تم تحديث حالة الطلب"
+);
+
+}catch(error){
+
+console.error(error);
+
+alert(
+"فشل تحديث الحالة"
+);
+
+}
+
+};
+
+</script>
 
 </body>
 
