@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>تسجيل دخول الإدارة - G-Glam</title>
+
+<style>
+
+body{
+font-family:Arial,sans-serif;
+background:#f5f5f5;
+margin:0;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.login-box{
+background:white;
+padding:30px;
+border-radius:15px;
+width:320px;
+text-align:center;
+box-shadow:0 0 15px rgba(0,0,0,.15);
+}
+
+h2{
+margin-top:0;
+}
+
+button{
+width:100%;
+padding:15px;
+border:none;
+border-radius:10px;
+background:#4285F4;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+opacity:.9;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="login-box">
+
+<h2>🔐 لوحة تحكم G-Glam</h2>
+
+<p>
+سجل الدخول بحساب المدير
+</p>
+
+<button id="loginBtn">
+تسجيل الدخول بواسطة Google
+</button>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getAuth,
+GoogleAuthProvider,
+signInWithPopup
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+
+authDomain: "g-glam.firebaseapp.com",
+
+projectId: "g-glam",
+
+storageBucket: "g-glam.firebasestorage.app",
+
+messagingSenderId: "997228419719",
+
+appId: "1:997228419719:web:f9d88de7ea2c6f457e3622",
+
+measurementId: "G-WX1K1F83F6"
+
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const auth =
+getAuth(app);
+
+const provider =
+new GoogleAuthProvider();
+
+document
+.getElementById("loginBtn")
+.addEventListener(
+"click",
+async ()=>{
+
+try{
+
+const result =
+await signInWithPopup(
+auth,
+provider
+);
+
+const user =
+result.user;
+
+if(
+user.email ===
+"loxenteam@gmail.com"
+){
+
+localStorage.setItem(
+"adminLogged",
+"true"
+);
+
+window.location.href =
+"dashboard.html";
+
+}
+else{
+
+alert(
+"هذا الحساب غير مصرح له بالدخول"
+);
+
+auth.signOut();
+
+}
+
+}
+catch(error){
+
+console.error(error);
+
+alert(
+"حدث خطأ أثناء تسجيل الدخول"
+);
+
+}
+
+}
+);
+
+</script>
+
+</body>
+</html>
