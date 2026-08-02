@@ -1,0 +1,629 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>
+G-Glam | تعديل المنتج
+</title>
+
+
+<style>
+
+*{
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+
+body{
+
+margin:0;
+background:#f5f5f5;
+padding:20px;
+
+}
+
+
+
+.container{
+
+max-width:700px;
+margin:auto;
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 0 10px rgba(0,0,0,.1);
+
+}
+
+
+
+h1{
+
+text-align:center;
+margin-bottom:20px;
+
+}
+
+
+
+input,
+textarea{
+
+width:100%;
+padding:12px;
+margin-bottom:12px;
+border:1px solid #ddd;
+border-radius:8px;
+
+}
+
+
+
+textarea{
+
+height:120px;
+resize:none;
+
+}
+
+
+
+button{
+
+width:100%;
+padding:14px;
+border:none;
+border-radius:10px;
+background:#111;
+color:white;
+font-size:18px;
+cursor:pointer;
+
+}
+
+
+
+button:hover{
+
+opacity:.9;
+
+}
+
+
+
+img{
+
+width:150px;
+display:block;
+margin:15px auto;
+border-radius:10px;
+
+}
+
+
+
+.success{
+
+display:none;
+background:#d4edda;
+color:#155724;
+padding:10px;
+border-radius:8px;
+text-align:center;
+margin-bottom:15px;
+
+}
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<h1>
+✏️ تعديل المنتج
+</h1>
+
+
+
+<div class="success" id="success">
+
+تم تعديل المنتج بنجاح ✅
+
+  </div>
+  
+
+<input
+id="name"
+type="text"
+placeholder="اسم المنتج">
+
+
+
+<input
+id="price"
+type="number"
+placeholder="السعر">
+
+
+
+<textarea
+id="description"
+placeholder="وصف المنتج">
+</textarea>
+
+
+
+
+<input
+id="colors"
+type="text"
+placeholder="الألوان مثال: Beige,Nude,Pink">
+
+
+
+<input
+id="stock"
+type="number"
+placeholder="المخزون">
+
+
+
+<label>
+📷 تغيير صورة المنتج (اختياري)
+</label>
+
+
+<input
+id="imageFile"
+type="file"
+accept="image/*">
+
+
+
+<img
+id="preview"
+src="">
+
+
+
+<button id="updateBtn">
+
+حفظ التعديلات
+
+</button>
+
+
+
+</div>
+
+<script type="module">
+
+
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+
+
+import {
+
+getFirestore,
+
+doc,
+
+getDoc,
+
+updateDoc
+
+}
+
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+
+
+
+
+
+const firebaseConfig = {
+
+
+apiKey: "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+
+authAuthDomain: "g-glam.firebaseapp.com",
+
+authDomain: "g-glam.firebaseapp.com",
+
+projectId: "g-glam",
+
+storageBucket: "g-glam.firebasestorage.app",
+
+messagingSenderId: "997228419719",
+
+appId: "1:997228419719:web:f9d88de7ea2c6f457e3622",
+
+measurementId: "G-WX1K1F83F6"
+
+};
+
+
+
+
+
+const app = initializeApp(firebaseConfig);
+
+
+const db = getFirestore(app);
+
+
+
+
+
+
+const params =
+
+new URLSearchParams(
+
+window.location.search
+
+);
+
+
+
+const productId =
+
+params.get("id");
+
+
+
+
+
+let oldImage = "";
+
+let selectedImage = null;
+
+
+
+
+
+async function loadProduct(){
+
+
+
+const productRef =
+
+doc(db,"products",productId);
+
+
+
+
+const productSnap =
+
+await getDoc(productRef);
+
+
+
+
+
+if(!productSnap.exists()){
+
+
+alert("المنتج غير موجود");
+
+
+return;
+
+
+}
+
+
+
+
+const product = productSnap.data();
+
+
+
+
+
+document.getElementById("name").value =
+
+product.name || "";
+
+
+
+document.getElementById("price").value =
+
+product.price || "";
+
+
+
+document.getElementById("description").value =
+
+product.description || "";
+
+
+
+document.getElementById("colors").value =
+
+(product.colors || []).join(",");
+
+
+
+document.getElementById("stock").value =
+
+product.stock || "";
+
+
+
+
+
+oldImage = product.image || "";
+
+
+
+
+document.getElementById("preview").src =
+
+oldImage;
+
+
+
+}
+
+
+
+loadProduct();
+  
+
+// اختيار صورة جديدة
+
+document
+.getElementById("imageFile")
+.addEventListener("change",function(){
+
+
+selectedImage = this.files[0];
+
+
+if(selectedImage){
+
+
+const reader = new FileReader();
+
+
+
+reader.onload = function(e){
+
+
+document.getElementById("preview").src =
+
+e.target.result;
+
+
+};
+
+
+
+reader.readAsDataURL(selectedImage);
+
+
+}
+
+
+});
+
+
+
+
+
+
+
+// حفظ التعديلات
+
+
+document
+.getElementById("updateBtn")
+.addEventListener("click", async function(){
+
+
+
+const name =
+
+document.getElementById("name")
+.value.trim();
+
+
+
+const price =
+
+Number(
+document.getElementById("price").value
+);
+
+
+
+const description =
+
+document.getElementById("description")
+.value.trim();
+
+
+
+
+const colors =
+
+document.getElementById("colors")
+.value
+.split(",")
+.map(c=>c.trim())
+.filter(c=>c);
+
+
+
+const stock =
+
+Number(
+document.getElementById("stock").value
+);
+
+
+
+if(!name || !price){
+
+
+alert("يرجى إدخال الاسم والسعر");
+
+
+return;
+
+
+}
+
+
+
+
+
+try{
+
+
+let imageUrl = oldImage;
+
+
+
+
+
+if(selectedImage){
+
+
+const formData = new FormData();
+
+
+
+formData.append(
+"file",
+selectedImage
+);
+
+
+
+formData.append(
+"upload_preset",
+"gglam_products"
+);
+
+
+
+
+const response = await fetch(
+
+"https://api.cloudinary.com/v1_1/g82dvrkr/image/upload",
+
+{
+
+method:"POST",
+
+body:formData
+
+}
+
+);
+
+
+
+
+const data = await response.json();
+
+
+
+imageUrl = data.secure_url;
+
+
+
+}
+
+
+
+
+
+await updateDoc(
+
+doc(db,"products",productId),
+
+{
+
+name:name,
+
+price:price,
+
+description:description,
+
+colors:colors,
+
+stock:stock,
+
+image:imageUrl
+
+}
+
+);
+
+
+
+
+
+document.getElementById("success")
+.style.display="block";
+
+
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
+
+
+
+}
+
+
+catch(error){
+
+
+console.error(error);
+
+
+alert(
+"حدث خطأ أثناء التعديل"
+);
+
+
+}
+
+
+
+});
+  
+</script>
+
+
+</body>
+
+
+</html>
