@@ -24,9 +24,9 @@ padding:20px;
 }
 
 .container{
-max-width:600px;
+max-width:700px;
 margin:auto;
-background:white;
+background:#fff;
 padding:20px;
 border-radius:15px;
 box-shadow:0 0 10px rgba(0,0,0,.1);
@@ -66,6 +66,16 @@ button:hover{
 opacity:.9;
 }
 
+.success{
+display:none;
+background:#d4edda;
+color:#155724;
+padding:10px;
+border-radius:8px;
+margin-bottom:15px;
+text-align:center;
+}
+
 </style>
 
 </head>
@@ -74,10 +84,11 @@ opacity:.9;
 
 <div class="container">
 
-<h1>
-➕ إضافة منتج جديد
-</h1>
+<h1>➕ إضافة منتج جديد</h1>
 
+<div class="success" id="successMsg">
+تمت إضافة المنتج بنجاح ✅
+</div>
 <input
 type="text"
 id="name"
@@ -86,7 +97,7 @@ placeholder="اسم المنتج">
 <input
 type="number"
 id="price"
-placeholder="السعر">
+placeholder="السعر بالدينار">
 
 <input
 type="text"
@@ -98,72 +109,133 @@ id="description"
 placeholder="وصف المنتج">
 </textarea>
 
+<input
+type="text"
+id="colors"
+placeholder="الألوان (مثال: Beige,Nude,Pink)">
+
+<input
+type="number"
+id="stock"
+placeholder="المخزون المتوفر">
+
 <button id="saveBtn">
 حفظ المنتج
 </button>
 
 </div>
-<script>
-
-document.getElementById("saveBtn").onclick = function(){
-
-let name = document.getElementById("name").value;
-let price = document.getElementById("price").value;
-let image = document.getElementById("image").value;
-let description = document.getElementById("description").value;
 
 
-if(name=="" || price=="" || image==""){
-alert("يرجى ملء جميع المعلومات الأساسية");
-return;
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc,
+serverTimestamp
 }
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+  const firebaseConfig = {
 
+apiKey: "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
 
-// جلب المنتجات القديمة
-let products = JSON.parse(localStorage.getItem("products")) || [];
+authDomain: "g-glam.firebaseapp.com",
 
+projectId: "g-glam",
 
-// إنشاء منتج جديد
-let newProduct = {
+storageBucket: "g-glam.firebasestorage.app",
 
-id: Date.now(),
+messagingSenderId: "997228419719",
 
-name:name,
+appId: "1:997228419719:web:f9d88de7ea2c6f457e3622",
 
-price:price,
-
-image:image,
-
-description:description
+measurementId: "G-WX1K1F83F6"
 
 };
 
 
-// إضافة المنتج
-products.push(newProduct);
+// تشغيل Firebase
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+document.getElementById("saveBtn")
+.addEventListener("click", async () => {
+
+const name =
+document.getElementById("name").value.trim();
+
+const price =
+Number(document.getElementById("price").value);
+
+const image =
+document.getElementById("image").value.trim();
+
+const description =
+document.getElementById("description").value.trim();
+
+const colors =
+document.getElementById("colors").value
+.split(",")
+.map(color => color.trim())
+.filter(color => color !== "");
+
+const stock =
+Number(document.getElementById("stock").value);
 
 
-// حفظ المنتجات
-localStorage.setItem(
-"products",
-JSON.stringify(products)
+if(
+!name ||
+!price ||
+!image
+){
+alert("يرجى ملء جميع الحقول المطلوبة");
+return;
+}
+
+try{
+
+await addDoc(
+collection(db,"products"),
+{
+name:name,
+price:price,
+image:image,
+description:description,
+colors:colors,
+stock:stock,
+createdAt:serverTimestamp()
+}
 );
 
+document.getElementById("successMsg").style.display="block";
 
-alert("تمت إضافة المنتج بنجاح ✅");
-
-
-// تفريغ الخانات
 document.getElementById("name").value="";
 document.getElementById("price").value="";
 document.getElementById("image").value="";
 document.getElementById("description").value="";
+document.getElementById("colors").value="";
+document.getElementById("stock").value="";
 
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
 
-};
+}catch(error){
 
-</script>
+console.error(error);
 
+alert(
+"حدث خطأ أثناء حفظ المنتج"
+);
+
+}
+
+});
+  </script>
 
 </body>
 
