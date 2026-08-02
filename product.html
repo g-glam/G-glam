@@ -47,18 +47,34 @@ font-size:16px;
 
 }
 
-.gallery{
+.gallery-container{
 
-width:100%;
-overflow:hidden;
-border-radius:12px;
+overflow-x:auto;
+scroll-snap-type:x mandatory;
+display:flex;
+gap:10px;
 margin-bottom:15px;
 
 }
 
-.gallery img{
+.gallery-container::-webkit-scrollbar{
 
-width:100%;
+display:none;
+
+}
+
+.gallery-track{
+
+display:flex;
+gap:10px;
+
+}
+
+.gallery-track img{
+
+width:85%;
+flex-shrink:0;
+scroll-snap-align:center;
 border-radius:12px;
 display:block;
 
@@ -117,8 +133,6 @@ margin-bottom:15px;
 
 }
 
-
-
 .qty-btn{
 
 width:40px;
@@ -132,16 +146,12 @@ cursor:pointer;
 
 }
 
-
-
 #quantity{
 
 width:70px;
 text-align:center;
 
 }
-
-
 
 button{
 
@@ -156,15 +166,11 @@ cursor:pointer;
 
 }
 
-
-
 button:hover{
 
 opacity:.9;
 
 }
-
-
 
 .qty-box span{
 
@@ -172,8 +178,6 @@ font-size:20px;
 font-weight:bold;
 
 }
-
-
 
 .order-btn{
 
@@ -196,18 +200,15 @@ background:#111;
 
 </a>
 
+<div class="gallery-container">
 
-
-<div class="gallery">
-
-<img
-id="productImage"
-src=""
-alt="product">
+<div
+class="gallery-track"
+id="galleryTrack">
 
 </div>
 
-
+</div>
 
 <h1 id="productName">
 
@@ -215,15 +216,11 @@ alt="product">
 
 </h1>
 
-
-
 <div
 class="price"
 id="productPrice">
 
 </div>
-
-
 
 <div
 class="description"
@@ -231,15 +228,11 @@ id="productDescription">
 
 </div>
 
-
-
 <div class="box-title">
 
 اختيار اللون
 
 </div>
-
-
 
 <select id="productColors">
 
@@ -251,8 +244,6 @@ id="productDescription">
 
 </div>
 
-
-
 <div class="qty-box">
 
 <button
@@ -263,15 +254,11 @@ onclick="changeQuantity(-1)">
 
 </button>
 
-
-
 <span id="quantity">
 
 1
 
 </span>
-
-
 
 <button
 class="qty-btn"
@@ -283,15 +270,11 @@ onclick="changeQuantity(1)">
 
 </div>
 
-
-
 <button onclick="addToCart()">
 
 إضافة إلى السلة
 
 </button>
-
-
 
 <button
 class="order-btn"
@@ -301,30 +284,19 @@ onclick="goToCart()">
 
 </button>
 
-
-
 </div>
-
-
 
 <script type="module">
 
 import { initializeApp }
-
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
-
 import {
-
 getFirestore,
 doc,
 getDoc
-
 }
-
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-
-
 
 const firebaseConfig = {
 
@@ -344,138 +316,24 @@ measurementId: "G-WX1K1F83F6"
 
 };
 
+const app =
+initializeApp(firebaseConfig);
 
-
-const app = initializeApp(firebaseConfig);
-
-const db = getFirestore(app);
-
-
+const db =
+getFirestore(app);
 
 const params =
-
 new URLSearchParams(
 window.location.search
 );
 
-
-
 const productId =
-
 params.get("id");
-
-
 
 let currentProduct = null;
 
 let quantity = 1;
-
-let productImages = [];
-
-let currentImageIndex = 0;
-
-let startX = 0;
-
-let endX = 0;
   
-async function loadProduct(){
-
-
-if(!productId){
-
-document.body.innerHTML =
-"<h2>لم يتم اختيار المنتج</h2>";
-
-return;
-
-}
-
-
-
-const productRef =
-
-doc(
-db,
-"products",
-productId
-);
-
-
-
-const productSnap =
-
-await getDoc(productRef);
-
-
-
-if(!productSnap.exists()){
-
-document.body.innerHTML =
-"<h2>المنتج غير موجود</h2>";
-
-return;
-
-}
-
-
-
-currentProduct =
-productSnap.data();
-
-
-
-productImages =
-
-currentProduct.images ||
-
-[currentProduct.image];
-
-
-
-currentImageIndex = 0;
-
-
-
-document.getElementById(
-"productImage"
-).src =
-productImages[0];
-
-
-
-document.getElementById(
-"productName"
-).textContent =
-currentProduct.name;
-
-
-
-document.getElementById(
-"productPrice"
-).textContent =
-currentProduct.price + " DA";
-
-
-
-document.getElementById(
-"productDescription"
-).textContent =
-currentProduct.description || "";
-
-
-
-const colors =
-
-document.getElementById(
-"productColors"
-);
-
-
-
-colors.innerHTML = "";
-
-
-
 if(
 
 currentProduct.colors &&
@@ -484,7 +342,7 @@ currentProduct.colors.length
 
 ){
 
-currentProduct.colors.forEach(color=>{
+currentProduct.colors.forEach(color => {
 
 colors.innerHTML += `
 
@@ -502,128 +360,31 @@ ${color}
 
 colors.innerHTML =
 
-`<option>بدون لون</option>`;
+`
+
+<option>
+
+بدون لون
+
+</option>
+
+`;
 
 }
 
-
-
-const image =
-
-document.getElementById(
-"productImage"
-);
-
-
-
-image.addEventListener(
-"touchstart",
-function(e){
-
-startX =
-e.changedTouches[0].screenX;
-
 }
-);
-
-
-
-image.addEventListener(
-"touchend",
-function(e){
-
-endX =
-e.changedTouches[0].screenX;
-
-handleSwipe();
-
-}
-);
-
-}
-
-
 
 loadProduct();
-  
-function handleSwipe(){
-
-
-if(productImages.length <= 1){
-
-return;
-
-}
-
-
-
-// سحب لليسار
-
-if(startX - endX > 50){
-
-currentImageIndex++;
-
-
-if(
-currentImageIndex >=
-productImages.length
-){
-
-currentImageIndex = 0;
-
-}
-
-
-document.getElementById(
-"productImage"
-).src =
-productImages[currentImageIndex];
-
-}
-
-
-
-// سحب لليمين
-
-if(endX - startX > 50){
-
-currentImageIndex--;
-
-
-if(
-currentImageIndex < 0
-){
-
-currentImageIndex =
-productImages.length - 1;
-
-}
-
-
-document.getElementById(
-"productImage"
-).src =
-productImages[currentImageIndex];
-
-}
-
-}
-
-
-
-// تغيير الكمية
 
 window.changeQuantity = function(value){
 
 quantity += value;
-
 
 if(quantity < 1){
 
 quantity = 1;
 
 }
-
 
 document.getElementById(
 "quantity"
@@ -632,8 +393,6 @@ quantity;
 
 };
   
-// إضافة إلى السلة
-
 window.addToCart = function(){
 
 if(!currentProduct){
@@ -642,23 +401,17 @@ return;
 
 }
 
-
-
 const color =
 
 document.getElementById(
 "productColors"
 ).value;
 
-
-
 let cart =
 
 JSON.parse(
 localStorage.getItem("cart")
 ) || [];
-
-
 
 let existing =
 
@@ -669,8 +422,6 @@ item.id === productId &&
 item.color === color
 
 );
-
-
 
 if(existing){
 
@@ -686,7 +437,12 @@ name:currentProduct.name,
 
 price:currentProduct.price,
 
-image:currentProduct.image,
+image:
+currentProduct.image ||
+
+(currentProduct.images
+? currentProduct.images[0]
+: ""),
 
 color:color,
 
@@ -696,8 +452,6 @@ quantity:quantity
 
 }
 
-
-
 localStorage.setItem(
 
 "cart",
@@ -706,8 +460,6 @@ JSON.stringify(cart)
 
 );
 
-
-
 alert(
 "تمت إضافة المنتج إلى السلة 🛒"
 );
@@ -715,8 +467,6 @@ alert(
 };
 
 
-
-// الانتقال إلى السلة
 
 window.goToCart = function(){
 
