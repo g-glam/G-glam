@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>إدارة الطلبات - G-Glam</title>
+
+<style>
+
+body{
+font-family:Arial,sans-serif;
+background:#f5f5f5;
+margin:0;
+padding:15px;
+}
+
+h1{
+text-align:center;
+}
+
+.order{
+background:white;
+padding:15px;
+margin-bottom:15px;
+border-radius:12px;
+box-shadow:0 0 8px #ddd;
+}
+
+.order h3{
+margin-top:0;
+}
+
+.product{
+padding:5px 0;
+border-bottom:1px solid #eee;
+}
+
+select{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:8px;
+}
+
+button{
+width:100%;
+padding:12px;
+border:none;
+border-radius:8px;
+background:#0084ff;
+color:white;
+font-size:16px;
+margin-top:10px;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>📦 إدارة الطلبات</h1>
+
+<div id="ordersContainer"></div>
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+getDocs,
+doc,
+updateDoc,
+query,
+orderBy
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+authDomain: "g-glam.firebaseapp.com",
+projectId: "g-glam",
+storageBucket: "g-glam.firebasestorage.app",
+messagingSenderId: "997228419719",
+appId: "1:997228419719:web:f9d88de7ea2c6f457e3622",
+measurementId: "G-WX1K1F83F6"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+const container =
+document.getElementById("ordersContainer");
+
+async function loadOrders(){
+
+container.innerHTML =
+"<h3>جاري تحميل الطلبات...</h3>";
+
+const q =
+query(
+collection(db,"orders"),
+orderBy("createdAt","desc")
+);
+
+const snapshot =
+await getDocs(q);
+
+container.innerHTML = "";
+
+snapshot.forEach(docSnap=>{
+
+const order = docSnap.data();
+
+const id = docSnap.id;
+
+let productsHTML = "";
+
+if(order.products){
+
+order.products.forEach(product=>{
+
+productsHTML += `
+
+<div class="product">
+
+<b>${product.name}</b><br>
+
+السعر:
+${product.price} DA
+
+<br>
+
+الكمية:
+${product.quantity || 1}
+
+</div>
+
+`;
+
+});
+
+}
+  container.innerHTML += `
+
+<div class="order">
+
+<h3>
+📦 طلب جديد
+</h3>
+
+<p>
+<b>الاسم:</b>
+${order.name || ""}
+</p>
+
+<p>
+<b>الهاتف:</b>
+${order.phone || ""}
+</p>
+
+<p>
+<b>الولاية:</b>
+${order.wilaya || ""}
+</p>
+
+<p>
+<b>البلدية:</b>
+${order.commune || ""}
+</p>
+
+<p>
+<b>العنوان:</b>
+${order.address || ""}
+</p>
+
+<p>
+<b>نوع التوصيل:</b>
+${order.deliveryType || ""}
+</p>
+
+<p>
+<b>سعر التوصيل:</b>
+${order.deliveryPrice || 0} DA
+</p>
+
+<p>
+<b>المجموع:</b>
+${order.total || 0} DA
+</p>
+
+<h4>
+المنتجات:
+</h4>
+
+${productsHTML}
+
+<select id="status-${id}">
+
+<option value="قيد المعالجة"
+${order.status==="قيد المعالجة" ? "selected" : ""}>
+قيد المعالجة
+</option>
+
+<option value="تم التأكيد"
+${order.status==="تم التأكيد" ? "selected" : ""}>
+تم التأكيد
+</option>
+
+<option value="تم الشحن"
+${order.status==="تم الشحن" ? "selected" : ""}>
+تم الشحن
+</option>
+
+<option value="تم التوصيل"
+${order.status==="تم التوصيل" ? "selected" : ""}>
+تم التوصيل
+</option>
+
+</select>
+
+<button onclick="updateStatus('${id}')">
+
+💾 حفظ الحالة
+
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+window.updateStatus = async function(id){
+
+const status =
+document.getElementById(
+`status-${id}`
+).value;
+
+await updateDoc(
+doc(db,"orders",id),
+{
+status:status
+}
+);
+
+alert("✅ تم تحديث الحالة");
+
+};
+
+loadOrders();
+  </script>
+
+</body>
+
+</html>
