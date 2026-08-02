@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
@@ -8,21 +7,15 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
 <title>
 G-Glam | تفاصيل المنتج
 </title>
 
-
-
 <style>
-
 
 *{
 box-sizing:border-box;
 }
-
-
 
 body{
 
@@ -32,8 +25,6 @@ margin:0;
 padding:15px;
 
 }
-
-
 
 .container{
 
@@ -46,10 +37,6 @@ box-shadow:0 0 10px rgba(0,0,0,.1);
 
 }
 
-
-
-
-
 .back-btn{
 
 display:block;
@@ -60,11 +47,9 @@ font-size:16px;
 
 }
 
-
-
-
 .gallery{
 
+position:relative;
 width:100%;
 overflow:hidden;
 border-radius:12px;
@@ -72,18 +57,42 @@ margin-bottom:15px;
 
 }
 
-
-
-
 .gallery img{
 
 width:100%;
 border-radius:12px;
+display:block;
 
 }
 
+.slide-btn{
 
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+width:45px;
+height:45px;
+border:none;
+border-radius:50%;
+background:rgba(0,0,0,.6);
+color:white;
+font-size:22px;
+cursor:pointer;
+z-index:10;
 
+}
+
+.slide-right{
+
+right:10px;
+
+}
+
+.slide-left{
+
+left:10px;
+
+}
 
 h1{
 
@@ -91,9 +100,6 @@ font-size:25px;
 margin-bottom:10px;
 
 }
-
-
-
 
 .price{
 
@@ -103,11 +109,7 @@ color:#ff4fc3;
 margin-bottom:15px;
 
 }
-
-
-
-
-
+  
 .description{
 
 line-height:1.8;
@@ -115,7 +117,6 @@ margin-bottom:20px;
 color:#555;
 
 }
-
 
 
 
@@ -142,8 +143,6 @@ font-size:16px;
 
 
 
-
-
 .qty-box{
 
 display:flex;
@@ -153,7 +152,6 @@ gap:15px;
 margin-bottom:15px;
 
 }
-
 
 
 
@@ -169,7 +167,6 @@ font-size:22px;
 cursor:pointer;
 
 }
-
 
 
 
@@ -202,7 +199,10 @@ button:hover{
 opacity:.9;
 
 }
-  .qty-box span{
+
+
+
+.qty-box span{
 
 font-size:20px;
 font-weight:bold;
@@ -218,20 +218,13 @@ background:#111;
 
 }
 
-
-
 </style>
-
 
 </head>
 
-
 <body>
 
-
-
 <div class="container">
-
 
 <a class="back-btn" href="index.html">
 
@@ -241,19 +234,30 @@ background:#111;
 
 
 
-
 <div class="gallery">
 
+<button
+class="slide-btn slide-right"
+onclick="prevImage()">
 
-<img id="productImage"
+❮
+
+</button>
+
+<img
+id="productImage"
 src=""
 alt="product">
 
+<button
+class="slide-btn slide-left"
+onclick="nextImage()">
 
+❯
+
+</button>
 
 </div>
-
-
 
 
 
@@ -265,24 +269,19 @@ alt="product">
 
 
 
-
-
-<div class="price" id="productPrice">
-
-</div>
-
-
-
-
-
-<div class="description" id="productDescription">
+<div
+class="price"
+id="productPrice">
 
 </div>
 
 
 
+<div
+class="description"
+id="productDescription">
 
-
+</div>
 
 <div class="box-title">
 
@@ -294,12 +293,7 @@ alt="product">
 
 <select id="productColors">
 
-
 </select>
-
-
-
-
 
 
 
@@ -311,18 +305,15 @@ alt="product">
 
 
 
-
 <div class="qty-box">
 
-
-<button 
+<button
 class="qty-btn"
 onclick="changeQuantity(-1)">
 
 -
 
 </button>
-
 
 
 
@@ -334,9 +325,7 @@ onclick="changeQuantity(-1)">
 
 
 
-
-
-<button 
+<button
 class="qty-btn"
 onclick="changeQuantity(1)">
 
@@ -344,12 +333,7 @@ onclick="changeQuantity(1)">
 
 </button>
 
-
-
 </div>
-
-
-
 
 
 
@@ -361,9 +345,7 @@ onclick="changeQuantity(1)">
 
 
 
-
-
-<button 
+<button
 class="order-btn"
 onclick="goToCart()">
 
@@ -373,13 +355,11 @@ onclick="goToCart()">
 
 
 
-
-
-
 </div>
 
-<script type="module">
 
+
+<script type="module">
 
 import { initializeApp }
 
@@ -398,11 +378,7 @@ from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 
 
-
-
-
 const firebaseConfig = {
-
 
 apiKey: "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
 
@@ -418,88 +394,55 @@ appId: "1:997228419719:web:f9d88de7ea2c6f457e3622",
 
 measurementId: "G-WX1K1F83F6"
 
-
 };
-
-
 
 
 
 const app = initializeApp(firebaseConfig);
 
-
 const db = getFirestore(app);
 
 
 
-
-
-
 const params =
-
 new URLSearchParams(
-
 window.location.search
-
 );
 
-
-
-
 const productId =
-
 params.get("id");
-
-
 
 
 
 let currentProduct = null;
 
-
 let quantity = 1;
 
+let productImages = [];
 
-
-
-
-
-
-
+let currentImageIndex = 0;
+  
 async function loadProduct(){
 
 
-
 if(!productId){
-
 
 document.body.innerHTML =
 "<h2>لم يتم اختيار المنتج</h2>";
 
 return;
 
-
 }
-
-
-
 
 
 
 const productRef =
 
 doc(
-
 db,
-
 "products",
-
 productId
-
 );
-
-
-
 
 
 
@@ -509,85 +452,58 @@ await getDoc(productRef);
 
 
 
-
-
-
 if(!productSnap.exists()){
 
-
-
 document.body.innerHTML =
-
 "<h2>المنتج غير موجود</h2>";
 
 return;
-
 
 }
 
 
 
-
-
 currentProduct =
-
 productSnap.data();
 
 
 
+productImages =
+
+currentProduct.images ||
+
+[currentProduct.image];
 
 
+
+currentImageIndex = 0;
 
 
 
 document.getElementById(
 "productImage"
-).src =
-
-currentProduct.image;
-
-
-
-
+).src = productImages[0];
 
 
 
 document.getElementById(
 "productName"
 ).textContent =
-
 currentProduct.name;
-
-
-
-
-
 
 
 
 document.getElementById(
 "productPrice"
 ).textContent =
-
-currentProduct.price +
-
-" DA";
-
-
-
-
+currentProduct.price + " DA";
 
 
 
 document.getElementById(
 "productDescription"
 ).textContent =
-
 currentProduct.description || "";
-
-
-
-
 
 
 
@@ -599,12 +515,7 @@ document.getElementById(
 
 
 
-
-
-colors.innerHTML="";
-
-
-
+colors.innerHTML = "";
 
 
 
@@ -616,15 +527,9 @@ currentProduct.colors.length
 
 ){
 
-
-
 currentProduct.colors.forEach(color=>{
 
-
-
-colors.innerHTML +=
-
-`
+colors.innerHTML += `
 
 <option value="${color}">
 
@@ -634,19 +539,11 @@ ${color}
 
 `;
 
-
-
 });
-
-
 
 }else{
 
-
-
-colors.innerHTML =
-
-`
+colors.innerHTML = `
 
 <option>
 
@@ -656,31 +553,85 @@ colors.innerHTML =
 
 `;
 
-
-
 }
 
-
-
 }
-
-
-
 
 
 
 loadProduct();
   
+// الصورة التالية
+
+window.nextImage = function(){
+
+if(productImages.length <= 1){
+
+return;
+
+}
+
+currentImageIndex++;
+
+
+if(
+currentImageIndex >=
+productImages.length
+){
+
+currentImageIndex = 0;
+
+}
+
+
+document.getElementById(
+"productImage"
+).src =
+productImages[currentImageIndex];
+
+};
+
+
+
+
+// الصورة السابقة
+
+window.prevImage = function(){
+
+if(productImages.length <= 1){
+
+return;
+
+}
+
+currentImageIndex--;
+
+
+if(
+currentImageIndex < 0
+){
+
+currentImageIndex =
+productImages.length - 1;
+
+}
+
+
+document.getElementById(
+"productImage"
+).src =
+productImages[currentImageIndex];
+
+};
+
+
+
 
 // تغيير الكمية
 
-
 window.changeQuantity = function(value){
 
-
 quantity += value;
-
-
 
 if(quantity < 1){
 
@@ -688,31 +639,16 @@ quantity = 1;
 
 }
 
-
-
 document.getElementById(
-
 "quantity"
-
-).textContent = quantity;
-
-
+).textContent =
+quantity;
 
 };
-
-
-
-
-
-
-
-
+  
 // إضافة إلى السلة
 
-
 window.addToCart = function(){
-
-
 
 if(!currentProduct){
 
@@ -722,34 +658,21 @@ return;
 
 
 
-
-
 const color =
 
 document.getElementById(
-
 "productColors"
-
 ).value;
-
-
 
 
 
 let cart =
 
 JSON.parse(
-
 localStorage.getItem("cart")
-
 ) || [];
 
 
-
-
-
-
-// البحث عن نفس المنتج ونفس اللون
 
 let existing =
 
@@ -763,51 +686,29 @@ item.color === color
 
 
 
-
-
-
 if(existing){
-
 
 existing.quantity += quantity;
 
-
-
 }else{
-
-
 
 cart.push({
 
-
 id:productId,
-
 
 name:currentProduct.name,
 
-
 price:currentProduct.price,
-
 
 image:currentProduct.image,
 
-
 color:color,
-
 
 quantity:quantity
 
-
-
 });
 
-
-
 }
-
-
-
-
 
 
 
@@ -821,50 +722,26 @@ JSON.stringify(cart)
 
 
 
-
-
 alert(
-
 "تمت إضافة المنتج إلى السلة"
-
 );
 
-
-
-
-
 };
-
-
-
-
 
 
 
 
 // الانتقال للسلة
 
-
 window.goToCart = function(){
 
-
-
-window.location.href=
-
+window.location.href =
 "cart.html";
-
-
 
 };
 
-
-
-
-
 </script>
 
-
 </body>
-
 
 </html>
