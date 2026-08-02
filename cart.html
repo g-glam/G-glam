@@ -2,68 +2,50 @@
 <html lang="ar" dir="rtl">
 
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>سلة التسوق - G-Glam</title>
 
-
 <style>
 
 body{
-    font-family:Arial,sans-serif;
-    background:#f8f8f8;
-    margin:0;
-    padding:15px;
+font-family:Arial,sans-serif;
+background:#f8f8f8;
+margin:0;
+padding:15px;
 }
 
-
-h1,h2,h3{
-    text-align:center;
+h1,h2{
+text-align:center;
 }
-
 
 .container{
-    max-width:600px;
-    margin:auto;
+max-width:600px;
+margin:auto;
 }
-
 
 .item{
-
-    background:white;
-    padding:15px;
-    margin-bottom:15px;
-    border-radius:12px;
-    box-shadow:0 0 8px #ddd;
-
+background:white;
+padding:15px;
+margin-bottom:15px;
+border-radius:12px;
+box-shadow:0 0 8px #ddd;
 }
-
 
 .item h3{
-
-    margin-top:0;
-
+margin-top:0;
 }
 
-
-
 .qty-box{
-
 display:flex;
 justify-content:center;
 align-items:center;
 gap:10px;
-margin:10px;
-
-
+margin:10px 0;
 }
 
-
 .qty-btn{
-
 background:#000;
 color:white;
 border:none;
@@ -72,37 +54,28 @@ height:35px;
 border-radius:50%;
 font-size:20px;
 cursor:pointer;
-
 }
 
-
 .delete-btn{
-
 background:red;
 color:white;
 border:none;
 padding:10px;
 border-radius:8px;
 cursor:pointer;
-
 }
-
 
 input,
 select{
-
 width:100%;
 padding:12px;
 margin:7px 0;
 border:1px solid #ddd;
 border-radius:8px;
 box-sizing:border-box;
-
 }
 
-
 .order-btn{
-
 background:#0084ff;
 color:white;
 border:none;
@@ -112,402 +85,233 @@ font-size:18px;
 border-radius:10px;
 cursor:pointer;
 margin-top:15px;
-
 }
 
-
-
 .total{
-
 background:white;
 padding:10px;
 border-radius:10px;
 margin:10px 0;
 text-align:center;
 font-size:18px;
-
+font-weight:bold;
 }
 
-
 </style>
-
 </head>
-
 
 <body>
 
-
 <div class="container">
 
-
-<h1>
-🛒 سلة التسوق
-</h1>
-
+<h1>🛒 سلة التسوق</h1>
 
 <div id="cart-items"></div>
-
 
 <div class="total" id="productsTotal">
 مجموع المنتجات: 0 DA
 </div>
 
+<h2>معلومات الزبون</h2>
 
-<h2>
-معلومات الزبون
-</h2>
+<input type="text" id="name" placeholder="الاسم واللقب">
 
-
-<input 
-type="text" 
-id="name"
-placeholder="الاسم واللقب">
-
-
-<input 
-type="text" 
-id="phone"
-placeholder="رقم الهاتف">
-
-
+<input type="text" id="phone" placeholder="رقم الهاتف">
 
 <select id="wilaya">
-
-<option value="">
-اختر الولاية
-</option>
-
+<option value="">اختر الولاية</option>
 </select>
 
+<input type="text" id="commune" placeholder="البلدية">
 
-
-<input 
-type="text"
-id="commune"
-placeholder="البلدية">
-
-
-
-<input 
-type="text"
-id="address"
-placeholder="العنوان الكامل">
-
-
+<input type="text" id="address" placeholder="العنوان الكامل">
 
 <select id="deliveryType">
-
-<option value="">
-نوع التوصيل
-</option>
-
-
-<option value="إلى المكتب">
-إلى المكتب
-</option>
-
-
-<option value="إلى باب المنزل">
-إلى باب المنزل
-</option>
-
-
+<option value="">نوع التوصيل</option>
+<option value="إلى المكتب">إلى المكتب</option>
+<option value="إلى باب المنزل">إلى باب المنزل</option>
 </select>
-
-
 
 <div class="total" id="deliveryPrice">
 سعر التوصيل: --
 </div>
 
-
-
 <div class="total" id="finalTotal">
 المجموع النهائي: --
 </div>
 
-
-
-<button 
-class="order-btn"
-onclick="sendOrder()">
-
+<button class="order-btn" onclick="sendOrder()">
 📦 إرسال الطلب
-
 </button>
 
-
 </div>
-<script>
+<script type="module">
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-const SCRIPT_URL =
-"https://script.google.com/macros/s/AKfycbzgEMuUVkrHmurIp3cU-EmBL612FlF52wvLTlXfVupbrEhFtlx2l_E-gvLWfwnNIv0taQ/exec";
+import {
+getFirestore,
+collection,
+addDoc,
+serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+const firebaseConfig = {
+apiKey: "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+authDomain: "g-glam.firebaseapp.com",
+projectId: "g-glam",
+storageBucket: "g-glam.firebasestorage.app",
+messagingSenderId: "997228419719",
+appId: "1:997228419719:web:f9d88de7ea2c6f457e3622",
+measurementId: "G-WX1K1F83F6"
+};
 
+const app = initializeApp(firebaseConfig);
 
-// جلب السلة من التخزين
+const db = getFirestore(app);
 
 let cart =
 JSON.parse(localStorage.getItem("cart")) || [];
-
-
 
 let productsTotal = 0;
 
 let deliveryCost = 0;
 
-
-
-// أسعار التوصيل
-
 let tarifs = {
-
-
 "Adrar":{toOffice:1100,toHome:1400},
-
 "Chlef":{toOffice:450,toHome:650},
-
 "Laghouat":{toOffice:700,toHome:1000},
-
 "Oum El Bouaghi":{toOffice:500,toHome:650},
-
 "Batna":{toOffice:400,toHome:500},
-
 "Bejaia":{toOffice:500,toHome:650},
-
 "Biskra":{toOffice:600,toHome:950},
-
 "Bechar":{toOffice:1100,toHome:1400},
-
 "Blida":{toOffice:450,toHome:650},
-
 "Bouira":{toOffice:450,toHome:650},
-
 "Tamanrasset":{toOffice:1400,toHome:1600},
-
 "Tebessa":{toOffice:600,toHome:950},
-
 "Tlemcen":{toOffice:500,toHome:650},
-
 "Tiaret":{toOffice:500,toHome:650},
-
 "Tizi Ouzou":{toOffice:450,toHome:650},
-
 "Alger":{toOffice:450,toHome:700},
-
 "Djelfa":{toOffice:600,toHome:900},
-
 "Jijel":{toOffice:500,toHome:650},
-
 "Setif":{toOffice:450,toHome:650},
-
 "Saida":{toOffice:600,toHome:900},
-
 "Skikda":{toOffice:500,toHome:650},
-
 "Sidi Bel Abbes":{toOffice:500,toHome:650},
-
 "Annaba":{toOffice:500,toHome:650},
-
 "Guelma":{toOffice:600,toHome:900},
-
 "Constantine":{toOffice:450,toHome:650},
-
 "Medea":{toOffice:450,toHome:650},
-
 "Mostaganem":{toOffice:500,toHome:650},
-
 "M'sila":{toOffice:500,toHome:650},
-
 "Mascara":{toOffice:600,toHome:900},
-
 "Ouargla":{toOffice:800,toHome:1100},
-
 "Oran":{toOffice:450,toHome:650},
-
 "El Bayadh":{toOffice:800,toHome:1100},
-
 "Illizi":{toOffice:1700,toHome:2000},
-
 "Bordj Bou Arreridj":{toOffice:450,toHome:650},
-
 "Boumerdes":{toOffice:450,toHome:650},
-
 "El Tarf":{toOffice:600,toHome:950},
-
 "Tindouf":{toOffice:1400,toHome:1600},
-
 "Tissemsilt":{toOffice:500,toHome:650},
-
 "El Oued":{toOffice:800,toHome:1100},
-
 "Khenchela":{toOffice:600,toHome:900},
-
 "Souk Ahras":{toOffice:600,toHome:900},
-
 "Tipaza":{toOffice:450,toHome:650},
-
 "Mila":{toOffice:500,toHome:650},
-
 "Ain Defla":{toOffice:450,toHome:650},
-
 "Naama":{toOffice:800,toHome:1100},
-
 "Ain Temouchent":{toOffice:600,toHome:900},
-
 "Ghardaia":{toOffice:800,toHome:1100},
-
 "Relizane":{toOffice:500,toHome:650},
-
 "El M'Ghair":{toOffice:1100,toHome:1400},
-
 "El Menia":{toOffice:1700,toHome:2000},
-
 "Ouled Djellal":{toOffice:700,toHome:1000},
-
 "Bordj Badji Mokhtar":{toOffice:1000,toHome:1400},
-
 "Beni Abbes":{toOffice:1100,toHome:1400},
-
 "Timimoun":{toOffice:1700,toHome:2000},
-
 "Touggourt":{toOffice:800,toHome:1100},
-
 "Djanet":{toOffice:1700,toHome:2000},
-
 "In Salah":{toOffice:800,toHome:1100},
-
 "In Guezzam":{toOffice:1000,toHome:1300}
-
-
 };
 
-
-
-// إضافة الولايات للقائمة
-
-let wilayaSelect =
+const wilayaSelect =
 document.getElementById("wilaya");
-
 
 Object.keys(tarifs).forEach(wilaya=>{
 
-
 let option =
 document.createElement("option");
-
 
 option.value = wilaya;
 
 option.textContent = wilaya;
 
-
 wilayaSelect.appendChild(option);
 
-
-
 });
-    
-
-
-// عرض محتوى السلة
-
-function displayCart(){
-
+    function displayCart(){
 
 let container =
 document.getElementById("cart-items");
 
-
 container.innerHTML="";
-
 
 productsTotal=0;
 
-
-
 if(cart.length===0){
 
-
-container.innerHTML =
+container.innerHTML=
 "<p style='text-align:center'>السلة فارغة</p>";
 
-
-}
-
-else{
-
+}else{
 
 cart.forEach((item,index)=>{
-
 
 let qty =
 item.quantity || 1;
 
-
-
 let itemTotal =
 item.price * qty;
 
-
-
 productsTotal += itemTotal;
-
-
 
 container.innerHTML += `
 
-
 <div class="item">
 
-
-<h3>
-${item.name}
-</h3>
-
-
+<h3>${item.name}</h3>
 
 <p>
 السعر: ${item.price} DA
 </p>
 
-
-
 <div class="qty-box">
 
-
-<button 
+<button
 class="qty-btn"
 onclick="changeQty(${index},-1)">
 -
 </button>
 
+<b>${qty}</b>
 
-
-<b>
-${qty}
-</b>
-
-
-
-<button 
+<button
 class="qty-btn"
 onclick="changeQty(${index},1)">
 +
 </button>
 
-
 </div>
-
-
 
 <p>
 المجموع:
 ${itemTotal} DA
 </p>
-
-
 
 <button
 class="delete-btn"
@@ -517,102 +321,57 @@ onclick="removeItem(${index})">
 
 </button>
 
-
-
 </div>
-
 
 `;
 
-
 });
 
-
 }
-
-
-
 
 document.getElementById("productsTotal")
 .innerText =
-"مجموع المنتجات: "
-+
-productsTotal
-+
+"مجموع المنتجات: " +
+productsTotal +
 " DA";
-
-
 
 updateFinalTotal();
 
-
 }
 
-
-
-
-// تغيير الكمية
-
-function changeQty(index,value){
-
+window.changeQty = function(index,value){
 
 cart[index].quantity =
 (cart[index].quantity || 1)
-+
-value;
-
-
++ value;
 
 if(cart[index].quantity < 1){
 
-cart[index].quantity=1;
+cart[index].quantity = 1;
 
 }
-
-
 
 localStorage.setItem(
 "cart",
 JSON.stringify(cart)
 );
 
-
-
 displayCart();
 
+};
 
-
-}
-
-
-
-
-// حذف منتج
-
-function removeItem(index){
-
+window.removeItem = function(index){
 
 cart.splice(index,1);
 
-
-
 localStorage.setItem(
 "cart",
 JSON.stringify(cart)
 );
 
-
-
 displayCart();
 
-
-}
-
-
-
-
-
-// تحديث سعر التوصيل
+};
 
 document
 .getElementById("wilaya")
@@ -621,8 +380,6 @@ document
 updateDelivery
 );
 
-
-
 document
 .getElementById("deliveryType")
 .addEventListener(
@@ -630,172 +387,93 @@ document
 updateDelivery
 );
 
-
-
-
-
 function updateDelivery(){
-
 
 let wilaya =
 document.getElementById("wilaya").value;
 
-
-
 let type =
 document.getElementById("deliveryType").value;
 
+if(!wilaya || !type){
 
-
-if(
-!wilaya ||
-!type
-){
-
-
-deliveryCost=0;
-
+deliveryCost = 0;
 
 document.getElementById("deliveryPrice")
 .innerText =
 "سعر التوصيل: --";
 
-
 updateFinalTotal();
-
 
 return;
 
-
 }
 
-
-
-
-
 if(type==="إلى المكتب"){
-
 
 deliveryCost =
 tarifs[wilaya].toOffice;
 
-
-}
-
-else{
-
+}else{
 
 deliveryCost =
 tarifs[wilaya].toHome;
 
-
 }
-
-
-
-
 
 document.getElementById("deliveryPrice")
 .innerText =
-
-"سعر التوصيل: "
-+
-deliveryCost
-+
+"سعر التوصيل: " +
+deliveryCost +
 " DA";
-
-
 
 updateFinalTotal();
 
-
 }
 
-
-
-
-
-// المجموع النهائي
-
 function updateFinalTotal(){
-
 
 document.getElementById("finalTotal")
 .innerText =
 
-"المجموع النهائي: "
-+
-(
-productsTotal
-+
-deliveryCost
-)
-+
-" DA";
+"المجموع النهائي: " +
 
+(productsTotal + deliveryCost)
+
++
+
+" DA";
 
 }
 
-
-
-
-
-// تشغيل عرض السلة
-
 displayCart();
-    
-
-
-// إرسال الطلب
-
-function sendOrder(){
-
+    window.sendOrder = async function(){
 
 if(cart.length===0){
-
 
 alert("السلة فارغة");
 
 return;
 
-
 }
-
-
-
-
 
 let name =
 document.getElementById("name").value.trim();
 
-
-
 let phone =
 document.getElementById("phone").value.trim();
-
-
 
 let wilaya =
 document.getElementById("wilaya").value;
 
-
-
 let commune =
 document.getElementById("commune").value.trim();
-
-
 
 let address =
 document.getElementById("address").value.trim();
 
-
-
 let deliveryType =
 document.getElementById("deliveryType").value;
-
-
-
-
 
 if(
 !name ||
@@ -804,68 +482,47 @@ if(
 !deliveryType
 ){
 
-
 alert("يرجى ملء جميع المعلومات المطلوبة");
 
 return;
 
+}
+
+try{
+
+await addDoc(
+
+collection(db,"orders"),
+
+{
+
+name:name,
+
+phone:phone,
+
+wilaya:wilaya,
+
+commune:commune,
+
+address:address,
+
+deliveryType:deliveryType,
+
+deliveryPrice:deliveryCost,
+
+products:cart,
+
+productsTotal:productsTotal,
+
+total:productsTotal + deliveryCost,
+
+status:"قيد المعالجة",
+
+createdAt:serverTimestamp()
 
 }
 
-
-
-
-let products="";
-
-
-
-cart.forEach(item=>{
-
-
-products +=
-
-item.name
-+
-" - الكمية: "
-+
-(item.quantity || 1)
-+
-" - السعر: "
-+
-item.price
-+
-" DA\n";
-
-
-});
-
-
-
-
-
-
-fetch(
-SCRIPT_URL,
-{
-
-
-method:"POST",
-body:JSON.stringify({
-name:name,
-phone:phone,
-wilaya:wilaya,
-commune:commune,
-address:address,
-deliveryType:deliveryType,
-deliveryPrice:deliveryCost,
-products:products,
-total:productsTotal + deliveryCost
-
-})
-
-})
-.then(response=>response.text())
-.then(data=>{
+);
 
 alert("✅ تم إرسال الطلب بنجاح");
 
@@ -873,25 +530,19 @@ localStorage.removeItem("cart");
 
 window.location.href="index.html";
 
-})
+}
 
-.catch(error=>{
+catch(error){
 
-console.log(error);
+console.error(error);
 
-alert("❌ حدث خطأ أثناء إرسال الطلب");
-
-});
-
-
+alert("❌ فشل إرسال الطلب");
 
 }
 
-
+};
 
 </script>
 
-
 </body>
-
 </html>
