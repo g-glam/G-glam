@@ -2,9 +2,7 @@
 <html lang="ar" dir="rtl">
 
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>G-Glam</title>
@@ -96,10 +94,9 @@ background:black;
 🛒 عرض السلة
 </a>
 
-<div
-class="products"
-id="productsContainer">
+<div class="products" id="productsContainer">
 </div>
+
 <script type="module">
 
 import { initializeApp }
@@ -112,34 +109,22 @@ getDocs
 }
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
-
 const firebaseConfig = {
-
 apiKey: "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
-
 authDomain: "g-glam.firebaseapp.com",
-
 projectId: "g-glam",
-
 storageBucket: "g-glam.firebasestorage.app",
-
 messagingSenderId: "997228419719",
-
 appId: "1:997228419719:web:f9d88de7ea2c6f457e3622",
-
 measurementId: "G-WX1K1F83F6"
-
 };
 
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
 
 const productsContainer =
-document.getElementById(
-"productsContainer"
-);
-async function loadProducts(){
+document.getElementById("productsContainer");
+    async function loadProducts(){
 
 productsContainer.innerHTML = "";
 
@@ -148,9 +133,9 @@ await getDocs(
 collection(db,"products")
 );
 
-querySnapshot.forEach((doc)=>{
+querySnapshot.forEach((productDoc)=>{
 
-const product = doc.data();
+const product = productDoc.data();
 
 productsContainer.innerHTML += `
 
@@ -170,12 +155,12 @@ ${product.price} DA
 
 <button
 class="details-btn"
-onclick="viewProduct('${doc.id}')">
+onclick="window.viewProduct('${productDoc.id}')">
 عرض المنتج
 </button>
 
 <button
-onclick="addToCart(
+onclick="window.addToCart(
 '${product.name}',
 ${product.price}
 )">
@@ -191,7 +176,9 @@ ${product.price}
 }
 
 loadProducts();
-    function addToCart(name,price){
+
+
+window.addToCart = function(name,price){
 
 let cart =
 JSON.parse(
@@ -209,19 +196,20 @@ localStorage.setItem(
 JSON.stringify(cart)
 );
 
-alert("تمت إضافة المنتج إلى السلة");
+alert(
+"تمت إضافة المنتج إلى السلة"
+);
 
-}
+};
 
 
-function viewProduct(productId){
+window.viewProduct = function(productId){
 
 window.location.href =
 "product.html?id=" + productId;
 
-}
-
-</script>
+};
+    </script>
 
 </body>
 
