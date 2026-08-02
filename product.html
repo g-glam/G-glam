@@ -49,7 +49,6 @@ font-size:16px;
 
 .gallery{
 
-position:relative;
 width:100%;
 overflow:hidden;
 border-radius:12px;
@@ -62,35 +61,6 @@ margin-bottom:15px;
 width:100%;
 border-radius:12px;
 display:block;
-
-}
-
-.slide-btn{
-
-position:absolute;
-top:50%;
-transform:translateY(-50%);
-width:45px;
-height:45px;
-border:none;
-border-radius:50%;
-background:rgba(0,0,0,.6);
-color:white;
-font-size:22px;
-cursor:pointer;
-z-index:10;
-
-}
-
-.slide-right{
-
-right:10px;
-
-}
-
-.slide-left{
-
-left:10px;
 
 }
 
@@ -109,7 +79,7 @@ color:#ff4fc3;
 margin-bottom:15px;
 
 }
-  
+
 .description{
 
 line-height:1.8;
@@ -118,16 +88,12 @@ color:#555;
 
 }
 
-
-
 .box-title{
 
 font-weight:bold;
 margin-bottom:8px;
 
 }
-
-
 
 select,
 input{
@@ -140,9 +106,7 @@ border-radius:8px;
 font-size:16px;
 
 }
-
-
-
+  
 .qty-box{
 
 display:flex;
@@ -236,26 +200,10 @@ background:#111;
 
 <div class="gallery">
 
-<button
-class="slide-btn slide-right"
-onclick="prevImage()">
-
-❮
-
-</button>
-
 <img
 id="productImage"
 src=""
 alt="product">
-
-<button
-class="slide-btn slide-left"
-onclick="nextImage()">
-
-❯
-
-</button>
 
 </div>
 
@@ -283,6 +231,8 @@ id="productDescription">
 
 </div>
 
+
+
 <div class="box-title">
 
 اختيار اللون
@@ -294,8 +244,6 @@ id="productDescription">
 <select id="productColors">
 
 </select>
-
-
 
 <div class="box-title">
 
@@ -405,11 +353,15 @@ const db = getFirestore(app);
 
 
 const params =
+
 new URLSearchParams(
 window.location.search
 );
 
+
+
 const productId =
+
 params.get("id");
 
 
@@ -421,6 +373,10 @@ let quantity = 1;
 let productImages = [];
 
 let currentImageIndex = 0;
+
+let startX = 0;
+
+let endX = 0;
   
 async function loadProduct(){
 
@@ -482,7 +438,8 @@ currentImageIndex = 0;
 
 document.getElementById(
 "productImage"
-).src = productImages[0];
+).src =
+productImages[0];
 
 
 
@@ -543,17 +500,45 @@ ${color}
 
 }else{
 
-colors.innerHTML = `
+colors.innerHTML =
 
-<option>
-
-بدون لون
-
-</option>
-
-`;
+`<option>بدون لون</option>`;
 
 }
+
+
+
+const image =
+
+document.getElementById(
+"productImage"
+);
+
+
+
+image.addEventListener(
+"touchstart",
+function(e){
+
+startX =
+e.changedTouches[0].screenX;
+
+}
+);
+
+
+
+image.addEventListener(
+"touchend",
+function(e){
+
+endX =
+e.changedTouches[0].screenX;
+
+handleSwipe();
+
+}
+);
 
 }
 
@@ -561,15 +546,20 @@ colors.innerHTML = `
 
 loadProduct();
   
-// الصورة التالية
+function handleSwipe(){
 
-window.nextImage = function(){
 
 if(productImages.length <= 1){
 
 return;
 
 }
+
+
+
+// سحب لليسار
+
+if(startX - endX > 50){
 
 currentImageIndex++;
 
@@ -589,20 +579,13 @@ document.getElementById(
 ).src =
 productImages[currentImageIndex];
 
-};
-
-
-
-
-// الصورة السابقة
-
-window.prevImage = function(){
-
-if(productImages.length <= 1){
-
-return;
-
 }
+
+
+
+// سحب لليمين
+
+if(endX - startX > 50){
 
 currentImageIndex--;
 
@@ -622,8 +605,9 @@ document.getElementById(
 ).src =
 productImages[currentImageIndex];
 
-};
+}
 
+}
 
 
 
@@ -633,11 +617,13 @@ window.changeQuantity = function(value){
 
 quantity += value;
 
+
 if(quantity < 1){
 
 quantity = 1;
 
 }
+
 
 document.getElementById(
 "quantity"
@@ -723,15 +709,14 @@ JSON.stringify(cart)
 
 
 alert(
-"تمت إضافة المنتج إلى السلة"
+"تمت إضافة المنتج إلى السلة 🛒"
 );
 
 };
 
 
 
-
-// الانتقال للسلة
+// الانتقال إلى السلة
 
 window.goToCart = function(){
 
