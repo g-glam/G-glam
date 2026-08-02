@@ -2,7 +2,9 @@
 <html lang="ar" dir="rtl">
 
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>G-Glam</title>
@@ -10,98 +12,74 @@
 <style>
 
 body{
-    font-family:Arial,sans-serif;
-    background:#f8f8f8;
-    margin:0;
-    padding:0;
+font-family:Arial,sans-serif;
+background:#f8f8f8;
+margin:0;
+padding:0;
 }
 
 header{
-    background:#000;
-    color:white;
-    text-align:center;
-    padding:15px;
-}
-
-.products{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-    gap:15px;
-    padding:15px;
-}
-
-.card{
-    background:white;
-    padding:10px;
-    border-radius:10px;
-    box-shadow:0 0 10px rgba(0,0,0,.1);
-    text-align:center;
-}
-
-.card img{
-    width:100%;
-    border-radius:10px;
-}
-
-.card a{
-    text-decoration:none;
-    color:black;
-}
-
-button{
-    background:#ff4fc3;
-    color:white;
-    border:none;
-    padding:10px;
-    border-radius:8px;
-    cursor:pointer;
-    width:100%;
-    margin-top:8px;
-}
-
-.details-btn{
-    background:black;
+background:#000;
+color:white;
+text-align:center;
+padding:15px;
 }
 
 .cart-btn{
-    display:block;
-    margin:15px;
-    text-align:center;
-    background:black;
-    color:white;
-    padding:12px;
-    text-decoration:none;
-    border-radius:8px;
+display:block;
+margin:15px;
+text-align:center;
+background:black;
+color:white;
+padding:12px;
+text-decoration:none;
+border-radius:8px;
 }
 
-/* القائمة الجانبية */
-
-.drawer{
-    position:fixed;
-    top:0;
-    right:-350px;
-    width:320px;
-    height:100%;
-    background:white;
-    padding:20px;
-    box-shadow:-2px 0 10px rgba(0,0,0,.2);
-    transition:.3s;
-    z-index:9999;
-    overflow:auto;
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+padding:15px;
 }
 
-.drawer select,
-.drawer input{
-    width:100%;
-    padding:10px;
-    margin:10px 0;
-    border:1px solid #ddd;
-    border-radius:8px;
-    box-sizing:border-box;
+.card{
+background:white;
+padding:10px;
+border-radius:12px;
+box-shadow:0 0 10px rgba(0,0,0,.1);
+text-align:center;
 }
 
-.close-btn{
-    background:#555;
+.card img{
+width:100%;
+height:220px;
+object-fit:cover;
+border-radius:10px;
+}
+
+.card h3{
+margin:10px 0;
+font-size:16px;
+}
+
+.card p{
+font-weight:bold;
+}
+
+button{
+background:#ff4fc3;
+color:white;
+border:none;
+padding:10px;
+border-radius:8px;
+cursor:pointer;
+width:100%;
+margin-top:8px;
+}
+
+.details-btn{
+background:black;
 }
 
 </style>
@@ -118,175 +96,112 @@ button{
 🛒 عرض السلة
 </a>
 
-<div class="products">
+<div
+class="products"
+id="productsContainer">
+</div>
+<script type="module">
 
-<!-- المنتج الأول -->
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+getDocs
+}
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+
+authDomain: "g-glam.firebaseapp.com",
+
+projectId: "g-glam",
+
+storageBucket: "g-glam.firebasestorage.app",
+
+messagingSenderId: "997228419719",
+
+appId: "1:997228419719:web:f9d88de7ea2c6f457e3622",
+
+measurementId: "G-WX1K1F83F6"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+const productsContainer =
+document.getElementById(
+"productsContainer"
+);
+async function loadProducts(){
+
+productsContainer.innerHTML = "";
+
+const querySnapshot =
+await getDocs(
+collection(db,"products")
+);
+
+querySnapshot.forEach((doc)=>{
+
+const product = doc.data();
+
+productsContainer.innerHTML += `
 
 <div class="card">
 
-<a href="concealer-rubyrose.html">
-
-<img src="images - 2026-07-30T173056.527.jpeg"
-alt="Concealer Ruby Rose">
-
-<h3>
-Concealer Ruby Rose
-</h3>
-
-</a>
-
-<p>
-150 DA
-</p>
-
-<a href="concealer-rubyrose.html">
-
-<button class="details-btn">
-عرض المنتج
-</button>
-
-</a>
-
-<button onclick="openDrawer()">
-أضف إلى السلة
-</button>
-
-</div>
-
-<!-- المنتج الثاني -->
-
-<div class="card">
-
-<a href="lipgloss.html">
-
-<img src="1785433980071.png"
-alt="Lip Gloss">
+<img
+src="${product.image}"
+alt="${product.name}">
 
 <h3>
-Lip Gloss
+${product.name}
 </h3>
 
-</a>
-
 <p>
-250 DA
+${product.price} DA
 </p>
 
-<a href="lipgloss.html">
-
-<button class="details-btn">
+<button
+class="details-btn"
+onclick="viewProduct('${doc.id}')">
 عرض المنتج
-</button>
-
-</a>
-
-<button onclick="addToCart('Lip Gloss',250)">
-أضف إلى السلة
-</button>
-
-</div>
-
-<!-- المنتج الثالث -->
-
-<div class="card">
-
-<a href="pencilcase.html">
-
-<img src="1785499182902.png"
-alt="مقلمة مدرسية">
-
-<h3>
-مقلمة مدرسية
-</h3>
-
-</a>
-
-<p>
-500 DA
-</p>
-
-<a href="pencilcase.html">
-
-<button class="details-btn">
-عرض المنتج
-</button>
-
-</a>
-
-<button onclick="window.location.href='pencilcase.html'">
-أضف إلى السلة
-</button>
-
-</div>
-
-</div>
-
-<!-- القائمة الجانبية الخاصة بالكونسيلر -->
-
-<div id="drawer" class="drawer">
-
-<h2>Concealer Ruby Rose</h2>
-
-<p>السعر: 150 DA</p>
-
-<label><b>اختيار اللون:</b></label>
-
-<select id="drawerColor">
-<option>01 Beige</option>
-<option>02 Natural</option>
-<option>03 Honey</option>
-</select>
-
-<label><b>الكمية:</b></label>
-
-<input
-type="number"
-id="drawerQty"
-value="1"
-min="1">
-
-<button onclick="addDrawerToCart()">
-🛒 إضافة إلى السلة
 </button>
 
 <button
-class="close-btn"
-onclick="closeDrawer()">
-إغلاق
+onclick="addToCart(
+'${product.name}',
+${product.price}
+)">
+أضف إلى السلة
 </button>
 
 </div>
 
-<script>
+`;
 
-function openDrawer(){
-
-document.getElementById("drawer").style.right = "0";
+});
 
 }
 
-function closeDrawer(){
-
-document.getElementById("drawer").style.right = "-350px";
-
-}
-
-function addDrawerToCart(){
-
-let color =
-document.getElementById("drawerColor").value;
-
-let quantity =
-parseInt(document.getElementById("drawerQty").value);
+loadProducts();
+    function addToCart(name,price){
 
 let cart =
-JSON.parse(localStorage.getItem("cart")) || [];
+JSON.parse(
+localStorage.getItem("cart")
+) || [];
 
 cart.push({
-name:"Concealer Ruby Rose",
-price:150,
-color:color,
-quantity:quantity
+name:name,
+price:price,
+quantity:1
 });
 
 localStorage.setItem(
@@ -296,30 +211,18 @@ JSON.stringify(cart)
 
 alert("تمت إضافة المنتج إلى السلة");
 
-closeDrawer();
-
 }
 
-function addToCart(name, price){
 
-let cart =
-JSON.parse(localStorage.getItem('cart')) || [];
+function viewProduct(productId){
 
-cart.push({
-name:name,
-price:price
-});
-
-localStorage.setItem(
-'cart',
-JSON.stringify(cart)
-);
-
-alert('تمت إضافة ' + name + ' إلى السلة');
+window.location.href =
+"product.html?id=" + productId;
 
 }
 
 </script>
 
 </body>
+
 </html>
