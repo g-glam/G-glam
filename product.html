@@ -2,154 +2,365 @@
 <html lang="ar" dir="rtl">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>G-Glam | تفاصيل المنتج</title>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+G-Glam | تفاصيل المنتج
+</title>
 
 <style>
 
+:root{
+
+--bg:#F5F0E8;
+--card:#FFFFFF;
+--text:#222;
+--accent:#B89B7A;
+--shadow:0 4px 15px rgba(0,0,0,.06);
+
+}
+
 *{
+
+margin:0;
+padding:0;
 box-sizing:border-box;
+font-family:Arial,sans-serif;
+
 }
 
 body{
-font-family:Arial,sans-serif;
-background:#f8f8f8;
-margin:0;
-padding:15px;
+
+background:var(--bg);
+color:var(--text);
+padding-bottom:100px;
+
 }
 
-.container{
-max-width:700px;
-margin:auto;
-background:white;
+/* Header */
+
+header{
+
+display:flex;
+align-items:center;
+justify-content:space-between;
 padding:20px;
-border-radius:15px;
-box-shadow:0 0 10px rgba(0,0,0,.1);
+background:var(--bg);
+position:sticky;
+top:0;
+z-index:100;
+
+}
+
+.logo{
+
+font-size:34px;
+font-weight:800;
+
+}
+
+.menu-btn,
+.cart-icon{
+
+font-size:28px;
+cursor:pointer;
+position:relative;
+
+}
+
+.cart-count{
+
+position:absolute;
+top:-8px;
+left:-8px;
+background:#d66;
+color:#fff;
+width:20px;
+height:20px;
+border-radius:50%;
+font-size:12px;
+display:flex;
+align-items:center;
+justify-content:center;
+
+}
+
+/* Sidebar */
+
+.sidebar{
+
+position:fixed;
+top:0;
+right:-280px;
+width:280px;
+height:100%;
+background:#fff;
+box-shadow:-4px 0 15px rgba(0,0,0,.1);
+z-index:999;
+transition:.3s;
+padding-top:30px;
+
+}
+
+.sidebar.active{
+
+right:0;
+
+}
+
+.sidebar a{
+
+display:block;
+padding:16px 25px;
+text-decoration:none;
+color:#222;
+border-bottom:1px solid #eee;
+
+}
+
+.overlay{
+
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.35);
+display:none;
+z-index:998;
+
+}
+
+.overlay.active{
+
+display:block;
+
+}
+  
+/* Card */
+
+.container{
+
+max-width:900px;
+margin:15px auto;
+background:var(--card);
+border-radius:18px;
+padding:20px;
+box-shadow:var(--shadow);
+
 }
 
 .back-btn{
-display:block;
+
+display:inline-block;
 margin-bottom:15px;
 text-decoration:none;
-color:#333;
-font-size:16px;
+color:#222;
+font-weight:bold;
+
 }
 
+/* Gallery */
+
 .gallery-container{
+
 overflow-x:auto;
 scroll-snap-type:x mandatory;
-margin-bottom:15px;
+margin-bottom:20px;
+
 }
 
 .gallery-container::-webkit-scrollbar{
+
 height:5px;
+
 }
 
 .gallery-track{
+
 display:flex;
 gap:10px;
+
 }
 
 .gallery-track img{
+
 width:85%;
 flex-shrink:0;
-border-radius:12px;
+border-radius:16px;
 scroll-snap-align:center;
-display:block;
+object-fit:cover;
+
 }
 
 h1{
-font-size:25px;
+
+font-size:28px;
 margin-bottom:10px;
+
 }
 
 .price{
+
 font-size:24px;
 font-weight:bold;
-color:#ff4fc3;
+color:var(--accent);
 margin-bottom:15px;
+
 }
-  
+
 .description{
+
 line-height:1.8;
-margin-bottom:20px;
 color:#555;
+margin-bottom:20px;
+
 }
 
 .box-title{
+
 font-weight:bold;
 margin-bottom:8px;
+
 }
 
-select,
-input{
+select{
+
 width:100%;
-padding:12px;
+padding:14px;
+border:none;
+border-radius:14px;
+background:#f8f8f8;
 margin-bottom:15px;
-border:1px solid #ddd;
-border-radius:8px;
-font-size:16px;
+
 }
 
 .qty-box{
+
 display:flex;
 justify-content:center;
 align-items:center;
 gap:15px;
-margin-bottom:15px;
+margin-bottom:20px;
+
 }
 
 .qty-btn{
-width:40px;
-height:40px;
+
+width:42px;
+height:42px;
 border:none;
-background:#111;
-color:white;
 border-radius:50%;
+background:#222;
+color:#fff;
 font-size:22px;
 cursor:pointer;
+
 }
 
 #quantity{
-width:70px;
-text-align:center;
+
+font-size:22px;
+font-weight:bold;
+
 }
 
-button{
-width:100%;
-padding:15px;
+/* Floating Button */
+
+.floating-add{
+
+position:fixed;
+bottom:15px;
+right:50%;
+transform:translateX(50%);
+width:90%;
+max-width:500px;
+background:#222;
+color:#fff;
+padding:16px;
 border:none;
-border-radius:10px;
-background:#ff4fc3;
-color:white;
+border-radius:30px;
 font-size:18px;
 cursor:pointer;
-}
+box-shadow:0 8px 20px rgba(0,0,0,.2);
+z-index:500;
 
-button:hover{
-opacity:.9;
-}
-
-.qty-box span{
-font-size:20px;
-font-weight:bold;
-}
-
-.order-btn{
-margin-top:10px;
-background:#111;
 }
 
 </style>
+
 </head>
 
 <body>
 
+<div
+class="overlay"
+id="overlay">
+
+</div>
+
+<div
+class="sidebar"
+id="sidebar">
+
+<a href="index.html">
+الرئيسية
+</a>
+
+<a href="cart.html">
+السلة
+</a>
+
+<a
+href="https://www.facebook.com/share/1BNEuBhjHV/"
+target="_blank">
+
+📘 Facebook
+
+</a>
+
+</div>
+
+<header>
+
+<div
+class="menu-btn"
+id="menuBtn">
+
+☰
+
+</div>
+
+<div class="logo">
+
+G-Glam
+
+</div>
+
+<div
+class="cart-icon"
+onclick="window.location.href='cart.html'">
+
+🛒
+
+<span
+id="cartCount"
+class="cart-count">
+
+0
+
+</span>
+
+</div>
+
+</header>
+
 <div class="container">
 
-<a class="back-btn" href="index.html">
+<a
+href="index.html"
+class="back-btn">
 
 ← العودة إلى المتجر
 
@@ -225,21 +436,15 @@ onclick="changeQuantity(1)">
 
 </div>
 
-<button onclick="addToCart()">
-
-إضافة إلى السلة
-
-</button>
+</div>
 
 <button
-class="order-btn"
-onclick="goToCart()">
+class="floating-add"
+onclick="addToCart()">
 
-إتمام الطلب
+🛒 أضف إلى السلة
 
 </button>
-
-</div>
 
 <script type="module">
 
@@ -255,19 +460,19 @@ from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+apiKey:"AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
 
-authDomain: "g-glam.firebaseapp.com",
+authDomain:"g-glam.firebaseapp.com",
 
-projectId: "g-glam",
+projectId:"g-glam",
 
-storageBucket: "g-glam.firebasestorage.app",
+storageBucket:"g-glam.firebasestorage.app",
 
-messagingSenderId: "997228419719",
+messagingSenderId:"997228419719",
 
-appId: "1:997228419719:web:f9d88de7ea2c6f457e3622",
+appId:"1:997228419719:web:f9d88de7ea2c6f457e3622",
 
-measurementId: "G-WX1K1F83F6"
+measurementId:"G-WX1K1F83F6"
 
 };
 
@@ -340,6 +545,7 @@ document.getElementById(
 currentProduct.description || "";
 
 const galleryTrack =
+
 document.getElementById(
 "galleryTrack"
 );
@@ -359,23 +565,25 @@ images.forEach(img => {
 
 galleryTrack.innerHTML += `
 
-<img src="${img}" alt="product">
+<img
+src="${img}"
+alt="${currentProduct.name}">
 
 `;
 
 });
 
 const colors =
+
 document.getElementById(
 "productColors"
 );
 
 colors.innerHTML = "";
-  
+
 if(
 
 currentProduct.colors &&
-
 currentProduct.colors.length
 
 ){
@@ -409,9 +617,7 @@ colors.innerHTML = `
 }
 
 }
-
-loadProduct();
-
+  
 window.changeQuantity = function(value){
 
 quantity += value;
@@ -428,7 +634,7 @@ document.getElementById(
 quantity;
 
 };
-  
+
 window.addToCart = function(){
 
 if(!currentProduct){
@@ -454,7 +660,6 @@ let existing =
 cart.find(item =>
 
 item.id === productId &&
-
 item.color === color
 
 );
@@ -490,8 +695,8 @@ quantity:quantity
 
 });
 
-  }
-  
+}
+
 localStorage.setItem(
 
 "cart",
@@ -500,24 +705,65 @@ JSON.stringify(cart)
 
 );
 
+updateCartCount();
+
 alert(
-
 "تمت إضافة المنتج إلى السلة 🛒"
-
 );
 
 };
-
-
-
-window.goToCart = function(){
-
-window.location.href =
-
-"cart.html";
-
-};
   
+function updateCartCount(){
+
+let cart =
+
+JSON.parse(
+localStorage.getItem("cart")
+) || [];
+
+let total = 0;
+
+cart.forEach(item => {
+
+total += item.quantity;
+
+});
+
+document.getElementById(
+"cartCount"
+).textContent =
+total;
+
+}
+
+const sidebar =
+document.getElementById("sidebar");
+
+const overlay =
+document.getElementById("overlay");
+
+document
+.getElementById("menuBtn")
+.addEventListener("click",()=>{
+
+sidebar.classList.add("active");
+
+overlay.classList.add("active");
+
+});
+
+overlay.addEventListener("click",()=>{
+
+sidebar.classList.remove("active");
+
+overlay.classList.remove("active");
+
+});
+
+updateCartCount();
+
+loadProduct();
+
 </script>
 
 </body>
