@@ -5,59 +5,160 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<title>سلة التسوق | G-Glam</title>
-
+<title>
+سلة التسوق | G-Glam
+</title>
 
 <style>
 
-*{
-box-sizing:border-box;
+:root{
+
+--bg:#F5F0E8;
+--card:#FFFFFF;
+--text:#222;
+--accent:#B89B7A;
+--shadow:0 4px 15px rgba(0,0,0,.06);
+
 }
 
+*{
+
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+
+}
 
 body{
 
-font-family:Arial,sans-serif;
-background:#f7f7f7;
-margin:0;
-padding:20px;
+background:var(--bg);
+color:var(--text);
+padding-bottom:120px;
 
 }
 
+header{
 
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:20px;
+background:var(--bg);
+position:sticky;
+top:0;
+z-index:100;
 
+}
+
+.logo{
+
+font-size:34px;
+font-weight:800;
+
+}
+
+.menu-btn,
+.cart-icon{
+
+font-size:28px;
+cursor:pointer;
+position:relative;
+
+}
+
+.cart-count{
+
+position:absolute;
+top:-8px;
+left:-8px;
+background:#d66;
+color:#fff;
+width:20px;
+height:20px;
+border-radius:50%;
+font-size:12px;
+display:flex;
+align-items:center;
+justify-content:center;
+
+}
+
+.sidebar{
+
+position:fixed;
+top:0;
+right:-280px;
+width:280px;
+height:100%;
+background:#fff;
+box-shadow:-4px 0 15px rgba(0,0,0,.1);
+z-index:999;
+transition:.3s;
+padding-top:30px;
+
+}
+
+.sidebar.active{
+
+right:0;
+
+}
+
+.sidebar a{
+
+display:block;
+padding:16px 25px;
+text-decoration:none;
+color:#222;
+border-bottom:1px solid #eee;
+
+}
+
+.overlay{
+
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.35);
+display:none;
+z-index:998;
+
+}
+
+.overlay.active{
+
+display:block;
+
+}
+    
 .container{
 
-max-width:650px;
+max-width:900px;
 margin:auto;
+padding:15px;
 
 }
-
-
-
-h1{
-
-text-align:center;
-font-size:28px;
-margin-bottom:25px;
-
-}
-
-
 
 .card{
 
-background:white;
+background:var(--card);
+border-radius:18px;
 padding:20px;
-border-radius:12px;
-box-shadow:0 3px 12px rgba(0,0,0,.08);
 margin-bottom:20px;
+box-shadow:var(--shadow);
 
 }
 
+.section-title{
 
+font-size:22px;
+font-weight:bold;
+margin-bottom:15px;
+
+}
 
 .item{
 
@@ -66,23 +167,17 @@ padding:15px 0;
 
 }
 
-
-
 .item:last-child{
 
 border-bottom:none;
 
 }
 
-
-
 .item h3{
 
-margin:0 0 10px;
+margin-bottom:8px;
 
 }
-
-
 
 .qty-box{
 
@@ -90,266 +185,262 @@ display:flex;
 align-items:center;
 justify-content:center;
 gap:15px;
-margin:10px 0;
+margin:12px 0;
 
 }
 
-
-
 .qty-btn{
 
-width:35px;
-height:35px;
+width:38px;
+height:38px;
 border:none;
 border-radius:50%;
-background:#111;
-color:white;
+background:#222;
+color:#fff;
 font-size:20px;
 cursor:pointer;
 
 }
 
-
-
 .delete-btn{
 
-background:#c62828;
+background:#d9534f;
 color:white;
 border:none;
-padding:8px 15px;
-border-radius:7px;
+padding:10px 15px;
+border-radius:12px;
 cursor:pointer;
 
 }
-
-
-
 
 input,
 select{
 
 width:100%;
-padding:12px;
-margin:7px 0;
-border:1px solid #ddd;
-border-radius:8px;
+padding:14px;
+border:none;
+border-radius:14px;
+background:#f7f7f7;
+margin-bottom:12px;
 font-size:15px;
 
 }
 
-
-
-
 .total{
 
-background:#111;
-color:white;
-padding:15px;
-border-radius:10px;
+background:#222;
+color:#fff;
+padding:14px;
+border-radius:14px;
 text-align:center;
-font-size:18px;
-font-weight:bold;
-margin:15px 0;
+margin-top:12px;
 
 }
 
+.floating-order{
 
-
-
-.order-btn{
-
-width:100%;
-padding:15px;
-background:#111;
-color:white;
+position:fixed;
+bottom:15px;
+right:50%;
+transform:translateX(50%);
+width:90%;
+max-width:500px;
+background:#222;
+color:#fff;
 border:none;
-border-radius:10px;
+padding:16px;
+border-radius:30px;
 font-size:18px;
 cursor:pointer;
+box-shadow:0 8px 20px rgba(0,0,0,.2);
+z-index:500;
 
 }
-
-
-
-.order-btn:hover{
-
-background:#333;
-
-}
-
-
-
-h2{
-
-font-size:20px;
-border-bottom:1px solid #eee;
-padding-bottom:10px;
-
-}
-
-
 
 </style>
 
-
 </head>
-
-
 
 <body>
 
+<div
+class="overlay"
+id="overlay">
 
+</div>
+
+<div
+class="sidebar"
+id="sidebar">
+
+<a href="index.html">
+الرئيسية
+</a>
+
+<a href="cart.html">
+السلة
+</a>
+
+<a
+href="https://www.facebook.com/share/1BNEuBhjHV/"
+target="_blank">
+
+📘 Facebook
+
+</a>
+
+</div>
+
+<header>
+
+<div
+class="menu-btn"
+id="menuBtn">
+
+☰
+
+</div>
+
+<div class="logo">
+
+G-Glam
+
+</div>
+
+<div
+class="cart-icon"
+onclick="window.location.href='cart.html'">
+
+🛒
+
+<span
+class="cart-count"
+id="cartCount">
+
+0
+
+</span>
+
+</div>
+
+</header>
 
 <div class="container">
-
-
-
-<h1>
-G-Glam
-</h1>
-
-
-
+    
 <div class="card">
 
+<div class="section-title">
 
-<h2>
-سلة التسوق
-</h2>
+🛒 سلة التسوق
 
-
+</div>
 
 <div id="cart-items">
 
 </div>
 
-
-
-<div class="total" id="productsTotal">
+<div
+class="total"
+id="productsTotal">
 
 مجموع المنتجات: 0 DA
 
 </div>
 
-
 </div>
-
-
-
-
 
 <div class="card">
 
+<div class="section-title">
 
-<h2>
 معلومات الزبون
-</h2>
 
+</div>
 
-
-<input 
+<input
 type="text"
 id="name"
 placeholder="الاسم واللقب">
 
-
-
-<input 
+<input
 type="text"
 id="phone"
 placeholder="رقم الهاتف">
 
-
-
 <select id="wilaya">
 
 <option value="">
+
 اختر الولاية
+
 </option>
 
-
 </select>
-
-
 
 <input
 type="text"
 id="commune"
 placeholder="البلدية">
 
-
-
 <input
 type="text"
 id="address"
 placeholder="العنوان الكامل">
 
-
-
 <select id="deliveryType">
 
-
 <option value="">
-اختر نوع التوصيل
-</option>
 
+اختر نوع التوصيل
+
+</option>
 
 <option value="إلى المكتب">
+
 إلى المكتب
+
 </option>
-
-
 
 <option value="إلى باب المنزل">
+
 إلى باب المنزل
+
 </option>
-
-
 
 </select>
 
-
-
-
-<div class="total" id="deliveryPrice">
+<div
+class="total"
+id="deliveryPrice">
 
 سعر التوصيل: --
 
 </div>
 
-
-
-<div class="total" id="finalTotal">
+<div
+class="total"
+id="finalTotal">
 
 المجموع النهائي: --
 
 </div>
 
+</div>
 
+</div>
 
-<button 
-class="order-btn"
+<button
+class="floating-order"
 onclick="sendOrder()">
 
-إرسال الطلب
+📦 إرسال الطلب
 
 </button>
 
-
-
-</div>
-
-
-
-</div>
-
-
-
 <script type="module">
-    
+
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-
 
 import {
 
@@ -362,209 +453,172 @@ serverTimestamp
 
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
-
-
 const firebaseConfig = {
 
+apiKey:"AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
 
-apiKey: "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+authDomain:"g-glam.firebaseapp.com",
 
-authDomain: "g-glam.firebaseapp.com",
+projectId:"g-glam",
 
-projectId: "g-glam",
+storageBucket:"g-glam.firebasestorage.app",
 
-storageBucket: "g-glam.firebasestorage.app",
+messagingSenderId:"997228419719",
 
-messagingSenderId: "997228419719",
+appId:"1:997228419719:web:f9d88de7ea2c6f457e3622",
 
-appId: "1:997228419719:web:f9d88de7ea2c6f457e3622",
-
-measurementId: "G-WX1K1F83F6"
+measurementId:"G-WX1K1F83F6"
 
 };
 
+const app =
+initializeApp(firebaseConfig);
 
-
-const app = initializeApp(firebaseConfig);
-
-
-const db = getFirestore(app);
-
-
-
-
+const db =
+getFirestore(app);
 
 let cart =
 
-JSON.parse(localStorage.getItem("cart")) || [];
-
-
+JSON.parse(
+localStorage.getItem("cart")
+) || [];
 
 let productsTotal = 0;
 
-
 let deliveryCost = 0;
-
-
-
-
-const tarifs = {
-
-"Adrar":{office:1100,home:1400},
-"Chlef":{office:450,home:650},
-"Laghouat":{office:700,home:1000},
-"Oum El Bouaghi":{office:500,home:650},
-"Batna":{office:400,home:500},
-"Bejaia":{office:500,home:650},
-"Biskra":{office:600,home:950},
-"Bechar":{office:1100,home:1400},
-"Blida":{office:450,home:650},
-"Bouira":{office:450,home:650},
-"Tamanrasset":{office:1400,home:1600},
-"Tebessa":{office:600,home:950},
-"Tlemcen":{office:500,home:650},
-"Tiaret":{office:500,home:650},
-"Tizi Ouzou":{office:450,home:650},
-"Alger":{office:450,home:700},
-"Djelfa":{office:600,home:900},
-"Jijel":{office:500,home:650},
-"Setif":{office:450,home:650},
-"Saida":{office:600,home:900},
-"Skikda":{office:500,home:650},
-"Sidi Bel Abbes":{office:500,home:650},
-"Annaba":{office:500,home:650},
-"Guelma":{office:600,home:900},
-"Constantine":{office:450,home:650},
-"Medea":{office:450,home:650},
-"Mostaganem":{office:500,home:650},
-"M'Sila":{office:500,home:650},
-"Mascara":{office:600,home:900},
-"Ouargla":{office:800,home:1100},
-"Oran":{office:450,home:650},
-"El Bayadh":{office:800,home:1100},
-"Illizi":{office:1700,home:2000},
-"Bordj Bou Arreridj":{office:450,home:650},
-"Boumerdes":{office:450,home:650},
-"El Tarf":{office:600,home:950},
-"Tindouf":{office:1400,home:1600},
-"Tissemsilt":{office:500,home:650},
-"El Oued":{office:800,home:1100},
-"Khenchela":{office:600,home:900},
-"Souk Ahras":{office:600,home:900},
-"Tipaza":{office:450,home:650},
-"Mila":{office:500,home:650},
-"Ain Defla":{office:450,home:650},
-"Naama":{office:800,home:1100},
-"Ain Temouchent":{office:600,home:900},
-"Ghardaia":{office:800,home:1100},
-"Relizane":{office:500,home:650},
-
-"El M'Ghair":{office:1100,home:1400},
-"El Menia":{office:1700,home:2000},
-"Ouled Djellal":{office:700,home:1000},
-"Bordj Badji Mokhtar":{office:1000,home:1400},
-"Beni Abbes":{office:1100,home:1400},
-"Timimoun":{office:1700,home:2000},
-"Touggourt":{office:800,home:1100},
-"Djanet":{office:1700,home:2000},
-"In Salah":{office:800,home:1100},
-"In Guezzam":{office:1000,home:1300}
-
-};
-
-
-
-
-
+    const tarifs = {  
+  
+"Adrar":{office:1100,home:1400},  
+"Chlef":{office:450,home:650},  
+"Laghouat":{office:700,home:1000},  
+"Oum El Bouaghi":{office:500,home:650},  
+"Batna":{office:400,home:500},  
+"Bejaia":{office:500,home:650},  
+"Biskra":{office:600,home:950},  
+"Bechar":{office:1100,home:1400},  
+"Blida":{office:450,home:650},  
+"Bouira":{office:450,home:650},  
+"Tamanrasset":{office:1400,home:1600},  
+"Tebessa":{office:600,home:950},  
+"Tlemcen":{office:500,home:650},  
+"Tiaret":{office:500,home:650},  
+"Tizi Ouzou":{office:450,home:650},  
+"Alger":{office:450,home:700},  
+"Djelfa":{office:600,home:900},  
+"Jijel":{office:500,home:650},  
+"Setif":{office:450,home:650},  
+"Saida":{office:600,home:900},  
+"Skikda":{office:500,home:650},  
+"Sidi Bel Abbes":{office:500,home:650},  
+"Annaba":{office:500,home:650},  
+"Guelma":{office:600,home:900},  
+"Constantine":{office:450,home:650},  
+"Medea":{office:450,home:650},  
+"Mostaganem":{office:500,home:650},  
+"M'Sila":{office:500,home:650},  
+"Mascara":{office:600,home:900},  
+"Ouargla":{office:800,home:1100},  
+"Oran":{office:450,home:650},  
+"El Bayadh":{office:800,home:1100},  
+"Illizi":{office:1700,home:2000},  
+"Bordj Bou Arreridj":{office:450,home:650},  
+"Boumerdes":{office:450,home:650},  
+"El Tarf":{office:600,home:950},  
+"Tindouf":{office:1400,home:1600},  
+"Tissemsilt":{office:500,home:650},  
+"El Oued":{office:800,home:1100},  
+"Khenchela":{office:600,home:900},  
+"Souk Ahras":{office:600,home:900},  
+"Tipaza":{office:450,home:650},  
+"Mila":{office:500,home:650},  
+"Ain Defla":{office:450,home:650},  
+"Naama":{office:800,home:1100},  
+"Ain Temouchent":{office:600,home:900},  
+"Ghardaia":{office:800,home:1100},  
+"Relizane":{office:500,home:650},  
+  
+"El M'Ghair":{office:1100,home:1400},  
+"El Menia":{office:1700,home:2000},  
+"Ouled Djellal":{office:700,home:1000},  
+"Bordj Badji Mokhtar":{office:1000,home:1400},  
+"Beni Abbes":{office:1100,home:1400},  
+"Timimoun":{office:1700,home:2000},  
+"Touggourt":{office:800,home:1100},  
+"Djanet":{office:1700,home:2000},  
+"In Salah":{office:800,home:1100},  
+"In Guezzam":{office:1000,home:1300}  
+  
+};  
+    
 const wilayaSelect =
 
-document.getElementById("wilaya");
-
-
+document.getElementById(
+"wilaya"
+);
 
 Object.keys(tarifs).forEach(w=>{
-
 
 let option =
 document.createElement("option");
 
+option.value = w;
 
-option.value=w;
-
-option.textContent=w;
-
+option.textContent = w;
 
 wilayaSelect.appendChild(option);
 
-
-
 });
-
-
-
-
 
 function displayCart(){
 
-
 let container =
 
-document.getElementById("cart-items");
+document.getElementById(
+"cart-items"
+);
 
+container.innerHTML = "";
 
+productsTotal = 0;
 
-container.innerHTML="";
+if(cart.length === 0){
 
+container.innerHTML =
 
-productsTotal=0;
-
-
-
-if(cart.length===0){
-
-
-container.innerHTML=
-
-"السلة فارغة";
-
+"<p>السلة فارغة</p>";
 
 }else{
 
-
 cart.forEach((item,index)=>{
 
+let qty =
+item.quantity || 1;
 
-let qty=item.quantity || 1;
-
-
-let total=item.price * qty;
-
+let total =
+item.price * qty;
 
 productsTotal += total;
 
-
-
 container.innerHTML += `
-
 
 <div class="item">
 
+<h3>
 
-<h3>${item.name}</h3>
+${item.name}
 
+</h3>
 
 <p>
 
-السعر: ${item.price} DA
+السعر:
+${item.price} DA
 
 </p>
 
-
-
 <div class="qty-box">
 
-
-<button 
+<button
 class="qty-btn"
 onclick="changeQty(${index},-1)">
 
@@ -572,10 +626,11 @@ onclick="changeQty(${index},-1)">
 
 </button>
 
+<b>
 
-<b>${qty}</b>
+${qty}
 
-
+</b>
 
 <button
 class="qty-btn"
@@ -585,10 +640,7 @@ onclick="changeQty(${index},1)">
 
 </button>
 
-
 </div>
-
-
 
 <p>
 
@@ -597,9 +649,7 @@ ${total} DA
 
 </p>
 
-
-
-<button 
+<button
 class="delete-btn"
 onclick="removeItem(${index})">
 
@@ -607,52 +657,37 @@ onclick="removeItem(${index})">
 
 </button>
 
-
-
 </div>
-
 
 `;
 
-
-
 });
-
 
 }
 
-
-
-document.getElementById("productsTotal")
-.innerText =
+document.getElementById(
+"productsTotal"
+).innerText =
 
 "مجموع المنتجات: "
-
-+ productsTotal +
-
++
+productsTotal
++
 " DA";
-
-
 
 updateFinalTotal();
 
-
 }
-
-
-
 
 displayCart();
     
-// تغيير كمية المنتج
-
 window.changeQty = function(index,value){
 
-
 cart[index].quantity =
-(cart[index].quantity || 1) + value;
 
+(cart[index].quantity || 1)
 
++ value;
 
 if(cart[index].quantity < 1){
 
@@ -660,51 +695,33 @@ cart[index].quantity = 1;
 
 }
 
-
-
 localStorage.setItem(
+
 "cart",
+
 JSON.stringify(cart)
+
 );
-
-
 
 displayCart();
 
-
 };
-
-
-
-
-
-// حذف منتج
 
 window.removeItem = function(index){
 
-
 cart.splice(index,1);
 
-
-
 localStorage.setItem(
+
 "cart",
+
 JSON.stringify(cart)
+
 );
-
-
 
 displayCart();
 
-
 };
-
-
-
-
-
-
-// تحديث سعر التوصيل
 
 document
 .getElementById("wilaya")
@@ -713,8 +730,6 @@ document
 updateDelivery
 );
 
-
-
 document
 .getElementById("deliveryType")
 .addEventListener(
@@ -722,200 +737,140 @@ document
 updateDelivery
 );
 
-
-
-
-
 function updateDelivery(){
-
 
 let wilaya =
 
-document.getElementById("wilaya").value;
-
-
+document.getElementById(
+"wilaya"
+).value;
 
 let type =
 
-document.getElementById("deliveryType").value;
-
-
-
+document.getElementById(
+"deliveryType"
+).value;
 
 if(!wilaya || !type){
 
-
 deliveryCost = 0;
 
+document.getElementById(
+"deliveryPrice"
+).innerText =
 
-document.getElementById("deliveryPrice")
-.innerText =
 "سعر التوصيل: --";
-
-
 
 updateFinalTotal();
 
-
 return;
-
 
 }
 
-
-
-
-
 if(type === "إلى المكتب"){
-
 
 deliveryCost =
 tarifs[wilaya].office;
 
-
-
 }else{
-
 
 deliveryCost =
 tarifs[wilaya].home;
 
-
-
 }
 
-
-
-
-document.getElementById("deliveryPrice")
-.innerText =
+document.getElementById(
+"deliveryPrice"
+).innerText =
 
 "سعر التوصيل: "
-
-+ deliveryCost +
-
++
+deliveryCost
++
 " DA";
-
-
 
 updateFinalTotal();
 
-
 }
-
-
-
-
-
-// المجموع النهائي
-
 
 function updateFinalTotal(){
 
-
-document.getElementById("finalTotal")
-.innerText =
-
+document.getElementById(
+"finalTotal"
+).innerText =
 
 "المجموع النهائي: "
-
 +
-
 (productsTotal + deliveryCost)
-
 +
-
 " DA";
 
-
-
-}
-
-
-
-
-
-// إرسال الطلب إلى Firebase
-
-
+    }
+    
 window.sendOrder = async function(){
 
-
-
-if(cart.length===0){
-
+if(cart.length === 0){
 
 alert("السلة فارغة");
 
-
 return;
-
 
 }
 
-
-
-
-
 let name =
 
-document.getElementById("name").value.trim();
-
-
+document.getElementById(
+"name"
+).value.trim();
 
 let phone =
 
-document.getElementById("phone").value.trim();
-
-
+document.getElementById(
+"phone"
+).value.trim();
 
 let wilaya =
 
-document.getElementById("wilaya").value;
-
-
+document.getElementById(
+"wilaya"
+).value;
 
 let commune =
 
-document.getElementById("commune").value.trim();
-
-
+document.getElementById(
+"commune"
+).value.trim();
 
 let address =
 
-document.getElementById("address").value.trim();
-
-
+document.getElementById(
+"address"
+).value.trim();
 
 let delivery =
 
-document.getElementById("deliveryType").value;
-
-
-
+document.getElementById(
+"deliveryType"
+).value;
 
 if(
+
 !name ||
 !phone ||
 !wilaya ||
 !delivery
+
 ){
 
-
-alert("يرجى ملء المعلومات المطلوبة");
-
+alert(
+"يرجى ملء المعلومات المطلوبة"
+);
 
 return;
 
-
 }
 
-
-
-
-
 try{
-
 
 await addDoc(
 
@@ -923,102 +878,127 @@ collection(db,"orders"),
 
 {
 
-
 name:name,
-
 
 phone:phone,
 
-
 wilaya:wilaya,
-
 
 commune:commune,
 
-
 address:address,
-
-
-
-// مهم للوحة التحكم
 
 delivery:delivery,
 
-
-
 deliveryPrice:deliveryCost,
-
-
 
 products:cart,
 
-
-
 productsTotal:productsTotal,
-
-
 
 total:
 productsTotal + deliveryCost,
 
-
-
 status:"تم التأكيد",
-
-
 
 note:"",
 
-
-
-// تاريخ الطلب
-
 date:
-new Date().toLocaleString("ar-DZ"),
-
-
+new Date()
+.toLocaleString("ar-DZ"),
 
 createdAt:
 serverTimestamp()
-
-
 
 }
 
 );
 
+alert(
+"تم إرسال الطلب بنجاح ✅"
+);
 
+localStorage.removeItem(
+"cart"
+);
 
-alert("تم إرسال الطلب بنجاح");
-
-
-
-localStorage.removeItem("cart");
-
-
-
-window.location.href="index.html";
-
-
+window.location.href =
+"index.html";
 
 }
 
 catch(error){
 
-
 console.error(error);
 
-
-
-alert("فشل إرسال الطلب");
-
+alert(
+"فشل إرسال الطلب"
+);
 
 }
 
-
-
 };
     
+function updateCartCount(){
+
+let savedCart =
+
+JSON.parse(
+localStorage.getItem("cart")
+) || [];
+
+let total = 0;
+
+savedCart.forEach(item=>{
+
+total += item.quantity || 1;
+
+});
+
+document.getElementById(
+"cartCount"
+).textContent = total;
+
+}
+
+const sidebar =
+document.getElementById(
+"sidebar"
+);
+
+const overlay =
+document.getElementById(
+"overlay"
+);
+
+document
+.getElementById("menuBtn")
+.addEventListener("click",()=>{
+
+sidebar.classList.add(
+"active"
+);
+
+overlay.classList.add(
+"active"
+);
+
+});
+
+overlay.addEventListener("click",()=>{
+
+sidebar.classList.remove(
+"active"
+);
+
+overlay.classList.remove(
+"active"
+);
+
+});
+
+updateCartCount();
+
 </script>
 
 </body>
