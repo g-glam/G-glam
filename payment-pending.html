@@ -8,7 +8,7 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>G-Glam | في انتظار الموافقة</title>
+<title>G-Glam | حالة الطلب</title>
 
 <style>
 
@@ -19,7 +19,7 @@ font-family:Arial,sans-serif;
 
 body{
 margin:0;
-background:#f5f0e8;
+background:#F5F0E8;
 min-height:100vh;
 display:flex;
 align-items:center;
@@ -32,21 +32,26 @@ color:#222;
 background:white;
 width:100%;
 max-width:500px;
-padding:30px 25px;
+padding:30px;
 border-radius:22px;
 box-shadow:0 5px 25px rgba(0,0,0,.08);
 text-align:center;
 }
 
 .logo{
-font-size:34px;
+font-size:35px;
 font-weight:bold;
 margin-bottom:10px;
 }
 
+.subtitle{
+color:#777;
+margin-bottom:25px;
+}
+
 .icon{
-font-size:65px;
-margin:15px 0;
+font-size:60px;
+margin-bottom:15px;
 }
 
 h1{
@@ -60,60 +65,15 @@ line-height:1.8;
 margin-bottom:20px;
 }
 
-.info{
-background:#f8f5f0;
-padding:18px;
-border-radius:14px;
-text-align:right;
-margin-bottom:20px;
-line-height:2;
+.status-box{
+padding:20px;
+border-radius:15px;
+margin-top:20px;
 }
 
-.info strong{
-color:#222;
-}
-
-.status{
+.pending{
 background:#fff3cd;
 color:#856404;
-padding:13px;
-border-radius:10px;
-margin-bottom:20px;
-font-weight:bold;
-}
-
-button{
-width:100%;
-padding:14px;
-border:none;
-border-radius:12px;
-background:#222;
-color:white;
-font-size:16px;
-cursor:pointer;
-margin-top:10px;
-}
-
-button:hover{
-opacity:.9;
-}
-
-.logout{
-background:#eee;
-color:#222;
-}
-
-.message{
-display:none;
-padding:12px;
-border-radius:10px;
-margin-top:15px;
-line-height:1.6;
-}
-
-.error{
-background:#f8d7da;
-color:#721c24;
 }
 
 .approved{
@@ -126,10 +86,53 @@ background:#f8d7da;
 color:#721c24;
 }
 
+.status-title{
+font-size:20px;
+font-weight:bold;
+margin-bottom:10px;
+}
+
+.status-text{
+line-height:1.8;
+}
+
+button{
+width:100%;
+padding:14px;
+border:none;
+border-radius:12px;
+background:#222;
+color:white;
+font-size:16px;
+cursor:pointer;
+margin-top:15px;
+}
+
+button:hover{
+opacity:.9;
+}
+
+.secondary{
+background:#eee;
+color:#222;
+}
+
+.info{
+margin-top:20px;
+padding:15px;
+background:#f8f8f8;
+border-radius:12px;
+text-align:right;
+font-size:14px;
+line-height:1.8;
+}
+
 .loading{
 color:#777;
-font-size:14px;
-margin-top:15px;
+}
+
+.hidden{
+display:none;
 }
 
 </style>
@@ -141,112 +144,113 @@ margin-top:15px;
 
 <div class="card">
 
-
 <div class="logo">
 G-Glam
 </div>
 
-
-<div class="icon">
-⏳
+<div class="subtitle">
+حالة إنشاء متجرك
 </div>
 
 
-<h1>
-طلبك قيد المراجعة
+<div
+class="icon"
+id="statusIcon">
+
+⏳
+
+</div>
+
+
+<h1 id="statusTitle">
+
+جاري التحقق...
+
 </h1>
 
 
-<p class="description">
+<div
+class="description"
+id="statusDescription">
 
-تم استلام طلب إنشاء متجرك ووصل الدفع بنجاح.
+جاري الاتصال بحسابك والتحقق من حالة الدفع.
+
+</div>
+
+
+<!-- حالة الطلب -->
+
+<div
+class="status-box pending"
+id="statusBox">
+
+<div
+class="status-title"
+id="boxTitle">
+
+⏳ الطلب قيد المراجعة
+
+</div>
+
+<div
+class="status-text"
+id="boxText">
+
+تم إرسال وصل الدفع بنجاح.
+سيقوم المدير بمراجعة الوصل والموافقة على المتجر.
+
+</div>
+
+</div>
+
+
+<!-- معلومات الطلب -->
+
+<div
+class="info"
+id="orderInfo">
+
+<strong>
+معلومات الطلب
+</strong>
 
 <br>
 
-سيقوم فريق الإدارة بمراجعة وصل الدفع والموافقة على المتجر.
+البريد:
+<span id="emailText">
+جاري التحميل...
+</span>
 
-</p>
+<br>
 
-
-<div class="status">
-🕐 في انتظار موافقة الإدارة
-</div>
-
-
-<div class="info">
-
-<div>
-👤 <strong>الاسم:</strong>
-<span id="ownerName">...</span>
-</div>
-
-<div>
-🏪 <strong>المتجر:</strong>
-<span id="storeName">...</span>
-</div>
-
-<div>
-📧 <strong>البريد:</strong>
-<span id="ownerEmail">...</span>
-</div>
-
-<div>
-💰 <strong>المبلغ:</strong>
-3500 DA
-</div>
+المتجر:
+<span id="storeText">
+جاري التحميل...
+</span>
 
 </div>
 
+
+<!-- زر الدخول -->
 
 <button
-id="refreshBtn">
+id="dashboardBtn"
+class="hidden">
 
-🔄 تحديث حالة الطلب
+🏪 الدخول إلى لوحة المتجر
 
 </button>
 
 
-<button
-class="logout"
-id="logoutBtn">
+<!-- زر إعادة المحاولة -->
 
-🚪 تسجيل الخروج
+<button
+id="retryBtn"
+class="secondary">
+
+🔄 تحديث الحالة
 
 </button>
-
-
-<div
-class="message error"
-id="errorMsg">
-</div>
-
-
-<div
-class="message approved"
-id="approvedMsg">
-
-✅ تمت الموافقة على متجرك!
-
-<br>
-
-جاري تحويلك إلى لوحة التحكم...
-
-</div>
-
-
-<div
-class="message rejected"
-id="rejectedMsg">
-</div>
-
-
-<div
-class="loading"
-id="loading">
-
-جاري التحقق من حالة الطلب...
-
-</div>
 
 
 </div>
@@ -256,7 +260,7 @@ id="loading">
 
 
 /* =========================
-   Firebase
+   FIREBASE
 ========================= */
 
 import {
@@ -267,25 +271,28 @@ from
 
 
 import {
+
 getAuth,
-onAuthStateChanged,
-signOut
+onAuthStateChanged
+
 }
 from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
 
 import {
+
 getFirestore,
 doc,
-getDoc
+onSnapshot
+
 }
 from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 
 /* =========================
-   Firebase Config
+   CONFIG
 ========================= */
 
 const firebaseConfig = {
@@ -317,121 +324,175 @@ measurementId:
 const app =
 initializeApp(firebaseConfig);
 
+
 const auth =
 getAuth(app);
+
 
 const db =
 getFirestore(app);
 
 
 /* =========================
-   العناصر
+   ELEMENTS
 ========================= */
 
-const ownerNameElement =
+const statusIcon =
 document.getElementById(
-"ownerName"
+"statusIcon"
 );
 
-const storeNameElement =
+const statusTitle =
 document.getElementById(
-"storeName"
+"statusTitle"
 );
 
-const ownerEmailElement =
+const statusDescription =
 document.getElementById(
-"ownerEmail"
+"statusDescription"
 );
 
-const loading =
+const statusBox =
 document.getElementById(
-"loading"
+"statusBox"
 );
 
-const errorMsg =
+const boxTitle =
 document.getElementById(
-"errorMsg"
+"boxTitle"
 );
 
-const approvedMsg =
+const boxText =
 document.getElementById(
-"approvedMsg"
+"boxText"
 );
 
-const rejectedMsg =
+const emailText =
 document.getElementById(
-"rejectedMsg"
+"emailText"
 );
 
-const refreshBtn =
+const storeText =
 document.getElementById(
-"refreshBtn"
+"storeText"
 );
 
-const logoutBtn =
+const dashboardBtn =
 document.getElementById(
-"logoutBtn"
+"dashboardBtn"
+);
+
+const retryBtn =
+document.getElementById(
+"retryBtn"
 );
 
 
 /* =========================
-   المستخدم الحالي
+   VARIABLES
 ========================= */
 
-let currentUser = null;
+let unsubscribe = null;
 
 
 /* =========================
-   التحقق من الطلب
+   AUTH
 ========================= */
 
-async function checkRequest(){
+onAuthStateChanged(
+auth,
+function(user){
 
-if(!currentUser){
+/*
+   المستخدم غير مسجل
+*/
+
+if(!user){
+
+statusIcon.textContent="⚠️";
+
+statusTitle.textContent=
+"لم يتم تسجيل الدخول";
+
+statusDescription.textContent=
+"يجب تسجيل الدخول أولًا لمتابعة حالة طلب المتجر.";
+
+statusBox.className=
+"status-box rejected";
+
+boxTitle.textContent=
+"⚠️ الحساب غير مسجل";
+
+boxText.textContent=
+"يرجى تسجيل الدخول ثم العودة إلى هذه الصفحة.";
+
+retryBtn.style.display="none";
 
 return;
 
 }
 
 
-loading.style.display =
-"block";
+/*
+   المستخدم مسجل
+*/
 
-errorMsg.style.display =
-"none";
-
-approvedMsg.style.display =
-"none";
-
-rejectedMsg.style.display =
-"none";
+emailText.textContent=
+user.email;
 
 
-try{
+/*
+   مراقبة طلب هذا المستخدم
+*/
 
+watchRequest(user.uid);
+
+});
+
+
+/* =========================
+   WATCH REQUEST
+========================= */
+
+function watchRequest(uid){
+
+/*
+   إلغاء المراقبة السابقة
+*/
+
+if(unsubscribe){
+
+unsubscribe();
+
+}
+
+
+/*
+   طلب المتجر الخاص بالمستخدم
+*/
 
 const requestRef =
 doc(
 db,
 "storeRequests",
-currentUser.uid
+uid
 );
 
 
-const requestSnapshot =
-await getDoc(requestRef);
+/*
+   مراقبة Firestore لحظيًا
+*/
 
+unsubscribe =
+onSnapshot(
 
-if(!requestSnapshot.exists()){
+requestRef,
 
-loading.style.display =
-"none";
+function(snapshot){
 
-errorMsg.textContent =
-"لم يتم العثور على طلب إنشاء المتجر.";
+if(!snapshot.exists()){
 
-errorMsg.style.display =
-"block";
+showNotFound();
 
 return;
 
@@ -439,216 +500,288 @@ return;
 
 
 const data =
-requestSnapshot.data();
+snapshot.data();
 
 
-/* معلومات المستخدم */
+/*
+   اسم المتجر
+*/
 
-ownerNameElement.textContent =
-data.ownerName || "-";
-
-storeNameElement.textContent =
+storeText.textContent =
 data.storeName || "-";
 
-ownerEmailElement.textContent =
-data.ownerEmail ||
-currentUser.email ||
-"-";
 
-
-/* الحالة */
+/*
+   حالة الطلب
+*/
 
 const status =
-data.status;
+data.status || "pending";
 
-
-/* =========================
-   Pending
-========================= */
 
 if(status === "pending"){
 
-loading.textContent =
-"آخر تحديث: الطلب مازال قيد المراجعة.";
+showPending();
 
-return;
+}
+
+else if(status === "approved"){
+
+showApproved();
+
+}
+
+else if(status === "rejected"){
+
+showRejected(
+data.rejectionReason
+);
+
+}
+
+else{
+
+showPending();
+
+}
+
+},
+
+function(error){
+
+console.error(
+"Firestore error:",
+error
+);
+
+statusIcon.textContent="⚠️";
+
+statusTitle.textContent=
+"حدث خطأ";
+
+statusDescription.textContent=
+"تعذر الاتصال بقاعدة البيانات.";
+
+statusBox.className=
+"status-box rejected";
+
+boxTitle.textContent=
+"❌ خطأ في الاتصال";
+
+boxText.textContent=
+error.message;
+
+}
+
+);
 
 }
 
 
 /* =========================
-   Approved
+   PENDING
 ========================= */
 
-if(status === "approved"){
+function showPending(){
 
-loading.style.display =
-"none";
+statusIcon.textContent="⏳";
 
-approvedMsg.style.display =
+statusTitle.textContent=
+"طلبك قيد المراجعة";
+
+statusDescription.textContent=
+"تم إرسال وصل الدفع بنجاح. انتظر حتى يقوم المدير بمراجعته.";
+
+statusBox.className=
+"status-box pending";
+
+boxTitle.textContent=
+"⏳ في انتظار الموافقة";
+
+boxText.textContent=
+"تم استلام طلب إنشاء متجرك. سيتم التحقق من وصل الدفع والموافقة عليه من طرف الإدارة.";
+
+dashboardBtn.classList.add(
+"hidden"
+);
+
+retryBtn.style.display=
 "block";
 
-refreshBtn.style.display =
+}
+
+
+/* =========================
+   APPROVED
+========================= */
+
+function showApproved(){
+
+statusIcon.textContent="✅";
+
+statusTitle.textContent=
+"تم قبول متجرك!";
+
+statusDescription.textContent=
+"تمت الموافقة على وصل الدفع وإنشاء متجرك بنجاح.";
+
+statusBox.className=
+"status-box approved";
+
+boxTitle.textContent=
+"✅ تم قبول الدفع";
+
+boxText.textContent=
+"مبروك! أصبح بإمكانك الآن الدخول إلى لوحة التحكم الخاصة بمتجرك وإضافة المنتجات وإدارة الطلبات.";
+
+dashboardBtn.classList.remove(
+"hidden"
+);
+
+retryBtn.style.display=
 "none";
 
 
+/*
+   حفظ حالة الدفع محليًا
+*/
+
+localStorage.setItem(
+"paymentStatus",
+"approved"
+);
+
+
+/*
+   الانتقال إلى Dashboard
+   بعد 3 ثوانٍ
+*/
+
 setTimeout(
+
 function(){
 
-window.location.href =
+window.location.href=
 "dashboard.html";
 
 },
-1500
-);
 
-return;
+3000
+
+);
 
 }
 
 
 /* =========================
-   Rejected
+   REJECTED
 ========================= */
 
-if(status === "rejected"){
+function showRejected(reason){
 
-loading.style.display =
-"none";
+statusIcon.textContent="❌";
 
-rejectedMsg.innerHTML =
+statusTitle.textContent=
+"تم رفض الطلب";
 
-"❌ تم رفض طلب إنشاء المتجر." +
+statusDescription.textContent=
+"لم تتم الموافقة على طلب إنشاء المتجر.";
 
-"<br><br>" +
+statusBox.className=
+"status-box rejected";
 
-(
-data.rejectionReason
-?
-"السبب: " +
-data.rejectionReason
-:
-"يرجى التواصل مع الإدارة لمعرفة السبب."
+boxTitle.textContent=
+"❌ تم رفض الدفع";
+
+if(reason && reason.trim()){
+
+boxText.innerHTML=
+"سبب الرفض:<br><strong>"+
+escapeHtml(reason)+
+"</strong>";
+
+}else{
+
+boxText.textContent=
+"تم رفض الطلب من طرف الإدارة. يرجى التواصل مع الإدارة لمعرفة السبب.";
+
+}
+
+
+dashboardBtn.classList.add(
+"hidden"
 );
 
-rejectedMsg.style.display =
-"block";
-
-return;
-
-}
-
-
-loading.style.display =
-"none";
-
-errorMsg.textContent =
-"حالة الطلب غير معروفة.";
-
-errorMsg.style.display =
+retryBtn.style.display=
 "block";
 
 
-}
-catch(error){
-
-console.error(error);
-
-loading.style.display =
-"none";
-
-errorMsg.textContent =
-"حدث خطأ أثناء التحقق من الطلب. حاول مرة أخرى.";
-
-errorMsg.style.display =
-"block";
-
-}
+localStorage.setItem(
+"paymentStatus",
+"rejected"
+);
 
 }
 
 
 /* =========================
-   التحقق من تسجيل الدخول
+   NOT FOUND
 ========================= */
 
-onAuthStateChanged(
-auth,
-function(user){
+function showNotFound(){
 
-if(!user){
+statusIcon.textContent="⚠️";
 
-window.location.href =
-"login.html";
+statusTitle.textContent=
+"لم يتم العثور على الطلب";
 
-return;
+statusDescription.textContent=
+"لا يوجد طلب إنشاء متجر مرتبط بهذا الحساب.";
 
-}
+statusBox.className=
+"status-box rejected";
 
+boxTitle.textContent=
+"⚠️ الطلب غير موجود";
 
-currentUser =
-user;
+boxText.textContent=
+"إذا كنت قد أنشأت متجرًا بالفعل، تأكد من تسجيل الدخول بالحساب الصحيح.";
 
-checkRequest();
-
-}
+dashboardBtn.classList.add(
+"hidden"
 );
+
+}
 
 
 /* =========================
-   تحديث
+   RETRY
 ========================= */
 
-refreshBtn.addEventListener(
+retryBtn.addEventListener(
 "click",
 function(){
 
-checkRequest();
-
-}
-);
-
-
-/* =========================
-   تسجيل الخروج
-========================= */
-
-logoutBtn.addEventListener(
-"click",
-async function(){
-
-try{
-
-await signOut(auth);
-
-localStorage.removeItem(
-"storeOwnerEmail"
-);
-
-localStorage.removeItem(
-"storeName"
-);
-
-localStorage.removeItem(
-"paymentStatus"
-);
-
-localStorage.removeItem(
-"storeId"
-);
-
-window.location.href =
-"login.html";
-
-}
-catch(error){
-
-console.error(error);
-
-}
+location.reload();
 
 });
 
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHtml(value){
+
+return String(value)
+
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
 
 </script>
 
