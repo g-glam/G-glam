@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>لوحة المتجر - G-Glam</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f5f5f5;
+color:#222;
+}
+
+.header{
+background:#111;
+color:white;
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:24px;
+font-weight:bold;
+}
+
+.logout{
+background:#d9534f;
+border:none;
+color:white;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+padding:20px;
+}
+
+.welcome{
+background:white;
+padding:20px;
+border-radius:15px;
+margin-bottom:20px;
+box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+.welcome h1{
+margin-top:0;
+}
+
+.email{
+color:#777;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+.card h3{
+margin-top:0;
+color:#666;
+}
+
+.number{
+font-size:30px;
+font-weight:bold;
+}
+
+.loading{
+text-align:center;
+padding:30px;
+}
+
+.error{
+background:#f8d7da;
+color:#721c24;
+padding:15px;
+border-radius:10px;
+margin-bottom:15px;
+display:none;
+}
+
+@media(max-width:700px){
+
+.cards{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+<div class="logo">
+G-Glam
+</div>
+
+<button
+class="logout"
+id="logoutBtn">
+
+تسجيل الخروج
+
+</button>
+
+</header>
+
+
+<div class="container">
+
+
+<div
+class="error"
+id="errorMessage">
+</div>
+
+
+<div
+class="loading"
+id="loading">
+
+⏳ جاري تحميل المتجر...
+
+</div>
+
+
+<div
+id="dashboard"
+style="display:none;">
+
+
+<div class="welcome">
+
+<h1 id="storeName">
+متجري
+</h1>
+
+<p>
+مرحبًا بك في لوحة التحكم الخاصة بمتجرك 👋
+</p>
+
+<p
+class="email"
+id="ownerEmail">
+</p>
+
+</div>
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<h3>
+📦 عدد المنتجات
+</h3>
+
+<div
+class="number"
+id="productsCount">
+0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+🛒 عدد الطلبات
+</h3>
+
+<div
+class="number"
+id="ordersCount">
+0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+🚚 الطلبات الجديدة
+</h3>
+
+<div
+class="number"
+id="newOrders">
+0
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+<script type="module">
+
+
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+
+import {
+
+getAuth,
+onAuthStateChanged,
+signOut
+
+}
+
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+
+import {
+
+getFirestore,
+collection,
+query,
+where,
+getDocs
+
+}
+
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+apiKey:"AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+
+authDomain:"g-glam.firebaseapp.com",
+
+projectId:"g-glam",
+
+storageBucket:"g-glam.firebasestorage.app",
+
+messagingSenderId:"997228419719",
+
+appId:"1:997228419719:web:f9d88de7ea2c6f457e3622",
+
+measurementId:"G-WX1K1F83F6"
+
+};
+
+
+const app =
+initializeApp(firebaseConfig);
+
+
+const auth =
+getAuth(app);
+
+
+const db =
+getFirestore(app);
+
+
+const loading =
+document.getElementById("loading");
+
+const dashboard =
+document.getElementById("dashboard");
+
+const errorMessage =
+document.getElementById("errorMessage");
+
+
+const storeName =
+document.getElementById("storeName");
+
+const ownerEmail =
+document.getElementById("ownerEmail");
+
+const productsCount =
+document.getElementById("productsCount");
+
+const ordersCount =
+document.getElementById("ordersCount");
+
+const newOrders =
+document.getElementById("newOrders");
+
+
+function showError(message){
+
+loading.style.display="none";
+
+errorMessage.textContent=message;
+
+errorMessage.style.display="block";
+
+}
+
+
+onAuthStateChanged(auth, async(user)=>{
+
+
+if(!user){
+
+window.location.href="store-login.html";
+
+return;
+
+}
+
+
+try{
+
+
+const email =
+user.email;
+
+
+ownerEmail.textContent =
+email;
+
+
+/* البحث عن متجر صاحب الحساب */
+
+const storesQuery =
+query(
+
+collection(db,"stores"),
+
+where("email","==",email)
+
+);
+
+
+const storesSnapshot =
+await getDocs(storesQuery);
+
+
+if(storesSnapshot.empty){
+
+showError(
+"لم يتم العثور على متجر مرتبط بهذا البريد الإلكتروني."
+);
+
+return;
+
+}
+
+
+const storeDoc =
+storesSnapshot.docs[0];
+
+
+const store =
+storeDoc.data();
+
+
+const storeId =
+storeDoc.id;
+
+
+/* اسم المتجر */
+
+storeName.textContent =
+store.name ||
+"متجري";
+
+
+/*
+--------------------------------
+جلب منتجات هذا المتجر
+--------------------------------
+*/
+
+
+const productsQuery =
+query(
+
+collection(db,"products"),
+
+where("storeId","==",storeId)
+
+);
+
+
+const productsSnapshot =
+await getDocs(productsQuery);
+
+
+productsCount.textContent =
+productsSnapshot.size;
+
+
+/*
+--------------------------------
+جلب طلبات هذا المتجر
+--------------------------------
+*/
+
+
+const ordersQuery =
+query(
+
+collection(db,"orders"),
+
+where("storeId","==",storeId)
+
+);
+
+
+const ordersSnapshot =
+await getDocs(ordersQuery);
+
+
+ordersCount.textContent =
+ordersSnapshot.size;
+
+
+let newCount = 0;
+
+
+ordersSnapshot.forEach(doc=>{
+
+const order =
+doc.data();
+
+
+if(
+!order.status ||
+order.status==="جديد" ||
+order.status==="تم التأكيد"
+){
+
+newCount++;
+
+}
+
+});
+
+
+newOrders.textContent =
+newCount;
+
+
+loading.style.display="none";
+
+dashboard.style.display="block";
+
+
+}
+
+catch(error){
+
+console.error(error);
+
+showError(
+"حدث خطأ أثناء تحميل بيانات المتجر: "
++
+error.message
+);
+
+}
+
+});
+
+
+/* تسجيل الخروج */
+
+document
+.getElementById("logoutBtn")
+.addEventListener("click",async()=>{
+
+await signOut(auth);
+
+window.location.href=
+"store-login.html";
+
+});
+
+
+</script>
+
+
+</body>
+
+  </html>
