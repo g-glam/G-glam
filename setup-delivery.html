@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إعداد أسعار التوصيل</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#F5F0E8;
+    padding:30px;
+    text-align:center;
+}
+
+button{
+    background:#222;
+    color:white;
+    border:none;
+    padding:15px 25px;
+    border-radius:12px;
+    font-size:17px;
+    cursor:pointer;
+}
+
+#result{
+    background:white;
+    margin-top:20px;
+    padding:20px;
+    border-radius:15px;
+    text-align:right;
+    white-space:pre-line;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🚚 إعداد أسعار التوصيل</h1>
+
+<p>
+اضغطي الزر لإضافة جميع الولايات إلى Firebase
+</p>
+
+<br>
+
+<button id="startBtn">
+إضافة أسعار التوصيل
+</button>
+
+<div id="result">
+لم يبدأ التنفيذ بعد...
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+import {
+    getFirestore,
+    doc,
+    setDoc
+}
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+    apiKey:"AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+
+    authDomain:"g-glam.firebaseapp.com",
+
+    projectId:"g-glam",
+
+    storageBucket:"g-glam.firebasestorage.app",
+
+    messagingSenderId:"997228419719",
+
+    appId:"1:997228419719:web:f9d88de7ea2c6f457e3622",
+
+    measurementId:"G-WX1K1F83F6"
+
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+
+const tarifs = {
+
+"Zana el beida":{office:50,home:50},
+"Ain Djasser":{office:150,home:150},
+"Seriana":{office:150,home:150},
+
+"Adrar":{office:1100,home:1400},
+"Chlef":{office:450,home:650},
+"Laghouat":{office:700,home:1000},
+"Oum El Bouaghi":{office:500,home:650},
+"Batna":{office:400,home:500},
+"Bejaia":{office:500,home:650},
+"Biskra":{office:600,home:950},
+"Bechar":{office:1100,home:1400},
+"Blida":{office:450,home:650},
+"Bouira":{office:450,home:650},
+"Tamanrasset":{office:1400,home:1600},
+"Tebessa":{office:600,home:950},
+"Tlemcen":{office:500,home:650},
+"Tiaret":{office:500,home:650},
+"Tizi Ouzou":{office:450,home:650},
+"Alger":{office:450,home:700},
+"Djelfa":{office:600,home:900},
+"Jijel":{office:500,home:650},
+"Setif":{office:450,home:650},
+"Saida":{office:600,home:900},
+"Skikda":{office:500,home:650},
+"Sidi Bel Abbes":{office:500,home:650},
+"Annaba":{office:500,home:650},
+"Guelma":{office:600,home:900},
+"Constantine":{office:450,home:650},
+"Medea":{office:450,home:650},
+"Mostaganem":{office:500,home:650},
+"M'Sila":{office:500,home:650},
+"Mascara":{office:600,home:900},
+"Ouargla":{office:800,home:1100},
+"Oran":{office:450,home:650},
+"El Bayadh":{office:800,home:1100},
+"Illizi":{office:1700,home:2000},
+"Bordj Bou Arreridj":{office:450,home:650},
+"Boumerdes":{office:450,home:650},
+"El Tarf":{office:600,home:950},
+"Tindouf":{office:1400,home:1600},
+"Tissemsilt":{office:500,home:650},
+"El Oued":{office:800,home:1100},
+"Khenchela":{office:600,home:900},
+"Souk Ahras":{office:600,home:900},
+"Tipaza":{office:450,home:650},
+"Mila":{office:500,home:650},
+"Ain Defla":{office:450,home:650},
+"Naama":{office:800,home:1100},
+"Ain Temouchent":{office:600,home:900},
+"Ghardaia":{office:800,home:1100},
+"Relizane":{office:500,home:650},
+
+"El M'Ghair":{office:1100,home:1400},
+"El Menia":{office:1700,home:2000},
+"Ouled Djellal":{office:700,home:1000},
+"Bordj Badji Mokhtar":{office:1000,home:1400},
+"Beni Abbes":{office:1100,home:1400},
+"Timimoun":{office:1700,home:2000},
+"Touggourt":{office:800,home:1100},
+"Djanet":{office:1700,home:2000},
+"In Salah":{office:800,home:1100},
+"In Guezzam":{office:1000,home:1300}
+
+};
+
+
+const result =
+document.getElementById("result");
+
+
+document
+.getElementById("startBtn")
+.addEventListener("click", async ()=>{
+
+    const confirmAction =
+    confirm(
+        "هل تريدين إضافة جميع أسعار التوصيل إلى Firebase؟"
+    );
+
+    if(!confirmAction) return;
+
+
+    result.innerText =
+    "⏳ جاري إضافة الولايات...\n";
+
+
+    let count = 0;
+
+
+    try{
+
+        for(const [wilaya, prices] of Object.entries(tarifs)){
+
+            await setDoc(
+
+                doc(
+                    db,
+                    "delivery",
+                    wilaya
+                ),
+
+                {
+                    office: prices.office,
+                    home: prices.home
+                }
+
+            );
+
+            count++;
+
+            result.innerText +=
+            "✅ " + wilaya +
+            " : مكتب " +
+            prices.office +
+            " / منزل " +
+            prices.home +
+            "\n";
+        }
+
+
+        result.innerText +=
+        "\n🎉 تم بنجاح!\n" +
+        "عدد الولايات: " +
+        count;
+
+
+        alert(
+            "تمت إضافة جميع أسعار التوصيل بنجاح ✅"
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+        result.innerText +=
+        "\n❌ حدث خطأ:\n" +
+        error.message;
+
+
+        alert(
+            "حدث خطأ أثناء الحفظ"
+        );
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
