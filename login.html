@@ -12,10 +12,15 @@ content="width=device-width, initial-scale=1.0">
 
 <style>
 
+*{
+box-sizing:border-box;
+}
+
 body{
 
 margin:0;
 font-family:Arial,sans-serif;
+
 background:#F5F0E8;
 
 display:flex;
@@ -31,8 +36,9 @@ padding:20px;
 .card{
 
 background:white;
+
 width:100%;
-max-width:400px;
+max-width:420px;
 
 padding:30px;
 
@@ -45,8 +51,11 @@ box-shadow:0 5px 20px rgba(0,0,0,.08);
 .logo{
 
 text-align:center;
+
 font-size:38px;
+
 font-weight:bold;
+
 margin-bottom:10px;
 
 }
@@ -54,15 +63,25 @@ margin-bottom:10px;
 .subtitle{
 
 text-align:center;
+
 color:#777;
+
 margin-bottom:25px;
+
+}
+
+h2{
+
+margin-bottom:20px;
 
 }
 
 label{
 
 display:block;
+
 font-weight:bold;
+
 margin-bottom:7px;
 
 }
@@ -70,6 +89,7 @@ margin-bottom:7px;
 input{
 
 width:100%;
+
 padding:14px;
 
 border:1px solid #ddd;
@@ -79,8 +99,6 @@ border-radius:12px;
 font-size:16px;
 
 margin-bottom:15px;
-
-box-sizing:border-box;
 
 }
 
@@ -108,13 +126,15 @@ button:disabled{
 
 opacity:.6;
 
+cursor:not-allowed;
+
 }
 
 #message{
 
 margin-top:15px;
 
-padding:12px;
+padding:14px;
 
 border-radius:10px;
 
@@ -122,7 +142,59 @@ text-align:center;
 
 display:none;
 
-line-height:1.6;
+line-height:1.7;
+
+}
+
+.message-info{
+
+background:#fff3cd;
+
+color:#856404;
+
+}
+
+.message-success{
+
+background:#d4edda;
+
+color:#155724;
+
+}
+
+.message-error{
+
+background:#f8d7da;
+
+color:#721c24;
+
+}
+
+.message-warning{
+
+background:#e2e3e5;
+
+color:#383d41;
+
+}
+
+.register{
+
+text-align:center;
+
+margin-top:20px;
+
+color:#777;
+
+}
+
+.register a{
+
+color:#222;
+
+font-weight:bold;
+
+text-decoration:none;
 
 }
 
@@ -156,22 +228,22 @@ G-Glam
 البريد الإلكتروني
 </label>
 
-
 <input
 id="email"
 type="email"
-placeholder="example@gmail.com">
+placeholder="example@gmail.com"
+autocomplete="email">
 
 
 <label>
 كلمة المرور
 </label>
 
-
 <input
 id="password"
 type="password"
-placeholder="كلمة المرور">
+placeholder="كلمة المرور"
+autocomplete="current-password">
 
 
 <button id="loginBtn">
@@ -183,17 +255,35 @@ placeholder="كلمة المرور">
 </div>
 
 
+<div class="register">
+
+ليس لديك متجر؟
+
+<a href="register.html">
+إنشاء متجر
+</a>
+
+</div>
+
+
 </div>
 
 
 <script type="module">
 
 
-/* Firebase */
+/* =========================================
+   Firebase
+========================================= */
 
-import { initializeApp }
+import {
 
-from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+initializeApp
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
 
 import {
@@ -203,8 +293,27 @@ signInWithEmailAndPassword
 
 }
 
-from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
+
+import {
+
+getFirestore,
+collection,
+query,
+where,
+getDocs
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+
+/* =========================================
+   Firebase Config
+========================================= */
 
 const firebaseConfig = {
 
@@ -232,31 +341,55 @@ measurementId:
 };
 
 
+/* =========================================
+   تشغيل Firebase
+========================================= */
+
 const app =
 initializeApp(firebaseConfig);
-
 
 const auth =
 getAuth(app);
 
+const db =
+getFirestore(app);
+
+
+/* =========================================
+   العناصر
+========================================= */
+
+const emailInput =
+document.getElementById("email");
+
+const passwordInput =
+document.getElementById("password");
 
 const loginBtn =
-document.getElementById(
-"loginBtn"
-);
+document.getElementById("loginBtn");
 
 const message =
-document.getElementById(
-"message"
-);
+document.getElementById("message");
 
 
-/* رسالة */
+/* =========================================
+   عرض الرسائل
+========================================= */
 
-function showMessage(text){
+function showMessage(
+text,
+type
+){
 
 message.innerHTML =
 text;
+
+message.className =
+"";
+
+message.classList.add(
+type
+);
 
 message.style.display =
 "block";
@@ -264,27 +397,90 @@ message.style.display =
 }
 
 
-/* الضغط على تسجيل الدخول */
+/* =========================================
+   البحث عن متجر صاحب الحساب
+========================================= */
+
+async function findStore(
+email
+){
+
+const q =
+query(
+
+collection(
+db,
+"stores"
+),
+
+where(
+"ownerEmail",
+"==",
+email
+)
+
+);
+
+
+const snapshot =
+await getDocs(q);
+
+
+if(snapshot.empty){
+
+return null;
+
+}
+
+
+/*
+
+إذا كان هناك أكثر من متجر
+نستخدم أول متجر حاليًا
+
+*/
+
+const storeDoc =
+snapshot.docs[0];
+
+
+return {
+
+id:
+storeDoc.id,
+
+data:
+storeDoc.data()
+
+};
+
+}
+
+
+/* =========================================
+   تسجيل الدخول
+========================================= */
 
 loginBtn.addEventListener(
+
 "click",
+
 async function(){
 
 const email =
-document.getElementById(
-"email"
-).value.trim();
+emailInput.value
+.trim()
+.toLowerCase();
 
 const password =
-document.getElementById(
-"password"
-).value;
+passwordInput.value;
 
 
 if(!email){
 
 showMessage(
-"⚠️ أدخلي البريد الإلكتروني"
+"⚠️ أدخلي البريد الإلكتروني",
+"message-error"
 );
 
 return;
@@ -295,13 +491,16 @@ return;
 if(!password){
 
 showMessage(
-"⚠️ أدخلي كلمة المرور"
+"⚠️ أدخلي كلمة المرور",
+"message-error"
 );
 
 return;
 
 }
 
+
+/* تعطيل الزر */
 
 loginBtn.disabled =
 true;
@@ -313,12 +512,18 @@ loginBtn.textContent =
 try{
 
 
+/* =====================================
+   تسجيل الدخول في Firebase Auth
+===================================== */
+
 const result =
 
 await signInWithEmailAndPassword(
 
 auth,
+
 email,
+
 password
 
 );
@@ -328,31 +533,214 @@ const user =
 result.user;
 
 
+/* =====================================
+   البحث عن متجر صاحب الحساب
+===================================== */
+
 showMessage(
 
-"✅ تسجيل الدخول نجح!<br><br>" +
+"⏳ جاري التحقق من حالة المتجر...",
 
-"الحساب:<br>" +
+"message-info"
 
-user.email +
+);
+
+
+const store =
+await findStore(
+email
+);
+
+
+/* =====================================
+   لا يوجد متجر
+===================================== */
+
+if(!store){
+
+showMessage(
+
+"⚠️ تم تسجيل الدخول بنجاح، ولكن لم يتم العثور على بيانات متجرك.<br><br>" +
+
+"يرجى إكمال تسجيل المتجر والدفع قبل الدخول إلى لوحة التحكم.",
+
+"message-warning"
+
+);
+
+loginBtn.disabled =
+false;
+
+loginBtn.textContent =
+"تسجيل الدخول";
+
+return;
+
+}
+
+
+/* =====================================
+   بيانات المتجر
+===================================== */
+
+const storeData =
+store.data;
+
+
+/*
+
+الحالة الموجودة في Firestore
+
+*/
+
+const status =
+String(
+storeData.status || "pending"
+)
+.toLowerCase();
+
+
+/* =====================================
+   حفظ بيانات المتجر محليًا
+===================================== */
+
+localStorage.setItem(
+"storeId",
+store.id
+);
+
+localStorage.setItem(
+"storeOwnerEmail",
+user.email
+);
+
+localStorage.setItem(
+"ownerEmail",
+user.email
+);
+
+localStorage.setItem(
+"storeName",
+
+storeData.storeName ||
+"G-Glam"
+
+);
+
+
+/* =====================================
+   الحالة: قيد المراجعة
+===================================== */
+
+if(
+
+status === "pending" ||
+
+status === "waiting" ||
+
+status === "review"
+
+){
+
+showMessage(
+
+"🟡 تم تسجيل الدخول بنجاح.<br><br>" +
+
+"وصل الدفع الخاص بك قيد المراجعة من طرف الإدارة.<br><br>" +
+
+"<strong>3500 DA</strong><br><br>" +
+
+"سيتم فتح لوحة التحكم بعد قبول طلبك.",
+
+"message-info"
+
+);
+
+
+loginBtn.disabled =
+false;
+
+loginBtn.textContent =
+"تسجيل الدخول";
+
+return;
+
+}
+
+
+/* =====================================
+   الحالة: مرفوض
+===================================== */
+
+if(
+
+status === "rejected" ||
+
+status === "refused"
+
+){
+
+const reason =
+storeData.rejectionReason ||
+"لم يتم ذكر سبب الرفض.";
+
+
+showMessage(
+
+"🔴 تم رفض طلب إنشاء المتجر.<br><br>" +
+
+"<strong>السبب:</strong><br>" +
+
+reason +
 
 "<br><br>" +
 
-"UID:<br>" +
+"يمكنك التواصل مع الإدارة.",
 
-user.uid +
+"message-error"
 
-"<br><br>" +
+);
 
-"جاري الانتقال إلى Dashboard..."
+
+loginBtn.disabled =
+false;
+
+loginBtn.textContent =
+"تسجيل الدخول";
+
+return;
+
+}
+
+
+/* =====================================
+   الحالة: مقبول
+===================================== */
+
+if(
+
+status === "approved" ||
+
+status === "accepted" ||
+
+status === "active"
+
+){
+
+showMessage(
+
+"✅ تم قبول متجرك بنجاح!<br><br>" +
+
+"جاري الدخول إلى لوحة التحكم...",
+
+"message-success"
 
 );
 
 
 /*
 
-   ننتظر ثانية واحدة
-   حتى نرى نتيجة الاختبار
+انتظار بسيط ثم الدخول
 
 */
 
@@ -369,26 +757,134 @@ window.location.href =
 
 );
 
+return;
 
 }
 
 
+/* =====================================
+   حالة غير معروفة
+===================================== */
+
+showMessage(
+
+"⚠️ حالة المتجر غير معروفة.<br><br>" +
+
+"يرجى التواصل مع الإدارة.",
+
+"message-warning"
+
+);
+
+
+loginBtn.disabled =
+false;
+
+loginBtn.textContent =
+"تسجيل الدخول";
+
+
+}
+
 catch(error){
 
-console.error(error);
+console.error(
+"Login error:",
+error
+);
+
+
+/* =====================================
+   أخطاء Firebase
+===================================== */
+
+let errorMessage =
+"حدث خطأ أثناء تسجيل الدخول.";
+
+
+if(
+
+error.code ===
+"auth/invalid-credential"
+
+){
+
+errorMessage =
+"❌ البريد الإلكتروني أو كلمة المرور غير صحيحة.";
+
+}
+
+
+else if(
+
+error.code ===
+"auth/user-not-found"
+
+){
+
+errorMessage =
+"❌ لا يوجد حساب بهذا البريد الإلكتروني.";
+
+}
+
+
+else if(
+
+error.code ===
+"auth/wrong-password"
+
+){
+
+errorMessage =
+"❌ كلمة المرور غير صحيحة.";
+
+}
+
+
+else if(
+
+error.code ===
+"auth/invalid-email"
+
+){
+
+errorMessage =
+"❌ البريد الإلكتروني غير صحيح.";
+
+}
+
+
+else if(
+
+error.code ===
+"auth/too-many-requests"
+
+){
+
+errorMessage =
+"⚠️ محاولات كثيرة. حاولي مرة أخرى لاحقًا.";
+
+}
+
+
+else if(
+
+error.code ===
+"auth/network-request-failed"
+
+){
+
+errorMessage =
+"⚠️ تأكدي من اتصال الإنترنت.";
+
+}
 
 
 showMessage(
 
-"❌ فشل تسجيل الدخول<br><br>" +
+errorMessage,
 
-"رمز الخطأ:<br>" +
-
-error.code +
-
-"<br><br>" +
-
-error.message
+"message-error"
 
 );
 
@@ -401,8 +897,33 @@ loginBtn.textContent =
 
 }
 
-});
+}
 
+);
+
+
+/* =========================================
+   السماح بالضغط Enter
+========================================= */
+
+passwordInput.addEventListener(
+
+"keydown",
+
+function(event){
+
+if(
+event.key ===
+"Enter"
+){
+
+loginBtn.click();
+
+}
+
+}
+
+);
 
 </script>
 
