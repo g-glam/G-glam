@@ -1,0 +1,1878 @@
+admin-dashboard.html
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>G-Glam | Admin</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#F5F0E8;
+color:#222;
+min-height:100vh;
+}
+
+/* =========================
+   Sidebar
+========================= */
+
+.sidebar{
+position:fixed;
+right:0;
+top:0;
+height:100vh;
+width:70px;
+background:#222;
+color:white;
+overflow:hidden;
+transition:.3s;
+z-index:1000;
+}
+
+.sidebar:hover{
+width:240px;
+}
+
+.logo{
+height:75px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+font-weight:bold;
+border-bottom:1px solid #444;
+white-space:nowrap;
+}
+
+.menu{
+margin-top:20px;
+}
+
+.menu a{
+display:flex;
+align-items:center;
+gap:15px;
+padding:15px;
+color:white;
+text-decoration:none;
+white-space:nowrap;
+transition:.2s;
+}
+
+.menu a:hover{
+background:#333;
+}
+
+.menu a.active{
+background:#B89B7A;
+}
+
+.icon{
+min-width:35px;
+text-align:center;
+font-size:20px;
+}
+
+.text{
+opacity:0;
+transition:.3s;
+}
+
+.sidebar:hover .text{
+opacity:1;
+}
+
+/* =========================
+   Content
+========================= */
+
+.content{
+margin-right:70px;
+padding:20px;
+transition:.3s;
+}
+
+.header{
+background:white;
+padding:20px;
+border-radius:18px;
+box-shadow:0 3px 15px rgba(0,0,0,.06);
+margin-bottom:20px;
+}
+
+.header h1{
+font-size:28px;
+margin-bottom:8px;
+}
+
+.header p{
+color:#777;
+}
+
+/* =========================
+   Stats
+========================= */
+
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+margin-bottom:20px;
+}
+
+.stat{
+background:white;
+padding:20px;
+border-radius:18px;
+box-shadow:0 3px 15px rgba(0,0,0,.06);
+}
+
+.stat-title{
+color:#777;
+font-size:14px;
+margin-bottom:10px;
+}
+
+.stat-value{
+font-size:28px;
+font-weight:bold;
+}
+
+/* =========================
+   Toolbar
+========================= */
+
+.toolbar{
+background:white;
+padding:15px;
+border-radius:18px;
+margin-bottom:20px;
+display:flex;
+gap:10px;
+}
+
+.search{
+flex:1;
+padding:13px;
+border:1px solid #ddd;
+border-radius:10px;
+font-size:15px;
+}
+
+.add-btn{
+background:#222;
+color:white;
+border:none;
+padding:13px 20px;
+border-radius:10px;
+cursor:pointer;
+font-size:15px;
+}
+
+.add-btn:hover{
+opacity:.9;
+}
+
+/* =========================
+   Stores
+========================= */
+
+.stores-box{
+background:white;
+padding:20px;
+border-radius:18px;
+box-shadow:0 3px 15px rgba(0,0,0,.06);
+}
+
+.stores-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.stores-header h2{
+font-size:21px;
+}
+
+.store-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+}
+
+.store-card{
+border:1px solid #eee;
+border-radius:16px;
+padding:18px;
+background:#fff;
+}
+
+.store-card h3{
+font-size:19px;
+margin-bottom:8px;
+}
+
+.store-email{
+color:#777;
+font-size:14px;
+margin-bottom:10px;
+word-break:break-word;
+}
+
+.store-info{
+font-size:14px;
+line-height:1.8;
+color:#555;
+}
+
+.status{
+display:inline-block;
+padding:6px 10px;
+border-radius:20px;
+font-size:12px;
+margin-top:10px;
+}
+
+.active-status{
+background:#d4edda;
+color:#155724;
+}
+
+.inactive-status{
+background:#f8d7da;
+color:#721c24;
+}
+
+.store-actions{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:7px;
+margin-top:15px;
+}
+
+.store-actions button{
+border:none;
+padding:9px;
+border-radius:9px;
+cursor:pointer;
+font-size:13px;
+}
+
+.edit-btn{
+background:#F5F0E8;
+}
+
+.products-btn{
+background:#222;
+color:white;
+}
+
+.orders-btn{
+background:#333;
+color:white;
+}
+
+.toggle-btn{
+background:#e8f0e8;
+}
+
+.delete-btn{
+background:#f1dede;
+color:#9b3030;
+}
+
+.empty{
+padding:40px;
+text-align:center;
+color:#777;
+}
+
+/* =========================
+   Modal
+========================= */
+
+.modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.5);
+display:none;
+align-items:center;
+justify-content:center;
+padding:20px;
+z-index:2000;
+}
+
+.modal.active{
+display:flex;
+}
+
+.modal-box{
+background:white;
+width:100%;
+max-width:500px;
+border-radius:20px;
+padding:25px;
+max-height:90vh;
+overflow-y:auto;
+}
+
+.modal-box h2{
+margin-bottom:20px;
+}
+
+.form-group{
+margin-bottom:15px;
+}
+
+.form-group label{
+display:block;
+font-weight:bold;
+margin-bottom:7px;
+}
+
+.form-group input{
+width:100%;
+padding:13px;
+border:1px solid #ddd;
+border-radius:10px;
+font-size:15px;
+}
+
+.modal-buttons{
+display:flex;
+gap:10px;
+margin-top:20px;
+}
+
+.modal-buttons button{
+flex:1;
+padding:13px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-size:15px;
+}
+
+.save-btn{
+background:#222;
+color:white;
+}
+
+.cancel-btn{
+background:#eee;
+}
+
+/* =========================
+   Messages
+========================= */
+
+.message{
+display:none;
+padding:12px;
+border-radius:10px;
+margin-bottom:15px;
+text-align:center;
+}
+
+.success{
+background:#d4edda;
+color:#155724;
+}
+
+.error{
+background:#f8d7da;
+color:#721c24;
+}
+
+/* =========================
+   Mobile
+========================= */
+
+@media(max-width:900px){
+
+.store-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media(max-width:700px){
+
+.sidebar{
+width:60px;
+}
+
+.sidebar:hover{
+width:210px;
+}
+
+.content{
+margin-right:60px;
+padding:10px;
+}
+
+.stats{
+grid-template-columns:1fr;
+}
+
+.toolbar{
+flex-direction:column;
+}
+
+.store-grid{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- =========================
+     Sidebar
+========================= -->
+
+<div class="sidebar">
+
+<div class="logo">
+G-Glam Admin
+</div>
+
+<div class="menu">
+
+<a href="admin-dashboard.html"
+class="active">
+
+<span class="icon">🏠</span>
+
+<span class="text">
+الرئيسية
+</span>
+
+</a>
+
+<a href="admin-stores.html">
+
+<span class="icon">🏪</span>
+
+<span class="text">
+المتاجر
+</span>
+
+</a>
+
+<a href="admin-orders.html">
+
+<span class="icon">📦</span>
+
+<span class="text">
+الطلبات
+</span>
+
+</a>
+
+<a href="admin-products.html">
+
+<span class="icon">🛍️</span>
+
+<span class="text">
+المنتجات
+</span>
+
+</a>
+
+<a href="#"
+id="logoutBtn">
+
+<span class="icon">🚪</span>
+
+<span class="text">
+تسجيل الخروج
+</span>
+
+</a>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     Content
+========================= -->
+
+<div class="content">
+
+
+<div class="header">
+
+<h1>
+لوحة تحكم G-Glam
+</h1>
+
+<p>
+إدارة جميع المتاجر والعملاء من مكان واحد
+</p>
+
+</div>
+
+
+<!-- الإحصائيات -->
+
+<div class="stats">
+
+<div class="stat">
+
+<div class="stat-title">
+🏪 عدد المتاجر
+</div>
+
+<div
+class="stat-value"
+id="storesCount">
+
+0
+
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-title">
+🛍️ عدد المنتجات
+</div>
+
+<div
+class="stat-value"
+id="productsCount">
+
+0
+
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-title">
+📦 عدد الطلبات
+</div>
+
+<div
+class="stat-value"
+id="ordersCount">
+
+0
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- الرسائل -->
+
+<div
+class="message success"
+id="successMessage">
+</div>
+
+<div
+class="message error"
+id="errorMessage">
+</div>
+
+
+<!-- البحث + إضافة -->
+
+<div class="toolbar">
+
+<input
+class="search"
+id="searchInput"
+placeholder="🔎 البحث باسم المتجر أو البريد أو الهاتف...">
+
+<button
+class="add-btn"
+id="addStoreBtn">
+
+➕ إضافة متجر
+
+</button>
+
+</div>
+
+
+<!-- المتاجر -->
+
+<div class="stores-box">
+
+<div class="stores-header">
+
+<h2>
+🏪 المتاجر
+</h2>
+
+</div>
+
+
+<div
+class="store-grid"
+id="storesContainer">
+
+<div class="empty">
+جاري تحميل المتاجر...
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<!-- =========================
+     Modal
+========================= -->
+
+<div
+class="modal"
+id="storeModal">
+
+
+<div class="modal-box">
+
+<h2 id="modalTitle">
+إضافة متجر جديد
+</h2>
+
+
+<div class="form-group">
+
+<label>
+اسم المتجر
+</label>
+
+<input
+id="storeName"
+type="text"
+placeholder="مثال: Beauty Shop">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+اسم صاحب المتجر
+</label>
+
+<input
+id="ownerName"
+type="text"
+placeholder="مثال: Ahmed">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+البريد الإلكتروني
+</label>
+
+<input
+id="ownerEmail"
+type="email"
+placeholder="example@gmail.com">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+رقم الهاتف
+</label>
+
+<input
+id="phone"
+type="tel"
+placeholder="05xxxxxxxx">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+العنوان
+</label>
+
+<input
+id="address"
+type="text"
+placeholder="الولاية / البلدية">
+
+</div>
+
+
+<div class="modal-buttons">
+
+<button
+class="cancel-btn"
+id="cancelBtn">
+
+إلغاء
+
+</button>
+
+<button
+class="save-btn"
+id="saveBtn">
+
+حفظ المتجر
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script type="module">
+
+
+/* =========================
+   Firebase
+========================= */
+
+import {
+initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+
+import {
+getFirestore,
+collection,
+getDocs,
+doc,
+setDoc,
+deleteDoc,
+updateDoc,
+getCountFromServer
+}
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+apiKey:
+"AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+
+authDomain:
+"g-glam.firebaseapp.com",
+
+projectId:
+"g-glam",
+
+storageBucket:
+"g-glam.firebasestorage.app",
+
+messagingSenderId:
+"997228419719",
+
+appId:
+"1:997228419719:web:f9d88de7ea2c6f457e3622",
+
+measurementId:
+"G-WX1K1F83F6"
+
+};
+
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
+
+/* =========================
+   العناصر
+========================= */
+
+const storesContainer =
+document.getElementById(
+"storesContainer"
+);
+
+const searchInput =
+document.getElementById(
+"searchInput"
+);
+
+const storesCount =
+document.getElementById(
+"storesCount"
+);
+
+const productsCount =
+document.getElementById(
+"productsCount"
+);
+
+const ordersCount =
+document.getElementById(
+"ordersCount"
+);
+
+const modal =
+document.getElementById(
+"storeModal"
+);
+
+const modalTitle =
+document.getElementById(
+"modalTitle"
+);
+
+const storeName =
+document.getElementById(
+"storeName"
+);
+
+const ownerName =
+document.getElementById(
+"ownerName"
+);
+
+const ownerEmail =
+document.getElementById(
+"ownerEmail"
+);
+
+const phone =
+document.getElementById(
+"phone"
+);
+
+const address =
+document.getElementById(
+"address"
+);
+
+const saveBtn =
+document.getElementById(
+"saveBtn"
+);
+
+const addStoreBtn =
+document.getElementById(
+"addStoreBtn"
+);
+
+const cancelBtn =
+document.getElementById(
+"cancelBtn"
+);
+
+
+let stores = [];
+
+let editingStoreId = null;
+
+
+/* =========================
+   تحميل الإحصائيات
+========================= */
+
+async function loadStats(){
+
+try{
+
+const storesSnapshot =
+await getCountFromServer(
+collection(db,"stores")
+);
+
+storesCount.textContent =
+storesSnapshot.data().count;
+
+
+const productsSnapshot =
+await getCountFromServer(
+collection(db,"products")
+);
+
+productsCount.textContent =
+productsSnapshot.data().count;
+
+
+const ordersSnapshot =
+await getCountFromServer(
+collection(db,"orders")
+);
+
+ordersCount.textContent =
+ordersSnapshot.data().count;
+
+
+}catch(error){
+
+console.error(
+"Stats error:",
+error
+);
+
+}
+
+}
+
+
+/* =========================
+   تحميل المتاجر
+========================= */
+
+async function loadStores(){
+
+try{
+
+storesContainer.innerHTML = `
+<div class="empty">
+جاري تحميل المتاجر...
+</div>
+`;
+
+
+const snapshot =
+await getDocs(
+collection(db,"stores")
+);
+
+
+stores = [];
+
+
+snapshot.forEach(item=>{
+
+stores.push({
+
+id:item.id,
+
+...item.data()
+
+});
+
+});
+
+
+displayStores(stores);
+
+
+}catch(error){
+
+console.error(
+"Load stores error:",
+error
+);
+
+storesContainer.innerHTML = `
+<div class="empty">
+❌ حدث خطأ أثناء تحميل المتاجر
+</div>
+`;
+
+}
+
+}
+
+
+/* =========================
+   عرض المتاجر
+========================= */
+
+function displayStores(data){
+
+storesContainer.innerHTML = "";
+
+
+if(data.length === 0){
+
+storesContainer.innerHTML = `
+<div class="empty">
+لا توجد متاجر حاليًا.<br><br>
+اضغطي «إضافة متجر» لإنشاء أول متجر.
+</div>
+`;
+
+return;
+
+}
+
+
+data.forEach(store=>{
+
+
+const card =
+document.createElement("div");
+
+card.className =
+"store-card";
+
+
+const active =
+store.active !== false;
+
+
+card.innerHTML = `
+
+<h3>
+🏪 ${escapeHtml(
+store.storeName || "بدون اسم"
+)}
+</h3>
+
+<div class="store-email">
+📧 ${
+escapeHtml(
+store.ownerEmail || "لا يوجد بريد"
+)
+}
+</div>
+
+<div class="store-info">
+
+👤 صاحب المتجر:
+${escapeHtml(
+store.ownerName || "-"
+)}
+
+<br>
+
+📱 الهاتف:
+${escapeHtml(
+store.phone || "-"
+)}
+
+<br>
+
+📍 العنوان:
+${escapeHtml(
+store.address || "-"
+)}
+
+<br>
+
+🆔 Store ID:
+${store.id}
+
+<br>
+
+<span class="status ${
+active
+? "active-status"
+: "inactive-status"
+}">
+
+${
+active
+? "🟢 نشط"
+: "🔴 متوقف"
+}
+
+</span>
+
+</div>
+
+
+<div class="store-actions">
+
+<button
+class="edit-btn"
+data-edit="${store.id}">
+
+✏️ تعديل
+
+</button>
+
+
+<button
+class="products-btn"
+data-products="${store.id}">
+
+🛍️ المنتجات
+
+</button>
+
+
+<button
+class="orders-btn"
+data-orders="${store.id}">
+
+📦 الطلبات
+
+</button>
+
+
+<button
+class="toggle-btn"
+data-toggle="${store.id}">
+
+${
+active
+? "⏸️ تعطيل"
+: "▶️ تفعيل"
+}
+
+</button>
+
+
+<button
+class="delete-btn"
+data-delete="${store.id}">
+
+🗑️ حذف
+
+</button>
+
+</div>
+
+`;
+
+
+card
+.querySelector("[data-edit]")
+.addEventListener(
+"click",
+()=>editStore(store.id)
+);
+
+
+card
+.querySelector("[data-products]")
+.addEventListener(
+"click",
+()=>openProducts(store.id)
+);
+
+
+card
+.querySelector("[data-orders]")
+.addEventListener(
+"click",
+()=>openOrders(store.id)
+);
+
+
+card
+.querySelector("[data-toggle]")
+.addEventListener(
+"click",
+()=>toggleStore(store.id)
+);
+
+
+card
+.querySelector("[data-delete]")
+.addEventListener(
+"click",
+()=>deleteStore(store.id)
+);
+
+
+storesContainer.appendChild(card);
+
+});
+
+}
+
+
+/* =========================
+   إضافة متجر
+========================= */
+
+addStoreBtn.addEventListener(
+"click",
+()=>{
+
+editingStoreId = null;
+
+modalTitle.textContent =
+"إضافة متجر جديد";
+
+saveBtn.textContent =
+"حفظ المتجر";
+
+clearForm();
+
+modal.classList.add(
+"active"
+);
+
+}
+);
+
+
+/* =========================
+   تعديل متجر
+========================= */
+
+async function editStore(id){
+
+const store =
+stores.find(
+item=>item.id === id
+);
+
+
+if(!store){
+
+return;
+
+}
+
+
+editingStoreId = id;
+
+modalTitle.textContent =
+"تعديل بيانات المتجر";
+
+saveBtn.textContent =
+"حفظ التعديل";
+
+
+storeName.value =
+store.storeName || "";
+
+ownerName.value =
+store.ownerName || "";
+
+ownerEmail.value =
+store.ownerEmail || "";
+
+phone.value =
+store.phone || "";
+
+address.value =
+store.address || "";
+
+
+modal.classList.add(
+"active"
+);
+
+}
+
+
+/* =========================
+   حفظ
+========================= */
+
+saveBtn.addEventListener(
+"click",
+async ()=>{
+
+
+const name =
+storeName.value.trim();
+
+const owner =
+ownerName.value.trim();
+
+const email =
+ownerEmail.value.trim();
+
+const phoneValue =
+phone.value.trim();
+
+const addressValue =
+address.value.trim();
+
+
+if(!name){
+
+alert(
+"يرجى إدخال اسم المتجر"
+);
+
+return;
+
+}
+
+
+if(!email){
+
+alert(
+"يرجى إدخال بريد صاحب المتجر"
+);
+
+return;
+
+}
+
+
+saveBtn.disabled = true;
+
+
+try{
+
+
+/* إضافة */
+
+if(!editingStoreId){
+
+
+/*
+   إنشاء ID للمتجر
+*/
+
+const storeId =
+"store_" +
+Date.now();
+
+
+await setDoc(
+
+doc(
+db,
+"stores",
+storeId
+),
+
+{
+
+storeName:name,
+
+ownerName:owner,
+
+ownerEmail:email,
+
+phone:phoneValue,
+
+address:addressValue,
+
+active:true,
+
+createdAt:
+new Date()
+
+}
+
+);
+
+
+showSuccess(
+"تمت إضافة المتجر بنجاح ✅"
+);
+
+}
+
+
+/* تعديل */
+
+else{
+
+
+await updateDoc(
+
+doc(
+db,
+"stores",
+editingStoreId
+),
+
+{
+
+storeName:name,
+
+ownerName:owner,
+
+ownerEmail:email,
+
+phone:phoneValue,
+
+address:addressValue
+
+}
+
+);
+
+
+showSuccess(
+"تم تعديل بيانات المتجر بنجاح ✅"
+);
+
+}
+
+
+closeModal();
+
+await loadStores();
+
+await loadStats();
+
+
+}catch(error){
+
+console.error(
+"Save store error:",
+error
+);
+
+showError(
+"❌ حدث خطأ أثناء حفظ المتجر"
+);
+
+}
+
+
+saveBtn.disabled = false;
+
+}
+);
+
+
+/* =========================
+   تفعيل / تعطيل
+========================= */
+
+async function toggleStore(id){
+
+const store =
+stores.find(
+item=>item.id === id
+);
+
+
+if(!store){
+
+return;
+
+}
+
+
+const newStatus =
+store.active === false;
+
+
+const text =
+newStatus
+? "تفعيل"
+: "تعطيل";
+
+
+const ok =
+confirm(
+`هل تريد ${text} هذا المتجر؟`
+);
+
+
+if(!ok){
+
+return;
+
+}
+
+
+try{
+
+await updateDoc(
+
+doc(
+db,
+"stores",
+id
+),
+
+{
+
+active:newStatus
+
+}
+
+);
+
+
+showSuccess(
+newStatus
+? "تم تفعيل المتجر ✅"
+: "تم تعطيل المتجر ⏸️"
+);
+
+
+loadStores();
+
+
+}catch(error){
+
+console.error(error);
+
+showError(
+"حدث خطأ أثناء تغيير حالة المتجر"
+);
+
+}
+
+}
+
+
+/* =========================
+   حذف متجر
+========================= */
+
+async function deleteStore(id){
+
+const store =
+stores.find(
+item=>item.id === id
+);
+
+
+if(!store){
+
+return;
+
+}
+
+
+const ok =
+confirm(
+
+"⚠️ هل تريد حذف هذا المتجر؟\n\n" +
+
+"اسم المتجر: " +
+(store.storeName || "") +
+
+"\n\n" +
+
+"هذه العملية ستحذف سجل المتجر فقط، " +
+"ولن تحذف المنتجات والطلبات تلقائيًا."
+
+);
+
+
+if(!ok){
+
+return;
+
+}
+
+
+try{
+
+await deleteDoc(
+
+doc(
+db,
+"stores",
+id
+)
+
+);
+
+
+showSuccess(
+"تم حذف المتجر بنجاح 🗑️"
+);
+
+
+loadStores();
+
+loadStats();
+
+
+}catch(error){
+
+console.error(error);
+
+showError(
+"حدث خطأ أثناء حذف المتجر"
+);
+
+}
+
+}
+
+
+/* =========================
+   فتح المنتجات
+========================= */
+
+function openProducts(id){
+
+window.location.href =
+"products.html?storeId=" +
+encodeURIComponent(id);
+
+}
+
+
+/* =========================
+   فتح الطلبات
+========================= */
+
+function openOrders(id){
+
+window.location.href =
+"orders.html?storeId=" +
+encodeURIComponent(id);
+
+}
+
+
+/* =========================
+   البحث
+========================= */
+
+searchInput.addEventListener(
+"input",
+function(){
+
+const value =
+this.value
+.toLowerCase()
+.trim();
+
+
+const result =
+stores.filter(store=>{
+
+return (
+
+(store.storeName || "")
+.toLowerCase()
+.includes(value)
+
+||
+
+(store.ownerName || "")
+.toLowerCase()
+.includes(value)
+
+||
+
+(store.ownerEmail || "")
+.toLowerCase()
+.includes(value)
+
+||
+
+(store.phone || "")
+.includes(value)
+
+);
+
+});
+
+
+displayStores(result);
+
+}
+);
+
+
+/* =========================
+   إغلاق النافذة
+========================= */
+
+cancelBtn.addEventListener(
+"click",
+closeModal
+);
+
+
+modal.addEventListener(
+"click",
+function(e){
+
+if(e.target === modal){
+
+closeModal();
+
+}
+
+}
+);
+
+
+function closeModal(){
+
+modal.classList.remove(
+"active"
+);
+
+}
+
+
+function clearForm(){
+
+storeName.value="";
+ownerName.value="";
+ownerEmail.value="";
+phone.value="";
+address.value="";
+
+}
+
+
+/* =========================
+   رسائل
+========================= */
+
+function showSuccess(text){
+
+const box =
+document.getElementById(
+"successMessage"
+);
+
+box.textContent =
+text;
+
+box.style.display =
+"block";
+
+
+setTimeout(
+()=>{
+
+box.style.display =
+"none";
+
+},
+3000
+);
+
+}
+
+
+function showError(text){
+
+const box =
+document.getElementById(
+"errorMessage"
+);
+
+box.textContent =
+text;
+
+box.style.display =
+"block";
+
+
+setTimeout(
+()=>{
+
+box.style.display =
+"none";
+
+},
+4000
+);
+
+}
+
+
+/* =========================
+   حماية HTML
+========================= */
+
+function escapeHtml(value){
+
+return String(value)
+
+.replace(/&/g,"&amp;")
+
+.replace(/</g,"&lt;")
+
+.replace(/>/g,"&gt;")
+
+.replace(/"/g,"&quot;")
+
+.replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+   تسجيل الخروج
+========================= */
+
+document
+.getElementById("logoutBtn")
+.addEventListener(
+"click",
+function(e){
+
+e.preventDefault();
+
+
+const ok =
+confirm(
+"هل تريد تسجيل الخروج؟"
+);
+
+
+if(!ok){
+
+return;
+
+}
+
+
+localStorage.removeItem(
+"adminLogged"
+);
+
+
+window.location.href =
+"login.html";
+
+}
+);
+
+
+/* =========================
+   تشغيل
+========================= */
+
+loadStats();
+
+loadStores();
+
+</script>
+
+</body>
+
+</html>
