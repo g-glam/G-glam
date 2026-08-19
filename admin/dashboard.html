@@ -88,6 +88,15 @@ margin-bottom:7px;
 color:var(--muted);
 }
 
+.owner-info{
+background:#fff;
+padding:12px 15px;
+border-radius:12px;
+margin-top:15px;
+color:#666;
+font-size:14px;
+}
+
 .stats{
 display:grid;
 grid-template-columns:repeat(3,1fr);
@@ -451,6 +460,7 @@ cursor:pointer;
 
 <body>
 
+
 <header class="header">
 
 <button
@@ -469,7 +479,7 @@ G-Glam
 class="store-name"
 id="storeName">
 
-G-Glam
+جاري التحميل...
 
 </div>
 
@@ -489,12 +499,23 @@ G-Glam
 إدارة متجرك من مكان واحد
 </p>
 
+
+<div class="owner-info">
+
+📧 حساب المدير:
+<span id="ownerEmail">
+جاري التحميل...
+</span>
+
+</div>
+
 </div>
 
 
 <!-- الإحصائيات -->
 
 <div class="stats">
+
 
 <div class="stat">
 
@@ -553,6 +574,7 @@ G-Glam
 
 <div class="actions">
 
+
 <button
 class="action"
 onclick="goAddProduct()">
@@ -581,6 +603,7 @@ onclick="goOrders()">
 </p>
 
 </button>
+
 
 </div>
 
@@ -710,9 +733,7 @@ id="deliveryMobile">
 class="modal"
 id="deliveryModal">
 
-
 <div class="modal-box">
-
 
 <h2 id="modalTitle">
 إضافة ولاية
@@ -783,7 +804,6 @@ onclick="saveDelivery()">
 
 </div>
 
-
 </div>
 
 </div>
@@ -791,6 +811,10 @@ onclick="saveDelivery()">
 
 <script type="module">
 
+
+/* =========================
+   Firebase
+========================= */
 
 import { initializeApp }
 
@@ -805,30 +829,50 @@ getDocs,
 deleteDoc,
 doc,
 setDoc,
-getCountFromServer
+query,
+where
 
 }
 
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 
-/* Firebase */
+import {
+
+getAuth,
+onAuthStateChanged
+
+}
+
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+
+/* =========================
+   Firebase Config
+========================= */
 
 const firebaseConfig = {
 
-apiKey:"AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+apiKey:
+"AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
 
-authDomain:"g-glam.firebaseapp.com",
+authDomain:
+"g-glam.firebaseapp.com",
 
-projectId:"g-glam",
+projectId:
+"g-glam",
 
-storageBucket:"g-glam.firebasestorage.app",
+storageBucket:
+"g-glam.firebasestorage.app",
 
-messagingSenderId:"997228419719",
+messagingSenderId:
+"997228419719",
 
-appId:"1:997228419719:web:f9d88de7ea2c6f457e3622",
+appId:
+"1:997228419719:web:f9d88de7ea2c6f457e3622",
 
-measurementId:"G-WX1K1F83F6"
+measurementId:
+"G-WX1K1F83F6"
 
 };
 
@@ -839,68 +883,240 @@ initializeApp(firebaseConfig);
 const db =
 getFirestore(app);
 
+const auth =
+getAuth(app);
 
-/* العناصر */
+
+/* =========================
+   العناصر
+========================= */
 
 const productsContainer =
-document.getElementById("productsContainer");
+document.getElementById(
+"productsContainer"
+);
 
 const productsCount =
-document.getElementById("productsCount");
+document.getElementById(
+"productsCount"
+);
 
 const ordersCount =
-document.getElementById("ordersCount");
+document.getElementById(
+"ordersCount"
+);
+
+const storeNameElement =
+document.getElementById(
+"storeName"
+);
+
+const storeNameStat =
+document.getElementById(
+"storeNameStat"
+);
+
+const ownerEmailElement =
+document.getElementById(
+"ownerEmail"
+);
 
 const deliveryTableBody =
-document.getElementById("deliveryTableBody");
+document.getElementById(
+"deliveryTableBody"
+);
 
 const deliveryMobile =
-document.getElementById("deliveryMobile");
+document.getElementById(
+"deliveryMobile"
+);
 
 const modal =
-document.getElementById("deliveryModal");
+document.getElementById(
+"deliveryModal"
+);
 
 const modalTitle =
-document.getElementById("modalTitle");
+document.getElementById(
+"modalTitle"
+);
 
 const wilayaName =
-document.getElementById("wilayaName");
+document.getElementById(
+"wilayaName"
+);
 
 const officePrice =
-document.getElementById("officePrice");
+document.getElementById(
+"officePrice"
+);
 
 const homePrice =
-document.getElementById("homePrice");
+document.getElementById(
+"homePrice"
+);
 
+
+/* =========================
+   المتغيرات
+========================= */
+
+let currentOwnerEmail = "";
+
+let storeName = "";
 
 let editingWilaya = null;
 
 
 /* =========================
-   المنتجات
+   تحميل بيانات المتجر
+========================= */
+
+async function loadStore(){
+
+try{
+
+const q =
+query(
+
+collection(
+db,
+"stores"
+),
+
+where(
+"ownerEmail",
+"==",
+currentOwnerEmail
+)
+
+);
+
+
+const snapshot =
+await getDocs(q);
+
+
+if(snapshot.empty){
+
+storeName =
+"G-Glam";
+
+storeNameElement.textContent =
+storeName;
+
+storeNameStat.textContent =
+storeName;
+
+return;
+
+}
+
+
+const storeDoc =
+snapshot.docs[0];
+
+const data =
+storeDoc.data();
+
+
+storeName =
+data.storeName ||
+"G-Glam";
+
+
+storeNameElement.textContent =
+storeName;
+
+storeNameStat.textContent =
+storeName;
+
+
+/* حفظ معلومات المتجر */
+
+localStorage.setItem(
+"storeOwnerEmail",
+currentOwnerEmail
+);
+
+localStorage.setItem(
+"storeName",
+storeName
+);
+
+localStorage.setItem(
+"storeId",
+storeDoc.id
+);
+
+
+}catch(error){
+
+console.error(
+"Store error:",
+error
+);
+
+storeName =
+"G-Glam";
+
+storeNameElement.textContent =
+storeName;
+
+storeNameStat.textContent =
+storeName;
+
+}
+
+}
+
+
+/* =========================
+   تحميل المنتجات
 ========================= */
 
 async function loadProducts(){
 
 try{
 
-const snapshot =
-await getDocs(
-collection(db,"products")
+
+const q =
+query(
+
+collection(
+db,
+"products"
+),
+
+where(
+"ownerEmail",
+"==",
+currentOwnerEmail
+)
+
 );
 
-productsContainer.innerHTML="";
+
+const snapshot =
+await getDocs(q);
+
 
 productsCount.textContent =
 snapshot.size;
 
 
+productsContainer.innerHTML =
+"";
+
+
 if(snapshot.empty){
 
-productsContainer.innerHTML=`
+productsContainer.innerHTML = `
 
 <div class="empty">
-لا توجد منتجات حاليًا
+
+لا توجد منتجات في متجرك حاليًا
+
 </div>
 
 `;
@@ -910,7 +1126,9 @@ return;
 }
 
 
-snapshot.forEach(productDoc=>{
+snapshot.forEach(
+productDoc=>{
+
 
 const product =
 productDoc.data();
@@ -920,12 +1138,15 @@ productDoc.id;
 
 
 const card =
-document.createElement("div");
+document.createElement(
+"div"
+);
 
-card.className="product";
+card.className =
+"product";
 
 
-card.innerHTML=`
+card.innerHTML = `
 
 <img
 src="${
@@ -935,31 +1156,27 @@ product.image ||
 alt="${product.name || 'منتج'}"
 >
 
-
 <h3>
 ${product.name || "بدون اسم"}
 </h3>
-
 
 <div class="product-price">
 ${product.price || 0} DA
 </div>
 
-
 <div class="product-buttons">
 
 <button
 class="edit-btn"
-onclick="editProduct('${id}')">
+data-id="${id}">
 
 تعديل
 
 </button>
 
-
 <button
 class="delete-btn"
-onclick="deleteProduct('${id}')">
+data-id="${id}">
 
 حذف
 
@@ -970,19 +1187,54 @@ onclick="deleteProduct('${id}')">
 `;
 
 
-productsContainer.appendChild(card);
+/* تعديل */
+
+card
+.querySelector(".edit-btn")
+.addEventListener(
+"click",
+function(){
+
+editProduct(id);
+
+}
+);
+
+
+/* حذف */
+
+card
+.querySelector(".delete-btn")
+.addEventListener(
+"click",
+function(){
+
+deleteProduct(id);
+
+}
+);
+
+
+productsContainer.appendChild(
+card
+);
 
 });
 
 
 }catch(error){
 
-console.error(error);
+console.error(
+"Products error:",
+error
+);
 
-productsContainer.innerHTML=`
+productsContainer.innerHTML = `
 
 <div class="empty">
-حدث خطأ أثناء تحميل المنتجات
+
+❌ حدث خطأ أثناء تحميل المنتجات
+
 </div>
 
 `;
@@ -992,7 +1244,9 @@ productsContainer.innerHTML=`
 }
 
 
-/* حذف المنتج */
+/* =========================
+   حذف المنتج
+========================= */
 
 window.deleteProduct =
 async function(id){
@@ -1007,15 +1261,76 @@ if(!ok)return;
 
 try{
 
-await deleteDoc(
-doc(db,"products",id)
+/*
+   نتحقق أن المنتج
+   ملك للمستخدم الحالي
+*/
+
+const q =
+query(
+
+collection(
+db,
+"products"
+),
+
+where(
+"ownerEmail",
+"==",
+currentOwnerEmail
+)
+
 );
+
+
+const snapshot =
+await getDocs(q);
+
+
+let exists = false;
+
+
+snapshot.forEach(
+item=>{
+
+if(item.id === id){
+
+exists = true;
+
+}
+
+});
+
+
+if(!exists){
+
+alert(
+"لا يمكنك حذف هذا المنتج"
+);
+
+return;
+
+}
+
+
+await deleteDoc(
+
+doc(
+db,
+"products",
+id
+)
+
+);
+
 
 alert(
 "تم حذف المنتج بنجاح ✅"
 );
 
+
 loadProducts();
+
 
 }catch(error){
 
@@ -1030,14 +1345,15 @@ alert(
 };
 
 
-/* تعديل المنتج */
+/* =========================
+   تعديل المنتج
+========================= */
 
 window.editProduct =
 function(id){
 
-alert(
-"صفحة تعديل المنتج سنضيفها في الخطوة القادمة.\nID: "+id
-);
+window.location.href =
+"edit-product.html?id=" + id;
 
 };
 
@@ -1050,17 +1366,44 @@ async function loadOrdersCount(){
 
 try{
 
-const snapshot =
-await getDocs(
-collection(db,"orders")
+/*
+   نفس الفكرة:
+   نعرض فقط طلبات صاحب المتجر.
+
+   يجب أن يحتوي الطلب على ownerEmail.
+*/
+
+const q =
+query(
+
+collection(
+db,
+"orders"
+),
+
+where(
+"ownerEmail",
+"==",
+currentOwnerEmail
+)
+
 );
+
+
+const snapshot =
+await getDocs(q);
+
 
 ordersCount.textContent =
 snapshot.size;
 
+
 }catch(error){
 
-console.error(error);
+console.error(
+"Orders error:",
+error
+);
 
 ordersCount.textContent =
 "0";
@@ -1080,17 +1423,25 @@ try{
 
 const snapshot =
 await getDocs(
-collection(db,"delivery")
+
+collection(
+db,
+"delivery"
+)
+
 );
 
 
-deliveryTableBody.innerHTML="";
-deliveryMobile.innerHTML="";
+deliveryTableBody.innerHTML =
+"";
+
+deliveryMobile.innerHTML =
+"";
 
 
 if(snapshot.empty){
 
-deliveryTableBody.innerHTML=`
+deliveryTableBody.innerHTML = `
 
 <tr>
 
@@ -1102,7 +1453,7 @@ deliveryTableBody.innerHTML=`
 
 `;
 
-deliveryMobile.innerHTML=`
+deliveryMobile.innerHTML = `
 
 <div class="empty">
 لا توجد ولايات توصيل
@@ -1115,13 +1466,15 @@ return;
 }
 
 
-const data=[];
+const data = [];
 
 
-snapshot.forEach(item=>{
+snapshot.forEach(
+item=>{
 
 const d =
 item.data();
+
 
 data.push({
 
@@ -1138,25 +1491,28 @@ Number(d.home || 0)
 });
 
 
-/* ترتيب أبجدي */
-
-data.sort((a,b)=>
+data.sort(
+(a,b)=>
 a.id.localeCompare(
 b.id,
 'ar'
-));
+)
+);
 
 
-data.forEach(item=>{
+data.forEach(
+item=>{
 
 
-/* نسخة الكمبيوتر */
+/* الكمبيوتر */
 
 const row =
-document.createElement("tr");
+document.createElement(
+"tr"
+);
 
 
-row.innerHTML=`
+row.innerHTML = `
 
 <td>
 ${item.id}
@@ -1176,7 +1532,7 @@ ${item.home} DA
 
 <button
 class="delivery-edit"
-onclick="editDelivery('${escapeJs(item.id)}')">
+data-id="${escapeHtml(item.id)}">
 
 ✏️ تعديل
 
@@ -1184,7 +1540,7 @@ onclick="editDelivery('${escapeJs(item.id)}')">
 
 <button
 class="delivery-delete"
-onclick="deleteDelivery('${escapeJs(item.id)}')">
+data-id="${escapeHtml(item.id)}">
 
 🗑️ حذف
 
@@ -1197,21 +1553,50 @@ onclick="deleteDelivery('${escapeJs(item.id)}')">
 `;
 
 
-deliveryTableBody.appendChild(row);
+row
+.querySelector(".delivery-edit")
+.addEventListener(
+"click",
+function(){
+
+editDelivery(item.id);
+
+}
+);
 
 
-/* نسخة الهاتف */
+row
+.querySelector(".delivery-delete")
+.addEventListener(
+"click",
+function(){
+
+deleteDelivery(item.id);
+
+}
+);
+
+
+deliveryTableBody.appendChild(
+row
+);
+
+
+/* الهاتف */
 
 const card =
-document.createElement("div");
+document.createElement(
+"div"
+);
 
-card.className="delivery-card";
+card.className =
+"delivery-card";
 
 
-card.innerHTML=`
+card.innerHTML = `
 
 <div class="delivery-card-title">
-🚚 ${item.id}
+🚚 ${escapeHtml(item.id)}
 </div>
 
 <div class="delivery-row">
@@ -1226,7 +1611,6 @@ ${item.office} DA
 
 </div>
 
-
 <div class="delivery-row">
 
 <span>
@@ -1239,21 +1623,17 @@ ${item.home} DA
 
 </div>
 
-
 <div class="delivery-card-actions">
 
 <button
-class="delivery-edit"
-onclick="editDelivery('${escapeJs(item.id)}')">
+class="delivery-edit">
 
 ✏️ تعديل
 
 </button>
 
-
 <button
-class="delivery-delete"
-onclick="deleteDelivery('${escapeJs(item.id)}')">
+class="delivery-delete">
 
 🗑️ حذف
 
@@ -1264,16 +1644,45 @@ onclick="deleteDelivery('${escapeJs(item.id)}')">
 `;
 
 
-deliveryMobile.appendChild(card);
+card
+.querySelector(".delivery-edit")
+.addEventListener(
+"click",
+function(){
+
+editDelivery(item.id);
+
+}
+);
+
+
+card
+.querySelector(".delivery-delete")
+.addEventListener(
+"click",
+function(){
+
+deleteDelivery(item.id);
+
+}
+);
+
+
+deliveryMobile.appendChild(
+card
+);
 
 });
 
 
 }catch(error){
 
-console.error(error);
+console.error(
+"Delivery error:",
+error
+);
 
-deliveryTableBody.innerHTML=`
+deliveryTableBody.innerHTML = `
 
 <tr>
 
@@ -1290,39 +1699,55 @@ deliveryTableBody.innerHTML=`
 }
 
 
-/* حماية بسيطة للنص داخل onclick */
+/* حماية HTML */
 
-function escapeJs(value){
+function escapeHtml(value){
 
 return String(value)
-.replace(/\\/g,"\\\\")
-.replace(/'/g,"\\'");
+
+.replace(/&/g,"&amp;")
+
+.replace(/</g,"&lt;")
+
+.replace(/>/g,"&gt;")
+
+.replace(/"/g,"&quot;")
+
+.replace(/'/g,"&#039;");
 
 }
 
 
-/* فتح إضافة */
+/* =========================
+   إضافة ولاية
+========================= */
 
 window.openAddDelivery =
 function(){
 
-editingWilaya=null;
+editingWilaya = null;
 
 modalTitle.textContent =
 "إضافة ولاية";
 
-wilayaName.value="";
-officePrice.value="";
-homePrice.value="";
+wilayaName.value = "";
 
-wilayaName.disabled=false;
+officePrice.value = "";
 
-modal.classList.add("active");
+homePrice.value = "";
+
+wilayaName.disabled = false;
+
+modal.classList.add(
+"active"
+);
 
 };
 
 
-/* فتح تعديل */
+/* =========================
+   تعديل ولاية
+========================= */
 
 window.editDelivery =
 async function(id){
@@ -1331,17 +1756,25 @@ try{
 
 const snapshot =
 await getDocs(
-collection(db,"delivery")
+
+collection(
+db,
+"delivery"
+)
+
 );
 
-let found=null;
+
+let found = null;
 
 
-snapshot.forEach(item=>{
+snapshot.forEach(
+item=>{
 
-if(item.id===id){
+if(item.id === id){
 
-found=item.data();
+found =
+item.data();
 
 }
 
@@ -1350,29 +1783,42 @@ found=item.data();
 
 if(!found){
 
-alert("لم يتم العثور على الولاية");
+alert(
+"لم يتم العثور على الولاية"
+);
 
 return;
 
 }
 
 
-editingWilaya=id;
+editingWilaya =
+id;
+
 
 modalTitle.textContent =
 "تعديل الولاية";
 
-wilayaName.value=id;
+
+wilayaName.value =
+id;
+
 
 officePrice.value =
 found.office ?? 0;
 
+
 homePrice.value =
 found.home ?? 0;
 
-wilayaName.disabled=true;
 
-modal.classList.add("active");
+wilayaName.disabled =
+true;
+
+
+modal.classList.add(
+"active"
+);
 
 
 }catch(error){
@@ -1388,17 +1834,23 @@ alert(
 };
 
 
-/* إغلاق */
+/* =========================
+   إغلاق النافذة
+========================= */
 
 window.closeDeliveryModal =
 function(){
 
-modal.classList.remove("active");
+modal.classList.remove(
+"active"
+);
 
 };
 
 
-/* حفظ */
+/* =========================
+   حفظ التوصيل
+========================= */
 
 window.saveDelivery =
 async function(){
@@ -1407,10 +1859,14 @@ const name =
 wilayaName.value.trim();
 
 const office =
-Number(officePrice.value);
+Number(
+officePrice.value
+);
 
 const home =
-Number(homePrice.value);
+Number(
+homePrice.value
+);
 
 
 if(!name){
@@ -1425,10 +1881,15 @@ return;
 
 
 if(
+
 office < 0 ||
+
 home < 0 ||
+
 officePrice.value === "" ||
+
 homePrice.value === ""
+
 ){
 
 alert(
@@ -1442,25 +1903,37 @@ return;
 
 try{
 
+
 /* إضافة */
 
 if(!editingWilaya){
 
 const existing =
 await getDocs(
-collection(db,"delivery")
+
+collection(
+db,
+"delivery"
+)
+
 );
 
-let alreadyExists=false;
 
-existing.forEach(item=>{
+let alreadyExists =
+false;
+
+
+existing.forEach(
+item=>{
 
 if(
+
 item.id.toLowerCase() ===
 name.toLowerCase()
+
 ){
 
-alreadyExists=true;
+alreadyExists = true;
 
 }
 
@@ -1496,6 +1969,7 @@ home:home
 
 );
 
+
 showSuccess(
 "تمت إضافة الولاية بنجاح ✅"
 );
@@ -1525,6 +1999,7 @@ home:home
 
 );
 
+
 showSuccess(
 "تم تعديل أسعار الولاية بنجاح ✅"
 );
@@ -1550,17 +2025,22 @@ showError(
 };
 
 
-/* حذف ولاية */
+/* =========================
+   حذف ولاية
+========================= */
 
 window.deleteDelivery =
 async function(id){
 
 const ok =
 confirm(
+
 "هل أنت متأكد من حذف ولاية " +
 id +
-"؟\n\nستختفي من قائمة التوصيل بعد ربط cart.html بها."
+"؟"
+
 );
+
 
 if(!ok)return;
 
@@ -1568,12 +2048,20 @@ if(!ok)return;
 try{
 
 await deleteDoc(
-doc(db,"delivery",id)
+
+doc(
+db,
+"delivery",
+id
+)
+
 );
+
 
 showSuccess(
 "تم حذف الولاية بنجاح 🗑️"
 );
+
 
 loadDelivery();
 
@@ -1591,7 +2079,9 @@ showError(
 };
 
 
-/* رسائل */
+/* =========================
+   الرسائل
+========================= */
 
 function showSuccess(text){
 
@@ -1600,20 +2090,28 @@ document.getElementById(
 "deliverySuccess"
 );
 
-box.textContent=text;
+box.textContent =
+text;
 
-box.style.display="block";
+box.style.display =
+"block";
+
 
 document.getElementById(
 "deliveryError"
-).style.display="none";
+).style.display =
+"none";
 
 
-setTimeout(()=>{
+setTimeout(
+()=>{
 
-box.style.display="none";
+box.style.display =
+"none";
 
-},3000);
+},
+3000
+);
 
 }
 
@@ -1625,71 +2123,14 @@ document.getElementById(
 "deliveryError"
 );
 
-box.textContent=text;
+box.textContent =
+text;
 
-box.style.display="block";
+box.style.display =
+"block";
+
 
 document.getElementById(
 "deliverySuccess"
-).style.display="none";
-
-
-setTimeout(()=>{
-
-box.style.display="none";
-
-},4000);
-
-}
-
-
-/* أزرار التنقل */
-
-window.goAddProduct =
-function(){
-
-window.location.href =
-"add-product.html";
-
-};
-
-
-window.goOrders =
-function(){
-
-window.location.href =
-"orders.html";
-
-};
-
-
-/* زر القائمة */
-
-document
-.getElementById("menuBtn")
-.addEventListener(
-"click",
-function(){
-
-alert(
-"لوحة تحكم G-Glam"
-);
-
-}
-);
-
-
-/* تشغيل */
-
-loadProducts();
-
-loadOrdersCount();
-
-loadDelivery();
-
-
-</script>
-
-</body>
-
-  </html>
+).style.display =
+"non
