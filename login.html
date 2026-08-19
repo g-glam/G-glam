@@ -424,16 +424,22 @@ window.location.href =
 }
 catch(error){
 
-console.error("Firebase Error Code:", error.code);
-console.error("Firebase Error Message:", error.message);
+console.error(error);
 
-alert(
-"رمز الخطأ: " + error.code +
-"\n\nالرسالة: " + error.message
+showMessage(
+"❌ رمز الخطأ: " +
+(error.code || "غير معروف") +
+"<br><br>" +
+(error.message || "لا توجد تفاصيل"),
+true
 );
 
-let text =
-"حدث خطأ أثناء تسجيل الدخول";
+loginBtn.disabled = false;
+
+loginBtn.textContent =
+"تسجيل الدخول";
+
+  }
 
 
 if(
