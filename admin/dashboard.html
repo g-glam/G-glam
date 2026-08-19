@@ -2133,4 +2133,133 @@ box.style.display =
 document.getElementById(
 "deliverySuccess"
 ).style.display =
-"non
+"none";
+
+setTimeout(
+()=>{
+box.style.display =
+"none";
+},
+3000
+);
+
+}
+
+
+function showError(text){
+
+const box =
+document.getElementById(
+"deliveryError"
+);
+
+box.textContent =
+text;
+
+box.style.display =
+"block";
+
+document.getElementById(
+"deliverySuccess"
+).style.display =
+"none";
+
+setTimeout(
+()=>{
+box.style.display =
+"none";
+},
+3000
+);
+
+
+/* =========================
+   أزرار التنقل
+========================= */
+
+window.goAddProduct =
+function(){
+
+window.location.href =
+"add-product.html";
+
+};
+
+
+window.goOrders =
+function(){
+
+window.location.href =
+"orders.html";
+
+};
+
+
+/* =========================
+   تسجيل الدخول
+========================= */
+
+onAuthStateChanged(
+auth,
+async function(user){
+
+if(!user){
+
+ownerEmailElement.textContent =
+"غير مسجل";
+
+storeNameElement.textContent =
+"غير مسجل";
+
+storeNameStat.textContent =
+"غير مسجل";
+
+productsContainer.innerHTML = `
+<div class="empty">
+⚠️ يجب تسجيل الدخول أولًا
+</div>
+`;
+
+return;
+
+}
+
+
+/* البريد الحالي */
+
+currentOwnerEmail =
+user.email;
+
+
+/* عرض البريد */
+
+ownerEmailElement.textContent =
+currentOwnerEmail;
+
+
+/* تحميل بيانات المتجر */
+
+await loadStore();
+
+
+/* تحميل منتجات هذا المتجر فقط */
+
+await loadProducts();
+
+
+/* تحميل الطلبات */
+
+await loadOrdersCount();
+
+
+/* تحميل التوصيل */
+
+await loadDelivery();
+
+});
+
+</script>
+
+</body>
+
+</html>
