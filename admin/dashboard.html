@@ -8,20 +8,9 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>G-Glam | لوحة التحكم</title>
+<title>G-Glam | Admin Dashboard</title>
 
 <style>
-
-:root{
---bg:#F5F0E8;
---card:#FFFFFF;
---text:#222;
---muted:#777;
---accent:#B89B7A;
---dark:#222;
---danger:#f1dede;
---dangerText:#9b3030;
-}
 
 *{
 box-sizing:border-box;
@@ -31,417 +20,580 @@ font-family:Arial,sans-serif;
 }
 
 body{
-background:var(--bg);
-color:var(--text);
-min-height:100vh;
-}
-
-.header{
-height:75px;
-background:#fff;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 20px;
-box-shadow:0 2px 12px rgba(0,0,0,.06);
-position:sticky;
-top:0;
-z-index:10;
-}
-
-.logo{
-font-size:28px;
-font-weight:800;
-}
-
-.menu-btn{
-width:45px;
-height:45px;
-border:none;
-border-radius:14px;
-background:var(--bg);
-font-size:22px;
-cursor:pointer;
-}
-
-.store-name{
-font-weight:bold;
-font-size:16px;
-}
-
-.container{
-max-width:1100px;
-margin:auto;
-padding:25px 15px 100px;
-}
-
-.welcome{
-margin-bottom:25px;
-}
-
-.welcome h1{
-font-size:27px;
-margin-bottom:7px;
-}
-
-.welcome p{
-color:var(--muted);
-}
-
-.stats{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:15px;
-margin-bottom:25px;
-}
-
-.stat{
-background:#fff;
-border-radius:18px;
-padding:20px;
-box-shadow:0 3px 15px rgba(0,0,0,.05);
-}
-
-.stat-title{
-color:var(--muted);
-font-size:14px;
-margin-bottom:10px;
-}
-
-.stat-value{
-font-size:25px;
-font-weight:bold;
-}
-
-.actions{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:15px;
-margin-bottom:30px;
-}
-
-.action{
-background:#fff;
-border:none;
-border-radius:18px;
-padding:22px;
-text-align:right;
-cursor:pointer;
-box-shadow:0 3px 15px rgba(0,0,0,.05);
-}
-
-.action h3{
-margin-bottom:7px;
-font-size:18px;
-}
-
-.action p{
-color:var(--muted);
-font-size:14px;
-}
-
-.section{
-background:#fff;
-border-radius:18px;
-padding:20px;
-margin-bottom:25px;
-box-shadow:0 3px 15px rgba(0,0,0,.05);
-}
-
-.section-header{
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:10px;
-margin-bottom:18px;
-}
-
-.section-header h2{
-font-size:22px;
-}
-
-.add-btn{
-background:var(--dark);
-color:white;
-border:none;
-padding:12px 18px;
-border-radius:14px;
-cursor:pointer;
-font-size:15px;
-}
-
-.products{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:15px;
-}
-
-.product{
-background:#fff;
-border:1px solid #eee;
-border-radius:18px;
-padding:10px;
-}
-
-.product img{
-width:100%;
-height:180px;
-object-fit:cover;
-border-radius:14px;
-}
-
-.product h3{
-font-size:16px;
-margin:10px 5px 5px;
-}
-
-.product-price{
-font-weight:bold;
-margin:0 5px 10px;
-}
-
-.product-buttons{
-display:flex;
-gap:7px;
-}
-
-.product-buttons button{
-flex:1;
-padding:10px;
-border:none;
-border-radius:10px;
-cursor:pointer;
-}
-
-.edit-btn{
-background:var(--bg);
-}
-
-.delete-btn{
-background:var(--danger);
-color:var(--dangerText);
-}
-
-.empty{
-background:#fff;
-border-radius:18px;
-padding:35px;
-text-align:center;
-color:var(--muted);
-grid-column:1/-1;
-}
-
-/* جدول التوصيل */
-
-.delivery-table{
-width:100%;
-border-collapse:collapse;
-}
-
-.delivery-table th,
-.delivery-table td{
-padding:13px 10px;
-border-bottom:1px solid #eee;
-text-align:center;
-}
-
-.delivery-table th{
-background:#f8f5f0;
-font-size:14px;
-}
-
-.delivery-table td{
-font-size:15px;
-}
-
-.delivery-actions{
-display:flex;
-justify-content:center;
-gap:7px;
-}
-
-.delivery-actions button{
-border:none;
-padding:8px 12px;
-border-radius:9px;
-cursor:pointer;
-}
-
-.delivery-edit{
-background:var(--bg);
-}
-
-.delivery-delete{
-background:var(--danger);
-color:var(--dangerText);
-}
-
-.delivery-mobile{
-display:none;
-}
-
-/* النافذة */
-
-.modal{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.45);
-display:none;
-align-items:center;
-justify-content:center;
-padding:20px;
-z-index:1000;
-}
-
-.modal.active{
-display:flex;
-}
-
-.modal-box{
-background:#fff;
-width:100%;
-max-width:450px;
-border-radius:20px;
-padding:25px;
-box-shadow:0 10px 40px rgba(0,0,0,.2);
-}
-
-.modal-box h2{
-margin-bottom:20px;
-}
-
-.form-group{
-margin-bottom:15px;
-}
-
-.form-group label{
-display:block;
-font-weight:bold;
-margin-bottom:7px;
-}
-
-.form-group input{
-width:100%;
-padding:13px;
-border:1px solid #ddd;
-border-radius:11px;
-font-size:15px;
-}
-
-.modal-buttons{
-display:flex;
-gap:10px;
-margin-top:20px;
-}
-
-.modal-buttons button{
-flex:1;
-padding:13px;
-border:none;
-border-radius:11px;
-cursor:pointer;
-font-size:15px;
-}
-
-.save-btn{
-background:#222;
-color:#fff;
-}
-
-.cancel-btn{
-background:#eee;
+background:#f5f5f5;
 color:#222;
 }
 
-.message{
-padding:12px;
-border-radius:10px;
-margin-bottom:15px;
-display:none;
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+
+position:fixed;
+right:0;
+top:0;
+
+width:250px;
+height:100vh;
+
+background:#111;
+color:white;
+
+padding:20px;
+
+z-index:1000;
+
+}
+
+.logo{
+
+font-size:23px;
+font-weight:bold;
+
 text-align:center;
+
+padding:15px 0 25px;
+
+border-bottom:1px solid #333;
+
+margin-bottom:20px;
+
+}
+
+.menu a{
+
+display:block;
+
+padding:14px;
+
+margin-bottom:8px;
+
+border-radius:10px;
+
+background:#1f1f1f;
+
+color:white;
+
+text-decoration:none;
+
+cursor:pointer;
+
+}
+
+.menu a:hover{
+
+background:#333;
+
+}
+
+.menu a.active{
+
+background:#B89B7A;
+
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.content{
+
+margin-right:250px;
+
+padding:25px;
+
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+
+background:white;
+
+padding:20px;
+
+border-radius:15px;
+
+box-shadow:0 2px 10px rgba(0,0,0,.08);
+
+margin-bottom:20px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+gap:15px;
+
+}
+
+.header h1{
+
+font-size:27px;
+
+}
+
+.admin-email{
+
+color:#777;
+
+font-size:14px;
+
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+
+display:grid;
+
+grid-template-columns:
+repeat(4,1fr);
+
+gap:15px;
+
+margin-bottom:20px;
+
+}
+
+.stat{
+
+background:white;
+
+padding:20px;
+
+border-radius:15px;
+
+box-shadow:0 2px 10px rgba(0,0,0,.07);
+
+}
+
+.stat-title{
+
+color:#777;
+
+margin-bottom:10px;
+
+}
+
+.stat-value{
+
+font-size:28px;
+
+font-weight:bold;
+
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+.search-box{
+
+background:white;
+
+padding:15px;
+
+border-radius:15px;
+
+margin-bottom:20px;
+
+}
+
+.search-box input{
+
+width:100%;
+
+padding:13px;
+
+border:1px solid #ddd;
+
+border-radius:9px;
+
+font-size:16px;
+
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+.table-box{
+
+background:white;
+
+border-radius:15px;
+
+padding:15px;
+
+overflow-x:auto;
+
+box-shadow:
+0 2px 10px rgba(0,0,0,.07);
+
+}
+
+table{
+
+width:100%;
+
+border-collapse:collapse;
+
+min-width:950px;
+
+}
+
+th{
+
+background:#111;
+
+color:white;
+
+padding:13px;
+
+white-space:nowrap;
+
+}
+
+td{
+
+padding:12px;
+
+text-align:center;
+
+border-bottom:1px solid #eee;
+
+vertical-align:middle;
+
+}
+
+tr:hover{
+
+background:#fafafa;
+
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+.status{
+
+padding:7px 12px;
+
+border-radius:20px;
+
+font-size:13px;
+
+display:inline-block;
+
+}
+
+.pending{
+
+background:#fff3cd;
+
+color:#856404;
+
+}
+
+.approved{
+
+background:#d4edda;
+
+color:#155724;
+
+}
+
+.rejected{
+
+background:#f8d7da;
+
+color:#721c24;
+
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+button{
+
+border:none;
+
+border-radius:8px;
+
+padding:9px 13px;
+
+cursor:pointer;
+
+font-size:14px;
+
+margin:2px;
+
+}
+
+.approve-btn{
+
+background:#2e7d32;
+
+color:white;
+
+}
+
+.reject-btn{
+
+background:#c62828;
+
+color:white;
+
+}
+
+.delete-btn{
+
+background:#555;
+
+color:white;
+
+}
+
+.receipt-btn{
+
+background:#111;
+
+color:white;
+
+}
+
+button:hover{
+
+opacity:.85;
+
+}
+
+
+/* =========================
+   RECEIPT
+========================= */
+
+.receipt-img{
+
+width:70px;
+
+height:70px;
+
+object-fit:cover;
+
+border-radius:8px;
+
+cursor:pointer;
+
+border:1px solid #ddd;
+
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+
+display:none;
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.75);
+
+z-index:2000;
+
+align-items:center;
+
+justify-content:center;
+
+padding:20px;
+
+}
+
+.modal.active{
+
+display:flex;
+
+}
+
+.modal-box{
+
+background:white;
+
+border-radius:15px;
+
+padding:20px;
+
+max-width:700px;
+
+width:100%;
+
+max-height:90vh;
+
+overflow:auto;
+
+text-align:center;
+
+}
+
+.modal-box img{
+
+max-width:100%;
+
+max-height:70vh;
+
+object-fit:contain;
+
+border-radius:10px;
+
+}
+
+.close-btn{
+
+background:#111;
+
+color:white;
+
+margin-top:15px;
+
+width:100%;
+
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message{
+
+display:none;
+
+padding:13px;
+
+border-radius:9px;
+
+margin-bottom:15px;
+
+text-align:center;
+
 }
 
 .success{
+
 background:#d4edda;
+
 color:#155724;
+
 }
 
 .error{
+
 background:#f8d7da;
+
 color:#721c24;
-}
-
-@media(max-width:800px){
-
-.products{
-grid-template-columns:repeat(2,1fr);
-}
 
 }
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:900px){
+
+.sidebar{
+
+width:200px;
+
+}
+
+.content{
+
+margin-right:200px;
+
+}
+
+.stats{
+
+grid-template-columns:
+repeat(2,1fr);
+
+}
+
+}
+
 
 @media(max-width:600px){
 
-.stats{
-grid-template-columns:1fr;
+.sidebar{
+
+position:relative;
+
+width:100%;
+
+height:auto;
+
 }
 
-.actions{
-grid-template-columns:1fr;
+.content{
+
+margin-right:0;
+
+}
+
+.stats{
+
+grid-template-columns:1fr 1fr;
+
 }
 
 .header{
-padding:0 12px;
-}
 
-.welcome h1{
-font-size:23px;
-}
-
-.products{
-grid-template-columns:1fr 1fr;
-}
-
-.delivery-table{
-display:none;
-}
-
-.delivery-mobile{
 display:block;
+
 }
 
-.delivery-card{
-border:1px solid #eee;
-border-radius:14px;
-padding:15px;
-margin-bottom:12px;
-}
+.admin-email{
 
-.delivery-card-title{
-font-weight:bold;
-font-size:17px;
-margin-bottom:10px;
-}
-
-.delivery-row{
-display:flex;
-justify-content:space-between;
-padding:5px 0;
-color:#555;
-}
-
-.delivery-card-actions{
-display:flex;
-gap:8px;
 margin-top:10px;
+
 }
 
-.delivery-card-actions button{
-flex:1;
-border:none;
-padding:10px;
-border-radius:9px;
-cursor:pointer;
 }
+
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty{
+
+padding:40px;
+
+text-align:center;
+
+color:#777;
 
 }
 
@@ -449,231 +601,276 @@ cursor:pointer;
 
 </head>
 
+
 <body>
 
-<header class="header">
 
-<button
-class="menu-btn"
-id="menuBtn">
+<!-- =========================
+     SIDEBAR
+========================= -->
 
-☰
-
-</button>
+<div class="sidebar">
 
 <div class="logo">
-G-Glam
-</div>
 
-<div
-class="store-name"
-id="storeName">
-
-G-Glam
+G-Glam Admin
 
 </div>
 
-</header>
+
+<div class="menu">
+
+<a
+class="active"
+href="admin-dashboard.html">
+
+🏠 لوحة التحكم
+
+</a>
 
 
-<main class="container">
+<a
+href="#stores">
+
+🏪 المتاجر
+
+</a>
 
 
-<div class="welcome">
+<a
+href="#pending">
+
+⏳ طلبات الانتظار
+
+</a>
+
+
+<a
+href="#approved">
+
+✅ المتاجر المقبولة
+
+</a>
+
+
+<a
+href="#rejected">
+
+❌ المرفوضة
+
+</a>
+
+
+<a
+href="#logout"
+id="logoutBtn">
+
+🚪 تسجيل الخروج
+
+</a>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     CONTENT
+========================= -->
+
+<div class="content">
+
+
+<div class="header">
+
+<div>
 
 <h1>
-مرحبًا بك 👋
+
+لوحة تحكم G-Glam
+
 </h1>
 
 <p>
-إدارة متجرك من مكان واحد
+
+إدارة أصحاب المتاجر وطلبات الاشتراك
+
 </p>
 
 </div>
 
 
-<!-- الإحصائيات -->
+<div class="admin-email">
 
-<div class="stats">
-
-<div class="stat">
-
-<div class="stat-title">
-عدد المنتجات
-</div>
-
-<div
-class="stat-value"
-id="productsCount">
-
-0
+👤 Admin
 
 </div>
 
 </div>
 
 
-<div class="stat">
-
-<div class="stat-title">
-عدد الطلبات
-</div>
-
-<div
-class="stat-value"
-id="ordersCount">
-
-0
-
-</div>
-
-</div>
-
-
-<div class="stat">
-
-<div class="stat-title">
-اسم المتجر
-</div>
-
-<div
-class="stat-value"
-id="storeNameStat">
-
-G-Glam
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- الأزرار -->
-
-<div class="actions">
-
-<button
-class="action"
-onclick="goAddProduct()">
-
-<h3>
-➕ إضافة منتج
-</h3>
-
-<p>
-أضف منتجًا جديدًا إلى متجرك
-</p>
-
-</button>
-
-
-<button
-class="action"
-onclick="goOrders()">
-
-<h3>
-📦 الطلبات
-</h3>
-
-<p>
-عرض وإدارة طلبات الزبائن
-</p>
-
-</button>
-
-</div>
-
-
-<!-- المنتجات -->
-
-<div class="section">
-
-<div class="section-header">
-
-<h2>
-🛍️ منتجاتي
-</h2>
-
-<button
-class="add-btn"
-onclick="goAddProduct()">
-
-+ إضافة منتج
-
-</button>
-
-</div>
-
-
-<div
-class="products"
-id="productsContainer">
-
-<div class="empty">
-جاري تحميل المنتجات...
-</div>
-
-</div>
-
-</div>
-
-
-<!-- التوصيل -->
-
-<div class="section">
-
-<div class="section-header">
-
-<h2>
-🚚 إدارة التوصيل
-</h2>
-
-<button
-class="add-btn"
-onclick="openAddDelivery()">
-
-+ إضافة ولاية
-
-</button>
-
-</div>
-
+<!-- MESSAGE -->
 
 <div
 class="message success"
-id="deliverySuccess">
-
-تم حفظ التعديل بنجاح ✅
+id="successMsg">
 
 </div>
 
 
 <div
 class="message error"
-id="deliveryError">
-
-حدث خطأ أثناء العملية
+id="errorMsg">
 
 </div>
 
 
-<table class="delivery-table">
+<!-- =========================
+     STATS
+========================= -->
+
+<div class="stats">
+
+
+<div class="stat">
+
+<div class="stat-title">
+
+🏪 إجمالي المتاجر
+
+</div>
+
+<div
+class="stat-value"
+id="totalStores">
+
+0
+
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-title">
+
+⏳ قيد الانتظار
+
+</div>
+
+<div
+class="stat-value"
+id="pendingStores">
+
+0
+
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-title">
+
+✅ مقبولة
+
+</div>
+
+<div
+class="stat-value"
+id="approvedStores">
+
+0
+
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-title">
+
+❌ مرفوضة
+
+</div>
+
+<div
+class="stat-value"
+id="rejectedStores">
+
+0
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<!-- =========================
+     SEARCH
+========================= -->
+
+<div class="search-box">
+
+<input
+type="text"
+id="searchInput"
+placeholder="🔎 البحث باسم المتجر أو البريد الإلكتروني أو الهاتف...">
+
+</div>
+
+
+<!-- =========================
+     TABLE
+========================= -->
+
+<div class="table-box">
+
+<table>
 
 <thead>
 
 <tr>
 
 <th>
-الولاية
+رقم
 </th>
 
 <th>
-إلى المكتب
+اسم المتجر
 </th>
 
 <th>
-إلى المنزل
+اسم صاحب المتجر
+</th>
+
+<th>
+البريد
+</th>
+
+<th>
+الهاتف
+</th>
+
+<th>
+تاريخ التسجيل
+</th>
+
+<th>
+المبلغ
+</th>
+
+<th>
+وصل الدفع
+</th>
+
+<th>
+الحالة
 </th>
 
 <th>
@@ -684,7 +881,9 @@ id="deliveryError">
 
 </thead>
 
-<tbody id="deliveryTableBody">
+
+<tbody
+id="storesTable">
 
 </tbody>
 
@@ -692,8 +891,11 @@ id="deliveryError">
 
 
 <div
-class="delivery-mobile"
-id="deliveryMobile">
+class="empty"
+id="emptyMessage"
+style="display:none">
+
+لا توجد متاجر.
 
 </div>
 
@@ -701,88 +903,45 @@ id="deliveryMobile">
 </div>
 
 
-</main>
+</div>
 
 
-<!-- نافذة إضافة / تعديل ولاية -->
+<!-- =========================
+     RECEIPT MODAL
+========================= -->
 
 <div
 class="modal"
-id="deliveryModal">
+id="receiptModal">
 
 
 <div class="modal-box">
 
+<h2>
 
-<h2 id="modalTitle">
-إضافة ولاية
+🧾 وصل الدفع
+
 </h2>
 
-
-<div class="form-group">
-
-<label>
-اسم الولاية
-</label>
-
-<input
-type="text"
-id="wilayaName"
-placeholder="مثال: Batna">
-
-</div>
+<br>
 
 
-<div class="form-group">
-
-<label>
-سعر التوصيل إلى المكتب DA
-</label>
-
-<input
-type="number"
-id="officePrice"
-placeholder="مثال: 400"
-min="0">
-
-</div>
+<img
+id="receiptImage"
+src=""
+alt="وصل الدفع">
 
 
-<div class="form-group">
+<br>
 
-<label>
-سعر التوصيل إلى المنزل DA
-</label>
-
-<input
-type="number"
-id="homePrice"
-placeholder="مثال: 500"
-min="0">
-
-</div>
-
-
-<div class="modal-buttons">
 
 <button
-class="cancel-btn"
-onclick="closeDeliveryModal()">
+class="close-btn"
+id="closeModal">
 
-إلغاء
-
-</button>
-
-<button
-class="save-btn"
-onclick="saveDelivery()">
-
-حفظ
+إغلاق
 
 </button>
-
-</div>
-
 
 </div>
 
@@ -792,43 +951,64 @@ onclick="saveDelivery()">
 <script type="module">
 
 
-import { initializeApp }
+/* =========================
+   FIREBASE
+========================= */
 
-from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import {
+
+initializeApp
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
 
 import {
 
 getFirestore,
+
 collection,
+
 getDocs,
-deleteDoc,
+
 doc,
-setDoc,
-getCountFromServer
+
+updateDoc,
+
+deleteDoc
 
 }
 
-from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+from
 
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
-/* Firebase */
 
 const firebaseConfig = {
 
-apiKey:"AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+apiKey:
+"AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
 
-authDomain:"g-glam.firebaseapp.com",
+authDomain:
+"g-glam.firebaseapp.com",
 
-projectId:"g-glam",
+projectId:
+"g-glam",
 
-storageBucket:"g-glam.firebasestorage.app",
+storageBucket:
+"g-glam.firebasestorage.app",
 
-messagingSenderId:"997228419719",
+messagingSenderId:
+"997228419719",
 
-appId:"1:997228419719:web:f9d88de7ea2c6f457e3622",
+appId:
+"1:997228419719:web:f9d88de7ea2c6f457e3622",
 
-measurementId:"G-WX1K1F83F6"
+measurementId:
+"G-WX1K1F83F6"
 
 };
 
@@ -840,701 +1020,97 @@ const db =
 getFirestore(app);
 
 
-/* العناصر */
+/* =========================
+   ELEMENTS
+========================= */
 
-const productsContainer =
-document.getElementById("productsContainer");
+const storesTable =
+document.getElementById(
+"storesTable"
+);
 
-const productsCount =
-document.getElementById("productsCount");
+const emptyMessage =
+document.getElementById(
+"emptyMessage"
+);
 
-const ordersCount =
-document.getElementById("ordersCount");
+const searchInput =
+document.getElementById(
+"searchInput"
+);
 
-const deliveryTableBody =
-document.getElementById("deliveryTableBody");
+const totalStores =
+document.getElementById(
+"totalStores"
+);
 
-const deliveryMobile =
-document.getElementById("deliveryMobile");
+const pendingStores =
+document.getElementById(
+"pendingStores"
+);
 
-const modal =
-document.getElementById("deliveryModal");
+const approvedStores =
+document.getElementById(
+"approvedStores"
+);
 
-const modalTitle =
-document.getElementById("modalTitle");
+const rejectedStores =
+document.getElementById(
+"rejectedStores"
+);
 
-const wilayaName =
-document.getElementById("wilayaName");
+const receiptModal =
+document.getElementById(
+"receiptModal"
+);
 
-const officePrice =
-document.getElementById("officePrice");
+const receiptImage =
+document.getElementById(
+"receiptImage"
+);
 
-const homePrice =
-document.getElementById("homePrice");
 
-
-let editingWilaya = null;
+let stores=[];
 
 
 /* =========================
-   المنتجات
+   LOAD STORES
 ========================= */
 
-async function loadProducts(){
+async function loadStores(){
 
 try{
 
 const snapshot =
 await getDocs(
-collection(db,"products")
-);
-
-productsContainer.innerHTML="";
-
-productsCount.textContent =
-snapshot.size;
-
-
-if(snapshot.empty){
-
-productsContainer.innerHTML=`
-
-<div class="empty">
-لا توجد منتجات حاليًا
-</div>
-
-`;
-
-return;
-
-}
-
-
-snapshot.forEach(productDoc=>{
-
-const product =
-productDoc.data();
-
-const id =
-productDoc.id;
-
-
-const card =
-document.createElement("div");
-
-card.className="product";
-
-
-card.innerHTML=`
-
-<img
-src="${
-product.image ||
-'https://via.placeholder.com/400x400?text=G-Glam'
-}"
-alt="${product.name || 'منتج'}"
->
-
-
-<h3>
-${product.name || "بدون اسم"}
-</h3>
-
-
-<div class="product-price">
-${product.price || 0} DA
-</div>
-
-
-<div class="product-buttons">
-
-<button
-class="edit-btn"
-onclick="editProduct('${id}')">
-
-تعديل
-
-</button>
-
-
-<button
-class="delete-btn"
-onclick="deleteProduct('${id}')">
-
-حذف
-
-</button>
-
-</div>
-
-`;
-
-
-productsContainer.appendChild(card);
-
-});
-
-
-}catch(error){
-
-console.error(error);
-
-productsContainer.innerHTML=`
-
-<div class="empty">
-حدث خطأ أثناء تحميل المنتجات
-</div>
-
-`;
-
-}
-
-}
-
-
-/* حذف المنتج */
-
-window.deleteProduct =
-async function(id){
-
-const ok =
-confirm(
-"هل أنت متأكد من حذف هذا المنتج؟"
-);
-
-if(!ok)return;
-
-
-try{
-
-await deleteDoc(
-doc(db,"products",id)
-);
-
-alert(
-"تم حذف المنتج بنجاح ✅"
-);
-
-loadProducts();
-
-}catch(error){
-
-console.error(error);
-
-alert(
-"حدث خطأ أثناء حذف المنتج"
-);
-
-}
-
-};
-
-
-/* تعديل المنتج */
-
-window.editProduct =
-function(id){
-
-alert(
-"صفحة تعديل المنتج سنضيفها في الخطوة القادمة.\nID: "+id
-);
-
-};
-
-
-/* =========================
-   الطلبات
-========================= */
-
-async function loadOrdersCount(){
-
-try{
-
-const snapshot =
-await getDocs(
-collection(db,"orders")
-);
-
-ordersCount.textContent =
-snapshot.size;
-
-}catch(error){
-
-console.error(error);
-
-ordersCount.textContent =
-"0";
-
-}
-
-}
-
-
-/* =========================
-   التوصيل
-========================= */
-
-async function loadDelivery(){
-
-try{
-
-const snapshot =
-await getDocs(
-collection(db,"delivery")
+collection(db,"stores")
 );
 
 
-deliveryTableBody.innerHTML="";
-deliveryMobile.innerHTML="";
+stores=[];
 
 
-if(snapshot.empty){
+snapshot.forEach(
+item=>{
 
-deliveryTableBody.innerHTML=`
-
-<tr>
-
-<td colspan="4">
-لا توجد ولايات
-</td>
-
-</tr>
-
-`;
-
-deliveryMobile.innerHTML=`
-
-<div class="empty">
-لا توجد ولايات توصيل
-</div>
-
-`;
-
-return;
-
-}
-
-
-const data=[];
-
-
-snapshot.forEach(item=>{
-
-const d =
-item.data();
-
-data.push({
+stores.push({
 
 id:item.id,
 
-office:
-Number(d.office || 0),
-
-home:
-Number(d.home || 0)
+...item.data()
 
 });
 
 });
 
 
-/* ترتيب أبجدي */
-
-data.sort((a,b)=>
-a.id.localeCompare(
-b.id,
-'ar'
-));
-
-
-data.forEach(item=>{
-
-
-/* نسخة الكمبيوتر */
-
-const row =
-document.createElement("tr");
-
-
-row.innerHTML=`
-
-<td>
-${item.id}
-</td>
-
-<td>
-${item.office} DA
-</td>
-
-<td>
-${item.home} DA
-</td>
-
-<td>
-
-<div class="delivery-actions">
-
-<button
-class="delivery-edit"
-onclick="editDelivery('${escapeJs(item.id)}')">
-
-✏️ تعديل
-
-</button>
-
-<button
-class="delivery-delete"
-onclick="deleteDelivery('${escapeJs(item.id)}')">
-
-🗑️ حذف
-
-</button>
-
-</div>
-
-</td>
-
-`;
-
-
-deliveryTableBody.appendChild(row);
-
-
-/* نسخة الهاتف */
-
-const card =
-document.createElement("div");
-
-card.className="delivery-card";
-
-
-card.innerHTML=`
-
-<div class="delivery-card-title">
-🚚 ${item.id}
-</div>
-
-<div class="delivery-row">
-
-<span>
-إلى المكتب
-</span>
-
-<strong>
-${item.office} DA
-</strong>
-
-</div>
-
-
-<div class="delivery-row">
-
-<span>
-إلى المنزل
-</span>
-
-<strong>
-${item.home} DA
-</strong>
-
-</div>
-
-
-<div class="delivery-card-actions">
-
-<button
-class="delivery-edit"
-onclick="editDelivery('${escapeJs(item.id)}')">
-
-✏️ تعديل
-
-</button>
-
-
-<button
-class="delivery-delete"
-onclick="deleteDelivery('${escapeJs(item.id)}')">
-
-🗑️ حذف
-
-</button>
-
-</div>
-
-`;
-
-
-deliveryMobile.appendChild(card);
-
-});
-
-
-}catch(error){
-
-console.error(error);
-
-deliveryTableBody.innerHTML=`
-
-<tr>
-
-<td colspan="4">
-حدث خطأ أثناء تحميل أسعار التوصيل
-</td>
-
-</tr>
-
-`;
-
-}
-
-}
-
-
-/* حماية بسيطة للنص داخل onclick */
-
-function escapeJs(value){
-
-return String(value)
-.replace(/\\/g,"\\\\")
-.replace(/'/g,"\\'");
-
-}
-
-
-/* فتح إضافة */
-
-window.openAddDelivery =
-function(){
-
-editingWilaya=null;
-
-modalTitle.textContent =
-"إضافة ولاية";
-
-wilayaName.value="";
-officePrice.value="";
-homePrice.value="";
-
-wilayaName.disabled=false;
-
-modal.classList.add("active");
-
-};
-
-
-/* فتح تعديل */
-
-window.editDelivery =
-async function(id){
-
-try{
-
-const snapshot =
-await getDocs(
-collection(db,"delivery")
+updateStats(
+stores
 );
 
-let found=null;
-
-
-snapshot.forEach(item=>{
-
-if(item.id===id){
-
-found=item.data();
-
-}
-
-});
-
-
-if(!found){
-
-alert("لم يتم العثور على الولاية");
-
-return;
-
-}
-
-
-editingWilaya=id;
-
-modalTitle.textContent =
-"تعديل الولاية";
-
-wilayaName.value=id;
-
-officePrice.value =
-found.office ?? 0;
-
-homePrice.value =
-found.home ?? 0;
-
-wilayaName.disabled=true;
-
-modal.classList.add("active");
-
-
-}catch(error){
-
-console.error(error);
-
-alert(
-"حدث خطأ أثناء تحميل بيانات الولاية"
+displayStores(
+stores
 );
-
-}
-
-};
-
-
-/* إغلاق */
-
-window.closeDeliveryModal =
-function(){
-
-modal.classList.remove("active");
-
-};
-
-
-/* حفظ */
-
-window.saveDelivery =
-async function(){
-
-const name =
-wilayaName.value.trim();
-
-const office =
-Number(officePrice.value);
-
-const home =
-Number(homePrice.value);
-
-
-if(!name){
-
-alert(
-"يرجى إدخال اسم الولاية"
-);
-
-return;
-
-}
-
-
-if(
-office < 0 ||
-home < 0 ||
-officePrice.value === "" ||
-homePrice.value === ""
-){
-
-alert(
-"يرجى إدخال أسعار صحيحة"
-);
-
-return;
-
-}
-
-
-try{
-
-/* إضافة */
-
-if(!editingWilaya){
-
-const existing =
-await getDocs(
-collection(db,"delivery")
-);
-
-let alreadyExists=false;
-
-existing.forEach(item=>{
-
-if(
-item.id.toLowerCase() ===
-name.toLowerCase()
-){
-
-alreadyExists=true;
-
-}
-
-});
-
-
-if(alreadyExists){
-
-alert(
-"هذه الولاية موجودة بالفعل"
-);
-
-return;
-
-}
-
-
-await setDoc(
-
-doc(
-db,
-"delivery",
-name
-),
-
-{
-
-office:office,
-
-home:home
-
-}
-
-);
-
-showSuccess(
-"تمت إضافة الولاية بنجاح ✅"
-);
-
-}
-
-
-/* تعديل */
-
-else{
-
-await setDoc(
-
-doc(
-db,
-"delivery",
-editingWilaya
-),
-
-{
-
-office:office,
-
-home:home
-
-}
-
-);
-
-showSuccess(
-"تم تعديل أسعار الولاية بنجاح ✅"
-);
-
-}
-
-
-closeDeliveryModal();
-
-loadDelivery();
 
 
 }catch(error){
@@ -1542,7 +1118,429 @@ loadDelivery();
 console.error(error);
 
 showError(
-"حدث خطأ أثناء حفظ البيانات"
+"حدث خطأ أثناء تحميل المتاجر"
+);
+
+}
+
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+function updateStats(data){
+
+let pending=0;
+
+let approved=0;
+
+let rejected=0;
+
+
+data.forEach(store=>{
+
+const status =
+store.status ||
+"pending";
+
+
+if(status==="pending"){
+
+pending++;
+
+}
+
+else if(status==="approved"){
+
+approved++;
+
+}
+
+else if(status==="rejected"){
+
+rejected++;
+
+}
+
+});
+
+
+totalStores.textContent =
+data.length;
+
+pendingStores.textContent =
+pending;
+
+approvedStores.textContent =
+approved;
+
+rejectedStores.textContent =
+rejected;
+
+}
+
+
+/* =========================
+   DISPLAY
+========================= */
+
+function displayStores(data){
+
+storesTable.innerHTML="";
+
+
+if(data.length===0){
+
+emptyMessage.style.display=
+"block";
+
+return;
+
+}
+
+
+emptyMessage.style.display=
+"none";
+
+
+data.forEach(
+(store,index)=>{
+
+
+const status =
+store.status ||
+"pending";
+
+
+let statusText=
+"قيد الانتظار";
+
+let statusClass=
+"pending";
+
+
+if(status==="approved"){
+
+statusText=
+"مقبول";
+
+statusClass=
+"approved";
+
+}
+
+
+if(status==="rejected"){
+
+statusText=
+"مرفوض";
+
+statusClass=
+"rejected";
+
+}
+
+
+let date="-";
+
+
+if(store.createdAt){
+
+if(
+store.createdAt.toDate
+){
+
+date=
+store.createdAt
+.toDate()
+.toLocaleDateString(
+"ar-DZ"
+);
+
+}
+
+else{
+
+date=
+store.createdAt;
+
+}
+
+}
+
+
+const receipt =
+store.paymentReceipt ||
+store.receipt ||
+store.receiptUrl ||
+"";
+
+
+const tr =
+document.createElement(
+"tr"
+);
+
+
+tr.innerHTML=`
+
+<td>
+
+${index+1}
+
+</td>
+
+
+<td>
+
+<strong>
+
+${escapeHtml(
+store.storeName ||
+"G-Glam"
+)}
+
+</strong>
+
+</td>
+
+
+<td>
+
+${escapeHtml(
+store.ownerName ||
+store.name ||
+"-"
+)}
+
+</td>
+
+
+<td>
+
+${escapeHtml(
+store.ownerEmail ||
+store.email ||
+"-"
+)}
+
+</td>
+
+
+<td>
+
+${escapeHtml(
+store.phone ||
+"-"
+)}
+
+</td>
+
+
+<td>
+
+${date}
+
+</td>
+
+
+<td>
+
+<strong>
+3500 DA
+</strong>
+
+</td>
+
+
+<td>
+
+${
+receipt
+
+?
+
+`
+
+<img
+
+class="receipt-img"
+
+src="${receipt}"
+
+onclick="showReceipt('${escapeAttribute(receipt)}')"
+
+title="عرض الوصل"
+
+>
+
+`
+
+:
+
+`
+
+<span>
+لا يوجد
+</span>
+
+`
+
+}
+
+</td>
+
+
+<td>
+
+<span
+class="status ${statusClass}">
+
+${statusText}
+
+</span>
+
+</td>
+
+
+<td>
+
+${
+status!=="approved"
+
+?
+
+`
+
+<button
+
+class="approve-btn"
+
+onclick="approveStore('${store.id}')">
+
+✅ قبول
+
+</button>
+
+`
+
+:
+
+""
+
+}
+
+
+${
+status!=="rejected"
+
+?
+
+`
+
+<button
+
+class="reject-btn"
+
+onclick="rejectStore('${store.id}')">
+
+❌ رفض
+
+</button>
+
+`
+
+:
+
+""
+
+}
+
+
+<button
+
+class="delete-btn"
+
+onclick="deleteStore('${store.id}')">
+
+🗑️ حذف
+
+</button>
+
+</td>
+
+`;
+
+
+storesTable.appendChild(
+tr
+);
+
+}
+
+);
+
+}
+
+
+/* =========================
+   ACCEPT
+========================= */
+
+window.approveStore =
+async function(id){
+
+const ok =
+confirm(
+"هل تريد قبول صاحب هذا المتجر؟"
+);
+
+
+if(!ok)return;
+
+
+try{
+
+await updateDoc(
+
+doc(
+db,
+"stores",
+id
+),
+
+{
+
+status:
+"approved",
+
+paymentStatus:
+"approved",
+
+approvedAt:
+new Date()
+
+}
+
+);
+
+
+showSuccess(
+"تم قبول صاحب المتجر ✅"
+);
+
+
+loadStores();
+
+
+}catch(error){
+
+console.error(error);
+
+showError(
+"حدث خطأ أثناء قبول المتجر"
 );
 
 }
@@ -1550,17 +1548,81 @@ showError(
 };
 
 
-/* حذف ولاية */
+/* =========================
+   REJECT
+========================= */
 
-window.deleteDelivery =
+window.rejectStore =
 async function(id){
 
 const ok =
 confirm(
-"هل أنت متأكد من حذف ولاية " +
-id +
-"؟\n\nستختفي من قائمة التوصيل بعد ربط cart.html بها."
+"هل تريد رفض صاحب هذا المتجر؟"
 );
+
+
+if(!ok)return;
+
+
+try{
+
+await updateDoc(
+
+doc(
+db,
+"stores",
+id
+),
+
+{
+
+status:
+"rejected",
+
+paymentStatus:
+"rejected",
+
+rejectedAt:
+new Date()
+
+}
+
+);
+
+
+showSuccess(
+"تم رفض صاحب المتجر ❌"
+);
+
+
+loadStores();
+
+
+}catch(error){
+
+console.error(error);
+
+showError(
+"حدث خطأ أثناء رفض المتجر"
+);
+
+}
+
+};
+
+
+/* =========================
+   DELETE
+========================= */
+
+window.deleteStore =
+async function(id){
+
+const ok =
+confirm(
+"⚠️ هل تريد حذف صاحب المتجر نهائيًا؟"
+);
+
 
 if(!ok)return;
 
@@ -1568,14 +1630,22 @@ if(!ok)return;
 try{
 
 await deleteDoc(
-doc(db,"delivery",id)
+
+doc(
+db,
+"stores",
+id
+)
+
 );
+
 
 showSuccess(
-"تم حذف الولاية بنجاح 🗑️"
+"تم حذف المتجر"
 );
 
-loadDelivery();
+
+loadStores();
 
 
 }catch(error){
@@ -1583,7 +1653,7 @@ loadDelivery();
 console.error(error);
 
 showError(
-"حدث خطأ أثناء حذف الولاية"
+"حدث خطأ أثناء حذف المتجر"
 );
 
 }
@@ -1591,29 +1661,191 @@ showError(
 };
 
 
-/* رسائل */
+/* =========================
+   SHOW RECEIPT
+========================= */
+
+window.showReceipt =
+function(url){
+
+receiptImage.src=url;
+
+receiptModal.classList.add(
+"active"
+);
+
+};
+
+
+/* =========================
+   CLOSE RECEIPT
+========================= */
+
+document
+.getElementById("closeModal")
+.addEventListener(
+"click",
+function(){
+
+receiptModal.classList.remove(
+"active"
+);
+
+receiptImage.src="";
+
+});
+
+
+receiptModal.addEventListener(
+"click",
+function(e){
+
+if(e.target===receiptModal){
+
+receiptModal.classList.remove(
+"active"
+);
+
+}
+
+});
+
+
+/* =========================
+   SEARCH
+========================= */
+
+searchInput.addEventListener(
+"input",
+function(){
+
+const value =
+this.value
+.toLowerCase()
+.trim();
+
+
+const result =
+stores.filter(
+store=>{
+
+const text=
+
+(
+
+store.storeName ||
+""
+
+)
+
++
+
+" "
+
++
+
+(
+
+store.ownerName ||
+store.name ||
+""
+
+)
+
++
+
+" "
+
++
+
+(
+
+store.ownerEmail ||
+store.email ||
+""
+
+)
+
++
+
+" "
+
++
+
+(
+
+store.phone ||
+""
+
+);
+
+
+return text
+.toLowerCase()
+.includes(value);
+
+});
+
+
+displayStores(
+result
+);
+
+});
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHtml(value){
+
+return String(value)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+function escapeAttribute(value){
+
+return String(value)
+.replace(/\\/g,"\\\\")
+.replace(/'/g,"\\'")
+.replace(/"/g,"&quot;");
+
+}
+
+
+/* =========================
+   MESSAGES
+========================= */
 
 function showSuccess(text){
 
 const box =
 document.getElementById(
-"deliverySuccess"
+"successMsg"
 );
 
 box.textContent=text;
 
-box.style.display="block";
-
-document.getElementById(
-"deliveryError"
-).style.display="none";
+box.style.display=
+"block";
 
 
-setTimeout(()=>{
+setTimeout(
+()=>{
 
-box.style.display="none";
+box.style.display=
+"none";
 
-},3000);
+},
+3000
+);
 
 }
 
@@ -1622,71 +1854,53 @@ function showError(text){
 
 const box =
 document.getElementById(
-"deliveryError"
+"errorMsg"
 );
 
 box.textContent=text;
 
-box.style.display="block";
-
-document.getElementById(
-"deliverySuccess"
-).style.display="none";
+box.style.display=
+"block";
 
 
-setTimeout(()=>{
+setTimeout(
+()=>{
 
-box.style.display="none";
+box.style.display=
+"none";
 
-},4000);
+},
+4000
+);
 
 }
 
 
-/* أزرار التنقل */
-
-window.goAddProduct =
-function(){
-
-window.location.href =
-"add-product.html";
-
-};
-
-
-window.goOrders =
-function(){
-
-window.location.href =
-"orders.html";
-
-};
-
-
-/* زر القائمة */
+/* =========================
+   LOGOUT
+========================= */
 
 document
-.getElementById("menuBtn")
+.getElementById("logoutBtn")
 .addEventListener(
 "click",
 function(){
 
-alert(
-"لوحة تحكم G-Glam"
+localStorage.removeItem(
+"adminLogged"
 );
 
-}
-);
+window.location.href=
+"login.html";
+
+});
 
 
-/* تشغيل */
+/* =========================
+   START
+========================= */
 
-loadProducts();
-
-loadOrdersCount();
-
-loadDelivery();
-
+loadStores();
 
 </script>
 
