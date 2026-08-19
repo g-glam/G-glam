@@ -107,21 +107,12 @@ margin:0;
 
 .header p{
 color:#777;
-margin-bottom:0;
+margin-bottom:8px;
 }
 
-/* معلومات المتجر */
-
-.store-info{
-background:#fff;
-padding:15px;
-border-radius:12px;
-margin-bottom:20px;
-box-shadow:0 2px 10px rgba(0,0,0,.08);
-}
-
-.store-info p{
-margin:6px 0;
+.owner-info{
+font-size:14px;
+color:#555;
 }
 
 /* البحث */
@@ -139,6 +130,18 @@ padding:12px;
 border:1px solid #ddd;
 border-radius:8px;
 font-size:16px;
+}
+
+/* الرسائل */
+
+.message{
+background:white;
+padding:25px;
+border-radius:12px;
+text-align:center;
+margin-bottom:20px;
+color:#666;
+display:none;
 }
 
 /* شبكة المنتجات */
@@ -162,7 +165,6 @@ width:100%;
 height:220px;
 object-fit:cover;
 border-radius:10px;
-background:#eee;
 }
 
 .product-card h3{
@@ -198,31 +200,7 @@ background:#c62828;
 color:white;
 }
 
-.empty{
-background:white;
-padding:30px;
-border-radius:12px;
-text-align:center;
-color:#777;
-grid-column:1/-1;
-}
-
-.loading{
-background:white;
-padding:30px;
-border-radius:12px;
-text-align:center;
-grid-column:1/-1;
-}
-
-.error{
-background:#f8d7da;
-color:#721c24;
-padding:20px;
-border-radius:12px;
-text-align:center;
-grid-column:1/-1;
-}
+/* الهاتف */
 
 @media(max-width:1000px){
 
@@ -235,7 +213,7 @@ grid-template-columns:repeat(3,1fr);
 @media(max-width:700px){
 
 .products-grid{
-grid-template-columns:1fr;
+grid-template-columns:1fr 1fr;
 }
 
 .content{
@@ -249,6 +227,14 @@ width:60px;
 
 .sidebar:hover{
 width:200px;
+}
+
+}
+
+@media(max-width:450px){
+
+.products-grid{
+grid-template-columns:1fr;
 }
 
 }
@@ -339,7 +325,6 @@ G-Glam
 
 <div class="content">
 
-
 <div class="header">
 
 <h1>
@@ -350,37 +335,14 @@ G-Glam
 إدارة منتجات متجرك
 </p>
 
-</div>
+<div class="owner-info">
 
-
-<!-- معلومات المتجر -->
-
-<div class="store-info">
-
-<p>
-<strong>🏪 المتجر:</strong>
-
-<span id="storeName">
-جاري التحميل...
-</span>
-</p>
-
-<p>
-<strong>📧 البريد:</strong>
-
+📧 الحساب:
 <span id="ownerEmail">
 جاري التحميل...
 </span>
-</p>
 
-<p>
-<strong>🛍️ عدد المنتجات:</strong>
-
-<span id="productsCount">
-0
-</span>
-
-</p>
+</div>
 
 </div>
 
@@ -397,15 +359,22 @@ placeholder="🔎 البحث عن منتج...">
 </div>
 
 
+<!-- الرسالة -->
+
+<div
+class="message"
+id="message">
+
+جاري تحميل المنتجات...
+
+</div>
+
+
 <!-- المنتجات -->
 
 <div
 class="products-grid"
 id="productsList">
-
-<div class="loading">
-⏳ جاري تحميل منتجات متجرك...
-</div>
 
 </div>
 
@@ -416,9 +385,9 @@ id="productsList">
 <script type="module">
 
 
-/* =========================================
+/* ================================
    Firebase
-========================================= */
+================================ */
 
 import { initializeApp }
 
@@ -450,9 +419,9 @@ onAuthStateChanged
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
 
-/* =========================================
+/* ================================
    Firebase Config
-========================================= */
+================================ */
 
 const firebaseConfig = {
 
@@ -490,9 +459,9 @@ const auth =
 getAuth(app);
 
 
-/* =========================================
+/* ================================
    العناصر
-========================================= */
+================================ */
 
 const productsList =
 document.getElementById(
@@ -504,9 +473,9 @@ document.getElementById(
 "searchInput"
 );
 
-const storeNameElement =
+const message =
 document.getElementById(
-"storeName"
+"message"
 );
 
 const ownerEmailElement =
@@ -514,243 +483,38 @@ document.getElementById(
 "ownerEmail"
 );
 
-const productsCountElement =
-document.getElementById(
-"productsCount"
-);
 
-
-/* =========================================
+/* ================================
    المتغيرات
-========================================= */
+================================ */
 
 let products = [];
 
 let currentOwnerEmail = "";
 
-let currentStoreId = "";
 
-let currentStoreName = "";
+/* ================================
+   تحميل المنتجات
+================================ */
 
-
-/* =========================================
-   الحصول على البريد
-========================================= */
-
-function getSavedEmail(){
-
-const savedEmail =
-localStorage.getItem(
-"storeOwnerEmail"
-);
-
-if(savedEmail){
-
-return savedEmail;
-
-}
-
-
-const savedOwnerEmail =
-localStorage.getItem(
-"ownerEmail"
-);
-
-if(savedOwnerEmail){
-
-return savedOwnerEmail;
-
-}
-
-
-return "";
-
-}
-
-
-/* =========================================
-   تحميل بيانات المتجر
-========================================= */
-
-async function loadStoreAndProducts(){
+async function loadProducts(){
 
 try{
 
-
 /*
-   أولًا نحصل على المستخدم
+   لا نسمح بتحميل كل المنتجات.
+
+   نبحث فقط عن المنتجات
+   التي ownerEmail فيها يساوي
+   بريد صاحب المتجر الحالي.
 */
 
-const user =
-auth.currentUser;
+const q = query(
 
-
-/*
-   البريد من Firebase Authentication
-*/
-
-if(user && user.email){
-
-currentOwnerEmail =
-user.email;
-
-}
-
-
-/*
-   إذا لم يوجد المستخدم،
-   نحاول localStorage
-*/
-
-if(!currentOwnerEmail){
-
-currentOwnerEmail =
-getSavedEmail();
-
-}
-
-
-/*
-   إذا لم نجد البريد
-*/
-
-if(!currentOwnerEmail){
-
-ownerEmailElement.textContent =
-"غير مسجل";
-
-storeNameElement.textContent =
-"غير معروف";
-
-productsList.innerHTML = `
-
-<div class="error">
-
-❌ لم يتم العثور على صاحب المتجر.
-
-<br><br>
-
-يرجى تسجيل الدخول أولًا.
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-/*
-   عرض البريد
-*/
-
-ownerEmailElement.textContent =
-currentOwnerEmail;
-
-
-/* =====================================
-   البحث عن متجر صاحب البريد
-===================================== */
-
-const storeQuery =
-query(
-
-collection(db,"stores"),
-
-where(
-"ownerEmail",
-"==",
-currentOwnerEmail
-)
-
-);
-
-
-const storeSnapshot =
-await getDocs(
-storeQuery
-);
-
-
-/*
-   إذا وجد المتجر
-*/
-
-if(!storeSnapshot.empty){
-
-const storeDoc =
-storeSnapshot.docs[0];
-
-const storeData =
-storeDoc.data();
-
-
-currentStoreId =
-storeDoc.id;
-
-
-currentStoreName =
-storeData.storeName ||
-"G-Glam";
-
-
-storeNameElement.textContent =
-currentStoreName;
-
-
-/*
-   حفظ المعلومات
-*/
-
-localStorage.setItem(
-"storeId",
-currentStoreId
-);
-
-localStorage.setItem(
-"storeName",
-currentStoreName
-);
-
-localStorage.setItem(
-"storeOwnerEmail",
-currentOwnerEmail
-);
-
-}
-else{
-
-/*
-   لم نجد متجرًا لهذا البريد
-*/
-
-currentStoreName =
-"G-Glam";
-
-storeNameElement.textContent =
-"G-Glam";
-
-}
-
-
-/* =====================================
-   تحميل المنتجات
-===================================== */
-
-
-/*
-   مهم جدًا:
-
-   نبحث فقط عن المنتجات التي
-   ownerEmail فيها يساوي بريد
-   صاحب المتجر الحالي.
-*/
-
-const productsQuery =
-query(
-
-collection(db,"products"),
+collection(
+db,
+"products"
+),
 
 where(
 "ownerEmail",
@@ -762,16 +526,14 @@ currentOwnerEmail
 
 
 const snapshot =
-await getDocs(
-productsQuery
-);
+await getDocs(q);
 
 
 products = [];
 
 
 snapshot.forEach(
-function(item){
+(item)=>{
 
 products.push({
 
@@ -784,50 +546,48 @@ id:item.id,
 });
 
 
-/*
-   عدد المنتجات
-*/
-
-productsCountElement.textContent =
-products.length;
-
-
-/*
-   عرض المنتجات
-*/
-
 displayProducts(products);
+
+
+/* لا توجد منتجات */
+
+if(products.length === 0){
+
+message.textContent =
+"لا توجد منتجات في متجرك حاليًا.";
+
+message.style.display =
+"block";
+
+}else{
+
+message.style.display =
+"none";
+
+}
 
 
 }catch(error){
 
 console.error(
-"Products loading error:",
+"Load products error:",
 error
 );
 
-productsList.innerHTML = `
+message.textContent =
+"❌ حدث خطأ أثناء تحميل المنتجات";
 
-<div class="error">
-
-❌ حدث خطأ أثناء تحميل المنتجات.
-
-<br><br>
-
-${error.message}
-
-</div>
-
-`;
+message.style.display =
+"block";
 
 }
 
 }
 
 
-/* =========================================
+/* ================================
    عرض المنتجات
-========================================= */
+================================ */
 
 function displayProducts(data){
 
@@ -836,28 +596,13 @@ productsList.innerHTML = "";
 
 if(data.length === 0){
 
-productsList.innerHTML = `
-
-<div class="empty">
-
-🛍️ لا توجد منتجات في متجرك حاليًا.
-
-<br><br>
-
-يمكنك إضافة منتج جديد من زر
-<strong>إضافة منتج</strong>.
-
-</div>
-
-`;
-
 return;
 
 }
 
 
 data.forEach(
-function(product){
+(product)=>{
 
 
 const card =
@@ -878,34 +623,21 @@ card.innerHTML = `
 
 <img
 src="${image}"
-alt="${escapeHtml(product.name || 'منتج')}"
+alt="${product.name || 'منتج'}"
 >
 
-
 <h3>
-
-${escapeHtml(
-product.name || "بدون اسم"
-)}
-
+${product.name || "بدون اسم"}
 </h3>
 
-
 <div class="price">
-
 ${product.price || 0} DA
-
 </div>
-
 
 <div class="stock">
-
 المخزون:
-
 ${product.stock || 0}
-
 </div>
-
 
 <button
 class="edit-btn"
@@ -914,7 +646,6 @@ data-id="${product.id}">
 ✏️ تعديل
 
 </button>
-
 
 <button
 class="delete-btn"
@@ -927,9 +658,7 @@ data-id="${product.id}">
 `;
 
 
-/*
-   زر التعديل
-*/
+/* زر التعديل */
 
 card
 .querySelector(".edit-btn")
@@ -945,9 +674,7 @@ product.id
 );
 
 
-/*
-   زر الحذف
-*/
+/* زر الحذف */
 
 card
 .querySelector(".delete-btn")
@@ -963,7 +690,9 @@ product.id
 );
 
 
-productsList.appendChild(card);
+productsList.appendChild(
+card
+);
 
 }
 
@@ -972,44 +701,25 @@ productsList.appendChild(card);
 }
 
 
-/* =========================================
-   حماية HTML
-========================================= */
-
-function escapeHtml(value){
-
-return String(value)
-
-.replace(/&/g,"&amp;")
-
-.replace(/</g,"&lt;")
-
-.replace(/>/g,"&gt;")
-
-.replace(/"/g,"&quot;")
-
-.replace(/'/g,"&#039;");
-
-}
-
-
-/* =========================================
+/* ================================
    تعديل المنتج
-========================================= */
+================================ */
 
-function editProduct(id){
+window.editProduct =
+function(id){
 
 window.location.href =
 "edit-product.html?id=" + id;
 
-}
+};
 
 
-/* =========================================
+/* ================================
    حذف المنتج
-========================================= */
+================================ */
 
-async function deleteProduct(id){
+window.deleteProduct =
+async function(id){
 
 const confirmDelete =
 confirm(
@@ -1025,7 +735,6 @@ return;
 
 
 try{
-
 
 await deleteDoc(
 
@@ -1043,12 +752,7 @@ alert(
 );
 
 
-/*
-   إعادة تحميل منتجات
-   صاحب المتجر الحالي فقط
-*/
-
-await loadStoreAndProducts();
+loadProducts();
 
 
 }catch(error){
@@ -1056,20 +760,17 @@ await loadStoreAndProducts();
 console.error(error);
 
 alert(
-
-"حدث خطأ أثناء حذف المنتج:\n" +
-error.message
-
+"حدث خطأ أثناء حذف المنتج"
 );
 
 }
 
-}
+};
 
 
-/* =========================================
+/* ================================
    البحث
-========================================= */
+================================ */
 
 searchInput.addEventListener(
 "input",
@@ -1077,13 +778,13 @@ function(){
 
 const value =
 this.value
-.trim()
-.toLowerCase();
+.toLowerCase()
+.trim();
 
 
 const result =
 products.filter(
-function(product){
+product=>{
 
 return (
 
@@ -1101,70 +802,93 @@ product.name
 
 displayProducts(result);
 
+
+if(result.length === 0){
+
+message.textContent =
+"لم يتم العثور على منتج.";
+
+message.style.display =
+"block";
+
+}else{
+
+message.style.display =
+"none";
+
 }
-);
+
+});
 
 
-/* =========================================
-   انتظار تسجيل الدخول
-========================================= */
+/* ================================
+   التحقق من المستخدم
+================================ */
 
 onAuthStateChanged(
+
 auth,
+
 async function(user){
 
 /*
-   إذا كان المستخدم مسجلًا
+   المستخدم غير مسجل
 */
 
-if(user && user.email){
+if(!user){
+
+ownerEmailElement.textContent =
+"غير مسجل";
+
+message.textContent =
+"⚠️ يجب تسجيل الدخول أولًا.";
+
+message.style.display =
+"block";
+
+productsList.innerHTML =
+"";
+
+return;
+
+}
+
+
+/*
+   البريد الحالي
+*/
 
 currentOwnerEmail =
 user.email;
 
 
 /*
-   تحميل المتجر والمنتجات
+   عرضه في الصفحة
 */
 
-await loadStoreAndProducts();
+ownerEmailElement.textContent =
+currentOwnerEmail;
 
-}
-
-else{
 
 /*
-   إذا لم يكن Firebase Auth
-   يحمل المستخدم، نحاول localStorage
+   حفظه محليًا أيضًا
 */
 
-currentOwnerEmail =
-getSavedEmail();
+localStorage.setItem(
+"storeOwnerEmail",
+currentOwnerEmail
+);
 
 
-if(currentOwnerEmail){
+/*
+   تحميل منتجات هذا المستخدم فقط
+*/
 
-await loadStoreAndProducts();
-
-}
-else{
-
-productsList.innerHTML = `
-
-<div class="error">
-
-❌ يجب تسجيل الدخول إلى حساب صاحب المتجر أولًا.
-
-</div>
-
-`;
+await loadProducts();
 
 }
 
-}
-
-});
-
+);
 
 </script>
 
