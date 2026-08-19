@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>G-Glam | في انتظار الموافقة</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+margin:0;
+background:#f5f0e8;
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+color:#222;
+}
+
+.card{
+background:white;
+width:100%;
+max-width:500px;
+padding:30px 25px;
+border-radius:22px;
+box-shadow:0 5px 25px rgba(0,0,0,.08);
+text-align:center;
+}
+
+.logo{
+font-size:34px;
+font-weight:bold;
+margin-bottom:10px;
+}
+
+.icon{
+font-size:65px;
+margin:15px 0;
+}
+
+h1{
+font-size:24px;
+margin-bottom:12px;
+}
+
+.description{
+color:#666;
+line-height:1.8;
+margin-bottom:20px;
+}
+
+.info{
+background:#f8f5f0;
+padding:18px;
+border-radius:14px;
+text-align:right;
+margin-bottom:20px;
+line-height:2;
+}
+
+.info strong{
+color:#222;
+}
+
+.status{
+background:#fff3cd;
+color:#856404;
+padding:13px;
+border-radius:10px;
+margin-bottom:20px;
+font-weight:bold;
+}
+
+button{
+width:100%;
+padding:14px;
+border:none;
+border-radius:12px;
+background:#222;
+color:white;
+font-size:16px;
+cursor:pointer;
+margin-top:10px;
+}
+
+button:hover{
+opacity:.9;
+}
+
+.logout{
+background:#eee;
+color:#222;
+}
+
+.message{
+display:none;
+padding:12px;
+border-radius:10px;
+margin-top:15px;
+line-height:1.6;
+}
+
+.error{
+background:#f8d7da;
+color:#721c24;
+}
+
+.approved{
+background:#d4edda;
+color:#155724;
+}
+
+.rejected{
+background:#f8d7da;
+color:#721c24;
+}
+
+.loading{
+color:#777;
+font-size:14px;
+margin-top:15px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<div class="card">
+
+
+<div class="logo">
+G-Glam
+</div>
+
+
+<div class="icon">
+⏳
+</div>
+
+
+<h1>
+طلبك قيد المراجعة
+</h1>
+
+
+<p class="description">
+
+تم استلام طلب إنشاء متجرك ووصل الدفع بنجاح.
+
+<br>
+
+سيقوم فريق الإدارة بمراجعة وصل الدفع والموافقة على المتجر.
+
+</p>
+
+
+<div class="status">
+🕐 في انتظار موافقة الإدارة
+</div>
+
+
+<div class="info">
+
+<div>
+👤 <strong>الاسم:</strong>
+<span id="ownerName">...</span>
+</div>
+
+<div>
+🏪 <strong>المتجر:</strong>
+<span id="storeName">...</span>
+</div>
+
+<div>
+📧 <strong>البريد:</strong>
+<span id="ownerEmail">...</span>
+</div>
+
+<div>
+💰 <strong>المبلغ:</strong>
+3500 DA
+</div>
+
+</div>
+
+
+<button
+id="refreshBtn">
+
+🔄 تحديث حالة الطلب
+
+</button>
+
+
+<button
+class="logout"
+id="logoutBtn">
+
+🚪 تسجيل الخروج
+
+</button>
+
+
+<div
+class="message error"
+id="errorMsg">
+</div>
+
+
+<div
+class="message approved"
+id="approvedMsg">
+
+✅ تمت الموافقة على متجرك!
+
+<br>
+
+جاري تحويلك إلى لوحة التحكم...
+
+</div>
+
+
+<div
+class="message rejected"
+id="rejectedMsg">
+</div>
+
+
+<div
+class="loading"
+id="loading">
+
+جاري التحقق من حالة الطلب...
+
+</div>
+
+
+</div>
+
+
+<script type="module">
+
+
+/* =========================
+   Firebase
+========================= */
+
+import {
+initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+
+import {
+getAuth,
+onAuthStateChanged,
+signOut
+}
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+
+import {
+getFirestore,
+doc,
+getDoc
+}
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+
+/* =========================
+   Firebase Config
+========================= */
+
+const firebaseConfig = {
+
+apiKey:
+"AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+
+authDomain:
+"g-glam.firebaseapp.com",
+
+projectId:
+"g-glam",
+
+storageBucket:
+"g-glam.firebasestorage.app",
+
+messagingSenderId:
+"997228419719",
+
+appId:
+"1:997228419719:web:f9d88de7ea2c6f457e3622",
+
+measurementId:
+"G-WX1K1F83F6"
+
+};
+
+
+const app =
+initializeApp(firebaseConfig);
+
+const auth =
+getAuth(app);
+
+const db =
+getFirestore(app);
+
+
+/* =========================
+   العناصر
+========================= */
+
+const ownerNameElement =
+document.getElementById(
+"ownerName"
+);
+
+const storeNameElement =
+document.getElementById(
+"storeName"
+);
+
+const ownerEmailElement =
+document.getElementById(
+"ownerEmail"
+);
+
+const loading =
+document.getElementById(
+"loading"
+);
+
+const errorMsg =
+document.getElementById(
+"errorMsg"
+);
+
+const approvedMsg =
+document.getElementById(
+"approvedMsg"
+);
+
+const rejectedMsg =
+document.getElementById(
+"rejectedMsg"
+);
+
+const refreshBtn =
+document.getElementById(
+"refreshBtn"
+);
+
+const logoutBtn =
+document.getElementById(
+"logoutBtn"
+);
+
+
+/* =========================
+   المستخدم الحالي
+========================= */
+
+let currentUser = null;
+
+
+/* =========================
+   التحقق من الطلب
+========================= */
+
+async function checkRequest(){
+
+if(!currentUser){
+
+return;
+
+}
+
+
+loading.style.display =
+"block";
+
+errorMsg.style.display =
+"none";
+
+approvedMsg.style.display =
+"none";
+
+rejectedMsg.style.display =
+"none";
+
+
+try{
+
+
+const requestRef =
+doc(
+db,
+"storeRequests",
+currentUser.uid
+);
+
+
+const requestSnapshot =
+await getDoc(requestRef);
+
+
+if(!requestSnapshot.exists()){
+
+loading.style.display =
+"none";
+
+errorMsg.textContent =
+"لم يتم العثور على طلب إنشاء المتجر.";
+
+errorMsg.style.display =
+"block";
+
+return;
+
+}
+
+
+const data =
+requestSnapshot.data();
+
+
+/* معلومات المستخدم */
+
+ownerNameElement.textContent =
+data.ownerName || "-";
+
+storeNameElement.textContent =
+data.storeName || "-";
+
+ownerEmailElement.textContent =
+data.ownerEmail ||
+currentUser.email ||
+"-";
+
+
+/* الحالة */
+
+const status =
+data.status;
+
+
+/* =========================
+   Pending
+========================= */
+
+if(status === "pending"){
+
+loading.textContent =
+"آخر تحديث: الطلب مازال قيد المراجعة.";
+
+return;
+
+}
+
+
+/* =========================
+   Approved
+========================= */
+
+if(status === "approved"){
+
+loading.style.display =
+"none";
+
+approvedMsg.style.display =
+"block";
+
+refreshBtn.style.display =
+"none";
+
+
+setTimeout(
+function(){
+
+window.location.href =
+"dashboard.html";
+
+},
+1500
+);
+
+return;
+
+}
+
+
+/* =========================
+   Rejected
+========================= */
+
+if(status === "rejected"){
+
+loading.style.display =
+"none";
+
+rejectedMsg.innerHTML =
+
+"❌ تم رفض طلب إنشاء المتجر." +
+
+"<br><br>" +
+
+(
+data.rejectionReason
+?
+"السبب: " +
+data.rejectionReason
+:
+"يرجى التواصل مع الإدارة لمعرفة السبب."
+);
+
+rejectedMsg.style.display =
+"block";
+
+return;
+
+}
+
+
+loading.style.display =
+"none";
+
+errorMsg.textContent =
+"حالة الطلب غير معروفة.";
+
+errorMsg.style.display =
+"block";
+
+
+}
+catch(error){
+
+console.error(error);
+
+loading.style.display =
+"none";
+
+errorMsg.textContent =
+"حدث خطأ أثناء التحقق من الطلب. حاول مرة أخرى.";
+
+errorMsg.style.display =
+"block";
+
+}
+
+}
+
+
+/* =========================
+   التحقق من تسجيل الدخول
+========================= */
+
+onAuthStateChanged(
+auth,
+function(user){
+
+if(!user){
+
+window.location.href =
+"login.html";
+
+return;
+
+}
+
+
+currentUser =
+user;
+
+checkRequest();
+
+}
+);
+
+
+/* =========================
+   تحديث
+========================= */
+
+refreshBtn.addEventListener(
+"click",
+function(){
+
+checkRequest();
+
+}
+);
+
+
+/* =========================
+   تسجيل الخروج
+========================= */
+
+logoutBtn.addEventListener(
+"click",
+async function(){
+
+try{
+
+await signOut(auth);
+
+localStorage.removeItem(
+"storeOwnerEmail"
+);
+
+localStorage.removeItem(
+"storeName"
+);
+
+localStorage.removeItem(
+"paymentStatus"
+);
+
+localStorage.removeItem(
+"storeId"
+);
+
+window.location.href =
+"login.html";
+
+}
+catch(error){
+
+console.error(error);
+
+}
+
+});
+
+
+</script>
+
+</body>
+
+</html>
