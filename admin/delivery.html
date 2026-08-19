@@ -818,9 +818,16 @@ id:item.id,
 });
 
 
-items.sort((a,b)=>
-a.id.localeCompare(b.id,'ar')
-);
+const order = Object.keys(tarifs);
+
+items.sort((a,b) => {
+
+const indexA = order.indexOf(a.id);
+const indexB = order.indexOf(b.id);
+
+return indexA - indexB;
+
+});
 
 
 items.forEach(item=>{
