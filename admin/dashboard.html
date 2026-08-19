@@ -1,80 +1,448 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>لوحة تحكم G-Glam</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>G-Glam | لوحة التحكم</title>
 
 <style>
 
+:root{
+--bg:#F5F0E8;
+--card:#FFFFFF;
+--text:#222;
+--muted:#777;
+--accent:#B89B7A;
+--dark:#222;
+--danger:#f1dede;
+--dangerText:#9b3030;
+}
+
 *{
+box-sizing:border-box;
 margin:0;
 padding:0;
-box-sizing:border-box;
 font-family:Arial,sans-serif;
 }
 
 body{
-display:flex;
-background:#f5f5f5;
+background:var(--bg);
+color:var(--text);
+min-height:100vh;
 }
 
-.sidebar{
-width:250px;
-height:100vh;
-background:#111;
-color:white;
-padding:20px;
-position:fixed;
-right:0;
+.header{
+height:75px;
+background:#fff;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 20px;
+box-shadow:0 2px 12px rgba(0,0,0,.06);
+position:sticky;
 top:0;
+z-index:10;
 }
 
 .logo{
+font-size:28px;
+font-weight:800;
+}
+
+.menu-btn{
+width:45px;
+height:45px;
+border:none;
+border-radius:14px;
+background:var(--bg);
 font-size:22px;
+cursor:pointer;
+}
+
+.store-name{
 font-weight:bold;
-margin-bottom:30px;
-text-align:center;
+font-size:16px;
 }
 
-.menu a{
-display:block;
-color:white;
-text-decoration:none;
-padding:15px;
-border-radius:10px;
-margin-bottom:10px;
-background:#1f1f1f;
+.container{
+max-width:1100px;
+margin:auto;
+padding:25px 15px 100px;
 }
 
-.menu a:hover{
-background:#333;
+.welcome{
+margin-bottom:25px;
 }
 
-.content{
-margin-right:270px;
-padding:20px;
-width:100%;
+.welcome h1{
+font-size:27px;
+margin-bottom:7px;
 }
 
-.cards{
+.welcome p{
+color:var(--muted);
+}
+
+.stats{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+margin-bottom:25px;
 }
 
-.card{
-background:white;
+.stat{
+background:#fff;
+border-radius:18px;
 padding:20px;
-border-radius:15px;
-box-shadow:0 0 10px rgba(0,0,0,.1);
+box-shadow:0 3px 15px rgba(0,0,0,.05);
+}
+
+.stat-title{
+color:var(--muted);
+font-size:14px;
+margin-bottom:10px;
+}
+
+.stat-value{
+font-size:25px;
+font-weight:bold;
+}
+
+.actions{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+margin-bottom:30px;
+}
+
+.action{
+background:#fff;
+border:none;
+border-radius:18px;
+padding:22px;
+text-align:right;
+cursor:pointer;
+box-shadow:0 3px 15px rgba(0,0,0,.05);
+}
+
+.action h3{
+margin-bottom:7px;
+font-size:18px;
+}
+
+.action p{
+color:var(--muted);
+font-size:14px;
+}
+
+.section{
+background:#fff;
+border-radius:18px;
+padding:20px;
+margin-bottom:25px;
+box-shadow:0 3px 15px rgba(0,0,0,.05);
+}
+
+.section-header{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:10px;
+margin-bottom:18px;
+}
+
+.section-header h2{
+font-size:22px;
+}
+
+.add-btn{
+background:var(--dark);
+color:white;
+border:none;
+padding:12px 18px;
+border-radius:14px;
+cursor:pointer;
+font-size:15px;
+}
+
+.products{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px;
+}
+
+.product{
+background:#fff;
+border:1px solid #eee;
+border-radius:18px;
+padding:10px;
+}
+
+.product img{
+width:100%;
+height:180px;
+object-fit:cover;
+border-radius:14px;
+}
+
+.product h3{
+font-size:16px;
+margin:10px 5px 5px;
+}
+
+.product-price{
+font-weight:bold;
+margin:0 5px 10px;
+}
+
+.product-buttons{
+display:flex;
+gap:7px;
+}
+
+.product-buttons button{
+flex:1;
+padding:10px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
+
+.edit-btn{
+background:var(--bg);
+}
+
+.delete-btn{
+background:var(--danger);
+color:var(--dangerText);
+}
+
+.empty{
+background:#fff;
+border-radius:18px;
+padding:35px;
+text-align:center;
+color:var(--muted);
+grid-column:1/-1;
+}
+
+/* جدول التوصيل */
+
+.delivery-table{
+width:100%;
+border-collapse:collapse;
+}
+
+.delivery-table th,
+.delivery-table td{
+padding:13px 10px;
+border-bottom:1px solid #eee;
 text-align:center;
 }
 
-.card h2{
-font-size:30px;
+.delivery-table th{
+background:#f8f5f0;
+font-size:14px;
+}
+
+.delivery-table td{
+font-size:15px;
+}
+
+.delivery-actions{
+display:flex;
+justify-content:center;
+gap:7px;
+}
+
+.delivery-actions button{
+border:none;
+padding:8px 12px;
+border-radius:9px;
+cursor:pointer;
+}
+
+.delivery-edit{
+background:var(--bg);
+}
+
+.delivery-delete{
+background:var(--danger);
+color:var(--dangerText);
+}
+
+.delivery-mobile{
+display:none;
+}
+
+/* النافذة */
+
+.modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.45);
+display:none;
+align-items:center;
+justify-content:center;
+padding:20px;
+z-index:1000;
+}
+
+.modal.active{
+display:flex;
+}
+
+.modal-box{
+background:#fff;
+width:100%;
+max-width:450px;
+border-radius:20px;
+padding:25px;
+box-shadow:0 10px 40px rgba(0,0,0,.2);
+}
+
+.modal-box h2{
+margin-bottom:20px;
+}
+
+.form-group{
+margin-bottom:15px;
+}
+
+.form-group label{
+display:block;
+font-weight:bold;
+margin-bottom:7px;
+}
+
+.form-group input{
+width:100%;
+padding:13px;
+border:1px solid #ddd;
+border-radius:11px;
+font-size:15px;
+}
+
+.modal-buttons{
+display:flex;
+gap:10px;
+margin-top:20px;
+}
+
+.modal-buttons button{
+flex:1;
+padding:13px;
+border:none;
+border-radius:11px;
+cursor:pointer;
+font-size:15px;
+}
+
+.save-btn{
+background:#222;
+color:#fff;
+}
+
+.cancel-btn{
+background:#eee;
+color:#222;
+}
+
+.message{
+padding:12px;
+border-radius:10px;
+margin-bottom:15px;
+display:none;
+text-align:center;
+}
+
+.success{
+background:#d4edda;
+color:#155724;
+}
+
+.error{
+background:#f8d7da;
+color:#721c24;
+}
+
+@media(max-width:800px){
+
+.products{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media(max-width:600px){
+
+.stats{
+grid-template-columns:1fr;
+}
+
+.actions{
+grid-template-columns:1fr;
+}
+
+.header{
+padding:0 12px;
+}
+
+.welcome h1{
+font-size:23px;
+}
+
+.products{
+grid-template-columns:1fr 1fr;
+}
+
+.delivery-table{
+display:none;
+}
+
+.delivery-mobile{
+display:block;
+}
+
+.delivery-card{
+border:1px solid #eee;
+border-radius:14px;
+padding:15px;
+margin-bottom:12px;
+}
+
+.delivery-card-title{
+font-weight:bold;
+font-size:17px;
+margin-bottom:10px;
+}
+
+.delivery-row{
+display:flex;
+justify-content:space-between;
+padding:5px 0;
+color:#555;
+}
+
+.delivery-card-actions{
+display:flex;
+gap:8px;
 margin-top:10px;
+}
+
+.delivery-card-actions button{
+flex:1;
+border:none;
+padding:10px;
+border-radius:9px;
+cursor:pointer;
+}
+
 }
 
 </style>
@@ -83,83 +451,368 @@ margin-top:10px;
 
 <body>
 
-<div class="sidebar">
+<header class="header">
+
+<button
+class="menu-btn"
+id="menuBtn">
+
+☰
+
+</button>
 
 <div class="logo">
-G-Glam Admin
+G-Glam
 </div>
 
-<div class="menu">
+<div
+class="store-name"
+id="storeName">
 
-<a href="dashboard.html">
-🏠 الرئيسية
-</a>
-
-<a href="orders.html">
-📦 الطلبات
-</a>
-
-<a href="products.html">
-🛍 المنتجات
-</a>
-
-<a href="add-product.html">
-➕ إضافة منتج
-</a>
-
-<a href="#" id="logoutBtn">
-🚪 تسجيل الخروج
-</a>
+G-Glam
 
 </div>
 
-</div>
+</header>
 
-<div class="content">
+
+<main class="container">
+
+
+<div class="welcome">
 
 <h1>
-لوحة التحكم
+مرحبًا بك 👋
 </h1>
 
-<br>
+<p>
+إدارة متجرك من مكان واحد
+</p>
 
-<div class="cards">
-
-<div class="card">
-عدد الطلبات
-<h2 id="ordersCount">0</h2>
 </div>
 
-<div class="card">
+
+<!-- الإحصائيات -->
+
+<div class="stats">
+
+<div class="stat">
+
+<div class="stat-title">
 عدد المنتجات
-<h2 id="productsCount">0</h2>
+</div>
+
+<div
+class="stat-value"
+id="productsCount">
+
+0
+
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-title">
+عدد الطلبات
+</div>
+
+<div
+class="stat-value"
+id="ordersCount">
+
+0
+
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-title">
+اسم المتجر
+</div>
+
+<div
+class="stat-value"
+id="storeNameStat">
+
+G-Glam
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- الأزرار -->
+
+<div class="actions">
+
+<button
+class="action"
+onclick="goAddProduct()">
+
+<h3>
+➕ إضافة منتج
+</h3>
+
+<p>
+أضف منتجًا جديدًا إلى متجرك
+</p>
+
+</button>
+
+
+<button
+class="action"
+onclick="goOrders()">
+
+<h3>
+📦 الطلبات
+</h3>
+
+<p>
+عرض وإدارة طلبات الزبائن
+</p>
+
+</button>
+
+</div>
+
+
+<!-- المنتجات -->
+
+<div class="section">
+
+<div class="section-header">
+
+<h2>
+🛍️ منتجاتي
+</h2>
+
+<button
+class="add-btn"
+onclick="goAddProduct()">
+
++ إضافة منتج
+
+</button>
+
+</div>
+
+
+<div
+class="products"
+id="productsContainer">
+
+<div class="empty">
+جاري تحميل المنتجات...
 </div>
 
 </div>
 
 </div>
+
+
+<!-- التوصيل -->
+
+<div class="section">
+
+<div class="section-header">
+
+<h2>
+🚚 إدارة التوصيل
+</h2>
+
+<button
+class="add-btn"
+onclick="openAddDelivery()">
+
++ إضافة ولاية
+
+</button>
+
+</div>
+
+
+<div
+class="message success"
+id="deliverySuccess">
+
+تم حفظ التعديل بنجاح ✅
+
+</div>
+
+
+<div
+class="message error"
+id="deliveryError">
+
+حدث خطأ أثناء العملية
+
+</div>
+
+
+<table class="delivery-table">
+
+<thead>
+
+<tr>
+
+<th>
+الولاية
+</th>
+
+<th>
+إلى المكتب
+</th>
+
+<th>
+إلى المنزل
+</th>
+
+<th>
+الإجراءات
+</th>
+
+</tr>
+
+</thead>
+
+<tbody id="deliveryTableBody">
+
+</tbody>
+
+</table>
+
+
+<div
+class="delivery-mobile"
+id="deliveryMobile">
+
+</div>
+
+
+</div>
+
+
+</main>
+
+
+<!-- نافذة إضافة / تعديل ولاية -->
+
+<div
+class="modal"
+id="deliveryModal">
+
+
+<div class="modal-box">
+
+
+<h2 id="modalTitle">
+إضافة ولاية
+</h2>
+
+
+<div class="form-group">
+
+<label>
+اسم الولاية
+</label>
+
+<input
+type="text"
+id="wilayaName"
+placeholder="مثال: Batna">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+سعر التوصيل إلى المكتب DA
+</label>
+
+<input
+type="number"
+id="officePrice"
+placeholder="مثال: 400"
+min="0">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+سعر التوصيل إلى المنزل DA
+</label>
+
+<input
+type="number"
+id="homePrice"
+placeholder="مثال: 500"
+min="0">
+
+</div>
+
+
+<div class="modal-buttons">
+
+<button
+class="cancel-btn"
+onclick="closeDeliveryModal()">
+
+إلغاء
+
+</button>
+
+<button
+class="save-btn"
+onclick="saveDelivery()">
+
+حفظ
+
+</button>
+
+</div>
+
+
+</div>
+
+</div>
+
 
 <script type="module">
 
-if(
-localStorage.getItem("adminLogged")
-!=="true"
-){
-
-window.location.href=
-"login.html";
-
-}
 
 import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
 
 import {
+
 getFirestore,
 collection,
-getDocs
+getDocs,
+deleteDoc,
+doc,
+setDoc,
+getCountFromServer
+
 }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+
+/* Firebase */
 
 const firebaseConfig = {
 
@@ -179,55 +832,864 @@ measurementId:"G-WX1K1F83F6"
 
 };
 
+
 const app =
 initializeApp(firebaseConfig);
 
 const db =
 getFirestore(app);
 
-async function loadStats(){
 
-const orders =
-await getDocs(
-collection(db,"orders")
-);
+/* العناصر */
 
-document.getElementById(
-"ordersCount"
-).innerText =
-orders.size;
+const productsContainer =
+document.getElementById("productsContainer");
 
-const products =
+const productsCount =
+document.getElementById("productsCount");
+
+const ordersCount =
+document.getElementById("ordersCount");
+
+const deliveryTableBody =
+document.getElementById("deliveryTableBody");
+
+const deliveryMobile =
+document.getElementById("deliveryMobile");
+
+const modal =
+document.getElementById("deliveryModal");
+
+const modalTitle =
+document.getElementById("modalTitle");
+
+const wilayaName =
+document.getElementById("wilayaName");
+
+const officePrice =
+document.getElementById("officePrice");
+
+const homePrice =
+document.getElementById("homePrice");
+
+
+let editingWilaya = null;
+
+
+/* =========================
+   المنتجات
+========================= */
+
+async function loadProducts(){
+
+try{
+
+const snapshot =
 await getDocs(
 collection(db,"products")
 );
 
-document.getElementById(
-"productsCount"
-).innerText =
-products.size;
+productsContainer.innerHTML="";
+
+productsCount.textContent =
+snapshot.size;
+
+
+if(snapshot.empty){
+
+productsContainer.innerHTML=`
+
+<div class="empty">
+لا توجد منتجات حاليًا
+</div>
+
+`;
+
+return;
 
 }
 
-loadStats();
+
+snapshot.forEach(productDoc=>{
+
+const product =
+productDoc.data();
+
+const id =
+productDoc.id;
+
+
+const card =
+document.createElement("div");
+
+card.className="product";
+
+
+card.innerHTML=`
+
+<img
+src="${
+product.image ||
+'https://via.placeholder.com/400x400?text=G-Glam'
+}"
+alt="${product.name || 'منتج'}"
+>
+
+
+<h3>
+${product.name || "بدون اسم"}
+</h3>
+
+
+<div class="product-price">
+${product.price || 0} DA
+</div>
+
+
+<div class="product-buttons">
+
+<button
+class="edit-btn"
+onclick="editProduct('${id}')">
+
+تعديل
+
+</button>
+
+
+<button
+class="delete-btn"
+onclick="deleteProduct('${id}')">
+
+حذف
+
+</button>
+
+</div>
+
+`;
+
+
+productsContainer.appendChild(card);
+
+});
+
+
+}catch(error){
+
+console.error(error);
+
+productsContainer.innerHTML=`
+
+<div class="empty">
+حدث خطأ أثناء تحميل المنتجات
+</div>
+
+`;
+
+}
+
+}
+
+
+/* حذف المنتج */
+
+window.deleteProduct =
+async function(id){
+
+const ok =
+confirm(
+"هل أنت متأكد من حذف هذا المنتج؟"
+);
+
+if(!ok)return;
+
+
+try{
+
+await deleteDoc(
+doc(db,"products",id)
+);
+
+alert(
+"تم حذف المنتج بنجاح ✅"
+);
+
+loadProducts();
+
+}catch(error){
+
+console.error(error);
+
+alert(
+"حدث خطأ أثناء حذف المنتج"
+);
+
+}
+
+};
+
+
+/* تعديل المنتج */
+
+window.editProduct =
+function(id){
+
+alert(
+"صفحة تعديل المنتج سنضيفها في الخطوة القادمة.\nID: "+id
+);
+
+};
+
+
+/* =========================
+   الطلبات
+========================= */
+
+async function loadOrdersCount(){
+
+try{
+
+const snapshot =
+await getDocs(
+collection(db,"orders")
+);
+
+ordersCount.textContent =
+snapshot.size;
+
+}catch(error){
+
+console.error(error);
+
+ordersCount.textContent =
+"0";
+
+}
+
+}
+
+
+/* =========================
+   التوصيل
+========================= */
+
+async function loadDelivery(){
+
+try{
+
+const snapshot =
+await getDocs(
+collection(db,"delivery")
+);
+
+
+deliveryTableBody.innerHTML="";
+deliveryMobile.innerHTML="";
+
+
+if(snapshot.empty){
+
+deliveryTableBody.innerHTML=`
+
+<tr>
+
+<td colspan="4">
+لا توجد ولايات
+</td>
+
+</tr>
+
+`;
+
+deliveryMobile.innerHTML=`
+
+<div class="empty">
+لا توجد ولايات توصيل
+</div>
+
+`;
+
+return;
+
+}
+
+
+const data=[];
+
+
+snapshot.forEach(item=>{
+
+const d =
+item.data();
+
+data.push({
+
+id:item.id,
+
+office:
+Number(d.office || 0),
+
+home:
+Number(d.home || 0)
+
+});
+
+});
+
+
+/* ترتيب أبجدي */
+
+data.sort((a,b)=>
+a.id.localeCompare(
+b.id,
+'ar'
+));
+
+
+data.forEach(item=>{
+
+
+/* نسخة الكمبيوتر */
+
+const row =
+document.createElement("tr");
+
+
+row.innerHTML=`
+
+<td>
+${item.id}
+</td>
+
+<td>
+${item.office} DA
+</td>
+
+<td>
+${item.home} DA
+</td>
+
+<td>
+
+<div class="delivery-actions">
+
+<button
+class="delivery-edit"
+onclick="editDelivery('${escapeJs(item.id)}')">
+
+✏️ تعديل
+
+</button>
+
+<button
+class="delivery-delete"
+onclick="deleteDelivery('${escapeJs(item.id)}')">
+
+🗑️ حذف
+
+</button>
+
+</div>
+
+</td>
+
+`;
+
+
+deliveryTableBody.appendChild(row);
+
+
+/* نسخة الهاتف */
+
+const card =
+document.createElement("div");
+
+card.className="delivery-card";
+
+
+card.innerHTML=`
+
+<div class="delivery-card-title">
+🚚 ${item.id}
+</div>
+
+<div class="delivery-row">
+
+<span>
+إلى المكتب
+</span>
+
+<strong>
+${item.office} DA
+</strong>
+
+</div>
+
+
+<div class="delivery-row">
+
+<span>
+إلى المنزل
+</span>
+
+<strong>
+${item.home} DA
+</strong>
+
+</div>
+
+
+<div class="delivery-card-actions">
+
+<button
+class="delivery-edit"
+onclick="editDelivery('${escapeJs(item.id)}')">
+
+✏️ تعديل
+
+</button>
+
+
+<button
+class="delivery-delete"
+onclick="deleteDelivery('${escapeJs(item.id)}')">
+
+🗑️ حذف
+
+</button>
+
+</div>
+
+`;
+
+
+deliveryMobile.appendChild(card);
+
+});
+
+
+}catch(error){
+
+console.error(error);
+
+deliveryTableBody.innerHTML=`
+
+<tr>
+
+<td colspan="4">
+حدث خطأ أثناء تحميل أسعار التوصيل
+</td>
+
+</tr>
+
+`;
+
+}
+
+}
+
+
+/* حماية بسيطة للنص داخل onclick */
+
+function escapeJs(value){
+
+return String(value)
+.replace(/\\/g,"\\\\")
+.replace(/'/g,"\\'");
+
+}
+
+
+/* فتح إضافة */
+
+window.openAddDelivery =
+function(){
+
+editingWilaya=null;
+
+modalTitle.textContent =
+"إضافة ولاية";
+
+wilayaName.value="";
+officePrice.value="";
+homePrice.value="";
+
+wilayaName.disabled=false;
+
+modal.classList.add("active");
+
+};
+
+
+/* فتح تعديل */
+
+window.editDelivery =
+async function(id){
+
+try{
+
+const snapshot =
+await getDocs(
+collection(db,"delivery")
+);
+
+let found=null;
+
+
+snapshot.forEach(item=>{
+
+if(item.id===id){
+
+found=item.data();
+
+}
+
+});
+
+
+if(!found){
+
+alert("لم يتم العثور على الولاية");
+
+return;
+
+}
+
+
+editingWilaya=id;
+
+modalTitle.textContent =
+"تعديل الولاية";
+
+wilayaName.value=id;
+
+officePrice.value =
+found.office ?? 0;
+
+homePrice.value =
+found.home ?? 0;
+
+wilayaName.disabled=true;
+
+modal.classList.add("active");
+
+
+}catch(error){
+
+console.error(error);
+
+alert(
+"حدث خطأ أثناء تحميل بيانات الولاية"
+);
+
+}
+
+};
+
+
+/* إغلاق */
+
+window.closeDeliveryModal =
+function(){
+
+modal.classList.remove("active");
+
+};
+
+
+/* حفظ */
+
+window.saveDelivery =
+async function(){
+
+const name =
+wilayaName.value.trim();
+
+const office =
+Number(officePrice.value);
+
+const home =
+Number(homePrice.value);
+
+
+if(!name){
+
+alert(
+"يرجى إدخال اسم الولاية"
+);
+
+return;
+
+}
+
+
+if(
+office < 0 ||
+home < 0 ||
+officePrice.value === "" ||
+homePrice.value === ""
+){
+
+alert(
+"يرجى إدخال أسعار صحيحة"
+);
+
+return;
+
+}
+
+
+try{
+
+/* إضافة */
+
+if(!editingWilaya){
+
+const existing =
+await getDocs(
+collection(db,"delivery")
+);
+
+let alreadyExists=false;
+
+existing.forEach(item=>{
+
+if(
+item.id.toLowerCase() ===
+name.toLowerCase()
+){
+
+alreadyExists=true;
+
+}
+
+});
+
+
+if(alreadyExists){
+
+alert(
+"هذه الولاية موجودة بالفعل"
+);
+
+return;
+
+}
+
+
+await setDoc(
+
+doc(
+db,
+"delivery",
+name
+),
+
+{
+
+office:office,
+
+home:home
+
+}
+
+);
+
+showSuccess(
+"تمت إضافة الولاية بنجاح ✅"
+);
+
+}
+
+
+/* تعديل */
+
+else{
+
+await setDoc(
+
+doc(
+db,
+"delivery",
+editingWilaya
+),
+
+{
+
+office:office,
+
+home:home
+
+}
+
+);
+
+showSuccess(
+"تم تعديل أسعار الولاية بنجاح ✅"
+);
+
+}
+
+
+closeDeliveryModal();
+
+loadDelivery();
+
+
+}catch(error){
+
+console.error(error);
+
+showError(
+"حدث خطأ أثناء حفظ البيانات"
+);
+
+}
+
+};
+
+
+/* حذف ولاية */
+
+window.deleteDelivery =
+async function(id){
+
+const ok =
+confirm(
+"هل أنت متأكد من حذف ولاية " +
+id +
+"؟\n\nستختفي من قائمة التوصيل بعد ربط cart.html بها."
+);
+
+if(!ok)return;
+
+
+try{
+
+await deleteDoc(
+doc(db,"delivery",id)
+);
+
+showSuccess(
+"تم حذف الولاية بنجاح 🗑️"
+);
+
+loadDelivery();
+
+
+}catch(error){
+
+console.error(error);
+
+showError(
+"حدث خطأ أثناء حذف الولاية"
+);
+
+}
+
+};
+
+
+/* رسائل */
+
+function showSuccess(text){
+
+const box =
+document.getElementById(
+"deliverySuccess"
+);
+
+box.textContent=text;
+
+box.style.display="block";
+
+document.getElementById(
+"deliveryError"
+).style.display="none";
+
+
+setTimeout(()=>{
+
+box.style.display="none";
+
+},3000);
+
+}
+
+
+function showError(text){
+
+const box =
+document.getElementById(
+"deliveryError"
+);
+
+box.textContent=text;
+
+box.style.display="block";
+
+document.getElementById(
+"deliverySuccess"
+).style.display="none";
+
+
+setTimeout(()=>{
+
+box.style.display="none";
+
+},4000);
+
+}
+
+
+/* أزرار التنقل */
+
+window.goAddProduct =
+function(){
+
+window.location.href =
+"add-product.html";
+
+};
+
+
+window.goOrders =
+function(){
+
+window.location.href =
+"orders.html";
+
+};
+
+
+/* زر القائمة */
 
 document
-.getElementById("logoutBtn")
+.getElementById("menuBtn")
 .addEventListener(
 "click",
-()=>{
+function(){
 
-localStorage.removeItem(
-"adminLogged"
+alert(
+"لوحة تحكم G-Glam"
 );
-
-window.location.href=
-"login.html";
 
 }
 );
+
+
+/* تشغيل */
+
+loadProducts();
+
+loadOrdersCount();
+
+loadDelivery();
+
 
 </script>
 
 </body>
-</html>
+
+  </html>
