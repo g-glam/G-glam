@@ -56,7 +56,6 @@ opacity:.9;
 
 <body>
 
-
 <div class="login-box">
 
 <h2>
@@ -64,46 +63,27 @@ opacity:.9;
 </h2>
 
 <p>
-سجل الدخول بحساب صاحب المتجر
+سجل الدخول بحساب المدير
 </p>
 
 <button id="loginBtn">
-
 تسجيل الدخول بواسطة Google
-
 </button>
 
 </div>
 
-
 <script type="module">
 
-
-/* =========================
-   Firebase
-========================= */
-
 import { initializeApp }
-
-from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-
 getAuth,
-
 GoogleAuthProvider,
-
 signInWithPopup
-
 }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-
-
-/* =========================
-   Firebase Config
-========================= */
 
 const firebaseConfig = {
 
@@ -131,32 +111,25 @@ measurementId:
 };
 
 
-/* =========================
-   تشغيل Firebase
-========================= */
-
 const app =
 initializeApp(firebaseConfig);
 
+
 const auth =
 getAuth(app);
+
 
 const provider =
 new GoogleAuthProvider();
 
 
-/* =========================
-   تسجيل الدخول
-========================= */
-
 document
 .getElementById("loginBtn")
 .addEventListener(
 "click",
-async function(){
+async ()=>{
 
 try{
-
 
 const result =
 await signInWithPopup(
@@ -169,39 +142,42 @@ const user =
 result.user;
 
 
-/* =========================
-   حفظ معلومات المستخدم
-========================= */
+if(
+user.email ===
+"loxenteam@gmail.com"
+){
 
 localStorage.setItem(
-"storeOwnerEmail",
-user.email
+"adminLogged",
+"true"
 );
 
-localStorage.setItem(
-"ownerEmail",
-user.email
-);
-
-
-/* =========================
-   الانتقال إلى Dashboard
-========================= */
 
 window.location.href =
 "dashboard.html";
 
+}
 
-}catch(error){
+else{
 
-console.error(
-"Login error:",
-error
+alert(
+"هذا الحساب غير مصرح له بالدخول"
 );
 
 
+auth.signOut();
+
+}
+
+}
+
+catch(error){
+
+console.error(error);
+
+
 alert(
-"❌ حدث خطأ أثناء تسجيل الدخول"
+"حدث خطأ أثناء تسجيل الدخول"
 );
 
 }
