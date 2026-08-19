@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+G-Glam | إنشاء متجر
+</title>
+
+<style>
+
+:root{
+
+--bg:#F5F0E8;
+--card:#FFFFFF;
+--text:#222;
+--accent:#B89B7A;
+--shadow:0 5px 20px rgba(0,0,0,.07);
+
+}
+
+*{
+
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:Arial,sans-serif;
+
+}
+
+body{
+
+background:var(--bg);
+color:var(--text);
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+
+}
+
+.container{
+
+width:100%;
+max-width:500px;
+
+}
+
+.logo{
+
+text-align:center;
+font-size:38px;
+font-weight:800;
+margin-bottom:8px;
+
+}
+
+.subtitle{
+
+text-align:center;
+color:#666;
+margin-bottom:25px;
+
+}
+
+.card{
+
+background:var(--card);
+border-radius:20px;
+padding:25px;
+box-shadow:var(--shadow);
+
+}
+
+h1{
+
+font-size:24px;
+margin-bottom:20px;
+
+}
+
+label{
+
+display:block;
+font-weight:bold;
+margin-bottom:7px;
+
+}
+
+input{
+
+width:100%;
+padding:14px;
+border:none;
+background:#f7f7f7;
+border-radius:14px;
+font-size:16px;
+margin-bottom:15px;
+outline:none;
+
+}
+
+input:focus{
+
+box-shadow:0 0 0 2px var(--accent);
+
+}
+
+button{
+
+width:100%;
+padding:15px;
+border:none;
+border-radius:14px;
+background:#222;
+color:white;
+font-size:17px;
+cursor:pointer;
+margin-top:5px;
+
+}
+
+button:hover{
+
+opacity:.9;
+
+}
+
+.login{
+
+text-align:center;
+margin-top:18px;
+
+}
+
+.login a{
+
+color:#8d7358;
+font-weight:bold;
+text-decoration:none;
+
+}
+
+.message{
+
+margin-top:15px;
+padding:12px;
+border-radius:12px;
+display:none;
+text-align:center;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo">
+
+G-Glam
+
+</div>
+
+<div class="subtitle">
+
+أنشئ متجرك الإلكتروني الخاص
+
+</div>
+
+<div class="card">
+
+<h1>
+
+إنشاء حساب
+
+</h1>
+
+<label>
+
+الاسم واللقب
+
+</label>
+
+<input
+type="text"
+id="fullName"
+placeholder="أدخل الاسم واللقب">
+
+<label>
+
+اسم المتجر
+
+</label>
+
+<input
+type="text"
+id="storeName"
+placeholder="مثال: Sara Beauty">
+
+<label>
+
+البريد الإلكتروني
+
+</label>
+
+<input
+type="email"
+id="email"
+placeholder="example@gmail.com">
+
+<label>
+
+كلمة المرور
+
+</label>
+
+<input
+type="password"
+id="password"
+placeholder="كلمة المرور">
+
+<label>
+
+تأكيد كلمة المرور
+
+</label>
+
+<input
+type="password"
+id="confirmPassword"
+placeholder="أعد كتابة كلمة المرور">
+
+<button
+id="registerBtn">
+
+إنشاء المتجر
+
+</button>
+
+<div
+class="message"
+id="message">
+
+</div>
+
+<div class="login">
+
+لديك حساب بالفعل؟
+
+<a href="login.html">
+
+تسجيل الدخول
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import {
+initializeApp
+}
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+import {
+getAuth,
+createUserWithEmailAndPassword
+}
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+import {
+getFirestore,
+doc,
+setDoc,
+serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+apiKey:
+"AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+
+authDomain:
+"g-glam.firebaseapp.com",
+
+projectId:
+"g-glam",
+
+storageBucket:
+"g-glam.firebasestorage.app",
+
+messagingSenderId:
+"997228419719",
+
+appId:
+"1:997228419719:web:f9d88de7ea2c6f457e3622",
+
+measurementId:
+"G-WX1K1F83F6"
+
+};
+
+
+const app =
+initializeApp(firebaseConfig);
+
+
+const auth =
+getAuth(app);
+
+
+const db =
+getFirestore(app);
+
+
+const registerBtn =
+document.getElementById(
+"registerBtn"
+);
+
+
+const message =
+document.getElementById(
+"message"
+);
+  
+registerBtn.addEventListener(
+"click",
+async function(){
+
+const fullName =
+document.getElementById(
+"fullName"
+).value.trim();
+
+const storeName =
+document.getElementById(
+"storeName"
+).value.trim();
+
+const email =
+document.getElementById(
+"email"
+).value.trim();
+
+const password =
+document.getElementById(
+"password"
+).value;
+
+const confirmPassword =
+document.getElementById(
+"confirmPassword"
+).value;
+
+
+if(
+!fullName ||
+!storeName ||
+!email ||
+!password ||
+!confirmPassword
+){
+
+showMessage(
+"يرجى ملء جميع المعلومات",
+true
+);
+
+return;
+
+}
+
+
+if(password !== confirmPassword){
+
+showMessage(
+"كلمتا المرور غير متطابقتين",
+true
+);
+
+return;
+
+}
+
+
+if(password.length < 6){
+
+showMessage(
+"كلمة المرور يجب أن تكون 6 أحرف على الأقل",
+true
+);
+
+return;
+
+}
+
+
+registerBtn.disabled = true;
+
+registerBtn.textContent =
+"جاري إنشاء المتجر...";
+
+
+try{
+
+const userCredential =
+
+await createUserWithEmailAndPassword(
+
+auth,
+email,
+password
+
+);
+
+
+const user =
+userCredential.user;
+
+const storeId =
+user.uid;
+
+
+await setDoc(
+
+doc(
+db,
+"stores",
+storeId
+),
+
+{
+
+ownerId: user.uid,
+
+ownerName: fullName,
+
+ownerEmail: email,
+
+storeName: storeName,
+
+createdAt:
+serverTimestamp(),
+
+status:
+"active"
+
+}
+
+);
+
+
+await setDoc(
+
+doc(
+db,
+"users",
+user.uid
+),
+
+{
+
+fullName: fullName,
+
+email: email,
+
+storeId: storeId,
+
+storeName: storeName,
+
+createdAt:
+serverTimestamp()
+
+}
+
+);
+
+
+showMessage(
+"تم إنشاء متجرك بنجاح ✅",
+false
+);
+
+
+setTimeout(()=>{
+
+window.location.href =
+"dashboard.html";
+
+},1500);
+
+
+}catch(error){
+
+console.error(error);
+
+let text =
+"حدث خطأ أثناء إنشاء الحساب";
+
+if(
+error.code ===
+"auth/email-already-in-use"
+){
+
+text =
+"هذا البريد الإلكتروني مستخدم من قبل";
+
+}
+
+else if(
+error.code ===
+"auth/invalid-email"
+){
+
+text =
+"البريد الإلكتروني غير صحيح";
+
+}
+
+else if(
+error.code ===
+"auth/weak-password"
+){
+
+text =
+"كلمة المرور ضعيفة";
+
+}
+
+
+showMessage(
+text,
+true
+);
+
+
+registerBtn.disabled = false;
+
+registerBtn.textContent =
+"إنشاء المتجر";
+
+}
+
+});
+  
+function showMessage(
+text,
+error
+){
+
+message.textContent =
+text;
+
+message.style.display =
+"block";
+
+if(error){
+
+message.style.background =
+"#f8d7da";
+
+message.style.color =
+"#842029";
+
+}else{
+
+message.style.background =
+"#d1e7dd";
+
+message.style.color =
+"#0f5132";
+
+}
+
+}
+  
+</script>
+
+</body>
+
+</html>
