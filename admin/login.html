@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>تسجيل دخول الإدارة - G-Glam</title>
 
@@ -49,51 +53,87 @@ opacity:.9;
 </style>
 
 </head>
+
 <body>
+
 
 <div class="login-box">
 
-<h2>🔐 لوحة تحكم G-Glam</h2>
+<h2>
+🔐 لوحة تحكم G-Glam
+</h2>
 
 <p>
-سجل الدخول بحساب المدير
+سجل الدخول بحساب صاحب المتجر
 </p>
 
 <button id="loginBtn">
+
 تسجيل الدخول بواسطة Google
+
 </button>
 
 </div>
 
+
 <script type="module">
 
+
+/* =========================
+   Firebase
+========================= */
+
 import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
 
 import {
+
 getAuth,
+
 GoogleAuthProvider,
+
 signInWithPopup
+
 }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+
+/* =========================
+   Firebase Config
+========================= */
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+apiKey:
+"AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
 
-authDomain: "g-glam.firebaseapp.com",
+authDomain:
+"g-glam.firebaseapp.com",
 
-projectId: "g-glam",
+projectId:
+"g-glam",
 
-storageBucket: "g-glam.firebasestorage.app",
+storageBucket:
+"g-glam.firebasestorage.app",
 
-messagingSenderId: "997228419719",
+messagingSenderId:
+"997228419719",
 
-appId: "1:997228419719:web:f9d88de7ea2c6f457e3622",
+appId:
+"1:997228419719:web:f9d88de7ea2c6f457e3622",
 
-measurementId: "G-WX1K1F83F6"
+measurementId:
+"G-WX1K1F83F6"
 
 };
+
+
+/* =========================
+   تشغيل Firebase
+========================= */
 
 const app =
 initializeApp(firebaseConfig);
@@ -104,13 +144,19 @@ getAuth(app);
 const provider =
 new GoogleAuthProvider();
 
+
+/* =========================
+   تسجيل الدخول
+========================= */
+
 document
 .getElementById("loginBtn")
 .addEventListener(
 "click",
-async ()=>{
+async function(){
 
 try{
+
 
 const result =
 await signInWithPopup(
@@ -118,40 +164,44 @@ auth,
 provider
 );
 
+
 const user =
 result.user;
 
-if(
-user.email ===
-"loxenteam@gmail.com"
-){
+
+/* =========================
+   حفظ معلومات المستخدم
+========================= */
 
 localStorage.setItem(
-"adminLogged",
-"true"
+"storeOwnerEmail",
+user.email
 );
+
+localStorage.setItem(
+"ownerEmail",
+user.email
+);
+
+
+/* =========================
+   الانتقال إلى Dashboard
+========================= */
 
 window.location.href =
 "dashboard.html";
 
-}
-else{
 
-alert(
-"هذا الحساب غير مصرح له بالدخول"
+}catch(error){
+
+console.error(
+"Login error:",
+error
 );
 
-auth.signOut();
-
-}
-
-}
-catch(error){
-
-console.error(error);
 
 alert(
-"حدث خطأ أثناء تسجيل الدخول"
+"❌ حدث خطأ أثناء تسجيل الدخول"
 );
 
 }
@@ -162,4 +212,5 @@ alert(
 </script>
 
 </body>
+
 </html>
