@@ -2,12 +2,16 @@
 <html lang="ar" dir="rtl">
 
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>G-Glam | إنشاء متجري</title>
 
 <style>
+
 *{
 box-sizing:border-box;
 font-family:Arial,sans-serif;
@@ -48,6 +52,7 @@ margin-bottom:25px;
 
 h2{
 margin-top:0;
+margin-bottom:15px;
 }
 
 label{
@@ -131,6 +136,7 @@ padding:12px;
 border-radius:10px;
 margin-bottom:15px;
 text-align:center;
+line-height:1.6;
 }
 
 .error{
@@ -153,38 +159,59 @@ font-size:13px;
 color:#777;
 margin-top:5px;
 }
+
+.login-link{
+text-align:center;
+margin-top:18px;
+color:#777;
+}
+
+.login-link a{
+color:#8d7358;
+font-weight:bold;
+text-decoration:none;
+}
+
 </style>
 
 </head>
 
 <body>
 
+
 <div class="container">
 
 <div class="box">
+
 
 <div class="logo">
 G-Glam
 </div>
 
+
 <div class="subtitle">
 أنشئ متجرك الإلكتروني
 </div>
+
 
 <div
 class="message error"
 id="errorMsg">
 </div>
 
+
 <div
 class="message success"
 id="successMsg">
 </div>
 
+
 <div
 class="message loading"
 id="loadingMsg">
-⏳ جاري إنشاء حسابك وإرسال طلبك...
+
+⏳ جاري إنشاء الحساب وإرسال طلبك...
+
 </div>
 
 
@@ -192,14 +219,15 @@ id="loadingMsg">
 👤 معلومات الحساب
 </h2>
 
+
 <label>
-الاسم
+الاسم واللقب
 </label>
 
 <input
 id="ownerName"
 type="text"
-placeholder="اسمك الكامل">
+placeholder="أدخل اسمك الكامل">
 
 
 <label>
@@ -219,7 +247,7 @@ placeholder="example@gmail.com">
 <input
 id="password"
 type="password"
-placeholder="كلمة المرور">
+placeholder="6 أحرف على الأقل">
 
 
 <label>
@@ -235,6 +263,7 @@ placeholder="أعد كتابة كلمة المرور">
 <h2>
 🏪 معلومات المتجر
 </h2>
+
 
 <label>
 اسم المتجر
@@ -270,15 +299,17 @@ placeholder="مثال: Beauty Store">
 </strong>
 
 <p>
-قم بتحويل مبلغ 3500 DA إلى الحساب التالي:
+قم بتحويل مبلغ <strong>3500 DA</strong> إلى الحساب التالي:
 </p>
+
 
 <div class="rib">
 RIB: 00000000000000000000
 </div>
 
+
 <p class="small">
-بعد التحويل، قم بإرفاق صورة وصل الدفع.
+بعد التحويل، قم بإرفاق صورة واضحة لوصل الدفع.
 </p>
 
 </div>
@@ -288,14 +319,17 @@ RIB: 00000000000000000000
 📷 وصل الدفع
 </label>
 
+
 <input
 id="receipt"
 type="file"
-accept="image/*">
+accept="image/jpeg,image/png,image/webp">
+
 
 <img
 id="receiptPreview"
-class="preview">
+class="preview"
+alt="معاينة وصل الدفع">
 
 
 <button
@@ -305,12 +339,29 @@ id="submitBtn">
 
 </button>
 
+
+<div class="login-link">
+
+لديك حساب بالفعل؟
+
+<a href="login.html">
+تسجيل الدخول
+</a>
+
+</div>
+
+
 </div>
 
 </div>
 
 
 <script type="module">
+
+
+/* =========================
+   Firebase
+========================= */
 
 import {
 initializeApp
@@ -337,10 +388,14 @@ from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 
+/* =========================
+   Firebase Config
+========================= */
+
 const firebaseConfig = {
 
 apiKey:
-"AIzaSyBqt5JH9AR1n4vdZlImKB_jZi1jTe63Jo",
+"AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
 
 authDomain:
 "g-glam.firebaseapp.com",
@@ -363,6 +418,8 @@ measurementId:
 };
 
 
+/* تشغيل Firebase */
+
 const app =
 initializeApp(firebaseConfig);
 
@@ -372,6 +429,10 @@ getAuth(app);
 const db =
 getFirestore(app);
 
+
+/* =========================
+   العناصر
+========================= */
 
 const ownerName =
 document.getElementById("ownerName");
@@ -407,7 +468,9 @@ const loadingMsg =
 document.getElementById("loadingMsg");
 
 
-/* معاينة الوصل */
+/* =========================
+   معاينة الوصل
+========================= */
 
 receipt.addEventListener(
 "change",
@@ -418,14 +481,32 @@ this.files[0];
 
 if(!file){
 
-receiptPreview.style.display="none";
+receiptPreview.style.display =
+"none";
+
+receiptPreview.src = "";
 
 return;
 
 }
 
+
+if(!file.type.startsWith("image/")){
+
+showError(
+"الملف يجب أن يكون صورة."
+);
+
+this.value = "";
+
+return;
+
+}
+
+
 const reader =
 new FileReader();
+
 
 reader.onload =
 function(e){
@@ -433,23 +514,31 @@ function(e){
 receiptPreview.src =
 e.target.result;
 
-receiptPreview.style.display="block";
+receiptPreview.style.display =
+"block";
 
 };
+
 
 reader.readAsDataURL(file);
 
 });
 
 
+/* =========================
+   الرسائل
+========================= */
+
 function showError(text){
 
 errorMsg.textContent =
 text;
 
-errorMsg.style.display="block";
+errorMsg.style.display =
+"block";
 
-successMsg.style.display="none";
+successMsg.style.display =
+"none";
 
 }
 
@@ -459,22 +548,31 @@ function showSuccess(text){
 successMsg.textContent =
 text;
 
-successMsg.style.display="block";
+successMsg.style.display =
+"block";
 
-errorMsg.style.display="none";
+errorMsg.style.display =
+"none";
 
 }
 
 
-/* إرسال الطلب */
+/* =========================
+   إنشاء المتجر
+========================= */
 
 submitBtn.addEventListener(
 "click",
 async function(){
 
-errorMsg.style.display="none";
-successMsg.style.display="none";
+errorMsg.style.display =
+"none";
 
+successMsg.style.display =
+"none";
+
+
+/* البيانات */
 
 const name =
 ownerName.value.trim();
@@ -495,9 +593,15 @@ const receiptFile =
 receipt.files[0];
 
 
+/* =========================
+   التحقق
+========================= */
+
 if(!name){
 
-showError("يرجى إدخال اسمك.");
+showError(
+"يرجى إدخال الاسم واللقب."
+);
 
 return;
 
@@ -506,7 +610,20 @@ return;
 
 if(!userEmail){
 
-showError("يرجى إدخال البريد الإلكتروني.");
+showError(
+"يرجى إدخال البريد الإلكتروني."
+);
+
+return;
+
+}
+
+
+if(!pass){
+
+showError(
+"يرجى إدخال كلمة المرور."
+);
 
 return;
 
@@ -557,8 +674,6 @@ return;
 }
 
 
-/* التأكد أن الملف صورة */
-
 if(!receiptFile.type.startsWith("image/")){
 
 showError(
@@ -569,8 +684,6 @@ return;
 
 }
 
-
-/* حجم الصورة */
 
 if(receiptFile.size > 10 * 1024 * 1024){
 
@@ -583,15 +696,26 @@ return;
 }
 
 
-submitBtn.disabled=true;
+/* =========================
+   تعطيل الزر
+========================= */
 
-loadingMsg.style.display="block";
+submitBtn.disabled =
+true;
+
+submitBtn.textContent =
+"جاري المعالجة...";
+
+loadingMsg.style.display =
+"block";
 
 
 try{
 
 
-/* إنشاء حساب Firebase */
+/* =========================
+   1. إنشاء حساب Firebase
+========================= */
 
 const credential =
 await createUserWithEmailAndPassword(
@@ -605,21 +729,27 @@ const user =
 credential.user;
 
 
-/* رفع الوصل إلى Cloudinary */
+/* =========================
+   2. رفع الوصل Cloudinary
+========================= */
 
 const formData =
 new FormData();
+
 
 formData.append(
 "file",
 receiptFile
 );
 
+
 formData.append(
 "upload_preset",
 "gglam_products"
 );
 
+
+/* رفع الصورة */
 
 const cloudinaryResponse =
 await fetch(
@@ -637,7 +767,7 @@ body:formData
 if(!cloudinaryResponse.ok){
 
 throw new Error(
-"فشل رفع صورة الوصل."
+"فشل رفع صورة وصل الدفع."
 );
 
 }
@@ -654,13 +784,15 @@ cloudinaryData.secure_url;
 if(!receiptUrl){
 
 throw new Error(
-"لم يتم الحصول على رابط الوصل."
+"لم يتم الحصول على رابط صورة الوصل."
 );
 
 }
 
 
-/* إنشاء طلب متجر */
+/* =========================
+   3. حفظ طلب المتجر
+========================= */
 
 await setDoc(
 
@@ -701,7 +833,86 @@ serverTimestamp()
 );
 
 
-/* حفظ معلومات أساسية محليًا */
+/* =========================
+   4. حفظ بيانات المستخدم
+========================= */
+
+await setDoc(
+
+doc(
+db,
+"users",
+user.uid
+),
+
+{
+
+fullName:
+name,
+
+email:
+userEmail,
+
+storeId:
+user.uid,
+
+storeName:
+shop,
+
+paymentStatus:
+"pending",
+
+createdAt:
+serverTimestamp()
+
+}
+
+);
+
+
+/* =========================
+   5. حفظ بيانات المتجر
+========================= */
+
+await setDoc(
+
+doc(
+db,
+"stores",
+user.uid
+),
+
+{
+
+ownerId:
+user.uid,
+
+ownerName:
+name,
+
+ownerEmail:
+userEmail,
+
+storeName:
+shop,
+
+paymentStatus:
+"pending",
+
+status:
+"pending",
+
+createdAt:
+serverTimestamp()
+
+}
+
+);
+
+
+/* =========================
+   6. LocalStorage
+========================= */
 
 localStorage.setItem(
 "storeOwnerEmail",
@@ -718,23 +929,29 @@ localStorage.setItem(
 "pending"
 );
 
+localStorage.setItem(
+"storeId",
+user.uid
+);
 
-loadingMsg.style.display="none";
+
+/* =========================
+   نجاح
+========================= */
+
+loadingMsg.style.display =
+"none";
 
 showSuccess(
 "تم إنشاء حسابك وإرسال وصل الدفع بنجاح ✅"
 );
 
 
-/* إخفاء الزر */
+submitBtn.style.display =
+"none";
 
-submitBtn.style.display="none";
 
-
-/*
-ننتظر قليلًا ثم نذهب
-إلى صفحة انتظار الموافقة
-*/
+/* الانتقال */
 
 setTimeout(
 function(){
@@ -747,26 +964,42 @@ window.location.href =
 );
 
 
-}catch(error){
+}
+catch(error){
 
-console.error(error);
+console.error(
+"REGISTER ERROR:",
+error
+);
 
-loadingMsg.style.display="none";
 
-submitBtn.disabled=false;
+loadingMsg.style.display =
+"none";
+
+submitBtn.disabled =
+false;
+
+submitBtn.textContent =
+"إنشاء المتجر وإرسال وصل الدفع";
 
 
-if(error.code ===
-"auth/email-already-in-use"){
+/* أخطاء Firebase */
+
+if(
+error.code ===
+"auth/email-already-in-use"
+){
 
 showError(
-"هذا البريد الإلكتروني مسجل مسبقًا."
+"هذا البريد الإلكتروني مسجل مسبقًا. يمكنك تسجيل الدخول."
 );
 
 }
 
-else if(error.code ===
-"auth/invalid-email"){
+else if(
+error.code ===
+"auth/invalid-email"
+){
 
 showError(
 "البريد الإلكتروني غير صحيح."
@@ -774,10 +1007,21 @@ showError(
 
 }
 
+else if(
+error.code ===
+"auth/weak-password"
+){
+
+showError(
+"كلمة المرور ضعيفة. استخدمي 6 أحرف على الأقل."
+);
+
+}
+
 else{
 
 showError(
-"حدث خطأ: " +
+"حدث خطأ أثناء إنشاء المتجر: " +
 error.message
 );
 
@@ -790,4 +1034,5 @@ error.message
 </script>
 
 </body>
+
 </html>
