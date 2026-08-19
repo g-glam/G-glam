@@ -12,43 +12,33 @@ content="width=device-width, initial-scale=1.0">
 
 <style>
 
-:root{
-
---bg:#F5F0E8;
---card:#FFFFFF;
---text:#222;
---accent:#B89B7A;
---shadow:0 5px 20px rgba(0,0,0,.07);
-
-}
-
-*{
-
-box-sizing:border-box;
-margin:0;
-padding:0;
-font-family:Arial,sans-serif;
-
-}
-
 body{
 
-background:var(--bg);
-color:var(--text);
-min-height:100vh;
+margin:0;
+font-family:Arial,sans-serif;
+background:#F5F0E8;
 
 display:flex;
-align-items:center;
 justify-content:center;
+align-items:center;
+
+min-height:100vh;
 
 padding:20px;
 
 }
 
-.container{
+.card{
 
+background:white;
 width:100%;
-max-width:500px;
+max-width:400px;
+
+padding:30px;
+
+border-radius:20px;
+
+box-shadow:0 5px 20px rgba(0,0,0,.08);
 
 }
 
@@ -56,32 +46,16 @@ max-width:500px;
 
 text-align:center;
 font-size:38px;
-font-weight:800;
-margin-bottom:8px;
+font-weight:bold;
+margin-bottom:10px;
 
 }
 
 .subtitle{
 
 text-align:center;
-color:#666;
+color:#777;
 margin-bottom:25px;
-
-}
-
-.card{
-
-background:var(--card);
-border-radius:20px;
-padding:25px;
-box-shadow:var(--shadow);
-
-}
-
-h1{
-
-font-size:24px;
-margin-bottom:20px;
 
 }
 
@@ -97,70 +71,57 @@ input{
 
 width:100%;
 padding:14px;
-border:none;
-background:#f7f7f7;
-border-radius:14px;
+
+border:1px solid #ddd;
+
+border-radius:12px;
+
 font-size:16px;
+
 margin-bottom:15px;
-outline:none;
 
-}
-
-input:focus{
-
-box-shadow:0 0 0 2px var(--accent);
+box-sizing:border-box;
 
 }
 
 button{
 
 width:100%;
+
 padding:15px;
+
 border:none;
-border-radius:14px;
+
+border-radius:12px;
+
 background:#222;
+
 color:white;
+
 font-size:17px;
+
 cursor:pointer;
-margin-top:5px;
-
-}
-
-button:hover{
-
-opacity:.9;
 
 }
 
 button:disabled{
 
 opacity:.6;
-cursor:not-allowed;
 
 }
 
-.register{
-
-text-align:center;
-margin-top:18px;
-
-}
-
-.register a{
-
-color:#8d7358;
-font-weight:bold;
-text-decoration:none;
-
-}
-
-.message{
+#message{
 
 margin-top:15px;
+
 padding:12px;
-border-radius:12px;
-display:none;
+
+border-radius:10px;
+
 text-align:center;
+
+display:none;
+
 line-height:1.6;
 
 }
@@ -169,92 +130,58 @@ line-height:1.6;
 
 </head>
 
+
 <body>
-
-
-<div class="container">
-
-
-<div class="logo">
-
-G-Glam
-
-</div>
-
-
-<div class="subtitle">
-
-الدخول إلى متجرك
-
-</div>
 
 
 <div class="card">
 
 
-<h1>
+<div class="logo">
+G-Glam
+</div>
 
+
+<div class="subtitle">
+الدخول إلى متجرك
+</div>
+
+
+<h2>
 تسجيل الدخول
-
-</h1>
+</h2>
 
 
 <label>
-
 البريد الإلكتروني
-
 </label>
 
 
 <input
-type="email"
 id="email"
-placeholder="example@gmail.com"
-autocomplete="email">
+type="email"
+placeholder="example@gmail.com">
 
 
 <label>
-
 كلمة المرور
-
 </label>
 
 
 <input
-type="password"
 id="password"
-placeholder="كلمة المرور"
-autocomplete="current-password">
+type="password"
+placeholder="كلمة المرور">
 
 
-<button
-id="loginBtn">
-
+<button id="loginBtn">
 تسجيل الدخول
-
 </button>
 
 
-<div
-class="message"
-id="message">
+<div id="message">
 </div>
 
-
-<div class="register">
-
-ليس لديك حساب؟
-
-<a href="register.html">
-
-إنشاء متجر
-
-</a>
-
-</div>
-
-
-</div>
 
 </div>
 
@@ -262,9 +189,7 @@ id="message">
 <script type="module">
 
 
-/* =================================
-   Firebase
-================================= */
+/* Firebase */
 
 import { initializeApp }
 
@@ -274,28 +199,12 @@ from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 import {
 
 getAuth,
-signInWithEmailAndPassword,
-signOut
+signInWithEmailAndPassword
 
 }
 
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
-
-import {
-
-getFirestore,
-doc,
-getDoc
-
-}
-
-from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-
-
-/* =================================
-   Firebase Config
-================================= */
 
 const firebaseConfig = {
 
@@ -323,23 +232,13 @@ measurementId:
 };
 
 
-/* =================================
-   تشغيل Firebase
-================================= */
-
 const app =
 initializeApp(firebaseConfig);
+
 
 const auth =
 getAuth(app);
 
-const db =
-getFirestore(app);
-
-
-/* =================================
-   العناصر
-================================= */
 
 const loginBtn =
 document.getElementById(
@@ -351,25 +250,10 @@ document.getElementById(
 "message"
 );
 
-const emailInput =
-document.getElementById(
-"email"
-);
 
-const passwordInput =
-document.getElementById(
-"password"
-);
+/* رسالة */
 
-
-/* =================================
-   رسالة
-================================= */
-
-function showMessage(
-text,
-error = true
-){
+function showMessage(text){
 
 message.innerHTML =
 text;
@@ -377,49 +261,41 @@ text;
 message.style.display =
 "block";
 
-
-if(error){
-
-message.style.background =
-"#f8d7da";
-
-message.style.color =
-"#842029";
-
-}
-else{
-
-message.style.background =
-"#d1e7dd";
-
-message.style.color =
-"#0f5132";
-
-}
-
 }
 
 
-/* =================================
-   تسجيل الدخول
-================================= */
+/* الضغط على تسجيل الدخول */
 
 loginBtn.addEventListener(
 "click",
 async function(){
 
 const email =
-emailInput.value.trim();
+document.getElementById(
+"email"
+).value.trim();
 
 const password =
-passwordInput.value;
+document.getElementById(
+"password"
+).value;
 
 
-if(!email || !password){
+if(!email){
 
 showMessage(
-"⚠️ يرجى إدخال البريد الإلكتروني وكلمة المرور",
-true
+"⚠️ أدخلي البريد الإلكتروني"
+);
+
+return;
+
+}
+
+
+if(!password){
+
+showMessage(
+"⚠️ أدخلي كلمة المرور"
 );
 
 return;
@@ -431,17 +307,13 @@ loginBtn.disabled =
 true;
 
 loginBtn.textContent =
-"جاري تسجيل الدخول...";
+"جاري الدخول...";
 
 
 try{
 
 
-/* ===============================
-   Firebase Authentication
-=============================== */
-
-const userCredential =
+const result =
 
 await signInWithEmailAndPassword(
 
@@ -453,118 +325,36 @@ password
 
 
 const user =
-userCredential.user;
-
-
-/* ===============================
-   الحصول على بيانات المستخدم
-=============================== */
-
-const userRef =
-
-doc(
-db,
-"users",
-user.uid
-);
-
-
-const userSnap =
-
-await getDoc(
-userRef
-);
-
-
-/* ===============================
-   لا توجد بيانات المستخدم
-=============================== */
-
-if(!userSnap.exists()){
-
-await signOut(auth);
+result.user;
 
 
 showMessage(
 
-"⚠️ تم تسجيل الدخول في Firebase، " +
-"لكن لم يتم العثور على بيانات المتجر في Firestore.<br><br>" +
+"✅ تسجيل الدخول نجح!<br><br>" +
+
+"الحساب:<br>" +
+
+user.email +
+
+"<br><br>" +
 
 "UID:<br>" +
-user.uid,
 
-true
+user.uid +
 
-);
+"<br><br>" +
 
-
-loginBtn.disabled =
-false;
-
-loginBtn.textContent =
-"تسجيل الدخول";
-
-return;
-
-}
-
-
-/* ===============================
-   بيانات المتجر
-=============================== */
-
-const userData =
-userSnap.data();
-
-
-/* ===============================
-   حفظ البيانات
-=============================== */
-
-localStorage.setItem(
-
-"storeId",
-
-userData.storeId || ""
+"جاري الانتقال إلى Dashboard..."
 
 );
 
 
-localStorage.setItem(
+/*
 
-"storeName",
+   ننتظر ثانية واحدة
+   حتى نرى نتيجة الاختبار
 
-userData.storeName || "G-Glam"
-
-);
-
-
-localStorage.setItem(
-
-"ownerEmail",
-
-userData.email || user.email
-
-);
-
-
-/* ===============================
-   نجاح
-=============================== */
-
-showMessage(
-
-"✅ تم تسجيل الدخول بنجاح<br>" +
-"جاري فتح لوحة التحكم...",
-
-false
-
-);
-
-
-/* ===============================
-   Dashboard
-=============================== */
+*/
 
 setTimeout(
 
@@ -575,108 +365,30 @@ window.location.href =
 
 },
 
-700
+1000
 
 );
 
 
 }
 
-
-/* =================================
-   خطأ
-================================= */
 
 catch(error){
 
-console.error(
-"Firebase Error:",
-error
-);
-
-
-let errorText =
-"❌ حدث خطأ أثناء تسجيل الدخول";
-
-
-if(
-error.code ===
-"auth/invalid-credential"
-){
-
-errorText =
-"❌ البريد الإلكتروني أو كلمة المرور غير صحيحة";
-
-}
-
-
-else if(
-error.code ===
-"auth/user-not-found"
-){
-
-errorText =
-"❌ هذا الحساب غير موجود في Firebase Authentication";
-
-}
-
-
-else if(
-error.code ===
-"auth/wrong-password"
-){
-
-errorText =
-"❌ كلمة المرور غير صحيحة";
-
-}
-
-
-else if(
-error.code ===
-"auth/invalid-email"
-){
-
-errorText =
-"❌ البريد الإلكتروني غير صحيح";
-
-}
-
-
-else if(
-error.code ===
-"auth/too-many-requests"
-){
-
-errorText =
-"⚠️ تم إجراء محاولات كثيرة. حاولي مرة أخرى لاحقًا";
-
-}
-
-
-else if(
-error.code ===
-"auth/network-request-failed"
-){
-
-errorText =
-"❌ مشكلة في الاتصال بالإنترنت";
-
-}
+console.error(error);
 
 
 showMessage(
 
-errorText +
+"❌ فشل تسجيل الدخول<br><br>" +
+
+"رمز الخطأ:<br>" +
+
+error.code +
 
 "<br><br>" +
 
-"<small>" +
-"رمز Firebase: " +
-(error.code || "غير معروف") +
-"</small>",
-
-true
+error.message
 
 );
 
@@ -686,26 +398,6 @@ false;
 
 loginBtn.textContent =
 "تسجيل الدخول";
-
-}
-
-});
-
-
-/* =================================
-   الضغط على Enter
-================================= */
-
-passwordInput.addEventListener(
-"keydown",
-function(event){
-
-if(
-event.key ===
-"Enter"
-){
-
-loginBtn.click();
 
 }
 
