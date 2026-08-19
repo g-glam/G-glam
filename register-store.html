@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>G-Glam | إنشاء متجري</title>
+
+<style>
+*{
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+margin:0;
+background:#f5f0e8;
+color:#222;
+}
+
+.container{
+width:100%;
+max-width:520px;
+margin:40px auto;
+padding:15px;
+}
+
+.box{
+background:white;
+padding:25px;
+border-radius:20px;
+box-shadow:0 5px 25px rgba(0,0,0,.08);
+}
+
+.logo{
+text-align:center;
+font-size:30px;
+font-weight:bold;
+margin-bottom:10px;
+}
+
+.subtitle{
+text-align:center;
+color:#777;
+margin-bottom:25px;
+}
+
+h2{
+margin-top:0;
+}
+
+label{
+display:block;
+font-weight:bold;
+margin-bottom:7px;
+}
+
+input{
+width:100%;
+padding:13px;
+border:1px solid #ddd;
+border-radius:10px;
+margin-bottom:16px;
+font-size:15px;
+}
+
+.price-box{
+background:#f8f5f0;
+padding:18px;
+border-radius:12px;
+margin:15px 0;
+}
+
+.price{
+font-size:24px;
+font-weight:bold;
+margin-top:8px;
+}
+
+.payment-box{
+background:#fafafa;
+border:1px solid #eee;
+padding:15px;
+border-radius:12px;
+margin-bottom:20px;
+}
+
+.rib{
+background:white;
+padding:12px;
+border-radius:8px;
+word-break:break-all;
+font-weight:bold;
+margin-top:8px;
+}
+
+input[type="file"]{
+padding:10px;
+background:white;
+}
+
+.preview{
+width:100%;
+max-height:300px;
+object-fit:contain;
+border-radius:10px;
+margin-top:10px;
+display:none;
+}
+
+button{
+width:100%;
+padding:14px;
+border:none;
+border-radius:10px;
+background:#222;
+color:white;
+font-size:17px;
+cursor:pointer;
+}
+
+button:disabled{
+opacity:.5;
+cursor:not-allowed;
+}
+
+.message{
+display:none;
+padding:12px;
+border-radius:10px;
+margin-bottom:15px;
+text-align:center;
+}
+
+.error{
+background:#f8d7da;
+color:#721c24;
+}
+
+.success{
+background:#d4edda;
+color:#155724;
+}
+
+.loading{
+background:#fff3cd;
+color:#856404;
+}
+
+.small{
+font-size:13px;
+color:#777;
+margin-top:5px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="box">
+
+<div class="logo">
+G-Glam
+</div>
+
+<div class="subtitle">
+أنشئ متجرك الإلكتروني
+</div>
+
+<div
+class="message error"
+id="errorMsg">
+</div>
+
+<div
+class="message success"
+id="successMsg">
+</div>
+
+<div
+class="message loading"
+id="loadingMsg">
+⏳ جاري إنشاء حسابك وإرسال طلبك...
+</div>
+
+
+<h2>
+👤 معلومات الحساب
+</h2>
+
+<label>
+الاسم
+</label>
+
+<input
+id="ownerName"
+type="text"
+placeholder="اسمك الكامل">
+
+
+<label>
+البريد الإلكتروني
+</label>
+
+<input
+id="email"
+type="email"
+placeholder="example@gmail.com">
+
+
+<label>
+كلمة المرور
+</label>
+
+<input
+id="password"
+type="password"
+placeholder="كلمة المرور">
+
+
+<label>
+تأكيد كلمة المرور
+</label>
+
+<input
+id="confirmPassword"
+type="password"
+placeholder="أعد كتابة كلمة المرور">
+
+
+<h2>
+🏪 معلومات المتجر
+</h2>
+
+<label>
+اسم المتجر
+</label>
+
+<input
+id="storeName"
+type="text"
+placeholder="مثال: Beauty Store">
+
+
+<div class="price-box">
+
+<div>
+💰 سعر إنشاء المتجر
+</div>
+
+<div class="price">
+700 DA
+</div>
+
+<div class="small">
+دفع مرة واحدة فقط
+</div>
+
+</div>
+
+
+<div class="payment-box">
+
+<strong>
+💳 معلومات الدفع
+</strong>
+
+<p>
+قم بتحويل مبلغ 700 DA إلى الحساب التالي:
+</p>
+
+<div class="rib">
+RIB: 00000000000000000000
+</div>
+
+<p class="small">
+بعد التحويل، قم بإرفاق صورة وصل الدفع.
+</p>
+
+</div>
+
+
+<label>
+📷 وصل الدفع
+</label>
+
+<input
+id="receipt"
+type="file"
+accept="image/*">
+
+<img
+id="receiptPreview"
+class="preview">
+
+
+<button
+id="submitBtn">
+
+إنشاء المتجر وإرسال وصل الدفع
+
+</button>
+
+</div>
+
+</div>
+
+
+<script type="module">
+
+import {
+initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+
+import {
+getAuth,
+createUserWithEmailAndPassword
+}
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+
+import {
+getFirestore,
+doc,
+setDoc,
+serverTimestamp
+}
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+apiKey:
+"AIzaSyBqt5JH9AR1n4vdZlImKB_jZi1jTe63Jo",
+
+authDomain:
+"g-glam.firebaseapp.com",
+
+projectId:
+"g-glam",
+
+storageBucket:
+"g-glam.firebasestorage.app",
+
+messagingSenderId:
+"997228419719",
+
+appId:
+"1:997228419719:web:f9d88de7ea2c6f457e3622",
+
+measurementId:
+"G-WX1K1F83F6"
+
+};
+
+
+const app =
+initializeApp(firebaseConfig);
+
+const auth =
+getAuth(app);
+
+const db =
+getFirestore(app);
+
+
+const ownerName =
+document.getElementById("ownerName");
+
+const email =
+document.getElementById("email");
+
+const password =
+document.getElementById("password");
+
+const confirmPassword =
+document.getElementById("confirmPassword");
+
+const storeName =
+document.getElementById("storeName");
+
+const receipt =
+document.getElementById("receipt");
+
+const receiptPreview =
+document.getElementById("receiptPreview");
+
+const submitBtn =
+document.getElementById("submitBtn");
+
+const errorMsg =
+document.getElementById("errorMsg");
+
+const successMsg =
+document.getElementById("successMsg");
+
+const loadingMsg =
+document.getElementById("loadingMsg");
+
+
+/* معاينة الوصل */
+
+receipt.addEventListener(
+"change",
+function(){
+
+const file =
+this.files[0];
+
+if(!file){
+
+receiptPreview.style.display="none";
+
+return;
+
+}
+
+const reader =
+new FileReader();
+
+reader.onload =
+function(e){
+
+receiptPreview.src =
+e.target.result;
+
+receiptPreview.style.display="block";
+
+};
+
+reader.readAsDataURL(file);
+
+});
+
+
+function showError(text){
+
+errorMsg.textContent =
+text;
+
+errorMsg.style.display="block";
+
+successMsg.style.display="none";
+
+}
+
+
+function showSuccess(text){
+
+successMsg.textContent =
+text;
+
+successMsg.style.display="block";
+
+errorMsg.style.display="none";
+
+}
+
+
+/* إرسال الطلب */
+
+submitBtn.addEventListener(
+"click",
+async function(){
+
+errorMsg.style.display="none";
+successMsg.style.display="none";
+
+
+const name =
+ownerName.value.trim();
+
+const userEmail =
+email.value.trim();
+
+const pass =
+password.value;
+
+const confirm =
+confirmPassword.value;
+
+const shop =
+storeName.value.trim();
+
+const receiptFile =
+receipt.files[0];
+
+
+if(!name){
+
+showError("يرجى إدخال اسمك.");
+
+return;
+
+}
+
+
+if(!userEmail){
+
+showError("يرجى إدخال البريد الإلكتروني.");
+
+return;
+
+}
+
+
+if(pass.length < 6){
+
+showError(
+"كلمة المرور يجب أن تحتوي على 6 أحرف على الأقل."
+);
+
+return;
+
+}
+
+
+if(pass !== confirm){
+
+showError(
+"كلمتا المرور غير متطابقتين."
+);
+
+return;
+
+}
+
+
+if(!shop){
+
+showError(
+"يرجى إدخال اسم المتجر."
+);
+
+return;
+
+}
+
+
+if(!receiptFile){
+
+showError(
+"يرجى إرفاق صورة وصل الدفع."
+);
+
+return;
+
+}
+
+
+/* التأكد أن الملف صورة */
+
+if(!receiptFile.type.startsWith("image/")){
+
+showError(
+"الملف يجب أن يكون صورة."
+);
+
+return;
+
+}
+
+
+/* حجم الصورة */
+
+if(receiptFile.size > 10 * 1024 * 1024){
+
+showError(
+"حجم صورة الوصل يجب ألا يتجاوز 10 MB."
+);
+
+return;
+
+}
+
+
+submitBtn.disabled=true;
+
+loadingMsg.style.display="block";
+
+
+try{
+
+
+/* إنشاء حساب Firebase */
+
+const credential =
+await createUserWithEmailAndPassword(
+auth,
+userEmail,
+pass
+);
+
+
+const user =
+credential.user;
+
+
+/* رفع الوصل إلى Cloudinary */
+
+const formData =
+new FormData();
+
+formData.append(
+"file",
+receiptFile
+);
+
+formData.append(
+"upload_preset",
+"gglam_products"
+);
+
+
+const cloudinaryResponse =
+await fetch(
+
+"https://api.cloudinary.com/v1_1/g82dvrkr/image/upload",
+
+{
+method:"POST",
+body:formData
+}
+
+);
+
+
+if(!cloudinaryResponse.ok){
+
+throw new Error(
+"فشل رفع صورة الوصل."
+);
+
+}
+
+
+const cloudinaryData =
+await cloudinaryResponse.json();
+
+
+const receiptUrl =
+cloudinaryData.secure_url;
+
+
+if(!receiptUrl){
+
+throw new Error(
+"لم يتم الحصول على رابط الوصل."
+);
+
+}
+
+
+/* إنشاء طلب متجر */
+
+await setDoc(
+
+doc(
+db,
+"storeRequests",
+user.uid
+),
+
+{
+
+ownerUid:
+user.uid,
+
+ownerName:
+name,
+
+ownerEmail:
+userEmail,
+
+storeName:
+shop,
+
+amount:
+700,
+
+receiptUrl:
+receiptUrl,
+
+status:
+"pending",
+
+createdAt:
+serverTimestamp()
+
+}
+
+);
+
+
+/* حفظ معلومات أساسية محليًا */
+
+localStorage.setItem(
+"storeOwnerEmail",
+userEmail
+);
+
+localStorage.setItem(
+"storeName",
+shop
+);
+
+localStorage.setItem(
+"paymentStatus",
+"pending"
+);
+
+
+loadingMsg.style.display="none";
+
+showSuccess(
+"تم إنشاء حسابك وإرسال وصل الدفع بنجاح ✅"
+);
+
+
+/* إخفاء الزر */
+
+submitBtn.style.display="none";
+
+
+/*
+ننتظر قليلًا ثم نذهب
+إلى صفحة انتظار الموافقة
+*/
+
+setTimeout(
+function(){
+
+window.location.href =
+"payment-pending.html";
+
+},
+1800
+);
+
+
+}catch(error){
+
+console.error(error);
+
+loadingMsg.style.display="none";
+
+submitBtn.disabled=false;
+
+
+if(error.code ===
+"auth/email-already-in-use"){
+
+showError(
+"هذا البريد الإلكتروني مسجل مسبقًا."
+);
+
+}
+
+else if(error.code ===
+"auth/invalid-email"){
+
+showError(
+"البريد الإلكتروني غير صحيح."
+);
+
+}
+
+else{
+
+showError(
+"حدث خطأ: " +
+error.message
+);
+
+}
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
