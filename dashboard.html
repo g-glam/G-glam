@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+G-Glam | لوحة التحكم
+</title>
+
+<style>
+
+:root{
+
+--bg:#F5F0E8;
+--card:#FFFFFF;
+--text:#222;
+--muted:#777;
+--accent:#B89B7A;
+--dark:#222;
+
+}
+
+*{
+
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:Arial,sans-serif;
+
+}
+
+body{
+
+background:var(--bg);
+color:var(--text);
+min-height:100vh;
+
+}
+
+.header{
+
+height:75px;
+
+background:#fff;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:0 20px;
+
+box-shadow:
+0 2px 12px rgba(0,0,0,.06);
+
+position:sticky;
+
+top:0;
+
+z-index:10;
+
+}
+
+.logo{
+
+font-size:28px;
+
+font-weight:800;
+
+}
+
+.menu-btn{
+
+width:45px;
+
+height:45px;
+
+border:none;
+
+border-radius:14px;
+
+background:var(--bg);
+
+font-size:22px;
+
+cursor:pointer;
+
+}
+
+.store-name{
+
+font-weight:bold;
+
+font-size:16px;
+
+}
+
+.container{
+
+max-width:1100px;
+
+margin:auto;
+
+padding:25px 15px 100px;
+
+}
+
+.welcome{
+
+margin-bottom:25px;
+
+}
+
+.welcome h1{
+
+font-size:27px;
+
+margin-bottom:7px;
+
+}
+
+.welcome p{
+
+color:var(--muted);
+
+}
+
+.stats{
+
+display:grid;
+
+grid-template-columns:
+repeat(3,1fr);
+
+gap:15px;
+
+margin-bottom:25px;
+
+}
+
+.stat{
+
+background:#fff;
+
+border-radius:18px;
+
+padding:20px;
+
+box-shadow:
+0 3px 15px rgba(0,0,0,.05);
+
+}
+
+.stat-title{
+
+color:var(--muted);
+
+font-size:14px;
+
+margin-bottom:10px;
+
+}
+
+.stat-value{
+
+font-size:25px;
+
+font-weight:bold;
+
+}
+
+.actions{
+
+display:grid;
+
+grid-template-columns:
+repeat(2,1fr);
+
+gap:15px;
+
+margin-bottom:25px;
+
+}
+
+.action{
+
+background:#fff;
+
+border:none;
+
+border-radius:18px;
+
+padding:22px;
+
+text-align:right;
+
+cursor:pointer;
+
+box-shadow:
+0 3px 15px rgba(0,0,0,.05);
+
+}
+
+.action h3{
+
+margin-bottom:7px;
+
+font-size:18px;
+
+}
+
+.action p{
+
+color:var(--muted);
+
+font-size:14px;
+
+}
+
+.products-title{
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+margin-bottom:15px;
+
+}
+
+.products-title h2{
+
+font-size:22px;
+
+}
+
+.add-btn{
+
+background:var(--dark);
+
+color:white;
+
+border:none;
+
+padding:12px 18px;
+
+border-radius:14px;
+
+cursor:pointer;
+
+font-size:15px;
+
+}
+
+.products{
+
+display:grid;
+
+grid-template-columns:
+repeat(4,1fr);
+
+gap:15px;
+
+}
+
+.product{
+
+background:#fff;
+
+border-radius:18px;
+
+padding:10px;
+
+box-shadow:
+0 3px 15px rgba(0,0,0,.05);
+
+}
+
+.product img{
+
+width:100%;
+
+height:180px;
+
+object-fit:cover;
+
+border-radius:14px;
+
+}
+
+.product h3{
+
+font-size:16px;
+
+margin:10px 5px 5px;
+
+}
+
+.product-price{
+
+font-weight:bold;
+
+margin:0 5px 10px;
+
+}
+
+.product-buttons{
+
+display:flex;
+
+gap:7px;
+
+}
+
+.product-buttons button{
+
+flex:1;
+
+padding:10px;
+
+border:none;
+
+border-radius:10px;
+
+cursor:pointer;
+
+}
+
+.edit-btn{
+
+background:var(--bg);
+
+}
+
+.delete-btn{
+
+background:#f1dede;
+
+color:#9b3030;
+
+}
+
+.empty{
+
+background:#fff;
+
+border-radius:18px;
+
+padding:35px;
+
+text-align:center;
+
+color:var(--muted);
+
+grid-column:1/-1;
+
+}
+
+@media(max-width:800px){
+
+.products{
+
+grid-template-columns:
+repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:600px){
+
+.stats{
+
+grid-template-columns:
+1fr;
+
+}
+
+.actions{
+
+grid-template-columns:
+1fr;
+
+}
+
+.header{
+
+padding:0 12px;
+
+}
+
+.welcome h1{
+
+font-size:23px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="header">
+
+<button
+class="menu-btn"
+id="menuBtn">
+
+☰
+
+</button>
+
+<div class="logo">
+
+G-Glam
+
+</div>
+
+<div
+class="store-name"
+id="storeName">
+
+جاري التحميل...
+
+</div>
+
+</header>
+
+<main class="container">
+
+<div class="welcome">
+
+<h1>
+
+مرحبًا بك 👋
+
+</h1>
+
+<p>
+
+إدارة متجرك من مكان واحد
+
+</p>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+
+<div class="stat-title">
+
+عدد المنتجات
+
+</div>
+
+<div
+class="stat-value"
+id="productsCount">
+
+0
+
+</div>
+
+</div>
+
+<div class="stat">
+
+<div class="stat-title">
+
+عدد الطلبات
+
+</div>
+
+<div
+class="stat-value"
+id="ordersCount">
+
+0
+
+</div>
+
+</div>
+
+<div class="stat">
+
+<div class="stat-title">
+
+اسم المتجر
+
+</div>
+
+<div
+class="stat-value"
+id="storeNameStat">
+
+-
+
+</div>
+
+</div>
+
+</div>
+
+<div class="actions">
+
+<button
+class="action"
+onclick="goAddProduct()">
+
+<h3>
+
+➕ إضافة منتج
+
+</h3>
+
+<p>
+
+أضف منتجًا جديدًا إلى متجرك
+
+</p>
+
+</button>
+
+<button
+class="action"
+onclick="goOrders()">
+
+<h3>
+
+📦 الطلبات
+
+</h3>
+
+<p>
+
+عرض وإدارة طلبات الزبائن
+
+</p>
+
+</button>
+
+</div>
+
+<div class="products-title">
+
+<h2>
+
+منتجاتي
+
+</h2>
+
+<button
+class="add-btn"
+onclick="goAddProduct()">
+
++ إضافة منتج
+
+</button>
+
+</div>
+
+<div
+class="products"
+id="productsContainer">
+
+<div class="empty">
+
+جاري تحميل المنتجات...
+
+</div>
+
+</div>
+
+</main>
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+    getFirestore,
+    collection,
+    getDocs,
+    deleteDoc,
+    doc
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyDXtv5iV4erAkfmIYhjPIBXmrASFIFogvQ",
+
+    authDomain: "g-glam-dz.firebaseapp.com",
+
+    projectId: "g-glam-dz",
+
+    storageBucket: "g-glam-dz.firebasestorage.app",
+
+    messagingSenderId: "260935907007",
+
+    appId: "1:260935907007:web:be0d7bc1d82cc1ec86f80a",
+
+    measurementId: "G-9R9FTD0W4S"
+
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+
+// عناصر الصفحة
+
+const productsContainer =
+    document.getElementById("productsContainer");
+
+const productsCount =
+    document.getElementById("productsCount");
+
+
+// جلب المنتجات
+
+async function loadProducts() {
+
+    try {
+
+        const snapshot =
+            await getDocs(collection(db, "products"));
+
+        productsContainer.innerHTML = "";
+
+        productsCount.textContent =
+            snapshot.size;
+
+
+        if (snapshot.empty) {
+
+            productsContainer.innerHTML = `
+                <div class="empty">
+                    لا توجد منتجات حاليًا
+                </div>
+            `;
+
+            return;
+        }
+
+
+        snapshot.forEach((productDoc) => {
+
+            const product =
+                productDoc.data();
+
+            const id =
+                productDoc.id;
+
+
+            const card =
+                document.createElement("div");
+
+            card.className = "product";
+
+
+            card.innerHTML = `
+
+                <img
+                    src="${product.image || 'https://via.placeholder.com/400x400?text=G-Glam'}"
+                    alt="${product.name || 'منتج'}"
+                >
+
+                <h3>
+                    ${product.name || "بدون اسم"}
+                </h3>
+
+                <div class="product-price">
+                    ${product.price || 0} دج
+                </div>
+
+                <div class="product-buttons">
+
+                    <button
+                        class="edit-btn"
+                        onclick="editProduct('${id}')">
+
+                        تعديل
+
+                    </button>
+
+                    <button
+                        class="delete-btn"
+                        onclick="deleteProduct('${id}')">
+
+                        حذف
+
+                    </button>
+
+                </div>
+
+            `;
+
+
+            productsContainer.appendChild(card);
+
+        });
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        productsContainer.innerHTML = `
+
+            <div class="empty">
+
+                حدث خطأ أثناء تحميل المنتجات
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+// حذف المنتج
+
+window.deleteProduct = async function(id) {
+
+    const confirmDelete =
+        confirm("هل أنت متأكد من حذف هذا المنتج؟");
+
+
+    if (!confirmDelete) return;
+
+
+    try {
+
+        await deleteDoc(
+            doc(db, "products", id)
+        );
+
+        alert("تم حذف المنتج بنجاح");
+
+        loadProducts();
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("حدث خطأ أثناء حذف المنتج");
+
+    }
+
+};
+
+
+// زر التعديل
+
+window.editProduct = function(id) {
+
+    alert(
+        "سنضيف صفحة تعديل المنتج في الخطوة القادمة.\nID: " + id
+    );
+
+};
+
+
+// زر إضافة منتج
+
+window.goAddProduct = function() {
+
+    window.location.href =
+        "add-product.html";
+
+};
+
+
+// زر الطلبات
+
+window.goOrders = function() {
+
+    window.location.href =
+        "orders.html";
+
+};
+
+
+// تشغيل تحميل المنتجات
+
+loadProducts();
+
+</script>
+
+</body>
+
+</html>
