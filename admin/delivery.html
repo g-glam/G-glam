@@ -23,6 +23,8 @@ background:#f5f5f5;
 color:#222;
 }
 
+/* القائمة الجانبية */
+
 .sidebar{
 position:fixed;
 right:0;
@@ -84,6 +86,8 @@ transition:.3s;
 opacity:1;
 }
 
+/* المحتوى */
+
 .content{
 margin-right:70px;
 padding:20px;
@@ -107,6 +111,8 @@ color:#777;
 margin-bottom:0;
 }
 
+/* الصندوق */
+
 .box{
 background:white;
 padding:20px;
@@ -120,15 +126,21 @@ justify-content:space-between;
 align-items:center;
 gap:10px;
 margin-bottom:20px;
+flex-wrap:wrap;
 }
 
 .top h2{
 margin:0;
 }
 
-.add-btn{
-background:#111;
-color:white;
+.top-buttons{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.add-btn,
+.import-btn{
 border:none;
 padding:12px 18px;
 border-radius:8px;
@@ -136,12 +148,30 @@ cursor:pointer;
 font-size:15px;
 }
 
+.add-btn{
+background:#111;
+color:white;
+}
+
+.import-btn{
+background:#B89B7A;
+color:white;
+}
+
+/* الجدول */
+
+.table-container{
+overflow-x:auto;
+}
+
 table{
 width:100%;
 border-collapse:collapse;
+min-width:600px;
 }
 
-th,td{
+th,
+td{
 padding:14px 10px;
 border-bottom:1px solid #eee;
 text-align:center;
@@ -174,6 +204,8 @@ text-align:center;
 padding:30px;
 color:#777;
 }
+
+/* الرسائل */
 
 .message{
 display:none;
@@ -264,6 +296,8 @@ color:white;
 background:#eee;
 }
 
+/* الهاتف */
+
 @media(max-width:700px){
 
 .sidebar{
@@ -279,20 +313,21 @@ margin-right:60px;
 padding:10px;
 }
 
-table{
-font-size:13px;
-}
-
-th,td{
-padding:10px 5px;
-}
-
 .top{
-align-items:flex-start;
-flex-direction:column;
+align-items:stretch;
+}
+
+.top-buttons{
+width:100%;
+}
+
+.add-btn,
+.import-btn{
+flex:1;
 }
 
 }
+
 </style>
 
 </head>
@@ -300,7 +335,7 @@ flex-direction:column;
 <body>
 
 
-<!-- القائمة -->
+<!-- القائمة الجانبية -->
 
 <div class="sidebar">
 
@@ -312,7 +347,9 @@ G-Glam
 
 <a href="index.html">
 
-<span class="icon">⌂</span>
+<span class="icon">
+⌂
+</span>
 
 <span class="text">
 الرئيسية
@@ -320,9 +357,12 @@ G-Glam
 
 </a>
 
+
 <a href="orders.html">
 
-<span class="icon">▣</span>
+<span class="icon">
+▣
+</span>
 
 <span class="text">
 الطلبات
@@ -330,9 +370,12 @@ G-Glam
 
 </a>
 
+
 <a href="products.html">
 
-<span class="icon">□</span>
+<span class="icon">
+□
+</span>
 
 <span class="text">
 المنتجات
@@ -340,9 +383,12 @@ G-Glam
 
 </a>
 
+
 <a href="add-product.html">
 
-<span class="icon">+</span>
+<span class="icon">
++
+</span>
 
 <span class="text">
 إضافة منتج
@@ -350,9 +396,12 @@ G-Glam
 
 </a>
 
+
 <a href="delivery.html">
 
-<span class="icon">🚚</span>
+<span class="icon">
+🚚
+</span>
 
 <span class="text">
 أسعار التوصيل
@@ -360,9 +409,12 @@ G-Glam
 
 </a>
 
+
 <a href="settings.html">
 
-<span class="icon">⚙</span>
+<span class="icon">
+⚙
+</span>
 
 <span class="text">
 الإعدادات
@@ -386,7 +438,7 @@ G-Glam
 </h1>
 
 <p>
-إضافة وتعديل أسعار التوصيل حسب الولاية
+إدارة أسعار التوصيل حسب الولاية
 </p>
 
 </div>
@@ -400,6 +452,16 @@ G-Glam
 ولايات التوصيل
 </h2>
 
+<div class="top-buttons">
+
+<button
+class="import-btn"
+id="importBtn">
+
+📥 استيراد الأسعار الحالية
+
+</button>
+
 <button
 class="add-btn"
 onclick="openAdd()">
@@ -410,20 +472,22 @@ onclick="openAdd()">
 
 </div>
 
+</div>
+
 
 <div
 id="success"
 class="message success">
-
 </div>
 
 
 <div
 id="error"
 class="message error">
-
 </div>
 
+
+<div class="table-container">
 
 <table>
 
@@ -451,14 +515,13 @@ class="message error">
 
 </thead>
 
-<tbody
-id="deliveryList">
+<tbody id="deliveryList">
 
 <tr>
 
 <td colspan="4">
 
-جاري تحميل البيانات...
+⏳ جاري تحميل الولايات...
 
 </td>
 
@@ -467,6 +530,8 @@ id="deliveryList">
 </tbody>
 
 </table>
+
+</div>
 
 </div>
 
@@ -509,7 +574,8 @@ placeholder="مثال: Batna">
 <input
 type="number"
 id="office"
-placeholder="مثال: 400">
+placeholder="مثال: 400"
+min="0">
 
 </div>
 
@@ -523,7 +589,8 @@ placeholder="مثال: 400">
 <input
 type="number"
 id="home"
-placeholder="مثال: 500">
+placeholder="مثال: 500"
+min="0">
 
 </div>
 
@@ -542,7 +609,7 @@ onclick="closeModal()">
 class="save"
 onclick="saveDelivery()">
 
-حفظ
+💾 حفظ
 
 </button>
 
@@ -555,6 +622,8 @@ onclick="saveDelivery()">
 
 <script type="module">
 
+
+/* Firebase */
 
 import { initializeApp }
 
@@ -574,8 +643,6 @@ deleteDoc
 
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
-
-/* Firebase */
 
 const firebaseConfig = {
 
@@ -606,19 +673,100 @@ getFirestore(app);
 let editingId = null;
 
 
-/* تحميل الولايات */
+/* =========================
+   الأسعار الحالية
+========================= */
+
+const tarifs = {
+
+"Zana el beida":{office:50,home:50},
+"Ain Djasser":{office:150,home:150},
+"Seriana":{office:150,home:150},
+
+"Adrar":{office:1100,home:1400},
+"Chlef":{office:450,home:650},
+"Laghouat":{office:700,home:1000},
+"Oum El Bouaghi":{office:500,home:650},
+"Batna":{office:400,home:500},
+"Bejaia":{office:500,home:650},
+"Biskra":{office:600,home:950},
+"Bechar":{office:1100,home:1400},
+"Blida":{office:450,home:650},
+"Bouira":{office:450,home:650},
+"Tamanrasset":{office:1400,home:1600},
+"Tebessa":{office:600,home:950},
+"Tlemcen":{office:500,home:650},
+"Tiaret":{office:500,home:650},
+"Tizi Ouzou":{office:450,home:650},
+"Alger":{office:450,home:700},
+"Djelfa":{office:600,home:900},
+"Jijel":{office:500,home:650},
+"Setif":{office:450,home:650},
+"Saida":{office:600,home:900},
+"Skikda":{office:500,home:650},
+"Sidi Bel Abbes":{office:500,home:650},
+"Annaba":{office:500,home:650},
+"Guelma":{office:600,home:900},
+"Constantine":{office:450,home:650},
+"Medea":{office:450,home:650},
+"Mostaganem":{office:500,home:650},
+"M'Sila":{office:500,home:650},
+"Mascara":{office:600,home:900},
+"Ouargla":{office:800,home:1100},
+"Oran":{office:450,home:650},
+"El Bayadh":{office:800,home:1100},
+"Illizi":{office:1700,home:2000},
+"Bordj Bou Arreridj":{office:450,home:650},
+"Boumerdes":{office:450,home:650},
+"El Tarf":{office:600,home:950},
+"Tindouf":{office:1400,home:1600},
+"Tissemsilt":{office:500,home:650},
+"El Oued":{office:800,home:1100},
+"Khenchela":{office:600,home:900},
+"Souk Ahras":{office:600,home:900},
+"Tipaza":{office:450,home:650},
+"Mila":{office:500,home:650},
+"Ain Defla":{office:450,home:650},
+"Naama":{office:800,home:1100},
+"Ain Temouchent":{office:600,home:900},
+"Ghardaia":{office:800,home:1100},
+"Relizane":{office:500,home:650},
+
+"El M'Ghair":{office:1100,home:1400},
+"El Menia":{office:1700,home:2000},
+"Ouled Djellal":{office:700,home:1000},
+"Bordj Badji Mokhtar":{office:1000,home:1400},
+"Beni Abbes":{office:1100,home:1400},
+"Timimoun":{office:1700,home:2000},
+"Touggourt":{office:800,home:1100},
+"Djanet":{office:1700,home:2000},
+"In Salah":{office:800,home:1100},
+"In Guezzam":{office:1000,home:1300}
+
+};
+
+
+/* =========================
+   تحميل الولايات
+========================= */
 
 async function loadDelivery(){
 
 const list =
 document.getElementById("deliveryList");
 
-list.innerHTML = `
+list.innerHTML=`
+
 <tr>
+
 <td colspan="4">
-جاري التحميل...
+
+⏳ جاري التحميل...
+
 </td>
+
 </tr>
+
 `;
 
 
@@ -636,11 +784,17 @@ list.innerHTML="";
 if(snapshot.empty){
 
 list.innerHTML=`
+
 <tr>
+
 <td colspan="4">
-لا توجد ولايات مضافة
+
+لا توجد ولايات مضافة حاليًا
+
 </td>
+
 </tr>
+
 `;
 
 return;
@@ -650,11 +804,13 @@ return;
 
 let items=[];
 
+
 snapshot.forEach(item=>{
 
 items.push({
 
 id:item.id,
+
 ...item.data()
 
 });
@@ -680,11 +836,11 @@ ${item.id}
 </td>
 
 <td>
-${item.office || 0} DA
+${item.office} DA
 </td>
 
 <td>
-${item.home || 0} DA
+${item.home} DA
 </td>
 
 <td>
@@ -715,7 +871,9 @@ list.appendChild(row);
 });
 
 
-}catch(error){
+}
+
+catch(error){
 
 console.error(error);
 
@@ -725,7 +883,7 @@ list.innerHTML=`
 
 <td colspan="4">
 
-❌ حدث خطأ أثناء تحميل البيانات
+❌ حدث خطأ أثناء تحميل الولايات
 
 </td>
 
@@ -738,9 +896,11 @@ list.innerHTML=`
 }
 
 
-/* فتح نافذة الإضافة */
+/* =========================
+   إضافة ولاية
+========================= */
 
-window.openAdd = function(){
+window.openAdd=function(){
 
 editingId=null;
 
@@ -765,9 +925,11 @@ document.getElementById("modal")
 };
 
 
-/* إغلاق */
+/* =========================
+   إغلاق النافذة
+========================= */
 
-window.closeModal = function(){
+window.closeModal=function(){
 
 document.getElementById("modal")
 .classList.remove("active");
@@ -775,9 +937,11 @@ document.getElementById("modal")
 };
 
 
-/* تعديل */
+/* =========================
+   تعديل ولاية
+========================= */
 
-window.editDelivery = async function(id){
+window.editDelivery=async function(id){
 
 try{
 
@@ -811,7 +975,7 @@ return;
 editingId=id;
 
 document.getElementById("modalTitle")
-.innerText="تعديل الولاية";
+.innerText="تعديل أسعار "+id;
 
 document.getElementById("wilaya")
 .value=id;
@@ -828,40 +992,41 @@ document.getElementById("wilaya")
 document.getElementById("modal")
 .classList.add("active");
 
+}
 
-}catch(error){
+catch(error){
 
 console.error(error);
 
-alert("حدث خطأ");
+alert("حدث خطأ أثناء تحميل بيانات الولاية");
 
 }
 
 };
 
 
-/* حفظ */
+/* =========================
+   حفظ الولاية
+========================= */
 
-window.saveDelivery = async function(){
+window.saveDelivery=async function(){
 
 const wilaya =
 document.getElementById("wilaya")
 .value.trim();
 
-const office =
-Number(
-document.getElementById("office").value
-);
+const officeInput =
+document.getElementById("office")
+.value;
 
-const home =
-Number(
-document.getElementById("home").value
-);
+const homeInput =
+document.getElementById("home")
+.value;
 
 
 if(!wilaya){
 
-alert("أدخل اسم الولاية");
+alert("يرجى إدخال اسم الولاية");
 
 return;
 
@@ -869,11 +1034,27 @@ return;
 
 
 if(
-document.getElementById("office").value === "" ||
-document.getElementById("home").value === ""
+officeInput === "" ||
+homeInput === ""
 ){
 
-alert("أدخل أسعار التوصيل");
+alert("يرجى إدخال سعر المكتب وسعر المنزل");
+
+return;
+
+}
+
+
+const office =
+Number(officeInput);
+
+const home =
+Number(homeInput);
+
+
+if(office<0 || home<0){
+
+alert("السعر لا يمكن أن يكون سالبًا");
 
 return;
 
@@ -897,7 +1078,7 @@ let exists=false;
 snapshot.forEach(item=>{
 
 if(
-item.id.toLowerCase() ===
+item.id.toLowerCase()===
 wilaya.toLowerCase()
 ){
 
@@ -968,7 +1149,7 @@ home:home
 
 
 showMessage(
-"تم تعديل الأسعار بنجاح ✅",
+"تم تعديل أسعار الولاية بنجاح ✅",
 true
 );
 
@@ -977,15 +1158,17 @@ true
 
 closeModal();
 
-loadDelivery();
+await loadDelivery();
 
 
-}catch(error){
+}
+
+catch(error){
 
 console.error(error);
 
 showMessage(
-"❌ حدث خطأ أثناء الحفظ",
+"❌ حدث خطأ: "+error.message,
 false
 );
 
@@ -994,16 +1177,20 @@ false
 };
 
 
-/* حذف */
+/* =========================
+   حذف ولاية
+========================= */
 
-window.deleteDelivery = async function(id){
+window.deleteDelivery=async function(id){
 
-const ok =
-confirm(
-"هل تريد حذف ولاية " +
-id +
-"؟"
+const ok=confirm(
+
+"هل أنت متأكد من حذف ولاية:\n\n"+
+id+
+"\n\nسيتم حذف أسعار التوصيل الخاصة بها."
+
 );
+
 
 if(!ok)return;
 
@@ -1011,7 +1198,13 @@ if(!ok)return;
 try{
 
 await deleteDoc(
-doc(db,"delivery",id)
+
+doc(
+db,
+"delivery",
+id
+)
+
 );
 
 
@@ -1020,15 +1213,18 @@ showMessage(
 true
 );
 
-loadDelivery();
+await loadDelivery();
 
 
-}catch(error){
+}
+
+catch(error){
 
 console.error(error);
 
 showMessage(
-"❌ حدث خطأ أثناء الحذف",
+"❌ حدث خطأ أثناء الحذف: "+
+error.message,
 false
 );
 
@@ -1037,7 +1233,116 @@ false
 };
 
 
-/* الرسائل */
+/* =========================
+   استيراد الأسعار الحالية
+========================= */
+
+document
+.getElementById("importBtn")
+.addEventListener(
+"click",
+importAllTarifs
+);
+
+
+async function importAllTarifs(){
+
+const ok=confirm(
+
+"سيتم إضافة جميع الولايات والأسعار الحالية إلى Firebase.\n\n"+
+"إذا كانت الولاية موجودة، سيتم تحديث سعرها.\n\n"+
+"هل تريد المتابعة؟"
+
+);
+
+
+if(!ok)return;
+
+
+const button =
+document.getElementById("importBtn");
+
+button.disabled=true;
+
+button.innerText=
+"⏳ جاري الاستيراد...";
+
+
+try{
+
+let count=0;
+
+
+for(
+const [wilaya,prices]
+of Object.entries(tarifs)
+){
+
+await setDoc(
+
+doc(
+db,
+"delivery",
+wilaya
+),
+
+{
+
+office:prices.office,
+
+home:prices.home
+
+}
+
+);
+
+count++;
+
+}
+
+
+alert(
+
+"تم بنجاح استيراد "+
+count+
+" ولاية إلى Firebase ✅"
+
+);
+
+
+await loadDelivery();
+
+
+}
+
+catch(error){
+
+console.error(error);
+
+alert(
+
+"❌ حدث خطأ أثناء الاستيراد:\n\n"+
+error.message
+
+);
+
+}
+
+finally{
+
+button.disabled=false;
+
+button.innerText=
+"📥 استيراد الأسعار الحالية";
+
+}
+
+}
+
+
+/* =========================
+   الرسائل
+========================= */
 
 function showMessage(text,success){
 
@@ -1047,18 +1352,24 @@ document.getElementById("success");
 const e =
 document.getElementById("error");
 
+
 s.style.display="none";
+
 e.style.display="none";
 
 
 if(success){
 
 s.innerText=text;
+
 s.style.display="block";
 
-}else{
+}
+
+else{
 
 e.innerText=text;
+
 e.style.display="block";
 
 }
@@ -1067,6 +1378,7 @@ e.style.display="block";
 setTimeout(()=>{
 
 s.style.display="none";
+
 e.style.display="none";
 
 },3000);
@@ -1074,12 +1386,16 @@ e.style.display="none";
 }
 
 
-/* */
+/* =========================
+   حماية بسيطة للنص
+========================= */
 
 function escapeHtml(text){
 
 return String(text)
+
 .replace(/\\/g,"\\\\")
+
 .replace(/'/g,"\\'");
 
 }
@@ -1088,7 +1404,6 @@ return String(text)
 /* تشغيل */
 
 loadDelivery();
-
 
 </script>
 
