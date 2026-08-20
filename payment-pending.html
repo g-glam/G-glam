@@ -44,6 +44,10 @@ font-weight:bold;
 margin-bottom:10px;
 }
 
+.logo span{
+color:#f47b20;
+}
+
 .subtitle{
 color:#777;
 margin-bottom:25px;
@@ -127,12 +131,12 @@ font-size:14px;
 line-height:1.8;
 }
 
-.loading{
-color:#777;
-}
-
 .hidden{
 display:none;
+}
+
+.loading{
+color:#777;
 }
 
 </style>
@@ -145,7 +149,7 @@ display:none;
 <div class="card">
 
 <div class="logo">
-G-Glam
+G-<span>Glam</span>
 </div>
 
 <div class="subtitle">
@@ -178,7 +182,9 @@ id="statusDescription">
 </div>
 
 
-<!-- حالة الطلب -->
+<!-- =========================
+     حالة الطلب
+========================= -->
 
 <div
 class="status-box pending"
@@ -188,7 +194,7 @@ id="statusBox">
 class="status-title"
 id="boxTitle">
 
-⏳ الطلب قيد المراجعة
+⏳ طلبك قيد المراجعة
 
 </div>
 
@@ -196,15 +202,17 @@ id="boxTitle">
 class="status-text"
 id="boxText">
 
-تم إرسال وصل الدفع بنجاح.
-سيقوم المدير بمراجعة الوصل والموافقة على المتجر.
+سيتم مراجعة طلبك والتأكد من الدفع من طرف الإدارة،
+وبعد تأكيد الدفع ستتمكن من الدخول إلى متجرك.
 
 </div>
 
 </div>
 
 
-<!-- معلومات الطلب -->
+<!-- =========================
+     معلومات الطلب
+========================= -->
 
 <div
 class="info"
@@ -217,6 +225,7 @@ id="orderInfo">
 <br>
 
 البريد:
+
 <span id="emailText">
 جاري التحميل...
 </span>
@@ -224,6 +233,7 @@ id="orderInfo">
 <br>
 
 المتجر:
+
 <span id="storeText">
 جاري التحميل...
 </span>
@@ -231,7 +241,9 @@ id="orderInfo">
 </div>
 
 
-<!-- زر الدخول -->
+<!-- =========================
+     زر الدخول
+========================= -->
 
 <button
 id="dashboardBtn"
@@ -242,7 +254,9 @@ class="hidden">
 </button>
 
 
-<!-- زر إعادة المحاولة -->
+<!-- =========================
+     تحديث الحالة
+========================= -->
 
 <button
 id="retryBtn"
@@ -259,9 +273,9 @@ class="secondary">
 <script type="module">
 
 
-/* =========================
+/* =====================================================
    FIREBASE
-========================= */
+===================================================== */
 
 import {
 initializeApp
@@ -271,29 +285,25 @@ from
 
 
 import {
-
 getAuth,
 onAuthStateChanged
-
 }
 from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
 
 import {
-
 getFirestore,
 doc,
 onSnapshot
-
 }
 from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 
-/* =========================
-   CONFIG
-========================= */
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
 
 const firebaseConfig = {
 
@@ -321,21 +331,23 @@ measurementId:
 };
 
 
+/* =====================================================
+   INITIALIZE FIREBASE
+===================================================== */
+
 const app =
 initializeApp(firebaseConfig);
 
-
 const auth =
 getAuth(app);
-
 
 const db =
 getFirestore(app);
 
 
-/* =========================
+/* =====================================================
    ELEMENTS
-========================= */
+===================================================== */
 
 const statusIcon =
 document.getElementById(
@@ -388,77 +400,73 @@ document.getElementById(
 );
 
 
-/* =========================
+/* =====================================================
    VARIABLES
-========================= */
+===================================================== */
 
 let unsubscribe = null;
 
 
-/* =========================
-   AUTH
-========================= */
+/* =====================================================
+   AUTH STATE
+===================================================== */
 
 onAuthStateChanged(
 auth,
 function(user){
 
-/*
-   المستخدم غير مسجل
-*/
+/* المستخدم غير مسجل الدخول */
 
 if(!user){
 
-statusIcon.textContent="⚠️";
+statusIcon.textContent =
+"⚠️";
 
-statusTitle.textContent=
+statusTitle.textContent =
 "لم يتم تسجيل الدخول";
 
-statusDescription.textContent=
+statusDescription.textContent =
 "يجب تسجيل الدخول أولًا لمتابعة حالة طلب المتجر.";
 
-statusBox.className=
+statusBox.className =
 "status-box rejected";
 
-boxTitle.textContent=
+boxTitle.textContent =
 "⚠️ الحساب غير مسجل";
 
-boxText.textContent=
+boxText.textContent =
 "يرجى تسجيل الدخول ثم العودة إلى هذه الصفحة.";
 
-retryBtn.style.display="none";
+retryBtn.style.display =
+"none";
 
 return;
 
 }
 
 
-/*
-   المستخدم مسجل
-*/
+/* المستخدم مسجل */
 
-emailText.textContent=
-user.email;
+emailText.textContent =
+user.email || "-";
 
 
-/*
-   مراقبة طلب هذا المستخدم
-*/
+/* مراقبة طلب المتجر */
 
-watchRequest(user.uid);
+watchRequest(
+user.uid
+);
 
 });
 
 
-/* =========================
-   WATCH REQUEST
-========================= */
+/* =====================================================
+   WATCH STORE REQUEST
+===================================================== */
 
 function watchRequest(uid){
 
-/*
-   إلغاء المراقبة السابقة
-*/
+/* إلغاء المراقبة السابقة */
 
 if(unsubscribe){
 
@@ -468,19 +476,21 @@ unsubscribe();
 
 
 /*
-   طلب المتجر الخاص بالمستخدم
+   مهم جدًا:
+   register-store.html يحفظ الطلب
+   داخل مجموعة stores
 */
 
 const requestRef =
 doc(
 db,
-"storeRequests",
+"stores",
 uid
 );
 
 
 /*
-   مراقبة Firestore لحظيًا
+   مراقبة الطلب لحظيًا
 */
 
 unsubscribe =
@@ -489,6 +499,10 @@ onSnapshot(
 requestRef,
 
 function(snapshot){
+
+/* =====================================================
+   الطلب غير موجود
+===================================================== */
 
 if(!snapshot.exists()){
 
@@ -499,45 +513,72 @@ return;
 }
 
 
+/* بيانات المتجر */
+
 const data =
 snapshot.data();
 
 
-/*
-   اسم المتجر
-*/
+/* اسم المتجر */
 
 storeText.textContent =
-data.storeName || "-";
+data.storeName ||
+data.name ||
+"-";
 
 
-/*
-   حالة الطلب
-*/
+/* =====================================================
+   تحديد الحالة
+===================================================== */
 
 const status =
-data.status || "pending";
+data.status ||
+"pending";
 
 
-if(status === "pending"){
+/* =====================================================
+   قيد المراجعة
+===================================================== */
+
+if(
+status === "pending"
+){
 
 showPending();
 
 }
 
-else if(status === "approved"){
+
+/* =====================================================
+   مقبول
+===================================================== */
+
+else if(
+status === "approved" ||
+status === "active"
+){
 
 showApproved();
 
 }
 
-else if(status === "rejected"){
+
+/* =====================================================
+   مرفوض
+===================================================== */
+
+else if(
+status === "rejected"
+){
 
 showRejected(
 data.rejectionReason
 );
 
 }
+
+
+/* أي حالة أخرى */
 
 else{
 
@@ -547,6 +588,7 @@ showPending();
 
 },
 
+
 function(error){
 
 console.error(
@@ -554,21 +596,23 @@ console.error(
 error
 );
 
-statusIcon.textContent="⚠️";
 
-statusTitle.textContent=
+statusIcon.textContent =
+"⚠️";
+
+statusTitle.textContent =
 "حدث خطأ";
 
-statusDescription.textContent=
+statusDescription.textContent =
 "تعذر الاتصال بقاعدة البيانات.";
 
-statusBox.className=
+statusBox.className =
 "status-box rejected";
 
-boxTitle.textContent=
+boxTitle.textContent =
 "❌ خطأ في الاتصال";
 
-boxText.textContent=
+boxText.textContent =
 error.message;
 
 }
@@ -578,131 +622,153 @@ error.message;
 }
 
 
-/* =========================
+/* =====================================================
    PENDING
-========================= */
+===================================================== */
 
 function showPending(){
 
-statusIcon.textContent="⏳";
+statusIcon.textContent =
+"⏳";
 
-statusTitle.textContent=
+
+statusTitle.textContent =
 "طلبك قيد المراجعة";
 
-statusDescription.textContent=
-"تم إرسال وصل الدفع بنجاح. انتظر حتى يقوم المدير بمراجعته.";
 
-statusBox.className=
+statusDescription.textContent =
+"سيتم مراجعة طلبك والتأكد من الدفع من طرف الإدارة، وبعد تأكيد الدفع ستتمكن من الدخول إلى متجرك.";
+
+
+statusBox.className =
 "status-box pending";
 
-boxTitle.textContent=
-"⏳ في انتظار الموافقة";
 
-boxText.textContent=
-"تم استلام طلب إنشاء متجرك. سيتم التحقق من وصل الدفع والموافقة عليه من طرف الإدارة.";
+boxTitle.textContent =
+"⏳ طلبك قيد المراجعة";
+
+
+boxText.textContent =
+"سيتم مراجعة طلبك والتأكد من الدفع من طرف الإدارة، وبعد تأكيد الدفع ستتمكن من الدخول إلى متجرك.";
+
 
 dashboardBtn.classList.add(
 "hidden"
 );
 
-retryBtn.style.display=
+
+retryBtn.style.display =
 "block";
 
 }
 
 
-/* =========================
+/* =====================================================
    APPROVED
-========================= */
+===================================================== */
 
 function showApproved(){
 
-statusIcon.textContent="✅";
+statusIcon.textContent =
+"✅";
 
-statusTitle.textContent=
+
+statusTitle.textContent =
 "تم قبول متجرك!";
 
-statusDescription.textContent=
+
+statusDescription.textContent =
 "تمت الموافقة على وصل الدفع وإنشاء متجرك بنجاح.";
 
-statusBox.className=
+
+statusBox.className =
 "status-box approved";
 
-boxTitle.textContent=
-"✅ تم قبول الدفع";
 
-boxText.textContent=
-"مبروك! أصبح بإمكانك الآن الدخول إلى لوحة التحكم الخاصة بمتجرك وإضافة المنتجات وإدارة الطلبات.";
+boxTitle.textContent =
+"✅ تم تأكيد الدفع";
+
+
+boxText.textContent =
+"مبروك! تمت الموافقة على طلبك. يمكنك الآن الدخول إلى لوحة التحكم الخاصة بمتجرك وإضافة المنتجات وإدارة الطلبات.";
+
 
 dashboardBtn.classList.remove(
 "hidden"
 );
 
-retryBtn.style.display=
+
+retryBtn.style.display =
 "none";
 
 
-/*
-   حفظ حالة الدفع محليًا
-*/
+/* حفظ الحالة */
 
 localStorage.setItem(
 "paymentStatus",
 "approved"
 );
 
+localStorage.setItem(
+"storeStatus",
+"active"
+);
 
-/*
-   الانتقال إلى Dashboard
-   بعد 3 ثوانٍ
-*/
 
-setTimeout(
+/* زر الدخول */
 
+dashboardBtn.onclick =
 function(){
 
-window.location.href=
+window.location.href =
 "dashboard.html";
 
-},
-
-3000
-
-);
+};
 
 }
 
 
-/* =========================
+/* =====================================================
    REJECTED
-========================= */
+===================================================== */
 
 function showRejected(reason){
 
-statusIcon.textContent="❌";
+statusIcon.textContent =
+"❌";
 
-statusTitle.textContent=
+
+statusTitle.textContent =
 "تم رفض الطلب";
 
-statusDescription.textContent=
+
+statusDescription.textContent =
 "لم تتم الموافقة على طلب إنشاء المتجر.";
 
-statusBox.className=
+
+statusBox.className =
 "status-box rejected";
 
-boxTitle.textContent=
-"❌ تم رفض الدفع";
 
-if(reason && reason.trim()){
+boxTitle.textContent =
+"❌ تم رفض الطلب";
 
-boxText.innerHTML=
-"سبب الرفض:<br><strong>"+
-escapeHtml(reason)+
+
+if(
+reason &&
+reason.trim()
+){
+
+boxText.innerHTML =
+"سبب الرفض:<br><strong>" +
+escapeHtml(reason) +
 "</strong>";
 
-}else{
+}
 
-boxText.textContent=
+else{
+
+boxText.textContent =
 "تم رفض الطلب من طرف الإدارة. يرجى التواصل مع الإدارة لمعرفة السبب.";
 
 }
@@ -712,7 +778,8 @@ dashboardBtn.classList.add(
 "hidden"
 );
 
-retryBtn.style.display=
+
+retryBtn.style.display =
 "block";
 
 
@@ -721,42 +788,64 @@ localStorage.setItem(
 "rejected"
 );
 
-}
 
-
-/* =========================
-   NOT FOUND
-========================= */
-
-function showNotFound(){
-
-statusIcon.textContent="⚠️";
-
-statusTitle.textContent=
-"لم يتم العثور على الطلب";
-
-statusDescription.textContent=
-"لا يوجد طلب إنشاء متجر مرتبط بهذا الحساب.";
-
-statusBox.className=
-"status-box rejected";
-
-boxTitle.textContent=
-"⚠️ الطلب غير موجود";
-
-boxText.textContent=
-"إذا كنت قد أنشأت متجرًا بالفعل، تأكد من تسجيل الدخول بالحساب الصحيح.";
-
-dashboardBtn.classList.add(
-"hidden"
+localStorage.setItem(
+"storeStatus",
+"rejected"
 );
 
 }
 
 
-/* =========================
+/* =====================================================
+   NOT FOUND
+===================================================== */
+
+function showNotFound(){
+
+/*
+   لا نظهر رسالة مخيفة للمستخدم.
+   لأن الطلب قد يكون مازال تتم مزامنته.
+*/
+
+statusIcon.textContent =
+"⏳";
+
+
+statusTitle.textContent =
+"طلبك قيد المراجعة";
+
+
+statusDescription.textContent =
+"سيتم مراجعة طلبك والتأكد من الدفع من طرف الإدارة، وبعد تأكيد الدفع ستتمكن من الدخول إلى متجرك.";
+
+
+statusBox.className =
+"status-box pending";
+
+
+boxTitle.textContent =
+"⏳ طلبك قيد المراجعة";
+
+
+boxText.textContent =
+"سيتم مراجعة طلبك والتأكد من الدفع من طرف الإدارة، وبعد تأكيد الدفع ستتمكن من الدخول إلى متجرك.";
+
+
+dashboardBtn.classList.add(
+"hidden"
+);
+
+
+retryBtn.style.display =
+"block";
+
+}
+
+
+/* =====================================================
    RETRY
-========================= */
+===================================================== */
 
 retryBtn.addEventListener(
 "click",
@@ -767,19 +856,40 @@ location.reload();
 });
 
 
-/* =========================
+/* =====================================================
    ESCAPE HTML
-========================= */
+===================================================== */
 
 function escapeHtml(value){
 
-return String(value)
+return String(
+value ?? ""
+)
 
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/'/g,
+"&#039;"
+);
 
 }
 
