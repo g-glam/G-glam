@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>G-Glam | إنشاء المتجر</title>
+<title>G-Glam | إنشاء متجر</title>
 
 <style>
 
@@ -17,20 +17,17 @@ font-family:Arial,sans-serif;
 
 body{
 margin:0;
-min-height:100vh;
 background:#f1f1f1;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:20px;
 color:#222;
+min-height:100vh;
+display:flex;
+justify-content:center;
+padding:25px 15px;
 }
-
-/* الصفحة */
 
 .page{
 width:100%;
-max-width:520px;
+max-width:560px;
 }
 
 /* الشعار */
@@ -42,10 +39,8 @@ margin-bottom:20px;
 
 .logo h1{
 margin:0;
-font-size:34px;
+font-size:36px;
 font-weight:800;
-color:#222;
-letter-spacing:1px;
 }
 
 .logo span{
@@ -53,9 +48,8 @@ color:#f47b20;
 }
 
 .logo p{
-margin:8px 0 0;
+margin:7px 0;
 color:#777;
-font-size:14px;
 }
 
 /* البطاقة */
@@ -63,33 +57,47 @@ font-size:14px;
 .card{
 background:#fff;
 border-radius:20px;
-padding:30px;
+padding:28px;
 box-shadow:0 5px 25px rgba(0,0,0,.08);
 border:1px solid #e7e7e7;
 }
 
 .card h2{
-margin:0 0 8px;
+margin-top:0;
 font-size:24px;
 }
 
 .subtitle{
 color:#777;
 font-size:14px;
-margin-bottom:25px;
+line-height:1.7;
+}
+
+/* الأقسام */
+
+.section{
+margin-top:25px;
+padding-top:20px;
+border-top:1px solid #eee;
+}
+
+.section-title{
+font-size:18px;
+font-weight:bold;
+margin-bottom:15px;
 }
 
 /* الحقول */
 
 .form-group{
-margin-bottom:17px;
+margin-bottom:16px;
 }
 
 label{
 display:block;
 font-weight:bold;
 font-size:14px;
-margin-bottom:8px;
+margin-bottom:7px;
 }
 
 input{
@@ -99,9 +107,8 @@ border:1px solid #ddd;
 border-radius:10px;
 padding:0 14px;
 font-size:15px;
-outline:none;
 background:#fafafa;
-transition:.2s;
+outline:none;
 }
 
 input:focus{
@@ -110,11 +117,93 @@ background:#fff;
 box-shadow:0 0 0 3px rgba(244,123,32,.10);
 }
 
+/* الدفع */
+
+.payment-box{
+background:#fff7f0;
+border:1px solid #ffd6b5;
+border-right:5px solid #f47b20;
+border-radius:12px;
+padding:18px;
+line-height:1.9;
+}
+
+.payment-row{
+display:flex;
+justify-content:space-between;
+gap:15px;
+padding:9px 0;
+border-bottom:1px solid #f2d9c5;
+}
+
+.payment-row:last-child{
+border-bottom:none;
+}
+
+.payment-label{
+font-weight:bold;
+}
+
+.payment-value{
+font-weight:bold;
+color:#f47b20;
+word-break:break-word;
+text-align:left;
+}
+
+.amount{
+font-size:20px;
+}
+
+.copy-btn{
+margin-top:12px;
+width:100%;
+height:42px;
+border:none;
+border-radius:8px;
+background:#222;
+color:white;
+cursor:pointer;
+font-size:14px;
+}
+
+/* رفع الوصل */
+
+.upload-box{
+border:2px dashed #ddd;
+border-radius:12px;
+padding:20px;
+text-align:center;
+background:#fafafa;
+}
+
+.upload-box input{
+height:auto;
+background:white;
+padding:12px;
+}
+
+.upload-box p{
+font-size:13px;
+color:#777;
+line-height:1.7;
+}
+
+.preview{
+display:none;
+width:100%;
+max-height:320px;
+object-fit:contain;
+margin-top:15px;
+border-radius:10px;
+border:1px solid #ddd;
+}
+
 /* زر */
 
 .create-btn{
 width:100%;
-height:50px;
+height:52px;
 border:none;
 border-radius:10px;
 background:#f47b20;
@@ -122,8 +211,7 @@ color:white;
 font-size:17px;
 font-weight:bold;
 cursor:pointer;
-margin-top:8px;
-transition:.2s;
+margin-top:20px;
 }
 
 .create-btn:hover{
@@ -139,12 +227,11 @@ cursor:not-allowed;
 
 .message{
 display:none;
-padding:12px;
+padding:13px;
 border-radius:9px;
 margin-bottom:15px;
-font-size:14px;
 text-align:center;
-line-height:1.6;
+line-height:1.7;
 }
 
 .success{
@@ -157,12 +244,22 @@ background:#fdeaea;
 color:#a52222;
 }
 
-/* تسجيل الدخول */
+.pending{
+display:none;
+background:#fff4df;
+color:#8a5a00;
+padding:15px;
+border-radius:10px;
+margin-top:15px;
+text-align:center;
+line-height:1.9;
+}
+
+/* الدخول */
 
 .login{
 text-align:center;
 margin-top:20px;
-font-size:14px;
 color:#777;
 }
 
@@ -176,40 +273,31 @@ text-decoration:none;
 text-decoration:underline;
 }
 
-/* معلومات */
-
-.info{
-margin-top:20px;
-padding:14px;
-background:#fafafa;
-border-right:4px solid #f47b20;
-border-radius:8px;
-font-size:13px;
-color:#666;
-line-height:1.8;
-}
-
 /* الهاتف */
 
 @media(max-width:600px){
 
 body{
 padding:15px;
-align-items:flex-start;
-padding-top:35px;
 }
 
 .card{
-padding:22px 18px;
+padding:20px 16px;
 border-radius:16px;
 }
 
 .logo h1{
-font-size:30px;
+font-size:31px;
 }
 
-.card h2{
-font-size:21px;
+.payment-row{
+display:block;
+}
+
+.payment-value{
+display:block;
+margin-top:3px;
+text-align:right;
 }
 
 }
@@ -237,17 +325,16 @@ G-<span>Glam</span>
 </div>
 
 
-<!-- البطاقة -->
-
 <div class="card">
 
 <h2>
 🏪 إنشاء متجرك
 </h2>
 
-<div class="subtitle">
-أدخل معلوماتك لإنشاء متجر جديد على G-Glam
-</div>
+<p class="subtitle">
+أنشئ حسابك، قم بالدفع، ثم أرسل صورة وصل الدفع.
+سيتم تفعيل متجرك بعد مراجعة الإدارة والموافقة على الطلب.
+</p>
 
 
 <!-- الرسائل -->
@@ -263,7 +350,14 @@ class="message error">
 </div>
 
 
-<!-- اسم المتجر -->
+<!-- معلومات المتجر -->
+
+<div class="section">
+
+<div class="section-title">
+📋 معلومات المتجر
+</div>
+
 
 <div class="form-group">
 
@@ -280,8 +374,6 @@ autocomplete="organization">
 </div>
 
 
-<!-- اسم صاحب المتجر -->
-
 <div class="form-group">
 
 <label for="ownerName">
@@ -296,8 +388,6 @@ autocomplete="name">
 
 </div>
 
-
-<!-- البريد -->
 
 <div class="form-group">
 
@@ -314,8 +404,6 @@ autocomplete="email">
 </div>
 
 
-<!-- كلمة المرور -->
-
 <div class="form-group">
 
 <label for="password">
@@ -331,8 +419,6 @@ autocomplete="new-password">
 </div>
 
 
-<!-- تأكيد كلمة المرور -->
-
 <div class="form-group">
 
 <label for="confirmPassword">
@@ -347,19 +433,165 @@ autocomplete="new-password">
 
 </div>
 
+</div>
+
+
+<!-- معلومات الدفع -->
+
+<div class="section">
+
+<div class="section-title">
+💳 معلومات الدفع
+</div>
+
+
+<div class="payment-box">
+
+
+<div class="payment-row">
+
+<span class="payment-label">
+المبلغ المطلوب
+</span>
+
+<span class="payment-value amount">
+3500 DA
+</span>
+
+</div>
+
+
+<div class="payment-row">
+
+<span class="payment-label">
+طريقة الدفع
+</span>
+
+<span class="payment-value">
+تحويل CCP / RIB
+</span>
+
+</div>
+
+
+<div class="payment-row">
+
+<span class="payment-label">
+RIB
+</span>
+
+<span
+class="payment-value"
+id="ribNumber">
+
+00799999002416083093
+
+</span>
+
+</div>
+
+
+<div class="payment-row">
+
+<span class="payment-label">
+صاحب الحساب
+</span>
+
+<span class="payment-value">
+G-Glam
+</span>
+
+</div>
+
+
+<button
+type="button"
+class="copy-btn"
+id="copyRib">
+
+📋 نسخ رقم RIB
+
+</button>
+
+</div>
+
+</div>
+
+
+<!-- وصل الدفع -->
+
+<div class="section">
+
+<div class="section-title">
+🧾 وصل الدفع
+</div>
+
+<p class="subtitle">
+
+بعد تحويل مبلغ <strong>3500 DA</strong> إلى RIB أعلاه،
+قم برفع صورة واضحة لوصل الدفع.
+
+</p>
+
+
+<div class="upload-box">
+
+<input
+id="receiptFile"
+type="file"
+accept="image/jpeg,image/png,image/webp">
+
+<p>
+الصيغ المسموحة: JPG / PNG / WEBP
+<br>
+الحد الأقصى للحجم: 5MB
+</p>
+
+
+<img
+id="receiptPreview"
+class="preview"
+alt="معاينة وصل الدفع">
+
+</div>
+
+</div>
+
+
+<!-- زر الإرسال -->
 
 <button
 id="createBtn"
 class="create-btn">
 
-إنشاء المتجر
+إرسال طلب إنشاء المتجر
 
 </button>
 
 
-<div class="info">
+<!-- حالة الانتظار -->
 
-💡 بعد إنشاء الحساب سيتم إنشاء متجر خاص بك وربطه بحسابك، ويمكنك بعدها الدخول إلى لوحة التحكم وإدارة المنتجات والطلبات.
+<div
+id="pendingMessage"
+class="pending">
+
+<strong>
+⏳ تم إرسال طلبك بنجاح
+</strong>
+
+<br>
+
+طلب إنشاء متجرك الآن قيد المراجعة.
+
+<br>
+
+سيتم التحقق من وصل الدفع من طرف الإدارة.
+
+<br>
+
+<strong>
+لن يتم فتح لوحة التحكم حتى تتم الموافقة على طلبك.
+</strong>
 
 </div>
 
@@ -381,37 +613,30 @@ class="create-btn">
 
 <script type="module">
 
-import { initializeApp }
+/* =========================
+   Firebase
+========================= */
 
+import { initializeApp }
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
 
 import {
-
 getAuth,
 createUserWithEmailAndPassword,
 updateProfile
-
 }
-
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
 
 import {
-
 getFirestore,
 doc,
 setDoc,
 serverTimestamp
-
 }
-
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
-
-/* =========================
-   Firebase
-========================= */
 
 const firebaseConfig = {
 
@@ -435,33 +660,46 @@ measurementId:"G-WX1K1F83F6"
 const app =
 initializeApp(firebaseConfig);
 
-
 const auth =
 getAuth(app);
-
 
 const db =
 getFirestore(app);
 
 
 /* =========================
+   معلومات الدفع
+========================= */
+
+const PAYMENT_AMOUNT = 3500;
+
+const PAYMENT_RIB = "00799999002416083093";
+
+
+/* =========================
    العناصر
 ========================= */
 
-const storeNameInput =
+const storeName =
 document.getElementById("storeName");
 
-const ownerNameInput =
+const ownerName =
 document.getElementById("ownerName");
 
-const emailInput =
+const email =
 document.getElementById("email");
 
-const passwordInput =
+const password =
 document.getElementById("password");
 
-const confirmPasswordInput =
+const confirmPassword =
 document.getElementById("confirmPassword");
+
+const receiptFile =
+document.getElementById("receiptFile");
+
+const receiptPreview =
+document.getElementById("receiptPreview");
 
 const createBtn =
 document.getElementById("createBtn");
@@ -472,6 +710,105 @@ document.getElementById("successMessage");
 const errorMessage =
 document.getElementById("errorMessage");
 
+const pendingMessage =
+document.getElementById("pendingMessage");
+
+
+/* =========================
+   نسخ RIB
+========================= */
+
+document
+.getElementById("copyRib")
+.addEventListener("click",async()=>{
+
+try{
+
+await navigator.clipboard.writeText(
+PAYMENT_RIB
+);
+
+alert(
+"تم نسخ رقم RIB ✅"
+);
+
+}catch(error){
+
+alert(
+"تعذر نسخ رقم RIB."
+);
+
+}
+
+});
+
+
+/* =========================
+   معاينة الوصل
+========================= */
+
+receiptFile.addEventListener(
+"change",
+function(){
+
+const file =
+this.files[0];
+
+if(!file){
+
+receiptPreview.style.display="none";
+
+return;
+
+}
+
+
+if(!file.type.startsWith("image/")){
+
+this.value="";
+
+alert(
+"يرجى اختيار صورة فقط."
+);
+
+return;
+
+}
+
+
+if(file.size >
+5 * 1024 * 1024){
+
+this.value="";
+
+alert(
+"حجم صورة الوصل يجب ألا يتجاوز 5MB."
+);
+
+return;
+
+}
+
+
+const reader =
+new FileReader();
+
+
+reader.onload=function(e){
+
+receiptPreview.src =
+e.target.result;
+
+receiptPreview.style.display=
+"block";
+
+};
+
+
+reader.readAsDataURL(file);
+
+});
+
 
 /* =========================
    الرسائل
@@ -481,9 +818,11 @@ function showError(message){
 
 successMessage.style.display="none";
 
-errorMessage.textContent=message;
+errorMessage.textContent=
+message;
 
-errorMessage.style.display="block";
+errorMessage.style.display=
+"block";
 
 window.scrollTo({
 top:0,
@@ -497,45 +836,45 @@ function showSuccess(message){
 
 errorMessage.style.display="none";
 
-successMessage.textContent=message;
+successMessage.textContent=
+message;
 
-successMessage.style.display="block";
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
+successMessage.style.display=
+"block";
 
 }
 
 
 /* =========================
-   إنشاء المتجر
+   إرسال طلب إنشاء المتجر
 ========================= */
 
 createBtn.addEventListener(
 "click",
 async function(){
 
-const storeName =
-storeNameInput.value.trim();
+const store =
+storeName.value.trim();
 
-const ownerName =
-ownerNameInput.value.trim();
+const owner =
+ownerName.value.trim();
 
-const email =
-emailInput.value.trim();
+const mail =
+email.value.trim();
 
-const password =
-passwordInput.value;
+const pass =
+password.value;
 
-const confirmPassword =
-confirmPasswordInput.value;
+const confirm =
+confirmPassword.value;
+
+const receipt =
+receiptFile.files[0];
 
 
 /* التحقق */
 
-if(!storeName){
+if(!store){
 
 showError(
 "يرجى إدخال اسم المتجر."
@@ -546,7 +885,7 @@ return;
 }
 
 
-if(!ownerName){
+if(!owner){
 
 showError(
 "يرجى إدخال اسم صاحب المتجر."
@@ -557,7 +896,7 @@ return;
 }
 
 
-if(!email){
+if(!mail){
 
 showError(
 "يرجى إدخال البريد الإلكتروني."
@@ -568,7 +907,7 @@ return;
 }
 
 
-if(!password){
+if(!pass){
 
 showError(
 "يرجى إدخال كلمة المرور."
@@ -579,7 +918,7 @@ return;
 }
 
 
-if(password.length < 6){
+if(pass.length < 6){
 
 showError(
 "كلمة المرور يجب أن تحتوي على 6 أحرف على الأقل."
@@ -590,7 +929,7 @@ return;
 }
 
 
-if(password !== confirmPassword){
+if(pass !== confirm){
 
 showError(
 "كلمتا المرور غير متطابقتين."
@@ -601,29 +940,54 @@ return;
 }
 
 
-/* تعطيل الزر */
+if(!receipt){
+
+showError(
+"يجب رفع صورة وصل الدفع."
+);
+
+return;
+
+}
+
+
+if(receipt.size >
+5 * 1024 * 1024){
+
+showError(
+"حجم صورة الوصل يجب ألا يتجاوز 5MB."
+);
+
+return;
+
+}
+
+
+/* تعطيل */
 
 createBtn.disabled=true;
 
 createBtn.textContent=
-"⏳ جاري إنشاء المتجر...";
+"⏳ جاري إرسال الطلب...";
 
 
 try{
 
 
-/* إنشاء حساب Firebase */
+/* =========================
+   إنشاء حساب المستخدم
+========================= */
 
-const userCredential =
+const credential =
 await createUserWithEmailAndPassword(
 auth,
-email,
-password
+mail,
+pass
 );
 
 
 const user =
-userCredential.user;
+credential.user;
 
 
 /* اسم المستخدم */
@@ -633,22 +997,81 @@ try{
 await updateProfile(
 user,
 {
-displayName:ownerName
+displayName:owner
 }
 );
 
-}catch(profileError){
+}catch(error){
 
 console.warn(
-"تعذر تحديث اسم الحساب:",
-profileError
+"تعذر تحديث اسم المستخدم",
+error
 );
 
 }
 
 
 /* =========================
-   إنشاء وثيقة المتجر
+   رفع الوصل إلى Cloudinary
+========================= */
+
+const formData =
+new FormData();
+
+
+formData.append(
+"file",
+receipt
+);
+
+
+formData.append(
+"upload_preset",
+"gglam_products"
+);
+
+
+const uploadResponse =
+await fetch(
+
+"https://api.cloudinary.com/v1_1/g82dvrkr/image/upload",
+
+{
+method:"POST",
+body:formData
+}
+
+);
+
+
+if(!uploadResponse.ok){
+
+throw new Error(
+"فشل رفع صورة وصل الدفع."
+);
+
+}
+
+
+const uploadData =
+await uploadResponse.json();
+
+
+if(!uploadData.secure_url){
+
+throw new Error(
+"لم يتم الحصول على رابط صورة الوصل."
+);
+
+}
+
+
+const receiptUrl =
+uploadData.secure_url;
+
+
+/* =========================
+   إنشاء المتجر
 ========================= */
 
 await setDoc(
@@ -661,19 +1084,48 @@ user.uid
 
 {
 
-name:storeName,
+name:store,
 
-ownerName:ownerName,
+ownerName:owner,
 
-email:email,
+email:mail,
 
 ownerId:user.uid,
 
-status:"active",
+/* مهم جدًا */
 
-createdAt:serverTimestamp(),
+status:"pending",
 
-updatedAt:serverTimestamp()
+paymentStatus:"pending",
+
+paymentAmount:PAYMENT_AMOUNT,
+
+paymentMethod:"CCP / RIB",
+
+paymentRib:PAYMENT_RIB,
+
+receiptUrl:receiptUrl,
+
+receiptPublicId:
+uploadData.public_id || "",
+
+/* معلومات المراجعة */
+
+approvedAt:null,
+
+approvedBy:null,
+
+rejectedAt:null,
+
+rejectedBy:null,
+
+rejectionReason:"",
+
+createdAt:
+serverTimestamp(),
+
+updatedAt:
+serverTimestamp()
 
 }
 
@@ -681,7 +1133,7 @@ updatedAt:serverTimestamp()
 
 
 /* =========================
-   إنشاء إعدادات المتجر
+   إعدادات المتجر
 ========================= */
 
 await setDoc(
@@ -696,11 +1148,11 @@ user.uid
 
 storeId:user.uid,
 
-storeName:storeName,
+storeName:store,
 
-ownerName:ownerName,
+ownerName:owner,
 
-email:email,
+email:mail,
 
 phone:"",
 
@@ -708,43 +1160,61 @@ address:"",
 
 logo:"",
 
-createdAt:serverTimestamp(),
+createdAt:
+serverTimestamp(),
 
-updatedAt:serverTimestamp()
+updatedAt:
+serverTimestamp()
 
 }
 
 );
 
 
-/* النجاح */
+/* =========================
+   نجاح
+========================= */
 
 showSuccess(
-"تم إنشاء المتجر بنجاح ✅ سيتم تحويلك إلى لوحة التحكم..."
+"تم إرسال طلب إنشاء المتجر بنجاح ✅"
 );
 
 
-/* الانتقال */
-
-setTimeout(()=>{
-
-window.location.href=
-"store-dashboard.html";
-
-},1500);
+pendingMessage.style.display=
+"block";
 
 
-}
+createBtn.style.display=
+"none";
 
-catch(error){
+
+/* منع التعديل */
+
+storeName.disabled=true;
+
+ownerName.disabled=true;
+
+email.disabled=true;
+
+password.disabled=true;
+
+confirmPassword.disabled=true;
+
+receiptFile.disabled=true;
+
+
+/*
+لا يوجد redirect هنا.
+صاحب المتجر ينتظر موافقة الإدارة.
+*/
+
+}catch(error){
 
 console.error(error);
 
 let message=
-"حدث خطأ أثناء إنشاء المتجر.";
+"حدث خطأ أثناء إرسال الطلب.";
 
-
-/* رسائل Firebase */
 
 if(
 error.code ===
@@ -752,10 +1222,9 @@ error.code ===
 ){
 
 message=
-"هذا البريد الإلكتروني مستخدم بالفعل. حاول تسجيل الدخول.";
+"هذا البريد الإلكتروني مستخدم بالفعل.";
 
 }
-
 
 else if(
 error.code ===
@@ -767,7 +1236,6 @@ message=
 
 }
 
-
 else if(
 error.code ===
 "auth/weak-password"
@@ -778,7 +1246,6 @@ message=
 
 }
 
-
 else if(
 error.code ===
 "auth/network-request-failed"
@@ -788,18 +1255,6 @@ message=
 "تعذر الاتصال بالإنترنت. تحقق من الاتصال وحاول مرة أخرى.";
 
 }
-
-
-else if(
-error.code ===
-"permission-denied"
-){
-
-message=
-"ليس لديك صلاحية لإنشاء المتجر. تحقق من إعدادات Firestore.";
-
-}
-
 
 else if(error.message){
 
@@ -812,12 +1267,10 @@ error.message;
 showError(message);
 
 
-/* إعادة الزر */
-
 createBtn.disabled=false;
 
 createBtn.textContent=
-"إنشاء المتجر";
+"إرسال طلب إنشاء المتجر";
 
 }
 
@@ -832,7 +1285,10 @@ document.addEventListener(
 "keydown",
 function(event){
 
-if(event.key==="Enter"){
+if(
+event.key === "Enter" &&
+!createBtn.disabled
+){
 
 createBtn.click();
 
