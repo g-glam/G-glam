@@ -27,6 +27,7 @@ body{
     min-height:100vh;
 }
 
+
 /* =========================
    القائمة الجانبية
 ========================= */
@@ -161,9 +162,15 @@ body{
     color:#B91C1C;
 }
 
+.loading{
+    display:block;
+    background:#FFF7ED;
+    color:#C2410C;
+}
+
 
 /* =========================
-   الأقسام
+   البطاقات
 ========================= */
 
 .card{
@@ -249,7 +256,6 @@ body{
 
 .upload-btn:hover{
     background:#EA580C;
-    transform:translateY(-1px);
 }
 
 #imageInput{
@@ -332,6 +338,34 @@ body{
 
 
 /* =========================
+   حالة الحساب
+========================= */
+
+.status-box{
+    padding:14px;
+    border-radius:12px;
+    margin-bottom:20px;
+    font-size:14px;
+    display:none;
+}
+
+.status-pending{
+    background:#FFF7ED;
+    color:#C2410C;
+}
+
+.status-approved{
+    background:#ECFDF5;
+    color:#047857;
+}
+
+.status-rejected{
+    background:#FEF2F2;
+    color:#B91C1C;
+}
+
+
+/* =========================
    الهاتف
 ========================= */
 
@@ -382,7 +416,7 @@ body{
 
 
 <!-- =========================
-     القائمة الجانبية
+     القائمة
 ========================= -->
 
 <div class="sidebar">
@@ -390,6 +424,7 @@ body{
     <div class="logo">
         G-Glam
     </div>
+
 
     <div class="menu">
 
@@ -510,16 +545,32 @@ body{
     </div>
 
 
-    <!-- الرسائل -->
+    <div
+        class="message loading"
+        id="loadingMessage">
+
+        ⏳ جاري تحميل بيانات المتجر...
+
+    </div>
+
 
     <div
         class="message success"
         id="successMessage">
     </div>
 
+
     <div
         class="message error"
         id="errorMessage">
+    </div>
+
+
+    <!-- حالة الحساب -->
+
+    <div
+        class="status-box"
+        id="statusBox">
     </div>
 
 
@@ -559,8 +610,8 @@ body{
                 </h3>
 
                 <p>
-                    يمكنك اختيار صورة من هاتفك.
-                    يفضل استخدام صورة واضحة ومربعة.
+                    اختر صورة واضحة لمتجرك من هاتفك.
+                    الحد الأقصى لحجم الصورة 5MB.
                 </p>
 
 
@@ -576,7 +627,7 @@ body{
                 <input
                     type="file"
                     id="imageInput"
-                    accept="image/*">
+                    accept="image/jpeg,image/png,image/webp">
 
 
                 <div
@@ -605,7 +656,7 @@ body{
         </div>
 
         <div class="card-description">
-            قم بتعديل معلومات متجرك ثم اضغط حفظ.
+            يمكنك تعديل معلومات متجرك.
         </div>
 
 
@@ -679,26 +730,19 @@ from
 
 
 import {
-
     getFirestore,
-    collection,
-    getDocs,
-    query,
-    where,
     doc,
+    getDoc,
     updateDoc
-
 }
 from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 
 import {
-
     getAuth,
     onAuthStateChanged,
     signOut
-
 }
 from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
@@ -737,10 +781,8 @@ const firebaseConfig = {
 const app =
 initializeApp(firebaseConfig);
 
-
 const db =
 getFirestore(app);
-
 
 const auth =
 getAuth(app);
@@ -785,6 +827,16 @@ document.getElementById(
     "saveBtn"
 );
 
+const loadingMessage =
+document.getElementById(
+    "loadingMessage"
+);
+
+const statusBox =
+document.getElementById(
+    "statusBox"
+);
+
 
 let currentUser = null;
 
@@ -796,38 +848,17 @@ let selectedImageFile = null;
 
 
 /* =========================
-   تحميل بيانات المتجر
+   تحميل المتجر
 ========================= */
 
 async function loadStore(){
 
     try{
 
-        const q =
-        query(
-
-            collection(
-                db,
-                "stores"
-            ),
-
-            where(
-                "ownerEmail",
-                "==",
-                currentUser.email
-            )
-
-        );
-
-
-        const snapshot =
-        await getDocs(q);
-
-
-        if(snapshot.empty){
+        if(!currentUser){
 
             showError(
-                "لم يتم العثور على متجرك."
+                "لم يتم التعرف على حسابك."
             );
 
             return;
@@ -835,16 +866,54 @@ async function loadStore(){
         }
 
 
-        const storeDoc =
-        snapshot.docs[0];
+        /*
+         * register-store.html
+         * يحفظ المتجر هكذا:
+         *
+         * stores / user.uid
+         */
+
+        const storeRef =
+        doc(
+            db,
+            "stores",
+            currentUser.uid
+        );
+
+
+        const storeSnapshot =
+        await getDoc(
+            storeRef
+        );
+
+
+        if(!storeSnapshot.exists()){
+
+            loadingMessage.style.display =
+            "none";
+
+            showError(
+                "لم يتم العثور على متجر مرتبط بهذا الحساب."
+            );
+
+            disableSettings();
+
+            console.error(
+                "Store not found for UID:",
+                currentUser.uid
+            );
+
+            return;
+
+        }
 
 
         const store =
-        storeDoc.data();
+        storeSnapshot.data();
 
 
         currentStoreId =
-        storeDoc.id;
+        storeSnapshot.id;
 
 
         currentStoreImage =
@@ -863,7 +932,9 @@ async function loadStore(){
 
 
         ownerEmail.value =
-        currentUser.email;
+        currentUser.email ||
+        store.ownerEmail ||
+        "";
 
 
         if(currentStoreImage){
@@ -874,6 +945,59 @@ async function loadStore(){
         }
 
 
+        /* حالة المتجر */
+
+        const status =
+        store.status ||
+        store.paymentStatus ||
+        "pending";
+
+
+        statusBox.style.display =
+        "block";
+
+
+        if(status === "approved"){
+
+            statusBox.className =
+            "status-box status-approved";
+
+            statusBox.textContent =
+            "🟢 متجرك مقبول ويمكنك تعديل بياناته.";
+
+            enableSettings();
+
+        }
+
+        else if(status === "rejected"){
+
+            statusBox.className =
+            "status-box status-rejected";
+
+            statusBox.textContent =
+            "🔴 تم رفض طلب المتجر. يمكنك مراجعة بياناتك.";
+
+            enableSettings();
+
+        }
+
+        else{
+
+            statusBox.className =
+            "status-box status-pending";
+
+            statusBox.textContent =
+            "⏳ طلب متجرك ما زال قيد المراجعة.";
+
+            disableSettings();
+
+        }
+
+
+        loadingMessage.style.display =
+        "none";
+
+
     }catch(error){
 
         console.error(
@@ -881,11 +1005,56 @@ async function loadStore(){
             error
         );
 
+        loadingMessage.style.display =
+        "none";
+
         showError(
             "حدث خطأ أثناء تحميل بيانات المتجر."
         );
 
     }
+
+}
+
+
+/* =========================
+   تعطيل الإعدادات
+========================= */
+
+function disableSettings(){
+
+    imageInput.disabled =
+    true;
+
+    saveBtn.disabled =
+    true;
+
+    storeName.disabled =
+    true;
+
+    storeDescription.disabled =
+    true;
+
+}
+
+
+/* =========================
+   تفعيل الإعدادات
+========================= */
+
+function enableSettings(){
+
+    imageInput.disabled =
+    false;
+
+    saveBtn.disabled =
+    false;
+
+    storeName.disabled =
+    false;
+
+    storeDescription.disabled =
+    false;
 
 }
 
@@ -915,6 +1084,8 @@ imageInput.addEventListener(
                 "يرجى اختيار صورة فقط."
             );
 
+            this.value = "";
+
             return;
 
         }
@@ -926,6 +1097,8 @@ imageInput.addEventListener(
                 "حجم الصورة يجب ألا يتجاوز 5MB."
             );
 
+            this.value = "";
+
             return;
 
         }
@@ -934,8 +1107,6 @@ imageInput.addEventListener(
         selectedImageFile =
         file;
 
-
-        /* معاينة فورية */
 
         const reader =
         new FileReader();
@@ -954,14 +1125,14 @@ imageInput.addEventListener(
 
 
         uploadStatus.textContent =
-        "تم اختيار الصورة. اضغط حفظ لرفعها.";
+        "✅ تم اختيار الصورة. اضغط حفظ لرفعها.";
 
     }
 );
 
 
 /* =========================
-   رفع الصورة إلى Cloudinary
+   Cloudinary
 ========================= */
 
 async function uploadToCloudinary(file){
@@ -1004,17 +1175,32 @@ async function uploadToCloudinary(file){
     );
 
 
+    const data =
+    await response.json();
+
+
     if(!response.ok){
 
+        console.error(
+            "Cloudinary error:",
+            data
+        );
+
         throw new Error(
-            "Cloudinary upload failed"
+            data.error?.message ||
+            "فشل رفع الصورة إلى Cloudinary."
         );
 
     }
 
 
-    const data =
-    await response.json();
+    if(!data.secure_url){
+
+        throw new Error(
+            "لم يتم الحصول على رابط الصورة."
+        );
+
+    }
 
 
     return data.secure_url;
@@ -1065,7 +1251,7 @@ saveBtn.addEventListener(
             currentStoreImage;
 
 
-            /* رفع الصورة الجديدة */
+            /* رفع الصورة */
 
             if(selectedImageFile){
 
@@ -1085,7 +1271,7 @@ saveBtn.addEventListener(
             }
 
 
-            /* تحديث Firestore */
+            /* مرجع المتجر */
 
             const storeRef =
             doc(
@@ -1094,6 +1280,8 @@ saveBtn.addEventListener(
                 currentStoreId
             );
 
+
+            /* تحديث البيانات */
 
             await updateDoc(
                 storeRef,
@@ -1121,7 +1309,7 @@ saveBtn.addEventListener(
 
 
             showSuccess(
-                "تم حفظ إعدادات المتجر بنجاح ✅"
+                "تم حفظ معلومات المتجر بنجاح ✅"
             );
 
 
@@ -1134,7 +1322,8 @@ saveBtn.addEventListener(
 
 
             showError(
-                "حدث خطأ أثناء الحفظ. تأكد من إعدادات Cloudinary."
+                error.message ||
+                "حدث خطأ أثناء حفظ معلومات المتجر."
             );
 
 
@@ -1154,147 +1343,4 @@ saveBtn.addEventListener(
 
 /* =========================
    تسجيل الخروج
-========================= */
-
-document
-.getElementById(
-    "logoutBtn"
-)
-.addEventListener(
-    "click",
-    async function(e){
-
-        e.preventDefault();
-
-
-        const ok =
-        confirm(
-            "هل تريد تسجيل الخروج؟"
-        );
-
-
-        if(!ok){
-
-            return;
-
-        }
-
-
-        try{
-
-            await signOut(auth);
-
-            window.location.href =
-            "login.html";
-
-        }catch(error){
-
-            console.error(error);
-
-        }
-
-    }
-);
-
-
-/* =========================
-   الرسائل
-========================= */
-
-function showSuccess(text){
-
-    const box =
-    document.getElementById(
-        "successMessage"
-    );
-
-
-    box.textContent =
-    text;
-
-
-    box.style.display =
-    "block";
-
-
-    setTimeout(
-        function(){
-
-            box.style.display =
-            "none";
-
-        },
-        4000
-    );
-
-}
-
-
-function showError(text){
-
-    const box =
-    document.getElementById(
-        "errorMessage"
-    );
-
-
-    box.textContent =
-    text;
-
-
-    box.style.display =
-    "block";
-
-
-    setTimeout(
-        function(){
-
-            box.style.display =
-            "none";
-
-        },
-        5000
-    );
-
-}
-
-
-/* =========================
-   Authentication
-========================= */
-
-onAuthStateChanged(
-
-    auth,
-
-    async function(user){
-
-        if(!user){
-
-            window.location.href =
-            "login.html";
-
-            return;
-
-        }
-
-
-        currentUser =
-        user;
-
-
-        ownerEmail.value =
-        user.email;
-
-
-        await loadStore();
-
-    }
-
-);
-
-</script>
-
-</body>
-
-  </html>
+=====================
