@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>G-Glam | إنشاء متجر</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+margin:0;
+min-height:100vh;
+background:#f5f5f5;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+.container{
+width:100%;
+max-width:500px;
+background:white;
+padding:30px;
+border-radius:18px;
+box-shadow:0 5px 25px rgba(0,0,0,.1);
+}
+
+.logo{
+text-align:center;
+font-size:30px;
+font-weight:bold;
+margin-bottom:10px;
+}
+
+.subtitle{
+text-align:center;
+color:#777;
+margin-bottom:25px;
+}
+
+.form-group{
+margin-bottom:16px;
+}
+
+label{
+display:block;
+font-weight:bold;
+margin-bottom:7px;
+}
+
+input,
+textarea{
+width:100%;
+padding:13px;
+border:1px solid #ddd;
+border-radius:9px;
+font-size:15px;
+outline:none;
+}
+
+input:focus,
+textarea:focus{
+border-color:#111;
+}
+
+textarea{
+height:90px;
+resize:none;
+}
+
+button{
+width:100%;
+padding:14px;
+border:0;
+border-radius:10px;
+background:#111;
+color:white;
+font-size:17px;
+cursor:pointer;
+margin-top:5px;
+}
+
+button:disabled{
+opacity:.6;
+cursor:not-allowed;
+}
+
+.message{
+display:none;
+padding:12px;
+border-radius:9px;
+text-align:center;
+margin-bottom:15px;
+}
+
+.success{
+background:#d4edda;
+color:#155724;
+}
+
+.error{
+background:#f8d7da;
+color:#721c24;
+}
+
+.login{
+text-align:center;
+margin-top:20px;
+color:#777;
+}
+
+.login a{
+color:#111;
+font-weight:bold;
+text-decoration:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo">
+G-Glam
+</div>
+
+<div class="subtitle">
+إنشاء متجر جديد
+</div>
+
+<div
+id="success"
+class="message success">
+</div>
+
+<div
+id="error"
+class="message error">
+</div>
+
+
+<div class="form-group">
+
+<label>
+اسم المتجر
+</label>
+
+<input
+id="storeName"
+type="text"
+placeholder="مثال: متجر G-Glam"
+autocomplete="organization">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+البريد الإلكتروني
+</label>
+
+<input
+id="email"
+type="email"
+placeholder="example@email.com"
+autocomplete="email">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+كلمة المرور
+</label>
+
+<input
+id="password"
+type="password"
+placeholder="6 أحرف على الأقل"
+autocomplete="new-password">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+تأكيد كلمة المرور
+</label>
+
+<input
+id="confirmPassword"
+type="password"
+placeholder="أعد كتابة كلمة المرور"
+autocomplete="new-password">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+رقم الهاتف
+</label>
+
+<input
+id="phone"
+type="tel"
+placeholder="مثال: 0550000000">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+عنوان المتجر
+</label>
+
+<textarea
+id="address"
+placeholder="أدخل عنوان المتجر"></textarea>
+
+</div>
+
+
+<button
+id="registerBtn">
+
+إنشاء المتجر
+
+</button>
+
+
+<div class="login">
+
+لديك حساب بالفعل؟
+
+<a href="store-login.html">
+تسجيل الدخول
+</a>
+
+</div>
+
+</div>
+
+
+<script type="module">
+
+import {
+initializeApp
+}
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+
+import {
+getAuth,
+createUserWithEmailAndPassword
+}
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+
+import {
+getFirestore,
+collection,
+addDoc,
+query,
+where,
+getDocs,
+serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+
+const firebaseConfig={
+
+apiKey:"AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+
+authDomain:"g-glam.firebaseapp.com",
+
+projectId:"g-glam",
+
+storageBucket:"g-glam.firebasestorage.app",
+
+messagingSenderId:"997228419719",
+
+appId:"1:997228419719:web:f9d88de7ea2c6f457e3622",
+
+measurementId:"G-WX1K1F83F6"
+
+};
+
+
+const app=
+initializeApp(firebaseConfig);
+
+const auth=
+getAuth(app);
+
+const db=
+getFirestore(app);
+
+
+const storeName=
+document.getElementById("storeName");
+
+const email=
+document.getElementById("email");
+
+const password=
+document.getElementById("password");
+
+const confirmPassword=
+document.getElementById("confirmPassword");
+
+const phone=
+document.getElementById("phone");
+
+const address=
+document.getElementById("address");
+
+const registerBtn=
+document.getElementById("registerBtn");
+
+const success=
+document.getElementById("success");
+
+const error=
+document.getElementById("error");
+
+
+function showSuccess(message){
+
+error.style.display="none";
+
+success.textContent=message;
+
+success.style.display="block";
+
+}
+
+
+function showError(message){
+
+success.style.display="none";
+
+error.textContent=message;
+
+error.style.display="block";
+
+}
+
+
+registerBtn.addEventListener(
+"click",
+async()=>{
+
+const name=
+storeName.value.trim();
+
+const userEmail=
+email.value.trim();
+
+const userPassword=
+password.value;
+
+const confirm=
+confirmPassword.value;
+
+const userPhone=
+phone.value.trim();
+
+const userAddress=
+address.value.trim();
+
+
+if(!name){
+
+showError("يرجى إدخال اسم المتجر.");
+
+return;
+
+}
+
+
+if(!userEmail){
+
+showError("يرجى إدخال البريد الإلكتروني.");
+
+return;
+
+}
+
+
+if(userPassword.length<6){
+
+showError(
+"كلمة المرور يجب أن تحتوي على 6 أحرف على الأقل."
+);
+
+return;
+
+}
+
+
+if(userPassword!==confirm){
+
+showError(
+"كلمتا المرور غير متطابقتين."
+);
+
+return;
+
+}
+
+
+registerBtn.disabled=true;
+
+registerBtn.textContent=
+"⏳ جاري إنشاء المتجر...";
+
+
+try{
+
+
+/*
+==============================
+التأكد من عدم وجود متجر بنفس البريد
+==============================
+*/
+
+const existingQuery=
+query(
+collection(db,"stores"),
+where("email","==",userEmail)
+);
+
+const existingSnapshot=
+await getDocs(existingQuery);
+
+
+if(!existingSnapshot.empty){
+
+showError(
+"يوجد متجر مرتبط بهذا البريد الإلكتروني بالفعل."
+);
+
+registerBtn.disabled=false;
+
+registerBtn.textContent=
+"إنشاء المتجر";
+
+return;
+
+}
+
+
+/*
+==============================
+إنشاء حساب Firebase
+==============================
+*/
+
+const userCredential=
+await createUserWithEmailAndPassword(
+auth,
+userEmail,
+userPassword
+);
+
+
+const user=
+userCredential.user;
+
+
+/*
+==============================
+إنشاء المتجر في Firestore
+==============================
+*/
+
+const storeRef=
+await addDoc(
+collection(db,"stores"),
+{
+
+name:name,
+
+email:userEmail,
+
+ownerId:user.uid,
+
+phone:userPhone,
+
+address:userAddress,
+
+status:"active",
+
+createdAt:serverTimestamp()
+
+}
+);
+
+
+/*
+==============================
+نجاح
+==============================
+*/
+
+showSuccess(
+"تم إنشاء المتجر بنجاح ✅"
+);
+
+
+/*
+إعطاء وقت لعرض الرسالة
+*/
+
+setTimeout(()=>{
+
+window.location.href=
+"store-dashboard.html";
+
+},1200);
+
+
+}
+catch(err){
+
+console.error(err);
+
+let message=
+"حدث خطأ أثناء إنشاء المتجر.";
+
+
+if(err.code==="auth/email-already-in-use"){
+
+message=
+"هذا البريد الإلكتروني مستخدم بالفعل.";
+
+}
+
+else if(err.code==="auth/invalid-email"){
+
+message=
+"البريد الإلكتروني غير صحيح.";
+
+}
+
+else if(err.code==="auth/weak-password"){
+
+message=
+"كلمة المرور ضعيفة.";
+
+}
+
+else if(err.code==="auth/network-request-failed"){
+
+message=
+"تحقق من اتصال الإنترنت.";
+
+}
+
+else if(
+err.code==="permission-denied"
+){
+
+message=
+"ليس لديك صلاحية للكتابة في قاعدة البيانات.";
+
+}
+
+
+showError(message);
+
+
+registerBtn.disabled=false;
+
+registerBtn.textContent=
+"إنشاء المتجر";
+
+}
+
+});
+
+</script>
+
+</body>
+
+  </html>
