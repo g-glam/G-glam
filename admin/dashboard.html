@@ -268,7 +268,7 @@ cursor:pointer;
 
 
 /* =========================
-   بطاقة صاحب المتجر
+   بطاقة الطلب
 ========================= */
 
 .request-card{
@@ -344,7 +344,9 @@ color:var(--dangerText);
 }
 
 
-/* المعلومات */
+/* =========================
+   المعلومات
+========================= */
 
 .info-grid{
 
@@ -726,15 +728,11 @@ flex-direction:column;
 <header class="header">
 
 <div class="logo">
-
 G-Glam Admin
-
 </div>
 
 <div class="admin-title">
-
 إدارة المتاجر
-
 </div>
 
 </header>
@@ -756,7 +754,9 @@ G-Glam Admin
 </div>
 
 
-<!-- الإحصائيات -->
+<!-- =========================
+     الإحصائيات
+========================= -->
 
 <div class="stats">
 
@@ -850,7 +850,9 @@ id="warningMessage">
 </div>
 
 
-<!-- الطلبات -->
+<!-- =========================
+     الطلبات
+========================= -->
 
 <div class="section">
 
@@ -887,7 +889,9 @@ id="requestsContainer">
 </div>
 
 
-<!-- المتاجر المقبولة -->
+<!-- =========================
+     المتاجر المقبولة
+========================= -->
 
 <div class="section">
 
@@ -919,7 +923,9 @@ id="approvedStoresContainer">
 </main>
 
 
-<!-- عرض الوصل بحجم كبير -->
+<!-- =========================
+     عرض الوصل
+========================= -->
 
 <div
 class="image-modal"
@@ -930,6 +936,7 @@ class="close-modal"
 id="closeModal">
 
 ×
+
 </button>
 
 <img
@@ -943,9 +950,9 @@ alt="وصل الدفع">
 <script type="module">
 
 
-/* =========================
+/* =====================================================
    Firebase
-========================= */
+===================================================== */
 
 import {
 initializeApp
@@ -955,7 +962,15 @@ from
 
 
 import {
+getAuth,
+onAuthStateChanged,
+signOut
+}
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
+
+import {
 getFirestore,
 collection,
 getDocs,
@@ -964,11 +979,14 @@ getDoc,
 setDoc,
 deleteDoc,
 serverTimestamp
-
 }
 from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
+
+/* =====================================================
+   Firebase Config
+===================================================== */
 
 const firebaseConfig = {
 
@@ -996,17 +1014,31 @@ measurementId:
 };
 
 
+/* =====================================================
+   Firebase Initialization
+===================================================== */
+
 const app =
 initializeApp(firebaseConfig);
 
+const auth =
+getAuth(app);
 
 const db =
 getFirestore(app);
 
 
-/* =========================
+/* =====================================================
+   Admin Email
+===================================================== */
+
+const ADMIN_EMAIL =
+"loxenteam@gmail.com";
+
+
+/* =====================================================
    العناصر
-========================= */
+===================================================== */
 
 const requestsContainer =
 document.getElementById(
@@ -1059,9 +1091,9 @@ document.getElementById(
 );
 
 
-/* =========================
-   الرسائل
-========================= */
+/* =====================================================
+   رسائل
+===================================================== */
 
 function showSuccess(text){
 
@@ -1070,15 +1102,21 @@ document.getElementById(
 "successMessage"
 );
 
-box.textContent = text;
+box.textContent =
+text;
 
-box.style.display = "block";
+box.style.display =
+"block";
 
-setTimeout(()=>{
+setTimeout(
+()=>{
 
-box.style.display="none";
+box.style.display =
+"none";
 
-},3500);
+},
+3500
+);
 
 }
 
@@ -1090,22 +1128,76 @@ document.getElementById(
 "errorMessage"
 );
 
-box.textContent = text;
+box.textContent =
+text;
 
-box.style.display = "block";
+box.style.display =
+"block";
 
-setTimeout(()=>{
+setTimeout(
+()=>{
 
-box.style.display="none";
+box.style.display =
+"none";
 
-},5000);
+},
+6000
+);
 
 }
 
 
-/* =========================
-   تحميل الطلبات
-========================= */
+/* =====================================================
+   حماية الصفحة
+===================================================== */
+
+onAuthStateChanged(
+auth,
+async function(user){
+
+if(!user){
+
+window.location.href =
+"login.html";
+
+return;
+
+}
+
+
+if(
+(user.email || "").toLowerCase()
+!==
+ADMIN_EMAIL.toLowerCase()
+){
+
+alert(
+"غير مسموح لك بالدخول إلى لوحة الأدمن."
+);
+
+await signOut(auth);
+
+window.location.href =
+"login.html";
+
+return;
+
+}
+
+
+/* الأدمن صحيح */
+
+await loadRequests();
+
+await loadApprovedStores();
+
+}
+);
+
+
+/* =====================================================
+   تحميل الطلبات من STORES
+===================================================== */
 
 async function loadRequests(){
 
@@ -1120,22 +1212,27 @@ requestsContainer.innerHTML = `
 `;
 
 
+/*
+   مهم جدًا:
+   الطلبات موجودة في stores
+*/
+
 const snapshot =
 await getDocs(
 collection(
 db,
-"storeRequests"
+"stores"
 )
 );
 
 
-const requests = [];
+const allStores = [];
 
 
 snapshot.forEach(
 item=>{
 
-requests.push({
+allStores.push({
 
 id:item.id,
 
@@ -1146,7 +1243,30 @@ id:item.id,
 });
 
 
-/* الإحصائيات */
+/*
+   الطلبات التي لم يتم قبولها
+   أو المرفوضة أيضًا
+*/
+
+const requests =
+allStores.filter(
+store=>{
+
+return (
+store.status === "pending"
+||
+store.status === "rejected"
+||
+store.status === "approved"
+);
+
+}
+);
+
+
+/* =====================================================
+   الإحصائيات
+===================================================== */
 
 totalCount.textContent =
 requests.length;
@@ -1154,21 +1274,30 @@ requests.length;
 
 pendingCount.textContent =
 requests.filter(
-x=>x.status === "pending"
+x=>
+x.status === "pending"
 ).length;
 
 
 approvedCount.textContent =
 requests.filter(
-x=>x.status === "approved"
+x=>
+x.status === "approved"
+||
+x.status === "active"
 ).length;
 
 
 rejectedCount.textContent =
 requests.filter(
-x=>x.status === "rejected"
+x=>
+x.status === "rejected"
 ).length;
 
+
+/* =====================================================
+   لا توجد طلبات
+===================================================== */
 
 if(requests.length === 0){
 
@@ -1187,7 +1316,9 @@ return;
 }
 
 
-/* الأحدث أولًا */
+/* =====================================================
+   ترتيب الأحدث
+===================================================== */
 
 requests.sort(
 (a,b)=>{
@@ -1198,13 +1329,17 @@ a.createdAt?.seconds || 0;
 const bTime =
 b.createdAt?.seconds || 0;
 
-return bTime-aTime;
+return bTime - aTime;
 
 });
 
 
 requestsContainer.innerHTML = "";
 
+
+/* =====================================================
+   إنشاء البطاقات
+===================================================== */
 
 requests.forEach(
 request=>{
@@ -1218,7 +1353,10 @@ createRequestCard(request)
 
 }catch(error){
 
-console.error(error);
+console.error(
+"LOAD STORES ERROR:",
+error
+);
 
 requestsContainer.innerHTML = `
 
@@ -1239,9 +1377,9 @@ ${escapeHtml(error.message)}
 }
 
 
-/* =========================
-   إنشاء بطاقة الطلب
-========================= */
+/* =====================================================
+   بطاقة الطلب
+===================================================== */
 
 function createRequestCard(request){
 
@@ -1259,7 +1397,11 @@ let statusClass =
 "status-pending";
 
 
-if(request.status === "approved"){
+if(
+request.status === "approved"
+||
+request.status === "active"
+){
 
 statusText =
 "مقبول";
@@ -1270,7 +1412,9 @@ statusClass =
 }
 
 
-if(request.status === "rejected"){
+if(
+request.status === "rejected"
+){
 
 statusText =
 "مرفوض";
@@ -1335,7 +1479,9 @@ request.ownerName || "-"
 <div class="info-value">
 
 ${escapeHtml(
-request.ownerEmail || "-"
+request.ownerEmail ||
+request.email ||
+"-"
 )}
 
 </div>
@@ -1352,7 +1498,10 @@ UID
 <div class="info-value">
 
 ${escapeHtml(
-request.ownerUid || request.id || "-"
+request.ownerUid ||
+request.ownerId ||
+request.id ||
+"-"
 )}
 
 </div>
@@ -1369,7 +1518,9 @@ request.ownerUid || request.id || "-"
 <div class="info-value">
 
 ${Number(
-request.amount || 0
+request.amount ||
+request.paymentAmount ||
+3500
 )} DA
 
 </div>
@@ -1377,8 +1528,48 @@ request.amount || 0
 </div>
 
 
+<div class="info">
+
+<div class="info-label">
+طريقة الدفع
 </div>
 
+<div class="info-value">
+
+${escapeHtml(
+request.paymentMethod ||
+"CCP / RIB"
+)}
+
+</div>
+
+</div>
+
+
+<div class="info">
+
+<div class="info-label">
+حالة الدفع
+</div>
+
+<div class="info-value">
+
+${escapeHtml(
+request.paymentStatus ||
+"pending"
+)}
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<!-- =========================
+     الوصل
+========================= -->
 
 <div class="receipt-box">
 
@@ -1433,6 +1624,10 @@ rel="noopener">
 </div>
 
 
+<!-- =========================
+     الأزرار
+========================= -->
+
 <div class="actions">
 
 
@@ -1442,7 +1637,10 @@ data-action="approve"
 data-id="${escapeAttribute(
 request.id
 )}"
-${request.status === "approved" ? "disabled" : ""}>
+${request.status === "approved" ||
+request.status === "active"
+? "disabled"
+: ""}>
 
 ✅ قبول المتجر
 
@@ -1455,7 +1653,9 @@ data-action="reject"
 data-id="${escapeAttribute(
 request.id
 )}"
-${request.status === "rejected" ? "disabled" : ""}>
+${request.status === "rejected"
+? "disabled"
+: ""}>
 
 ❌ رفض المتجر
 
@@ -1479,7 +1679,9 @@ request.id
 `;
 
 
-/* صورة الوصل */
+/* =====================================================
+   صورة الوصل
+===================================================== */
 
 const receiptImage =
 card.querySelector(
@@ -1505,7 +1707,9 @@ imageModal.classList.add(
 }
 
 
-/* الأزرار */
+/* =====================================================
+   الأزرار
+===================================================== */
 
 card
 .querySelectorAll(
@@ -1553,9 +1757,9 @@ return card;
 }
 
 
-/* =========================
+/* =====================================================
    قبول المتجر
-========================= */
+===================================================== */
 
 async function approveStore(id){
 
@@ -1565,26 +1769,31 @@ confirm(
 );
 
 
-if(!ok)return;
+if(!ok){
+
+return;
+
+}
 
 
 try{
 
-const requestRef =
+
+const storeRef =
 doc(
 db,
-"storeRequests",
+"stores",
 id
 );
 
 
-const requestSnap =
+const storeSnap =
 await getDoc(
-requestRef
+storeRef
 );
 
 
-if(!requestSnap.exists()){
+if(!storeSnap.exists()){
 
 showError(
 "الطلب غير موجود."
@@ -1595,61 +1804,19 @@ return;
 }
 
 
-const request =
-requestSnap.data();
+const store =
+storeSnap.data();
 
 
 /*
-   تغيير حالة الطلب
+   تحديث نفس الوثيقة
 */
 
 await setDoc(
 
-requestRef,
+storeRef,
 
 {
-
-status:"approved",
-
-approvedAt:
-serverTimestamp()
-
-},
-
-{
-
-merge:true
-
-}
-
-);
-
-
-/*
-   إنشاء بيانات المتجر
-*/
-
-await setDoc(
-
-doc(
-db,
-"stores",
-id
-),
-
-{
-
-ownerId:
-request.ownerUid,
-
-ownerName:
-request.ownerName,
-
-ownerEmail:
-request.ownerEmail,
-
-storeName:
-request.storeName,
 
 status:
 "active",
@@ -1657,17 +1824,13 @@ status:
 paymentStatus:
 "approved",
 
-paymentAmount:
-request.amount || 3500,
-
-receiptUrl:
-request.receiptUrl || "",
-
-createdAt:
-request.createdAt ||
+approvedAt:
 serverTimestamp(),
 
-approvedAt:
+approvedBy:
+ADMIN_EMAIL,
+
+updatedAt:
 serverTimestamp()
 
 },
@@ -1696,16 +1859,20 @@ id
 {
 
 fullName:
-request.ownerName,
+store.ownerName || "",
 
 email:
-request.ownerEmail,
+store.ownerEmail ||
+store.email ||
+"",
 
 storeId:
 id,
 
 storeName:
-request.storeName,
+store.storeName ||
+store.name ||
+"",
 
 status:
 "active",
@@ -1727,6 +1894,9 @@ merge:true
 );
 
 
+/* LocalStorage غير مهم للأدمن */
+
+
 showSuccess(
 "تم قبول المتجر بنجاح ✅"
 );
@@ -1739,7 +1909,10 @@ await loadApprovedStores();
 
 }catch(error){
 
-console.error(error);
+console.error(
+"APPROVE ERROR:",
+error
+);
 
 showError(
 "حدث خطأ أثناء قبول المتجر: " +
@@ -1751,15 +1924,15 @@ error.message
 }
 
 
-/* =========================
+/* =====================================================
    رفض المتجر
-========================= */
+===================================================== */
 
 async function rejectStore(id){
 
 const reason =
 prompt(
-"يمكنك كتابة سبب الرفض (اختياري):"
+"اكتب سبب رفض طلب المتجر:"
 );
 
 
@@ -1772,26 +1945,71 @@ return;
 
 try{
 
-const requestRef =
+
+const storeRef =
 doc(
 db,
-"storeRequests",
+"stores",
 id
 );
 
 
 await setDoc(
 
-requestRef,
+storeRef,
 
 {
 
-status:"rejected",
+status:
+"rejected",
+
+paymentStatus:
+"rejected",
 
 rejectionReason:
 reason.trim(),
 
 rejectedAt:
+serverTimestamp(),
+
+rejectedBy:
+ADMIN_EMAIL,
+
+updatedAt:
+serverTimestamp()
+
+},
+
+{
+
+merge:true
+
+}
+
+);
+
+
+/*
+   تحديث users
+*/
+
+await setDoc(
+
+doc(
+db,
+"users",
+id
+),
+
+{
+
+status:
+"rejected",
+
+paymentStatus:
+"rejected",
+
+updatedAt:
 serverTimestamp()
 
 },
@@ -1817,7 +2035,10 @@ await loadApprovedStores();
 
 }catch(error){
 
-console.error(error);
+console.error(
+"REJECT ERROR:",
+error
+);
 
 showError(
 "حدث خطأ أثناء رفض الطلب: " +
@@ -1829,9 +2050,9 @@ error.message
 }
 
 
-/* =========================
+/* =====================================================
    حذف الطلب
-========================= */
+===================================================== */
 
 async function deleteRequest(id){
 
@@ -1841,17 +2062,23 @@ confirm(
 );
 
 
-if(!ok)return;
+if(!ok){
+
+return;
+
+}
 
 
 try{
+
 
 await deleteDoc(
 
 doc(
 db,
-"storeRequests",
+"stores",
 id
+
 )
 
 );
@@ -1869,10 +2096,14 @@ await loadApprovedStores();
 
 }catch(error){
 
-console.error(error);
+console.error(
+"DELETE ERROR:",
+error
+);
 
 showError(
-"حدث خطأ أثناء حذف الطلب."
+"حدث خطأ أثناء حذف الطلب: " +
+error.message
 );
 
 }
@@ -1880,13 +2111,24 @@ showError(
 }
 
 
-/* =========================
+/* =====================================================
    المتاجر المقبولة
-========================= */
+===================================================== */
 
 async function loadApprovedStores(){
 
 try{
+
+approvedStoresContainer.innerHTML = `
+
+<div class="empty">
+
+⏳ جاري تحميل المتاجر...
+
+</div>
+
+`;
+
 
 const snapshot =
 await getDocs(
@@ -1897,10 +2139,44 @@ db,
 );
 
 
-approvedStoresContainer.innerHTML = "";
+const stores = [];
 
 
-if(snapshot.empty){
+snapshot.forEach(
+item=>{
+
+const store =
+item.data();
+
+
+/*
+   عرض المتاجر المقبولة أو النشطة فقط
+*/
+
+if(
+store.status === "approved"
+||
+store.status === "active"
+){
+
+stores.push({
+
+id:item.id,
+
+...store
+
+});
+
+}
+
+});
+
+
+/* =====================================================
+   لا توجد متاجر
+===================================================== */
+
+if(stores.length === 0){
 
 approvedStoresContainer.innerHTML = `
 
@@ -1917,12 +2193,37 @@ return;
 }
 
 
-snapshot.forEach(
-item=>{
+/* =====================================================
+   ترتيب الأحدث
+===================================================== */
 
-const store =
-item.data();
+stores.sort(
+(a,b)=>{
 
+const aTime =
+a.approvedAt?.seconds ||
+a.createdAt?.seconds ||
+0;
+
+const bTime =
+b.approvedAt?.seconds ||
+b.createdAt?.seconds ||
+0;
+
+return bTime - aTime;
+
+});
+
+
+approvedStoresContainer.innerHTML = "";
+
+
+/* =====================================================
+   إنشاء صفوف المتاجر
+===================================================== */
+
+stores.forEach(
+store=>{
 
 const row =
 document.createElement("div");
@@ -1938,23 +2239,42 @@ row.innerHTML = `
 <h3>
 
 🏪 ${escapeHtml(
-store.storeName || "بدون اسم"
+store.storeName ||
+store.name ||
+"بدون اسم"
 )}
 
 </h3>
 
+
 <p>
 
 👤 ${escapeHtml(
-store.ownerName || "-"
+store.ownerName ||
+"-"
 )}
 
 </p>
 
+
 <p>
 
 📧 ${escapeHtml(
-store.ownerEmail || "-"
+store.ownerEmail ||
+store.email ||
+"-"
+)}
+
+</p>
+
+
+<p>
+
+🆔 ${escapeHtml(
+store.ownerUid ||
+store.ownerId ||
+store.id ||
+"-"
 )}
 
 </p>
@@ -1984,13 +2304,23 @@ row
 
 }catch(error){
 
-console.error(error);
+console.error(
+"LOAD APPROVED STORES ERROR:",
+error
+);
+
 
 approvedStoresContainer.innerHTML = `
 
 <div class="empty">
 
-❌ تعذر تحميل المتاجر.
+❌ تعذر تحميل المتاجر المقبولة.
+
+<br><br>
+
+${escapeHtml(
+error.message
+)}
 
 </div>
 
@@ -2001,26 +2331,47 @@ approvedStoresContainer.innerHTML = `
 }
 
 
-/* =========================
-   حماية النص
-========================= */
+/* =====================================================
+   حماية النص HTML
+===================================================== */
 
 function escapeHtml(value){
 
-return String(value ?? "")
+return String(
+value ?? ""
+)
 
-.replace(/&/g,"&amp;")
+.replace(
+/&/g,
+"&amp;"
+)
 
-.replace(/</g,"&lt;")
+.replace(
+/</g,
+"&lt;"
+)
 
-.replace(/>/g,"&gt;")
+.replace(
+/>/g,
+"&gt;"
+)
 
-.replace(/"/g,"&quot;")
+.replace(
+/"/g,
+"&quot;"
+)
 
-.replace(/'/g,"&#039;");
+.replace(
+/'/g,
+"&#039;"
+);
 
 }
 
+
+/* =====================================================
+   حماية الخصائص
+===================================================== */
 
 function escapeAttribute(value){
 
@@ -2029,26 +2380,52 @@ return escapeHtml(value);
 }
 
 
-/* =========================
-   تحديث
-========================= */
+/* =====================================================
+   زر التحديث
+===================================================== */
 
 refreshBtn.addEventListener(
 "click",
 async function(){
 
-refreshBtn.disabled=true;
+if(
+refreshBtn.disabled
+){
+
+return;
+
+}
+
+
+refreshBtn.disabled =
+true;
 
 refreshBtn.textContent =
 "⏳ جاري التحديث...";
 
 
+try{
+
 await loadRequests();
 
 await loadApprovedStores();
 
+}catch(error){
 
-refreshBtn.disabled=false;
+console.error(
+"REFRESH ERROR:",
+error
+);
+
+showError(
+"حدث خطأ أثناء تحديث البيانات."
+);
+
+}
+
+
+refreshBtn.disabled =
+false;
 
 refreshBtn.textContent =
 "🔄 تحديث";
@@ -2056,9 +2433,9 @@ refreshBtn.textContent =
 });
 
 
-/* =========================
-   إغلاق صورة الوصل
-========================= */
+/* =====================================================
+   إغلاق نافذة الوصل
+===================================================== */
 
 closeModal.addEventListener(
 "click",
@@ -2068,7 +2445,8 @@ imageModal.classList.remove(
 "active"
 );
 
-modalImage.src="";
+modalImage.src =
+"";
 
 });
 
@@ -2077,26 +2455,55 @@ imageModal.addEventListener(
 "click",
 function(event){
 
-if(event.target === imageModal){
+if(
+event.target === imageModal
+){
 
 imageModal.classList.remove(
 "active"
 );
 
-modalImage.src="";
+modalImage.src =
+"";
 
 }
 
 });
 
 
-/* =========================
-   تشغيل
-========================= */
+/* =====================================================
+   إغلاق النافذة بزر ESC
+===================================================== */
 
-loadRequests();
+document.addEventListener(
+"keydown",
+function(event){
 
-loadApprovedStores();
+if(
+event.key === "Escape"
+){
+
+imageModal.classList.remove(
+"active"
+);
+
+modalImage.src =
+"";
+
+}
+
+});
+
+
+/* =====================================================
+   تشغيل الصفحة
+===================================================== */
+
+/*
+   لا نستدعي loadRequests() مباشرة
+   لأن onAuthStateChanged هو الذي
+   يتحقق أولًا من أن المستخدم هو الأدمن.
+*/
 
 </script>
 
