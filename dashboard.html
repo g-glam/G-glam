@@ -12,365 +12,1027 @@ content="width=device-width, initial-scale=1.0">
 
 <style>
 
+/* =====================================================
+   COLORS
+===================================================== */
+
+:root{
+
+--orange:#F47B20;
+--orange-dark:#DF6810;
+
+--bg:#F7F7F7;
+--card:#FFFFFF;
+
+--dark:#222222;
+--dark-2:#333333;
+
+--text:#333333;
+--muted:#888888;
+
+--border:#E9E9E9;
+
+--success:#198754;
+--success-bg:#E5F5EC;
+
+--danger:#DC3545;
+--danger-bg:#FBE7EA;
+
+--shadow:0 4px 18px rgba(0,0,0,.06);
+
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
 *{
+
 box-sizing:border-box;
+
 margin:0;
 padding:0;
+
 font-family:Arial,sans-serif;
+
 }
+
+
+/* =====================================================
+   BODY
+===================================================== */
 
 body{
-background:#F5F0E8;
-color:#222;
+
+background:var(--bg);
+
+color:var(--text);
+
 min-height:100vh;
+
 }
 
-/* =========================
+
+/* =====================================================
    SIDEBAR
-========================= */
+===================================================== */
 
 .sidebar{
+
 position:fixed;
+
 right:0;
 top:0;
+
 height:100vh;
-width:70px;
-background:#222;
+
+width:75px;
+
+background:var(--dark);
+
 color:white;
+
 overflow:hidden;
+
 transition:.3s;
+
 z-index:1000;
+
+box-shadow:-4px 0 20px rgba(0,0,0,.08);
+
 }
 
 .sidebar:hover{
-width:230px;
+
+width:240px;
+
 }
+
+
+/* =====================================================
+   LOGO
+===================================================== */
 
 .logo{
-height:75px;
+
+height:78px;
+
 display:flex;
+
 align-items:center;
+
 justify-content:center;
-font-size:22px;
-font-weight:bold;
-border-bottom:1px solid #444;
+
+font-size:23px;
+
+font-weight:800;
+
+border-bottom:1px solid #3a3a3a;
+
 white-space:nowrap;
+
 }
 
+.logo span{
+
+color:var(--orange);
+
+}
+
+
+/* =====================================================
+   MENU
+===================================================== */
+
 .menu{
-margin-top:20px;
+
+margin-top:18px;
+
+padding:0 10px;
+
 }
 
 .menu a{
+
 display:flex;
+
 align-items:center;
+
 gap:15px;
-padding:15px;
-color:white;
+
+height:52px;
+
+padding:0 10px;
+
+margin-bottom:7px;
+
+border-radius:12px;
+
+color:#ddd;
+
 text-decoration:none;
+
 white-space:nowrap;
+
 transition:.2s;
+
 }
 
 .menu a:hover{
+
 background:#333;
+
+color:white;
+
 }
 
 .menu a.active{
-background:#B89B7A;
+
+background:var(--orange);
+
+color:white;
+
+box-shadow:
+0 5px 15px rgba(244,123,32,.25);
+
 }
 
 .icon{
+
 min-width:35px;
+
 text-align:center;
+
 font-size:20px;
+
 }
 
 .text{
+
 opacity:0;
-transition:.3s;
+
+transition:.25s;
+
+font-size:14px;
+
+font-weight:bold;
+
 }
 
 .sidebar:hover .text{
+
 opacity:1;
+
 }
 
-/* =========================
+
+/* =====================================================
    CONTENT
-========================= */
+===================================================== */
 
 .content{
-margin-right:70px;
-padding:20px;
+
+margin-right:75px;
+
+padding:25px;
+
+transition:.3s;
+
 }
 
-/* =========================
-   HEADER
-========================= */
+
+/* =====================================================
+   TOP HEADER
+===================================================== */
 
 .header{
-background:white;
-padding:20px;
+
+background:var(--card);
+
+border:1px solid var(--border);
+
 border-radius:18px;
-box-shadow:0 3px 15px rgba(0,0,0,.06);
-margin-bottom:20px;
+
+padding:25px;
+
+box-shadow:var(--shadow);
+
+margin-bottom:22px;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.header::before{
+
+content:"";
+
+position:absolute;
+
+right:0;
+
+top:0;
+
+width:5px;
+
+height:100%;
+
+background:var(--orange);
+
 }
 
 .header h1{
-font-size:28px;
+
+font-size:27px;
+
+color:var(--dark-2);
+
 margin-bottom:8px;
+
 }
 
 .header p{
-color:#777;
+
+color:var(--muted);
+
+font-size:14px;
+
 }
 
 .owner-email{
+
 font-size:13px;
-color:#777;
-margin-top:10px;
+
+color:var(--muted);
+
+margin-top:13px;
+
 }
 
-/* =========================
-   STATISTICS
-========================= */
+.owner-email span{
 
-.stats{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:15px;
-margin-bottom:20px;
-}
+color:var(--dark-2);
 
-.stat{
-background:white;
-padding:20px;
-border-radius:18px;
-box-shadow:0 3px 15px rgba(0,0,0,.06);
-}
-
-.stat-title{
-color:#777;
-font-size:14px;
-margin-bottom:10px;
-}
-
-.stat-value{
-font-size:28px;
 font-weight:bold;
+
 }
 
-/* =========================
-   ACTIONS
-========================= */
 
-.actions{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:15px;
-margin-bottom:25px;
-}
-
-.action{
-background:white;
-border:none;
-border-radius:18px;
-padding:22px;
-text-align:right;
-cursor:pointer;
-box-shadow:0 3px 15px rgba(0,0,0,.06);
-transition:.2s;
-}
-
-.action:hover{
-transform:translateY(-2px);
-}
-
-.action h3{
-font-size:18px;
-margin-bottom:7px;
-}
-
-.action p{
-color:#777;
-font-size:14px;
-}
-
-/* =========================
-   PRODUCTS
-========================= */
-
-.section{
-background:white;
-padding:20px;
-border-radius:18px;
-box-shadow:0 3px 15px rgba(0,0,0,.06);
-margin-bottom:20px;
-}
-
-.section-header{
-display:flex;
-align-items:center;
-justify-content:space-between;
-margin-bottom:18px;
-}
-
-.section-header h2{
-font-size:21px;
-}
-
-.add-btn{
-background:#222;
-color:white;
-border:none;
-padding:12px 18px;
-border-radius:12px;
-cursor:pointer;
-}
-
-.products{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:15px;
-}
-
-.product{
-background:white;
-border:1px solid #eee;
-border-radius:16px;
-padding:10px;
-}
-
-.product img{
-width:100%;
-height:180px;
-object-fit:cover;
-border-radius:14px;
-}
-
-.product h3{
-font-size:16px;
-margin:10px 5px 5px;
-}
-
-.product-price{
-font-weight:bold;
-margin:0 5px 10px;
-}
-
-.product-stock{
-font-size:13px;
-color:#777;
-margin:0 5px 10px;
-}
-
-.product-buttons{
-display:flex;
-gap:7px;
-}
-
-.product-buttons button{
-flex:1;
-padding:9px;
-border:none;
-border-radius:10px;
-cursor:pointer;
-}
-
-.edit-btn{
-background:#F5F0E8;
-}
-
-.delete-btn{
-background:#f1dede;
-color:#9b3030;
-}
-
-/* =========================
-   EMPTY
-========================= */
-
-.empty{
-background:white;
-padding:35px;
-text-align:center;
-color:#777;
-border-radius:16px;
-grid-column:1/-1;
-}
-
-/* =========================
+/* =====================================================
    MESSAGES
-========================= */
+===================================================== */
 
 .message{
+
 display:none;
-padding:12px;
-border-radius:10px;
-margin-bottom:15px;
+
+padding:14px 18px;
+
+border-radius:12px;
+
+margin-bottom:18px;
+
 text-align:center;
+
+font-size:14px;
+
 }
 
 .success{
-background:#d4edda;
+
+background:var(--success-bg);
+
 color:#155724;
+
+border:1px solid #c5e8d3;
+
 }
 
 .error{
-background:#f8d7da;
+
+background:var(--danger-bg);
+
 color:#721c24;
+
+border:1px solid #efc7cc;
+
 }
 
-/* =========================
-   MOBILE
-========================= */
 
-@media(max-width:900px){
+/* =====================================================
+   STATISTICS
+===================================================== */
+
+.stats{
+
+display:grid;
+
+grid-template-columns:
+repeat(3,1fr);
+
+gap:18px;
+
+margin-bottom:22px;
+
+}
+
+.stat{
+
+background:white;
+
+border:1px solid var(--border);
+
+border-radius:18px;
+
+padding:22px;
+
+box-shadow:var(--shadow);
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.stat::after{
+
+content:"";
+
+position:absolute;
+
+bottom:0;
+
+right:0;
+
+height:3px;
+
+width:100%;
+
+background:var(--orange);
+
+opacity:.8;
+
+}
+
+.stat-title{
+
+color:var(--muted);
+
+font-size:14px;
+
+margin-bottom:12px;
+
+display:flex;
+
+align-items:center;
+
+gap:8px;
+
+}
+
+.stat-value{
+
+font-size:30px;
+
+font-weight:800;
+
+color:var(--dark);
+
+}
+
+
+/* =====================================================
+   ACTIONS
+===================================================== */
+
+.actions{
+
+display:grid;
+
+grid-template-columns:
+repeat(2,1fr);
+
+gap:18px;
+
+margin-bottom:22px;
+
+}
+
+.action{
+
+background:white;
+
+border:1px solid var(--border);
+
+border-radius:18px;
+
+padding:23px;
+
+text-align:right;
+
+cursor:pointer;
+
+box-shadow:var(--shadow);
+
+transition:.25s;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.action::before{
+
+content:"";
+
+position:absolute;
+
+right:0;
+
+top:0;
+
+width:4px;
+
+height:100%;
+
+background:var(--orange);
+
+transform:scaleY(0);
+
+transition:.25s;
+
+}
+
+.action:hover{
+
+transform:translateY(-3px);
+
+box-shadow:
+0 8px 25px rgba(0,0,0,.09);
+
+}
+
+.action:hover::before{
+
+transform:scaleY(1);
+
+}
+
+.action h3{
+
+font-size:18px;
+
+color:var(--dark);
+
+margin-bottom:8px;
+
+}
+
+.action p{
+
+color:var(--muted);
+
+font-size:14px;
+
+}
+
+
+/* =====================================================
+   PRODUCTS SECTION
+===================================================== */
+
+.section{
+
+background:white;
+
+border:1px solid var(--border);
+
+padding:22px;
+
+border-radius:18px;
+
+box-shadow:var(--shadow);
+
+margin-bottom:22px;
+
+}
+
+.section-header{
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+margin-bottom:20px;
+
+}
+
+.section-header h2{
+
+font-size:21px;
+
+color:var(--dark);
+
+}
+
+
+/* =====================================================
+   ADD BUTTON
+===================================================== */
+
+.add-btn{
+
+background:var(--orange);
+
+color:white;
+
+border:none;
+
+padding:11px 18px;
+
+border-radius:11px;
+
+cursor:pointer;
+
+font-size:14px;
+
+font-weight:bold;
+
+transition:.2s;
+
+box-shadow:
+0 4px 10px rgba(244,123,32,.18);
+
+}
+
+.add-btn:hover{
+
+background:var(--orange-dark);
+
+transform:translateY(-1px);
+
+}
+
+
+/* =====================================================
+   PRODUCTS GRID
+===================================================== */
 
 .products{
-grid-template-columns:repeat(2,1fr);
-}
+
+display:grid;
+
+grid-template-columns:
+repeat(4,1fr);
+
+gap:17px;
 
 }
 
-@media(max-width:700px){
+
+/* =====================================================
+   PRODUCT CARD
+===================================================== */
+
+.product{
+
+background:white;
+
+border:1px solid var(--border);
+
+border-radius:16px;
+
+padding:10px;
+
+transition:.25s;
+
+overflow:hidden;
+
+}
+
+.product:hover{
+
+transform:translateY(-3px);
+
+box-shadow:
+0 8px 25px rgba(0,0,0,.08);
+
+}
+
+
+/* =====================================================
+   PRODUCT IMAGE
+===================================================== */
+
+.product img{
+
+width:100%;
+
+height:190px;
+
+object-fit:cover;
+
+border-radius:12px;
+
+background:#f2f2f2;
+
+}
+
+
+/* =====================================================
+   PRODUCT NAME
+===================================================== */
+
+.product h3{
+
+font-size:16px;
+
+margin:12px 6px 7px;
+
+color:var(--dark);
+
+}
+
+
+/* =====================================================
+   PRODUCT PRICE
+===================================================== */
+
+.product-price{
+
+font-size:16px;
+
+font-weight:bold;
+
+color:var(--orange);
+
+margin:0 6px 8px;
+
+}
+
+
+/* =====================================================
+   PRODUCT STOCK
+===================================================== */
+
+.product-stock{
+
+font-size:13px;
+
+color:var(--muted);
+
+margin:0 6px 12px;
+
+}
+
+
+/* =====================================================
+   PRODUCT BUTTONS
+===================================================== */
+
+.product-buttons{
+
+display:flex;
+
+gap:7px;
+
+}
+
+.product-buttons button{
+
+flex:1;
+
+padding:10px 5px;
+
+border:none;
+
+border-radius:9px;
+
+cursor:pointer;
+
+font-size:13px;
+
+font-weight:bold;
+
+transition:.2s;
+
+}
+
+.edit-btn{
+
+background:#FFF1E6;
+
+color:var(--orange-dark);
+
+}
+
+.edit-btn:hover{
+
+background:#FFE2CC;
+
+}
+
+.delete-btn{
+
+background:var(--danger-bg);
+
+color:#B52B39;
+
+}
+
+.delete-btn:hover{
+
+background:#F6D1D6;
+
+}
+
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.empty{
+
+background:#FAFAFA;
+
+border:1px dashed #ddd;
+
+padding:40px 20px;
+
+text-align:center;
+
+color:var(--muted);
+
+border-radius:14px;
+
+grid-column:1/-1;
+
+line-height:1.8;
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:1000px){
+
+.products{
+
+grid-template-columns:
+repeat(3,1fr);
+
+}
+
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media(max-width:800px){
 
 .sidebar{
-width:60px;
+
+width:65px;
+
 }
 
 .sidebar:hover{
-width:200px;
+
+width:210px;
+
 }
 
 .content{
-margin-right:60px;
-padding:10px;
+
+margin-right:65px;
+
+padding:16px;
+
 }
 
 .stats{
-grid-template-columns:1fr;
+
+grid-template-columns:
+repeat(3,1fr);
+
+gap:10px;
+
 }
 
-.actions{
-grid-template-columns:1fr;
+.stat{
+
+padding:16px;
+
+}
+
+.stat-value{
+
+font-size:24px;
+
 }
 
 .products{
-grid-template-columns:1fr 1fr;
-}
+
+grid-template-columns:
+repeat(2,1fr);
 
 }
 
-@media(max-width:450px){
+}
 
-.products{
-grid-template-columns:1fr;
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:550px){
+
+.content{
+
+padding:12px;
+
+margin-right:60px;
+
+}
+
+.sidebar{
+
+width:60px;
+
+}
+
+.sidebar:hover{
+
+width:200px;
+
+}
+
+.header{
+
+padding:20px;
+
 }
 
 .header h1{
+
 font-size:22px;
+
 }
+
+.stats{
+
+grid-template-columns:1fr;
+
+}
+
+.actions{
+
+grid-template-columns:1fr;
+
+}
+
+.section{
+
+padding:15px;
+
+}
+
+.section-header{
+
+gap:10px;
+
+}
+
+.section-header h2{
+
+font-size:18px;
+
+}
+
+.add-btn{
+
+padding:10px 12px;
+
+font-size:12px;
+
+}
+
+.products{
+
+grid-template-columns:
+1fr 1fr;
+
+gap:10px;
+
+}
+
+.product img{
+
+height:150px;
+
+}
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media(max-width:380px){
+
+.products{
+
+grid-template-columns:1fr;
+
+}
+
+.product img{
+
+height:200px;
+
+}
+
+}
+
+
+/* =====================================================
+   SCROLLBAR
+===================================================== */
+
+::-webkit-scrollbar{
+
+width:7px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:#f1f1f1;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:#ccc;
+
+border-radius:10px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+background:var(--orange);
 
 }
 
@@ -378,19 +1040,25 @@ font-size:22px;
 
 </head>
 
+
 <body>
 
-<!-- =========================
+
+<!-- =====================================================
      SIDEBAR
-========================= -->
+===================================================== -->
 
 <div class="sidebar">
 
 <div class="logo">
-G-Glam
+
+G-<span>Glam</span>
+
 </div>
 
+
 <div class="menu">
+
 
 <a href="dashboard.html"
 class="active">
@@ -403,6 +1071,7 @@ class="active">
 
 </a>
 
+
 <a href="orders.html">
 
 <span class="icon">📦</span>
@@ -412,6 +1081,7 @@ class="active">
 </span>
 
 </a>
+
 
 <a href="products.html">
 
@@ -423,6 +1093,7 @@ class="active">
 
 </a>
 
+
 <a href="add-product.html">
 
 <span class="icon">➕</span>
@@ -432,6 +1103,7 @@ class="active">
 </span>
 
 </a>
+
 
 <a href="delivery.html">
 
@@ -443,6 +1115,7 @@ class="active">
 
 </a>
 
+
 <a href="settings.html">
 
 <span class="icon">⚙️</span>
@@ -452,6 +1125,7 @@ class="active">
 </span>
 
 </a>
+
 
 <a href="#"
 id="logoutBtn">
@@ -464,147 +1138,204 @@ id="logoutBtn">
 
 </a>
 
-</div>
 
 </div>
 
-<!-- =========================
+</div>
+
+
+<!-- =====================================================
      CONTENT
-========================= -->
+===================================================== -->
 
 <div class="content">
+
+
+<!-- HEADER -->
 
 <div class="header">
 
 <h1 id="storeName">
+
 جاري تحميل المتجر...
+
 </h1>
 
+
 <p>
+
 لوحة تحكم متجرك
+
 </p>
+
 
 <div class="owner-email">
 
 📧 الحساب:
 
 <span id="ownerEmail">
+
 جاري التحميل...
+
 </span>
 
 </div>
 
 </div>
 
-<!-- الرسائل -->
+
+<!-- =====================================================
+     MESSAGES
+===================================================== -->
 
 <div
 class="message success"
 id="successMessage">
 </div>
 
+
 <div
 class="message error"
 id="errorMessage">
 </div>
 
-<!-- =========================
+
+<!-- =====================================================
      STATISTICS
-========================= -->
+===================================================== -->
 
 <div class="stats">
+
 
 <div class="stat">
 
 <div class="stat-title">
+
 🛍️ منتجاتي
+
 </div>
+
 
 <div
 class="stat-value"
 id="productsCount">
+
 0
+
 </div>
 
 </div>
+
 
 <div class="stat">
 
 <div class="stat-title">
+
 📦 طلباتي
+
 </div>
+
 
 <div
 class="stat-value"
 id="ordersCount">
+
 0
+
 </div>
 
 </div>
+
 
 <div class="stat">
 
 <div class="stat-title">
+
 🏪 المتجر
+
 </div>
+
 
 <div
 class="stat-value"
 id="storeNameStat">
+
 G-Glam
-</div>
 
 </div>
 
 </div>
 
-<!-- =========================
+
+</div>
+
+
+<!-- =====================================================
      ACTIONS
-========================= -->
+===================================================== -->
 
 <div class="actions">
+
 
 <button
 class="action"
 onclick="goAddProduct()">
 
 <h3>
+
 ➕ إضافة منتج
+
 </h3>
 
+
 <p>
+
 إضافة منتج جديد إلى متجرك
+
 </p>
 
 </button>
+
 
 <button
 class="action"
 onclick="goOrders()">
 
 <h3>
+
 📦 الطلبات
+
 </h3>
 
+
 <p>
+
 عرض وإدارة طلبات الزبائن
+
 </p>
 
 </button>
 
+
 </div>
 
-<!-- =========================
+
+<!-- =====================================================
      PRODUCTS
-========================= -->
+===================================================== -->
 
 <div class="section">
 
+
 <div class="section-header">
 
+
 <h2>
+
 🛍️ أحدث منتجاتي
+
 </h2>
+
 
 <button
 class="add-btn"
@@ -614,11 +1345,14 @@ onclick="goAddProduct()">
 
 </button>
 
+
 </div>
+
 
 <div
 class="products"
 id="productsContainer">
+
 
 <div class="empty">
 
@@ -626,25 +1360,40 @@ id="productsContainer">
 
 </div>
 
-</div>
 
 </div>
 
+
 </div>
+
+
+</div>
+
+
+<!-- =====================================================
+     FIREBASE
+===================================================== -->
+
 <script type="module">
 
-/* =========================
-   FIREBASE
-========================= */
+
+/* =====================================================
+   IMPORTS
+===================================================== */
 
 import {
+
 initializeApp
+
 }
+
 from
+
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
 
 import {
+
 getFirestore,
 collection,
 getDocs,
@@ -653,23 +1402,30 @@ where,
 deleteDoc,
 doc,
 getDoc
+
 }
+
 from
+
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 
 import {
+
 getAuth,
 onAuthStateChanged,
 signOut
+
 }
+
 from
+
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
 
-/* =========================
+/* =====================================================
    FIREBASE CONFIG
-========================= */
+===================================================== */
 
 const firebaseConfig = {
 
@@ -697,48 +1453,55 @@ measurementId:
 };
 
 
-/* =========================
-   INITIALIZE FIREBASE
-========================= */
+/* =====================================================
+   INITIALIZE
+===================================================== */
 
 const app =
 initializeApp(firebaseConfig);
 
+
 const db =
 getFirestore(app);
+
 
 const auth =
 getAuth(app);
 
 
-/* =========================
+/* =====================================================
    ELEMENTS
-========================= */
+===================================================== */
 
 const storeNameElement =
 document.getElementById(
 "storeName"
 );
 
+
 const storeNameStat =
 document.getElementById(
 "storeNameStat"
 );
+
 
 const ownerEmailElement =
 document.getElementById(
 "ownerEmail"
 );
 
+
 const productsCount =
 document.getElementById(
 "productsCount"
 );
 
+
 const ordersCount =
 document.getElementById(
 "ordersCount"
 );
+
 
 const productsContainer =
 document.getElementById(
@@ -746,9 +1509,9 @@ document.getElementById(
 );
 
 
-/* =========================
+/* =====================================================
    VARIABLES
-========================= */
+===================================================== */
 
 let currentOwnerEmail = "";
 
@@ -759,18 +1522,14 @@ let currentStoreId = "";
 let currentStoreName = "G-Glam";
 
 
-/* =========================
-   LOAD STORE BY UID
-========================= */
+/* =====================================================
+   LOAD STORE
+===================================================== */
 
 async function loadStore(){
 
 try{
 
-
-/*
-   التأكد من وجود المستخدم
-*/
 
 if(!auth.currentUser){
 
@@ -782,20 +1541,17 @@ return;
 }
 
 
-/*
-   UID الحقيقي من Firebase Authentication
-*/
-
 const uid =
 auth.currentUser.uid;
+
 
 currentOwnerUid =
 uid;
 
 
-/* =========================
-   قراءة stores/{UID}
-========================= */
+/* =====================================================
+   STORES / UID
+===================================================== */
 
 const storeRef =
 doc(
@@ -811,9 +1567,9 @@ storeRef
 );
 
 
-/* =========================
-   لا يوجد متجر
-========================= */
+/* =====================================================
+   NO STORE
+===================================================== */
 
 if(!storeSnapshot.exists()){
 
@@ -831,33 +1587,35 @@ return;
 }
 
 
-/* =========================
-   بيانات المتجر
-========================= */
+/* =====================================================
+   STORE DATA
+===================================================== */
 
 const store =
 storeSnapshot.data();
+
 
 currentStoreId =
 storeSnapshot.id;
 
 
-/* =========================
-   حالة المتجر
-========================= */
+/* =====================================================
+   STATUS
+===================================================== */
 
 const status =
 
 String(
 store.status || "pending"
 )
+
 .toLowerCase()
 .trim();
 
 
-/* =========================
-   الطلب قيد المراجعة
-========================= */
+/* =====================================================
+   PENDING
+===================================================== */
 
 if(
 
@@ -883,9 +1641,9 @@ return;
 }
 
 
-/* =========================
-   المتجر مرفوض
-========================= */
+/* =====================================================
+   REJECTED
+===================================================== */
 
 if(
 
@@ -910,6 +1668,7 @@ reason
 
 );
 
+
 await signOut(auth);
 
 window.location.href =
@@ -920,9 +1679,9 @@ return;
 }
 
 
-/* =========================
-   التحقق من حالة القبول
-========================= */
+/* =====================================================
+   APPROVED
+===================================================== */
 
 if(
 
@@ -946,9 +1705,9 @@ return;
 }
 
 
-/* =========================
-   المتجر مقبول
-========================= */
+/* =====================================================
+   STORE ACCEPTED
+===================================================== */
 
 currentStoreName =
 
@@ -970,48 +1729,55 @@ auth.currentUser.email ||
 "";
 
 
-/* =========================
-   عرض معلومات المتجر
-========================= */
+/* =====================================================
+   DISPLAY
+===================================================== */
 
 storeNameElement.textContent =
 currentStoreName;
 
+
 storeNameStat.textContent =
 currentStoreName;
+
 
 ownerEmailElement.textContent =
 currentOwnerEmail;
 
 
-/* =========================
-   حفظ المعلومات محليًا
-========================= */
+/* =====================================================
+   LOCAL STORAGE
+===================================================== */
 
 localStorage.setItem(
 "storeId",
 currentStoreId
 );
 
+
 localStorage.setItem(
 "storeName",
 currentStoreName
 );
+
 
 localStorage.setItem(
 "storeOwnerEmail",
 currentOwnerEmail
 );
 
+
 localStorage.setItem(
 "ownerEmail",
 currentOwnerEmail
 );
 
+
 localStorage.setItem(
 "ownerUid",
 currentOwnerUid
 );
+
 
 localStorage.setItem(
 "paymentStatus",
@@ -1019,16 +1785,16 @@ localStorage.setItem(
 );
 
 
-/* =========================
-   تحميل المنتجات
-========================= */
+/* =====================================================
+   LOAD PRODUCTS
+===================================================== */
 
 await loadProducts();
 
 
-/* =========================
-   تحميل الطلبات
-========================= */
+/* =====================================================
+   LOAD ORDERS
+===================================================== */
 
 await loadOrders();
 
@@ -1067,9 +1833,9 @@ error.message
 }
 
 
-/* =========================
+/* =====================================================
    LOAD PRODUCTS
-========================= */
+===================================================== */
 
 async function loadProducts(){
 
@@ -1095,6 +1861,7 @@ currentOwnerUid
 
 let snapshot;
 
+
 try{
 
 snapshot =
@@ -1102,19 +1869,18 @@ await getDocs(q);
 
 }catch(error){
 
-/*
-   توافق مع المنتجات القديمة
-   التي تستخدم ownerEmail
-*/
 
 if(
+
 error.code ===
 "failed-precondition"
+
 ||
+
 error.code ===
 "permission-denied"
-){
 
+){
 const oldQuery =
 query(
 
@@ -1132,7 +1898,9 @@ currentOwnerEmail
 );
 
 snapshot =
-await getDocs(oldQuery);
+await getDocs(
+oldQuery
+);
 
 }else{
 
@@ -1143,12 +1911,25 @@ throw error;
 }
 
 
+/* =====================================================
+   PRODUCTS COUNT
+===================================================== */
+
 productsCount.textContent =
 snapshot.size;
 
 
-productsContainer.innerHTML = "";
+/* =====================================================
+   CLEAR PRODUCTS
+===================================================== */
 
+productsContainer.innerHTML =
+"";
+
+
+/* =====================================================
+   EMPTY PRODUCTS
+===================================================== */
 
 if(snapshot.empty){
 
@@ -1177,15 +1958,16 @@ return;
 }
 
 
-/* =========================
-   عرض المنتجات
-========================= */
+/* =====================================================
+   DISPLAY PRODUCTS
+===================================================== */
 
 snapshot.forEach(
 productDoc=>{
 
 const product =
 productDoc.data();
+
 
 const id =
 productDoc.id;
@@ -1195,6 +1977,7 @@ const card =
 document.createElement(
 "div"
 );
+
 
 card.className =
 "product";
@@ -1239,6 +2022,7 @@ product.price || 0
 <div class="product-stock">
 
 المخزون:
+
 ${Number(
 product.stock || 0
 )}
@@ -1270,7 +2054,9 @@ class="delete-btn">
 `;
 
 
-/* تعديل */
+/* =====================================================
+   EDIT
+===================================================== */
 
 card
 .querySelector(
@@ -1288,7 +2074,9 @@ encodeURIComponent(id);
 );
 
 
-/* حذف */
+/* =====================================================
+   DELETE
+===================================================== */
 
 card
 .querySelector(
@@ -1310,13 +2098,13 @@ card
 
 });
 
-
 }catch(error){
 
 console.error(
 "PRODUCTS ERROR:",
 error
 );
+
 
 productsContainer.innerHTML = `
 
@@ -1327,7 +2115,7 @@ productsContainer.innerHTML = `
 <br><br>
 
 ${escapeHtml(
-error.message
+error.message || ""
 )}
 
 </div>
@@ -1339,18 +2127,13 @@ error.message
 }
 
 
-/* =========================
+/* =====================================================
    LOAD ORDERS
-========================= */
+===================================================== */
 
 async function loadOrders(){
 
 try{
-
-
-/*
-   البحث بواسطة UID
-*/
 
 const q =
 query(
@@ -1379,17 +2162,18 @@ await getDocs(q);
 
 }catch(error){
 
-/*
-   دعم الطلبات القديمة
-   بواسطة البريد
-*/
+/* دعم الطلبات القديمة */
 
 if(
+
 error.code ===
 "failed-precondition"
+
 ||
+
 error.code ===
 "permission-denied"
+
 ){
 
 const oldQuery =
@@ -1409,7 +2193,9 @@ currentOwnerEmail
 );
 
 snapshot =
-await getDocs(oldQuery);
+await getDocs(
+oldQuery
+);
 
 }else{
 
@@ -1439,9 +2225,9 @@ ordersCount.textContent =
 }
 
 
-/* =========================
+/* =====================================================
    DELETE PRODUCT
-========================= */
+===================================================== */
 
 async function deleteProduct(id){
 
@@ -1486,6 +2272,7 @@ console.error(
 error
 );
 
+
 showError(
 "❌ حدث خطأ أثناء حذف المنتج."
 );
@@ -1495,9 +2282,9 @@ showError(
 }
 
 
-/* =========================
+/* =====================================================
    NAVIGATION
-========================= */
+===================================================== */
 
 window.goAddProduct =
 function(){
@@ -1517,9 +2304,9 @@ window.location.href =
 };
 
 
-/* =========================
+/* =====================================================
    LOGOUT
-========================= */
+===================================================== */
 
 document
 .getElementById(
@@ -1547,7 +2334,12 @@ return;
 
 try{
 
-await signOut(auth);
+await signOut(
+auth
+);
+
+
+/* تنظيف بيانات الدخول */
 
 localStorage.removeItem(
 "storeId"
@@ -1556,6 +2348,23 @@ localStorage.removeItem(
 localStorage.removeItem(
 "ownerUid"
 );
+
+localStorage.removeItem(
+"ownerEmail"
+);
+
+localStorage.removeItem(
+"storeOwnerEmail"
+);
+
+localStorage.removeItem(
+"storeName"
+);
+
+localStorage.removeItem(
+"paymentStatus"
+);
+
 
 window.location.href =
 "login.html";
@@ -1568,6 +2377,7 @@ console.error(
 error
 );
 
+
 showError(
 "❌ تعذر تسجيل الخروج."
 );
@@ -1577,9 +2387,9 @@ showError(
 });
 
 
-/* =========================
+/* =====================================================
    SUCCESS MESSAGE
-========================= */
+===================================================== */
 
 function showSuccess(text){
 
@@ -1588,8 +2398,10 @@ document.getElementById(
 "successMessage"
 );
 
+
 box.textContent =
 text;
+
 
 box.style.display =
 "block";
@@ -1608,9 +2420,9 @@ box.style.display =
 }
 
 
-/* =========================
+/* =====================================================
    ERROR MESSAGE
-========================= */
+===================================================== */
 
 function showError(text){
 
@@ -1619,8 +2431,10 @@ document.getElementById(
 "errorMessage"
 );
 
+
 box.textContent =
 text;
+
 
 box.style.display =
 "block";
@@ -1639,9 +2453,9 @@ box.style.display =
 }
 
 
-/* =========================
+/* =====================================================
    ESCAPE HTML
-========================= */
+===================================================== */
 
 function escapeHtml(value){
 
@@ -1677,9 +2491,9 @@ value ?? ""
 }
 
 
-/* =========================
-   FIREBASE AUTH
-========================= */
+/* =====================================================
+   FIREBASE AUTHENTICATION
+===================================================== */
 
 onAuthStateChanged(
 
@@ -1697,17 +2511,17 @@ return;
 }
 
 
-/* =========================
+/* =====================================================
    USER UID
-========================= */
+===================================================== */
 
 currentOwnerUid =
 user.uid;
 
 
-/* =========================
+/* =====================================================
    USER EMAIL
-========================= */
+===================================================== */
 
 currentOwnerEmail =
 user.email || "";
@@ -1717,20 +2531,18 @@ ownerEmailElement.textContent =
 currentOwnerEmail;
 
 
-/* =========================
+/* =====================================================
    CHECK STORE
-========================= */
+===================================================== */
 
 await loadStore();
 
-}
-
-);
+});
 
 
-/* =========================
+/* =====================================================
    START
-========================= */
+===================================================== */
 
 console.log(
 "G-Glam Store Dashboard Started"
