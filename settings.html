@@ -1342,5 +1342,191 @@ saveBtn.addEventListener(
 
 
 /* =========================
-   تسجيل الخروج
-=====================
+       تسجيل الخروج
+========================= */
+
+document
+.getElementById(
+    "logoutBtn"
+)
+.addEventListener(
+    "click",
+    async function(e){
+
+        e.preventDefault();
+
+
+        const ok =
+        confirm(
+            "هل تريد تسجيل الخروج؟"
+        );
+
+
+        if(!ok){
+
+            return;
+
+        }
+
+
+        try{
+
+            await signOut(auth);
+
+            window.location.href =
+            "login.html";
+
+        }catch(error){
+
+            console.error(
+                "Logout error:",
+                error
+            );
+
+            showError(
+                "حدث خطأ أثناء تسجيل الخروج."
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================
+   رسائل النجاح والخطأ
+========================= */
+
+function showSuccess(text){
+
+    const box =
+    document.getElementById(
+        "successMessage"
+    );
+
+
+    box.textContent =
+    text;
+
+    box.style.display =
+    "block";
+
+
+    const errorBox =
+    document.getElementById(
+        "errorMessage"
+    );
+
+    errorBox.style.display =
+    "none";
+
+
+    setTimeout(
+        function(){
+
+            box.style.display =
+            "none";
+
+        },
+        4000
+    );
+
+}
+
+
+function showError(text){
+
+    const box =
+    document.getElementById(
+        "errorMessage"
+    );
+
+
+    box.textContent =
+    text;
+
+    box.style.display =
+    "block";
+
+
+    const successBox =
+    document.getElementById(
+        "successMessage"
+    );
+
+    successBox.style.display =
+    "none";
+
+
+    setTimeout(
+        function(){
+
+            box.style.display =
+            "none";
+
+        },
+        6000
+    );
+
+}
+
+
+/* =========================
+   تسجيل الدخول والتحقق
+========================= */
+
+onAuthStateChanged(
+
+    auth,
+
+    async function(user){
+
+        /*
+         * إذا لم يكن هناك مستخدم مسجل الدخول
+         * نعيده إلى صفحة تسجيل الدخول
+         */
+
+        if(!user){
+
+            window.location.href =
+            "login.html";
+
+            return;
+
+        }
+
+
+        /*
+         * حفظ المستخدم الحالي
+         */
+
+        currentUser =
+        user;
+
+
+        /*
+         * عرض البريد الإلكتروني
+         */
+
+        ownerEmail.value =
+        user.email ||
+        "";
+
+
+        /*
+         * تحميل متجر هذا المستخدم
+         *
+         * stores / user.uid
+         */
+
+        await loadStore();
+
+    }
+
+);
+
+</script>
+
+</body>
+
+</html>
