@@ -12,44 +12,344 @@ content="width=device-width, initial-scale=1.0">
 
 <style>
 
+/* =====================================================
+   الألوان العامة
+===================================================== */
+
 :root{
---bg:#F5F0E8;
---card:#fff;
---text:#222;
---muted:#777;
---accent:#B89B7A;
---dark:#222;
---success:#d4edda;
---successText:#155724;
---danger:#f8d7da;
---dangerText:#721c24;
---warning:#fff3cd;
---warningText:#856404;
+
+--bg:#f3f3f3;
+--card:#ffffff;
+
+--orange:#f47b20;
+--orange-dark:#df6810;
+
+--text:#555;
+--dark:#333;
+--muted:#999;
+
+--border:#e8e8e8;
+
+--success:#198754;
+--success-bg:#dff3e7;
+
+--danger:#dc3545;
+--danger-bg:#fbe1e4;
+
+--warning:#b77900;
+--warning-bg:#fff2cc;
+
+--shadow:
+0 4px 18px rgba(0,0,0,.06);
+
 }
 
+
+/* =====================================================
+   RESET
+===================================================== */
+
 *{
+
 box-sizing:border-box;
+
 margin:0;
 padding:0;
+
 font-family:Arial,sans-serif;
+
 }
 
 body{
+
 background:var(--bg);
+
 color:var(--text);
+
 min-height:100vh;
+
 }
 
 
-/* =========================
-   الشريط العلوي
-========================= */
+/* =====================================================
+   LAYOUT
+===================================================== */
 
-.header{
+.layout{
+
+display:flex;
+
+min-height:100vh;
+
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar{
+
+width:260px;
 
 background:#fff;
 
-padding:15px 25px;
+border-left:1px solid var(--border);
+
+position:fixed;
+
+right:0;
+top:0;
+bottom:0;
+
+z-index:1000;
+
+display:flex;
+
+flex-direction:column;
+
+transition:.3s;
+
+}
+
+
+/* =====================================================
+   SIDEBAR HEADER
+===================================================== */
+
+.sidebar-header{
+
+height:75px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+border-bottom:1px solid var(--border);
+
+}
+
+.logo{
+
+font-size:28px;
+
+font-weight:800;
+
+color:#222;
+
+}
+
+.logo span{
+
+color:var(--orange);
+
+}
+
+
+/* =====================================================
+   SIDEBAR CONTENT
+===================================================== */
+
+.sidebar-content{
+
+padding:18px 12px;
+
+overflow-y:auto;
+
+flex:1;
+
+}
+
+.menu-title{
+
+font-size:11px;
+
+color:#aaa;
+
+font-weight:bold;
+
+padding:15px 12px 8px;
+
+}
+
+.menu-item{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+width:100%;
+
+padding:13px 14px;
+
+border:none;
+
+background:transparent;
+
+border-radius:10px;
+
+font-size:15px;
+
+color:#666;
+
+cursor:pointer;
+
+text-align:right;
+
+margin-bottom:4px;
+
+transition:.2s;
+
+}
+
+.menu-item:hover{
+
+background:#fff3ea;
+
+color:var(--orange);
+
+}
+
+.menu-item.active{
+
+background:#fff0e5;
+
+color:var(--orange);
+
+font-weight:bold;
+
+}
+
+.menu-icon{
+
+font-size:19px;
+
+width:24px;
+
+text-align:center;
+
+}
+
+.menu-badge{
+
+margin-right:auto;
+
+background:var(--orange);
+
+color:#fff;
+
+font-size:11px;
+
+min-width:22px;
+
+height:22px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+border-radius:20px;
+
+}
+
+
+/* =====================================================
+   SIDEBAR FOOTER
+===================================================== */
+
+.sidebar-footer{
+
+padding:15px;
+
+border-top:1px solid var(--border);
+
+}
+
+.admin-box{
+
+background:#f7f7f7;
+
+padding:12px;
+
+border-radius:12px;
+
+margin-bottom:10px;
+
+}
+
+.admin-name{
+
+font-weight:bold;
+
+font-size:14px;
+
+margin-bottom:4px;
+
+}
+
+.admin-email{
+
+font-size:11px;
+
+color:#999;
+
+word-break:break-word;
+
+}
+
+.logout-btn{
+
+width:100%;
+
+padding:12px;
+
+border:none;
+
+border-radius:10px;
+
+background:#fff0f0;
+
+color:#dc3545;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main{
+
+margin-right:260px;
+
+width:calc(100% - 260px);
+
+min-height:100vh;
+
+}
+
+
+/* =====================================================
+   TOPBAR
+===================================================== */
+
+.topbar{
+
+height:75px;
+
+background:#fff;
+
+border-bottom:1px solid var(--border);
 
 display:flex;
 
@@ -57,71 +357,178 @@ align-items:center;
 
 justify-content:space-between;
 
-box-shadow:0 2px 12px rgba(0,0,0,.08);
+padding:0 25px;
 
 position:sticky;
 
 top:0;
 
-z-index:100;
+z-index:500;
 
 }
 
-.logo{
+.topbar-right{
 
-font-size:25px;
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+}
+
+.menu-toggle{
+
+display:none;
+
+border:none;
+
+background:#f7f7f7;
+
+width:42px;
+
+height:42px;
+
+border-radius:10px;
+
+font-size:22px;
+
+cursor:pointer;
+
+}
+
+.page-name{
+
+font-size:20px;
+
+font-weight:bold;
+
+color:#444;
+
+}
+
+.page-subtitle{
+
+font-size:12px;
+
+color:#999;
+
+margin-top:4px;
+
+}
+
+.admin-top{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+}
+
+.admin-avatar{
+
+width:40px;
+
+height:40px;
+
+border-radius:50%;
+
+background:var(--orange);
+
+color:#fff;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
 
 font-weight:bold;
 
 }
 
-.admin-title{
 
-color:#777;
+/* =====================================================
+   CONTENT
+===================================================== */
 
-font-size:14px;
+.content{
 
-}
+padding:25px;
 
-
-/* =========================
-   المحتوى
-========================= */
-
-.container{
-
-max-width:1200px;
+max-width:1500px;
 
 margin:auto;
 
-padding:25px 15px 50px;
-
-}
-
-.page-title{
-
-margin-bottom:20px;
-
-}
-
-.page-title h1{
-
-font-size:28px;
-
-margin-bottom:7px;
-
-}
-
-.page-title p{
-
-color:var(--muted);
-
 }
 
 
-/* =========================
-   الإحصائيات
-========================= */
+/* =====================================================
+   PAGE HEADER
+===================================================== */
+
+.page-header{
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+gap:15px;
+
+margin-bottom:22px;
+
+}
+
+.page-header h1{
+
+font-size:26px;
+
+color:#444;
+
+}
+
+.page-header p{
+
+color:#999;
+
+font-size:14px;
+
+margin-top:6px;
+
+}
+
+.refresh-btn{
+
+background:#222;
+
+color:#fff;
+
+border:none;
+
+padding:11px 17px;
+
+border-radius:10px;
+
+cursor:pointer;
+
+font-weight:bold;
+
+}
+
+.refresh-btn:hover{
+
+background:#333;
+
+}
+
+
+/* =====================================================
+   STATS
+===================================================== */
 
 .stats{
 
@@ -136,409 +543,17 @@ margin-bottom:25px;
 
 }
 
-.stat{
+.stat-card{
 
 background:#fff;
-
-padding:20px;
-
-border-radius:18px;
-
-box-shadow:
-0 3px 15px rgba(0,0,0,.05);
-
-}
-
-.stat-title{
-
-color:var(--muted);
-
-font-size:14px;
-
-margin-bottom:10px;
-
-}
-
-.stat-value{
-
-font-size:28px;
-
-font-weight:bold;
-
-}
-
-
-/* =========================
-   الرسائل
-========================= */
-
-.message{
-
-display:none;
-
-padding:13px;
-
-border-radius:10px;
-
-margin-bottom:20px;
-
-text-align:center;
-
-}
-
-.success{
-
-background:var(--success);
-
-color:var(--successText);
-
-}
-
-.error{
-
-background:var(--danger);
-
-color:var(--dangerText);
-
-}
-
-.warning{
-
-background:var(--warning);
-
-color:var(--warningText);
-
-}
-
-
-/* =========================
-   الطلبات
-========================= */
-
-.section{
-
-background:#fff;
-
-border-radius:18px;
-
-padding:20px;
-
-margin-bottom:25px;
-
-box-shadow:
-0 3px 15px rgba(0,0,0,.05);
-
-}
-
-.section-header{
-
-display:flex;
-
-align-items:center;
-
-justify-content:space-between;
-
-gap:10px;
-
-margin-bottom:20px;
-
-}
-
-.section-header h2{
-
-font-size:21px;
-
-}
-
-.refresh-btn{
-
-background:#222;
-
-color:#fff;
-
-border:none;
-
-padding:10px 15px;
-
-border-radius:10px;
-
-cursor:pointer;
-
-}
-
-
-/* =========================
-   بطاقة الطلب
-========================= */
-
-.request-card{
-
-border:1px solid #eee;
 
 border-radius:16px;
 
-padding:18px;
+padding:20px;
 
-margin-bottom:15px;
-
-background:#fff;
-
-}
-
-.request-header{
+box-shadow:var(--shadow);
 
 display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-gap:10px;
-
-margin-bottom:15px;
-
-}
-
-.store-name{
-
-font-size:20px;
-
-font-weight:bold;
-
-}
-
-.status{
-
-padding:7px 12px;
-
-border-radius:20px;
-
-font-size:13px;
-
-font-weight:bold;
-
-}
-
-.status-pending{
-
-background:var(--warning);
-
-color:var(--warningText);
-
-}
-
-.status-approved{
-
-background:var(--success);
-
-color:var(--successText);
-
-}
-
-.status-rejected{
-
-background:var(--danger);
-
-color:var(--dangerText);
-
-}
-
-
-/* =========================
-   المعلومات
-========================= */
-
-.info-grid{
-
-display:grid;
-
-grid-template-columns:
-repeat(2,1fr);
-
-gap:10px;
-
-margin-bottom:15px;
-
-}
-
-.info{
-
-background:#f8f8f8;
-
-padding:12px;
-
-border-radius:10px;
-
-}
-
-.info-label{
-
-font-size:12px;
-
-color:#777;
-
-margin-bottom:5px;
-
-}
-
-.info-value{
-
-font-weight:bold;
-
-word-break:break-word;
-
-}
-
-
-/* =========================
-   الوصل
-========================= */
-
-.receipt-box{
-
-margin-top:15px;
-
-background:#fafafa;
-
-border:1px solid #eee;
-
-border-radius:14px;
-
-padding:15px;
-
-}
-
-.receipt-title{
-
-font-weight:bold;
-
-margin-bottom:10px;
-
-}
-
-.receipt-image{
-
-width:100%;
-
-max-width:400px;
-
-max-height:500px;
-
-object-fit:contain;
-
-border-radius:10px;
-
-border:1px solid #ddd;
-
-background:#fff;
-
-display:block;
-
-margin:auto;
-
-cursor:pointer;
-
-}
-
-.receipt-link{
-
-display:block;
-
-text-align:center;
-
-margin-top:10px;
-
-color:#8d7358;
-
-font-weight:bold;
-
-text-decoration:none;
-
-}
-
-
-/* =========================
-   الأزرار
-========================= */
-
-.actions{
-
-display:flex;
-
-gap:10px;
-
-margin-top:18px;
-
-}
-
-.actions button{
-
-flex:1;
-
-padding:13px;
-
-border:none;
-
-border-radius:10px;
-
-cursor:pointer;
-
-font-size:15px;
-
-font-weight:bold;
-
-}
-
-.approve-btn{
-
-background:#198754;
-
-color:white;
-
-}
-
-.reject-btn{
-
-background:#dc3545;
-
-color:white;
-
-}
-
-.delete-btn{
-
-background:#eee;
-
-color:#333;
-
-}
-
-.actions button:disabled{
-
-opacity:.5;
-
-cursor:not-allowed;
-
-}
-
-
-/* =========================
-   المتاجر المقبولة
-========================= */
-
-.store-row{
-
-border:1px solid #eee;
-
-border-radius:14px;
-
-padding:15px;
-
-margin-bottom:10px;
-
-display:flex;
-
-justify-content:space-between;
 
 align-items:center;
 
@@ -546,51 +561,562 @@ gap:15px;
 
 }
 
-.store-info h3{
+.stat-icon{
 
-margin-bottom:6px;
+width:52px;
+
+height:52px;
+
+border-radius:13px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:24px;
+
+background:#fff0e5;
 
 }
 
-.store-info p{
+.stat-info{
 
-color:#777;
+flex:1;
+
+}
+
+.stat-title{
+
+font-size:13px;
+
+color:#999;
+
+margin-bottom:7px;
+
+}
+
+.stat-value{
+
+font-size:25px;
+
+font-weight:bold;
+
+color:#444;
+
+}
+
+
+/* =====================================================
+   SECTION
+===================================================== */
+
+.section{
+
+background:#fff;
+
+border-radius:16px;
+
+box-shadow:var(--shadow);
+
+margin-bottom:25px;
+
+overflow:hidden;
+
+}
+
+.section-header{
+
+padding:18px 20px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+gap:15px;
+
+border-bottom:1px solid var(--border);
+
+}
+
+.section-title{
+
+font-size:19px;
+
+font-weight:bold;
+
+}
+
+.section-tools{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+.search-box{
+
+position:relative;
+
+}
+
+.search-box input{
+
+width:260px;
+
+padding:11px 40px 11px 12px;
+
+border:1px solid #ddd;
+
+border-radius:10px;
+
+outline:none;
 
 font-size:14px;
 
 }
 
+.search-box input:focus{
 
-/* =========================
-   لا يوجد
-========================= */
+border-color:var(--orange);
 
-.empty{
+}
 
-padding:35px;
+.search-icon{
 
-text-align:center;
+position:absolute;
 
-color:#777;
+right:13px;
 
-background:#fafafa;
+top:50%;
 
-border-radius:12px;
+transform:translateY(-50%);
+
+color:#aaa;
 
 }
 
 
-/* =========================
-   النافذة
-========================= */
+/* =====================================================
+   FILTER
+===================================================== */
 
-.image-modal{
+.filter-select{
+
+padding:11px;
+
+border:1px solid #ddd;
+
+border-radius:10px;
+
+background:#fff;
+
+color:#666;
+
+outline:none;
+
+cursor:pointer;
+
+}
+
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.table-wrapper{
+
+width:100%;
+
+overflow-x:auto;
+
+}
+
+table{
+
+width:100%;
+
+border-collapse:collapse;
+
+min-width:1050px;
+
+}
+
+thead{
+
+background:#fafafa;
+
+}
+
+th{
+
+padding:14px 15px;
+
+font-size:12px;
+
+color:#888;
+
+font-weight:bold;
+
+text-align:right;
+
+border-bottom:1px solid var(--border);
+
+white-space:nowrap;
+
+}
+
+td{
+
+padding:15px;
+
+font-size:13px;
+
+border-bottom:1px solid #f0f0f0;
+
+vertical-align:middle;
+
+}
+
+tbody tr{
+
+transition:.15s;
+
+}
+
+tbody tr:hover{
+
+background:#fffaf6;
+
+}
+
+
+/* =====================================================
+   STORE CELL
+===================================================== */
+
+.store-cell{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+min-width:180px;
+
+}
+
+.store-avatar{
+
+width:40px;
+
+height:40px;
+
+border-radius:10px;
+
+background:#fff0e5;
+
+color:var(--orange);
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-weight:bold;
+
+}
+
+.store-name{
+
+font-weight:bold;
+
+color:#444;
+
+}
+
+.owner-name{
+
+font-size:12px;
+
+color:#999;
+
+margin-top:4px;
+
+}
+
+.email-cell{
+
+color:#666;
+
+max-width:210px;
+
+word-break:break-word;
+
+}
+
+.amount{
+
+font-weight:bold;
+
+color:#444;
+
+white-space:nowrap;
+
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.status{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:5px;
+
+padding:6px 10px;
+
+border-radius:20px;
+
+font-size:11px;
+
+font-weight:bold;
+
+white-space:nowrap;
+
+}
+
+.status.pending{
+
+background:var(--warning-bg);
+
+color:var(--warning);
+
+}
+
+.status.approved,
+.status.active{
+
+background:var(--success-bg);
+
+color:var(--success);
+
+}
+
+.status.rejected{
+
+background:var(--danger-bg);
+
+color:var(--danger);
+
+}
+
+
+/* =====================================================
+   RECEIPT
+===================================================== */
+
+.receipt-btn{
+
+border:none;
+
+background:#f5f5f5;
+
+color:#555;
+
+padding:8px 11px;
+
+border-radius:8px;
+
+cursor:pointer;
+
+font-size:12px;
+
+}
+
+.receipt-btn:hover{
+
+background:#fff0e5;
+
+color:var(--orange);
+
+}
+
+
+/* =====================================================
+   ACTIONS
+===================================================== */
+
+.actions-cell{
+
+display:flex;
+
+gap:6px;
+
+white-space:nowrap;
+
+}
+
+.action-btn{
+
+border:none;
+
+padding:8px 10px;
+
+border-radius:8px;
+
+cursor:pointer;
+
+font-size:12px;
+
+font-weight:bold;
+
+}
+
+.approve-btn{
+
+background:#e2f4e9;
+
+color:#198754;
+
+}
+
+.reject-btn{
+
+background:#fde5e7;
+
+color:#dc3545;
+
+}
+
+.delete-btn{
+
+background:#f3f3f3;
+
+color:#666;
+
+}
+
+.action-btn:hover{
+
+opacity:.75;
+
+}
+
+.action-btn:disabled{
+
+opacity:.35;
+
+cursor:not-allowed;
+
+}
+
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.empty{
+
+padding:45px 20px;
+
+text-align:center;
+
+color:#999;
+
+}
+
+.empty-icon{
+
+font-size:40px;
+
+margin-bottom:12px;
+
+}
+
+
+/* =====================================================
+   MESSAGES
+===================================================== */
+
+.message{
+
+display:none;
+
+padding:13px 15px;
+
+border-radius:10px;
+
+margin-bottom:18px;
+
+font-size:14px;
+
+}
+
+.message.success{
+
+background:#dff3e7;
+
+color:#155724;
+
+}
+
+.message.error{
+
+background:#fbe1e4;
+
+color:#721c24;
+
+}
+
+
+/* =====================================================
+   SIDEBAR OVERLAY
+===================================================== */
+
+.sidebar-overlay{
+
+display:none;
 
 position:fixed;
 
 inset:0;
 
-background:rgba(0,0,0,.8);
+background:rgba(0,0,0,.35);
+
+z-index:900;
+
+}
+
+
+/* =====================================================
+   RECEIPT MODAL
+===================================================== */
+
+.modal{
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.72);
 
 display:none;
 
@@ -600,56 +1126,96 @@ justify-content:center;
 
 padding:20px;
 
-z-index:1000;
+z-index:2000;
 
 }
 
-.image-modal.active{
+.modal.active{
 
 display:flex;
 
 }
 
-.image-modal img{
-
-max-width:95%;
-
-max-height:90vh;
-
-border-radius:10px;
-
-}
-
-.close-modal{
-
-position:absolute;
-
-top:15px;
-
-left:20px;
+.modal-box{
 
 background:#fff;
 
+border-radius:16px;
+
+max-width:850px;
+
+width:100%;
+
+max-height:90vh;
+
+overflow:auto;
+
+padding:20px;
+
+position:relative;
+
+}
+
+.modal-header{
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+margin-bottom:15px;
+
+}
+
+.modal-title{
+
+font-size:19px;
+
+font-weight:bold;
+
+}
+
+.close-btn{
+
 border:none;
 
-width:45px;
+background:#f3f3f3;
 
-height:45px;
+width:38px;
+
+height:38px;
 
 border-radius:50%;
 
-font-size:25px;
+font-size:22px;
 
 cursor:pointer;
 
 }
 
+.receipt-large{
 
-/* =========================
-   الهاتف
-========================= */
+width:100%;
 
-@media(max-width:900px){
+max-height:75vh;
+
+object-fit:contain;
+
+display:block;
+
+border-radius:10px;
+
+background:#f5f5f5;
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:1100px){
 
 .stats{
 
@@ -660,40 +1226,93 @@ repeat(2,1fr);
 
 }
 
+@media(max-width:800px){
 
-@media(max-width:600px){
+.sidebar{
 
-.header{
+transform:translateX(100%);
+
+}
+
+.sidebar.open{
+
+transform:translateX(0);
+
+}
+
+.sidebar-overlay.active{
+
+display:block;
+
+}
+
+.main{
+
+margin-right:0;
+
+width:100%;
+
+}
+
+.menu-toggle{
+
+display:block;
+
+}
+
+.topbar{
+
+padding:0 15px;
+
+}
+
+.content{
 
 padding:15px;
 
 }
 
-.container{
+.search-box input{
 
-padding:15px 10px;
+width:180px;
+
+}
 
 }
 
-.page-title h1{
-
-font-size:23px;
-
-}
+@media(max-width:600px){
 
 .stats{
 
 grid-template-columns:1fr 1fr;
 
-}
-
-.info-grid{
-
-grid-template-columns:1fr;
+gap:10px;
 
 }
 
-.request-header{
+.stat-card{
+
+padding:14px;
+
+}
+
+.stat-icon{
+
+width:42px;
+
+height:42px;
+
+font-size:20px;
+
+}
+
+.stat-value{
+
+font-size:21px;
+
+}
+
+.page-header{
 
 align-items:flex-start;
 
@@ -701,19 +1320,49 @@ flex-direction:column;
 
 }
 
-.actions{
-
-flex-direction:column;
-
-}
-
-.store-row{
+.section-header{
 
 align-items:flex-start;
 
 flex-direction:column;
 
 }
+
+.section-tools{
+
+width:100%;
+
+flex-direction:column;
+
+align-items:stretch;
+
+}
+
+.search-box,
+.search-box input,
+.filter-select{
+
+width:100%;
+
+}
+
+.page-name{
+
+font-size:17px;
+
+}
+
+.admin-top{
+
+display:none;
+
+}
+
+}
+
+button{
+
+-webkit-tap-highlight-color:transparent;
 
 }
 
@@ -721,51 +1370,383 @@ flex-direction:column;
 
 </head>
 
-
 <body>
+   <!-- =====================================================
+     LAYOUT
+===================================================== -->
+
+<div class="layout">
 
 
-<header class="header">
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside
+class="sidebar"
+id="sidebar">
+
+
+<div class="sidebar-header">
 
 <div class="logo">
-G-Glam Admin
+
+G-<span>Glam</span>
+
 </div>
 
-<div class="admin-title">
-إدارة المتاجر
 </div>
+
+
+<div class="sidebar-content">
+
+
+<!-- الرئيسية -->
+
+<div class="menu-title">
+
+الرئيسية
+
+</div>
+
+
+<button
+class="menu-item active"
+data-section="dashboard">
+
+<span class="menu-icon">📊</span>
+
+<span>لوحة التحكم</span>
+
+</button>
+
+
+<!-- إدارة المتاجر -->
+
+<div class="menu-title">
+
+إدارة المتاجر
+
+</div>
+
+
+<button
+class="menu-item"
+data-section="stores">
+
+<span class="menu-icon">🏪</span>
+
+<span>جميع المتاجر</span>
+
+</button>
+
+
+<button
+class="menu-item"
+data-section="requests">
+
+<span class="menu-icon">📋</span>
+
+<span>طلبات إنشاء المتاجر</span>
+
+<span
+class="menu-badge"
+id="sidebarPending">
+
+0
+
+</span>
+
+</button>
+
+
+<button
+class="menu-item"
+data-section="active">
+
+<span class="menu-icon">✅</span>
+
+<span>المتاجر النشطة</span>
+
+</button>
+
+
+<button
+class="menu-item"
+data-section="rejected">
+
+<span class="menu-icon">❌</span>
+
+<span>المتاجر المرفوضة</span>
+
+</button>
+
+
+<!-- الإدارة -->
+
+<div class="menu-title">
+
+الإدارة
+
+</div>
+
+
+<button
+class="menu-item"
+data-section="users">
+
+<span class="menu-icon">👥</span>
+
+<span>المستخدمون</span>
+
+</button>
+
+
+<button
+class="menu-item"
+data-section="payments">
+
+<span class="menu-icon">💳</span>
+
+<span>المدفوعات</span>
+
+</button>
+
+
+<!-- النظام -->
+
+<div class="menu-title">
+
+النظام
+
+</div>
+
+
+<button
+class="menu-item"
+data-section="settings">
+
+<span class="menu-icon">⚙️</span>
+
+<span>الإعدادات</span>
+
+</button>
+
+
+</div>
+
+
+<!-- =====================================================
+     SIDEBAR FOOTER
+===================================================== -->
+
+<div class="sidebar-footer">
+
+
+<div class="admin-box">
+
+<div class="admin-name">
+
+👑 الأدمن
+
+</div>
+
+<div
+class="admin-email"
+id="sidebarEmail">
+
+loxenteam@gmail.com
+
+</div>
+
+</div>
+
+
+<button
+class="logout-btn"
+id="logoutBtn">
+
+🚪 تسجيل الخروج
+
+</button>
+
+
+</div>
+
+
+</aside>
+
+
+<!-- =====================================================
+     SIDEBAR OVERLAY
+===================================================== -->
+
+<div
+class="sidebar-overlay"
+id="sidebarOverlay">
+</div>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+<!-- =====================================================
+     TOPBAR
+===================================================== -->
+
+<header class="topbar">
+
+
+<div class="topbar-right">
+
+
+<button
+class="menu-toggle"
+id="menuToggle">
+
+☰
+
+</button>
+
+
+<div>
+
+<div
+class="page-name"
+id="pageName">
+
+لوحة التحكم
+
+</div>
+
+
+<div class="page-subtitle">
+
+إدارة متجر G-Glam
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<div class="admin-top">
+
+
+<div>
+
+<strong>
+
+الأدمن
+
+</strong>
+
+</div>
+
+
+<div class="admin-avatar">
+
+👑
+
+</div>
+
+
+</div>
+
 
 </header>
 
 
-<main class="container">
+<!-- =====================================================
+     CONTENT
+===================================================== -->
+
+<div class="content">
 
 
-<div class="page-title">
+<!-- الرسائل -->
+
+<div
+id="successMessage"
+class="message success">
+</div>
+
+
+<div
+id="errorMessage"
+class="message error">
+</div>
+
+
+<!-- =====================================================
+     PAGE HEADER
+===================================================== -->
+
+<div class="page-header">
+
+
+<div>
 
 <h1>
+
 لوحة تحكم الأدمن 👑
+
 </h1>
 
+
 <p>
-إدارة أصحاب المتاجر وطلبات الدفع
+
+إدارة أصحاب المتاجر وطلبات إنشاء المتاجر والمدفوعات
+
 </p>
 
 </div>
 
 
-<!-- =========================
-     الإحصائيات
-========================= -->
+<button
+class="refresh-btn"
+id="refreshBtn">
+
+🔄 تحديث البيانات
+
+</button>
+
+
+</div>
+
+
+<!-- =====================================================
+     STATS
+===================================================== -->
 
 <div class="stats">
 
 
-<div class="stat">
+<!-- إجمالي المتاجر -->
+
+<div class="stat-card">
+
+<div class="stat-icon">
+
+🏪
+
+</div>
+
+
+<div class="stat-info">
 
 <div class="stat-title">
-إجمالي الطلبات
+
+إجمالي المتاجر
+
 </div>
+
 
 <div
 class="stat-value"
@@ -777,12 +1758,28 @@ id="totalCount">
 
 </div>
 
+</div>
 
-<div class="stat">
+
+<!-- الطلبات المعلقة -->
+
+<div class="stat-card">
+
+<div class="stat-icon">
+
+⏳
+
+</div>
+
+
+<div class="stat-info">
 
 <div class="stat-title">
+
 طلبات قيد المراجعة
+
 </div>
+
 
 <div
 class="stat-value"
@@ -794,12 +1791,28 @@ id="pendingCount">
 
 </div>
 
+</div>
 
-<div class="stat">
+
+<!-- المتاجر النشطة -->
+
+<div class="stat-card">
+
+<div class="stat-icon">
+
+✅
+
+</div>
+
+
+<div class="stat-info">
 
 <div class="stat-title">
-متاجر مقبولة
+
+متاجر نشطة
+
 </div>
+
 
 <div
 class="stat-value"
@@ -811,12 +1824,28 @@ id="approvedCount">
 
 </div>
 
+</div>
 
-<div class="stat">
+
+<!-- المرفوضة -->
+
+<div class="stat-card">
+
+<div class="stat-icon">
+
+❌
+
+</div>
+
+
+<div class="stat-info">
 
 <div class="stat-title">
+
 طلبات مرفوضة
+
 </div>
+
 
 <div
 class="stat-value"
@@ -828,93 +1857,326 @@ id="rejectedCount">
 
 </div>
 
+</div>
+
 
 </div>
 
 
-<div
-class="message success"
-id="successMessage">
-</div>
+<!-- =====================================================
+     TABLE - STORE REQUESTS
+===================================================== -->
 
-
-<div
-class="message error"
-id="errorMessage">
-</div>
-
-
-<div
-class="message warning"
-id="warningMessage">
-</div>
-
-
-<!-- =========================
-     الطلبات
-========================= -->
-
-<div class="section">
+<section class="section">
 
 
 <div class="section-header">
 
-<h2>
+
+<div class="section-title">
+
 📋 طلبات إنشاء المتاجر
-</h2>
-
-<button
-class="refresh-btn"
-id="refreshBtn">
-
-🔄 تحديث
-
-</button>
 
 </div>
 
 
-<div
-id="requestsContainer">
+<div class="section-tools">
+
+
+<!-- البحث -->
+
+<div class="search-box">
+
+
+<span class="search-icon">
+
+🔍
+
+</span>
+
+
+<input
+type="search"
+id="searchInput"
+placeholder="ابحث عن متجر أو بريد...">
+
+
+</div>
+
+
+<!-- الفلترة -->
+
+<select
+id="statusFilter"
+class="filter-select">
+
+
+<option value="all">
+
+كل الحالات
+
+</option>
+
+
+<option value="pending">
+
+قيد المراجعة
+
+</option>
+
+
+<option value="approved">
+
+مقبول
+
+</option>
+
+
+<option value="rejected">
+
+مرفوض
+
+</option>
+
+
+</select>
+
+
+</div>
+
+
+</div>
+
+
+<!-- =====================================================
+     TABLE
+===================================================== -->
+
+<div class="table-wrapper">
+
+
+<table>
+
+
+<thead>
+
+<tr>
+
+<th>
+
+المتجر
+
+</th>
+
+
+<th>
+
+صاحب المتجر
+
+</th>
+
+
+<th>
+
+البريد الإلكتروني
+
+</th>
+
+
+<th>
+
+المبلغ
+
+</th>
+
+
+<th>
+
+طريقة الدفع
+
+</th>
+
+
+<th>
+
+الحالة
+
+</th>
+
+
+<th>
+
+وصل الدفع
+
+</th>
+
+
+<th>
+
+الإجراءات
+
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody
+id="requestsTableBody">
+
+
+<tr>
+
+<td
+colspan="8">
+
 
 <div class="empty">
 
-⏳ جاري تحميل الطلبات...
+
+<div class="empty-icon">
+
+⏳
 
 </div>
 
-</div>
+
+جاري تحميل الطلبات...
 
 
 </div>
 
 
-<!-- =========================
-     المتاجر المقبولة
-========================= -->
+</td>
 
-<div class="section">
+</tr>
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</section>
+
+
+<!-- =====================================================
+     ALL STORES
+===================================================== -->
+
+<section
+class="section"
+id="storesSection">
 
 
 <div class="section-header">
 
-<h2>
-🏪 المتاجر المقبولة
-</h2>
+
+<div class="section-title">
+
+🏪 جميع المتاجر
 
 </div>
 
 
-<div
-id="approvedStoresContainer">
+</div>
+
+
+<div class="table-wrapper">
+
+
+<table>
+
+
+<thead>
+
+<tr>
+
+<th>
+
+المتجر
+
+</th>
+
+
+<th>
+
+صاحب المتجر
+
+</th>
+
+
+<th>
+
+البريد
+
+</th>
+
+
+<th>
+
+الحالة
+
+</th>
+
+
+<th>
+
+حالة الدفع
+
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody
+id="storesTableBody">
+
+
+<tr>
+
+<td
+colspan="5">
+
 
 <div class="empty">
 
-⏳ جاري تحميل المتاجر...
+
+<div class="empty-icon">
+
+⏳
 
 </div>
 
+
+جاري تحميل المتاجر...
+
+
 </div>
+
+
+</td>
+
+</tr>
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</section>
 
 
 </div>
@@ -923,226 +2185,171 @@ id="approvedStoresContainer">
 </main>
 
 
-<!-- =========================
-     عرض الوصل
-========================= -->
+</div>
+
+
+<!-- =====================================================
+     RECEIPT MODAL
+===================================================== -->
 
 <div
-class="image-modal"
-id="imageModal">
+class="modal"
+id="receiptModal">
+
+
+<div class="modal-box">
+
+
+<div class="modal-header">
+
+
+<div class="modal-title">
+
+🧾 وصل الدفع
+
+</div>
+
 
 <button
-class="close-modal"
+class="close-btn"
 id="closeModal">
 
 ×
 
 </button>
 
-<img
-id="modalImage"
-src=""
-alt="وصل الدفع">
 
 </div>
 
 
+<img
+id="receiptImage"
+class="receipt-large"
+src=""
+alt="وصل الدفع">
+
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     بداية JavaScript
+===================================================== -->
+
 <script type="module">
-
-
-/* =====================================================
-   Firebase
+   /* =====================================================
+   عناصر الصفحة
 ===================================================== */
 
-import {
-initializeApp
-}
-from
-"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+const sidebar =
+document.getElementById("sidebar");
 
+const sidebarOverlay =
+document.getElementById("sidebarOverlay");
 
-import {
-getAuth,
-onAuthStateChanged,
-signOut
-}
-from
-"https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+const menuToggle =
+document.getElementById("menuToggle");
 
-
-import {
-getFirestore,
-collection,
-getDocs,
-doc,
-getDoc,
-setDoc,
-deleteDoc,
-serverTimestamp
-}
-from
-"https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-
-
-/* =====================================================
-   Firebase Config
-===================================================== */
-
-const firebaseConfig = {
-
-apiKey:
-"AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
-
-authDomain:
-"g-glam.firebaseapp.com",
-
-projectId:
-"g-glam",
-
-storageBucket:
-"g-glam.firebasestorage.app",
-
-messagingSenderId:
-"997228419719",
-
-appId:
-"1:997228419719:web:f9d88de7ea2c6f457e3622",
-
-measurementId:
-"G-WX1K1F83F6"
-
-};
-
-
-/* =====================================================
-   Firebase Initialization
-===================================================== */
-
-const app =
-initializeApp(firebaseConfig);
-
-const auth =
-getAuth(app);
-
-const db =
-getFirestore(app);
-
-
-/* =====================================================
-   Admin Email
-===================================================== */
-
-const ADMIN_EMAIL =
-"loxenteam@gmail.com";
-
-
-/* =====================================================
-   العناصر
-===================================================== */
-
-const requestsContainer =
-document.getElementById(
-"requestsContainer"
-);
-
-const approvedStoresContainer =
-document.getElementById(
-"approvedStoresContainer"
-);
-
-const totalCount =
-document.getElementById(
-"totalCount"
-);
-
-const pendingCount =
-document.getElementById(
-"pendingCount"
-);
-
-const approvedCount =
-document.getElementById(
-"approvedCount"
-);
-
-const rejectedCount =
-document.getElementById(
-"rejectedCount"
-);
+const logoutBtn =
+document.getElementById("logoutBtn");
 
 const refreshBtn =
-document.getElementById(
-"refreshBtn"
-);
+document.getElementById("refreshBtn");
 
-const imageModal =
-document.getElementById(
-"imageModal"
-);
+const requestsTableBody =
+document.getElementById("requestsTableBody");
 
-const modalImage =
-document.getElementById(
-"modalImage"
-);
+const storesTableBody =
+document.getElementById("storesTableBody");
+
+const totalCount =
+document.getElementById("totalCount");
+
+const pendingCount =
+document.getElementById("pendingCount");
+
+const approvedCount =
+document.getElementById("approvedCount");
+
+const rejectedCount =
+document.getElementById("rejectedCount");
+
+const sidebarPending =
+document.getElementById("sidebarPending");
+
+const searchInput =
+document.getElementById("searchInput");
+
+const statusFilter =
+document.getElementById("statusFilter");
+
+const receiptModal =
+document.getElementById("receiptModal");
+
+const receiptImage =
+document.getElementById("receiptImage");
 
 const closeModal =
-document.getElementById(
-"closeModal"
-);
+document.getElementById("closeModal");
+
+const pageName =
+document.getElementById("pageName");
+
+const successMessage =
+document.getElementById("successMessage");
+
+const errorMessage =
+document.getElementById("errorMessage");
+
+const sidebarEmail =
+document.getElementById("sidebarEmail");
 
 
 /* =====================================================
-   رسائل
+   متغيرات
 ===================================================== */
 
-function showSuccess(text){
+let allStores = [];
 
-const box =
-document.getElementById(
-"successMessage"
-);
+let currentUser = null;
 
-box.textContent =
-text;
 
-box.style.display =
-"block";
+/* =====================================================
+   رسائل النظام
+===================================================== */
 
-setTimeout(
-()=>{
+function showSuccess(message){
 
-box.style.display =
-"none";
+    successMessage.textContent = message;
 
-},
-3500
-);
+    successMessage.style.display = "block";
+
+    errorMessage.style.display = "none";
+
+    setTimeout(() => {
+
+        successMessage.style.display = "none";
+
+    }, 4000);
 
 }
 
 
-function showError(text){
+function showError(message){
 
-const box =
-document.getElementById(
-"errorMessage"
-);
+    errorMessage.textContent = message;
 
-box.textContent =
-text;
+    errorMessage.style.display = "block";
 
-box.style.display =
-"block";
+    successMessage.style.display = "none";
 
-setTimeout(
-()=>{
+    setTimeout(() => {
 
-box.style.display =
-"none";
+        errorMessage.style.display = "none";
 
-},
-6000
-);
+    }, 6000);
 
 }
 
@@ -1152,774 +2359,1027 @@ box.style.display =
 ===================================================== */
 
 onAuthStateChanged(
-auth,
-async function(user){
+    auth,
+    async (user) => {
 
-if(!user){
+        if(!user){
 
-window.location.href =
-"login.html";
+            window.location.href =
+            "login.html";
 
-return;
+            return;
 
-}
-
-
-if(
-(user.email || "").toLowerCase()
-!==
-ADMIN_EMAIL.toLowerCase()
-){
-
-alert(
-"غير مسموح لك بالدخول إلى لوحة الأدمن."
-);
-
-await signOut(auth);
-
-window.location.href =
-"login.html";
-
-return;
-
-}
+        }
 
 
-/* الأدمن صحيح */
+        const email =
+        (user.email || "").toLowerCase().trim();
 
-await loadRequests();
 
-await loadApprovedStores();
+        if(email !== ADMIN_EMAIL.toLowerCase()){
 
-}
+            alert(
+                "غير مسموح لك بالدخول إلى لوحة الأدمن."
+            );
+
+            await signOut(auth);
+
+            window.location.href =
+            "login.html";
+
+            return;
+
+        }
+
+
+        /* الأدمن صحيح */
+
+        currentUser = user;
+
+        sidebarEmail.textContent =
+        user.email || ADMIN_EMAIL;
+
+
+        console.log(
+            "Admin authenticated:",
+            user.email
+        );
+
+
+        await loadStores();
+
+    }
 );
 
 
 /* =====================================================
-   تحميل الطلبات من STORES
+   تحميل جميع الطلبات من Collection stores
 ===================================================== */
 
-async function loadRequests(){
+async function loadStores(){
 
-try{
+    try{
 
-requestsContainer.innerHTML = `
+        requestsTableBody.innerHTML = `
 
-<div class="empty">
-⏳ جاري تحميل الطلبات...
-</div>
+            <tr>
 
-`;
+                <td colspan="8">
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            ⏳
+                        </div>
+
+                        جاري تحميل طلبات المتاجر...
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
 
 
-/*
-   مهم جدًا:
-   الطلبات موجودة في stores
-*/
+        storesTableBody.innerHTML = `
 
-const snapshot =
-await getDocs(
-collection(
-db,
-"stores"
-)
+            <tr>
+
+                <td colspan="5">
+
+                    <div class="empty">
+
+                        ⏳ جاري تحميل المتاجر...
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        const snapshot =
+        await getDocs(
+            collection(db, "stores")
+        );
+
+
+        allStores = [];
+
+
+        snapshot.forEach((item) => {
+
+            allStores.push({
+
+                id: item.id,
+
+                ...item.data()
+
+            });
+
+        });
+
+
+        console.log(
+            "عدد وثائق stores:",
+            allStores.length
+        );
+
+
+        /* تحديث الإحصائيات */
+
+        updateStatistics();
+
+
+        /* عرض الجدول */
+
+        renderRequests();
+
+
+        /* عرض جميع المتاجر */
+
+        renderAllStores();
+
+
+    }
+
+    catch(error){
+
+        console.error(
+            "FIRESTORE LOAD ERROR:",
+            error
+        );
+
+
+        requestsTableBody.innerHTML = `
+
+            <tr>
+
+                <td colspan="8">
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            ❌
+                        </div>
+
+                        حدث خطأ أثناء تحميل الطلبات
+
+                        <br><br>
+
+                        ${escapeHtml(error.message)}
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        showError(
+            "تعذر الاتصال بقاعدة البيانات: " +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   تحديث الإحصائيات
+===================================================== */
+
+function updateStatistics(){
+
+    const total =
+    allStores.length;
+
+
+    const pending =
+    allStores.filter(store => {
+
+        return (
+            store.status === "pending" ||
+            !store.status
+        );
+
+    }).length;
+
+
+    const approved =
+    allStores.filter(store => {
+
+        return (
+            store.status === "approved" ||
+            store.status === "active"
+        );
+
+    }).length;
+
+
+    const rejected =
+    allStores.filter(store => {
+
+        return store.status === "rejected";
+
+    }).length;
+
+
+    totalCount.textContent =
+    total;
+
+
+    pendingCount.textContent =
+    pending;
+
+
+    approvedCount.textContent =
+    approved;
+
+
+    rejectedCount.textContent =
+    rejected;
+
+
+    sidebarPending.textContent =
+    pending;
+
+}
+
+
+/* =====================================================
+   عرض طلبات المتاجر في الجدول
+===================================================== */
+
+function renderRequests(){
+
+    let stores =
+    [...allStores];
+
+
+    /* البحث */
+
+    const search =
+    (searchInput.value || "")
+    .toLowerCase()
+    .trim();
+
+
+    if(search){
+
+        stores =
+        stores.filter(store => {
+
+            const storeName =
+            String(
+                store.storeName ||
+                store.name ||
+                ""
+            ).toLowerCase();
+
+
+            const ownerName =
+            String(
+                store.ownerName ||
+                store.fullName ||
+                ""
+            ).toLowerCase();
+
+
+            const email =
+            String(
+                store.ownerEmail ||
+                store.email ||
+                ""
+            ).toLowerCase();
+
+
+            return (
+                storeName.includes(search) ||
+                ownerName.includes(search) ||
+                email.includes(search)
+            );
+
+        });
+
+    }
+
+
+    /* فلترة الحالة */
+
+    const filter =
+    statusFilter.value;
+
+
+    if(filter !== "all"){
+
+        stores =
+        stores.filter(store => {
+
+            if(
+                filter === "approved"
+            ){
+
+                return (
+                    store.status === "approved" ||
+                    store.status === "active"
+                );
+
+            }
+
+
+            return store.status === filter;
+
+        });
+
+    }
+
+
+    /* ترتيب الأحدث أولاً */
+
+    stores.sort(
+        (a,b) => {
+
+            const aTime =
+            getTimestamp(a.createdAt);
+
+            const bTime =
+            getTimestamp(b.createdAt);
+
+            return bTime - aTime;
+
+        }
+    );
+
+
+    if(stores.length === 0){
+
+        requestsTableBody.innerHTML = `
+
+            <tr>
+
+                <td colspan="8">
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            📭
+                        </div>
+
+                        لا توجد طلبات مطابقة
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    requestsTableBody.innerHTML = "";
+
+
+    stores.forEach(store => {
+
+        requestsTableBody.appendChild(
+            createStoreRow(store)
+        );
+
+    });
+
+}
+
+
+/* =====================================================
+   إنشاء صف الطلب
+===================================================== */
+
+function createStoreRow(store){
+
+    const tr =
+    document.createElement("tr");
+
+
+    const id =
+    store.id;
+
+
+    const storeName =
+    store.storeName ||
+    store.name ||
+    "بدون اسم";
+
+
+    const ownerName =
+    store.ownerName ||
+    store.fullName ||
+    "-";
+
+
+    const email =
+    store.ownerEmail ||
+    store.email ||
+    "-";
+
+
+    const amount =
+    store.amount ||
+    store.paymentAmount ||
+    0;
+
+
+    const paymentMethod =
+    store.paymentMethod ||
+    "CCP / RIB";
+
+
+    const status =
+    store.status ||
+    "pending";
+
+
+    const receipt =
+    store.receiptUrl ||
+    store.receipt ||
+    store.paymentReceipt ||
+    "";
+
+
+    let statusText =
+    "قيد المراجعة";
+
+
+    let statusClass =
+    "pending";
+
+
+    if(
+        status === "approved" ||
+        status === "active"
+    ){
+
+        statusText =
+        "مقبول";
+
+        statusClass =
+        "approved";
+
+    }
+
+
+    if(status === "rejected"){
+
+        statusText =
+        "مرفوض";
+
+        statusClass =
+        "rejected";
+
+    }
+
+
+    tr.innerHTML = `
+
+        <td>
+
+            <div class="store-cell">
+
+                <div class="store-avatar">
+
+                    🏪
+
+                </div>
+
+                <div>
+
+                    <div class="store-name">
+
+                        ${escapeHtml(storeName)}
+
+                    </div>
+
+                    <div class="owner-name">
+
+                        ID: ${escapeHtml(id)}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </td>
+
+
+        <td>
+
+            ${escapeHtml(ownerName)}
+
+        </td>
+
+
+        <td>
+
+            <div class="email-cell">
+
+                ${escapeHtml(email)}
+
+            </div>
+
+        </td>
+
+
+        <td>
+
+            <div class="amount">
+
+                ${Number(amount).toLocaleString()}
+                DA
+
+            </div>
+
+        </td>
+
+
+        <td>
+
+            ${escapeHtml(paymentMethod)}
+
+        </td>
+
+
+        <td>
+
+            <span class="status ${statusClass}">
+
+                ${statusText}
+
+            </span>
+
+        </td>
+
+
+        <td>
+
+            ${
+                receipt
+
+                ?
+
+                `
+
+                <button
+                    class="receipt-btn"
+                    data-receipt="${escapeAttribute(receipt)}">
+
+                    🧾 عرض الوصل
+
+                </button>
+
+                `
+
+                :
+
+                `
+
+                <span style="color:#aaa;font-size:12px">
+
+                    لا يوجد
+
+                </span>
+
+                `
+            }
+
+        </td>
+
+
+        <td>
+
+            <div class="actions-cell">
+
+                <button
+                    class="action-btn approve-btn"
+                    data-action="approve"
+                    data-id="${escapeAttribute(id)}"
+                    ${
+                        status === "approved" ||
+                        status === "active"
+                        ? "disabled"
+                        : ""
+                    }>
+
+                    ✅ قبول
+
+                </button>
+
+
+                <button
+                    class="action-btn reject-btn"
+                    data-action="reject"
+                    data-id="${escapeAttribute(id)}"
+                    ${
+                        status === "rejected"
+                        ? "disabled"
+                        : ""
+                    }>
+
+                    ❌ رفض
+
+                </button>
+
+
+                <button
+                    class="action-btn delete-btn"
+                    data-action="delete"
+                    data-id="${escapeAttribute(id)}">
+
+                    🗑️ حذف
+
+                </button>
+
+            </div>
+
+        </td>
+
+    `;
+
+
+    /* زر عرض الوصل */
+
+    const receiptBtn =
+    tr.querySelector(".receipt-btn");
+
+
+    if(receiptBtn){
+
+        receiptBtn.addEventListener(
+            "click",
+            () => {
+
+                openReceipt(
+                    receiptBtn.dataset.receipt
+                );
+
+            }
+        );
+
+    }
+
+
+    /* أزرار الإجراءات */
+
+    tr
+    .querySelectorAll(
+        "[data-action]"
+    )
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const action =
+                button.dataset.action;
+
+                const storeId =
+                button.dataset.id;
+
+
+                if(action === "approve"){
+
+                    approveStore(storeId);
+
+                }
+
+
+                if(action === "reject"){
+
+                    rejectStore(storeId);
+
+                }
+
+
+                if(action === "delete"){
+
+                    deleteStore(storeId);
+
+                }
+
+            }
+        );
+
+    });
+
+
+    return tr;
+
+}
+
+
+/* =====================================================
+   الحصول على Timestamp
+===================================================== */
+
+function getTimestamp(timestamp){
+
+    if(!timestamp){
+
+        return 0;
+
+    }
+
+
+    if(
+        typeof timestamp.seconds ===
+        "number"
+    ){
+
+        return timestamp.seconds;
+
+    }
+
+
+    if(
+        timestamp instanceof Date
+    ){
+
+        return timestamp.getTime();
+
+    }
+
+
+    return 0;
+
+}
+
+
+/* =====================================================
+   حماية HTML
+===================================================== */
+
+function escapeHtml(value){
+
+    return String(value ?? "")
+
+        .replace(/&/g,"&amp;")
+
+        .replace(/</g,"&lt;")
+
+        .replace(/>/g,"&gt;")
+
+        .replace(/"/g,"&quot;")
+
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function escapeAttribute(value){
+
+    return escapeHtml(value);
+
+}
+
+
+/* =====================================================
+   عرض الوصل
+===================================================== */
+
+function openReceipt(url){
+
+    if(!url){
+
+        showError(
+            "لا يوجد رابط لوصل الدفع."
+        );
+
+        return;
+
+    }
+
+
+    receiptImage.src =
+    url;
+
+
+    receiptModal.classList.add(
+        "active"
+    );
+
+}
+
+
+/* =====================================================
+   إغلاق الوصل
+===================================================== */
+
+closeModal.addEventListener(
+    "click",
+    () => {
+
+        receiptModal.classList.remove(
+            "active"
+        );
+
+        receiptImage.src = "";
+
+    }
 );
 
 
-const allStores = [];
+receiptModal.addEventListener(
+    "click",
+    (event) => {
 
+        if(
+            event.target ===
+            receiptModal
+        ){
 
-snapshot.forEach(
-item=>{
+            receiptModal.classList.remove(
+                "active"
+            );
 
-allStores.push({
+            receiptImage.src = "";
 
-id:item.id,
+        }
 
-...item.data()
-
-});
-
-});
-
-
-/*
-   الطلبات التي لم يتم قبولها
-   أو المرفوضة أيضًا
-*/
-
-const requests =
-allStores.filter(
-store=>{
-
-return (
-store.status === "pending"
-||
-store.status === "rejected"
-||
-store.status === "approved"
-);
-
-}
-);
-
-
-/* =====================================================
-   الإحصائيات
-===================================================== */
-
-totalCount.textContent =
-requests.length;
-
-
-pendingCount.textContent =
-requests.filter(
-x=>
-x.status === "pending"
-).length;
-
-
-approvedCount.textContent =
-requests.filter(
-x=>
-x.status === "approved"
-||
-x.status === "active"
-).length;
-
-
-rejectedCount.textContent =
-requests.filter(
-x=>
-x.status === "rejected"
-).length;
-
-
-/* =====================================================
-   لا توجد طلبات
-===================================================== */
-
-if(requests.length === 0){
-
-requestsContainer.innerHTML = `
-
-<div class="empty">
-
-لا توجد طلبات متاجر حاليًا.
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-/* =====================================================
-   ترتيب الأحدث
-===================================================== */
-
-requests.sort(
-(a,b)=>{
-
-const aTime =
-a.createdAt?.seconds || 0;
-
-const bTime =
-b.createdAt?.seconds || 0;
-
-return bTime - aTime;
-
-});
-
-
-requestsContainer.innerHTML = "";
-
-
-/* =====================================================
-   إنشاء البطاقات
-===================================================== */
-
-requests.forEach(
-request=>{
-
-requestsContainer.appendChild(
-createRequestCard(request)
-);
-
-});
-
-
-}catch(error){
-
-console.error(
-"LOAD STORES ERROR:",
-error
-);
-
-requestsContainer.innerHTML = `
-
-<div class="empty">
-
-❌ حدث خطأ أثناء تحميل الطلبات.
-
-<br><br>
-
-${escapeHtml(error.message)}
-
-</div>
-
-`;
-
-}
-
-}
-
-
-/* =====================================================
-   بطاقة الطلب
-===================================================== */
-
-function createRequestCard(request){
-
-const card =
-document.createElement("div");
-
-card.className =
-"request-card";
-
-
-let statusText =
-"قيد المراجعة";
-
-let statusClass =
-"status-pending";
-
-
-if(
-request.status === "approved"
-||
-request.status === "active"
-){
-
-statusText =
-"مقبول";
-
-statusClass =
-"status-approved";
-
-}
-
-
-if(
-request.status === "rejected"
-){
-
-statusText =
-"مرفوض";
-
-statusClass =
-"status-rejected";
-
-}
-
-
-const receipt =
-request.receiptUrl || "";
-
-
-card.innerHTML = `
-
-<div class="request-header">
-
-<div class="store-name">
-
-🏪 ${escapeHtml(
-request.storeName || "بدون اسم"
-)}
-
-</div>
-
-<div class="status ${statusClass}">
-
-${statusText}
-
-</div>
-
-</div>
-
-
-<div class="info-grid">
-
-
-<div class="info">
-
-<div class="info-label">
-صاحب المتجر
-</div>
-
-<div class="info-value">
-
-${escapeHtml(
-request.ownerName || "-"
-)}
-
-</div>
-
-</div>
-
-
-<div class="info">
-
-<div class="info-label">
-البريد الإلكتروني
-</div>
-
-<div class="info-value">
-
-${escapeHtml(
-request.ownerEmail ||
-request.email ||
-"-"
-)}
-
-</div>
-
-</div>
-
-
-<div class="info">
-
-<div class="info-label">
-UID
-</div>
-
-<div class="info-value">
-
-${escapeHtml(
-request.ownerUid ||
-request.ownerId ||
-request.id ||
-"-"
-)}
-
-</div>
-
-</div>
-
-
-<div class="info">
-
-<div class="info-label">
-المبلغ
-</div>
-
-<div class="info-value">
-
-${Number(
-request.amount ||
-request.paymentAmount ||
-3500
-)} DA
-
-</div>
-
-</div>
-
-
-<div class="info">
-
-<div class="info-label">
-طريقة الدفع
-</div>
-
-<div class="info-value">
-
-${escapeHtml(
-request.paymentMethod ||
-"CCP / RIB"
-)}
-
-</div>
-
-</div>
-
-
-<div class="info">
-
-<div class="info-label">
-حالة الدفع
-</div>
-
-<div class="info-value">
-
-${escapeHtml(
-request.paymentStatus ||
-"pending"
-)}
-
-</div>
-
-</div>
-
-
-</div>
-
-
-<!-- =========================
-     الوصل
-========================= -->
-
-<div class="receipt-box">
-
-<div class="receipt-title">
-
-🧾 وصل الدفع
-
-</div>
-
-
-${
-receipt
-
-?
-
-`
-
-<img
-class="receipt-image"
-src="${escapeAttribute(receipt)}"
-alt="وصل الدفع"
-data-receipt="${escapeAttribute(receipt)}"
->
-
-<a
-class="receipt-link"
-href="${escapeAttribute(receipt)}"
-target="_blank"
-rel="noopener">
-
-🔗 فتح الوصل في صفحة جديدة
-
-</a>
-
-`
-
-:
-
-`
-
-<div class="empty">
-
-❌ لم يتم إرفاق وصل الدفع
-
-</div>
-
-`
-
-}
-
-
-</div>
-
-
-<!-- =========================
-     الأزرار
-========================= -->
-
-<div class="actions">
-
-
-<button
-class="approve-btn"
-data-action="approve"
-data-id="${escapeAttribute(
-request.id
-)}"
-${request.status === "approved" ||
-request.status === "active"
-? "disabled"
-: ""}>
-
-✅ قبول المتجر
-
-</button>
-
-
-<button
-class="reject-btn"
-data-action="reject"
-data-id="${escapeAttribute(
-request.id
-)}"
-${request.status === "rejected"
-? "disabled"
-: ""}>
-
-❌ رفض المتجر
-
-</button>
-
-
-<button
-class="delete-btn"
-data-action="delete"
-data-id="${escapeAttribute(
-request.id
-)}">
-
-🗑️ حذف الطلب
-
-</button>
-
-
-</div>
-
-`;
-
-
-/* =====================================================
-   صورة الوصل
-===================================================== */
-
-const receiptImage =
-card.querySelector(
-".receipt-image"
-);
-
-
-if(receiptImage){
-
-receiptImage.addEventListener(
-"click",
-function(){
-
-modalImage.src =
-this.dataset.receipt;
-
-imageModal.classList.add(
-"active"
-);
-
-});
-
-}
-
-
-/* =====================================================
-   الأزرار
-===================================================== */
-
-card
-.querySelectorAll(
-"button[data-action]"
-)
-.forEach(
-button=>{
-
-button.addEventListener(
-"click",
-function(){
-
-const action =
-this.dataset.action;
-
-const id =
-this.dataset.id;
-
-
-if(action === "approve"){
-
-approveStore(id);
-
-}
-
-else if(action === "reject"){
-
-rejectStore(id);
-
-}
-
-else if(action === "delete"){
-
-deleteRequest(id);
-
-}
-
-});
-
-});
-
-
-return card;
-
-}
-
-
-/* =====================================================
+    }
+);/* =====================================================
    قبول المتجر
 ===================================================== */
 
 async function approveStore(id){
 
-const ok =
-confirm(
-"هل أنت متأكد من قبول هذا المتجر؟\n\nبعد القبول سيتمكن صاحب المتجر من الدخول إلى لوحة التحكم."
-);
+    const confirmed =
+    confirm(
+        "هل أنت متأكد من قبول هذا المتجر؟\n\n" +
+        "بعد القبول سيتمكن صاحب المتجر من الدخول إلى لوحة التحكم."
+    );
 
 
-if(!ok){
+    if(!confirmed){
 
-return;
+        return;
 
-}
-
-
-try{
+    }
 
 
-const storeRef =
-doc(
-db,
-"stores",
-id
-);
+    try{
+
+        const storeRef =
+        doc(
+            db,
+            "stores",
+            id
+        );
 
 
-const storeSnap =
-await getDoc(
-storeRef
-);
+        const storeSnap =
+        await getDoc(storeRef);
 
 
-if(!storeSnap.exists()){
+        if(!storeSnap.exists()){
 
-showError(
-"الطلب غير موجود."
-);
+            showError(
+                "لم يتم العثور على المتجر."
+            );
 
-return;
+            return;
 
-}
-
-
-const store =
-storeSnap.data();
+        }
 
 
-/*
-   تحديث نفس الوثيقة
-*/
-
-await setDoc(
-
-storeRef,
-
-{
-
-status:
-"active",
-
-paymentStatus:
-"approved",
-
-approvedAt:
-serverTimestamp(),
-
-approvedBy:
-ADMIN_EMAIL,
-
-updatedAt:
-serverTimestamp()
-
-},
-
-{
-
-merge:true
-
-}
-
-);
+        const store =
+        storeSnap.data();
 
 
-/*
-   تحديث users
-*/
+        /* تحديث المتجر */
 
-await setDoc(
+        await setDoc(
 
-doc(
-db,
-"users",
-id
-),
+            storeRef,
 
-{
+            {
 
-fullName:
-store.ownerName || "",
+                status:
+                "active",
 
-email:
-store.ownerEmail ||
-store.email ||
-"",
+                paymentStatus:
+                "approved",
 
-storeId:
-id,
+                approvedAt:
+                serverTimestamp(),
 
-storeName:
-store.storeName ||
-store.name ||
-"",
+                approvedBy:
+                ADMIN_EMAIL,
 
-status:
-"active",
+                updatedAt:
+                serverTimestamp()
 
-paymentStatus:
-"approved",
+            },
 
-updatedAt:
-serverTimestamp()
+            {
 
-},
+                merge:true
 
-{
+            }
 
-merge:true
-
-}
-
-);
+        );
 
 
-/* LocalStorage غير مهم للأدمن */
+        /* تحديث بيانات المستخدم */
+
+        const ownerId =
+        store.ownerUid ||
+        store.ownerId ||
+        id;
 
 
-showSuccess(
-"تم قبول المتجر بنجاح ✅"
-);
+        await setDoc(
+
+            doc(
+                db,
+                "users",
+                ownerId
+            ),
+
+            {
+
+                fullName:
+                store.ownerName ||
+                store.fullName ||
+                "",
+
+                email:
+                store.ownerEmail ||
+                store.email ||
+                "",
+
+                storeId:
+                id,
+
+                storeName:
+                store.storeName ||
+                store.name ||
+                "",
+
+                status:
+                "active",
+
+                paymentStatus:
+                "approved",
+
+                updatedAt:
+                serverTimestamp()
+
+            },
+
+            {
+
+                merge:true
+
+            }
+
+        );
 
 
-await loadRequests();
+        showSuccess(
+            "تم قبول المتجر بنجاح ✅"
+        );
 
-await loadApprovedStores();
+
+        await loadStores();
+
+    }
+
+    catch(error){
+
+        console.error(
+            "APPROVE STORE ERROR:",
+            error
+        );
 
 
-}catch(error){
+        showError(
+            "حدث خطأ أثناء قبول المتجر: " +
+            error.message
+        );
 
-console.error(
-"APPROVE ERROR:",
-error
-);
-
-showError(
-"حدث خطأ أثناء قبول المتجر: " +
-error.message
-);
-
-}
+    }
 
 }
 
@@ -1930,582 +3390,852 @@ error.message
 
 async function rejectStore(id){
 
-const reason =
-prompt(
-"اكتب سبب رفض طلب المتجر:"
-);
+    const reason =
+    prompt(
+        "اكتب سبب رفض طلب المتجر:"
+    );
 
 
-if(reason === null){
+    if(reason === null){
 
-return;
+        return;
 
-}
-
-
-try{
+    }
 
 
-const storeRef =
-doc(
-db,
-"stores",
-id
-);
+    try{
+
+        const storeRef =
+        doc(
+            db,
+            "stores",
+            id
+        );
 
 
-await setDoc(
-
-storeRef,
-
-{
-
-status:
-"rejected",
-
-paymentStatus:
-"rejected",
-
-rejectionReason:
-reason.trim(),
-
-rejectedAt:
-serverTimestamp(),
-
-rejectedBy:
-ADMIN_EMAIL,
-
-updatedAt:
-serverTimestamp()
-
-},
-
-{
-
-merge:true
-
-}
-
-);
+        const storeSnap =
+        await getDoc(storeRef);
 
 
-/*
-   تحديث users
-*/
+        if(!storeSnap.exists()){
 
-await setDoc(
+            showError(
+                "لم يتم العثور على المتجر."
+            );
 
-doc(
-db,
-"users",
-id
-),
+            return;
 
-{
-
-status:
-"rejected",
-
-paymentStatus:
-"rejected",
-
-updatedAt:
-serverTimestamp()
-
-},
-
-{
-
-merge:true
-
-}
-
-);
+        }
 
 
-showSuccess(
-"تم رفض طلب المتجر ❌"
-);
+        const store =
+        storeSnap.data();
 
 
-await loadRequests();
+        /* تحديث المتجر */
 
-await loadApprovedStores();
+        await setDoc(
+
+            storeRef,
+
+            {
+
+                status:
+                "rejected",
+
+                paymentStatus:
+                "rejected",
+
+                rejectionReason:
+                reason.trim(),
+
+                rejectedAt:
+                serverTimestamp(),
+
+                rejectedBy:
+                ADMIN_EMAIL,
+
+                updatedAt:
+                serverTimestamp()
+
+            },
+
+            {
+
+                merge:true
+
+            }
+
+        );
 
 
-}catch(error){
+        /* تحديث المستخدم */
 
-console.error(
-"REJECT ERROR:",
-error
-);
+        const ownerId =
+        store.ownerUid ||
+        store.ownerId ||
+        id;
 
-showError(
-"حدث خطأ أثناء رفض الطلب: " +
-error.message
-);
 
-}
+        await setDoc(
+
+            doc(
+                db,
+                "users",
+                ownerId
+            ),
+
+            {
+
+                status:
+                "rejected",
+
+                paymentStatus:
+                "rejected",
+
+                rejectionReason:
+                reason.trim(),
+
+                updatedAt:
+                serverTimestamp()
+
+            },
+
+            {
+
+                merge:true
+
+            }
+
+        );
+
+
+        showSuccess(
+            "تم رفض طلب المتجر ❌"
+        );
+
+
+        await loadStores();
+
+    }
+
+    catch(error){
+
+        console.error(
+            "REJECT STORE ERROR:",
+            error
+        );
+
+
+        showError(
+            "حدث خطأ أثناء رفض الطلب: " +
+            error.message
+        );
+
+    }
 
 }
 
 
 /* =====================================================
-   حذف الطلب
+   حذف المتجر / الطلب
 ===================================================== */
 
-async function deleteRequest(id){
+async function deleteStore(id){
 
-const ok =
-confirm(
-"هل تريد حذف طلب المتجر نهائيًا؟"
-);
-
-
-if(!ok){
-
-return;
-
-}
+    const confirmed =
+    confirm(
+        "⚠️ هل تريد حذف هذا الطلب نهائيًا؟\n\n" +
+        "سيتم حذف وثيقة المتجر من Collection stores."
+    );
 
 
-try{
+    if(!confirmed){
+
+        return;
+
+    }
 
 
-await deleteDoc(
+    try{
 
-doc(
-db,
-"stores",
-id
+        await deleteDoc(
 
-)
+            doc(
+                db,
+                "stores",
+                id
+            )
 
-);
-
-
-showSuccess(
-"تم حذف الطلب."
-);
+        );
 
 
-await loadRequests();
+        showSuccess(
+            "تم حذف الطلب بنجاح 🗑️"
+        );
 
-await loadApprovedStores();
+
+        await loadStores();
+
+    }
+
+    catch(error){
+
+        console.error(
+            "DELETE STORE ERROR:",
+            error
+        );
 
 
-}catch(error){
+        showError(
+            "حدث خطأ أثناء حذف الطلب: " +
+            error.message
+        );
 
-console.error(
-"DELETE ERROR:",
-error
-);
-
-showError(
-"حدث خطأ أثناء حذف الطلب: " +
-error.message
-);
-
-}
+    }
 
 }
 
 
 /* =====================================================
-   المتاجر المقبولة
+   عرض جميع المتاجر
 ===================================================== */
 
-async function loadApprovedStores(){
+function renderAllStores(){
 
-try{
+    if(allStores.length === 0){
 
-approvedStoresContainer.innerHTML = `
+        storesTableBody.innerHTML = `
 
-<div class="empty">
+            <tr>
 
-⏳ جاري تحميل المتاجر...
+                <td colspan="5">
 
-</div>
+                    <div class="empty">
 
-`;
+                        <div class="empty-icon">
+                            🏪
+                        </div>
+
+                        لا توجد متاجر حاليًا.
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
 
 
-const snapshot =
-await getDocs(
-collection(
-db,
-"stores"
-)
+    storesTableBody.innerHTML = "";
+
+
+    const stores =
+    [...allStores].sort(
+        (a,b) => {
+
+            return getTimestamp(
+                b.createdAt
+            )
+            -
+            getTimestamp(
+                a.createdAt
+            );
+
+        }
+    );
+
+
+    stores.forEach(store => {
+
+        const tr =
+        document.createElement("tr");
+
+
+        const storeName =
+        store.storeName ||
+        store.name ||
+        "بدون اسم";
+
+
+        const ownerName =
+        store.ownerName ||
+        store.fullName ||
+        "-";
+
+
+        const email =
+        store.ownerEmail ||
+        store.email ||
+        "-";
+
+
+        const status =
+        store.status ||
+        "pending";
+
+
+        const paymentStatus =
+        store.paymentStatus ||
+        "pending";
+
+
+        let statusText =
+        "قيد المراجعة";
+
+
+        let statusClass =
+        "pending";
+
+
+        if(
+            status === "active" ||
+            status === "approved"
+        ){
+
+            statusText =
+            "نشط";
+
+            statusClass =
+            "active";
+
+        }
+
+
+        if(status === "rejected"){
+
+            statusText =
+            "مرفوض";
+
+            statusClass =
+            "rejected";
+
+        }
+
+
+        let paymentText =
+        "قيد المراجعة";
+
+
+        if(
+            paymentStatus ===
+            "approved"
+        ){
+
+            paymentText =
+            "مقبول";
+
+        }
+
+
+        if(
+            paymentStatus ===
+            "rejected"
+        ){
+
+            paymentText =
+            "مرفوض";
+
+        }
+
+
+        tr.innerHTML = `
+
+            <td>
+
+                <div class="store-cell">
+
+                    <div class="store-avatar">
+                        🏪
+                    </div>
+
+                    <div>
+
+                        <div class="store-name">
+
+                            ${escapeHtml(
+                                storeName
+                            )}
+
+                        </div>
+
+                        <div class="owner-name">
+
+                            ID:
+                            ${escapeHtml(
+                                store.id
+                            )}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </td>
+
+
+            <td>
+
+                ${escapeHtml(
+                    ownerName
+                )}
+
+            </td>
+
+
+            <td>
+
+                <div class="email-cell">
+
+                    ${escapeHtml(
+                        email
+                    )}
+
+                </div>
+
+            </td>
+
+
+            <td>
+
+                <span
+                    class="status ${statusClass}">
+
+                    ${statusText}
+
+                </span>
+
+            </td>
+
+
+            <td>
+
+                <span
+                    class="status ${
+                        paymentStatus ===
+                        "approved"
+
+                        ? "approved"
+
+                        :
+
+                        paymentStatus ===
+                        "rejected"
+
+                        ? "rejected"
+
+                        :
+
+                        "pending"
+                    }">
+
+                    ${paymentText}
+
+                </span>
+
+            </td>
+
+        `;
+
+
+        storesTableBody.appendChild(
+            tr
+        );
+
+    });
+
+}
+
+
+/* =====================================================
+   البحث
+===================================================== */
+
+searchInput.addEventListener(
+    "input",
+    () => {
+
+        renderRequests();
+
+    }
 );
 
 
-const stores = [];
-
-
-snapshot.forEach(
-item=>{
-
-const store =
-item.data();
-
-
-/*
-   عرض المتاجر المقبولة أو النشطة فقط
-*/
-
-if(
-store.status === "approved"
-||
-store.status === "active"
-){
-
-stores.push({
-
-id:item.id,
-
-...store
-
-});
-
-}
-
-});
-
-
 /* =====================================================
-   لا توجد متاجر
+   فلترة الحالة
 ===================================================== */
 
-if(stores.length === 0){
+statusFilter.addEventListener(
+    "change",
+    () => {
 
-approvedStoresContainer.innerHTML = `
+        renderRequests();
 
-<div class="empty">
-
-لا توجد متاجر مقبولة حاليًا.
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-/* =====================================================
-   ترتيب الأحدث
-===================================================== */
-
-stores.sort(
-(a,b)=>{
-
-const aTime =
-a.approvedAt?.seconds ||
-a.createdAt?.seconds ||
-0;
-
-const bTime =
-b.approvedAt?.seconds ||
-b.createdAt?.seconds ||
-0;
-
-return bTime - aTime;
-
-});
-
-
-approvedStoresContainer.innerHTML = "";
-
-
-/* =====================================================
-   إنشاء صفوف المتاجر
-===================================================== */
-
-stores.forEach(
-store=>{
-
-const row =
-document.createElement("div");
-
-row.className =
-"store-row";
-
-
-row.innerHTML = `
-
-<div class="store-info">
-
-<h3>
-
-🏪 ${escapeHtml(
-store.storeName ||
-store.name ||
-"بدون اسم"
-)}
-
-</h3>
-
-
-<p>
-
-👤 ${escapeHtml(
-store.ownerName ||
-"-"
-)}
-
-</p>
-
-
-<p>
-
-📧 ${escapeHtml(
-store.ownerEmail ||
-store.email ||
-"-"
-)}
-
-</p>
-
-
-<p>
-
-🆔 ${escapeHtml(
-store.ownerUid ||
-store.ownerId ||
-store.id ||
-"-"
-)}
-
-</p>
-
-</div>
-
-
-<div>
-
-<span class="status status-approved">
-
-نشط
-
-</span>
-
-</div>
-
-`;
-
-
-approvedStoresContainer.appendChild(
-row
-);
-
-});
-
-
-}catch(error){
-
-console.error(
-"LOAD APPROVED STORES ERROR:",
-error
+    }
 );
 
 
-approvedStoresContainer.innerHTML = `
-
-<div class="empty">
-
-❌ تعذر تحميل المتاجر المقبولة.
-
-<br><br>
-
-${escapeHtml(
-error.message
-)}
-
-</div>
-
-`;
-
-}
-
-}
-
-
 /* =====================================================
-   حماية النص HTML
-===================================================== */
-
-function escapeHtml(value){
-
-return String(
-value ?? ""
-)
-
-.replace(
-/&/g,
-"&amp;"
-)
-
-.replace(
-/</g,
-"&lt;"
-)
-
-.replace(
-/>/g,
-"&gt;"
-)
-
-.replace(
-/"/g,
-"&quot;"
-)
-
-.replace(
-/'/g,
-"&#039;"
-);
-
-}
-
-
-/* =====================================================
-   حماية الخصائص
-===================================================== */
-
-function escapeAttribute(value){
-
-return escapeHtml(value);
-
-}
-
-
-/* =====================================================
-   زر التحديث
+   زر تحديث البيانات
 ===================================================== */
 
 refreshBtn.addEventListener(
-"click",
-async function(){
+    "click",
+    async () => {
 
-if(
-refreshBtn.disabled
-){
-
-return;
-
-}
+        refreshBtn.disabled =
+        true;
 
 
-refreshBtn.disabled =
-true;
-
-refreshBtn.textContent =
-"⏳ جاري التحديث...";
+        refreshBtn.textContent =
+        "⏳ جاري التحديث...";
 
 
-try{
+        try{
 
-await loadRequests();
+            await loadStores();
 
-await loadApprovedStores();
 
-}catch(error){
+            showSuccess(
+                "تم تحديث البيانات بنجاح ✅"
+            );
 
-console.error(
-"REFRESH ERROR:",
-error
+        }
+
+        catch(error){
+
+            console.error(error);
+
+        }
+
+
+        refreshBtn.disabled =
+        false;
+
+
+        refreshBtn.textContent =
+        "🔄 تحديث البيانات";
+
+    }
 );
-
-showError(
-"حدث خطأ أثناء تحديث البيانات."
-);
-
-}
-
-
-refreshBtn.disabled =
-false;
-
-refreshBtn.textContent =
-"🔄 تحديث";
-
-});
 
 
 /* =====================================================
-   إغلاق نافذة الوصل
+   القائمة الجانبية في الهاتف
 ===================================================== */
 
-closeModal.addEventListener(
-"click",
-function(){
+menuToggle.addEventListener(
+    "click",
+    () => {
 
-imageModal.classList.remove(
-"active"
+        sidebar.classList.toggle(
+            "open"
+        );
+
+        sidebarOverlay.classList.toggle(
+            "active"
+        );
+
+    }
 );
 
-modalImage.src =
-"";
 
-});
+/* =====================================================
+   إغلاق القائمة الجانبية
+===================================================== */
 
+sidebarOverlay.addEventListener(
+    "click",
+    () => {
 
-imageModal.addEventListener(
-"click",
-function(event){
+        sidebar.classList.remove(
+            "open"
+        );
 
-if(
-event.target === imageModal
-){
+        sidebarOverlay.classList.remove(
+            "active"
+        );
 
-imageModal.classList.remove(
-"active"
+    }
 );
 
-modalImage.src =
-"";
 
-}
+/* =====================================================
+   عناصر القائمة الجانبية
+===================================================== */
+
+const menuItems =
+document.querySelectorAll(
+    ".menu-item"
+);
+
+
+menuItems.forEach(item => {
+
+    item.addEventListener(
+        "click",
+        () => {
+
+            /* إزالة active */
+
+            menuItems.forEach(
+                menu => {
+
+                    menu.classList.remove(
+                        "active"
+                    );
+
+                }
+            );
+
+
+            item.classList.add(
+                "active"
+            );
+
+
+            const section =
+            item.dataset.section;
+
+
+            /* اسم الصفحة */
+
+            if(
+                section ===
+                "dashboard"
+            ){
+
+                pageName.textContent =
+                "لوحة التحكم";
+
+            }
+
+            else if(
+                section ===
+                "stores"
+            ){
+
+                pageName.textContent =
+                "جميع المتاجر";
+
+                document
+                .getElementById(
+                    "storesSection"
+                )
+                .scrollIntoView({
+                    behavior:"smooth"
+                });
+
+            }
+
+            else if(
+                section ===
+                "requests"
+            ){
+
+                pageName.textContent =
+                "طلبات إنشاء المتاجر";
+
+                window.scrollTo({
+                    top:0,
+                    behavior:"smooth"
+                });
+
+                statusFilter.value =
+                "pending";
+
+                renderRequests();
+
+            }
+
+            else if(
+                section ===
+                "active"
+            ){
+
+                pageName.textContent =
+                "المتاجر النشطة";
+
+                statusFilter.value =
+                "approved";
+
+                renderRequests();
+
+                window.scrollTo({
+                    top:0,
+                    behavior:"smooth"
+                });
+
+            }
+
+            else if(
+                section ===
+                "rejected"
+            ){
+
+                pageName.textContent =
+                "المتاجر المرفوضة";
+
+                statusFilter.value =
+                "rejected";
+
+                renderRequests();
+
+                window.scrollTo({
+                    top:0,
+                    behavior:"smooth"
+                });
+
+            }
+
+            else if(
+                section ===
+                "users"
+            ){
+
+                pageName.textContent =
+                "المستخدمون";
+
+                showSuccess(
+                    "قسم المستخدمين سيتم ربطه لاحقًا."
+                );
+
+            }
+
+            else if(
+                section ===
+                "payments"
+            ){
+
+                pageName.textContent =
+                "المدفوعات";
+
+                showSuccess(
+                    "قسم المدفوعات سيتم ربطه لاحقًا."
+                );
+
+            }
+
+            else if(
+                section ===
+                "settings"
+            ){
+
+                pageName.textContent =
+                "الإعدادات";
+
+                showSuccess(
+                    "قسم الإعدادات سيتم ربطه لاحقًا."
+                );
+
+            }
+
+
+            /* إغلاق القائمة في الهاتف */
+
+            sidebar.classList.remove(
+                "open"
+            );
+
+            sidebarOverlay.classList.remove(
+                "active"
+            );
+
+        }
+    );
 
 });
 
 
 /* =====================================================
-   إغلاق النافذة بزر ESC
+   تسجيل خروج الأدمن
+===================================================== */
+
+logoutBtn.addEventListener(
+    "click",
+    async () => {
+
+        const confirmed =
+        confirm(
+            "هل تريد تسجيل الخروج من لوحة الأدمن؟"
+        );
+
+
+        if(!confirmed){
+
+            return;
+
+        }
+
+
+        try{
+
+            await signOut(auth);
+
+
+            window.location.href =
+            "login.html";
+
+        }
+
+        catch(error){
+
+            console.error(
+                "LOGOUT ERROR:",
+                error
+            );
+
+
+            showError(
+                "تعذر تسجيل الخروج."
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   إغلاق الوصل بزر ESC
 ===================================================== */
 
 document.addEventListener(
-"keydown",
-function(event){
+    "keydown",
+    (event) => {
 
-if(
-event.key === "Escape"
-){
+        if(
+            event.key ===
+            "Escape"
+        ){
 
-imageModal.classList.remove(
-"active"
+            receiptModal.classList.remove(
+                "active"
+            );
+
+            receiptImage.src = "";
+
+        }
+
+    }
 );
-
-modalImage.src =
-"";
-
-}
-
-});
 
 
 /* =====================================================
-   تشغيل الصفحة
+   تشغيل أولي
 ===================================================== */
 
-/*
-   لا نستدعي loadRequests() مباشرة
-   لأن onAuthStateChanged هو الذي
-   يتحقق أولًا من أن المستخدم هو الأدمن.
-*/
-
-</script>
+console.log(
+    "G-Glam Admin Dashboard Started"
+);
+   
+   </script>
 
 </body>
 
