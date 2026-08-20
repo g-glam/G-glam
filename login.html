@@ -12,189 +12,603 @@ content="width=device-width, initial-scale=1.0">
 
 <style>
 
-*{
-box-sizing:border-box;
+/* =====================================================
+   الألوان
+===================================================== */
+
+:root{
+
+--bg:#f3f3f3;
+
+--card:#ffffff;
+
+--orange:#f47b20;
+
+--orange-dark:#df6810;
+
+--text:#555;
+
+--text-dark:#444;
+
+--muted:#999;
+
+--border:#e7e7e7;
+
+--input-bg:#fafafa;
+
+--success:#198754;
+
+--success-bg:#dff3e7;
+
+--danger:#dc3545;
+
+--danger-bg:#fbe1e4;
+
+--warning:#b77900;
+
+--warning-bg:#fff2cc;
+
+--shadow:0 8px 30px rgba(0,0,0,.07);
+
 }
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+
+box-sizing:border-box;
+
+margin:0;
+
+padding:0;
+
+font-family:Arial,sans-serif;
+
+}
+
+
+/* =====================================================
+   BODY
+===================================================== */
 
 body{
 
-margin:0;
-font-family:Arial,sans-serif;
+min-height:100vh;
 
-background:#F5F0E8;
+background:var(--bg);
+
+color:var(--text);
 
 display:flex;
-justify-content:center;
+
 align-items:center;
 
-min-height:100vh;
+justify-content:center;
 
 padding:20px;
 
 }
 
+
+/* =====================================================
+   BACKGROUND DECORATION
+===================================================== */
+
+.background-decoration{
+
+position:fixed;
+
+inset:0;
+
+overflow:hidden;
+
+pointer-events:none;
+
+z-index:0;
+
+}
+
+.circle-one{
+
+position:absolute;
+
+width:280px;
+
+height:280px;
+
+border-radius:50%;
+
+background:rgba(244,123,32,.07);
+
+top:-100px;
+
+right:-80px;
+
+}
+
+.circle-two{
+
+position:absolute;
+
+width:220px;
+
+height:220px;
+
+border-radius:50%;
+
+background:rgba(244,123,32,.05);
+
+bottom:-80px;
+
+left:-60px;
+
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
 .card{
 
-background:white;
+position:relative;
+
+z-index:1;
 
 width:100%;
-max-width:420px;
 
-padding:30px;
+max-width:440px;
 
-border-radius:20px;
+background:var(--card);
 
-box-shadow:0 5px 20px rgba(0,0,0,.08);
+border-radius:22px;
+
+box-shadow:var(--shadow);
+
+border:1px solid rgba(0,0,0,.03);
+
+padding:35px;
+
+}
+
+
+/* =====================================================
+   LOGO
+===================================================== */
+
+.logo-wrapper{
+
+text-align:center;
+
+margin-bottom:8px;
 
 }
 
 .logo{
 
-text-align:center;
+font-size:34px;
 
-font-size:38px;
+font-weight:800;
 
-font-weight:bold;
+letter-spacing:-1px;
 
-margin-bottom:10px;
+color:#222;
 
 }
+
+.logo span{
+
+color:var(--orange);
+
+}
+
+
+/* =====================================================
+   SUBTITLE
+===================================================== */
 
 .subtitle{
 
 text-align:center;
 
-color:#777;
+font-size:14px;
 
-margin-bottom:25px;
+color:var(--muted);
 
-}
-
-h2{
-
-margin-bottom:20px;
+margin-bottom:30px;
 
 }
 
-label{
 
-display:block;
+/* =====================================================
+   TITLE
+===================================================== */
+
+.title{
+
+font-size:22px;
 
 font-weight:bold;
+
+color:var(--text-dark);
 
 margin-bottom:7px;
 
 }
 
-input{
+.title-description{
 
-width:100%;
+font-size:13px;
 
-padding:14px;
+color:var(--muted);
 
-border:1px solid #ddd;
-
-border-radius:12px;
-
-font-size:16px;
-
-margin-bottom:15px;
-
-}
-
-button{
-
-width:100%;
-
-padding:15px;
-
-border:none;
-
-border-radius:12px;
-
-background:#222;
-
-color:white;
-
-font-size:17px;
-
-cursor:pointer;
-
-}
-
-button:disabled{
-
-opacity:.6;
-
-cursor:not-allowed;
-
-}
-
-#message{
-
-margin-top:15px;
-
-padding:14px;
-
-border-radius:10px;
-
-text-align:center;
-
-display:none;
+margin-bottom:25px;
 
 line-height:1.7;
 
 }
 
+
+/* =====================================================
+   FORM GROUP
+===================================================== */
+
+.form-group{
+
+margin-bottom:18px;
+
+}
+
+
+/* =====================================================
+   LABEL
+===================================================== */
+
+label{
+
+display:block;
+
+font-size:14px;
+
+font-weight:bold;
+
+color:var(--text-dark);
+
+margin-bottom:8px;
+
+}
+
+
+/* =====================================================
+   INPUT WRAPPER
+===================================================== */
+
+.input-wrapper{
+
+position:relative;
+
+}
+
+
+/* =====================================================
+   INPUT ICON
+===================================================== */
+
+.input-icon{
+
+position:absolute;
+
+right:14px;
+
+top:50%;
+
+transform:translateY(-50%);
+
+font-size:17px;
+
+color:#aaa;
+
+pointer-events:none;
+
+}
+
+
+/* =====================================================
+   INPUT
+===================================================== */
+
+input{
+
+width:100%;
+
+height:50px;
+
+padding:0 45px 0 14px;
+
+border:1px solid var(--border);
+
+border-radius:11px;
+
+background:var(--input-bg);
+
+font-size:15px;
+
+color:var(--text-dark);
+
+outline:none;
+
+transition:.2s;
+
+}
+
+input::placeholder{
+
+color:#aaa;
+
+}
+
+input:focus{
+
+border-color:var(--orange);
+
+background:#fff;
+
+box-shadow:0 0 0 3px rgba(244,123,32,.09);
+
+}
+
+
+/* =====================================================
+   LOGIN BUTTON
+===================================================== */
+
+#loginBtn{
+
+width:100%;
+
+height:52px;
+
+border:none;
+
+border-radius:11px;
+
+background:var(--orange);
+
+color:#fff;
+
+font-size:16px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.2s;
+
+margin-top:5px;
+
+box-shadow:0 4px 12px rgba(244,123,32,.20);
+
+}
+
+#loginBtn:hover{
+
+background:var(--orange-dark);
+
+transform:translateY(-1px);
+
+}
+
+#loginBtn:active{
+
+transform:translateY(0);
+
+}
+
+#loginBtn:disabled{
+
+opacity:.6;
+
+cursor:not-allowed;
+
+transform:none;
+
+}
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+#message{
+
+display:none;
+
+margin-top:18px;
+
+padding:14px 15px;
+
+border-radius:11px;
+
+font-size:13px;
+
+line-height:1.8;
+
+text-align:center;
+
+}
+
+
+/* =====================================================
+   MESSAGE TYPES
+===================================================== */
+
 .message-info{
 
-background:#fff3cd;
+background:var(--warning-bg);
 
 color:#856404;
 
+border:1px solid #f0df9d;
+
 }
+
 
 .message-success{
 
-background:#d4edda;
+background:var(--success-bg);
 
 color:#155724;
 
+border:1px solid #c4e5d0;
+
 }
+
 
 .message-error{
 
-background:#f8d7da;
+background:var(--danger-bg);
 
 color:#721c24;
 
+border:1px solid #efc5ca;
+
 }
+
 
 .message-warning{
 
-background:#e2e3e5;
+background:#eeeeee;
 
-color:#383d41;
+color:#555;
+
+border:1px solid #ddd;
 
 }
+
+
+/* =====================================================
+   REGISTER
+===================================================== */
 
 .register{
 
 text-align:center;
 
-margin-top:20px;
+margin-top:25px;
 
-color:#777;
+padding-top:20px;
+
+border-top:1px solid #eee;
+
+font-size:14px;
+
+color:#999;
 
 }
 
 .register a{
 
-color:#222;
+color:var(--orange);
 
 font-weight:bold;
 
 text-decoration:none;
+
+margin-right:4px;
+
+}
+
+.register a:hover{
+
+text-decoration:underline;
+
+}
+
+
+/* =====================================================
+   SECURITY NOTE
+===================================================== */
+
+.security-note{
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:6px;
+
+margin-top:18px;
+
+font-size:11px;
+
+color:#aaa;
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:500px){
+
+body{
+
+padding:15px;
+
+}
+
+.card{
+
+padding:27px 20px;
+
+border-radius:19px;
+
+}
+
+.logo{
+
+font-size:31px;
+
+}
+
+.title{
+
+font-size:20px;
+
+}
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media(max-width:350px){
+
+.card{
+
+padding:23px 16px;
+
+}
+
+input{
+
+height:48px;
+
+}
+
+#loginBtn{
+
+height:50px;
+
+}
 
 }
 
@@ -206,62 +620,184 @@ text-decoration:none;
 <body>
 
 
+<!-- =====================================================
+     BACKGROUND
+===================================================== -->
+
+<div class="background-decoration">
+
+<div class="circle-one"></div>
+
+<div class="circle-two"></div>
+
+</div>
+
+
+<!-- =====================================================
+     LOGIN CARD
+===================================================== -->
+
 <div class="card">
 
 
+<!-- LOGO -->
+
+<div class="logo-wrapper">
+
 <div class="logo">
-G-Glam
+
+G-<span>Glam</span>
+
+</div>
+
 </div>
 
 
 <div class="subtitle">
-الدخول إلى متجرك
+
+إدارة متجرك بسهولة وأمان
+
 </div>
 
 
-<h2>
+<!-- TITLE -->
+
+<h2 class="title">
+
 تسجيل الدخول
+
 </h2>
 
 
-<label>
+<div class="title-description">
+
+أدخل بيانات حسابك للوصول إلى لوحة التحكم الخاصة بمتجرك.
+
+</div>
+
+
+<!-- =====================================================
+     EMAIL
+===================================================== -->
+
+<div class="form-group">
+
+<label for="email">
+
 البريد الإلكتروني
+
 </label>
 
+
+<div class="input-wrapper">
+
+<span class="input-icon">
+
+✉️
+
+</span>
+
+
 <input
+
 id="email"
+
 type="email"
+
 placeholder="example@gmail.com"
+
 autocomplete="email">
 
+</div>
 
-<label>
+</div>
+
+
+<!-- =====================================================
+     PASSWORD
+===================================================== -->
+
+<div class="form-group">
+
+<label for="password">
+
 كلمة المرور
+
 </label>
 
+
+<div class="input-wrapper">
+
+<span class="input-icon">
+
+🔒
+
+</span>
+
+
 <input
+
 id="password"
+
 type="password"
-placeholder="كلمة المرور"
+
+placeholder="أدخل كلمة المرور"
+
 autocomplete="current-password">
 
+</div>
 
-<button id="loginBtn">
+</div>
+
+
+<!-- =====================================================
+     LOGIN BUTTON
+===================================================== -->
+
+<button
+
+id="loginBtn">
+
 تسجيل الدخول
+
 </button>
 
 
-<div id="message">
+<!-- =====================================================
+     MESSAGE
+===================================================== -->
+
+<div
+
+id="message">
+
 </div>
 
+
+<!-- =====================================================
+     REGISTER
+===================================================== -->
 
 <div class="register">
 
 ليس لديك متجر؟
 
 <a href="register.html">
-إنشاء متجر
+
+إنشاء متجر جديد
+
 </a>
+
+</div>
+
+
+<!-- =====================================================
+     SECURITY
+===================================================== -->
+
+<div class="security-note">
+
+🔐 بيانات الدخول محمية بواسطة Firebase
 
 </div>
 
@@ -272,9 +808,9 @@ autocomplete="current-password">
 <script type="module">
 
 
-/* =========================================
-   Firebase
-========================================= */
+/* =====================================================
+   FIREBASE
+===================================================== */
 
 import {
 
@@ -283,6 +819,7 @@ initializeApp
 }
 
 from
+
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
 
@@ -294,6 +831,7 @@ signInWithEmailAndPassword
 }
 
 from
+
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
 
@@ -308,12 +846,13 @@ getDocs
 }
 
 from
+
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 
-/* =========================================
-   Firebase Config
-========================================= */
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
 
 const firebaseConfig = {
 
@@ -341,9 +880,9 @@ measurementId:
 };
 
 
-/* =========================================
-   تشغيل Firebase
-========================================= */
+/* =====================================================
+   INITIALIZE FIREBASE
+===================================================== */
 
 const app =
 initializeApp(firebaseConfig);
@@ -355,9 +894,9 @@ const db =
 getFirestore(app);
 
 
-/* =========================================
-   العناصر
-========================================= */
+/* =====================================================
+   ELEMENTS
+===================================================== */
 
 const emailInput =
 document.getElementById("email");
@@ -372,14 +911,11 @@ const message =
 document.getElementById("message");
 
 
-/* =========================================
-   عرض الرسائل
-========================================= */
+/* =====================================================
+   SHOW MESSAGE
+===================================================== */
 
-function showMessage(
-text,
-type
-){
+function showMessage(text,type){
 
 message.innerHTML =
 text;
@@ -387,9 +923,7 @@ text;
 message.className =
 "";
 
-message.classList.add(
-type
-);
+message.classList.add(type);
 
 message.style.display =
 "block";
@@ -397,26 +931,22 @@ message.style.display =
 }
 
 
-/* =========================================
-   البحث عن متجر صاحب الحساب
-========================================= */
+/* =====================================================
+   FIND STORE
+===================================================== */
 
-async function findStore(
-email
-){
+async function findStore(email){
 
 const q =
 query(
 
-collection(
-db,
-"stores"
-),
+collection(db,"stores"),
 
 where(
 "ownerEmail",
 "==",
 email
+
 )
 
 );
@@ -433,33 +963,24 @@ return null;
 }
 
 
-/*
-
-إذا كان هناك أكثر من متجر
-نستخدم أول متجر حاليًا
-
-*/
-
 const storeDoc =
 snapshot.docs[0];
 
 
 return {
 
-id:
-storeDoc.id,
+id:storeDoc.id,
 
-data:
-storeDoc.data()
+data:storeDoc.data()
 
 };
 
 }
 
 
-/* =========================================
-   تسجيل الدخول
-========================================= */
+/* =====================================================
+   LOGIN
+===================================================== */
 
 loginBtn.addEventListener(
 
@@ -479,8 +1000,11 @@ passwordInput.value;
 if(!email){
 
 showMessage(
-"⚠️ أدخلي البريد الإلكتروني",
+
+"⚠️ يرجى إدخال البريد الإلكتروني.",
+
 "message-error"
+
 );
 
 return;
@@ -491,8 +1015,11 @@ return;
 if(!password){
 
 showMessage(
-"⚠️ أدخلي كلمة المرور",
+
+"⚠️ يرجى إدخال كلمة المرور.",
+
 "message-error"
+
 );
 
 return;
@@ -506,18 +1033,17 @@ loginBtn.disabled =
 true;
 
 loginBtn.textContent =
-"جاري الدخول...";
+"⏳ جاري تسجيل الدخول...";
 
 
 try{
 
 
-/* =====================================
-   تسجيل الدخول في Firebase Auth
-===================================== */
+/* =====================================================
+   FIREBASE AUTH
+===================================================== */
 
 const result =
-
 await signInWithEmailAndPassword(
 
 auth,
@@ -533,13 +1059,13 @@ const user =
 result.user;
 
 
-/* =====================================
-   البحث عن متجر صاحب الحساب
-===================================== */
+/* =====================================================
+   التحقق من المتجر
+===================================================== */
 
 showMessage(
 
-"⏳ جاري التحقق من حالة المتجر...",
+"⏳ جاري التحقق من حالة متجرك...",
 
 "message-info"
 
@@ -548,21 +1074,24 @@ showMessage(
 
 const store =
 await findStore(
-email
+
+(user.email || email)
+.toLowerCase()
+
 );
 
 
-/* =====================================
+/* =====================================================
    لا يوجد متجر
-===================================== */
+===================================================== */
 
 if(!store){
 
 showMessage(
 
-"⚠️ تم تسجيل الدخول بنجاح، ولكن لم يتم العثور على بيانات متجرك.<br><br>" +
+"⚠️ تم تسجيل الدخول بنجاح، ولكن لم يتم العثور على طلب إنشاء متجر مرتبط بهذا الحساب.<br><br>" +
 
-"يرجى إكمال تسجيل المتجر والدفع قبل الدخول إلى لوحة التحكم.",
+"تأكدي من تسجيل الدخول بنفس البريد الإلكتروني الذي استُخدم عند إنشاء المتجر.",
 
 "message-warning"
 
@@ -579,58 +1108,72 @@ return;
 }
 
 
-/* =====================================
-   بيانات المتجر
-===================================== */
+/* =====================================================
+   STORE DATA
+===================================================== */
+
+const storeId =
+store.id;
 
 const storeData =
 store.data;
 
 
-/*
-
-الحالة الموجودة في Firestore
-
-*/
+/* =====================================================
+   STORE STATUS
+===================================================== */
 
 const status =
+
 String(
 storeData.status || "pending"
 )
-.toLowerCase();
+
+.toLowerCase()
+.trim();
 
 
-/* =====================================
-   حفظ بيانات المتجر محليًا
-===================================== */
+/* =====================================================
+   STORE NAME
+===================================================== */
+
+const storeName =
+
+storeData.storeName ||
+
+storeData.name ||
+
+"G-Glam";
+
+
+/* =====================================================
+   SAVE STORE DATA
+===================================================== */
 
 localStorage.setItem(
 "storeId",
-store.id
+storeId
 );
 
 localStorage.setItem(
 "storeOwnerEmail",
-user.email
+user.email || email
 );
 
 localStorage.setItem(
 "ownerEmail",
-user.email
+user.email || email
 );
 
 localStorage.setItem(
 "storeName",
-
-storeData.storeName ||
-"G-Glam"
-
+storeName
 );
 
 
-/* =====================================
-   الحالة: قيد المراجعة
-===================================== */
+/* =====================================================
+   PENDING
+===================================================== */
 
 if(
 
@@ -642,15 +1185,17 @@ status === "review"
 
 ){
 
+localStorage.setItem(
+"paymentStatus",
+"pending"
+);
+
+
 showMessage(
 
-"🟡 تم تسجيل الدخول بنجاح.<br><br>" +
+"⏳ <strong>تم تسجيل الدخول بنجاح.</strong><br><br>" +
 
-"وصل الدفع الخاص بك قيد المراجعة من طرف الإدارة.<br><br>" +
-
-"<strong>3500 DA</strong><br><br>" +
-
-"سيتم فتح لوحة التحكم بعد قبول طلبك.",
+"سيتم مراجعة طلبك والتأكد من الدفع من طرف الإدارة، وبعد تأكيد الدفع ستتمكن من الدخول إلى متجرك.",
 
 "message-info"
 
@@ -668,9 +1213,9 @@ return;
 }
 
 
-/* =====================================
-   الحالة: مرفوض
-===================================== */
+/* =====================================================
+   REJECTED
+===================================================== */
 
 if(
 
@@ -680,22 +1225,30 @@ status === "refused"
 
 ){
 
+localStorage.setItem(
+"paymentStatus",
+"rejected"
+);
+
+
 const reason =
+
 storeData.rejectionReason ||
+
 "لم يتم ذكر سبب الرفض.";
 
 
 showMessage(
 
-"🔴 تم رفض طلب إنشاء المتجر.<br><br>" +
+"❌ <strong>تم رفض طلب إنشاء المتجر.</strong><br><br>" +
 
-"<strong>السبب:</strong><br>" +
+"<strong>سبب الرفض:</strong><br>" +
 
-reason +
+escapeHtml(reason) +
 
 "<br><br>" +
 
-"يمكنك التواصل مع الإدارة.",
+"يرجى التواصل مع الإدارة.",
 
 "message-error"
 
@@ -713,9 +1266,9 @@ return;
 }
 
 
-/* =====================================
-   الحالة: مقبول
-===================================== */
+/* =====================================================
+   APPROVED / ACTIVE
+===================================================== */
 
 if(
 
@@ -727,22 +1280,24 @@ status === "active"
 
 ){
 
+localStorage.setItem(
+"paymentStatus",
+"approved"
+);
+
+
 showMessage(
 
-"✅ تم قبول متجرك بنجاح!<br><br>" +
+"✅ <strong>تم قبول متجرك بنجاح!</strong><br><br>" +
 
-"جاري الدخول إلى لوحة التحكم...",
+"تم التأكد من الدفع من طرف الإدارة.<br>" +
+
+"جاري الدخول إلى لوحة التحكم الخاصة بمتجرك...",
 
 "message-success"
 
 );
 
-
-/*
-
-انتظار بسيط ثم الدخول
-
-*/
 
 setTimeout(
 
@@ -762,13 +1317,13 @@ return;
 }
 
 
-/* =====================================
-   حالة غير معروفة
-===================================== */
+/* =====================================================
+   UNKNOWN
+===================================================== */
 
 showMessage(
 
-"⚠️ حالة المتجر غير معروفة.<br><br>" +
+"⚠️ حالة طلب المتجر غير معروفة.<br><br>" +
 
 "يرجى التواصل مع الإدارة.",
 
@@ -784,19 +1339,13 @@ loginBtn.textContent =
 "تسجيل الدخول";
 
 
-}
-
-catch(error){
+}catch(error){
 
 console.error(
-"Login error:",
+"LOGIN ERROR:",
 error
 );
 
-
-/* =====================================
-   أخطاء Firebase
-===================================== */
 
 let errorMessage =
 "حدث خطأ أثناء تسجيل الدخول.";
@@ -814,7 +1363,6 @@ errorMessage =
 
 }
 
-
 else if(
 
 error.code ===
@@ -826,7 +1374,6 @@ errorMessage =
 "❌ لا يوجد حساب بهذا البريد الإلكتروني.";
 
 }
-
 
 else if(
 
@@ -840,7 +1387,6 @@ errorMessage =
 
 }
 
-
 else if(
 
 error.code ===
@@ -853,7 +1399,6 @@ errorMessage =
 
 }
 
-
 else if(
 
 error.code ===
@@ -862,10 +1407,9 @@ error.code ===
 ){
 
 errorMessage =
-"⚠️ محاولات كثيرة. حاولي مرة أخرى لاحقًا.";
+"⚠️ تم إجراء محاولات كثيرة. حاولي مرة أخرى لاحقًا.";
 
 }
-
 
 else if(
 
@@ -876,6 +1420,29 @@ error.code ===
 
 errorMessage =
 "⚠️ تأكدي من اتصال الإنترنت.";
+
+}
+
+else if(
+
+error.code ===
+"permission-denied"
+
+){
+
+errorMessage =
+"❌ لا توجد صلاحية للوصول إلى بيانات المتجر.";
+
+}
+
+else{
+
+errorMessage =
+"❌ حدث خطأ أثناء تسجيل الدخول.<br><br>" +
+
+escapeHtml(
+error.message || ""
+);
 
 }
 
@@ -897,14 +1464,12 @@ loginBtn.textContent =
 
 }
 
-}
-
-);
+});
 
 
-/* =========================================
-   السماح بالضغط Enter
-========================================= */
+/* =====================================================
+   ENTER KEY
+===================================================== */
 
 passwordInput.addEventListener(
 
@@ -912,18 +1477,64 @@ passwordInput.addEventListener(
 
 function(event){
 
-if(
-event.key ===
-"Enter"
-){
+if(event.key === "Enter"){
 
 loginBtn.click();
 
 }
 
+});
+
+
+emailInput.addEventListener(
+
+"keydown",
+
+function(event){
+
+if(event.key === "Enter"){
+
+passwordInput.focus();
+
 }
 
+});
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHtml(value){
+
+return String(value ?? "")
+
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/'/g,
+"&#039;"
 );
+
+}
 
 </script>
 
