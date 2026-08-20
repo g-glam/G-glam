@@ -19,33 +19,25 @@ content="width=device-width, initial-scale=1.0">
 :root{
 
 --bg:#f3f3f3;
-
 --card:#ffffff;
 
 --orange:#f47b20;
-
 --orange-dark:#df6810;
 
 --text:#555;
-
 --text-dark:#444;
-
 --muted:#999;
 
 --border:#e7e7e7;
-
 --input-bg:#fafafa;
 
 --success:#198754;
-
 --success-bg:#dff3e7;
 
 --danger:#dc3545;
-
 --danger-bg:#fbe1e4;
 
 --warning:#b77900;
-
 --warning-bg:#fff2cc;
 
 --shadow:0 8px 30px rgba(0,0,0,.07);
@@ -62,7 +54,6 @@ content="width=device-width, initial-scale=1.0">
 box-sizing:border-box;
 
 margin:0;
-
 padding:0;
 
 font-family:Arial,sans-serif;
@@ -94,7 +85,7 @@ padding:20px;
 
 
 /* =====================================================
-   BACKGROUND DECORATION
+   BACKGROUND
 ===================================================== */
 
 .background-decoration{
@@ -253,7 +244,7 @@ line-height:1.7;
 
 
 /* =====================================================
-   FORM GROUP
+   FORM
 ===================================================== */
 
 .form-group{
@@ -529,7 +520,7 @@ text-decoration:underline;
 
 
 /* =====================================================
-   SECURITY NOTE
+   SECURITY
 ===================================================== */
 
 .security-note{
@@ -640,8 +631,6 @@ height:50px;
 <div class="card">
 
 
-<!-- LOGO -->
-
 <div class="logo-wrapper">
 
 <div class="logo">
@@ -659,8 +648,6 @@ G-<span>Glam</span>
 
 </div>
 
-
-<!-- TITLE -->
 
 <h2 class="title">
 
@@ -809,7 +796,7 @@ id="message">
 
 
 /* =====================================================
-   FIREBASE
+   FIREBASE IMPORTS
 ===================================================== */
 
 import {
@@ -838,10 +825,8 @@ from
 import {
 
 getFirestore,
-collection,
-query,
-where,
-getDocs
+doc,
+getDoc
 
 }
 
@@ -887,8 +872,10 @@ measurementId:
 const app =
 initializeApp(firebaseConfig);
 
+
 const auth =
 getAuth(app);
+
 
 const db =
 getFirestore(app);
@@ -901,11 +888,14 @@ getFirestore(app);
 const emailInput =
 document.getElementById("email");
 
+
 const passwordInput =
 document.getElementById("password");
 
+
 const loginBtn =
 document.getElementById("loginBtn");
+
 
 const message =
 document.getElementById("message");
@@ -932,48 +922,75 @@ message.style.display =
 
 
 /* =====================================================
-   FIND STORE
+   FIND STORE BY UID
 ===================================================== */
 
-async function findStore(email){
+/*
 
-const q =
-query(
+مهم جدًا:
 
-collection(db,"stores"),
+الـ Document ID في مجموعة stores
+عندك هو نفس UID لصاحب المتجر.
 
-where(
-"ownerEmail",
-"==",
-email
+مثال:
 
-)
+stores/
+1r8XxSE2h4V4aR1eeCXZSZcHuyL2
 
+و:
+
+ownerUid =
+1r8XxSE2h4V4aR1eeCXZSZcHuyL2
+
+لذلك نقرأ المتجر مباشرة بواسطة UID.
+
+*/
+
+async function findStore(uid){
+
+try{
+
+const storeRef =
+doc(
+db,
+"stores",
+uid
 );
 
 
 const snapshot =
-await getDocs(q);
+await getDoc(storeRef);
 
 
-if(snapshot.empty){
+if(!snapshot.exists()){
 
 return null;
 
 }
 
 
-const storeDoc =
-snapshot.docs[0];
-
-
 return {
 
-id:storeDoc.id,
+id:
+snapshot.id,
 
-data:storeDoc.data()
+data:
+snapshot.data()
 
 };
+
+}
+
+catch(error){
+
+console.error(
+"FIND STORE ERROR:",
+error
+);
+
+throw error;
+
+}
 
 }
 
@@ -992,6 +1009,7 @@ const email =
 emailInput.value
 .trim()
 .toLowerCase();
+
 
 const password =
 passwordInput.value;
@@ -1040,10 +1058,11 @@ try{
 
 
 /* =====================================================
-   FIREBASE AUTH
+   FIREBASE AUTHENTICATION
 ===================================================== */
 
 const result =
+
 await signInWithEmailAndPassword(
 
 auth,
@@ -1060,12 +1079,25 @@ result.user;
 
 
 /* =====================================================
-   التحقق من المتجر
+   التأكد من تسجيل الدخول
+===================================================== */
+
+if(!user){
+
+throw new Error(
+"لم يتم العثور على المستخدم."
+);
+
+}
+
+
+/* =====================================================
+   التحقق من المتجر بواسطة UID
 ===================================================== */
 
 showMessage(
 
-"⏳ جاري التحقق من حالة متجرك...",
+"⏳ جاري التحقق من بيانات متجرك...",
 
 "message-info"
 
@@ -1074,10 +1106,7 @@ showMessage(
 
 const store =
 await findStore(
-
-(user.email || email)
-.toLowerCase()
-
+user.uid
 );
 
 
@@ -1089,13 +1118,14 @@ if(!store){
 
 showMessage(
 
-"⚠️ تم تسجيل الدخول بنجاح، ولكن لم يتم العثور على طلب إنشاء متجر مرتبط بهذا الحساب.<br><br>" +
+"⚠️ تم تسجيل الدخول بنجاح، ولكن لم يتم العثور على بيانات متجرك.<br><br>" +
 
-"تأكدي من تسجيل الدخول بنفس البريد الإلكتروني الذي استُخدم عند إنشاء المتجر.",
+"تأكدي من استخدام نفس الحساب الذي تم إنشاء المتجر به.",
 
 "message-warning"
 
 );
+
 
 loginBtn.disabled =
 false;
@@ -1115,6 +1145,7 @@ return;
 const storeId =
 store.id;
 
+
 const storeData =
 store.data;
 
@@ -1126,7 +1157,11 @@ store.data;
 const status =
 
 String(
-storeData.status || "pending"
+
+storeData.status ||
+
+"pending"
+
 )
 
 .toLowerCase()
@@ -1155,15 +1190,24 @@ localStorage.setItem(
 storeId
 );
 
+
 localStorage.setItem(
 "storeOwnerEmail",
 user.email || email
 );
 
+
 localStorage.setItem(
 "ownerEmail",
 user.email || email
 );
+
+
+localStorage.setItem(
+"ownerUid",
+user.uid
+);
+
 
 localStorage.setItem(
 "storeName",
@@ -1299,6 +1343,8 @@ showMessage(
 );
 
 
+/* الدخول إلى لوحة المتجر */
+
 setTimeout(
 
 function(){
@@ -1318,12 +1364,18 @@ return;
 
 
 /* =====================================================
-   UNKNOWN
+   UNKNOWN STATUS
 ===================================================== */
 
 showMessage(
 
 "⚠️ حالة طلب المتجر غير معروفة.<br><br>" +
+
+"الحالة الحالية: " +
+
+escapeHtml(status) +
+
+"<br><br>" +
 
 "يرجى التواصل مع الإدارة.",
 
@@ -1339,7 +1391,9 @@ loginBtn.textContent =
 "تسجيل الدخول";
 
 
-}catch(error){
+}
+
+catch(error){
 
 console.error(
 "LOGIN ERROR:",
@@ -1350,6 +1404,10 @@ error
 let errorMessage =
 "حدث خطأ أثناء تسجيل الدخول.";
 
+
+/* =====================================================
+   FIREBASE AUTH ERRORS
+===================================================== */
 
 if(
 
@@ -1363,6 +1421,7 @@ errorMessage =
 
 }
 
+
 else if(
 
 error.code ===
@@ -1374,6 +1433,7 @@ errorMessage =
 "❌ لا يوجد حساب بهذا البريد الإلكتروني.";
 
 }
+
 
 else if(
 
@@ -1387,6 +1447,7 @@ errorMessage =
 
 }
 
+
 else if(
 
 error.code ===
@@ -1398,6 +1459,7 @@ errorMessage =
 "❌ البريد الإلكتروني غير صحيح.";
 
 }
+
 
 else if(
 
@@ -1411,6 +1473,7 @@ errorMessage =
 
 }
 
+
 else if(
 
 error.code ===
@@ -1423,6 +1486,11 @@ errorMessage =
 
 }
 
+
+/* =====================================================
+   FIRESTORE PERMISSION ERROR
+===================================================== */
+
 else if(
 
 error.code ===
@@ -1431,13 +1499,22 @@ error.code ===
 ){
 
 errorMessage =
-"❌ لا توجد صلاحية للوصول إلى بيانات المتجر.";
+
+"❌ لا توجد صلاحية للوصول إلى بيانات المتجر.<br><br>" +
+
+"تأكدي من أن UID الخاص بالحساب هو نفسه معرف المتجر في Firestore.";
 
 }
+
+
+/* =====================================================
+   OTHER ERROR
+===================================================== */
 
 else{
 
 errorMessage =
+
 "❌ حدث خطأ أثناء تسجيل الدخول.<br><br>" +
 
 escapeHtml(
@@ -1477,7 +1554,9 @@ passwordInput.addEventListener(
 
 function(event){
 
-if(event.key === "Enter"){
+if(
+event.key === "Enter"
+){
 
 loginBtn.click();
 
@@ -1492,7 +1571,9 @@ emailInput.addEventListener(
 
 function(event){
 
-if(event.key === "Enter"){
+if(
+event.key === "Enter"
+){
 
 passwordInput.focus();
 
@@ -1507,7 +1588,9 @@ passwordInput.focus();
 
 function escapeHtml(value){
 
-return String(value ?? "")
+return String(
+value ?? ""
+)
 
 .replace(
 /&/g,
