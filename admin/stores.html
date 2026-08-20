@@ -4,53 +4,38 @@
 <head>
 
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>G-Glam | إدارة المتاجر</title>
+<title>G-Glam | طلبات إنشاء المتاجر</title>
 
 <style>
 
-@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800&display=swap');
-
 *{
 box-sizing:border-box;
-margin:0;
-padding:0;
-font-family:'Tajawal',Arial,sans-serif;
+font-family:Arial,sans-serif;
 }
 
 body{
-background:#F7F7F5;
-color:#374151;
-min-height:100vh;
+margin:0;
+background:#f1f1f1;
+color:#222;
 }
-
 
 /* =========================
    القائمة الجانبية
 ========================= */
 
 .sidebar{
-
 position:fixed;
 right:0;
 top:0;
-
 height:100vh;
 width:70px;
-
-background:#FFFFFF;
-color:#374151;
-
+background:#111;
+color:white;
 overflow:hidden;
 transition:.3s;
-
 z-index:1000;
-
-border-left:1px solid #E5E7EB;
-
 }
 
 .sidebar:hover{
@@ -58,22 +43,14 @@ width:230px;
 }
 
 .logo{
-
-height:75px;
-
+height:70px;
 display:flex;
 align-items:center;
 justify-content:center;
-
 font-size:22px;
-font-weight:800;
-
-color:#F97316;
-
-border-bottom:1px solid #E5E7EB;
-
+font-weight:bold;
+border-bottom:1px solid #333;
 white-space:nowrap;
-
 }
 
 .menu{
@@ -81,675 +58,434 @@ margin-top:20px;
 }
 
 .menu a{
-
 display:flex;
 align-items:center;
-
 gap:15px;
-
 padding:15px;
-
-color:#6B7280;
-
+color:white;
 text-decoration:none;
-
 white-space:nowrap;
-
 transition:.2s;
-
 }
 
 .menu a:hover{
-
-background:#FFF7ED;
-color:#F97316;
-
-}
-
-.menu a.active{
-
-background:#FFF7ED;
-color:#F97316;
-
-font-weight:700;
-
+background:#222;
 }
 
 .icon{
-
 min-width:35px;
-
 text-align:center;
-
 font-size:20px;
-
 }
 
 .text{
-
 opacity:0;
-
 transition:.3s;
-
 }
 
 .sidebar:hover .text{
 opacity:1;
 }
 
-
 /* =========================
    المحتوى
 ========================= */
 
 .content{
-
 margin-right:70px;
-
-padding:25px;
-
+padding:20px;
 }
 
-
-/* =========================
-   الهيدر
-========================= */
-
 .header{
-
-background:#FFFFFF;
-
-padding:25px;
-
-border-radius:18px;
-
-box-shadow:
-0 3px 15px rgba(0,0,0,.04);
-
+background:white;
+padding:22px;
+border-radius:14px;
+box-shadow:0 2px 10px rgba(0,0,0,.08);
 margin-bottom:20px;
-
 }
 
 .header h1{
-
-font-size:28px;
-
-color:#374151;
-
-margin-bottom:7px;
-
+margin:0;
+font-size:27px;
 }
 
 .header p{
-
-color:#9CA3AF;
-
-font-size:14px;
-
+margin-bottom:0;
+color:#777;
 }
-
-
-/* =========================
-   الرسائل
-========================= */
-
-.message{
-
-display:none;
-
-padding:14px;
-
-border-radius:12px;
-
-margin-bottom:18px;
-
-text-align:center;
-
-font-size:14px;
-
-}
-
-.success{
-
-background:#ECFDF5;
-
-color:#047857;
-
-}
-
-.error{
-
-background:#FEF2F2;
-
-color:#B91C1C;
-
-}
-
-.loading{
-
-display:block;
-
-background:#FFF7ED;
-
-color:#C2410C;
-
-}
-
 
 /* =========================
    الإحصائيات
 ========================= */
 
 .stats{
-
 display:grid;
-
-grid-template-columns:
-repeat(3,1fr);
-
+grid-template-columns:repeat(4,1fr);
 gap:15px;
-
 margin-bottom:20px;
-
 }
 
 .stat{
-
-background:#FFFFFF;
-
+background:white;
 padding:20px;
-
-border-radius:18px;
-
-box-shadow:
-0 3px 15px rgba(0,0,0,.04);
-
+border-radius:14px;
+box-shadow:0 2px 10px rgba(0,0,0,.07);
 }
 
 .stat-title{
-
+color:#777;
 font-size:14px;
-
-color:#9CA3AF;
-
-margin-bottom:8px;
-
+margin-bottom:10px;
 }
 
-.stat-value{
-
-font-size:28px;
-
-font-weight:800;
-
-color:#374151;
-
+.stat-number{
+font-size:30px;
+font-weight:bold;
 }
 
+.pending-color{
+color:#f47b20;
+}
+
+.approved-color{
+color:#16803c;
+}
+
+.rejected-color{
+color:#c62828;
+}
 
 /* =========================
-   الطلبات
+   البحث
 ========================= */
 
-.section{
-
-background:#FFFFFF;
-
-padding:22px;
-
-border-radius:18px;
-
-box-shadow:
-0 3px 15px rgba(0,0,0,.04);
-
+.search-box{
+background:white;
+padding:15px;
+border-radius:14px;
 margin-bottom:20px;
-
+box-shadow:0 2px 10px rgba(0,0,0,.07);
 }
 
-.section-title{
-
-font-size:21px;
-
-font-weight:700;
-
-margin-bottom:20px;
-
-color:#374151;
-
+.search-box input{
+width:100%;
+height:45px;
+border:1px solid #ddd;
+border-radius:9px;
+padding:0 14px;
+font-size:15px;
+outline:none;
 }
 
+.search-box input:focus{
+border-color:#f47b20;
+}
 
 /* =========================
-   بطاقة الطلب
+   الجدول
 ========================= */
 
-.request-card{
-
-border:1px solid #E5E7EB;
-
-border-radius:18px;
-
-padding:20px;
-
-margin-bottom:18px;
-
-background:#FFFFFF;
-
+.table-box{
+background:white;
+padding:15px;
+border-radius:14px;
+box-shadow:0 2px 10px rgba(0,0,0,.07);
+overflow-x:auto;
 }
 
-.request-card:last-child{
-
-margin-bottom:0;
-
+table{
+width:100%;
+border-collapse:collapse;
+min-width:1100px;
 }
 
-
-/* رأس البطاقة */
-
-.request-header{
-
-display:flex;
-
-align-items:center;
-
-justify-content:space-between;
-
-gap:15px;
-
-margin-bottom:18px;
-
-padding-bottom:15px;
-
-border-bottom:1px solid #F1F1F1;
-
+th{
+background:#111;
+color:white;
+padding:13px;
+white-space:nowrap;
 }
 
-.store-title{
-
-font-size:20px;
-
-font-weight:700;
-
-color:#374151;
-
+td{
+padding:13px 10px;
+text-align:center;
+border-bottom:1px solid #eee;
+vertical-align:middle;
 }
 
-.request-number{
-
-font-size:12px;
-
-color:#9CA3AF;
-
-margin-top:5px;
-
+tr:hover{
+background:#fafafa;
 }
 
-
-/* حالة الطلب */
+/* =========================
+   الحالة
+========================= */
 
 .status{
-
-display:inline-flex;
-
-align-items:center;
-
-padding:7px 13px;
-
-border-radius:30px;
-
+display:inline-block;
+padding:7px 12px;
+border-radius:20px;
 font-size:13px;
-
-font-weight:600;
-
-white-space:nowrap;
-
+font-weight:bold;
 }
 
 .status-pending{
-
-background:#FFF7ED;
-
-color:#C2410C;
-
+background:#fff0df;
+color:#b85c00;
 }
 
 .status-approved{
-
-background:#ECFDF5;
-
-color:#047857;
-
+background:#e7f7ec;
+color:#176b35;
 }
 
 .status-rejected{
-
-background:#FEF2F2;
-
-color:#B91C1C;
-
+background:#fde8e8;
+color:#a52222;
 }
-
-
-/* المعلومات */
-
-.info-grid{
-
-display:grid;
-
-grid-template-columns:
-repeat(2,1fr);
-
-gap:12px;
-
-margin-bottom:18px;
-
-}
-
-.info{
-
-background:#F9FAFB;
-
-padding:13px;
-
-border-radius:11px;
-
-}
-
-.info-label{
-
-font-size:12px;
-
-color:#9CA3AF;
-
-margin-bottom:5px;
-
-}
-
-.info-value{
-
-font-size:14px;
-
-font-weight:600;
-
-color:#4B5563;
-
-word-break:break-word;
-
-}
-
 
 /* =========================
-   الوصل
+   زر الوصل
 ========================= */
 
-.receipt-box{
-
-background:#FFF7ED;
-
-border-radius:14px;
-
-padding:15px;
-
-margin-bottom:18px;
-
-}
-
-.receipt-title{
-
-font-weight:700;
-
-color:#C2410C;
-
-margin-bottom:10px;
-
-}
-
-.receipt-image{
-
-display:block;
-
-width:100%;
-
-max-width:300px;
-
-height:220px;
-
-object-fit:contain;
-
-background:#FFFFFF;
-
-border-radius:10px;
-
-border:1px solid #FED7AA;
-
-margin-bottom:10px;
-
-}
-
-.receipt-link{
-
-display:inline-block;
-
-text-decoration:none;
-
-color:#EA580C;
-
-font-weight:700;
-
+.receipt-btn{
+border:none;
+background:#f47b20;
+color:white;
+padding:9px 13px;
+border-radius:8px;
+cursor:pointer;
 font-size:14px;
-
 }
 
+.receipt-btn:hover{
+background:#df6810;
+}
 
 /* =========================
    الأزرار
 ========================= */
 
 .actions{
-
 display:flex;
-
-gap:10px;
-
+gap:7px;
+justify-content:center;
 flex-wrap:wrap;
-
 }
 
-.action-btn{
-
+.approve-btn,
+.reject-btn{
 border:none;
-
-border-radius:11px;
-
-padding:12px 18px;
-
-font-size:14px;
-
-font-weight:700;
-
+padding:9px 13px;
+border-radius:8px;
 cursor:pointer;
-
-transition:.2s;
-
-}
-
-.action-btn:hover{
-
-transform:translateY(-1px);
-
+font-size:14px;
+font-weight:bold;
 }
 
 .approve-btn{
-
-background:#10B981;
-
+background:#16803c;
 color:white;
-
 }
 
 .approve-btn:hover{
-
-background:#059669;
-
+background:#10652f;
 }
 
 .reject-btn{
-
-background:#EF4444;
-
+background:#c62828;
 color:white;
-
 }
 
 .reject-btn:hover{
-
-background:#DC2626;
-
+background:#a51f1f;
 }
 
-.view-btn{
-
-background:#F3F4F6;
-
-color:#374151;
-
-}
-
-
-/* تعطيل */
-
-.action-btn:disabled{
-
-opacity:.5;
-
+.disabled-btn{
+background:#ddd;
+color:#888;
 cursor:not-allowed;
-
-transform:none;
-
 }
-
 
 /* =========================
-   لا توجد طلبات
+   نافذة وصل الدفع
 ========================= */
 
-.empty{
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.65);
+z-index:3000;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
 
+.modal.active{
+display:flex;
+}
+
+.modal-box{
+background:white;
+width:100%;
+max-width:650px;
+max-height:90vh;
+overflow:auto;
+border-radius:18px;
+padding:20px;
+position:relative;
+}
+
+.modal-title{
+font-size:20px;
+font-weight:bold;
+margin-bottom:15px;
+}
+
+.receipt-image{
+width:100%;
+max-height:65vh;
+object-fit:contain;
+border-radius:10px;
+border:1px solid #ddd;
+background:#f7f7f7;
+}
+
+.close-btn{
+width:100%;
+margin-top:15px;
+height:45px;
+border:none;
+border-radius:9px;
+background:#111;
+color:white;
+cursor:pointer;
+font-size:16px;
+}
+
+/* =========================
+   نافذة الرفض
+========================= */
+
+.reject-modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.55);
+z-index:4000;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+.reject-modal.active{
+display:flex;
+}
+
+.reject-box{
+background:white;
+width:100%;
+max-width:450px;
+border-radius:16px;
+padding:22px;
+}
+
+.reject-box h2{
+margin-top:0;
+}
+
+.reject-box textarea{
+width:100%;
+height:120px;
+border:1px solid #ddd;
+border-radius:9px;
+padding:12px;
+resize:none;
+outline:none;
+}
+
+.reject-actions{
+display:flex;
+gap:10px;
+margin-top:15px;
+}
+
+.reject-actions button{
+flex:1;
+height:45px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+.confirm-reject{
+background:#c62828;
+color:white;
+}
+
+.cancel-reject{
+background:#eee;
+}
+
+/* =========================
+   تحميل
+========================= */
+
+.loading{
 text-align:center;
-
-padding:50px 20px;
-
-color:#9CA3AF;
-
+padding:35px;
+color:#777;
 }
 
-.empty-icon{
-
-font-size:45px;
-
-margin-bottom:12px;
-
+.empty{
+text-align:center;
+padding:40px;
+color:#777;
 }
 
+.error{
+background:#fde8e8;
+color:#a52222;
+padding:15px;
+border-radius:10px;
+margin-bottom:15px;
+display:none;
+}
 
 /* =========================
    الهاتف
 ========================= */
 
-@media(max-width:800px){
-
-.content{
-
-margin-right:60px;
-
-padding:12px;
-
-}
+@media(max-width:900px){
 
 .stats{
-
-grid-template-columns:1fr;
-
-}
-
-.info-grid{
-
-grid-template-columns:1fr;
-
-}
-
-.request-header{
-
-align-items:flex-start;
-
-flex-direction:column;
-
+grid-template-columns:repeat(2,1fr);
 }
 
 }
 
-@media(max-width:500px){
+@media(max-width:700px){
 
 .sidebar{
-
 width:60px;
-
 }
 
 .sidebar:hover{
-
 width:200px;
-
 }
 
 .content{
-
 margin-right:60px;
-
 padding:10px;
-
 }
 
-.header{
-
-padding:18px;
-
+.stats{
+grid-template-columns:1fr 1fr;
 }
 
 .header h1{
-
-font-size:23px;
-
-}
-
-.section{
-
-padding:15px;
-
-}
-
-.request-card{
-
-padding:15px;
-
-}
-
-.actions{
-
-flex-direction:column;
-
-}
-
-.action-btn{
-
-width:100%;
-
-}
-
-.receipt-image{
-
-max-width:100%;
-
+font-size:22px;
 }
 
 }
@@ -758,31 +494,24 @@ max-width:100%;
 
 </head>
 
-
 <body>
 
 
 <!-- =========================
-     القائمة
+     القائمة الجانبية
 ========================= -->
 
 <div class="sidebar">
 
 <div class="logo">
-
 G-Glam
-
 </div>
-
 
 <div class="menu">
 
-
 <a href="index.html">
 
-<span class="icon">
-🏠
-</span>
+<span class="icon">⌂</span>
 
 <span class="text">
 الرئيسية
@@ -793,9 +522,7 @@ G-Glam
 
 <a href="orders.html">
 
-<span class="icon">
-📦
-</span>
+<span class="icon">▣</span>
 
 <span class="text">
 الطلبات
@@ -804,11 +531,20 @@ G-Glam
 </a>
 
 
+<a href="stores.html">
+
+<span class="icon">🏪</span>
+
+<span class="text">
+طلبات المتاجر
+</span>
+
+</a>
+
+
 <a href="products.html">
 
-<span class="icon">
-🛍️
-</span>
+<span class="icon">□</span>
 
 <span class="text">
 المنتجات
@@ -819,9 +555,7 @@ G-Glam
 
 <a href="add-product.html">
 
-<span class="icon">
-➕
-</span>
+<span class="icon">+</span>
 
 <span class="text">
 إضافة منتج
@@ -832,9 +566,7 @@ G-Glam
 
 <a href="delivery.html">
 
-<span class="icon">
-🚚
-</span>
+<span class="icon">🚚</span>
 
 <span class="text">
 أسعار التوصيل
@@ -843,32 +575,15 @@ G-Glam
 </a>
 
 
-<a href="stores.html"
-class="active">
-
-<span class="icon">
-🏪
-</span>
-
-<span class="text">
-إدارة المتاجر
-</span>
-
-</a>
-
-
 <a href="settings.html">
 
-<span class="icon">
-⚙️
-</span>
+<span class="icon">⚙</span>
 
 <span class="text">
 الإعدادات
 </span>
 
 </a>
-
 
 </div>
 
@@ -885,62 +600,30 @@ class="active">
 <div class="header">
 
 <h1>
-
-🏪 إدارة المتاجر
-
+🏪 طلبات إنشاء المتاجر
 </h1>
 
 <p>
-
-مراجعة طلبات أصحاب المتاجر وقبولها أو رفضها
-
+مراجعة أصحاب المتاجر والتحقق من وصل الدفع قبل الموافقة.
 </p>
 
 </div>
 
 
-<div
-class="message loading"
-id="loadingMessage">
-
-⏳ جاري تحميل طلبات المتاجر...
-
-</div>
-
-
-<div
-class="message success"
-id="successMessage">
-</div>
-
-
-<div
-class="message error"
-id="errorMessage">
-</div>
-
-
-<!-- =========================
-     الإحصائيات
-========================= -->
+<!-- الإحصائيات -->
 
 <div class="stats">
 
-
 <div class="stat">
 
 <div class="stat-title">
-
 ⏳ قيد المراجعة
-
 </div>
 
 <div
-class="stat-value"
+class="stat-number pending-color"
 id="pendingCount">
-
 0
-
 </div>
 
 </div>
@@ -949,17 +632,13 @@ id="pendingCount">
 <div class="stat">
 
 <div class="stat-title">
-
-🟢 المقبولة
-
+✅ مقبولة
 </div>
 
 <div
-class="stat-value"
+class="stat-number approved-color"
 id="approvedCount">
-
 0
-
 </div>
 
 </div>
@@ -968,49 +647,153 @@ id="approvedCount">
 <div class="stat">
 
 <div class="stat-title">
-
-🔴 المرفوضة
-
+❌ مرفوضة
 </div>
 
 <div
-class="stat-value"
+class="stat-number rejected-color"
 id="rejectedCount">
-
 0
-
 </div>
 
 </div>
 
+
+<div class="stat">
+
+<div class="stat-title">
+🏪 جميع الطلبات
+</div>
+
+<div
+class="stat-number"
+id="totalCount">
+0
+</div>
+
+</div>
+
+</div>
+
+
+<!-- البحث -->
+
+<div class="search-box">
+
+<input
+id="searchInput"
+type="text"
+placeholder="🔎 البحث باسم المتجر، صاحب المتجر أو البريد الإلكتروني...">
+
+</div>
+
+
+<div
+id="errorMessage"
+class="error">
+</div>
+
+
+<!-- الجدول -->
+
+<div class="table-box">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+رقم
+</th>
+
+<th>
+اسم المتجر
+</th>
+
+<th>
+صاحب المتجر
+</th>
+
+<th>
+البريد الإلكتروني
+</th>
+
+<th>
+المبلغ
+</th>
+
+<th>
+وصل الدفع
+</th>
+
+<th>
+التاريخ
+</th>
+
+<th>
+الحالة
+</th>
+
+<th>
+الإجراءات
+</th>
+
+</tr>
+
+</thead>
+
+<tbody id="storesTable">
+
+<tr>
+
+<td
+colspan="9"
+class="loading">
+
+⏳ جاري تحميل طلبات المتاجر...
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
 
 </div>
 
 
 <!-- =========================
-     طلبات المتاجر
+     نافذة وصل الدفع
 ========================= -->
 
-<div class="section">
+<div
+class="modal"
+id="receiptModal">
 
-<div class="section-title">
+<div class="modal-box">
 
-📋 طلبات أصحاب المتاجر
-
+<div class="modal-title">
+🧾 وصل الدفع
 </div>
 
+<img
+id="receiptImage"
+class="receipt-image"
+src=""
+alt="وصل الدفع">
 
-<div id="requestsContainer">
+<button
+class="close-btn"
+id="closeReceipt">
 
-<div class="empty">
+إغلاق
 
-<div class="empty-icon">
-⏳
-</div>
-
-جاري تحميل الطلبات...
-
-</div>
+</button>
 
 </div>
 
@@ -1018,54 +801,61 @@ id="rejectedCount">
 
 
 <!-- =========================
-     المتاجر المقبولة
+     نافذة الرفض
 ========================= -->
 
-<div class="section">
+<div
+class="reject-modal"
+id="rejectModal">
 
-<div class="section-title">
+<div class="reject-box">
 
-🏪 المتاجر المسجلة
+<h2>
+❌ رفض طلب المتجر
+</h2>
+
+<p>
+يمكنك كتابة سبب رفض الطلب ليظهر لصاحب المتجر.
+</p>
+
+<textarea
+id="rejectReason"
+placeholder="مثال: وصل الدفع غير واضح أو لم يتم العثور على التحويل..."></textarea>
+
+<div class="reject-actions">
+
+<button
+class="cancel-reject"
+id="cancelReject">
+
+إلغاء
+
+</button>
+
+<button
+class="confirm-reject"
+id="confirmReject">
+
+تأكيد الرفض
+
+</button>
 
 </div>
 
-
-<div id="storesContainer">
-
-<div class="empty">
-
-<div class="empty-icon">
-⏳
 </div>
-
-جاري تحميل المتاجر...
-
-</div>
-
-</div>
-
-</div>
-
 
 </div>
 
 
 <script type="module">
 
-
 /* =========================
    Firebase
 ========================= */
 
-import {
+import { initializeApp }
 
-initializeApp
-
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
 
 import {
@@ -1074,52 +864,34 @@ getFirestore,
 collection,
 getDocs,
 doc,
-getDoc,
-updateDoc,
-setDoc,
-deleteDoc,
-serverTimestamp
+updateDoc
 
 }
 
-from
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
-"https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-
-
-/* =========================
-   Firebase Config
-========================= */
 
 const firebaseConfig = {
 
-apiKey:
-"AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+apiKey:"AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
 
-authDomain:
-"g-glam.firebaseapp.com",
+authDomain:"g-glam.firebaseapp.com",
 
-projectId:
-"g-glam",
+projectId:"g-glam",
 
-storageBucket:
-"g-glam.firebasestorage.app",
+storageBucket:"g-glam.firebasestorage.app",
 
-messagingSenderId:
-"997228419719",
+messagingSenderId:"997228419719",
 
-appId:
-"1:997228419719:web:f9d88de7ea2c6f457e3622",
+appId:"1:997228419719:web:f9d88de7ea2c6f457e3622",
 
-measurementId:
-"G-WX1K1F83F6"
+measurementId:"G-WX1K1F83F6"
 
 };
 
 
 const app =
 initializeApp(firebaseConfig);
-
 
 const db =
 getFirestore(app);
@@ -1129,648 +901,505 @@ getFirestore(app);
    العناصر
 ========================= */
 
-const requestsContainer =
-document.getElementById(
-"requestsContainer"
-);
+const storesTable =
+document.getElementById("storesTable");
 
-const storesContainer =
-document.getElementById(
-"storesContainer"
-);
-
-const loadingMessage =
-document.getElementById(
-"loadingMessage"
-);
-
-const successMessage =
-document.getElementById(
-"successMessage"
-);
-
-const errorMessage =
-document.getElementById(
-"errorMessage"
-);
+const searchInput =
+document.getElementById("searchInput");
 
 const pendingCount =
-document.getElementById(
-"pendingCount"
-);
+document.getElementById("pendingCount");
 
 const approvedCount =
-document.getElementById(
-"approvedCount"
-);
+document.getElementById("approvedCount");
 
 const rejectedCount =
-document.getElementById(
-"rejectedCount"
-);
+document.getElementById("rejectedCount");
+
+const totalCount =
+document.getElementById("totalCount");
+
+const errorMessage =
+document.getElementById("errorMessage");
+
+const receiptModal =
+document.getElementById("receiptModal");
+
+const receiptImage =
+document.getElementById("receiptImage");
+
+const rejectModal =
+document.getElementById("rejectModal");
+
+const rejectReason =
+document.getElementById("rejectReason");
+
+let stores = [];
+
+let rejectStoreId = null;
 
 
 /* =========================
-   الرسائل
+   تحميل المتاجر
 ========================= */
 
-function showSuccess(message){
+async function loadStores(){
 
-successMessage.textContent =
-message;
+storesTable.innerHTML=`
 
-successMessage.style.display =
-"block";
+<tr>
 
-errorMessage.style.display =
-"none";
+<td colspan="9" class="loading">
 
+⏳ جاري تحميل الطلبات...
 
-setTimeout(
-function(){
+</td>
 
-successMessage.style.display =
-"none";
+</tr>
 
-},
-4000
-);
-
-}
-
-
-function showError(message){
-
-errorMessage.textContent =
-message;
-
-errorMessage.style.display =
-"block";
-
-successMessage.style.display =
-"none";
-
-
-setTimeout(
-function(){
-
-errorMessage.style.display =
-"none";
-
-},
-6000
-);
-
-}
-
-
-/* =========================
-   حماية النص
-========================= */
-
-function escapeHtml(value){
-
-return String(value || "")
-
-.replace(/&/g,"&amp;")
-
-.replace(/</g,"&lt;")
-
-.replace(/>/g,"&gt;")
-
-.replace(/"/g,"&quot;")
-
-.replace(/'/g,"&#039;");
-
-}
-
-
-/* =========================
-   حالة الطلب
-========================= */
-
-function getStatusText(status){
-
-if(status === "approved"){
-
-return "🟢 مقبول";
-
-}
-
-if(status === "rejected"){
-
-return "🔴 مرفوض";
-
-}
-
-return "🟠 قيد المراجعة";
-
-}
-
-
-function getStatusClass(status){
-
-if(status === "approved"){
-
-return "status-approved";
-
-}
-
-if(status === "rejected"){
-
-return "status-rejected";
-
-}
-
-return "status-pending";
-
-}
-
-
-/* =========================
-   تحميل طلبات المتاجر
-========================= */
-
-async function loadRequests(){
+`;
 
 try{
 
-
 const snapshot =
 await getDocs(
-
-collection(
-db,
-"storeRequests"
-)
-
+collection(db,"stores")
 );
 
+stores=[];
 
-requestsContainer.innerHTML = "";
+snapshot.forEach(item=>{
+
+stores.push({
+
+id:item.id,
+
+...item.data()
+
+});
+
+});
 
 
-let pending = 0;
+updateStatistics();
 
-let approved = 0;
+displayStores(stores);
 
-let rejected = 0;
+}
+
+catch(error){
+
+console.error(error);
+
+errorMessage.textContent =
+"حدث خطأ أثناء تحميل طلبات المتاجر: "+
+error.message;
+
+errorMessage.style.display="block";
+
+storesTable.innerHTML=`
+
+<tr>
+
+<td colspan="9" class="empty">
+
+❌ تعذر تحميل الطلبات
+
+</td>
+
+</tr>
+
+`;
+
+}
+
+}
 
 
-if(snapshot.empty){
+/* =========================
+   الإحصائيات
+========================= */
 
-requestsContainer.innerHTML = `
+function updateStatistics(){
 
-<div class="empty">
+let pending=0;
+let approved=0;
+let rejected=0;
 
-<div class="empty-icon">
-📭
-</div>
+stores.forEach(store=>{
 
-لا توجد طلبات متاجر حاليًا.
+const status =
+store.status || "pending";
+
+if(status==="pending"){
+pending++;
+}
+
+else if(status==="approved"){
+approved++;
+}
+
+else if(status==="rejected"){
+rejected++;
+}
+
+});
+
+
+pendingCount.textContent=pending;
+
+approvedCount.textContent=approved;
+
+rejectedCount.textContent=rejected;
+
+totalCount.textContent=stores.length;
+
+}
+
+
+/* =========================
+   التاريخ
+========================= */
+
+function formatDate(timestamp){
+
+if(!timestamp){
+
+return "-";
+
+}
+
+try{
+
+if(timestamp.toDate){
+
+return timestamp
+.toDate()
+.toLocaleString(
+"ar-DZ"
+);
+
+}
+
+return String(timestamp);
+
+}
+
+catch(error){
+
+return "-";
+
+}
+
+}
+
+
+/* =========================
+   الحالة
+========================= */
+
+function getStatusHTML(status){
+
+if(status==="approved"){
+
+return `
+<span class="status status-approved">
+مقبول ✅
+</span>
+`;
+
+}
+
+if(status==="rejected"){
+
+return `
+<span class="status status-rejected">
+مرفوض ❌
+</span>
+`;
+
+}
+
+return `
+<span class="status status-pending">
+قيد المراجعة ⏳
+</span>
+`;
+
+}
+
+
+/* =========================
+   عرض المتاجر
+========================= */
+
+function displayStores(data){
+
+storesTable.innerHTML="";
+
+
+if(data.length===0){
+
+storesTable.innerHTML=`
+
+<tr>
+
+<td colspan="9" class="empty">
+
+لا توجد طلبات متاجر.
+
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
+
+data.forEach((store,index)=>{
+
+const status =
+store.status || "pending";
+
+
+let actions="";
+
+
+if(status==="pending"){
+
+actions=`
+
+<div class="actions">
+
+<button
+class="approve-btn"
+onclick="approveStore('${store.id}')">
+
+✅ قبول
+
+</button>
+
+<button
+class="reject-btn"
+onclick="openReject('${store.id}')">
+
+❌ رفض
+
+</button>
 
 </div>
 
 `;
-
-}else{
-
-
-snapshot.forEach(
-requestDoc => {
-
-const request =
-requestDoc.data();
-
-const id =
-requestDoc.id;
-
-const status =
-request.status ||
-"pending";
-
-
-if(status === "approved"){
-
-approved++;
-
-}
-
-else if(status === "rejected"){
-
-rejected++;
 
 }
 
 else{
 
-pending++;
+actions=`
 
-}
-
-
-/* =========================
-   بطاقة الطلب
-========================= */
-
-const card =
-document.createElement("div");
-
-card.className =
-"request-card";
-
-
-const receiptUrl =
-request.receiptUrl ||
-"";
-
-
-let receiptHtml = "";
-
-
-if(receiptUrl){
-
-receiptHtml = `
-
-<div class="receipt-box">
-
-<div class="receipt-title">
-
-🧾 وصل الدفع
-
-</div>
-
-
-<a
-href="${escapeHtml(receiptUrl)}"
-target="_blank"
-rel="noopener noreferrer">
-
-<img
-src="${escapeHtml(receiptUrl)}"
-class="receipt-image"
-alt="وصل الدفع">
-
-</a>
-
-
-<a
-href="${escapeHtml(receiptUrl)}"
-target="_blank"
-rel="noopener noreferrer"
-class="receipt-link">
-
-🔍 فتح وصل الدفع بحجم كامل
-
-</a>
-
-</div>
-
-`;
-
-}else{
-
-receiptHtml = `
-
-<div class="receipt-box">
-
-<div class="receipt-title">
-
-🧾 وصل الدفع
-
-</div>
-
-<p>
-لم يتم إرفاق وصل دفع.
-</p>
-
-</div>
-
-`;
-
-}
-
-
-/* أزرار الطلب */
-
-let buttonsHtml = "";
-
-
-if(status === "pending"){
-
-buttonsHtml = `
-
-<div class="actions">
-
-<button
-class="action-btn approve-btn"
-data-action="approve"
-data-id="${escapeHtml(id)}">
-
-🟢 قبول المتجر
-
-</button>
-
-
-<button
-class="action-btn reject-btn"
-data-action="reject"
-data-id="${escapeHtml(id)}">
-
-🔴 رفض المتجر
-
-</button>
-
-</div>
-
-`;
-
-}else if(status === "approved"){
-
-buttonsHtml = `
-
-<div class="actions">
-
-<button
-class="action-btn approve-btn"
-disabled>
-
-✅ تم قبول المتجر
-
-</button>
-
-<button
-class="action-btn reject-btn"
-data-action="reject"
-data-id="${escapeHtml(id)}">
-
-رفض المتجر
-
-</button>
-
-</div>
-
-`;
-
-}else{
-
-buttonsHtml = `
-
-<div class="actions">
-
-<button
-class="action-btn reject-btn"
-disabled>
-
-❌ تم رفض المتجر
-
-</button>
-
-<button
-class="action-btn approve-btn"
-data-action="approve"
-data-id="${escapeHtml(id)}">
-
-قبول المتجر
-
-</button>
-
-</div>
-
-`;
-
-}
-
-
-card.innerHTML = `
-
-<div class="request-header">
-
-<div>
-
-<div class="store-title">
-
-🏪 ${escapeHtml(
-request.storeName ||
-"بدون اسم"
-)}
-
-</div>
-
-<div class="request-number">
-
-رقم الطلب: ${escapeHtml(id)}
-
-</div>
-
-</div>
-
-
-<span
-class="status ${getStatusClass(status)}">
-
-${getStatusText(status)}
-
+<span style="color:#777;">
+تمت معالجة الطلب
 </span>
 
-</div>
+`;
+
+}
 
 
-<div class="info-grid">
+let receiptButton="";
 
 
-<div class="info">
+if(store.receiptUrl){
 
-<div class="info-label">
+receiptButton=`
 
-👤 صاحب المتجر
+<button
+class="receipt-btn"
+onclick="showReceipt('${store.receiptUrl}')">
 
-</div>
+🧾 عرض الوصل
 
-<div class="info-value">
+</button>
 
-${escapeHtml(
-request.ownerName ||
-"-"
-)}
+`;
 
-</div>
+}
 
-</div>
+else{
 
+receiptButton=`
 
-<div class="info">
+<span style="color:#c62828;">
+لا يوجد وصل
+</span>
 
-<div class="info-label">
+`;
 
-📧 البريد الإلكتروني
-
-</div>
-
-<div class="info-value">
-
-${escapeHtml(
-request.ownerEmail ||
-"-"
-)}
-
-</div>
-
-</div>
+}
 
 
-<div class="info">
-
-<div class="info-label">
-
-💰 المبلغ
-
-</div>
-
-<div class="info-value">
-
-${escapeHtml(
-request.amount ||
-3500
-)} DA
-
-</div>
-
-</div>
+const row =
+document.createElement("tr");
 
 
-<div class="info">
+row.innerHTML=`
 
-<div class="info-label">
+<td>
+${index+1}
+</td>
 
-🆔 معرف الحساب
+<td>
 
-</div>
+<strong>
+${escapeHtml(store.name || "-")}
+</strong>
 
-<div class="info-value">
+</td>
 
-${escapeHtml(id)}
+<td>
+${escapeHtml(store.ownerName || "-")}
+</td>
 
-</div>
+<td>
 
-</div>
+<a
+href="mailto:${escapeAttribute(store.email || "")}">
 
+${escapeHtml(store.email || "-")}
 
-</div>
+</a>
 
+</td>
 
-${receiptHtml}
+<td>
 
+<strong>
+${Number(store.paymentAmount || 3500)}
+DA
+</strong>
 
-${buttonsHtml}
+</td>
+
+<td>
+
+${receiptButton}
+
+</td>
+
+<td>
+
+${formatDate(store.createdAt)}
+
+</td>
+
+<td>
+
+${getStatusHTML(status)}
+
+</td>
+
+<td>
+
+${actions}
+
+</td>
 
 `;
 
 
-requestsContainer.appendChild(card);
-
-
-/* =========================
-   أزرار القبول والرفض
-========================= */
-
-const approveButton =
-card.querySelector(
-'[data-action="approve"]'
-);
-
-const rejectButton =
-card.querySelector(
-'[data-action="reject"]'
-);
-
-
-if(approveButton){
-
-approveButton.addEventListener(
-"click",
-function(){
-
-approveStore(id);
-
-}
-);
-
-}
-
-
-if(rejectButton){
-
-rejectButton.addEventListener(
-"click",
-function(){
-
-rejectStore(id);
-
-}
-);
-
-}
+storesTable.appendChild(row);
 
 });
 
 }
 
 
-pendingCount.textContent =
-pending;
+/* =========================
+   عرض الوصل
+========================= */
 
-approvedCount.textContent =
-approved;
+window.showReceipt=function(url){
 
-rejectedCount.textContent =
-rejected;
+if(!url){
 
+alert("لا توجد صورة لوصل الدفع.");
 
-}catch(error){
-
-console.error(
-"LOAD REQUESTS ERROR:",
-error
-);
-
-
-requestsContainer.innerHTML = `
-
-<div class="empty">
-
-<div class="empty-icon">
-❌
-</div>
-
-تعذر تحميل طلبات المتاجر.
-
-<br><br>
-
-${escapeHtml(
-error.message
-)}
-
-</div>
-
-`;
+return;
 
 }
 
+receiptImage.src=url;
+
+receiptModal.classList.add("active");
+
+};
+
+
+/* =========================
+   إغلاق الوصل
+========================= */
+
+document
+.getElementById("closeReceipt")
+.addEventListener(
+"click",
+function(){
+
+receiptModal.classList.remove("active");
+
+receiptImage.src="";
+
+});
+
+
+receiptModal.addEventListener(
+"click",
+function(event){
+
+if(event.target===receiptModal){
+
+receiptModal.classList.remove("active");
+
+receiptImage.src="";
+
 }
+
+});
 
 
 /* =========================
    قبول المتجر
 ========================= */
 
-async function approveStore(requestId){
+window.approveStore=async function(id){
 
-const ok =
-confirm(
-"هل أنت متأكد من قبول هذا المتجر؟"
+const store =
+stores.find(item=>item.id===id);
+
+if(!store){
+
+alert("لم يتم العثور على المتجر.");
+
+return;
+
+}
+
+
+const ok=confirm(
+
+"هل أنت متأكد من قبول هذا المتجر؟\n\n"+
+"المتجر: "+
+(store.name || "-")+
+"\n"+
+"صاحب المتجر: "+
+(store.ownerName || "-")+
+"\n\n"+
+"بعد القبول سيتم السماح لصاحب المتجر بالدخول إلى لوحة التحكم."
+
 );
-
 
 if(!ok){
 
@@ -1781,283 +1410,117 @@ return;
 
 try{
 
+await updateDoc(
 
-/*
-   قراءة طلب المتجر
-*/
-
-const requestRef =
-doc(
-db,
-"storeRequests",
-requestId
-);
-
-
-const requestSnapshot =
-await getDoc(
-requestRef
-);
-
-
-if(!requestSnapshot.exists()){
-
-throw new Error(
-"طلب المتجر غير موجود."
-);
-
-}
-
-
-const request =
-requestSnapshot.data();
-
-
-/*
-   نفس UID المستخدم
-*/
-
-const userId =
-request.ownerUid ||
-requestId;
-
-
-if(!userId){
-
-throw new Error(
-"لم يتم العثور على معرف صاحب المتجر."
-);
-
-}
-
-
-/*
-   تحديث المتجر
-*/
-
-const storeRef =
 doc(
 db,
 "stores",
-userId
-);
-
-
-const storeSnapshot =
-await getDoc(
-storeRef
-);
-
-
-/*
-   إذا كان المتجر موجودًا
-*/
-
-if(storeSnapshot.exists()){
-
-await updateDoc(
-
-storeRef,
+id
+),
 
 {
 
-status:
-"approved",
+status:"approved",
 
-paymentStatus:
-"approved",
-
-ownerId:
-userId,
-
-ownerUid:
-userId,
-
-ownerName:
-request.ownerName ||
-"",
-
-ownerEmail:
-request.ownerEmail ||
-"",
-
-storeName:
-request.storeName ||
-"",
+paymentStatus:"approved",
 
 approvedAt:
-serverTimestamp()
+new Date(),
 
-}
+approvedBy:"admin",
 
-);
+rejectionReason:"",
 
-}
-
-/*
-   إذا لم يكن المتجر موجودًا
-   ننشئه تلقائيًا
-*/
-
-else{
-
-await setDoc(
-
-storeRef,
-
-{
-
-ownerId:
-userId,
-
-ownerUid:
-userId,
-
-ownerName:
-request.ownerName ||
-"",
-
-ownerEmail:
-request.ownerEmail ||
-"",
-
-storeName:
-request.storeName ||
-"",
-
-description:
-"",
-
-storeImage:
-"",
-
-status:
-"approved",
-
-paymentStatus:
-"approved",
-
-createdAt:
-serverTimestamp(),
-
-approvedAt:
-serverTimestamp()
-
-}
-
-);
-
-}
-
-
-/*
-   تحديث طلب التسجيل
-*/
-
-await updateDoc(
-
-requestRef,
-
-{
-
-status:
-"approved",
-
-approvedAt:
-serverTimestamp()
+updatedAt:
+new Date()
 
 }
 
 );
 
 
-/*
-   تحديث users
-*/
-
-const userRef =
-doc(
-db,
-"users",
-userId
-);
-
-
-const userSnapshot =
-await getDoc(
-userRef
-);
-
-
-if(userSnapshot.exists()){
-
-await updateDoc(
-
-userRef,
-
-{
-
-paymentStatus:
-"approved",
-
-storeId:
-userId,
-
-storeName:
-request.storeName ||
-""
-
-}
-
-);
-
-}
-
-
-/* نجاح */
-
-showSuccess(
+alert(
 "تم قبول المتجر بنجاح ✅"
 );
 
-
-/* إعادة التحميل */
-
-await loadRequests();
-
 await loadStores();
 
+}
 
-}catch(error){
+catch(error){
 
-console.error(
-"APPROVE ERROR:",
-error
-);
+console.error(error);
 
-showError(
-"تعذر قبول المتجر: " +
+alert(
+"فشل قبول المتجر:\n"+
 error.message
 );
 
 }
 
-}
+};
 
 
 /* =========================
-   رفض المتجر
+   فتح نافذة الرفض
 ========================= */
 
-async function rejectStore(requestId){
+window.openReject=function(id){
+
+rejectStoreId=id;
+
+rejectReason.value="";
+
+rejectModal.classList.add("active");
+
+};
+
+
+/* =========================
+   إلغاء الرفض
+========================= */
+
+document
+.getElementById("cancelReject")
+.addEventListener(
+"click",
+function(){
+
+rejectStoreId=null;
+
+rejectReason.value="";
+
+rejectModal.classList.remove("active");
+
+});
+
+
+/* =========================
+   تأكيد الرفض
+========================= */
+
+document
+.getElementById("confirmReject")
+.addEventListener(
+"click",
+async function(){
+
+if(!rejectStoreId){
+
+return;
+
+}
+
 
 const reason =
-prompt(
-"يمكنك كتابة سبب الرفض، أو اتركه فارغًا:"
+rejectReason.value.trim();
+
+
+if(!reason){
+
+alert(
+"يرجى كتابة سبب رفض الطلب."
 );
-
-
-if(reason === null){
 
 return;
 
@@ -2066,264 +1529,177 @@ return;
 
 try{
 
-
-const requestRef =
-doc(
-db,
-"storeRequests",
-requestId
-);
-
-
-const requestSnapshot =
-await getDoc(
-requestRef
-);
-
-
-if(!requestSnapshot.exists()){
-
-throw new Error(
-"طلب المتجر غير موجود."
-);
-
-}
-
-
-const request =
-requestSnapshot.data();
-
-
-const userId =
-request.ownerUid ||
-requestId;
-
-
-/*
-   تحديث الطلب
-*/
-
 await updateDoc(
 
-requestRef,
-
-{
-
-status:
-"rejected",
-
-rejectionReason:
-reason.trim(),
-
-rejectedAt:
-serverTimestamp()
-
-}
-
-);
-
-
-/*
-   تحديث المتجر إذا كان موجودًا
-*/
-
-const storeRef =
 doc(
 db,
 "stores",
-userId
-);
-
-
-const storeSnapshot =
-await getDoc(
-storeRef
-);
-
-
-if(storeSnapshot.exists()){
-
-await updateDoc(
-
-storeRef,
+rejectStoreId
+),
 
 {
 
-status:
-"rejected",
+status:"rejected",
 
-paymentStatus:
-"rejected",
+paymentStatus:"rejected",
 
-rejectionReason:
-reason.trim(),
+rejectionReason:reason,
 
 rejectedAt:
-serverTimestamp()
+new Date(),
+
+rejectedBy:"admin",
+
+updatedAt:
+new Date()
 
 }
 
 );
 
-}
+
+rejectModal.classList.remove("active");
+
+rejectStoreId=null;
+
+rejectReason.value="";
 
 
-/*
-   تحديث المستخدم
-*/
-
-const userRef =
-doc(
-db,
-"users",
-userId
+alert(
+"تم رفض طلب المتجر ❌"
 );
 
-
-const userSnapshot =
-await getDoc(
-userRef
-);
-
-
-if(userSnapshot.exists()){
-
-await updateDoc(
-
-userRef,
-
-{
-
-paymentStatus:
-"rejected"
-
-}
-
-);
-
-}
-
-
-showSuccess(
-"تم رفض طلب المتجر 🔴"
-);
-
-
-await loadRequests();
 
 await loadStores();
 
+}
 
-}catch(error){
+catch(error){
 
-console.error(
-"REJECT ERROR:",
-error
-);
+console.error(error);
 
-showError(
-"تعذر رفض المتجر: " +
+alert(
+"فشل رفض الطلب:\n"+
 error.message
 );
 
 }
 
-}
+});
 
 
 /* =========================
-   تحميل المتاجر
+   إغلاق النوافذ عند الضغط خارجها
 ========================= */
 
-async function loadStores(){
+rejectModal.addEventListener(
+"click",
+function(event){
 
-try{
+if(event.target===rejectModal){
 
+rejectModal.classList.remove("active");
 
-const snapshot =
-await getDocs(
+rejectStoreId=null;
 
-collection(
-db,
-"stores"
-)
+}
 
-);
-
-
-storesContainer.innerHTML = "";
+});
 
 
-if(snapshot.empty){
+/* =========================
+   البحث
+========================= */
 
-storesContainer.innerHTML = `
+searchInput.addEventListener(
+"input",
+function(){
 
-<div class="empty">
+const value =
+this.value
+.trim()
+.toLowerCase();
 
-<div class="empty-icon">
-🏪
-</div>
 
-لا توجد متاجر مسجلة حاليًا.
+if(!value){
 
-</div>
-
-`;
+displayStores(stores);
 
 return;
 
 }
 
 
-snapshot.forEach(
-storeDoc => {
+const result =
+stores.filter(store=>{
 
-const store =
-storeDoc.data();
+return (
 
-const id =
-storeDoc.id;
+String(store.name || "")
+.toLowerCase()
+.includes(value)
 
+||
 
-const status =
-store.status ||
-"pending";
+String(store.ownerName || "")
+.toLowerCase()
+.includes(value)
 
+||
 
-const card =
-document.createElement(
-"div"
+String(store.email || "")
+.toLowerCase()
+.includes(value)
+
+||
+
+String(store.status || "")
+.toLowerCase()
+.includes(value)
+
 );
 
-card.className =
-"request-card";
+});
 
 
-card.innerHTML = `
+displayStores(result);
 
-<div class="request-header">
-
-<div>
-
-<div class="store-title">
-
-🏪 ${escapeHtml(
-store.storeName ||
-"بدون اسم"
-)}
-
-</div>
-
-<div class="request-number">
-
-UID: ${escapeHtml(id)}
-
-</div>
-
-</div>
+});
 
 
-<span
-class="status ${getStatusClass(status)}">
+/* =========================
+   حماية HTML
+========================= */
 
-${getStatus
+function escapeHtml(value){
+
+return String(value)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+function escapeAttribute(value){
+
+return String(value)
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+   التشغيل
+========================= */
+
+loadStores();
+
+</script>
+
+</body>
+
+</html>
