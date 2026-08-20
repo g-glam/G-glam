@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
@@ -6,12 +5,9 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>
-G-Glam | تعديل المنتج
-</title>
-
+<title>G-Glam | تعديل المنتج</title>
 
 <style>
 
@@ -20,63 +16,42 @@ box-sizing:border-box;
 font-family:Arial,sans-serif;
 }
 
-
 body{
-
 margin:0;
 background:#f5f5f5;
 padding:20px;
-
 }
 
-
-
 .container{
-
 max-width:700px;
 margin:auto;
 background:white;
 padding:20px;
 border-radius:15px;
 box-shadow:0 0 10px rgba(0,0,0,.1);
-
 }
-
-
 
 h1{
-
 text-align:center;
 margin-bottom:20px;
-
 }
-
-
 
 input,
 textarea{
-
 width:100%;
 padding:12px;
 margin-bottom:12px;
 border:1px solid #ddd;
 border-radius:8px;
-
+font-size:15px;
 }
-
-
 
 textarea{
-
 height:120px;
 resize:none;
-
 }
 
-
-
 button{
-
 width:100%;
 padding:14px;
 border:none;
@@ -85,32 +60,24 @@ background:#111;
 color:white;
 font-size:18px;
 cursor:pointer;
-
 }
 
-
-
-button:hover{
-
-opacity:.9;
-
+button:disabled{
+opacity:.5;
+cursor:not-allowed;
 }
-
-
 
 img{
-
 width:150px;
+height:150px;
+object-fit:cover;
 display:block;
 margin:15px auto;
 border-radius:10px;
-
+background:#eee;
 }
 
-
-
 .success{
-
 display:none;
 background:#d4edda;
 color:#155724;
@@ -118,34 +85,57 @@ padding:10px;
 border-radius:8px;
 text-align:center;
 margin-bottom:15px;
-
 }
 
+.error{
+display:none;
+background:#f8d7da;
+color:#721c24;
+padding:10px;
+border-radius:8px;
+text-align:center;
+margin-bottom:15px;
+}
+
+.back{
+display:block;
+text-align:center;
+margin-bottom:15px;
+color:#111;
+text-decoration:none;
+}
 
 </style>
 
-
 </head>
-
 
 <body>
 
-
 <div class="container">
 
+<a
+href="products.html"
+class="back">
+
+← العودة إلى المنتجات
+
+</a>
 
 <h1>
 ✏️ تعديل المنتج
 </h1>
 
-
-
-<div class="success" id="success">
-
+<div
+class="success"
+id="success">
 تم تعديل المنتج بنجاح ✅
+</div>
 
-  </div>
-  
+<div
+class="error"
+id="error">
+</div>
+
 
 <input
 id="name"
@@ -153,12 +143,11 @@ type="text"
 placeholder="اسم المنتج">
 
 
-
 <input
 id="price"
 type="number"
-placeholder="السعر">
-
+placeholder="السعر"
+min="0">
 
 
 <textarea
@@ -167,26 +156,22 @@ placeholder="وصف المنتج">
 </textarea>
 
 
-
-
 <input
 id="colors"
 type="text"
 placeholder="الألوان مثال: Beige,Nude,Pink">
 
 
-
 <input
 id="stock"
 type="number"
-placeholder="المخزون">
-
+placeholder="المخزون"
+min="0">
 
 
 <label>
-📷 تغيير صورة المنتج (اختياري)
+📷 تغيير صورة المنتج اختياري
 </label>
-
 
 <input
 id="imageFile"
@@ -194,339 +179,336 @@ type="file"
 accept="image/*">
 
 
-
 <img
 id="preview"
-src="">
+src=""
+alt="صورة المنتج">
 
 
-
-<button id="updateBtn">
+<button
+id="updateBtn">
 
 حفظ التعديلات
 
 </button>
 
-
-
 </div>
+
 
 <script type="module">
 
-
 import { initializeApp }
-
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
-
+import {
+getAuth,
+onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
 import {
-
 getFirestore,
-
 doc,
-
 getDoc,
-
-updateDoc
-
+updateDoc,
+collection,
+query,
+where,
+getDocs
 }
-
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 
+const firebaseConfig={
 
+apiKey:"AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
 
+authDomain:"g-glam.firebaseapp.com",
 
+projectId:"g-glam",
 
-const firebaseConfig = {
+storageBucket:"g-glam.firebasestorage.app",
 
+messagingSenderId:"997228419719",
 
-apiKey: "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+appId:"1:997228419719:web:f9d88de7ea2c6f457e3622",
 
-const firebaseConfig = {
-    apiKey: "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
-    authDomain: "g-glam.firebaseapp.com",
-    projectId: "g-glam",
-    storageBucket: "g-glam.firebasestorage.app",
-    messagingSenderId: "997228419719",
-    appId: "1:997228419719:web:f9d88de7ea2c6f457e3622",
-    measurementId: "G-WX1K1F83F6"
-};
-
-authDomain: "g-glam.firebaseapp.com",
-
-projectId: "g-glam",
-
-storageBucket: "g-glam.firebasestorage.app",
-
-messagingSenderId: "997228419719",
-
-appId: "1:997228419719:web:f9d88de7ea2c6f457e3622",
-
-measurementId: "G-WX1K1F83F6"
+measurementId:"G-WX1K1F83F6"
 
 };
 
 
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const db=getFirestore(app);
 
 
+const params=
+new URLSearchParams(window.location.search);
 
-const app = initializeApp(firebaseConfig);
-
-
-const db = getFirestore(app);
-
+const productId=params.get("id");
 
 
+let oldImage="";
+
+let selectedImage=null;
+
+let storeId=null;
 
 
+const updateBtn=
+document.getElementById("updateBtn");
 
-const params =
 
-new URLSearchParams(
+function showError(message){
 
-window.location.search
+const box=
+document.getElementById("error");
 
+box.textContent=message;
+
+box.style.display="block";
+
+}
+
+
+function getStoreForUser(email){
+
+return getDocs(
+query(
+collection(db,"stores"),
+where("email","==",email)
+)
 );
 
+}
 
 
-const productId =
+async function loadProduct(user){
 
-params.get("id");
+if(!productId){
 
+showError("لم يتم تحديد المنتج.");
 
+return;
 
-
-
-let oldImage = "";
-
-let selectedImage = null;
+}
 
 
+try{
+
+const storesSnapshot=
+await getStoreForUser(user.email);
 
 
+if(storesSnapshot.empty){
 
-async function loadProduct(){
+showError(
+"لم يتم العثور على متجر لهذا الحساب."
+);
+
+return;
+
+}
 
 
+storeId=
+storesSnapshot.docs[0].id;
 
-const productRef =
 
+const productRef=
 doc(db,"products",productId);
 
-
-
-
-const productSnap =
-
+const productSnap=
 await getDoc(productRef);
-
-
-
 
 
 if(!productSnap.exists()){
 
-
-alert("المنتج غير موجود");
-
+showError("المنتج غير موجود.");
 
 return;
 
+}
+
+
+const product=
+productSnap.data();
+
+
+/* التحقق من ملكية المنتج */
+
+if(product.storeId!==storeId){
+
+showError(
+"ليس لديك صلاحية تعديل هذا المنتج."
+);
+
+updateBtn.disabled=true;
+
+return;
 
 }
 
 
-
-
-const product = productSnap.data();
-
-
-
-
-
-document.getElementById("name").value =
-
+document.getElementById("name").value=
 product.name || "";
 
+document.getElementById("price").value=
+product.price ?? "";
 
-
-document.getElementById("price").value =
-
-product.price || "";
-
-
-
-document.getElementById("description").value =
-
+document.getElementById("description").value=
 product.description || "";
 
+document.getElementById("colors").value=
+Array.isArray(product.colors)
+? product.colors.join(",")
+: product.colors || "";
 
+document.getElementById("stock").value=
+product.stock ?? "";
 
-document.getElementById("colors").value =
+oldImage=
+product.image || "";
 
-(product.colors || []).join(",");
+document.getElementById("preview").src=
+oldImage || "";
 
+}
 
+catch(error){
 
-document.getElementById("stock").value =
+console.error(error);
 
-product.stock || "";
+showError(
+"حدث خطأ أثناء تحميل المنتج."
+);
 
-
-
-
-
-oldImage = product.image || "";
-
-
-
-
-document.getElementById("preview").src =
-
-oldImage;
-
-
+}
 
 }
 
 
+onAuthStateChanged(auth,user=>{
 
-loadProduct();
-  
+if(!user){
 
-// اختيار صورة جديدة
+window.location.href="store-login.html";
+
+return;
+
+}
+
+loadProduct(user);
+
+});
+
 
 document
 .getElementById("imageFile")
 .addEventListener("change",function(){
 
+selectedImage=this.files[0];
 
-selectedImage = this.files[0];
+if(!selectedImage)return;
 
+const reader=
+new FileReader();
 
-if(selectedImage){
+reader.onload=function(e){
 
-
-const reader = new FileReader();
-
-
-
-reader.onload = function(e){
-
-
-document.getElementById("preview").src =
-
+document.getElementById("preview").src=
 e.target.result;
-
 
 };
 
-
-
 reader.readAsDataURL(selectedImage);
-
-
-}
-
 
 });
 
 
+updateBtn.addEventListener(
+"click",
+async function(){
 
+if(!storeId){
 
-
-
-
-// حفظ التعديلات
-
-
-document
-.getElementById("updateBtn")
-.addEventListener("click", async function(){
-
-
-
-const name =
-
-document.getElementById("name")
-.value.trim();
-
-
-
-const price =
-
-Number(
-document.getElementById("price").value
-);
-
-
-
-const description =
-
-document.getElementById("description")
-.value.trim();
-
-
-
-
-const colors =
-
-document.getElementById("colors")
-.value
-.split(",")
-.map(c=>c.trim())
-.filter(c=>c);
-
-
-
-const stock =
-
-Number(
-document.getElementById("stock").value
-);
-
-
-
-if(!name || !price){
-
-
-alert("يرجى إدخال الاسم والسعر");
-
+showError("المتجر غير جاهز.");
 
 return;
-
 
 }
 
 
+const name=
+document.getElementById("name").value.trim();
 
+const price=
+Number(document.getElementById("price").value);
+
+const description=
+document.getElementById("description").value.trim();
+
+const colors=
+document.getElementById("colors")
+.value
+.split(",")
+.map(x=>x.trim())
+.filter(Boolean);
+
+const stock=
+Number(document.getElementById("stock").value);
+
+
+if(!name){
+
+showError("يرجى إدخال اسم المنتج.");
+
+return;
+
+}
+
+
+if(isNaN(price) || price<0){
+
+showError("يرجى إدخال سعر صحيح.");
+
+return;
+
+}
+
+
+if(isNaN(stock) || stock<0){
+
+showError("يرجى إدخال مخزون صحيح.");
+
+return;
+
+}
 
 
 try{
 
+updateBtn.disabled=true;
 
-let imageUrl = oldImage;
+updateBtn.textContent=
+"⏳ جاري الحفظ...";
 
 
-
+let imageUrl=oldImage;
 
 
 if(selectedImage){
 
-
-const formData = new FormData();
-
-
+const formData=
+new FormData();
 
 formData.append(
 "file",
 selectedImage
 );
-
-
 
 formData.append(
 "upload_preset",
@@ -534,104 +516,81 @@ formData.append(
 );
 
 
-
-
-const response = await fetch(
-
+const response=
+await fetch(
 "https://api.cloudinary.com/v1_1/g82dvrkr/image/upload",
-
 {
-
 method:"POST",
-
 body:formData
-
 }
-
 );
 
 
+if(!response.ok){
 
-
-const data = await response.json();
-
-
-
-imageUrl = data.secure_url;
-
-
+throw new Error(
+"فشل رفع الصورة"
+);
 
 }
 
 
+const data=
+await response.json();
 
+imageUrl=data.secure_url;
+
+}
 
 
 await updateDoc(
-
 doc(db,"products",productId),
-
 {
-
 name:name,
-
 price:price,
-
 description:description,
-
 colors:colors,
-
 stock:stock,
-
 image:imageUrl
-
 }
-
 );
-
-
-
 
 
 document.getElementById("success")
 .style.display="block";
 
-
-
 window.scrollTo({
-
 top:0,
-
 behavior:"smooth"
-
 });
 
 
-
 }
-
 
 catch(error){
 
-
 console.error(error);
 
-
-alert(
-"حدث خطأ أثناء التعديل"
+showError(
+"حدث خطأ أثناء حفظ التعديلات: "+
+error.message
 );
-
 
 }
 
+finally{
 
+updateBtn.disabled=false;
+
+updateBtn.textContent=
+"حفظ التعديلات";
+
+}
 
 });
-  
+
 </script>
 
-
 </body>
-
 
 </html>
