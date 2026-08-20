@@ -3479,144 +3479,146 @@ row
 
 async function approveStore(id){
 
-const ok =
-confirm(
-"هل أنت متأكد من قبول هذا المتجر؟\n\nبعد القبول سيتمكن صاحب المتجر من الدخول."
+const ok = confirm(
+"هل أنت متأكد من قبول هذا المتجر؟\n\nبعد القبول سيتمكن صاحب المتجر من الدخول مباشرة إلى لوحة متجره."
 );
 
-
 if(!ok){
-
 return;
-
 }
-
 
 try{
 
-const storeRef =
-doc(
-db,
-"stores",
-id
-);
+const storeRef = doc(db,"stores",id);
 
-
-const storeSnap =
-await getDoc(
-storeRef
-);
-
+const storeSnap = await getDoc(storeRef);
 
 if(!storeSnap.exists()){
 
-showError(
-"الطلب غير موجود."
-);
-
+showError("الطلب غير موجود.");
 return;
 
 }
 
+const store = storeSnap.data();
 
-const store =
-storeSnap.data();
+const ownerUid =
+store.ownerUid ||
+store.ownerId ||
+id;
+
+const ownerEmail =
+store.ownerEmail ||
+store.email ||
+"";
+
+const storeName =
+store.storeName ||
+store.name ||
+"G-Glam";
 
 
-/* تحديث stores */
+/* =========================================
+   تحديث المتجر
+========================================= */
 
 await setDoc(
 
 storeRef,
 
-   {
-      status:
-"active",
+{
 
-paymentStatus:
-"approved",
+status:"approved",
 
-approvedAt:
-serverTimestamp(),
+paymentStatus:"approved",
 
-approvedBy:
-ADMIN_EMAIL,
+approvedAt:serverTimestamp(),
 
-updatedAt:
-serverTimestamp()
+approvedBy:ADMIN_EMAIL,
+
+updatedAt:serverTimestamp()
 
 },
 
-{
-
-merge:true
-
-}
+{merge:true}
 
 );
 
 
-/* تحديث users */
+/* =========================================
+   تحديث حساب صاحب المتجر
+========================================= */
 
 await setDoc(
 
-doc(
-db,
-"users",
-id
-),
+doc(db,"users",ownerUid),
 
 {
 
-uid:
-id,
+uid:ownerUid,
 
-fullName:
-store.ownerName || "",
+fullName:store.ownerName || "",
 
-email:
-store.ownerEmail ||
-store.email ||
-"",
+email:ownerEmail,
 
-storeId:
-id,
+storeId:id,
 
-storeName:
-store.storeName ||
-store.name ||
-"",
+storeName:storeName,
 
-accountType:
-"storeOwner",
+accountType:"storeOwner",
 
-status:
-"active",
+status:"approved",
 
-paymentStatus:
-"approved",
+paymentStatus:"approved",
 
-updatedAt:
-serverTimestamp()
+updatedAt:serverTimestamp()
 
 },
 
-{
-
-merge:true
-
-}
+{merge:true}
 
 );
 
+
+/* =========================================
+   حفظ حالة القبول
+========================================= */
+
+localStorage.setItem(
+"storeId",
+id
+);
+
+localStorage.setItem(
+"ownerEmail",
+ownerEmail
+);
+
+localStorage.setItem(
+"storeName",
+storeName
+);
+
+localStorage.setItem(
+"paymentStatus",
+"approved"
+);
+
+
+/* =========================================
+   رسالة نجاح
+========================================= */
 
 showSuccess(
-"تم قبول المتجر بنجاح ✅"
+"✅ تم قبول المتجر بنجاح. أصبح بإمكان صاحب المتجر الدخول إلى لوحة التحكم."
 );
 
 
-await loadStores();
+/* =========================================
+   إعادة تحميل البيانات
+========================================= */
 
+await loadStores();
 
 }catch(error){
 
@@ -3626,14 +3628,13 @@ error
 );
 
 showError(
-"حدث خطأ أثناء قبول المتجر: "
-+
+"حدث خطأ أثناء قبول المتجر: " +
 error.message
 );
 
 }
 
-}
+   }
 
 
 /* =====================================================
