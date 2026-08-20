@@ -30,8 +30,6 @@ width:100%;
 max-width:560px;
 }
 
-/* الشعار */
-
 .logo{
 text-align:center;
 margin-bottom:20px;
@@ -52,8 +50,6 @@ margin:7px 0;
 color:#777;
 }
 
-/* البطاقة */
-
 .card{
 background:#fff;
 border-radius:20px;
@@ -73,8 +69,6 @@ font-size:14px;
 line-height:1.7;
 }
 
-/* الأقسام */
-
 .section{
 margin-top:25px;
 padding-top:20px;
@@ -86,8 +80,6 @@ font-size:18px;
 font-weight:bold;
 margin-bottom:15px;
 }
-
-/* الحقول */
 
 .form-group{
 margin-bottom:16px;
@@ -116,8 +108,6 @@ border-color:#f47b20;
 background:#fff;
 box-shadow:0 0 0 3px rgba(244,123,32,.10);
 }
-
-/* الدفع */
 
 .payment-box{
 background:#fff7f0;
@@ -167,8 +157,6 @@ cursor:pointer;
 font-size:14px;
 }
 
-/* رفع الوصل */
-
 .upload-box{
 border:2px dashed #ddd;
 border-radius:12px;
@@ -199,8 +187,6 @@ border-radius:10px;
 border:1px solid #ddd;
 }
 
-/* زر */
-
 .create-btn{
 width:100%;
 height:52px;
@@ -222,8 +208,6 @@ background:#df6810;
 opacity:.6;
 cursor:not-allowed;
 }
-
-/* الرسائل */
 
 .message{
 display:none;
@@ -255,8 +239,6 @@ text-align:center;
 line-height:1.9;
 }
 
-/* الدخول */
-
 .login{
 text-align:center;
 margin-top:20px;
@@ -268,12 +250,6 @@ color:#f47b20;
 font-weight:bold;
 text-decoration:none;
 }
-
-.login a:hover{
-text-decoration:underline;
-}
-
-/* الهاتف */
 
 @media(max-width:600px){
 
@@ -310,8 +286,6 @@ text-align:right;
 
 <div class="page">
 
-<!-- الشعار -->
-
 <div class="logo">
 
 <h1>
@@ -332,17 +306,16 @@ G-<span>Glam</span>
 </h2>
 
 <p class="subtitle">
-أنشئ حسابك، قم بالدفع، ثم أرسل صورة وصل الدفع.
-سيتم تفعيل متجرك بعد مراجعة الإدارة والموافقة على الطلب.
+أنشئ حسابك، قم بتحويل مبلغ الاشتراك، ثم أرسل صورة وصل الدفع.
+سيتم مراجعة الطلب من طرف الإدارة قبل تفعيل متجرك.
 </p>
 
-
-<!-- الرسائل -->
 
 <div
 id="successMessage"
 class="message success">
 </div>
+
 
 <div
 id="errorMessage"
@@ -436,7 +409,7 @@ autocomplete="new-password">
 </div>
 
 
-<!-- معلومات الدفع -->
+<!-- الدفع -->
 
 <div class="section">
 
@@ -483,9 +456,7 @@ RIB
 <span
 class="payment-value"
 id="ribNumber">
-
 00799999002416083093
-
 </span>
 
 </div>
@@ -528,8 +499,9 @@ id="copyRib">
 
 <p class="subtitle">
 
-بعد تحويل مبلغ <strong>3500 DA</strong> إلى RIB أعلاه،
-قم برفع صورة واضحة لوصل الدفع.
+بعد تحويل مبلغ
+<strong>3500 DA</strong>
+إلى RIB أعلاه، قم برفع صورة واضحة لوصل الدفع.
 
 </p>
 
@@ -558,8 +530,6 @@ alt="معاينة وصل الدفع">
 </div>
 
 
-<!-- زر الإرسال -->
-
 <button
 id="createBtn"
 class="create-btn">
@@ -568,8 +538,6 @@ class="create-btn">
 
 </button>
 
-
-<!-- حالة الانتظار -->
 
 <div
 id="pendingMessage"
@@ -613,12 +581,15 @@ class="pending">
 
 <script type="module">
 
-/* =========================
+/* =====================================
    Firebase
-========================= */
+===================================== */
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import {
+initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
 
 import {
@@ -626,7 +597,8 @@ getAuth,
 createUserWithEmailAndPassword,
 updateProfile
 }
-from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
 
 import {
@@ -635,24 +607,36 @@ doc,
 setDoc,
 serverTimestamp
 }
-from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
+
+/* =====================================
+   Firebase Config
+===================================== */
 
 const firebaseConfig = {
 
-apiKey:"AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+apiKey:
+"AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
 
-authDomain:"g-glam.firebaseapp.com",
+authDomain:
+"g-glam.firebaseapp.com",
 
-projectId:"g-glam",
+projectId:
+"g-glam",
 
-storageBucket:"g-glam.firebasestorage.app",
+storageBucket:
+"g-glam.firebasestorage.app",
 
-messagingSenderId:"997228419719",
+messagingSenderId:
+"997228419719",
 
-appId:"1:997228419719:web:f9d88de7ea2c6f457e3622",
+appId:
+"1:997228419719:web:f9d88de7ea2c6f457e3622",
 
-measurementId:"G-WX1K1F83F6"
+measurementId:
+"G-WX1K1F83F6"
 
 };
 
@@ -667,18 +651,37 @@ const db =
 getFirestore(app);
 
 
-/* =========================
+/* =====================================
    معلومات الدفع
-========================= */
+===================================== */
 
 const PAYMENT_AMOUNT = 3500;
 
-const PAYMENT_RIB = "00799999002416083093";
+const PAYMENT_RIB =
+"00799999002416083093";
 
 
-/* =========================
+/* =====================================
+   Cloudinary
+===================================== */
+
+const CLOUDINARY_CLOUD_NAME =
+"g82dvrkr";
+
+const CLOUDINARY_UPLOAD_PRESET =
+"gglam_receipts";
+
+const CLOUDINARY_URL =
+"https://api.cloudinary.com/v1_1/"
++
+CLOUDINARY_CLOUD_NAME
++
+"/image/upload";
+
+
+/* =====================================
    العناصر
-========================= */
+===================================== */
 
 const storeName =
 document.getElementById("storeName");
@@ -714,13 +717,15 @@ const pendingMessage =
 document.getElementById("pendingMessage");
 
 
-/* =========================
+/* =====================================
    نسخ RIB
-========================= */
+===================================== */
 
 document
 .getElementById("copyRib")
-.addEventListener("click",async()=>{
+.addEventListener(
+"click",
+async function(){
 
 try{
 
@@ -732,10 +737,30 @@ alert(
 "تم نسخ رقم RIB ✅"
 );
 
-}catch(error){
+}
+
+catch(error){
+
+const textArea =
+document.createElement("textarea");
+
+textArea.value =
+PAYMENT_RIB;
+
+document.body.appendChild(
+textArea
+);
+
+textArea.select();
+
+document.execCommand("copy");
+
+document.body.removeChild(
+textArea
+);
 
 alert(
-"تعذر نسخ رقم RIB."
+"تم نسخ رقم RIB ✅"
 );
 
 }
@@ -743,9 +768,9 @@ alert(
 });
 
 
-/* =========================
+/* =====================================
    معاينة الوصل
-========================= */
+===================================== */
 
 receiptFile.addEventListener(
 "change",
@@ -754,21 +779,28 @@ function(){
 const file =
 this.files[0];
 
-if(!file){
+receiptPreview.style.display =
+"none";
 
-receiptPreview.style.display="none";
+if(!file){
 
 return;
 
 }
 
 
-if(!file.type.startsWith("image/")){
+if(
+![
+"image/jpeg",
+"image/png",
+"image/webp"
+].includes(file.type)
+){
 
-this.value="";
+this.value = "";
 
-alert(
-"يرجى اختيار صورة فقط."
+showError(
+"يرجى اختيار صورة JPG أو PNG أو WEBP فقط."
 );
 
 return;
@@ -776,12 +808,14 @@ return;
 }
 
 
-if(file.size >
-5 * 1024 * 1024){
+if(
+file.size >
+5 * 1024 * 1024
+){
 
-this.value="";
+this.value = "";
 
-alert(
+showError(
 "حجم صورة الوصل يجب ألا يتجاوز 5MB."
 );
 
@@ -794,12 +828,13 @@ const reader =
 new FileReader();
 
 
-reader.onload=function(e){
+reader.onload =
+function(event){
 
 receiptPreview.src =
-e.target.result;
+event.target.result;
 
-receiptPreview.style.display=
+receiptPreview.style.display =
 "block";
 
 };
@@ -810,18 +845,19 @@ reader.readAsDataURL(file);
 });
 
 
-/* =========================
+/* =====================================
    الرسائل
-========================= */
+===================================== */
 
 function showError(message){
 
-successMessage.style.display="none";
+successMessage.style.display =
+"none";
 
-errorMessage.textContent=
+errorMessage.textContent =
 message;
 
-errorMessage.style.display=
+errorMessage.style.display =
 "block";
 
 window.scrollTo({
@@ -834,20 +870,122 @@ behavior:"smooth"
 
 function showSuccess(message){
 
-errorMessage.style.display="none";
+errorMessage.style.display =
+"none";
 
-successMessage.textContent=
+successMessage.textContent =
 message;
 
-successMessage.style.display=
+successMessage.style.display =
 "block";
 
 }
 
 
-/* =========================
-   إرسال طلب إنشاء المتجر
-========================= */
+/* =====================================
+   رفع الصورة إلى Cloudinary
+===================================== */
+
+async function uploadReceipt(file){
+
+const formData =
+new FormData();
+
+
+formData.append(
+"file",
+file
+);
+
+
+formData.append(
+"upload_preset",
+CLOUDINARY_UPLOAD_PRESET
+);
+
+
+let response;
+
+
+try{
+
+response =
+await fetch(
+CLOUDINARY_URL,
+{
+method:"POST",
+body:formData
+}
+);
+
+}
+
+catch(error){
+
+throw new Error(
+"تعذر الاتصال بخدمة رفع الصور Cloudinary. تحقق من الإنترنت وإعدادات Upload Preset."
+);
+
+}
+
+
+if(!response.ok){
+
+let cloudinaryError =
+"فشل رفع صورة الوصل.";
+
+try{
+
+const errorData =
+await response.json();
+
+if(
+errorData &&
+errorData.error &&
+errorData.error.message
+){
+
+cloudinaryError =
+"Cloudinary: "
++
+errorData.error.message;
+
+}
+
+}
+
+catch(e){
+
+}
+
+throw new Error(
+cloudinaryError
+);
+
+}
+
+
+const data =
+await response.json();
+
+
+if(!data.secure_url){
+
+throw new Error(
+"Cloudinary لم يرجع رابط صورة الوصل."
+);
+
+}
+
+
+return data;
+
+}
+
+
+/* =====================================
+   إنشاء المتجر
+===================================== */
 
 createBtn.addEventListener(
 "click",
@@ -872,7 +1010,9 @@ const receipt =
 receiptFile.files[0];
 
 
-/* التحقق */
+/* =====================================
+   التحقق
+===================================== */
 
 if(!store){
 
@@ -951,8 +1091,10 @@ return;
 }
 
 
-if(receipt.size >
-5 * 1024 * 1024){
+if(
+receipt.size >
+5 * 1024 * 1024
+){
 
 showError(
 "حجم صورة الوصل يجب ألا يتجاوز 5MB."
@@ -963,20 +1105,44 @@ return;
 }
 
 
-/* تعطيل */
+/* =====================================
+   تعطيل الزر
+===================================== */
 
-createBtn.disabled=true;
+createBtn.disabled =
+true;
 
-createBtn.textContent=
-"⏳ جاري إرسال الطلب...";
+createBtn.textContent =
+"⏳ جاري رفع وصل الدفع...";
 
 
 try{
 
 
-/* =========================
-   إنشاء حساب المستخدم
-========================= */
+/* =====================================
+   أولًا: رفع الوصل
+===================================== */
+
+const uploadData =
+await uploadReceipt(
+receipt
+);
+
+
+const receiptUrl =
+uploadData.secure_url;
+
+const receiptPublicId =
+uploadData.public_id || "";
+
+
+/* =====================================
+   ثانيًا: إنشاء حساب Firebase
+===================================== */
+
+createBtn.textContent =
+"⏳ جاري إنشاء الحساب...";
+
 
 const credential =
 await createUserWithEmailAndPassword(
@@ -990,7 +1156,9 @@ const user =
 credential.user;
 
 
-/* اسم المستخدم */
+/* =====================================
+   اسم صاحب المتجر
+===================================== */
 
 try{
 
@@ -1001,78 +1169,25 @@ displayName:owner
 }
 );
 
-}catch(error){
+}
+
+catch(error){
 
 console.warn(
-"تعذر تحديث اسم المستخدم",
+"تعذر حفظ اسم صاحب المتجر.",
 error
 );
 
 }
 
 
-/* =========================
-   رفع الوصل إلى Cloudinary
-========================= */
+/* =====================================
+   ثالثًا: إنشاء طلب المتجر
+===================================== */
 
-const formData =
-new FormData();
+createBtn.textContent =
+"⏳ جاري حفظ طلب المتجر...";
 
-
-formData.append(
-"file",
-receipt
-);
-
-
-formData.append(
-"upload_preset",
-"gglam_products"
-);
-
-
-const uploadResponse =
-await fetch(
-
-"https://api.cloudinary.com/v1_1/g82dvrkr/image/upload",
-
-{
-method:"POST",
-body:formData
-}
-
-);
-
-
-if(!uploadResponse.ok){
-
-throw new Error(
-"فشل رفع صورة وصل الدفع."
-);
-
-}
-
-
-const uploadData =
-await uploadResponse.json();
-
-
-if(!uploadData.secure_url){
-
-throw new Error(
-"لم يتم الحصول على رابط صورة الوصل."
-);
-
-}
-
-
-const receiptUrl =
-uploadData.secure_url;
-
-
-/* =========================
-   إنشاء المتجر
-========================= */
 
 await setDoc(
 
@@ -1092,8 +1207,6 @@ email:mail,
 
 ownerId:user.uid,
 
-/* مهم جدًا */
-
 status:"pending",
 
 paymentStatus:"pending",
@@ -1106,10 +1219,7 @@ paymentRib:PAYMENT_RIB,
 
 receiptUrl:receiptUrl,
 
-receiptPublicId:
-uploadData.public_id || "",
-
-/* معلومات المراجعة */
+receiptPublicId:receiptPublicId,
 
 approvedAt:null,
 
@@ -1132,9 +1242,9 @@ serverTimestamp()
 );
 
 
-/* =========================
-   إعدادات المتجر
-========================= */
+/* =====================================
+   رابعًا: إعدادات المتجر
+===================================== */
 
 await setDoc(
 
@@ -1171,58 +1281,73 @@ serverTimestamp()
 );
 
 
-/* =========================
+/* =====================================
    نجاح
-========================= */
+===================================== */
 
 showSuccess(
 "تم إرسال طلب إنشاء المتجر بنجاح ✅"
 );
 
 
-pendingMessage.style.display=
+pendingMessage.style.display =
 "block";
 
 
-createBtn.style.display=
+createBtn.style.display =
 "none";
 
 
-/* منع التعديل */
+/* تعطيل الحقول */
 
-storeName.disabled=true;
+storeName.disabled =
+true;
 
-ownerName.disabled=true;
+ownerName.disabled =
+true;
 
-email.disabled=true;
+email.disabled =
+true;
 
-password.disabled=true;
+password.disabled =
+true;
 
-confirmPassword.disabled=true;
+confirmPassword.disabled =
+true;
 
-receiptFile.disabled=true;
+receiptFile.disabled =
+true;
 
 
 /*
-لا يوجد redirect هنا.
-صاحب المتجر ينتظر موافقة الإدارة.
+لا يوجد تحويل إلى Dashboard.
+الحساب ينتظر موافقة الأدمن.
 */
 
-}catch(error){
 
-console.error(error);
+}
 
-let message=
+catch(error){
+
+console.error(
+"STORE REGISTER ERROR:",
+error
+);
+
+
+let message =
 "حدث خطأ أثناء إرسال الطلب.";
 
+
+/* Firebase Auth */
 
 if(
 error.code ===
 "auth/email-already-in-use"
 ){
 
-message=
-"هذا البريد الإلكتروني مستخدم بالفعل.";
+message =
+"هذا البريد الإلكتروني مستخدم بالفعل. حاول ببريد آخر.";
 
 }
 
@@ -1231,7 +1356,7 @@ error.code ===
 "auth/invalid-email"
 ){
 
-message=
+message =
 "البريد الإلكتروني غير صحيح.";
 
 }
@@ -1241,8 +1366,8 @@ error.code ===
 "auth/weak-password"
 ){
 
-message=
-"كلمة المرور ضعيفة. استخدم 6 أحرف على الأقل.";
+message =
+"كلمة المرور ضعيفة. يجب أن تحتوي على 6 أحرف على الأقل.";
 
 }
 
@@ -1251,25 +1376,66 @@ error.code ===
 "auth/network-request-failed"
 ){
 
-message=
-"تعذر الاتصال بالإنترنت. تحقق من الاتصال وحاول مرة أخرى.";
+message =
+"تعذر الاتصال بـ Firebase. تحقق من الإنترنت.";
+
+}
+
+
+/* Firestore */
+
+else if(
+error.code ===
+"permission-denied"
+){
+
+message =
+"تم إنشاء الحساب لكن Firestore رفض حفظ الطلب. يجب تعديل صلاحيات Firestore.";
+
+}
+
+else if(
+error.code ===
+"failed-precondition"
+){
+
+message =
+"تعذر حفظ الطلب بسبب إعدادات Firestore.";
+
+}
+
+
+/* Cloudinary */
+
+else if(
+error.message &&
+error.message.includes(
+"Cloudinary"
+)
+){
+
+message =
+error.message;
 
 }
 
 else if(error.message){
 
-message=
+message =
 error.message;
 
 }
 
 
-showError(message);
+showError(
+message
+);
 
 
-createBtn.disabled=false;
+createBtn.disabled =
+false;
 
-createBtn.textContent=
+createBtn.textContent =
 "إرسال طلب إنشاء المتجر";
 
 }
@@ -1277,9 +1443,9 @@ createBtn.textContent=
 });
 
 
-/* =========================
+/* =====================================
    Enter
-========================= */
+===================================== */
 
 document.addEventListener(
 "keydown",
@@ -1289,6 +1455,8 @@ if(
 event.key === "Enter" &&
 !createBtn.disabled
 ){
+
+event.preventDefault();
 
 createBtn.click();
 
@@ -1300,4 +1468,4 @@ createBtn.click();
 
 </body>
 
-</html>
+   </html>
