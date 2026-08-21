@@ -2,538 +2,538 @@
 <html lang="ar" dir="rtl">
 
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>G-Glam | إضافة منتج</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
 <style>
+
+:root{
+--orange:#F47B20;
+--orange-dark:#DF6810;
+--bg:#F7F7F7;
+--sidebar:#EEEEEE;
+--card:#FFFFFF;
+--text:#333333;
+--dark:#222222;
+--muted:#777777;
+--border:#E5E5E5;
+--input:#FAFAFA;
+--success:#198754;
+--success-bg:#EAF7EF;
+--error:#C62828;
+--error-bg:#FDECEC;
+--shadow:0 4px 18px rgba(0,0,0,.06);
+}
 
 *{
 box-sizing:border-box;
-font-family:Arial,sans-serif;
+margin:0;
+padding:0;
+font-family:"Tajawal",sans-serif;
 }
 
 body{
-margin:0;
-background:#f5f5f5;
-color:#222;
+background:var(--bg);
+color:var(--text);
+min-height:100vh;
 }
 
 /* =========================
-   SIDEBAR
+SIDEBAR
 ========================= */
 
 .sidebar{
-
 position:fixed;
-
 right:0;
 top:0;
-
 height:100vh;
-
-width:70px;
-
-background:#111;
-
-color:white;
-
+width:72px;
+background:var(--sidebar);
+border-left:1px solid var(--border);
 overflow:hidden;
-
 transition:.3s;
-
 z-index:1000;
-
+box-shadow:-3px 0 15px rgba(0,0,0,.04);
 }
 
 .sidebar:hover{
-
-width:230px;
-
+width:235px;
 }
 
 .logo{
-
-height:70px;
-
+height:76px;
 display:flex;
-
 align-items:center;
-
 justify-content:center;
+font-size:23px;
+font-weight:800;
+color:var(--dark);
+border-bottom:1px solid #ddd;
+white-space:nowrap;
+}
 
-font-size:22px;
-
-font-weight:bold;
-
-border-bottom:1px solid #333;
-
+.logo span{
+color:var(--orange);
 }
 
 .menu{
-
-margin-top:20px;
-
+margin-top:18px;
+padding:0 10px;
 }
 
 .menu a{
-
 display:flex;
-
 align-items:center;
-
-gap:15px;
-
-padding:15px;
-
-color:white;
-
+gap:14px;
+height:52px;
+padding:0 10px;
+margin-bottom:7px;
+border-radius:12px;
+color:#555;
 text-decoration:none;
-
 white-space:nowrap;
-
+transition:.2s;
 }
 
 .menu a:hover{
+background:#E3E3E3;
+color:var(--dark);
+}
 
-background:#222;
-
+.menu a.active{
+background:var(--orange);
+color:white;
+box-shadow:0 5px 15px rgba(244,123,32,.20);
 }
 
 .icon{
-
 min-width:35px;
-
 text-align:center;
-
 font-size:20px;
-
 }
 
 .text{
-
 opacity:0;
-
-transition:.3s;
-
+transition:.25s;
+font-size:14px;
+font-weight:700;
 }
 
 .sidebar:hover .text{
-
 opacity:1;
-
 }
 
-
 /* =========================
-   CONTENT
+CONTENT
 ========================= */
 
 .content{
-
-margin-right:70px;
-
-padding:20px;
-
+margin-right:72px;
+padding:25px;
 }
 
+/* =========================
+HEADER
+========================= */
+
 .header{
+background:var(--card);
+border:1px solid var(--border);
+border-radius:18px;
+padding:25px;
+box-shadow:var(--shadow);
+margin-bottom:22px;
+position:relative;
+overflow:hidden;
+}
 
-background:white;
-
-padding:20px;
-
-border-radius:12px;
-
-box-shadow:
-0 2px 10px rgba(0,0,0,.08);
-
-margin-bottom:20px;
-
+.header::before{
+content:"";
+position:absolute;
+right:0;
+top:0;
+width:5px;
+height:100%;
+background:var(--orange);
 }
 
 .header h1{
-
-margin:0;
-
+font-size:27px;
+font-weight:800;
+color:var(--dark);
+margin-bottom:7px;
 }
 
 .header p{
-
-color:#777;
-
-margin-bottom:8px;
-
+font-size:14px;
+color:var(--muted);
 }
 
 .store-info{
-
+margin-top:14px;
 font-size:14px;
-
-color:#555;
-
-margin-top:10px;
-
+line-height:2;
+color:var(--muted);
 }
 
 .store-info strong{
-
-color:#111;
-
+color:var(--dark);
 }
 
-
 /* =========================
-   BOX
+BOX
 ========================= */
 
 .box{
-
 background:white;
-
-padding:20px;
-
-border-radius:12px;
-
-box-shadow:
-0 2px 10px rgba(0,0,0,.08);
-
-max-width:700px;
-
+border:1px solid var(--border);
+padding:25px;
+border-radius:18px;
+box-shadow:var(--shadow);
+max-width:760px;
 margin:auto;
-
 }
 
+/* =========================
+LOADING
+========================= */
+
+.loading{
+text-align:center;
+padding:40px 20px;
+color:var(--muted);
+font-size:15px;
+}
 
 /* =========================
-   LABELS
+FORM
 ========================= */
+
+.form-group{
+margin-bottom:18px;
+}
 
 label{
-
 display:block;
-
-font-weight:bold;
-
-margin-bottom:7px;
-
+font-size:14px;
+font-weight:700;
+color:var(--dark);
+margin-bottom:8px;
 }
 
-
-/* =========================
-   INPUTS
-========================= */
+.required{
+color:var(--orange);
+}
 
 input,
 textarea{
-
 width:100%;
-
-padding:12px;
-
-border:1px solid #ddd;
-
-border-radius:8px;
-
-margin-bottom:15px;
-
-font-size:15px;
-
+padding:13px 14px;
+border:1px solid var(--border);
+border-radius:11px;
+background:var(--input);
+color:var(--dark);
+font-size:14px;
 outline:none;
-
+transition:.2s;
 }
 
 input:focus,
 textarea:focus{
-
-border-color:#111;
-
+border-color:var(--orange);
+background:white;
+box-shadow:0 0 0 3px rgba(244,123,32,.10);
 }
 
 textarea{
-
 height:120px;
-
-resize:none;
-
+resize:vertical;
+min-height:100px;
 }
 
-
 /* =========================
-   PREVIEW
+IMAGE UPLOAD
 ========================= */
 
-.preview{
-
-width:180px;
-
-height:180px;
-
-object-fit:cover;
-
-display:block;
-
-margin:10px auto 20px;
-
-border-radius:12px;
-
-background:#f3f3f3;
-
+.image-upload{
+border:2px dashed #D9D9D9;
+border-radius:14px;
+padding:20px;
+background:#FAFAFA;
+text-align:center;
+transition:.2s;
 }
 
+.image-upload:hover{
+border-color:var(--orange);
+background:#FFF9F5;
+}
+
+.image-upload input{
+border:none;
+background:transparent;
+padding:8px;
+box-shadow:none;
+}
+
+.image-help{
+font-size:12px;
+color:var(--muted);
+margin-top:8px;
+}
 
 /* =========================
-   BUTTON
+IMAGE PREVIEWS
+========================= */
+
+.preview-container{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+margin-top:15px;
+}
+
+.preview-item{
+position:relative;
+height:140px;
+border-radius:12px;
+overflow:hidden;
+border:1px solid var(--border);
+background:#F3F3F3;
+}
+
+.preview-item img{
+width:100%;
+height:100%;
+object-fit:cover;
+display:block;
+}
+
+.preview-number{
+position:absolute;
+top:7px;
+right:7px;
+background:rgba(0,0,0,.65);
+color:white;
+font-size:11px;
+font-weight:bold;
+padding:4px 8px;
+border-radius:20px;
+}
+
+/* =========================
+BUTTON
 ========================= */
 
 button{
+font-family:"Tajawal",sans-serif;
+}
 
+.add-btn{
 width:100%;
-
 padding:14px;
-
 border:none;
-
-border-radius:9px;
-
-background:#111;
-
+border-radius:11px;
+background:var(--orange);
 color:white;
-
-font-size:17px;
-
+font-size:16px;
+font-weight:800;
 cursor:pointer;
-
+transition:.2s;
+margin-top:5px;
+box-shadow:0 5px 15px rgba(244,123,32,.18);
 }
 
-button:hover{
-
-background:#222;
-
+.add-btn:hover{
+background:var(--orange-dark);
+transform:translateY(-1px);
 }
 
-button:disabled{
-
+.add-btn:disabled{
 opacity:.6;
-
 cursor:not-allowed;
-
+transform:none;
 }
-
 
 /* =========================
-   MESSAGES
+MESSAGES
 ========================= */
 
 .message{
-
 display:none;
-
-padding:12px;
-
-border-radius:8px;
-
-margin-bottom:15px;
-
+padding:13px 15px;
+border-radius:11px;
+margin-bottom:18px;
 text-align:center;
-
+font-size:14px;
+font-weight:500;
 }
 
 .success{
-
-background:#d4edda;
-
-color:#155724;
-
+background:var(--success-bg);
+color:var(--success);
+border:1px solid #C9E8D5;
 }
 
 .error{
-
-background:#f8d7da;
-
-color:#721c24;
-
+background:var(--error-bg);
+color:var(--error);
+border:1px solid #F0CACA;
 }
 
-
 /* =========================
-   LOADING
-========================= */
-
-.loading{
-
-text-align:center;
-
-padding:30px;
-
-color:#777;
-
-}
-
-
-/* =========================
-   MOBILE
+MOBILE
 ========================= */
 
 @media(max-width:700px){
 
 .sidebar{
-
-width:60px;
-
+width:62px;
 }
 
 .sidebar:hover{
-
-width:200px;
-
+width:205px;
 }
 
 .content{
-
-margin-right:60px;
-
-padding:10px;
-
-}
-
-.box{
-
-padding:15px;
-
+margin-right:62px;
+padding:12px;
 }
 
 .header{
+padding:20px;
+}
 
-padding:16px;
+.header h1{
+font-size:23px;
+}
+
+.box{
+padding:18px;
+}
+
+.preview-container{
+grid-template-columns:repeat(2,1fr);
+}
+
+.preview-item{
+height:150px;
+}
 
 }
 
+@media(max-width:400px){
+
+.content{
+padding:10px;
+}
+
+.box{
+padding:15px;
+}
+
+.preview-container{
+grid-template-columns:1fr 1fr;
+gap:8px;
+}
+
+.preview-item{
+height:125px;
+}
+
+}
+
+/* =========================
+SCROLLBAR
+========================= */
+
+::-webkit-scrollbar{
+width:7px;
+}
+
+::-webkit-scrollbar-track{
+background:#F1F1F1;
+}
+
+::-webkit-scrollbar-thumb{
+background:#CCC;
+border-radius:10px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+background:var(--orange);
 }
 
 </style>
-
 </head>
-
 
 <body>
 
-
-<!-- =====================================================
-     SIDEBAR
-===================================================== -->
+<!-- =========================
+SIDEBAR
+========================= -->
 
 <div class="sidebar">
 
 <div class="logo">
-
-G-Glam
-
+G-<span>Glam</span>
 </div>
-
 
 <div class="menu">
 
-
 <a href="dashboard.html">
-
-<span class="icon">⌂</span>
-
-<span class="text">
-الرئيسية
-</span>
-
+<span class="icon">🏠</span>
+<span class="text">الرئيسية</span>
 </a>
-
 
 <a href="orders.html">
-
-<span class="icon">▣</span>
-
-<span class="text">
-الطلبات
-</span>
-
+<span class="icon">📦</span>
+<span class="text">الطلبات</span>
 </a>
-
 
 <a href="products.html">
-
-<span class="icon">□</span>
-
-<span class="text">
-المنتجات
-</span>
-
+<span class="icon">🛍️</span>
+<span class="text">المنتجات</span>
 </a>
 
-
-<a href="add-product.html">
-
-<span class="icon">＋</span>
-
-<span class="text">
-إضافة منتج
-</span>
-
+<a href="add-product.html" class="active">
+<span class="icon">➕</span>
+<span class="text">إضافة منتج</span>
 </a>
-
 
 <a href="delivery.html">
-
 <span class="icon">🚚</span>
-
-<span class="text">
-أسعار التوصيل
-</span>
-
+<span class="text">أسعار التوصيل</span>
 </a>
-
 
 <a href="settings.html">
-
-<span class="icon">⚙</span>
-
-<span class="text">
-الإعدادات
-</span>
-
+<span class="icon">⚙️</span>
+<span class="text">الإعدادات</span>
 </a>
 
-
-<a href="#"
-id="logoutBtn">
-
+<a href="#" id="logoutBtn">
 <span class="icon">🚪</span>
-
-<span class="text">
-تسجيل الخروج
-</span>
-
+<span class="text">تسجيل الخروج</span>
 </a>
 
-
+</div>
 </div>
 
-</div>
-
-
-<!-- =====================================================
-     CONTENT
-===================================================== -->
+<!-- =========================
+CONTENT
+========================= -->
 
 <div class="content">
 
-
 <div class="header">
 
-<h1>
-➕ إضافة منتج
-</h1>
+<h1>➕ إضافة منتج</h1>
 
 <p>
 إضافة منتج جديد إلى متجرك
@@ -557,13 +557,7 @@ id="logoutBtn">
 
 </div>
 
-
-<!-- =====================================================
-     PRODUCT FORM
-===================================================== -->
-
 <div class="box">
-
 
 <div
 id="loadingMessage"
@@ -573,52 +567,54 @@ class="loading">
 
 </div>
 
-
 <div
 id="formContainer"
 style="display:none;">
-
 
 <div
 id="success"
 class="message success">
 </div>
 
-
 <div
 id="error"
 class="message error">
 </div>
 
-
 <!-- NAME -->
 
+<div class="form-group">
+
 <label>
-اسم المنتج
+اسم المنتج <span class="required">*</span>
 </label>
 
 <input
 id="name"
 type="text"
-placeholder="مثال: Lip Gloss"
->
+placeholder="مثال: Lip Gloss">
 
+</div>
 
 <!-- PRICE -->
 
+<div class="form-group">
+
 <label>
-السعر DA
+السعر DA <span class="required">*</span>
 </label>
 
 <input
 id="price"
 type="number"
 min="0"
-placeholder="مثال: 250"
->
+placeholder="مثال: 250">
 
+</div>
 
 <!-- DESCRIPTION -->
+
+<div class="form-group">
 
 <label>
 وصف المنتج
@@ -626,11 +622,13 @@ placeholder="مثال: 250"
 
 <textarea
 id="description"
-placeholder="اكتب وصف المنتج..."
-></textarea>
+placeholder="اكتب وصف المنتج بالتفصيل..."></textarea>
 
+</div>
 
 <!-- COLORS -->
+
+<div class="form-group">
 
 <label>
 الألوان
@@ -639,11 +637,13 @@ placeholder="اكتب وصف المنتج..."
 <input
 id="colors"
 type="text"
-placeholder="مثال: Beige,Nude,Pink"
->
+placeholder="مثال: Beige,Nude,Pink">
 
+</div>
 
 <!-- STOCK -->
+
+<div class="form-group">
 
 <label>
 المخزون
@@ -653,103 +653,89 @@ placeholder="مثال: Beige,Nude,Pink"
 id="stock"
 type="number"
 min="0"
-placeholder="مثال: 20"
->
+placeholder="مثال: 20">
 
+</div>
 
 <!-- IMAGE -->
 
+<div class="form-group">
+
 <label>
-صورة المنتج
+صور المنتج <span class="required">*</span>
 </label>
+
+<div class="image-upload">
 
 <input
 id="imageFile"
 type="file"
 accept="image/*"
-multiple
->
+multiple>
 
-<img
-id="preview"
-class="preview"
-style="display:none;"
-alt="معاينة الصورة"
->
+<div class="image-help">
+يمكنك اختيار أكثر من صورة للمنتج
+</div>
 
+</div>
 
-<!-- ADD -->
+<div
+id="previewContainer"
+class="preview-container">
+</div>
+
+</div>
 
 <button
 id="addBtn"
+class="add-btn"
 type="button">
 
 ➕ إضافة المنتج
 
 </button>
 
-
 </div>
 
 </div>
 
 </div>
-
-
-<!-- =====================================================
-     FIREBASE
-===================================================== -->
 
 <script type="module">
 
-
-/* =====================================================
-   FIREBASE IMPORTS
-===================================================== */
+/* =========================
+FIREBASE IMPORTS
+========================= */
 
 import {
-
 initializeApp
-
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
-
 import {
-
 getFirestore,
 collection,
 addDoc,
 serverTimestamp,
 doc,
 getDoc
-
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
-
 import {
-
 getAuth,
 onAuthStateChanged,
 signOut
-
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
 
-/* =====================================================
-   FIREBASE CONFIG
-===================================================== */
+/* =========================
+FIREBASE CONFIG
+========================= */
 
 const firebaseConfig = {
 
@@ -777,9 +763,9 @@ measurementId:
 };
 
 
-/* =====================================================
-   INITIALIZE FIREBASE
-===================================================== */
+/* =========================
+INITIALIZE
+========================= */
 
 const app =
 initializeApp(firebaseConfig);
@@ -791,146 +777,113 @@ const auth =
 getAuth(app);
 
 
-/* =====================================================
-   ELEMENTS
-===================================================== */
+/* =========================
+ELEMENTS
+========================= */
 
 const loadingMessage =
-document.getElementById(
-"loadingMessage"
-);
+document.getElementById("loadingMessage");
 
 const formContainer =
-document.getElementById(
-"formContainer"
-);
+document.getElementById("formContainer");
 
 const storeNameElement =
-document.getElementById(
-"storeName"
-);
+document.getElementById("storeName");
 
 const ownerEmailElement =
-document.getElementById(
-"ownerEmail"
-);
+document.getElementById("ownerEmail");
 
 const imageFile =
-document.getElementById(
-"imageFile"
-);
+document.getElementById("imageFile");
 
-const preview =
-document.getElementById(
-"preview"
-);
+const previewContainer =
+document.getElementById("previewContainer");
 
 const addBtn =
-document.getElementById(
-"addBtn"
-);
+document.getElementById("addBtn");
 
 
-/* =====================================================
-   STORE VARIABLES
-===================================================== */
+/* =========================
+STORE VARIABLES
+========================= */
 
 let currentUserUid = "";
-
 let currentUserEmail = "";
-
 let currentStoreId = "";
-
 let currentStoreName = "";
 
-let selectedImage = null;
+let selectedImages = [];
 
 
-/* =====================================================
-   IMAGE PREVIEW
-===================================================== */
+/* =========================
+IMAGE PREVIEW
+========================= */
 
 imageFile.addEventListener(
 "change",
 function(){
 
-selectedImage =
-imageFile.files[0] || null;
+selectedImages =
+Array.from(imageFile.files || []);
 
+previewContainer.innerHTML = "";
 
-if(!selectedImage){
-
-preview.style.display =
-"none";
-
-preview.src = "";
-
+if(!selectedImages.length){
 return;
-
 }
 
+selectedImages.forEach(
+(file,index)=>{
 
-/* التحقق من نوع الصورة */
-
-if(
-!selectedImage.type.startsWith(
-"image/"
-)
-){
-
-showError(
-"يرجى اختيار ملف صورة فقط."
-);
-
-imageFile.value = "";
-
-selectedImage = null;
-
-preview.style.display =
-"none";
-
+if(!file.type.startsWith("image/")){
 return;
-
 }
-
-
-/* معاينة الصورة */
 
 const reader =
 new FileReader();
 
-
 reader.onload =
 function(event){
 
-preview.src =
-event.target.result;
+const item =
+document.createElement("div");
 
-preview.style.display =
-"block";
+item.className =
+"preview-item";
+
+item.innerHTML = `
+
+<img
+src="${event.target.result}"
+alt="صورة المنتج">
+
+<div class="preview-number">
+${index + 1}
+</div>
+
+`;
+
+previewContainer.appendChild(item);
 
 };
 
+reader.readAsDataURL(file);
 
-reader.readAsDataURL(
-selectedImage
-);
+});
 
 });
 
 
-/* =====================================================
-   CHECK STORE
-===================================================== */
+/* =========================
+LOAD STORE
+========================= */
 
 async function loadStore(){
 
 try{
 
-
 const user =
 auth.currentUser;
-
 
 if(!user){
 
@@ -941,11 +894,6 @@ return;
 
 }
 
-
-/* =====================================================
-   CURRENT USER UID
-===================================================== */
-
 currentUserUid =
 user.uid;
 
@@ -953,10 +901,9 @@ currentUserEmail =
 user.email || "";
 
 
-/* =====================================================
-   STORE DOCUMENT
-   stores/{UID}
-===================================================== */
+/* =========================
+STORE DOCUMENT
+========================= */
 
 const storeRef =
 doc(
@@ -965,14 +912,11 @@ db,
 currentUserUid
 );
 
-
 const storeSnapshot =
 await getDoc(storeRef);
 
 
-if(
-!storeSnapshot.exists()
-){
+if(!storeSnapshot.exists()){
 
 alert(
 "⚠️ لم يتم العثور على متجر مرتبط بهذا الحساب."
@@ -991,17 +935,15 @@ return;
 const store =
 storeSnapshot.data();
 
-
 currentStoreId =
 storeSnapshot.id;
 
 
-/* =====================================================
-   STORE STATUS
-===================================================== */
+/* =========================
+STATUS
+========================= */
 
 const status =
-
 String(
 store.status || "pending"
 )
@@ -1010,13 +952,9 @@ store.status || "pending"
 
 
 if(
-
 status === "pending" ||
-
 status === "waiting" ||
-
 status === "review"
-
 ){
 
 alert(
@@ -1032,24 +970,16 @@ return;
 
 
 if(
-
 status === "rejected" ||
-
 status === "refused"
-
 ){
 
 alert(
-
-"❌ تم رفض إنشاء متجرك.\n\n" +
-
-"السبب:\n" +
-
+"❌ تم رفض إنشاء متجرك.\n\nالسبب:\n" +
 (
 store.rejectionReason ||
 "لم يتم ذكر سبب الرفض."
 )
-
 );
 
 await signOut(auth);
@@ -1063,11 +993,8 @@ return;
 
 
 if(
-
 status !== "approved" &&
-
 status !== "active"
-
 ){
 
 alert(
@@ -1082,27 +1009,19 @@ return;
 }
 
 
-/* =====================================================
-   STORE DATA
-===================================================== */
+/* =========================
+STORE DATA
+========================= */
 
 currentStoreName =
-
 store.storeName ||
-
 store.name ||
-
 "G-Glam";
 
-
 currentUserEmail =
-
 store.ownerEmail ||
-
 store.email ||
-
 user.email ||
-
 "";
 
 
@@ -1113,9 +1032,9 @@ ownerEmailElement.textContent =
 currentUserEmail;
 
 
-/* =====================================================
-   SHOW FORM
-===================================================== */
+/* =========================
+SHOW FORM
+========================= */
 
 loadingMessage.style.display =
 "none";
@@ -1131,18 +1050,20 @@ console.error(
 error
 );
 
-alert(
-"❌ حدث خطأ أثناء التحقق من المتجر."
-);
+loadingMessage.innerHTML = `
+❌ حدث خطأ أثناء التحقق من المتجر.
+<br><br>
+${escapeHtml(error.message)}
+`;
 
 }
 
 }
 
 
-/* =====================================================
-   ADD PRODUCT
-===================================================== */
+/* =========================
+ADD PRODUCT
+========================= */
 
 addBtn.addEventListener(
 "click",
@@ -1152,13 +1073,8 @@ addProduct
 
 async function addProduct(){
 
-/* =====================================================
-   CHECK LOGIN
-===================================================== */
-
 const user =
 auth.currentUser;
-
 
 if(!user){
 
@@ -1171,55 +1087,43 @@ return;
 }
 
 
-/* =====================================================
-   GET VALUES
-===================================================== */
+/* =========================
+VALUES
+========================= */
 
 const name =
-document.getElementById(
-"name"
-).value.trim();
-
+document.getElementById("name")
+.value
+.trim();
 
 const price =
 Number(
-document.getElementById(
-"price"
-).value
+document.getElementById("price")
+.value
 );
-
 
 const description =
-document.getElementById(
-"description"
-).value.trim();
-
+document.getElementById("description")
+.value
+.trim();
 
 const colors =
-document.getElementById(
-"colors"
-)
+document.getElementById("colors")
 .value
 .split(",")
-.map(
-x => x.trim()
-)
-.filter(
-x => x
-);
-
+.map(x=>x.trim())
+.filter(x=>x);
 
 const stock =
 Number(
-document.getElementById(
-"stock"
-).value
+document.getElementById("stock")
+.value
 );
 
 
-/* =====================================================
-   VALIDATION
-===================================================== */
+/* =========================
+VALIDATION
+========================= */
 
 if(!name){
 
@@ -1230,7 +1134,6 @@ showError(
 return;
 
 }
-
 
 if(
 isNaN(price) ||
@@ -1245,7 +1148,6 @@ return;
 
 }
 
-
 if(
 isNaN(stock) ||
 stock < 0
@@ -1259,11 +1161,10 @@ return;
 
 }
 
-
-if(!selectedImage){
+if(!selectedImages.length){
 
 showError(
-"يرجى اختيار صورة المنتج."
+"يرجى اختيار صورة واحدة على الأقل."
 );
 
 return;
@@ -1271,12 +1172,11 @@ return;
 }
 
 
-/* =====================================================
-   DISABLE BUTTON
-===================================================== */
+/* =========================
+BUTTON
+========================= */
 
-addBtn.disabled =
-true;
+addBtn.disabled = true;
 
 addBtn.textContent =
 "⏳ جاري إضافة المنتج...";
@@ -1284,20 +1184,26 @@ addBtn.textContent =
 
 try{
 
+/* =========================
+UPLOAD IMAGES
+========================= */
 
-/* =====================================================
-   CLOUDINARY
-===================================================== */
+const imageUrls = [];
+
+
+for(
+let i = 0;
+i < selectedImages.length;
+i++
+){
 
 const formData =
 new FormData();
 
-
 formData.append(
 "file",
-selectedImage
+selectedImages[i]
 );
-
 
 formData.append(
 "upload_preset",
@@ -1311,11 +1217,8 @@ await fetch(
 "https://api.cloudinary.com/v1_1/g82dvrkr/image/upload",
 
 {
-
 method:"POST",
-
 body:formData
-
 }
 
 );
@@ -1324,7 +1227,8 @@ body:formData
 if(!response.ok){
 
 throw new Error(
-"فشل رفع الصورة إلى Cloudinary."
+"فشل رفع الصورة رقم " +
+(i + 1)
 );
 
 }
@@ -1334,35 +1238,32 @@ const imageData =
 await response.json();
 
 
-const imageUrl =
-imageData.secure_url;
-
-
-if(!imageUrl){
+if(!imageData.secure_url){
 
 throw new Error(
-"لم يتم الحصول على رابط الصورة."
+"لم يتم الحصول على رابط الصورة رقم " +
+(i + 1)
 );
 
 }
 
 
-/* =====================================================
-   SAVE PRODUCT
-===================================================== */
+imageUrls.push(
+imageData.secure_url
+);
+
+}
+
+
+/* =========================
+SAVE PRODUCT
+========================= */
 
 await addDoc(
 
-collection(
-db,
-"products"
-),
+collection(db,"products"),
 
 {
-
-/* =========================
-   PRODUCT DATA
-========================= */
 
 name:name,
 
@@ -1374,22 +1275,22 @@ colors:colors,
 
 stock:stock,
 
-image:imageUrl,
+/*
+الصورة الأولى
+للتوافق مع النظام القديم
+*/
 
-images:[
-imageUrl
-],
-
-
-/* =========================
-   STORE OWNERSHIP
-========================= */
+image:imageUrls[0],
 
 /*
-   هذا هو أهم جزء.
+جميع الصور
+*/
 
-   كل منتج مربوط مباشرة
-   بـ UID صاحب المتجر.
+images:imageUrls,
+
+
+/*
+STORE OWNERSHIP
 */
 
 ownerUid:user.uid,
@@ -1397,16 +1298,16 @@ ownerUid:user.uid,
 storeId:user.uid,
 
 ownerEmail:
-
-user.email || currentUserEmail,
+user.email ||
+currentUserEmail,
 
 storeName:
 currentStoreName,
 
 
-/* =========================
-   TIMESTAMPS
-========================= */
+/*
+TIMESTAMPS
+*/
 
 createdAt:
 serverTimestamp(),
@@ -1419,55 +1320,34 @@ serverTimestamp()
 );
 
 
-/* =====================================================
-   SUCCESS
-===================================================== */
+/* =========================
+SUCCESS
+========================= */
 
 showSuccess(
 "✅ تمت إضافة المنتج إلى متجرك بنجاح."
 );
 
 
-/* =====================================================
-   CLEAR FORM
-===================================================== */
+/* =========================
+CLEAR
+========================= */
 
-document.getElementById(
-"name"
-).value = "";
+document.getElementById("name").value = "";
 
+document.getElementById("price").value = "";
 
-document.getElementById(
-"price"
-).value = "";
+document.getElementById("description").value = "";
 
+document.getElementById("colors").value = "";
 
-document.getElementById(
-"description"
-).value = "";
-
-
-document.getElementById(
-"colors"
-).value = "";
-
-
-document.getElementById(
-"stock"
-).value = "";
-
+document.getElementById("stock").value = "";
 
 imageFile.value = "";
 
+previewContainer.innerHTML = "";
 
-preview.src = "";
-
-preview.style.display =
-"none";
-
-
-selectedImage =
-null;
+selectedImages = [];
 
 
 }catch(error){
@@ -1477,17 +1357,14 @@ console.error(
 error
 );
 
-
 showError(
-"❌ حدث خطأ أثناء إضافة المنتج:\n" +
+"❌ حدث خطأ أثناء إضافة المنتج: " +
 error.message
 );
 
-
 }finally{
 
-addBtn.disabled =
-false;
+addBtn.disabled = false;
 
 addBtn.textContent =
 "➕ إضافة المنتج";
@@ -1497,16 +1374,14 @@ addBtn.textContent =
 }
 
 
-/* =====================================================
-   SUCCESS MESSAGE
-===================================================== */
+/* =========================
+SUCCESS
+========================= */
 
 function showSuccess(message){
 
 const element =
-document.getElementById(
-"success"
-);
+document.getElementById("success");
 
 element.textContent =
 message;
@@ -1514,12 +1389,10 @@ message;
 element.style.display =
 "block";
 
-
 document.getElementById(
 "error"
 ).style.display =
 "none";
-
 
 setTimeout(
 function(){
@@ -1534,23 +1407,20 @@ element.style.display =
 }
 
 
-/* =====================================================
-   ERROR MESSAGE
-===================================================== */
+/* =========================
+ERROR
+========================= */
 
 function showError(message){
 
 const element =
-document.getElementById(
-"error"
-);
+document.getElementById("error");
 
 element.textContent =
 message;
 
 element.style.display =
 "block";
-
 
 document.getElementById(
 "success"
@@ -1560,9 +1430,25 @@ document.getElementById(
 }
 
 
-/* =====================================================
-   LOGOUT
-===================================================== */
+/* =========================
+ESCAPE HTML
+========================= */
+
+function escapeHtml(value){
+
+return String(value ?? "")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+LOGOUT
+========================= */
 
 document
 .getElementById("logoutBtn")
@@ -1572,19 +1458,14 @@ async function(event){
 
 event.preventDefault();
 
-
 const confirmLogout =
 confirm(
 "هل تريد تسجيل الخروج؟"
 );
 
-
 if(!confirmLogout){
-
 return;
-
 }
-
 
 try{
 
@@ -1592,7 +1473,6 @@ await signOut(auth);
 
 window.location.href =
 "login.html";
-
 
 }catch(error){
 
@@ -1610,14 +1490,12 @@ showError(
 });
 
 
-/* =====================================================
-   AUTH STATE
-===================================================== */
+/* =========================
+AUTH STATE
+========================= */
 
 onAuthStateChanged(
-
 auth,
-
 async function(user){
 
 if(!user){
@@ -1629,10 +1507,11 @@ return;
 
 }
 
+currentUserUid =
+user.uid;
 
-/*
-   تحميل متجر المستخدم
-*/
+currentUserEmail =
+user.email || "";
 
 await loadStore();
 
@@ -1641,5 +1520,4 @@ await loadStore();
 </script>
 
 </body>
-
-  </html>
+</html>
