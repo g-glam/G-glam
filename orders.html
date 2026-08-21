@@ -4,1306 +4,704 @@
 <head>
 
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>G-Glam | الطلبات</title>
 
 <style>
 
-/* =====================================================
-   COLORS
-===================================================== */
-
 :root{
-
 --orange:#F47B20;
 --orange-dark:#DF6810;
-
 --bg:#F7F7F7;
 --sidebar:#EEEEEE;
 --card:#FFFFFF;
-
 --text:#333333;
 --dark:#222222;
 --muted:#777777;
-
 --border:#E5E5E5;
-
 --success:#198754;
 --success-bg:#E7F6ED;
-
 --warning:#D97706;
 --warning-bg:#FFF4E5;
-
 --blue:#2563EB;
 --blue-bg:#EAF1FF;
-
 --shadow:0 4px 18px rgba(0,0,0,.06);
-
 }
 
-
-/* =====================================================
-   RESET
-===================================================== */
-
 *{
-
 box-sizing:border-box;
-
 margin:0;
 padding:0;
-
-font-family:Tajawal,sans-serif;
-
+font-family:Arial,sans-serif;
 }
 
 body{
-
 background:var(--bg);
-
 color:var(--text);
-
 min-height:100vh;
-
 }
 
-
-/* =====================================================
-   SIDEBAR
-===================================================== */
-
 .sidebar{
-
 position:fixed;
-
 right:0;
 top:0;
-
 height:100vh;
-
 width:75px;
-
 background:var(--sidebar);
-
 border-left:1px solid var(--border);
-
 overflow:hidden;
-
 transition:.3s;
-
 z-index:1000;
-
 box-shadow:-3px 0 15px rgba(0,0,0,.04);
-
 }
 
 .sidebar:hover{
-
 width:240px;
-
 }
 
-
-/* =====================================================
-   LOGO
-===================================================== */
-   .logo{
-
+.logo{
 height:78px;
-
 display:flex;
-
 align-items:center;
-
 justify-content:center;
-
 font-size:23px;
-
 font-weight:800;
-
 color:var(--dark);
-
 border-bottom:1px solid #ddd;
-
 white-space:nowrap;
-
 }
 
 .logo span{
-
 color:var(--orange);
-
 }
 
-
-/* =====================================================
-   MENU
-===================================================== */
-
 .menu{
-
 margin-top:18px;
-
 padding:0 10px;
-
 }
 
 .menu a{
-
 display:flex;
-
 align-items:center;
-
 gap:15px;
-
 height:52px;
-
 padding:0 10px;
-
 margin-bottom:7px;
-
 border-radius:12px;
-
 color:#555;
-
 text-decoration:none;
-
 white-space:nowrap;
-
 transition:.2s;
-
 }
 
 .menu a:hover{
-
 background:#E4E4E4;
-
 color:var(--dark);
-
 }
 
 .menu a.active{
-
 background:var(--orange);
-
 color:white;
-
-box-shadow:
-0 5px 15px rgba(244,123,32,.20);
-
+box-shadow:0 5px 15px rgba(244,123,32,.20);
 }
 
 .icon{
-
 min-width:35px;
-
 text-align:center;
-
 font-size:20px;
-
 }
 
 .text{
-
 opacity:0;
-
 transition:.25s;
-
 font-size:14px;
-
 font-weight:bold;
-
 }
 
 .sidebar:hover .text{
-
 opacity:1;
-
 }
-
-
-/* =====================================================
-   CONTENT
-===================================================== */
 
 .content{
-
 margin-right:75px;
-
 padding:25px;
-
 }
 
-
-/* =====================================================
-   HEADER
-===================================================== */
-
 .header{
-
 background:var(--card);
-
 border:1px solid var(--border);
-
 border-radius:18px;
-
 padding:25px;
-
 box-shadow:var(--shadow);
-
 margin-bottom:22px;
-
 position:relative;
-
 overflow:hidden;
-
 }
 
 .header::before{
-
 content:"";
-
 position:absolute;
-
 right:0;
-
 top:0;
-
 width:5px;
-
 height:100%;
-
 background:var(--orange);
-
 }
 
 .header h1{
-
 font-size:27px;
-
 color:var(--dark);
-
 margin-bottom:8px;
-
 }
 
 .header p{
-
 color:var(--muted);
-
 font-size:14px;
-
 }
 
 .owner-email{
-
 font-size:13px;
-
 color:var(--muted);
-
 margin-top:13px;
-
 }
 
 .owner-email span{
-
 color:var(--dark);
-
 font-weight:bold;
+}
 
-   }
-/* =====================================================
-   MESSAGES
-===================================================== */
+.store-id{
+font-size:12px;
+color:#999;
+margin-top:6px;
+}
 
 .message{
-
 display:none;
-
 padding:14px 18px;
-
 border-radius:12px;
-
 margin-bottom:18px;
-
 text-align:center;
-
 font-size:14px;
-
 }
 
 .success{
-
 background:var(--success-bg);
-
 color:#155724;
-
 border:1px solid #c5e8d3;
-
 }
 
 .error{
-
 background:#FBE7EA;
-
 color:#721c24;
-
 border:1px solid #efc7cc;
-
 }
 
-
-/* =====================================================
-   STATISTICS
-===================================================== */
-
 .stats{
-
 display:grid;
-
-grid-template-columns:
-repeat(4,1fr);
-
+grid-template-columns:repeat(4,1fr);
 gap:18px;
-
 margin-bottom:22px;
-
 }
 
 .stat{
-
 background:white;
-
 border:1px solid var(--border);
-
 border-radius:18px;
-
 padding:22px;
-
 box-shadow:var(--shadow);
-
 position:relative;
-
 overflow:hidden;
-
 }
 
 .stat::after{
-
 content:"";
-
 position:absolute;
-
 bottom:0;
-
 right:0;
-
 height:3px;
-
 width:100%;
-
 background:var(--orange);
-
 }
 
 .stat-title{
-
 color:var(--muted);
-
 font-size:14px;
-
 margin-bottom:12px;
-
 }
 
 .stat-value{
-
 font-size:28px;
-
 font-weight:800;
-
 color:var(--dark);
-
 }
 
-
-/* =====================================================
-   ORDERS SECTION
-===================================================== */
-
 .section{
-
 background:white;
-
 border:1px solid var(--border);
-
 padding:22px;
-
 border-radius:18px;
-
 box-shadow:var(--shadow);
-
 }
 
 .section-header{
-
 display:flex;
-
 align-items:center;
-
 justify-content:space-between;
-
 margin-bottom:20px;
-
 }
 
 .section-header h2{
-
 font-size:21px;
-
 color:var(--dark);
-
 }
-
-
-/* =====================================================
-   ORDERS GRID
-===================================================== */
 
 .orders{
-
 display:grid;
-
-grid-template-columns:
-repeat(2,1fr);
-
+grid-template-columns:repeat(2,1fr);
 gap:18px;
-
 }
 
-
-/* =====================================================
-   ORDER CARD
-===================================================== */
-
 .order{
-
 background:white;
-
 border:1px solid var(--border);
-
 border-radius:17px;
-
 padding:20px;
-
 transition:.25s;
-
 }
 
 .order:hover{
-
 transform:translateY(-3px);
-
-box-shadow:
-0 8px 25px rgba(0,0,0,.08);
-
-   }
-
-   /* =====================================================
-   ORDER HEADER
-===================================================== */
+box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
 
 .order-header{
-
 display:flex;
-
 align-items:center;
-
 justify-content:space-between;
-
 gap:10px;
-
 padding-bottom:15px;
-
 border-bottom:1px solid var(--border);
-
 margin-bottom:15px;
-
 }
 
 .order-title{
-
 font-size:17px;
-
 font-weight:bold;
-
 color:var(--dark);
-
 }
 
 .order-id{
-
 font-size:11px;
-
 color:#999;
-
 margin-top:5px;
-
 direction:ltr;
-
 text-align:right;
-
 }
 
-
-/* =====================================================
-   STATUS
-===================================================== */
-
 .status{
-
 display:inline-block;
-
 padding:7px 11px;
-
 border-radius:20px;
-
 font-size:12px;
-
 font-weight:bold;
-
 white-space:nowrap;
-
 }
 
 .status-processing{
-
 background:var(--warning-bg);
-
 color:var(--warning);
-
 }
 
 .status-confirmed{
-
 background:var(--blue-bg);
-
 color:var(--blue);
-
 }
 
 .status-shipped{
-
 background:#F3E8FF;
-
 color:#7C3AED;
-
 }
 
 .status-delivered{
-
 background:var(--success-bg);
-
 color:var(--success);
-
 }
 
-
-/* =====================================================
-   CUSTOMER INFO
-===================================================== */
-
 .info-grid{
-
 display:grid;
-
-grid-template-columns:
-repeat(2,1fr);
-
+grid-template-columns:repeat(2,1fr);
 gap:10px;
-
 margin-bottom:17px;
-
 }
 
 .info{
-
 background:#FAFAFA;
-
 border:1px solid #eee;
-
 border-radius:11px;
-
 padding:11px;
-
 }
 
 .info-label{
-
 font-size:11px;
-
 color:#999;
-
 margin-bottom:5px;
-
 }
 
 .info-value{
-
 font-size:13px;
-
 font-weight:bold;
-
 color:var(--dark);
-
 word-break:break-word;
-
 }
 
-
-/* =====================================================
-   PRODUCTS
-===================================================== */
-
 .products-title{
-
 font-size:14px;
-
 font-weight:bold;
-
 margin-bottom:10px;
-
 color:var(--dark);
-
 }
 
 .product{
-
 display:flex;
-
 align-items:center;
-
 justify-content:space-between;
-
 gap:10px;
-
 padding:10px 0;
-
 border-bottom:1px solid #eee;
-
 }
 
 .product:last-child{
-
 border-bottom:none;
-
 }
 
 .product-name{
-
 font-size:13px;
-
 font-weight:bold;
-
 }
 
 .product-details{
-
 font-size:12px;
-
 color:var(--muted);
-
 margin-top:4px;
-
 }
 
 .product-price{
-
 font-size:13px;
-
 font-weight:bold;
-
 color:var(--orange);
-
 white-space:nowrap;
-
-   }
-   /* =====================================================
-   TOTAL
-===================================================== */
+}
 
 .total-box{
-
 background:#FFF8F2;
-
 border:1px solid #FFE3CE;
-
 border-radius:13px;
-
 padding:14px;
-
 margin-top:15px;
-
 }
 
 .total-row{
-
 display:flex;
-
 justify-content:space-between;
-
 align-items:center;
-
 margin-bottom:7px;
-
 font-size:13px;
-
 }
 
 .total-row:last-child{
-
 margin-bottom:0;
-
 }
 
 .total-final{
-
 font-size:18px;
-
 font-weight:800;
-
 color:var(--orange);
-
 padding-top:8px;
-
 border-top:1px solid #FFE3CE;
-
 }
 
-
-/* =====================================================
-   STATUS CONTROL
-===================================================== */
-
 .status-control{
-
 margin-top:17px;
-
 padding-top:17px;
-
 border-top:1px solid var(--border);
-
 }
 
 .status-control label{
-
 display:block;
-
 font-size:13px;
-
 font-weight:bold;
-
 margin-bottom:8px;
-
 }
 
 select{
-
 width:100%;
-
 padding:12px;
-
 border:1px solid var(--border);
-
 border-radius:11px;
-
 background:white;
-
 color:var(--dark);
-
 font-size:14px;
-
 outline:none;
-
 }
 
 select:focus{
-
 border-color:var(--orange);
-
-box-shadow:
-0 0 0 3px rgba(244,123,32,.10);
-
+box-shadow:0 0 0 3px rgba(244,123,32,.10);
 }
 
-
-/* =====================================================
-   SAVE BUTTON
-===================================================== */
-
 .save-btn{
-
 width:100%;
-
 padding:12px;
-
 border:none;
-
 border-radius:11px;
-
 background:var(--orange);
-
 color:white;
-
 font-size:14px;
-
 font-weight:bold;
-
 cursor:pointer;
-
 margin-top:9px;
-
 transition:.2s;
-
 }
 
 .save-btn:hover{
-
 background:var(--orange-dark);
-
 transform:translateY(-1px);
-
 }
 
-
-/* =====================================================
-   EMPTY
-===================================================== */
-
 .empty{
-
 background:#FAFAFA;
-
 border:1px dashed #D8D8D8;
-
 padding:45px 20px;
-
 text-align:center;
-
 color:var(--muted);
-
 border-radius:15px;
-
 grid-column:1/-1;
-
 line-height:2;
-
 }
 
 .empty-icon{
-
 font-size:40px;
-
 margin-bottom:10px;
-
 }
-
-
-/* =====================================================
-   LOADING
-===================================================== */
 
 .loading{
-
 text-align:center;
-
 padding:45px;
-
 color:var(--muted);
-
 grid-column:1/-1;
-
 }
-
-
-/* =====================================================
-   MOBILE
-===================================================== */
 
 @media(max-width:1000px){
 
 .stats{
-
-grid-template-columns:
-repeat(2,1fr);
-
+grid-template-columns:repeat(2,1fr);
 }
 
 .orders{
-
-grid-template-columns:
-1fr;
-
+grid-template-columns:1fr;
 }
 
 }
-
-
-/* =====================================================
-   TABLET
-===================================================== */
 
 @media(max-width:700px){
 
 .sidebar{
-
 width:65px;
-
 }
 
 .sidebar:hover{
-
 width:210px;
-
 }
 
 .content{
-
 margin-right:65px;
-
 padding:16px;
-
 }
 
 .stats{
-
-grid-template-columns:
-repeat(2,1fr);
-
+grid-template-columns:repeat(2,1fr);
 gap:10px;
-
 }
 
 .stat{
-
 padding:16px;
-
 }
 
 .stat-value{
-
 font-size:24px;
-
 }
 
-   }
-
-   /* =====================================================
-   MOBILE
-===================================================== */
+}
 
 @media(max-width:550px){
 
 .sidebar{
-
 width:60px;
-
 }
 
 .sidebar:hover{
-
 width:200px;
-
 }
 
 .content{
-
 margin-right:60px;
-
 padding:12px;
-
 }
 
 .header{
-
 padding:20px;
-
 }
 
 .header h1{
-
 font-size:22px;
-
 }
 
 .stats{
-
-grid-template-columns:
-1fr 1fr;
-
+grid-template-columns:1fr 1fr;
 }
 
 .section{
-
 padding:15px;
-
 }
 
 .section-header h2{
-
 font-size:18px;
-
 }
 
 .order{
-
 padding:15px;
-
 }
 
 .info-grid{
-
-grid-template-columns:
-1fr 1fr;
-
+grid-template-columns:1fr 1fr;
 }
 
 .order-header{
-
 align-items:flex-start;
-
 }
 
 }
-
-
-/* =====================================================
-   SMALL MOBILE
-===================================================== */
 
 @media(max-width:380px){
 
 .stats{
-
-grid-template-columns:
-1fr;
-
+grid-template-columns:1fr;
 }
 
 .info-grid{
-
-grid-template-columns:
-1fr;
-
+grid-template-columns:1fr;
 }
 
 .order-header{
-
 flex-direction:column;
-
 }
 
 }
-
-
-/* =====================================================
-   SCROLLBAR
-===================================================== */
 
 ::-webkit-scrollbar{
-
 width:7px;
-
 }
 
 ::-webkit-scrollbar-track{
-
 background:#f1f1f1;
-
 }
 
 ::-webkit-scrollbar-thumb{
-
 background:#ccc;
-
 border-radius:10px;
-
 }
 
 ::-webkit-scrollbar-thumb:hover{
-
 background:var(--orange);
-
 }
 
 </style>
 
 </head>
 
-
 <body>
-
-
-<!-- =====================================================
-     SIDEBAR
-===================================================== -->
 
 <div class="sidebar">
 
 <div class="logo">
-
 G-<span>Glam</span>
-
 </div>
-
 
 <div class="menu">
 
-
 <a href="dashboard.html">
-
 <span class="icon">🏠</span>
-
-<span class="text">
-الرئيسية
-</span>
-
+<span class="text">الرئيسية</span>
 </a>
 
-
-<a href="orders.html"
-class="active">
-
+<a href="orders.html" class="active">
 <span class="icon">📦</span>
-
-<span class="text">
-الطلبات
-</span>
-
+<span class="text">الطلبات</span>
 </a>
-
 
 <a href="products.html">
-
 <span class="icon">🛍️</span>
-
-<span class="text">
-المنتجات
-</span>
-
+<span class="text">المنتجات</span>
 </a>
-
 
 <a href="add-product.html">
-
 <span class="icon">➕</span>
-
-<span class="text">
-إضافة منتج
-</span>
-
+<span class="text">إضافة منتج</span>
 </a>
-
 
 <a href="delivery.html">
-
 <span class="icon">🚚</span>
-
-<span class="text">
-أسعار التوصيل
-</span>
-
+<span class="text">أسعار التوصيل</span>
 </a>
-
 
 <a href="settings.html">
-
 <span class="icon">⚙️</span>
-
-<span class="text">
-الإعدادات
-</span>
-
+<span class="text">الإعدادات</span>
 </a>
 
-
-<a href="#"
-id="logoutBtn">
-
+<a href="#" id="logoutBtn">
 <span class="icon">🚪</span>
-
-<span class="text">
-تسجيل الخروج
-</span>
-
+<span class="text">تسجيل الخروج</span>
 </a>
 
-
 </div>
-
 </div>
-
-
-   <!-- =====================================================
-     CONTENT
-===================================================== -->
 
 <div class="content">
-
-
-<!-- HEADER -->
 
 <div class="header">
 
 <h1 id="storeName">
-
 جاري تحميل المتجر...
-
 </h1>
 
 <p>
-
 إدارة ومتابعة طلبات زبائن متجرك
-
 </p>
 
 <div class="owner-email">
-
 📧 الحساب:
-
 <span id="ownerEmail">
-
 جاري التحميل...
-
 </span>
+</div>
 
+<div class="store-id">
+🆔 UID:
+<span id="storeUid">
+جاري التحميل...
+</span>
 </div>
 
 </div>
 
+<div class="message success" id="successMessage"></div>
 
-<!-- MESSAGES -->
-
-<div
-class="message success"
-id="successMessage">
-</div>
-
-<div
-class="message error"
-id="errorMessage">
-</div>
-
-
-<!-- =====================================================
-     STATISTICS
-===================================================== -->
+<div class="message error" id="errorMessage"></div>
 
 <div class="stats">
-
 
 <div class="stat">
 
@@ -1311,16 +709,11 @@ id="errorMessage">
 📦 إجمالي الطلبات
 </div>
 
-<div
-class="stat-value"
-id="totalOrders">
-
+<div class="stat-value" id="totalOrders">
 0
-
 </div>
 
 </div>
-
 
 <div class="stat">
 
@@ -1328,16 +721,11 @@ id="totalOrders">
 ⏳ قيد المعالجة
 </div>
 
-<div
-class="stat-value"
-id="processingOrders">
-
+<div class="stat-value" id="processingOrders">
 0
-
 </div>
 
 </div>
-
 
 <div class="stat">
 
@@ -1345,16 +733,11 @@ id="processingOrders">
 🚚 تم الشحن
 </div>
 
-<div
-class="stat-value"
-id="shippedOrders">
-
+<div class="stat-value" id="shippedOrders">
 0
-
 </div>
 
 </div>
-
 
 <div class="stat">
 
@@ -1362,79 +745,45 @@ id="shippedOrders">
 ✅ تم التوصيل
 </div>
 
-<div
-class="stat-value"
-id="deliveredOrders">
-
+<div class="stat-value" id="deliveredOrders">
 0
-
 </div>
 
 </div>
 
-
 </div>
-
-
-<!-- =====================================================
-     ORDERS
-===================================================== -->
 
 <div class="section">
 
 <div class="section-header">
 
 <h2>
-
 📦 طلبات زبائني
-
 </h2>
 
 </div>
 
-
-<div
-class="orders"
-id="ordersContainer">
+<div class="orders" id="ordersContainer">
 
 <div class="loading">
-
 ⏳ جاري تحميل الطلبات...
-
 </div>
 
 </div>
 
 </div>
 
-
 </div>
-
-
-<!-- =====================================================
-     FIREBASE
-===================================================== -->
 
 <script type="module">
 
-
-/* =====================================================
-   IMPORTS
-===================================================== */
-
 import {
-
 initializeApp
-
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
-
 import {
-
 getFirestore,
 collection,
 getDocs,
@@ -1442,32 +791,19 @@ query,
 where,
 doc,
 getDoc,
-updateDoc,
-orderBy
-
+updateDoc
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
-
 import {
-
 getAuth,
 onAuthStateChanged,
 signOut
-
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
-
-/* =====================================================
-   FIREBASE CONFIG
-===================================================== */
 
 const firebaseConfig = {
 
@@ -1495,10 +831,6 @@ measurementId:
 };
 
 
-/* =====================================================
-   INITIALIZE
-===================================================== */
-
 const app =
 initializeApp(firebaseConfig);
 
@@ -1509,110 +841,82 @@ const auth =
 getAuth(app);
 
 
-/* =====================================================
-   ELEMENTS
-===================================================== */
-
 const storeNameElement =
-document.getElementById(
-"storeName"
-);
+document.getElementById("storeName");
 
 const ownerEmailElement =
-document.getElementById(
-"ownerEmail"
-);
+document.getElementById("ownerEmail");
+
+const storeUidElement =
+document.getElementById("storeUid");
 
 const ordersContainer =
-document.getElementById(
-"ordersContainer"
-);
+document.getElementById("ordersContainer");
 
 const totalOrders =
-document.getElementById(
-"totalOrders"
-);
+document.getElementById("totalOrders");
 
 const processingOrders =
-document.getElementById(
-"processingOrders"
-);
+document.getElementById("processingOrders");
 
 const shippedOrders =
-document.getElementById(
-"shippedOrders"
-);
+document.getElementById("shippedOrders");
 
 const deliveredOrders =
-document.getElementById(
-"deliveredOrders"
-);
+document.getElementById("deliveredOrders");
 
-
-/* =====================================================
-   VARIABLES
-===================================================== */
 
 let currentOwnerUid = "";
-
 let currentOwnerEmail = "";
-
-let currentStoreId = "";
-
 let currentStoreName = "G-Glam";
 
-
-/* =====================================================
-   ESCAPE HTML
-===================================================== */
 
 function escapeHtml(value){
 
 return String(value ?? "")
-
 .replace(/&/g,"&amp;")
-
 .replace(/</g,"&lt;")
-
 .replace(/>/g,"&gt;")
-
 .replace(/"/g,"&quot;")
-
 .replace(/'/g,"&#039;");
 
 }
 
 
-/* =====================================================
-   LOAD STORE + SECURITY
-===================================================== */
-
 async function loadStore(){
 
 try{
 
+const user = auth.currentUser;
 
-if(!auth.currentUser){
+if(!user){
 
-window.location.href =
-"login.html";
-
+window.location.href="login.html";
 return;
 
 }
 
+currentOwnerUid = user.uid;
 
-currentOwnerUid =
-auth.currentUser.uid;
-
-
-currentOwnerEmail =
-auth.currentUser.email || "";
+currentOwnerEmail = user.email || "";
 
 
-/* =====================================================
-   STORES/{UID}
-===================================================== */
+/*
+=====================================================
+المهم:
+
+كل صاحب متجر له وثيقة:
+
+stores/{UID}
+
+مثال:
+
+stores/
+   UID_صاحب_المتجر_1
+   UID_صاحب_المتجر_2
+
+=====================================================
+*/
 
 const storeRef =
 doc(
@@ -1620,7 +924,6 @@ db,
 "stores",
 currentOwnerUid
 );
-
 
 const storeSnapshot =
 await getDoc(storeRef);
@@ -1634,8 +937,7 @@ alert(
 
 await signOut(auth);
 
-window.location.href =
-"login.html";
+window.location.href="login.html";
 
 return;
 
@@ -1645,13 +947,6 @@ return;
 const store =
 storeSnapshot.data();
 
-currentStoreId =
-storeSnapshot.id;
-
-
-/* =====================================================
-   STATUS
-===================================================== */
 
 const status =
 String(
@@ -1661,14 +956,10 @@ store.status || "pending"
 .trim();
 
 
-   if(
-
+if(
 status === "pending" ||
-
 status === "waiting" ||
-
 status === "review"
-
 ){
 
 alert(
@@ -1677,8 +968,7 @@ alert(
 
 await signOut(auth);
 
-window.location.href =
-"login.html";
+window.location.href="login.html";
 
 return;
 
@@ -1686,30 +976,21 @@ return;
 
 
 if(
-
 status === "rejected" ||
-
 status === "refused"
-
 ){
 
 alert(
-
-"❌ تم رفض طلب إنشاء المتجر.\n\n" +
-
-"سبب الرفض:\n" +
-
+"❌ تم رفض إنشاء المتجر.\n\nسبب الرفض:\n" +
 (
 store.rejectionReason ||
 "لم يتم ذكر سبب الرفض."
 )
-
 );
 
 await signOut(auth);
 
-window.location.href =
-"login.html";
+window.location.href="login.html";
 
 return;
 
@@ -1717,62 +998,51 @@ return;
 
 
 if(
-
 status !== "approved" &&
-
 status !== "active"
-
 ){
 
 alert(
-"⚠️ لا يمكنك الدخول إلى لوحة الطلبات حاليًا."
+"⚠️ لا يمكنك الدخول إلى لوحة المتجر حاليًا."
 );
 
 await signOut(auth);
 
-window.location.href =
-"login.html";
+window.location.href="login.html";
 
 return;
 
 }
 
 
-/* =====================================================
-   STORE INFORMATION
-===================================================== */
-
 currentStoreName =
-
 store.storeName ||
-
 store.name ||
-
 "G-Glam";
 
 
 currentOwnerEmail =
-
 store.ownerEmail ||
-
 store.email ||
-
-auth.currentUser.email ||
-
+user.email ||
 "";
 
 
 storeNameElement.textContent =
 currentStoreName;
 
-
 ownerEmailElement.textContent =
 currentOwnerEmail;
 
+storeUidElement.textContent =
+currentOwnerUid;
 
-/* =====================================================
-   LOAD ORDERS
-===================================================== */
+
+/*
+=====================================================
+الآن تحميل طلبات هذا الـ UID فقط
+=====================================================
+*/
 
 await loadOrders();
 
@@ -1784,47 +1054,54 @@ console.error(
 error
 );
 
-alert(
-"❌ حدث خطأ أثناء التحقق من المتجر."
-);
-
-}
-
-}
-
-
-/* =====================================================
-   LOAD ORDERS
-===================================================== */
-
-async function loadOrders(){
-
-try{
-
-
 ordersContainer.innerHTML = `
 
-<div class="loading">
+<div class="empty">
 
-⏳ جاري تحميل الطلبات...
+❌ حدث خطأ أثناء التحقق من المتجر.
+
+<br><br>
+
+${escapeHtml(error.message)}
 
 </div>
 
 `;
 
+}
 
-/* =====================================================
-   IMPORTANT:
-   ORDERS BELONG TO OWNER UID
-===================================================== */
+}
 
-const q =
+
+async function loadOrders(){
+
+try{
+
+ordersContainer.innerHTML = `
+
+<div class="loading">
+⏳ جاري تحميل طلبات متجرك...
+</div>
+
+`;
+
+
+/*
+=====================================================
+لا نقرأ جميع الطلبات.
+
+نقرأ فقط:
+
+orders
+where ownerUid == UID الحالي
+
+=====================================================
+*/
+
+const ordersQuery =
 query(
 
-collection(
-db,
-"orders"
-),
+collection(db,"orders"),
 
 where(
 "ownerUid",
@@ -1835,72 +1112,20 @@ currentOwnerUid
 );
 
 
-let snapshot;
+const snapshot =
+await getDocs(ordersQuery);
 
-
-try{
-
-snapshot =
-await getDocs(q);
-
-}catch(error){
-
-/*
-   دعم الطلبات القديمة التي تستخدم ownerEmail
-*/
-
-if(
-
-error.code === "failed-precondition" ||
-
-error.code === "permission-denied"
-
-){
-
-const oldQuery =
-query(
-
-collection(
-db,
-"orders"
-),
-
-where(
-"ownerEmail",
-"==",
-currentOwnerEmail
-)
-
-);
-
-snapshot =
-await getDocs(oldQuery);
-
-}else{
-
-throw error;
-
-}
-
-}
-
-
-/* =====================================================
-   STATISTICS
-===================================================== */
 
 totalOrders.textContent =
 snapshot.size;
 
+
 let processing = 0;
-
 let shipped = 0;
-
 let delivered = 0;
 
 
-snapshot.forEach(
-orderDoc=>{
+snapshot.forEach(orderDoc => {
 
 const order =
 orderDoc.data();
@@ -1910,28 +1135,16 @@ order.status ||
 "قيد المعالجة";
 
 
-if(
-status === "قيد المعالجة"
-){
-
+if(status === "قيد المعالجة"){
 processing++;
-
 }
 
-if(
-status === "تم الشحن"
-){
-
+if(status === "تم الشحن"){
 shipped++;
-
 }
 
-if(
-status === "تم التوصيل"
-){
-
+if(status === "تم التوصيل"){
 delivered++;
-
 }
 
 });
@@ -1947,10 +1160,6 @@ deliveredOrders.textContent =
 delivered;
 
 
-/* =====================================================
-   EMPTY
-===================================================== */
-
 if(snapshot.empty){
 
 ordersContainer.innerHTML = `
@@ -1958,16 +1167,14 @@ ordersContainer.innerHTML = `
 <div class="empty">
 
 <div class="empty-icon">
-
 📦
-
 </div>
 
-لا توجد طلبات لحد الآن.
+لا توجد طلبات في متجرك لحد الآن.
 
 <br>
 
-ستظهر طلبات زبائنك هنا عند وصولها.
+ستظهر هنا طلبات زبائن هذا المتجر فقط.
 
 </div>
 
@@ -1978,17 +1185,12 @@ return;
 }
 
 
-/* =====================================================
-   SORT CLIENT SIDE
-===================================================== */
-
 const orders =
-snapshot.docs
-.map(
-docSnap=>({
+snapshot.docs.map(
+orderDoc => ({
 
-id:docSnap.id,
-data:docSnap.data()
+id:orderDoc.id,
+data:orderDoc.data()
 
 })
 );
@@ -1997,15 +1199,13 @@ data:docSnap.data()
 orders.sort(
 (a,b)=>{
 
-const aTime =
-a.data.createdAt?.seconds ||
-0;
+const aSeconds =
+a.data.createdAt?.seconds || 0;
 
-const bTime =
-b.data.createdAt?.seconds ||
-0;
+const bSeconds =
+b.data.createdAt?.seconds || 0;
 
-return bTime-aTime;
+return bSeconds-aSeconds;
 
 }
 );
@@ -2014,12 +1214,7 @@ return bTime-aTime;
 ordersContainer.innerHTML = "";
 
 
-/* =====================================================
-   RENDER
-===================================================== */
-
-orders.forEach(
-item=>{
+orders.forEach(item => {
 
 renderOrder(
 item.id,
@@ -2055,10 +1250,6 @@ ${escapeHtml(error.message)}
 }
 
 
-/* =====================================================
-   RENDER ORDER
-===================================================== */
-
 function renderOrder(id,order){
 
 let productsHTML = "";
@@ -2069,19 +1260,13 @@ Array.isArray(order.products) &&
 order.products.length
 ){
 
-order.products.forEach(
-product=>{
+order.products.forEach(product => {
 
 const quantity =
-Number(
-product.quantity || 1
-);
-
+Number(product.quantity || 1);
 
 const price =
-Number(
-product.price || 0
-);
+Number(product.price || 0);
 
 
 productsHTML += `
@@ -2133,9 +1318,6 @@ productsHTML = `
 
 }
 
-/* =====================================================
-   STATUS CLASS
-===================================================== */
 
 const status =
 order.status ||
@@ -2147,36 +1329,22 @@ let statusClass =
 
 
 if(status === "تم التأكيد"){
-
-statusClass =
-"status-confirmed";
-
+statusClass="status-confirmed";
 }
 
 if(status === "تم الشحن"){
-
-statusClass =
-"status-shipped";
-
+statusClass="status-shipped";
 }
 
 if(status === "تم التوصيل"){
-
-statusClass =
-"status-delivered";
-
+statusClass="status-delivered";
 }
 
-
-/* =====================================================
-   ORDER CARD
-===================================================== */
 
 const card =
 document.createElement("div");
 
-card.className =
-"order";
+card.className="order";
 
 
 card.innerHTML = `
@@ -2186,31 +1354,23 @@ card.innerHTML = `
 <div>
 
 <div class="order-title">
-
 📦 طلب جديد
-
 </div>
 
 <div class="order-id">
-
 #${escapeHtml(id)}
-
 </div>
 
 </div>
 
-<span
-class="status ${statusClass}">
-
+<span class="status ${statusClass}">
 ${escapeHtml(status)}
-
 </span>
 
 </div>
 
 
 <div class="info-grid">
-
 
 <div class="info">
 
@@ -2219,11 +1379,9 @@ ${escapeHtml(status)}
 </div>
 
 <div class="info-value">
-
 ${escapeHtml(
 order.name || "غير محدد"
 )}
-
 </div>
 
 </div>
@@ -2236,11 +1394,9 @@ order.name || "غير محدد"
 </div>
 
 <div class="info-value">
-
 ${escapeHtml(
 order.phone || "غير محدد"
 )}
-
 </div>
 
 </div>
@@ -2253,11 +1409,9 @@ order.phone || "غير محدد"
 </div>
 
 <div class="info-value">
-
 ${escapeHtml(
 order.wilaya || "غير محدد"
 )}
-
 </div>
 
 </div>
@@ -2270,11 +1424,9 @@ order.wilaya || "غير محدد"
 </div>
 
 <div class="info-value">
-
 ${escapeHtml(
 order.commune || "غير محدد"
 )}
-
 </div>
 
 </div>
@@ -2287,11 +1439,9 @@ order.commune || "غير محدد"
 </div>
 
 <div class="info-value">
-
 ${escapeHtml(
 order.address || "غير محدد"
 )}
-
 </div>
 
 </div>
@@ -2304,31 +1454,24 @@ order.address || "غير محدد"
 </div>
 
 <div class="info-value">
-
 ${escapeHtml(
 order.deliveryType || "غير محدد"
 )}
-
 </div>
 
 </div>
-
 
 </div>
 
 
 <div class="products-title">
-
 🛍️ المنتجات
-
 </div>
-
 
 ${productsHTML}
 
 
 <div class="total-box">
-
 
 <div class="total-row">
 
@@ -2337,15 +1480,10 @@ ${productsHTML}
 </span>
 
 <strong>
-
-${Number(
-order.deliveryPrice || 0
-)} DA
-
+${Number(order.deliveryPrice || 0)} DA
 </strong>
 
 </div>
-
 
 <div class="total-row total-final">
 
@@ -2354,15 +1492,10 @@ order.deliveryPrice || 0
 </span>
 
 <strong>
-
-${Number(
-order.total || 0
-)} DA
-
+${Number(order.total || 0)} DA
 </strong>
 
 </div>
-
 
 </div>
 
@@ -2370,52 +1503,36 @@ order.total || 0
 <div class="status-control">
 
 <label>
-
 تحديث حالة الطلب
-
 </label>
 
-
-<select
-id="status-${escapeHtml(id)}">
+<select id="status-${escapeHtml(id)}">
 
 <option
 value="قيد المعالجة"
 ${status === "قيد المعالجة" ? "selected" : ""}>
-
 ⏳ قيد المعالجة
-
 </option>
-
 
 <option
 value="تم التأكيد"
 ${status === "تم التأكيد" ? "selected" : ""}>
-
 📋 تم التأكيد
-
 </option>
-
 
 <option
 value="تم الشحن"
 ${status === "تم الشحن" ? "selected" : ""}>
-
 🚚 تم الشحن
-
 </option>
-
 
 <option
 value="تم التوصيل"
 ${status === "تم التوصيل" ? "selected" : ""}>
-
 ✅ تم التوصيل
-
 </option>
 
 </select>
-
 
 <button
 class="save-btn"
@@ -2425,76 +1542,104 @@ data-id="${escapeHtml(id)}">
 
 </button>
 
-
 </div>
 
 `;
 
 
-/* =====================================================
-   SAVE STATUS
-===================================================== */
-
 card
 .querySelector(".save-btn")
 .addEventListener(
 "click",
-function(){
-
-updateStatus(id);
-
-});
+()=>updateStatus(id)
+);
 
 
 ordersContainer.appendChild(card);
 
 }
-
-
-/* =====================================================
-   UPDATE STATUS
-===================================================== */
-
-async function updateStatus(id){
+   async function updateStatus(id){
 
 try{
-
 
 const select =
 document.getElementById(
 "status-" + id
 );
 
-
 if(!select){
+return;
+}
+
+const newStatus =
+select.value;
+
+
+/*
+=====================================================
+تحديث الطلب المحدد فقط
+=====================================================
+
+ملاحظة مهمة:
+
+قواعد Firestore يجب أن تمنع صاحب المتجر
+من تعديل طلب لا يخص UID الخاص به.
+=====================================================
+*/
+
+const orderRef =
+doc(
+db,
+"orders",
+id
+);
+
+const orderSnapshot =
+await getDoc(orderRef);
+
+
+if(!orderSnapshot.exists()){
+
+showError(
+"❌ الطلب غير موجود."
+);
 
 return;
 
 }
 
 
-const newStatus =
-select.value;
+const orderData =
+orderSnapshot.data();
 
 
-/* =====================================================
-   UPDATE ONLY THIS ORDER
-===================================================== */
+/*
+=====================================================
+فحص أمان إضافي قبل التعديل
 
-await updateDoc(
+يجب أن يكون ownerUid داخل الطلب
+مساويًا لـ UID المستخدم الحالي.
+=====================================================
+*/
 
-doc(
-db,
-"orders",
-id
-),
+if(
+orderData.ownerUid !== currentOwnerUid
+){
 
-{
+showError(
+"❌ لا يمكنك تعديل طلب لا يخص متجرك."
+);
 
-status:newStatus
+return;
 
 }
 
+
+await updateDoc(
+orderRef,
+{
+status:newStatus
+}
 );
 
 
@@ -2522,10 +1667,6 @@ showError(
 }
 
 
-/* =====================================================
-   MESSAGES
-===================================================== */
-
 function showSuccess(text){
 
 const box =
@@ -2533,19 +1674,19 @@ document.getElementById(
 "successMessage"
 );
 
-box.textContent =
-text;
+box.textContent=text;
 
-box.style.display =
-"block";
+box.style.display="block";
+
+
+document.getElementById(
+"errorMessage"
+).style.display="none";
 
 
 setTimeout(
-function(){
-
-box.style.display =
-"none";
-
+()=>{
+box.style.display="none";
 },
 3000
 );
@@ -2560,19 +1701,19 @@ document.getElementById(
 "errorMessage"
 );
 
-box.textContent =
-text;
+box.textContent=text;
 
-box.style.display =
-"block";
+box.style.display="block";
+
+
+document.getElementById(
+"successMessage"
+).style.display="none";
 
 
 setTimeout(
-function(){
-
-box.style.display =
-"none";
-
+()=>{
+box.style.display="none";
 },
 4000
 );
@@ -2580,9 +1721,11 @@ box.style.display =
 }
 
 
-/* =====================================================
-   LOGOUT
-===================================================== */
+/*
+=====================================================
+تسجيل الخروج
+=====================================================
+*/
 
 document
 .getElementById("logoutBtn")
@@ -2600,9 +1743,7 @@ confirm(
 
 
 if(!ok){
-
 return;
-
 }
 
 
@@ -2610,29 +1751,17 @@ try{
 
 await signOut(auth);
 
-localStorage.removeItem(
-"storeId"
-);
 
-localStorage.removeItem(
-"ownerUid"
-);
+/*
+نحذف البيانات القديمة المحلية
+*/
 
-localStorage.removeItem(
-"storeName"
-);
-
-localStorage.removeItem(
-"ownerEmail"
-);
-
-localStorage.removeItem(
-"storeOwnerEmail"
-);
-
-localStorage.removeItem(
-"paymentStatus"
-);
+localStorage.removeItem("storeId");
+localStorage.removeItem("ownerUid");
+localStorage.removeItem("storeName");
+localStorage.removeItem("ownerEmail");
+localStorage.removeItem("storeOwnerEmail");
+localStorage.removeItem("paymentStatus");
 
 
 window.location.href =
@@ -2655,14 +1784,14 @@ showError(
 });
 
 
-/* =====================================================
-   AUTH STATE
-===================================================== */
+/*
+=====================================================
+AUTH STATE
+=====================================================
+*/
 
 onAuthStateChanged(
-
 auth,
-
 async function(user){
 
 if(!user){
@@ -2675,6 +1804,12 @@ return;
 }
 
 
+/*
+=====================================================
+هذا هو UID الحقيقي لصاحب المتجر
+=====================================================
+*/
+
 currentOwnerUid =
 user.uid;
 
@@ -2685,15 +1820,20 @@ user.email || "";
 ownerEmailElement.textContent =
 currentOwnerEmail;
 
+storeUidElement.textContent =
+currentOwnerUid;
+
+
+/*
+تحميل المتجر الخاص بهذا UID
+*/
 
 await loadStore();
 
 });
-
 
 </script>
 
 </body>
 
 </html>
-   
