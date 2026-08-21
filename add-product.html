@@ -852,53 +852,9 @@ function(){
 selectedImages =
 Array.from(imageFile.files || []);
 
-previewContainer.innerHTML = "";
-
-if(!selectedImages.length){
-return;
-}
-
-selectedImages.forEach(
-(file,index)=>{
-
-if(!file.type.startsWith("image/")){
-return;
-}
-
-const reader =
-new FileReader();
-
-reader.onload =
-function(event){
-
-const item =
-document.createElement("div");
-
-item.className =
-"preview-item";
-
-item.innerHTML = `
-
-<img
-src="${event.target.result}"
-alt="صورة المنتج">
-
-<div class="preview-number">
-${index + 1}
-</div>
-
-`;
-
-previewContainer.appendChild(item);
-
-};
-
-reader.readAsDataURL(file);
+renderImagePreviews();
 
 });
-
-});
-
 
 /* =========================
 LOAD STORE
