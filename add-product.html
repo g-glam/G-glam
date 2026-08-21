@@ -855,7 +855,79 @@ Array.from(imageFile.files || []);
 renderImagePreviews();
 
 });
+function renderImagePreviews(){
 
+previewContainer.innerHTML = "";
+
+if(!selectedImages.length){
+return;
+}
+
+selectedImages.forEach(
+(file,index)=>{
+
+if(!file.type.startsWith("image/")){
+return;
+}
+
+const reader =
+new FileReader();
+
+reader.onload =
+function(event){
+
+const item =
+document.createElement("div");
+
+item.className =
+"preview-item";
+
+item.innerHTML = `
+
+<img
+src="${event.target.result}"
+alt="صورة المنتج">
+
+<div class="preview-number">
+${index + 1}
+</div>
+
+<button
+type="button"
+class="delete-image"
+title="حذف الصورة">
+
+🗑️
+
+</button>
+
+`;
+
+const deleteButton =
+item.querySelector(".delete-image");
+
+deleteButton.addEventListener(
+"click",
+function(){
+
+selectedImages.splice(
+index,
+1
+);
+
+renderImagePreviews();
+
+});
+
+previewContainer.appendChild(item);
+
+};
+
+reader.readAsDataURL(file);
+
+});
+
+}
 /* =========================
 LOAD STORE
 ========================= */
