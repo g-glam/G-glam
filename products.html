@@ -1453,6 +1453,163 @@ document.getElementById(
 
 async function loadStore(){
 
+    try{
+
+        const user = auth.currentUser;
+
+        if(!user){
+
+            window.location.href = "login.html";
+            return;
+
+        }
+
+        // UID صاحب المتجر
+        currentOwnerUid = user.uid;
+
+        // البريد من Firebase Authentication
+        currentOwnerEmail = user.email || "";
+
+        ownerEmailElement.textContent =
+            currentOwnerEmail || "غير متوفر";
+
+        /*
+        ==========================================
+        قراءة متجر صاحب الحساب
+        stores/{UID}
+        ==========================================
+        */
+
+        const storeRef = doc(
+            db,
+            "stores",
+            currentOwnerUid
+        );
+
+        const storeSnapshot =
+            await getDoc(storeRef);
+
+        if(!storeSnapshot.exists()){
+
+            console.error(
+                "STORE NOT FOUND:",
+                currentOwnerUid
+            );
+
+            storeNameElement.textContent =
+                "لم يتم العثور على المتجر";
+
+            showError(
+                "⚠️ لم يتم العثور على بيانات متجرك في Firebase."
+            );
+
+            return;
+        }
+
+        const store =
+            storeSnapshot.data();
+
+        currentStoreId =
+            storeSnapshot.id;
+
+        /*
+        ==========================================
+        معلومات المتجر
+        ==========================================
+        */
+
+        currentStoreName =
+            store.storeName ||
+            store.name ||
+            store.shopName ||
+            "G-Glam";
+
+        currentOwnerEmail =
+            store.ownerEmail ||
+            store.email ||
+            user.email ||
+            "";
+
+        /*
+        ==========================================
+        عرض المعلومات
+        ==========================================
+        */
+
+        storeNameElement.textContent =
+            currentStoreName;
+
+        ownerEmailElement.textContent =
+            currentOwnerEmail;
+
+        /*
+        ==========================================
+        التحقق من حالة المتجر
+        ==========================================
+        */
+
+        const status =
+            String(
+                store.status || "approved"
+            )
+            .toLowerCase()
+            .trim();
+
+        if(
+            status === "rejected" ||
+            status === "refused"
+        ){
+
+            showError(
+                "❌ هذا المتجر مرفوض من الإدارة."
+            );
+
+            return;
+        }
+
+        if(
+            status === "pending" ||
+            status === "waiting" ||
+            status === "review"
+        ){
+
+            showError(
+                "⏳ متجرك مازال قيد المراجعة."
+            );
+
+            return;
+        }
+
+        /*
+        ==========================================
+        تحميل منتجات صاحب المتجر
+        ==========================================
+        */
+
+        await loadProducts();
+
+    }catch(error){
+
+        console.error(
+            "LOAD STORE ERROR:",
+            error
+        );
+
+        storeNameElement.textContent =
+            "G-Glam";
+
+        ownerEmailElement.textContent =
+            currentOwnerEmail || "غير متوفر";
+
+        showError(
+            "❌ حدث خطأ أثناء تحميل معلومات المتجر: " +
+            error.message
+        );
+
+    }
+
+}
+
 if(!auth.currentUser){
 
 window.location.href =
