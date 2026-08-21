@@ -1,506 +1,1276 @@
+orders.html
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>G-Glam | الطلبات</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800&display=swap"
+rel="stylesheet">
+
 <style>
 
+/* =====================================================
+   COLORS
+===================================================== */
+
 :root{
+
 --orange:#F47B20;
 --orange-dark:#DF6810;
---bg:#F7F7F7;
+
+--bg:#F5F5F5;
 --sidebar:#EEEEEE;
+
 --card:#FFFFFF;
+
 --text:#333333;
 --dark:#222222;
 --muted:#777777;
+
 --border:#E5E5E5;
+
 --success:#198754;
---success-bg:#E7F6ED;
---warning:#D97706;
---warning-bg:#FFF4E5;
+--success-bg:#E8F7EE;
+
+--danger:#DC3545;
+--danger-bg:#FDEBEC;
+
 --blue:#2563EB;
 --blue-bg:#EAF1FF;
+
+--purple:#7C3AED;
+--purple-bg:#F3E8FF;
+
+--warning:#D97706;
+--warning-bg:#FFF4E5;
+
 --shadow:0 4px 18px rgba(0,0,0,.06);
+
 }
 
+
+/* =====================================================
+   RESET
+===================================================== */
+
 *{
+
 box-sizing:border-box;
+
 margin:0;
+
 padding:0;
-font-family:Arial,sans-serif;
+
+font-family:"Tajawal",sans-serif;
+
 }
 
 body{
+
 background:var(--bg);
+
 color:var(--text);
+
 min-height:100vh;
+
 }
 
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
 .sidebar{
+
 position:fixed;
+
 right:0;
+
 top:0;
+
 height:100vh;
+
 width:75px;
+
 background:var(--sidebar);
+
 border-left:1px solid var(--border);
+
 overflow:hidden;
+
 transition:.3s;
+
 z-index:1000;
+
 box-shadow:-3px 0 15px rgba(0,0,0,.04);
+
 }
 
 .sidebar:hover{
+
 width:240px;
+
 }
 
 .logo{
+
 height:78px;
+
 display:flex;
+
 align-items:center;
+
 justify-content:center;
+
 font-size:23px;
+
 font-weight:800;
+
 color:var(--dark);
+
 border-bottom:1px solid #ddd;
+
 white-space:nowrap;
+
 }
 
 .logo span{
+
 color:var(--orange);
+
 }
 
 .menu{
+
 margin-top:18px;
+
 padding:0 10px;
+
 }
 
 .menu a{
+
 display:flex;
+
 align-items:center;
+
 gap:15px;
+
 height:52px;
+
 padding:0 10px;
+
 margin-bottom:7px;
+
 border-radius:12px;
+
 color:#555;
+
 text-decoration:none;
+
 white-space:nowrap;
+
 transition:.2s;
+
 }
 
 .menu a:hover{
-background:#E4E4E4;
+
+background:#E2E2E2;
+
 color:var(--dark);
+
 }
 
 .menu a.active{
+
 background:var(--orange);
+
 color:white;
+
 box-shadow:0 5px 15px rgba(244,123,32,.20);
+
 }
 
 .icon{
+
 min-width:35px;
+
 text-align:center;
+
 font-size:20px;
+
 }
 
 .text{
+
 opacity:0;
+
 transition:.25s;
+
 font-size:14px;
-font-weight:bold;
+
+font-weight:700;
+
 }
 
 .sidebar:hover .text{
+
 opacity:1;
+
 }
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
 
 .content{
+
 margin-right:75px;
+
 padding:25px;
+
 }
 
+
+/* =====================================================
+   HEADER
+===================================================== */
+
 .header{
+
 background:var(--card);
+
 border:1px solid var(--border);
+
 border-radius:18px;
+
 padding:25px;
+
 box-shadow:var(--shadow);
+
 margin-bottom:22px;
+
 position:relative;
+
 overflow:hidden;
+
 }
 
 .header::before{
+
 content:"";
+
 position:absolute;
+
 right:0;
+
 top:0;
+
 width:5px;
+
 height:100%;
+
 background:var(--orange);
+
 }
 
 .header h1{
+
 font-size:27px;
+
+font-weight:800;
+
 color:var(--dark);
+
 margin-bottom:8px;
+
 }
 
 .header p{
+
 color:var(--muted);
+
 font-size:14px;
+
 }
 
 .owner-email{
+
 font-size:13px;
+
 color:var(--muted);
+
 margin-top:13px;
+
 }
 
 .owner-email span{
+
 color:var(--dark);
-font-weight:bold;
+
+font-weight:700;
+
 }
 
 .store-id{
+
 font-size:12px;
+
 color:#999;
-margin-top:6px;
+
+margin-top:7px;
+
+direction:ltr;
+
+text-align:right;
+
 }
 
+
+/* =====================================================
+   MESSAGES
+===================================================== */
+
 .message{
+
 display:none;
-padding:14px 18px;
+
+padding:13px 18px;
+
 border-radius:12px;
+
 margin-bottom:18px;
+
 text-align:center;
+
 font-size:14px;
+
+font-weight:600;
+
 }
 
 .success{
+
 background:var(--success-bg);
+
 color:#155724;
+
 border:1px solid #c5e8d3;
+
 }
 
 .error{
-background:#FBE7EA;
+
+background:var(--danger-bg);
+
 color:#721c24;
+
 border:1px solid #efc7cc;
+
 }
 
+
+/* =====================================================
+   STATISTICS
+===================================================== */
+
 .stats{
+
 display:grid;
-grid-template-columns:repeat(4,1fr);
+
+grid-template-columns:
+repeat(4,1fr);
+
 gap:18px;
+
 margin-bottom:22px;
+
 }
 
 .stat{
+
 background:white;
+
 border:1px solid var(--border);
+
 border-radius:18px;
+
 padding:22px;
+
 box-shadow:var(--shadow);
+
 position:relative;
+
 overflow:hidden;
+
 }
 
 .stat::after{
+
 content:"";
+
 position:absolute;
+
 bottom:0;
+
 right:0;
+
 height:3px;
+
 width:100%;
+
 background:var(--orange);
+
 }
 
 .stat-title{
+
 color:var(--muted);
+
 font-size:14px;
-margin-bottom:12px;
+
+margin-bottom:10px;
+
 }
 
 .stat-value{
+
 font-size:28px;
+
 font-weight:800;
+
 color:var(--dark);
+
 }
 
+
+/* =====================================================
+   TABLE SECTION
+===================================================== */
+
 .section{
+
 background:white;
+
 border:1px solid var(--border);
+
 padding:22px;
+
 border-radius:18px;
+
 box-shadow:var(--shadow);
+
 }
 
 .section-header{
+
 display:flex;
+
 align-items:center;
+
 justify-content:space-between;
+
+gap:15px;
+
 margin-bottom:20px;
+
 }
 
 .section-header h2{
+
 font-size:21px;
+
+font-weight:800;
+
 color:var(--dark);
+
 }
 
-.orders{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:18px;
-}
 
-.order{
-background:white;
+/* =====================================================
+   TABLE WRAPPER
+===================================================== */
+
+.table-wrapper{
+
+width:100%;
+
+overflow-x:auto;
+
 border:1px solid var(--border);
-border-radius:17px;
-padding:20px;
-transition:.25s;
+
+border-radius:14px;
+
 }
 
-.order:hover{
-transform:translateY(-3px);
-box-shadow:0 8px 25px rgba(0,0,0,.08);
+.orders-table{
+
+width:100%;
+
+min-width:1250px;
+
+border-collapse:collapse;
+
+background:white;
+
 }
 
-.order-header{
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:10px;
-padding-bottom:15px;
+.orders-table thead{
+
+background:#F1F1F1;
+
+}
+
+.orders-table th{
+
+padding:15px 12px;
+
+font-size:13px;
+
+font-weight:800;
+
+color:#444;
+
 border-bottom:1px solid var(--border);
-margin-bottom:15px;
-}
 
-.order-title{
-font-size:17px;
-font-weight:bold;
-color:var(--dark);
-}
-
-.order-id{
-font-size:11px;
-color:#999;
-margin-top:5px;
-direction:ltr;
-text-align:right;
-}
-
-.status{
-display:inline-block;
-padding:7px 11px;
-border-radius:20px;
-font-size:12px;
-font-weight:bold;
 white-space:nowrap;
+
+text-align:center;
+
 }
+
+.orders-table td{
+
+padding:13px 10px;
+
+font-size:13px;
+
+border-bottom:1px solid #EEEEEE;
+
+vertical-align:middle;
+
+text-align:center;
+
+}
+
+.orders-table tbody tr{
+
+transition:.2s;
+
+}
+
+.orders-table tbody tr:hover{
+
+background:#FAFAFA;
+
+}
+
+.orders-table tbody tr:last-child td{
+
+border-bottom:none;
+
+}
+
+
+/* =====================================================
+   ORDER ID
+===================================================== */
+
+.order-number{
+
+font-weight:800;
+
+color:var(--orange);
+
+direction:ltr;
+
+white-space:nowrap;
+
+}
+
+.order-id-small{
+
+font-size:10px;
+
+color:#999;
+
+margin-top:3px;
+
+direction:ltr;
+
+}
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+.date-cell{
+
+white-space:nowrap;
+
+color:#555;
+
+font-size:12px;
+
+}
+
+
+/* =====================================================
+   CUSTOMER
+===================================================== */
+
+.customer-name{
+
+font-weight:700;
+
+color:var(--dark);
+
+}
+
+.customer-phone{
+
+display:inline-flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:5px;
+
+padding:7px 10px;
+
+border:none;
+
+border-radius:9px;
+
+background:#F3F3F3;
+
+color:var(--dark);
+
+font-family:"Tajawal",sans-serif;
+
+font-size:12px;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.2s;
+
+white-space:nowrap;
+
+}
+
+.customer-phone:hover{
+
+background:var(--orange);
+
+color:white;
+
+}
+
+
+/* =====================================================
+   ADDRESS
+===================================================== */
+
+.address-cell{
+
+max-width:180px;
+
+white-space:normal;
+
+line-height:1.7;
+
+}
+
+
+/* =====================================================
+   DELIVERY
+===================================================== */
+
+.delivery-cell{
+
+line-height:1.7;
+
+}
+
+.delivery-type{
+
+font-weight:700;
+
+color:var(--dark);
+
+}
+
+.delivery-price{
+
+font-size:11px;
+
+color:var(--muted);
+
+}
+
+
+/* =====================================================
+   PRODUCTS BUTTON
+===================================================== */
+
+.products-btn{
+
+border:none;
+
+background:#FFF4E8;
+
+color:var(--orange-dark);
+
+padding:9px 13px;
+
+border-radius:9px;
+
+font-family:"Tajawal",sans-serif;
+
+font-size:12px;
+
+font-weight:700;
+
+cursor:pointer;
+
+white-space:nowrap;
+
+transition:.2s;
+
+}
+
+.products-btn:hover{
+
+background:var(--orange);
+
+color:white;
+
+}
+
+
+/* =====================================================
+   TOTAL
+===================================================== */
+
+.total-cell{
+
+font-size:15px;
+
+font-weight:800;
+
+color:var(--orange);
+
+white-space:nowrap;
+
+}
+
+
+/* =====================================================
+   NOTES
+===================================================== */
+
+.notes-box{
+
+display:flex;
+
+align-items:center;
+
+gap:6px;
+
+min-width:190px;
+
+}
+
+.notes-input{
+
+width:140px;
+
+padding:9px 10px;
+
+border:1px solid var(--border);
+
+border-radius:9px;
+
+font-family:"Tajawal",sans-serif;
+
+font-size:12px;
+
+outline:none;
+
+background:#FAFAFA;
+
+}
+
+.notes-input:focus{
+
+border-color:var(--orange);
+
+background:white;
+
+box-shadow:0 0 0 3px rgba(244,123,32,.08);
+
+}
+
+.notes-save{
+
+border:none;
+
+background:var(--orange);
+
+color:white;
+
+padding:9px 10px;
+
+border-radius:9px;
+
+font-family:"Tajawal",sans-serif;
+
+font-size:12px;
+
+font-weight:700;
+
+cursor:pointer;
+
+white-space:nowrap;
+
+}
+
+.notes-save:hover{
+
+background:var(--orange-dark);
+
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.status-select{
+
+min-width:130px;
+
+padding:9px 10px;
+
+border:1px solid var(--border);
+
+border-radius:9px;
+
+background:white;
+
+font-family:"Tajawal",sans-serif;
+
+font-size:12px;
+
+font-weight:700;
+
+outline:none;
+
+cursor:pointer;
+
+}
+
+.status-select:focus{
+
+border-color:var(--orange);
+
+box-shadow:0 0 0 3px rgba(244,123,32,.08);
+
+}
+
+
+/* =====================================================
+   DELETE
+===================================================== */
+
+.delete-btn{
+
+border:none;
+
+background:var(--danger-bg);
+
+color:var(--danger);
+
+padding:9px 12px;
+
+border-radius:9px;
+
+font-family:"Tajawal",sans-serif;
+
+font-size:12px;
+
+font-weight:700;
+
+cursor:pointer;
+
+white-space:nowrap;
+
+transition:.2s;
+
+}
+
+.delete-btn:hover{
+
+background:var(--danger);
+
+color:white;
+
+}
+
+
+/* =====================================================
+   STATUS COLORS
+===================================================== */
 
 .status-processing{
+
 background:var(--warning-bg);
+
 color:var(--warning);
+
 }
 
 .status-confirmed{
+
 background:var(--blue-bg);
+
 color:var(--blue);
+
 }
 
-.status-shipped{
-background:#F3E8FF;
-color:#7C3AED;
+.status-cancelled{
+
+background:var(--danger-bg);
+
+color:var(--danger);
+
+}
+
+.status-ready{
+
+background:#E8F5E9;
+
+color:#2E7D32;
+
+}
+
+.status-shipping{
+
+background:var(--purple-bg);
+
+color:var(--purple);
+
 }
 
 .status-delivered{
+
 background:var(--success-bg);
+
 color:var(--success);
+
 }
 
-.info-grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:10px;
-margin-bottom:17px;
-}
 
-.info{
-background:#FAFAFA;
-border:1px solid #eee;
-border-radius:11px;
-padding:11px;
-}
-
-.info-label{
-font-size:11px;
-color:#999;
-margin-bottom:5px;
-}
-
-.info-value{
-font-size:13px;
-font-weight:bold;
-color:var(--dark);
-word-break:break-word;
-}
-
-.products-title{
-font-size:14px;
-font-weight:bold;
-margin-bottom:10px;
-color:var(--dark);
-}
-
-.product{
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:10px;
-padding:10px 0;
-border-bottom:1px solid #eee;
-}
-
-.product:last-child{
-border-bottom:none;
-}
-
-.product-name{
-font-size:13px;
-font-weight:bold;
-}
-
-.product-details{
-font-size:12px;
-color:var(--muted);
-margin-top:4px;
-}
-
-.product-price{
-font-size:13px;
-font-weight:bold;
-color:var(--orange);
-white-space:nowrap;
-}
-
-.total-box{
-background:#FFF8F2;
-border:1px solid #FFE3CE;
-border-radius:13px;
-padding:14px;
-margin-top:15px;
-}
-
-.total-row{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:7px;
-font-size:13px;
-}
-
-.total-row:last-child{
-margin-bottom:0;
-}
-
-.total-final{
-font-size:18px;
-font-weight:800;
-color:var(--orange);
-padding-top:8px;
-border-top:1px solid #FFE3CE;
-}
-
-.status-control{
-margin-top:17px;
-padding-top:17px;
-border-top:1px solid var(--border);
-}
-
-.status-control label{
-display:block;
-font-size:13px;
-font-weight:bold;
-margin-bottom:8px;
-}
-
-select{
-width:100%;
-padding:12px;
-border:1px solid var(--border);
-border-radius:11px;
-background:white;
-color:var(--dark);
-font-size:14px;
-outline:none;
-}
-
-select:focus{
-border-color:var(--orange);
-box-shadow:0 0 0 3px rgba(244,123,32,.10);
-}
-
-.save-btn{
-width:100%;
-padding:12px;
-border:none;
-border-radius:11px;
-background:var(--orange);
-color:white;
-font-size:14px;
-font-weight:bold;
-cursor:pointer;
-margin-top:9px;
-transition:.2s;
-}
-
-.save-btn:hover{
-background:var(--orange-dark);
-transform:translateY(-1px);
-}
+/* =====================================================
+   EMPTY / LOADING
+===================================================== */
 
 .empty{
-background:#FAFAFA;
-border:1px dashed #D8D8D8;
-padding:45px 20px;
+
+padding:55px 20px;
+
 text-align:center;
+
 color:var(--muted);
-border-radius:15px;
-grid-column:1/-1;
+
 line-height:2;
+
 }
 
 .empty-icon{
-font-size:40px;
+
+font-size:45px;
+
 margin-bottom:10px;
+
 }
 
 .loading{
+
+padding:55px 20px;
+
 text-align:center;
-padding:45px;
+
 color:var(--muted);
-grid-column:1/-1;
+
 }
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+.modal-overlay{
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.45);
+
+display:none;
+
+align-items:center;
+
+justify-content:center;
+
+padding:20px;
+
+z-index:3000;
+
+}
+
+.modal-overlay.active{
+
+display:flex;
+
+}
+
+.modal{
+
+background:white;
+
+width:100%;
+
+max-width:650px;
+
+max-height:90vh;
+
+overflow-y:auto;
+
+border-radius:18px;
+
+box-shadow:0 15px 50px rgba(0,0,0,.20);
+
+}
+
+.modal-header{
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:18px 20px;
+
+border-bottom:1px solid var(--border);
+
+}
+
+.modal-header h3{
+
+font-size:19px;
+
+font-weight:800;
+
+color:var(--dark);
+
+}
+
+.close-modal{
+
+width:35px;
+
+height:35px;
+
+border:none;
+
+border-radius:50%;
+
+background:#F1F1F1;
+
+font-size:20px;
+
+cursor:pointer;
+
+}
+
+.close-modal:hover{
+
+background:#E5E5E5;
+
+}
+
+.modal-body{
+
+padding:20px;
+
+}
+
+
+/* =====================================================
+   PRODUCT MODAL CARD
+===================================================== */
+
+.modal-product{
+
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+padding:13px 0;
+
+border-bottom:1px solid #EEEEEE;
+
+}
+
+.modal-product:last-child{
+
+border-bottom:none;
+
+}
+
+.modal-product-image{
+
+width:70px;
+
+height:70px;
+
+border-radius:12px;
+
+object-fit:cover;
+
+background:#F1F1F1;
+
+flex-shrink:0;
+
+}
+
+.modal-product-info{
+
+flex:1;
+
+min-width:0;
+
+}
+
+.modal-product-name{
+
+font-weight:800;
+
+color:var(--dark);
+
+margin-bottom:5px;
+
+}
+
+.modal-product-detail{
+
+font-size:12px;
+
+color:var(--muted);
+
+line-height:1.8;
+
+}
+
+.modal-product-total{
+
+font-weight:800;
+
+color:var(--orange);
+
+white-space:nowrap;
+
+}
+
+
+/* =====================================================
+   PHONE MODAL
+===================================================== */
+
+.phone-options{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:12px;
+
+}
+
+.phone-option{
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+padding:15px;
+
+border-radius:12px;
+
+text-decoration:none;
+
+font-family:"Tajawal",sans-serif;
+
+font-weight:800;
+
+font-size:14px;
+
+}
+
+.call-option{
+
+background:#E8F5E9;
+
+color:#2E7D32;
+
+}
+
+.whatsapp-option{
+
+background:#E8F7EE;
+
+color:#16833A;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
 
 @media(max-width:1000px){
 
 .stats{
-grid-template-columns:repeat(2,1fr);
-}
 
-.orders{
-grid-template-columns:1fr;
+grid-template-columns:
+repeat(2,1fr);
+
 }
 
 }
@@ -508,198 +1278,288 @@ grid-template-columns:1fr;
 @media(max-width:700px){
 
 .sidebar{
-width:65px;
-}
 
-.sidebar:hover{
-width:210px;
-}
-
-.content{
-margin-right:65px;
-padding:16px;
-}
-
-.stats{
-grid-template-columns:repeat(2,1fr);
-gap:10px;
-}
-
-.stat{
-padding:16px;
-}
-
-.stat-value{
-font-size:24px;
-}
-
-}
-
-@media(max-width:550px){
-
-.sidebar{
 width:60px;
+
 }
 
 .sidebar:hover{
+
 width:200px;
+
 }
 
 .content{
+
 margin-right:60px;
+
 padding:12px;
+
 }
 
 .header{
+
 padding:20px;
+
 }
 
 .header h1{
-font-size:22px;
-}
 
-.stats{
-grid-template-columns:1fr 1fr;
+font-size:22px;
+
 }
 
 .section{
-padding:15px;
+
+padding:14px;
+
+}
+
+.stats{
+
+gap:10px;
+
+}
+
+.stat{
+
+padding:16px;
+
+}
+
+.stat-value{
+
+font-size:24px;
+
+}
+
+.phone-options{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+@media(max-width:450px){
+
+.stats{
+
+grid-template-columns:
+1fr 1fr;
+
 }
 
 .section-header h2{
+
 font-size:18px;
+
 }
 
-.order{
-padding:15px;
-}
+.modal{
 
-.info-grid{
-grid-template-columns:1fr 1fr;
-}
+max-height:94vh;
 
-.order-header{
-align-items:flex-start;
 }
 
 }
 
-@media(max-width:380px){
 
-.stats{
-grid-template-columns:1fr;
-}
-
-.info-grid{
-grid-template-columns:1fr;
-}
-
-.order-header{
-flex-direction:column;
-}
-
-}
+/* =====================================================
+   SCROLLBAR
+===================================================== */
 
 ::-webkit-scrollbar{
+
 width:7px;
+
+height:7px;
+
 }
 
 ::-webkit-scrollbar-track{
-background:#f1f1f1;
+
+background:#F1F1F1;
+
 }
 
 ::-webkit-scrollbar-thumb{
-background:#ccc;
+
+background:#CCC;
+
 border-radius:10px;
+
 }
 
 ::-webkit-scrollbar-thumb:hover{
+
 background:var(--orange);
+
 }
 
 </style>
 
 </head>
 
+
 <body>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
 
 <div class="sidebar">
 
 <div class="logo">
+
 G-<span>Glam</span>
+
 </div>
 
 <div class="menu">
 
 <a href="dashboard.html">
+
 <span class="icon">🏠</span>
-<span class="text">الرئيسية</span>
+
+<span class="text">
+الرئيسية
+</span>
+
 </a>
 
 <a href="orders.html" class="active">
+
 <span class="icon">📦</span>
-<span class="text">الطلبات</span>
+
+<span class="text">
+الطلبات
+</span>
+
 </a>
 
 <a href="products.html">
+
 <span class="icon">🛍️</span>
-<span class="text">المنتجات</span>
+
+<span class="text">
+المنتجات
+</span>
+
 </a>
 
 <a href="add-product.html">
+
 <span class="icon">➕</span>
-<span class="text">إضافة منتج</span>
+
+<span class="text">
+إضافة منتج
+</span>
+
 </a>
 
 <a href="delivery.html">
+
 <span class="icon">🚚</span>
-<span class="text">أسعار التوصيل</span>
+
+<span class="text">
+أسعار التوصيل
+</span>
+
 </a>
 
 <a href="settings.html">
+
 <span class="icon">⚙️</span>
-<span class="text">الإعدادات</span>
+
+<span class="text">
+الإعدادات
+</span>
+
 </a>
 
 <a href="#" id="logoutBtn">
+
 <span class="icon">🚪</span>
-<span class="text">تسجيل الخروج</span>
+
+<span class="text">
+تسجيل الخروج
+</span>
+
 </a>
 
 </div>
+
 </div>
 
+
+<!-- =====================================================
+     CONTENT
+===================================================== -->
+
 <div class="content">
+
+
+<!-- HEADER -->
 
 <div class="header">
 
 <h1 id="storeName">
+
 جاري تحميل المتجر...
+
 </h1>
 
 <p>
+
 إدارة ومتابعة طلبات زبائن متجرك
+
 </p>
 
 <div class="owner-email">
+
 📧 الحساب:
+
 <span id="ownerEmail">
+
 جاري التحميل...
+
 </span>
+
 </div>
 
 <div class="store-id">
+
 🆔 UID:
+
 <span id="storeUid">
+
 جاري التحميل...
+
 </span>
-</div>
 
 </div>
 
-<div class="message success" id="successMessage"></div>
+</div>
 
-<div class="message error" id="errorMessage"></div>
+
+<!-- MESSAGES -->
+
+<div
+class="message success"
+id="successMessage">
+</div>
+
+<div
+class="message error"
+id="errorMessage">
+</div>
+
+
+<!-- =====================================================
+     STATISTICS
+===================================================== -->
 
 <div class="stats">
 
@@ -709,11 +1569,14 @@ G-<span>Glam</span>
 📦 إجمالي الطلبات
 </div>
 
-<div class="stat-value" id="totalOrders">
+<div
+class="stat-value"
+id="totalOrders">
 0
 </div>
 
 </div>
+
 
 <div class="stat">
 
@@ -721,67 +1584,237 @@ G-<span>Glam</span>
 ⏳ قيد المعالجة
 </div>
 
-<div class="stat-value" id="processingOrders">
+<div
+class="stat-value"
+id="processingOrders">
 0
 </div>
 
 </div>
+
 
 <div class="stat">
 
 <div class="stat-title">
-🚚 تم الشحن
+🚚 قيد الشحن
 </div>
 
-<div class="stat-value" id="shippedOrders">
+<div
+class="stat-value"
+id="shippingOrders">
 0
 </div>
 
 </div>
+
 
 <div class="stat">
 
 <div class="stat-title">
-✅ تم التوصيل
+✅ تم التسليم
 </div>
 
-<div class="stat-value" id="deliveredOrders">
+<div
+class="stat-value"
+id="deliveredOrders">
 0
 </div>
 
 </div>
 
 </div>
+
+
+<!-- =====================================================
+     ORDERS
+===================================================== -->
 
 <div class="section">
 
 <div class="section-header">
 
 <h2>
-📦 طلبات زبائني
+📦 طلبات متجري
 </h2>
 
 </div>
 
-<div class="orders" id="ordersContainer">
+
+<div class="table-wrapper">
+
+<table class="orders-table">
+
+<thead>
+
+<tr>
+
+<th>
+رقم الطلب
+</th>
+
+<th>
+التاريخ
+</th>
+
+<th>
+الزبون
+</th>
+
+<th>
+الهاتف
+</th>
+
+<th>
+الولاية
+</th>
+
+<th>
+العنوان
+</th>
+
+<th>
+التوصيل
+</th>
+
+<th>
+المنتجات
+</th>
+
+<th>
+المجموع
+</th>
+
+<th>
+الملاحظات
+</th>
+
+<th>
+الحالة
+</th>
+
+<th>
+إجراءات
+</th>
+
+</tr>
+
+</thead>
+
+<tbody id="ordersBody">
+
+<tr>
+
+<td colspan="12">
 
 <div class="loading">
 ⏳ جاري تحميل الطلبات...
 </div>
 
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<!-- =====================================================
+     PRODUCTS MODAL
+===================================================== -->
+
+<div
+class="modal-overlay"
+id="productsModal">
+
+<div class="modal">
+
+<div class="modal-header">
+
+<h3>
+🛍️ تفاصيل المنتجات
+</h3>
+
+<button
+class="close-modal"
+id="closeProductsModal">
+
+×
+</button>
+
+</div>
+
+<div
+class="modal-body"
+id="productsModalBody">
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     PHONE MODAL
+===================================================== -->
+
+<div
+class="modal-overlay"
+id="phoneModal">
+
+<div class="modal">
+
+<div class="modal-header">
+
+<h3>
+📞 التواصل مع الزبون
+</h3>
+
+<button
+class="close-modal"
+id="closePhoneModal">
+
+×
+</button>
+
+</div>
+
+<div class="modal-body">
+
+<div
+class="phone-options"
+id="phoneOptions">
+
+</div>
+
 </div>
 
 </div>
 
 </div>
+
 
 <script type="module">
+
+
+/* =====================================================
+   FIREBASE
+===================================================== */
 
 import {
 initializeApp
 }
 from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
 
 import {
 getFirestore,
@@ -791,10 +1824,12 @@ query,
 where,
 doc,
 getDoc,
-updateDoc
+updateDoc,
+deleteDoc
 }
 from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
 
 import {
 getAuth,
@@ -804,6 +1839,10 @@ signOut
 from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
+
+/* =====================================================
+   CONFIG
+===================================================== */
 
 const firebaseConfig = {
 
@@ -831,6 +1870,10 @@ measurementId:
 };
 
 
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
 const app =
 initializeApp(firebaseConfig);
 
@@ -841,6 +1884,10 @@ const auth =
 getAuth(app);
 
 
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
 const storeNameElement =
 document.getElementById("storeName");
 
@@ -850,8 +1897,8 @@ document.getElementById("ownerEmail");
 const storeUidElement =
 document.getElementById("storeUid");
 
-const ordersContainer =
-document.getElementById("ordersContainer");
+const ordersBody =
+document.getElementById("ordersBody");
 
 const totalOrders =
 document.getElementById("totalOrders");
@@ -859,64 +1906,170 @@ document.getElementById("totalOrders");
 const processingOrders =
 document.getElementById("processingOrders");
 
-const shippedOrders =
-document.getElementById("shippedOrders");
+const shippingOrders =
+document.getElementById("shippingOrders");
 
 const deliveredOrders =
 document.getElementById("deliveredOrders");
 
+const productsModal =
+document.getElementById("productsModal");
+
+const productsModalBody =
+document.getElementById("productsModalBody");
+
+const phoneModal =
+document.getElementById("phoneModal");
+
+const phoneOptions =
+document.getElementById("phoneOptions");
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
 
 let currentOwnerUid = "";
+
 let currentOwnerEmail = "";
+
 let currentStoreName = "G-Glam";
 
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
 
 function escapeHtml(value){
 
 return String(value ?? "")
+
 .replace(/&/g,"&amp;")
+
 .replace(/</g,"&lt;")
+
 .replace(/>/g,"&gt;")
+
 .replace(/"/g,"&quot;")
+
 .replace(/'/g,"&#039;");
 
 }
 
 
+/* =====================================================
+   DATE
+===================================================== */
+
+function formatDate(timestamp){
+
+if(!timestamp){
+
+return "غير محدد";
+
+}
+
+try{
+
+let date;
+
+if(timestamp.toDate){
+
+date =
+timestamp.toDate();
+
+}else if(timestamp.seconds){
+
+date =
+new Date(
+timestamp.seconds * 1000
+);
+
+}else{
+
+date =
+new Date(timestamp);
+
+}
+
+if(isNaN(date.getTime())){
+
+return "غير محدد";
+
+}
+
+return date.toLocaleDateString(
+"ar-DZ",
+{
+year:"numeric",
+month:"2-digit",
+day:"2-digit"
+}
+)
++
+" "
++
+date.toLocaleTimeString(
+"ar-DZ",
+{
+hour:"2-digit",
+minute:"2-digit"
+}
+);
+
+}catch(error){
+
+return "غير محدد";
+
+}
+
+}
+
+
+/* =====================================================
+   PHONE CLEAN
+===================================================== */
+
+function cleanPhone(phone){
+
+return String(phone || "")
+.replace(/[^\d+]/g,"");
+
+}
+
+
+/* =====================================================
+   STORE
+===================================================== */
+
 async function loadStore(){
 
 try{
 
-const user = auth.currentUser;
+const user =
+auth.currentUser;
+
 
 if(!user){
 
-window.location.href="login.html";
+window.location.href =
+"login.html";
+
 return;
 
 }
 
-currentOwnerUid = user.uid;
 
-currentOwnerEmail = user.email || "";
+currentOwnerUid =
+user.uid;
+
+currentOwnerEmail =
+user.email || "";
 
 
-/*
-=====================================================
-المهم:
-
-كل صاحب متجر له وثيقة:
-
-stores/{UID}
-
-مثال:
-
-stores/
-   UID_صاحب_المتجر_1
-   UID_صاحب_المتجر_2
-
-=====================================================
-*/
+/* =====================================================
+   stores/{UID}
+===================================================== */
 
 const storeRef =
 doc(
@@ -924,6 +2077,7 @@ db,
 "stores",
 currentOwnerUid
 );
+
 
 const storeSnapshot =
 await getDoc(storeRef);
@@ -937,7 +2091,8 @@ alert(
 
 await signOut(auth);
 
-window.location.href="login.html";
+window.location.href =
+"login.html";
 
 return;
 
@@ -957,9 +2112,13 @@ store.status || "pending"
 
 
 if(
+
 status === "pending" ||
+
 status === "waiting" ||
+
 status === "review"
+
 ){
 
 alert(
@@ -968,7 +2127,8 @@ alert(
 
 await signOut(auth);
 
-window.location.href="login.html";
+window.location.href =
+"login.html";
 
 return;
 
@@ -976,21 +2136,30 @@ return;
 
 
 if(
+
 status === "rejected" ||
+
 status === "refused"
+
 ){
 
 alert(
-"❌ تم رفض إنشاء المتجر.\n\nسبب الرفض:\n" +
+
+"❌ تم رفض إنشاء المتجر.\n\n" +
+
+"سبب الرفض:\n" +
+
 (
 store.rejectionReason ||
 "لم يتم ذكر سبب الرفض."
 )
+
 );
 
 await signOut(auth);
 
-window.location.href="login.html";
+window.location.href =
+"login.html";
 
 return;
 
@@ -998,8 +2167,11 @@ return;
 
 
 if(
+
 status !== "approved" &&
+
 status !== "active"
+
 ){
 
 alert(
@@ -1008,23 +2180,35 @@ alert(
 
 await signOut(auth);
 
-window.location.href="login.html";
+window.location.href =
+"login.html";
 
 return;
 
 }
 
 
+/* =====================================================
+   STORE INFO
+===================================================== */
+
 currentStoreName =
+
 store.storeName ||
+
 store.name ||
+
 "G-Glam";
 
 
 currentOwnerEmail =
+
 store.ownerEmail ||
+
 store.email ||
+
 user.email ||
+
 "";
 
 
@@ -1038,11 +2222,9 @@ storeUidElement.textContent =
 currentOwnerUid;
 
 
-/*
-=====================================================
-الآن تحميل طلبات هذا الـ UID فقط
-=====================================================
-*/
+/* =====================================================
+   LOAD ORDERS
+===================================================== */
 
 await loadOrders();
 
@@ -1054,11 +2236,15 @@ console.error(
 error
 );
 
-ordersContainer.innerHTML = `
+ordersBody.innerHTML = `
+
+<tr>
+
+<td colspan="12">
 
 <div class="empty">
 
-❌ حدث خطأ أثناء التحقق من المتجر.
+❌ حدث خطأ أثناء تحميل معلومات المتجر.
 
 <br><br>
 
@@ -1066,37 +2252,47 @@ ${escapeHtml(error.message)}
 
 </div>
 
+</td>
+
+</tr>
+
 `;
 
 }
 
 }
 
+
+/* =====================================================
+   LOAD ORDERS
+===================================================== */
 
 async function loadOrders(){
 
 try{
 
-ordersContainer.innerHTML = `
+ordersBody.innerHTML = `
+
+<tr>
+
+<td colspan="12">
 
 <div class="loading">
+
 ⏳ جاري تحميل طلبات متجرك...
+
 </div>
+
+</td>
+
+</tr>
 
 `;
 
 
-/*
-=====================================================
-لا نقرأ جميع الطلبات.
-
-نقرأ فقط:
-
-orders
-where ownerUid == UID الحالي
-
-=====================================================
-*/
+/* =====================================================
+   ONLY CURRENT OWNER ORDERS
+===================================================== */
 
 const ordersQuery =
 query(
@@ -1113,38 +2309,68 @@ currentOwnerUid
 
 
 const snapshot =
-await getDocs(ordersQuery);
+await getDocs(
+ordersQuery
+);
 
+
+/* =====================================================
+   STATISTICS
+===================================================== */
 
 totalOrders.textContent =
 snapshot.size;
 
 
 let processing = 0;
-let shipped = 0;
+
+let shipping = 0;
+
 let delivered = 0;
 
 
-snapshot.forEach(orderDoc => {
+snapshot.forEach(
+orderDoc=>{
 
 const order =
 orderDoc.data();
 
 const status =
+String(
 order.status ||
-"قيد المعالجة";
+"قيد المعالجة"
+)
+.trim();
 
 
-if(status === "قيد المعالجة"){
+if(
+status === "قيد المعالجة"
+){
+
 processing++;
+
 }
 
-if(status === "تم الشحن"){
-shipped++;
+
+if(
+status === "قيد الشحن" ||
+
+status === "تم الشحن"
+){
+
+shipping++;
+
 }
 
-if(status === "تم التوصيل"){
+
+if(
+status === "تم التسليم" ||
+
+status === "تم التوصيل"
+){
+
 delivered++;
+
 }
 
 });
@@ -1153,16 +2379,24 @@ delivered++;
 processingOrders.textContent =
 processing;
 
-shippedOrders.textContent =
-shipped;
+shippingOrders.textContent =
+shipping;
 
 deliveredOrders.textContent =
 delivered;
 
 
+/* =====================================================
+   EMPTY
+===================================================== */
+
 if(snapshot.empty){
 
-ordersContainer.innerHTML = `
+ordersBody.innerHTML = `
+
+<tr>
+
+<td colspan="12">
 
 <div class="empty">
 
@@ -1174,9 +2408,13 @@ ordersContainer.innerHTML = `
 
 <br>
 
-ستظهر هنا طلبات زبائن هذا المتجر فقط.
+ستظهر طلبات زبائن متجرك هنا.
 
 </div>
+
+</td>
+
+</tr>
 
 `;
 
@@ -1185,11 +2423,16 @@ return;
 }
 
 
+/* =====================================================
+   SORT
+===================================================== */
+
 const orders =
 snapshot.docs.map(
-orderDoc => ({
+orderDoc=>({
 
 id:orderDoc.id,
+
 data:orderDoc.data()
 
 })
@@ -1199,22 +2442,29 @@ data:orderDoc.data()
 orders.sort(
 (a,b)=>{
 
-const aSeconds =
-a.data.createdAt?.seconds || 0;
+const aTime =
+a.data.createdAt?.seconds ||
+0;
 
-const bSeconds =
-b.data.createdAt?.seconds || 0;
+const bTime =
+b.data.createdAt?.seconds ||
+0;
 
-return bSeconds-aSeconds;
+return bTime-aTime;
 
 }
 );
 
 
-ordersContainer.innerHTML = "";
+/* =====================================================
+   RENDER
+===================================================== */
+
+ordersBody.innerHTML = "";
 
 
-orders.forEach(item => {
+orders.forEach(
+item=>{
 
 renderOrder(
 item.id,
@@ -1231,7 +2481,11 @@ console.error(
 error
 );
 
-ordersContainer.innerHTML = `
+ordersBody.innerHTML = `
+
+<tr>
+
+<td colspan="12">
 
 <div class="empty">
 
@@ -1243,80 +2497,67 @@ ${escapeHtml(error.message)}
 
 </div>
 
+</td>
+
+</tr>
+
 `;
 
 }
 
 }
 
+
+/* =====================================================
+   STATUS CLASS
+===================================================== */
+
+function getStatusClass(status){
+
+switch(status){
+
+case "تأكيد":
+case "تم التأكيد":
+
+return "status-confirmed";
+
+case "إلغاء":
+case "ملغي":
+case "تم الإلغاء":
+
+return "status-cancelled";
+
+case "جاهز":
+
+return "status-ready";
+
+case "قيد الشحن":
+case "تم الشحن":
+
+return "status-shipping";
+
+case "تم التسليم":
+case "تم التوصيل":
+
+return "status-delivered";
+
+default:
+
+return "status-processing";
+
+}
+
+}
+
+
+/* =====================================================
+   RENDER ORDER
+===================================================== */
 
 function renderOrder(id,order){
 
-let productsHTML = "";
-
-
-if(
-Array.isArray(order.products) &&
-order.products.length
-){
-
-order.products.forEach(product => {
-
-const quantity =
-Number(product.quantity || 1);
-
-const price =
-Number(product.price || 0);
-
-
-productsHTML += `
-
-<div class="product">
-
-<div>
-
-<div class="product-name">
-
-${escapeHtml(
-product.name || "منتج"
-)}
-
-</div>
-
-<div class="product-details">
-
-الكمية:
-${quantity}
-
-</div>
-
-</div>
-
-<div class="product-price">
-
-${price * quantity} DA
-
-</div>
-
-</div>
-
-`;
-
-});
-
-}else{
-
-productsHTML = `
-
-<div class="product-details">
-
-لا توجد تفاصيل للمنتجات.
-
-</div>
-
-`;
-
-}
+const tr =
+document.createElement("tr");
 
 
 const status =
@@ -1324,268 +2565,651 @@ order.status ||
 "قيد المعالجة";
 
 
-let statusClass =
-"status-processing";
+const phone =
+cleanPhone(order.phone);
 
 
-if(status === "تم التأكيد"){
-statusClass="status-confirmed";
-}
-
-if(status === "تم الشحن"){
-statusClass="status-shipped";
-}
-
-if(status === "تم التوصيل"){
-statusClass="status-delivered";
-}
+const products =
+Array.isArray(order.products)
+? order.products
+: [];
 
 
-const card =
-document.createElement("div");
+/* =====================================================
+   PRODUCTS COUNT
+===================================================== */
 
-card.className="order";
+let productsCount = 0;
+
+products.forEach(
+product=>{
+
+productsCount +=
+Number(
+product.quantity || 1
+);
+
+});
 
 
-card.innerHTML = `
+/* =====================================================
+   TR
+===================================================== */
 
-<div class="order-header">
+tr.innerHTML = `
 
-<div>
+<td>
 
-<div class="order-title">
-📦 طلب جديد
-</div>
+<div class="order-number">
 
-<div class="order-id">
-#${escapeHtml(id)}
-</div>
-
-</div>
-
-<span class="status ${statusClass}">
-${escapeHtml(status)}
-</span>
+#${escapeHtml(id.slice(-6).toUpperCase())}
 
 </div>
 
+<div class="order-id-small">
 
-<div class="info-grid">
+${escapeHtml(id)}
 
-<div class="info">
-
-<div class="info-label">
-👤 الزبون
 </div>
 
-<div class="info-value">
+</td>
+
+
+<td>
+
+<div class="date-cell">
+
+${formatDate(order.createdAt)}
+
+</div>
+
+</td>
+
+
+<td>
+
+<div class="customer-name">
+
 ${escapeHtml(
-order.name || "غير محدد"
+order.name ||
+order.customerName ||
+"غير محدد"
 )}
-</div>
 
 </div>
 
+</td>
 
-<div class="info">
 
-<div class="info-label">
-📞 الهاتف
-</div>
+<td>
 
-<div class="info-value">
+<button
+class="customer-phone"
+data-phone="${escapeHtml(phone)}">
+
+📞
+
 ${escapeHtml(
-order.phone || "غير محدد"
+order.phone ||
+"غير محدد"
 )}
-</div>
 
-</div>
+</button>
+
+</td>
 
 
-<div class="info">
+<td>
 
-<div class="info-label">
-📍 الولاية
-</div>
-
-<div class="info-value">
 ${escapeHtml(
-order.wilaya || "غير محدد"
+order.wilaya ||
+"غير محدد"
 )}
-</div>
 
-</div>
+</td>
 
 
-<div class="info">
+<td>
 
-<div class="info-label">
-🏘️ البلدية
-</div>
+<div class="address-cell">
 
-<div class="info-value">
 ${escapeHtml(
-order.commune || "غير محدد"
+order.address ||
+order.commune ||
+"غير محدد"
 )}
-</div>
 
 </div>
 
+</td>
 
-<div class="info">
 
-<div class="info-label">
-🏠 العنوان
-</div>
+<td>
 
-<div class="info-value">
+<div class="delivery-cell">
+
+<div class="delivery-type">
+
 ${escapeHtml(
-order.address || "غير محدد"
+order.deliveryType ||
+"غير محدد"
 )}
-</div>
 
 </div>
 
+<div class="delivery-price">
 
-<div class="info">
-
-<div class="info-label">
-🚚 التوصيل
-</div>
-
-<div class="info-value">
-${escapeHtml(
-order.deliveryType || "غير محدد"
-)}
-</div>
+${Number(
+order.deliveryPrice || 0
+)} DA
 
 </div>
 
 </div>
 
-
-<div class="products-title">
-🛍️ المنتجات
-</div>
-
-${productsHTML}
+</td>
 
 
-<div class="total-box">
+<td>
 
-<div class="total-row">
+<button
+class="products-btn">
 
-<span>
-سعر التوصيل
-</span>
+🛍️ عرض المنتجات
 
-<strong>
-${Number(order.deliveryPrice || 0)} DA
-</strong>
+<br>
 
-</div>
+<small>
 
-<div class="total-row total-final">
+${productsCount} قطعة
 
-<span>
-المجموع
-</span>
+</small>
 
-<strong>
-${Number(order.total || 0)} DA
-</strong>
+</button>
 
-</div>
+</td>
+
+
+<td>
+
+<div class="total-cell">
+
+${Number(
+order.total || 0
+)} DA
 
 </div>
 
+</td>
 
-<div class="status-control">
 
-<label>
-تحديث حالة الطلب
-</label>
+<td>
 
-<select id="status-${escapeHtml(id)}">
+<div class="notes-box">
+
+<input
+class="notes-input"
+type="text"
+value="${escapeHtml(
+order.notes || ""
+)}"
+placeholder="اكتب ملاحظة..."
+>
+
+<button
+class="notes-save">
+
+💾
+
+</button>
+
+</div>
+
+</td>
+
+
+<td>
+
+<select
+class="status-select">
 
 <option
 value="قيد المعالجة"
 ${status === "قيد المعالجة" ? "selected" : ""}>
+
 ⏳ قيد المعالجة
+
 </option>
 
 <option
-value="تم التأكيد"
-${status === "تم التأكيد" ? "selected" : ""}>
-📋 تم التأكيد
+value="تأكيد"
+${status === "تأكيد" ? "selected" : ""}>
+
+📋 تأكيد
+
 </option>
 
 <option
-value="تم الشحن"
-${status === "تم الشحن" ? "selected" : ""}>
-🚚 تم الشحن
+value="إلغاء"
+${status === "إلغاء" ? "selected" : ""}>
+
+❌ إلغاء
+
 </option>
 
 <option
-value="تم التوصيل"
-${status === "تم التوصيل" ? "selected" : ""}>
-✅ تم التوصيل
+value="جاهز"
+${status === "جاهز" ? "selected" : ""}>
+
+📦 جاهز
+
+</option>
+
+<option
+value="قيد الشحن"
+${status === "قيد الشحن" ? "selected" : ""}>
+
+🚚 قيد الشحن
+
+</option>
+
+<option
+value="تم التسليم"
+${status === "تم التسليم" ? "selected" : ""}>
+
+✅ تم التسليم
+
 </option>
 
 </select>
 
-<button
-class="save-btn"
-data-id="${escapeHtml(id)}">
+</td>
 
-💾 حفظ الحالة
+
+<td>
+
+<button
+class="delete-btn">
+
+🗑️ حذف
 
 </button>
+
+</td>
+
+`;
+
+
+/* =====================================================
+   PHONE
+===================================================== */
+
+tr
+.querySelector(".customer-phone")
+.addEventListener(
+"click",
+()=>{
+
+openPhoneModal(
+phone
+);
+
+});
+
+
+/* =====================================================
+   PRODUCTS
+===================================================== */
+
+tr
+.querySelector(".products-btn")
+.addEventListener(
+"click",
+()=>{
+
+openProductsModal(
+products
+);
+
+});
+
+
+/* =====================================================
+   NOTES
+===================================================== */
+
+tr
+.querySelector(".notes-save")
+.addEventListener(
+"click",
+()=>{
+
+const input =
+tr.querySelector(
+".notes-input"
+);
+
+saveNotes(
+id,
+input.value
+);
+
+});
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+tr
+.querySelector(".status-select")
+.addEventListener(
+"change",
+async event=>{
+
+await updateStatus(
+id,
+event.target.value
+);
+
+});
+
+
+/* =====================================================
+   DELETE
+===================================================== */
+
+tr
+.querySelector(".delete-btn")
+.addEventListener(
+"click",
+()=>{
+
+deleteOrder(
+id
+);
+
+});
+
+
+ordersBody.appendChild(tr);
+
+}
+
+
+/* =====================================================
+   PHONE MODAL
+===================================================== */
+
+function openPhoneModal(phone){
+
+if(!phone){
+
+showError(
+"❌ رقم الهاتف غير موجود."
+);
+
+return;
+
+}
+
+
+const encoded =
+phone.replace("+","");
+
+
+phoneOptions.innerHTML = `
+
+<a
+class="phone-option call-option"
+href="tel:${escapeHtml(phone)}">
+
+📞 اتصال بالزبون
+
+</a>
+
+<a
+class="phone-option whatsapp-option"
+href="https://wa.me/${escapeHtml(encoded)}"
+target="_blank">
+
+💬 فتح WhatsApp
+
+</a>
+
+`;
+
+
+phoneModal.classList.add(
+"active"
+);
+
+}
+
+
+/* =====================================================
+   PRODUCTS MODAL
+===================================================== */
+
+function openProductsModal(products){
+
+productsModalBody.innerHTML = "";
+
+
+if(
+!products.length
+){
+
+productsModalBody.innerHTML = `
+
+<div class="empty">
+
+لا توجد تفاصيل للمنتجات.
+
+</div>
+
+`;
+
+productsModal.classList.add(
+"active"
+);
+
+return;
+
+}
+
+
+products.forEach(
+product=>{
+
+const quantity =
+Number(
+product.quantity || 1
+);
+
+const price =
+Number(
+product.price || 0
+);
+
+const total =
+price * quantity;
+
+
+const image =
+product.image ||
+(
+Array.isArray(product.images) &&
+product.images.length
+?
+product.images[0]
+:
+""
+);
+
+
+const div =
+document.createElement("div");
+
+div.className =
+"modal-product";
+
+
+div.innerHTML = `
+
+<img
+class="modal-product-image"
+src="${escapeHtml(image)}"
+alt="${escapeHtml(
+product.name || "منتج"
+)}"
+onerror="this.style.display='none';"
+>
+
+
+<div class="modal-product-info">
+
+<div class="modal-product-name">
+
+${escapeHtml(
+product.name || "منتج"
+)}
+
+</div>
+
+<div class="modal-product-detail">
+
+الكمية:
+<strong>
+${quantity}
+</strong>
+
+<br>
+
+السعر:
+<strong>
+${price} DA
+</strong>
+
+${
+product.color
+?
+`
+<br>
+اللون:
+<strong>
+${escapeHtml(product.color)}
+</strong>
+`
+:
+""
+}
+
+</div>
+
+</div>
+
+
+<div class="modal-product-total">
+
+${total} DA
 
 </div>
 
 `;
 
 
-card
-.querySelector(".save-btn")
-.addEventListener(
-"click",
-()=>updateStatus(id)
+productsModalBody.appendChild(
+div
 );
 
+});
 
-ordersContainer.appendChild(card);
+
+productsModal.classList.add(
+"active"
+);
 
 }
-   async function updateStatus(id){
+
+
+/* =====================================================
+   CLOSE MODALS
+===================================================== */
+
+document
+.getElementById("closeProductsModal")
+.addEventListener(
+"click",
+()=>{
+
+productsModal.classList.remove(
+"active"
+);
+
+});
+
+
+document
+.getElementById("closePhoneModal")
+.addEventListener(
+"click",
+()=>{
+
+phoneModal.classList.remove(
+"active"
+);
+
+});
+
+
+productsModal.addEventListener(
+"click",
+event=>{
+
+if(
+event.target ===
+productsModal
+){
+
+productsModal.classList.remove(
+"active"
+);
+
+}
+
+});
+
+
+phoneModal.addEventListener(
+"click",
+event=>{
+
+if(
+event.target ===
+phoneModal
+){
+
+phoneModal.classList.remove(
+"active"
+);
+
+}
+
+});
+
+
+/* =====================================================
+   SAVE NOTES
+===================================================== */
+
+async function saveNotes(
+id,
+notes
+){
 
 try{
 
-const select =
-document.getElementById(
-"status-" + id
-);
-
-if(!select){
-return;
-}
-
-const newStatus =
-select.value;
-
-
-/*
-=====================================================
-تحديث الطلب المحدد فقط
-=====================================================
-
-ملاحظة مهمة:
-
-قواعد Firestore يجب أن تمنع صاحب المتجر
-من تعديل طلب لا يخص UID الخاص به.
-=====================================================
-*/
 
 const orderRef =
 doc(
@@ -1594,11 +3218,14 @@ db,
 id
 );
 
-const orderSnapshot =
-await getDoc(orderRef);
+
+const snapshot =
+await getDoc(
+orderRef
+);
 
 
-if(!orderSnapshot.exists()){
+if(!snapshot.exists()){
 
 showError(
 "❌ الطلب غير موجود."
@@ -1609,21 +3236,13 @@ return;
 }
 
 
-const orderData =
-orderSnapshot.data();
+const data =
+snapshot.data();
 
-
-/*
-=====================================================
-فحص أمان إضافي قبل التعديل
-
-يجب أن يكون ownerUid داخل الطلب
-مساويًا لـ UID المستخدم الحالي.
-=====================================================
-*/
 
 if(
-orderData.ownerUid !== currentOwnerUid
+data.ownerUid !==
+currentOwnerUid
 ){
 
 showError(
@@ -1638,15 +3257,109 @@ return;
 await updateDoc(
 orderRef,
 {
-status:newStatus
+
+notes:
+String(notes || "").trim()
+
 }
+
 );
 
 
 showSuccess(
-"✅ تم تحديث حالة الطلب بنجاح"
+"✅ تم حفظ الملاحظة."
 );
 
+
+}catch(error){
+
+console.error(
+"NOTES ERROR:",
+error
+);
+
+showError(
+"❌ تعذر حفظ الملاحظة."
+);
+
+}
+
+}
+
+
+/* =====================================================
+   UPDATE STATUS
+===================================================== */
+
+async function updateStatus(
+id,
+newStatus
+){
+
+try{
+
+const orderRef =
+doc(
+db,
+"orders",
+id
+);
+
+
+const snapshot =
+await getDoc(
+orderRef
+);
+
+
+if(!snapshot.exists()){
+
+showError(
+"❌ الطلب غير موجود."
+);
+
+return;
+
+}
+
+
+const data =
+snapshot.data();
+
+
+if(
+data.ownerUid !==
+currentOwnerUid
+){
+
+showError(
+"❌ لا يمكنك تعديل طلب لا يخص متجرك."
+);
+
+return;
+
+}
+
+
+await updateDoc(
+orderRef,
+{
+
+status:newStatus
+
+}
+
+);
+
+
+showSuccess(
+"✅ تم تحديث حالة الطلب."
+);
+
+
+/*
+إعادة تحميل الإحصائيات
+*/
 
 await loadOrders();
 
@@ -1654,7 +3367,7 @@ await loadOrders();
 }catch(error){
 
 console.error(
-"UPDATE STATUS ERROR:",
+"STATUS ERROR:",
 error
 );
 
@@ -1667,6 +3380,112 @@ showError(
 }
 
 
+/* =====================================================
+   DELETE ORDER
+===================================================== */
+
+async function deleteOrder(id){
+
+const confirmed =
+confirm(
+"⚠️ هل أنت متأكد من حذف هذه الطلبية؟\n\nلا يمكن التراجع عن الحذف."
+);
+
+
+if(!confirmed){
+
+return;
+
+}
+
+
+try{
+
+const orderRef =
+doc(
+db,
+"orders",
+id
+);
+
+
+const snapshot =
+await getDoc(
+orderRef
+);
+
+
+if(!snapshot.exists()){
+
+showError(
+"❌ الطلب غير موجود."
+);
+
+return;
+
+}
+
+
+const data =
+snapshot.data();
+
+
+/*
+=====================================================
+أمان إضافي:
+
+لا نحذف إلا طلب المتجر الحالي.
+=====================================================
+*/
+
+if(
+data.ownerUid !==
+currentOwnerUid
+){
+
+showError(
+"❌ لا يمكنك حذف طلب لا يخص متجرك."
+);
+
+return;
+
+}
+
+
+await deleteDoc(
+orderRef
+);
+
+
+showSuccess(
+"🗑️ تم حذف الطلبية."
+);
+
+
+await loadOrders();
+
+
+}catch(error){
+
+console.error(
+"DELETE ERROR:",
+error
+);
+
+showError(
+"❌ تعذر حذف الطلبية.\n" +
+error.message
+);
+
+}
+
+}
+
+
+/* =====================================================
+   MESSAGES
+===================================================== */
+
 function showSuccess(text){
 
 const box =
@@ -1674,19 +3493,25 @@ document.getElementById(
 "successMessage"
 );
 
-box.textContent=text;
+box.textContent =
+text;
 
-box.style.display="block";
+box.style.display =
+"block";
 
 
 document.getElementById(
 "errorMessage"
-).style.display="none";
+).style.display =
+"none";
 
 
 setTimeout(
 ()=>{
-box.style.display="none";
+
+box.style.display =
+"none";
+
 },
 3000
 );
@@ -1701,37 +3526,41 @@ document.getElementById(
 "errorMessage"
 );
 
-box.textContent=text;
+box.textContent =
+text;
 
-box.style.display="block";
+box.style.display =
+"block";
 
 
 document.getElementById(
 "successMessage"
-).style.display="none";
+).style.display =
+"none";
 
 
 setTimeout(
 ()=>{
-box.style.display="none";
+
+box.style.display =
+"none";
+
 },
-4000
+5000
 );
 
 }
 
 
-/*
-=====================================================
-تسجيل الخروج
-=====================================================
-*/
+/* =====================================================
+   LOGOUT
+===================================================== */
 
 document
 .getElementById("logoutBtn")
 .addEventListener(
 "click",
-async function(event){
+async event=>{
 
 event.preventDefault();
 
@@ -1743,7 +3572,9 @@ confirm(
 
 
 if(!ok){
+
 return;
+
 }
 
 
@@ -1752,16 +3583,29 @@ try{
 await signOut(auth);
 
 
-/*
-نحذف البيانات القديمة المحلية
-*/
+localStorage.removeItem(
+"storeId"
+);
 
-localStorage.removeItem("storeId");
-localStorage.removeItem("ownerUid");
-localStorage.removeItem("storeName");
-localStorage.removeItem("ownerEmail");
-localStorage.removeItem("storeOwnerEmail");
-localStorage.removeItem("paymentStatus");
+localStorage.removeItem(
+"ownerUid"
+);
+
+localStorage.removeItem(
+"storeName"
+);
+
+localStorage.removeItem(
+"ownerEmail"
+);
+
+localStorage.removeItem(
+"storeOwnerEmail"
+);
+
+localStorage.removeItem(
+"paymentStatus"
+);
 
 
 window.location.href =
@@ -1784,15 +3628,13 @@ showError(
 });
 
 
-/*
-=====================================================
-AUTH STATE
-=====================================================
-*/
+/* =====================================================
+   AUTH
+===================================================== */
 
 onAuthStateChanged(
 auth,
-async function(user){
+async user=>{
 
 if(!user){
 
@@ -1803,12 +3645,6 @@ return;
 
 }
 
-
-/*
-=====================================================
-هذا هو UID الحقيقي لصاحب المتجر
-=====================================================
-*/
 
 currentOwnerUid =
 user.uid;
@@ -1824,15 +3660,12 @@ storeUidElement.textContent =
 currentOwnerUid;
 
 
-/*
-تحميل المتجر الخاص بهذا UID
-*/
-
 await loadStore();
 
 });
 
 </script>
+
 
 </body>
 
