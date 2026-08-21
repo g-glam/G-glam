@@ -1,0 +1,2004 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>G-Glam | المنتجات</title>
+
+<style>
+
+:root{
+
+--orange:#F47B20;
+--orange-dark:#DF6810;
+
+--bg:#F7F7F7;
+--sidebar:#EEEEEE;
+--card:#FFFFFF;
+
+--text:#333333;
+--dark:#222222;
+--muted:#777777;
+
+--border:#E5E5E5;
+
+--success:#198754;
+--danger:#DC3545;
+
+--shadow:0 4px 18px rgba(0,0,0,.06);
+
+}
+
+*{
+
+box-sizing:border-box;
+margin:0;
+padding:0;
+
+font-family:Arial,sans-serif;
+
+}
+
+body{
+
+background:var(--bg);
+color:var(--text);
+min-height:100vh;
+
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+
+position:fixed;
+
+right:0;
+top:0;
+
+height:100vh;
+
+width:75px;
+
+background:var(--sidebar);
+
+border-left:1px solid var(--border);
+
+overflow:hidden;
+
+transition:.3s;
+
+z-index:1000;
+
+box-shadow:-3px 0 15px rgba(0,0,0,.04);
+
+}
+
+.sidebar:hover{
+
+width:240px;
+
+}
+
+.logo{
+
+height:78px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:23px;
+
+font-weight:800;
+
+color:var(--dark);
+
+border-bottom:1px solid #ddd;
+
+white-space:nowrap;
+
+}
+
+.logo span{
+
+color:var(--orange);
+
+}
+
+.menu{
+
+margin-top:18px;
+
+padding:0 10px;
+
+}
+
+.menu a{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+height:52px;
+
+padding:0 10px;
+
+margin-bottom:7px;
+
+border-radius:12px;
+
+color:#555;
+
+text-decoration:none;
+
+white-space:nowrap;
+
+transition:.2s;
+
+}
+
+.menu a:hover{
+
+background:#E4E4E4;
+color:var(--dark);
+
+}
+
+.menu a.active{
+
+background:var(--orange);
+color:white;
+
+box-shadow:
+0 5px 15px rgba(244,123,32,.20);
+
+}
+
+.icon{
+
+min-width:35px;
+
+text-align:center;
+
+font-size:20px;
+
+}
+
+.text{
+
+opacity:0;
+
+transition:.25s;
+
+font-size:14px;
+
+font-weight:bold;
+
+}
+
+.sidebar:hover .text{
+
+opacity:1;
+
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.content{
+
+margin-right:75px;
+
+padding:25px;
+
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+
+background:var(--card);
+
+border:1px solid var(--border);
+
+border-radius:18px;
+
+padding:25px;
+
+box-shadow:var(--shadow);
+
+margin-bottom:22px;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.header::before{
+
+content:"";
+
+position:absolute;
+
+right:0;
+top:0;
+
+width:5px;
+height:100%;
+
+background:var(--orange);
+
+}
+
+.header h1{
+
+font-size:27px;
+
+color:var(--dark);
+
+margin-bottom:8px;
+
+}
+
+.header p{
+
+color:var(--muted);
+
+font-size:14px;
+
+}
+
+.store-info{
+
+margin-top:12px;
+
+font-size:13px;
+
+color:var(--muted);
+
+}
+
+.store-info strong{
+
+color:var(--dark);
+
+}
+
+
+/* =========================
+   MESSAGES
+========================= */
+
+.message{
+
+display:none;
+
+padding:14px;
+
+border-radius:12px;
+
+margin-bottom:18px;
+
+text-align:center;
+
+font-size:14px;
+
+}
+
+.success{
+
+background:#E7F6ED;
+
+color:#155724;
+
+border:1px solid #c5e8d3;
+
+}
+
+.error{
+
+background:#FBE7EA;
+
+color:#721c24;
+
+border:1px solid #efc7cc;
+
+}
+
+
+/* =========================
+   TOOLBAR
+========================= */
+
+.toolbar{
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+gap:15px;
+
+margin-bottom:20px;
+
+}
+
+.search-box{
+
+flex:1;
+
+}
+
+.search-box input{
+
+width:100%;
+
+padding:14px 18px;
+
+border:1px solid var(--border);
+
+border-radius:12px;
+
+background:white;
+
+font-size:14px;
+
+outline:none;
+
+}
+
+.search-box input:focus{
+
+border-color:var(--orange);
+
+box-shadow:
+0 0 0 3px rgba(244,123,32,.10);
+
+}
+
+.add-product-btn{
+
+background:var(--orange);
+
+color:white;
+
+text-decoration:none;
+
+padding:14px 20px;
+
+border-radius:12px;
+
+font-weight:bold;
+
+white-space:nowrap;
+
+transition:.2s;
+
+}
+
+.add-product-btn:hover{
+
+background:var(--orange-dark);
+
+}
+
+
+/* =========================
+   PRODUCTS
+========================= */
+
+.products-section{
+
+background:white;
+
+border:1px solid var(--border);
+
+border-radius:18px;
+
+padding:22px;
+
+box-shadow:var(--shadow);
+
+}
+
+.products-header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:20px;
+
+}
+
+.products-header h2{
+
+font-size:21px;
+
+color:var(--dark);
+
+}
+
+.product-count{
+
+font-size:13px;
+
+color:var(--muted);
+
+}
+
+
+/* =========================
+   PRODUCTS GRID
+========================= */
+
+.products{
+
+display:grid;
+
+grid-template-columns:
+repeat(4,1fr);
+
+gap:18px;
+
+}
+
+
+/* =========================
+   PRODUCT CARD
+========================= */
+
+.product-card{
+
+background:white;
+
+border:1px solid var(--border);
+
+border-radius:16px;
+
+overflow:hidden;
+
+transition:.25s;
+
+}
+
+.product-card:hover{
+
+transform:translateY(-3px);
+
+box-shadow:
+0 8px 25px rgba(0,0,0,.08);
+
+}
+
+.product-image{
+
+width:100%;
+
+aspect-ratio:1/1;
+
+object-fit:cover;
+
+display:block;
+
+background:#f5f5f5;
+
+}
+
+.product-body{
+
+padding:15px;
+
+}
+
+.product-name{
+
+font-size:16px;
+
+font-weight:bold;
+
+color:var(--dark);
+
+margin-bottom:8px;
+
+white-space:nowrap;
+
+overflow:hidden;
+
+text-overflow:ellipsis;
+
+}
+
+.product-price{
+
+font-size:18px;
+
+font-weight:800;
+
+color:var(--orange);
+
+margin-bottom:8px;
+
+}
+
+.product-stock{
+
+font-size:13px;
+
+color:var(--muted);
+
+margin-bottom:12px;
+
+}
+
+.stock-ok{
+
+color:var(--success);
+
+font-weight:bold;
+
+}
+
+.stock-empty{
+
+color:var(--danger);
+
+font-weight:bold;
+
+}
+
+.product-actions{
+
+display:flex;
+
+gap:8px;
+
+}
+
+.product-actions button{
+
+flex:1;
+
+padding:10px;
+
+border:none;
+
+border-radius:10px;
+
+font-size:13px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+.edit-btn{
+
+background:#FFF1E6;
+
+color:var(--orange);
+
+}
+
+.delete-btn{
+
+background:#FBE7EA;
+
+color:var(--danger);
+
+}
+
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty{
+
+grid-column:1/-1;
+
+text-align:center;
+
+padding:55px 20px;
+
+background:#FAFAFA;
+
+border:1px dashed #D8D8D8;
+
+border-radius:15px;
+
+color:var(--muted);
+
+line-height:2;
+
+}
+
+.empty-icon{
+
+font-size:45px;
+
+margin-bottom:10px;
+
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+
+grid-column:1/-1;
+
+text-align:center;
+
+padding:50px;
+
+color:var(--muted);
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:1100px){
+
+.products{
+
+grid-template-columns:
+repeat(3,1fr);
+
+}
+
+}
+
+@media(max-width:850px){
+
+.products{
+
+grid-template-columns:
+repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:700px){
+
+.sidebar{
+
+width:60px;
+
+}
+
+.sidebar:hover{
+
+width:200px;
+
+}
+
+.content{
+
+margin-right:60px;
+
+padding:12px;
+
+}
+
+.header{
+
+padding:20px;
+
+}
+
+.header h1{
+
+font-size:22px;
+
+}
+
+.toolbar{
+
+flex-direction:column;
+
+align-items:stretch;
+
+}
+
+.add-product-btn{
+
+text-align:center;
+
+}
+
+.products-section{
+
+padding:15px;
+
+}
+
+}
+
+@media(max-width:450px){
+
+.products{
+
+grid-template-columns:
+1fr 1fr;
+
+gap:10px;
+
+}
+
+.product-body{
+
+padding:11px;
+
+}
+
+.product-name{
+
+font-size:14px;
+
+}
+
+.product-price{
+
+font-size:16px;
+
+}
+
+.product-actions{
+
+flex-direction:column;
+
+}
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<div class="sidebar">
+
+<div class="logo">
+
+G-<span>Glam</span>
+
+</div>
+
+
+<div class="menu">
+
+<a href="dashboard.html">
+
+<span class="icon">🏠</span>
+
+<span class="text">
+الرئيسية
+</span>
+
+</a>
+
+
+<a href="orders.html">
+
+<span class="icon">📦</span>
+
+<span class="text">
+الطلبات
+</span>
+
+</a>
+
+
+<a href="products.html"
+class="active">
+
+<span class="icon">🛍️</span>
+
+<span class="text">
+المنتجات
+</span>
+
+</a>
+
+
+<a href="add-product.html">
+
+<span class="icon">➕</span>
+
+<span class="text">
+إضافة منتج
+</span>
+
+</a>
+
+
+<a href="delivery.html">
+
+<span class="icon">🚚</span>
+
+<span class="text">
+أسعار التوصيل
+</span>
+
+</a>
+
+
+<a href="settings.html">
+
+<span class="icon">⚙️</span>
+
+<span class="text">
+الإعدادات
+</span>
+
+</a>
+
+
+<a href="#"
+id="logoutBtn">
+
+<span class="icon">🚪</span>
+
+<span class="text">
+تسجيل الخروج
+</span>
+
+</a>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     CONTENT
+========================= -->
+
+<div class="content">
+
+
+<div class="header">
+
+<h1 id="storeName">
+
+جاري تحميل المتجر...
+
+</h1>
+
+<p>
+
+🛍️ إدارة منتجات متجرك
+
+</p>
+
+<div class="store-info">
+
+📧 الحساب:
+
+<strong id="ownerEmail">
+
+جاري التحميل...
+
+</strong>
+
+</div>
+
+</div>
+
+
+<div
+id="successMessage"
+class="message success">
+
+</div>
+
+
+<div
+id="errorMessage"
+class="message error">
+
+</div>
+
+
+<!-- =========================
+     TOOLBAR
+========================= -->
+
+<div class="toolbar">
+
+<div class="search-box">
+
+<input
+type="text"
+id="searchInput"
+placeholder="🔎 ابحث عن منتج..."
+>
+
+</div>
+
+
+<a
+href="add-product.html"
+class="add-product-btn">
+
+➕ إضافة منتج
+
+</a>
+
+</div>
+
+
+<!-- =========================
+     PRODUCTS
+========================= -->
+
+<div class="products-section">
+
+<div class="products-header">
+
+<h2>
+
+🛍️ منتجات متجري
+
+</h2>
+
+<div
+class="product-count"
+id="productCount">
+
+0 منتج
+
+</div>
+
+</div>
+
+
+<div
+class="products"
+id="productsContainer">
+
+<div class="loading">
+
+⏳ جاري تحميل منتجات متجرك...
+
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+<script type="module">
+
+/* =====================================================
+   FIREBASE
+===================================================== */
+
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  where
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+
+  authDomain:
+    "g-glam.firebaseapp.com",
+
+  projectId:
+    "g-glam",
+
+  storageBucket:
+    "g-glam.firebasestorage.app",
+
+  messagingSenderId:
+    "997228419719",
+
+  appId:
+    "1:997228419719:web:f9d88de7ea2c6f457e3622",
+
+  measurementId:
+    "G-WX1K1F83F6"
+
+};
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+const app =
+  initializeApp(firebaseConfig);
+
+const db =
+  getFirestore(app);
+
+const auth =
+  getAuth(app);
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const productsContainer =
+  document.getElementById(
+    "productsContainer"
+  );
+
+const searchInput =
+  document.getElementById(
+    "searchInput"
+  );
+
+const cartCount =
+  document.getElementById(
+    "cartCount"
+  );
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let allProducts = [];
+
+let currentOwnerUid = "";
+
+let currentStoreName = "G-Glam";
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+
+    .replace(/&/g,"&amp;")
+
+    .replace(/</g,"&lt;")
+
+    .replace(/>/g,"&gt;")
+
+    .replace(/"/g,"&quot;")
+
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   UPDATE CART COUNT
+===================================================== */
+
+function updateCartCount(){
+
+  const cart =
+    JSON.parse(
+      localStorage.getItem("cart")
+    ) || [];
+
+  let total = 0;
+
+  cart.forEach(item => {
+
+    total +=
+      Number(item.quantity || 0);
+
+  });
+
+  cartCount.textContent =
+    total;
+
+}
+
+
+/* =====================================================
+   LOAD PRODUCTS
+===================================================== */
+
+async function loadProducts(){
+
+  productsContainer.innerHTML = `
+
+    <div style="
+      grid-column:1/-1;
+      text-align:center;
+      padding:50px;
+      color:#777;
+    ">
+
+      ⏳ جاري تحميل منتجات المتجر...
+
+    </div>
+
+  `;
+
+
+  try{
+
+    /*
+      IMPORTANT:
+
+      كل منتج جديد يتم حفظه هكذا:
+
+      ownerUid: UID صاحب المتجر
+
+      لذلك نعرض فقط المنتجات
+      الخاصة بالمستخدم الحالي.
+    */
+
+    const productsQuery = query(
+
+      collection(
+        db,
+        "products"
+      ),
+
+      where(
+        "ownerUid",
+        "==",
+        currentOwnerUid
+      )
+
+    );
+
+
+    const snapshot =
+      await getDocs(
+        productsQuery
+      );
+
+
+    allProducts = [];
+
+
+    snapshot.forEach(
+      productDoc => {
+
+        const product =
+          productDoc.data();
+
+        allProducts.push({
+
+          id:
+            productDoc.id,
+
+          ...product
+
+        });
+
+      }
+    );
+
+
+    /*
+      ترتيب المنتجات
+      من الأحدث إلى الأقدم
+    */
+
+    allProducts.sort(
+      (a,b) => {
+
+        const aTime =
+          a.createdAt?.seconds || 0;
+
+        const bTime =
+          b.createdAt?.seconds || 0;
+
+        return bTime - aTime;
+
+      }
+    );
+
+
+    renderProducts(
+      allProducts
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "LOAD PRODUCTS ERROR:",
+      error
+    );
+
+
+    productsContainer.innerHTML = `
+
+      <div style="
+        grid-column:1/-1;
+        text-align:center;
+        padding:50px;
+        color:#c00;
+      ">
+
+        ❌ حدث خطأ أثناء تحميل المنتجات.
+
+        <br><br>
+
+        ${escapeHtml(
+          error.message
+        )}
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/* =====================================================
+   RENDER PRODUCTS
+===================================================== */
+
+function renderProducts(
+  products
+){
+
+  productsContainer.innerHTML = "";
+
+
+  if(!products.length){
+
+    productsContainer.innerHTML = `
+
+      <div style="
+        grid-column:1/-1;
+        text-align:center;
+        padding:60px 20px;
+        color:#777;
+        background:#fff;
+        border-radius:18px;
+      ">
+
+        <div style="
+          font-size:45px;
+          margin-bottom:15px;
+        ">
+
+          🛍️
+
+        </div>
+
+        <h3 style="
+          color:#333;
+          margin-bottom:8px;
+        ">
+
+          لا توجد منتجات
+
+        </h3>
+
+        <p>
+
+          لم تتم إضافة أي منتجات إلى متجرك بعد.
+
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  products.forEach(
+    product => {
+
+      const image =
+
+        product.image ||
+
+        (
+          Array.isArray(
+            product.images
+          ) &&
+          product.images.length
+
+            ? product.images[0]
+
+            : ""
+        );
+
+
+      const price =
+        Number(
+          product.price || 0
+        );
+
+
+      const stock =
+        Number(
+          product.stock || 0
+        );
+
+
+      const stockText =
+        stock > 0
+
+          ? `المخزون: ${stock}`
+
+          : "غير متوفر";
+
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+
+      card.className =
+        "card";
+
+
+      card.innerHTML = `
+
+        <img
+
+          src="${escapeHtml(image)}"
+
+          alt="${escapeHtml(
+            product.name ||
+            "منتج"
+          )}"
+
+          onerror="
+            this.style.display='none';
+          "
+
+        >
+
+
+        <div class="card-content">
+
+
+          <h3>
+
+            ${escapeHtml(
+              product.name ||
+              "منتج بدون اسم"
+            )}
+
+          </h3>
+
+
+          <div class="price">
+
+            ${price} DA
+
+          </div>
+
+
+          <div style="
+            font-size:12px;
+            color:${
+              stock > 0
+                ? "#198754"
+                : "#c00"
+            };
+            margin-bottom:10px;
+          ">
+
+            ${stockText}
+
+          </div>
+
+
+          <button
+
+            class="details-btn"
+
+            data-id="${escapeHtml(
+              product.id
+            )}"
+
+          >
+
+            عرض المنتج
+
+          </button>
+
+
+          <button
+
+            class="add-btn"
+
+            data-id="${escapeHtml(
+              product.id
+            )}"
+
+          >
+
+            أضف إلى السلة
+
+          </button>
+
+
+        </div>
+
+      `;
+
+
+      /*
+        عرض المنتج
+      */
+
+      card
+        .querySelector(
+          ".details-btn"
+        )
+        .addEventListener(
+          "click",
+          () => {
+
+            viewProduct(
+              product.id
+            );
+
+          }
+        );
+
+
+      /*
+        إضافة إلى السلة
+      */
+
+      card
+        .querySelector(
+          ".add-btn"
+        )
+        .addEventListener(
+          "click",
+          () => {
+
+            addToCart(
+              product
+            );
+
+          }
+        );
+
+
+      productsContainer
+        .appendChild(
+          card
+        );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   VIEW PRODUCT
+===================================================== */
+
+function viewProduct(
+  productId
+){
+
+  /*
+    نرسل UID مع رابط المنتج
+    حتى يعرف product.html
+    لأي متجر ينتمي المنتج.
+  */
+
+  window.location.href =
+
+    "product.html?id=" +
+
+    encodeURIComponent(
+      productId
+    ) +
+
+    "&ownerUid=" +
+
+    encodeURIComponent(
+      currentOwnerUid
+    );
+
+}
+
+
+/* =====================================================
+   ADD TO CART
+===================================================== */
+
+function addToCart(
+  product
+){
+
+  let cart =
+
+    JSON.parse(
+      localStorage.getItem(
+        "cart"
+      )
+    ) || [];
+
+
+  /*
+    مهم جدًا:
+
+    لا نكتفي بـ id المنتج.
+
+    نضيف ownerUid حتى لا تختلط
+    منتجات المتاجر المختلفة.
+  */
+
+  const ownerUid =
+    product.ownerUid ||
+    currentOwnerUid;
+
+
+  /*
+    البحث عن المنتج نفسه
+    داخل نفس المتجر فقط.
+  */
+
+  const existing =
+    cart.find(
+      item =>
+
+        item.id ===
+        product.id &&
+
+        item.ownerUid ===
+        ownerUid
+    );
+
+
+  if(existing){
+
+    existing.quantity =
+      Number(
+        existing.quantity || 0
+      ) + 1;
+
+  }else{
+
+    const image =
+
+      product.image ||
+
+      (
+        Array.isArray(
+          product.images
+        ) &&
+        product.images.length
+
+          ? product.images[0]
+
+          : ""
+      );
+
+
+    cart.push({
+
+      id:
+        product.id,
+
+      ownerUid:
+        ownerUid,
+
+      storeId:
+        ownerUid,
+
+      storeName:
+        currentStoreName,
+
+      name:
+        product.name || "",
+
+      price:
+        Number(
+          product.price || 0
+        ),
+
+      image:
+        image,
+
+      color:
+        "",
+
+      quantity:
+        1
+
+    });
+
+  }
+
+
+  localStorage.setItem(
+
+    "cart",
+
+    JSON.stringify(
+      cart
+    )
+
+  );
+
+
+  updateCartCount();
+
+
+  alert(
+    "تمت إضافة المنتج إلى السلة 🛒"
+  );
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+searchInput.addEventListener(
+  "input",
+  function(){
+
+    const keyword =
+
+      this.value
+        .toLowerCase()
+        .trim();
+
+
+    if(!keyword){
+
+      renderProducts(
+        allProducts
+      );
+
+      return;
+
+    }
+
+
+    const filtered =
+
+      allProducts.filter(
+        product => {
+
+          const name =
+
+            (
+              product.name ||
+              ""
+            )
+            .toLowerCase();
+
+
+          const description =
+
+            (
+              product.description ||
+              ""
+            )
+            .toLowerCase();
+
+
+          return (
+
+            name.includes(
+              keyword
+            ) ||
+
+            description.includes(
+              keyword
+            )
+
+          );
+
+        }
+      );
+
+
+    renderProducts(
+      filtered
+    );
+
+  }
+);
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+const sidebar =
+  document.getElementById(
+    "sidebar"
+  );
+
+const overlay =
+  document.getElementById(
+    "overlay"
+  );
+
+const menuBtn =
+  document.getElementById(
+    "menuBtn"
+  );
+
+
+if(menuBtn){
+
+  menuBtn.addEventListener(
+    "click",
+    () => {
+
+      sidebar.classList.add(
+        "active"
+      );
+
+      overlay.classList.add(
+        "active"
+      );
+
+    }
+  );
+
+}
+
+
+if(overlay){
+
+  overlay.addEventListener(
+    "click",
+    () => {
+
+      sidebar.classList.remove(
+        "active"
+      );
+
+      overlay.classList.remove(
+        "active"
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   AUTHENTICATION
+===================================================== */
+
+onAuthStateChanged(
+
+  auth,
+
+  async user => {
+
+    /*
+      لا يوجد تسجيل دخول
+    */
+
+    if(!user){
+
+      /*
+        إذا كانت هذه الصفحة
+        هي المتجر العام الحقيقي،
+        لا نحول الزبون إلى login.
+
+        لكن في نظام المتاجر الخاص
+        نحتاج UID.
+
+        لذلك نقرأ UID من الرابط
+        إذا كان موجودًا.
+      */
+
+      const urlParams =
+        new URLSearchParams(
+          window.location.search
+        );
+
+
+      const urlOwnerUid =
+        urlParams.get(
+          "ownerUid"
+        );
+
+
+      if(urlOwnerUid){
+
+        currentOwnerUid =
+          urlOwnerUid;
+
+        await loadProducts();
+
+        return;
+
+      }
+
+
+      productsContainer.innerHTML = `
+
+        <div style="
+          grid-column:1/-1;
+          text-align:center;
+          padding:50px;
+          color:#777;
+        ">
+
+          ⚠️ لم يتم تحديد المتجر.
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    /*
+      UID المستخدم المسجل
+    */
+
+    currentOwnerUid =
+      user.uid;
+
+
+    /*
+      البريد
+    */
+
+    const ownerEmail =
+      user.email || "";
+
+
+    console.log(
+      "STORE OWNER UID:",
+      currentOwnerUid
+    );
+
+
+    console.log(
+      "STORE OWNER EMAIL:",
+      ownerEmail
+    );
+
+
+    /*
+      تحميل منتجات هذا المتجر فقط
+    */
+
+    await loadProducts();
+
+  }
+
+);
+
+
+/* =====================================================
+   CART
+===================================================== */
+
+updateCartCount();
+
+
+</script>
+
+
+<!-- =====================================================
+     SERVICE WORKER
+===================================================== -->
+
+<script>
+
+if(
+  "serviceWorker"
+  in navigator
+){
+
+  window.addEventListener(
+    "load",
+    () => {
+
+      navigator
+        .serviceWorker
+        .register(
+          "service-worker.js"
+        )
+
+        .then(
+          () => {
+
+            console.log(
+              "G-Glam PWA جاهز"
+            );
+
+          }
+        )
+
+        .catch(
+          error => {
+
+            console.log(
+              "خطأ في PWA:",
+              error
+            );
+
+          }
+        );
+
+    }
+  );
+
+}
+
+</script>
+
+</body>
+
+</html>
