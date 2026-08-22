@@ -29,33 +29,62 @@ rel="stylesheet">
 
 <style>
 
+/* =====================================================
+   COLORS
+===================================================== */
+
 :root{
 
 --bg:#F4F4F4;
+
 --card:#FFFFFF;
+
 --text:#222222;
+
 --accent:#F47B20;
+
 --accent-dark:#DF6810;
+
 --accent-light:#FFF1E6;
+
 --muted:#777777;
+
 --border:#E8E8E8;
---shadow:0 4px 15px rgba(0,0,0,.06);
+
+--danger:#D9534F;
+
+--shadow:
+0 4px 15px rgba(0,0,0,.06);
 
 }
+
+
+/* =====================================================
+   RESET
+===================================================== */
 
 *{
 
 margin:0;
 padding:0;
+
 box-sizing:border-box;
+
 font-family:"Tajawal",Arial,sans-serif;
 
 }
 
+
+/* =====================================================
+   BODY
+===================================================== */
+
 body{
 
 background:var(--bg);
+
 color:var(--text);
+
 padding-bottom:90px;
 
 }
@@ -68,7 +97,9 @@ padding-bottom:90px;
 header{
 
 display:flex;
+
 align-items:center;
+
 justify-content:space-between;
 
 padding:18px 20px;
@@ -76,123 +107,208 @@ padding:18px 20px;
 background:var(--bg);
 
 position:sticky;
+
 top:0;
+
 z-index:100;
 
 }
 
+
+/* =====================================================
+   LOGO
+===================================================== */
+
 .logo{
 
 font-size:27px;
+
 font-weight:800;
+
 letter-spacing:.5px;
 
 }
+
+
+/* =====================================================
+   MENU + CART
+===================================================== */
 
 .menu-btn,
 .cart-icon{
 
 font-size:27px;
+
 cursor:pointer;
+
 position:relative;
 
 }
+
+
+/* =====================================================
+   CART COUNT
+===================================================== */
 
 .cart-count{
 
 position:absolute;
 
 top:-8px;
+
 left:-8px;
 
 background:var(--accent);
-color:white;
+
+color:#fff;
 
 font-size:11px;
+
 font-weight:bold;
 
 width:20px;
+
 height:20px;
 
 border-radius:50%;
 
 display:flex;
+
 align-items:center;
+
 justify-content:center;
 
 }
 
 
 /* =====================================================
-   STORE HEADER
+   STORE VERTICAL FRAME
 ===================================================== */
 
-.store-info{
+.store-banner{
+
+width:calc(100% - 30px);
+
+max-width:700px;
+
+margin:18px auto 22px;
+
+background:#FFFFFF;
+
+border-radius:24px;
+
+padding:30px 20px 25px;
 
 text-align:center;
 
-padding:18px 15px 20px;
+border:1px solid var(--border);
 
-}
+box-shadow:
 
+0 6px 22px rgba(0,0,0,.07);
 
-/* اسم المتجر */
+position:relative;
 
-.store-info h1{
-
-font-size:25px;
-font-weight:800;
-
-margin-bottom:6px;
-
-}
-
-
-/* وصف المتجر */
-
-.store-info p{
-
-font-size:14px;
-color:var(--muted);
-
-margin-bottom:18px;
+overflow:hidden;
 
 }
 
 
 /* =====================================================
-   STORE IMAGE - CENTER
+   ORANGE SIDE FRAME
 ===================================================== */
 
-.store-image-container{
+.store-banner::before{
+
+content:"";
+
+position:absolute;
+
+top:0;
+
+right:0;
+
+width:6px;
+
+height:100%;
+
+background:var(--accent);
+
+}
+
+
+/* =====================================================
+   STORE IMAGE CONTAINER
+===================================================== */
+
+.store-banner-image{
 
 display:flex;
 
 justify-content:center;
+
 align-items:center;
 
-margin:5px auto 10px;
+margin-bottom:16px;
 
 }
 
 
-.store-image{
+/* =====================================================
+   STORE IMAGE
+===================================================== */
 
-width:110px;
-height:110px;
+.store-banner-image img{
+
+width:120px;
+
+height:120px;
 
 border-radius:50%;
 
 object-fit:cover;
 
-background:#FFFFFF;
+background:#F1F1F1;
 
-border:4px solid #FFFFFF;
+border:5px solid #FFFFFF;
 
 box-shadow:
-0 5px 20px rgba(0,0,0,.10);
+
+0 6px 20px rgba(0,0,0,.12);
 
 display:block;
+
+}
+
+
+/* =====================================================
+   STORE NAME
+===================================================== */
+
+.store-banner h1{
+
+font-size:26px;
+
+font-weight:800;
+
+color:#222;
+
+margin-bottom:7px;
+
+}
+
+
+/* =====================================================
+   STORE DESCRIPTION
+===================================================== */
+
+.store-banner p{
+
+font-size:14px;
+
+color:var(--muted);
+
+line-height:1.8;
 
 }
 
@@ -207,6 +323,7 @@ padding:0 15px 20px;
 
 }
 
+
 .search-box input{
 
 width:100%;
@@ -217,7 +334,7 @@ border:1px solid var(--border);
 
 border-radius:30px;
 
-background:white;
+background:#fff;
 
 box-shadow:var(--shadow);
 
@@ -225,13 +342,17 @@ font-size:15px;
 
 outline:none;
 
+transition:.2s;
+
 }
+
 
 .search-box input:focus{
 
 border-color:var(--accent);
 
 box-shadow:
+
 0 0 0 3px rgba(244,123,32,.10);
 
 }
@@ -246,14 +367,18 @@ box-shadow:
 position:fixed;
 
 top:0;
+
 right:-280px;
 
 width:280px;
+
 height:100%;
 
-background:white;
+background:#fff;
 
-box-shadow:-4px 0 15px rgba(0,0,0,.1);
+box-shadow:
+
+-4px 0 15px rgba(0,0,0,.1);
 
 z-index:999;
 
@@ -263,11 +388,13 @@ padding-top:30px;
 
 }
 
+
 .sidebar.active{
 
 right:0;
 
 }
+
 
 .sidebar a{
 
@@ -283,11 +410,15 @@ font-size:17px;
 
 border-bottom:1px solid #eee;
 
+transition:.2s;
+
 }
+
 
 .sidebar a:hover{
 
 background:var(--accent-light);
+
 color:var(--accent-dark);
 
 }
@@ -311,6 +442,7 @@ z-index:998;
 
 }
 
+
 .overlay.active{
 
 display:block;
@@ -326,7 +458,9 @@ display:block;
 
 display:grid;
 
-grid-template-columns:repeat(2,1fr);
+grid-template-columns:
+
+repeat(2,1fr);
 
 gap:15px;
 
@@ -349,11 +483,12 @@ overflow:hidden;
 
 box-shadow:var(--shadow);
 
-border:1px solid rgba(0,0,0,.03);
-
 transition:.2s;
 
+border:1px solid rgba(0,0,0,.03);
+
 }
+
 
 .card:hover{
 
@@ -390,6 +525,7 @@ background:#F1F1F1;
 padding:12px;
 
 }
+
 
 .card h3{
 
@@ -443,7 +579,7 @@ border-radius:12px;
 
 background:var(--accent);
 
-color:white;
+color:#fff;
 
 text-decoration:none;
 
@@ -452,6 +588,15 @@ cursor:pointer;
 margin-bottom:8px;
 
 font-weight:bold;
+
+transition:.2s;
+
+}
+
+
+.details-btn:hover{
+
+background:var(--accent-dark);
 
 }
 
@@ -472,20 +617,23 @@ border-radius:12px;
 
 background:var(--accent);
 
-color:white;
+color:#fff;
 
 cursor:pointer;
 
 font-weight:bold;
 
+transition:.2s;
+
 }
 
-.add-btn:hover,
-.details-btn:hover{
+
+.add-btn:hover{
 
 background:var(--accent-dark);
 
 }
+
 
 .add-btn:disabled{
 
@@ -512,6 +660,7 @@ color:var(--muted);
 
 }
 
+
 .empty{
 
 grid-column:1/-1;
@@ -522,7 +671,7 @@ padding:50px 20px;
 
 color:var(--muted);
 
-background:white;
+background:#fff;
 
 border-radius:18px;
 
@@ -551,7 +700,7 @@ max-width:500px;
 
 background:var(--accent);
 
-color:white;
+color:#fff;
 
 padding:16px;
 
@@ -562,11 +711,21 @@ text-align:center;
 text-decoration:none;
 
 box-shadow:
+
 0 8px 20px rgba(244,123,32,.25);
 
 z-index:500;
 
 font-weight:bold;
+
+transition:.2s;
+
+}
+
+
+.floating-cart:hover{
+
+background:var(--accent-dark);
 
 }
 
@@ -579,7 +738,9 @@ font-weight:bold;
 
 .products{
 
-grid-template-columns:repeat(4,1fr);
+grid-template-columns:
+
+repeat(4,1fr);
 
 }
 
@@ -594,7 +755,9 @@ grid-template-columns:repeat(4,1fr);
 
 .products{
 
-grid-template-columns:repeat(5,1fr);
+grid-template-columns:
+
+repeat(5,1fr);
 
 }
 
@@ -602,23 +765,10 @@ grid-template-columns:repeat(5,1fr);
 
 
 /* =====================================================
-   MOBILE
+   SMALL MOBILE
 ===================================================== */
 
 @media(max-width:400px){
-
-.store-image{
-
-width:95px;
-height:95px;
-
-}
-
-.store-info h1{
-
-font-size:22px;
-
-}
 
 .logo{
 
@@ -626,9 +776,47 @@ font-size:24px;
 
 }
 
+.menu-btn,
+.cart-icon{
+
+font-size:25px;
+
+}
+
+.store-banner{
+
+width:calc(100% - 20px);
+
+margin-top:12px;
+
+padding:25px 15px 22px;
+
+}
+
+.store-banner-image img{
+
+width:100px;
+
+height:100px;
+
+}
+
+.store-banner h1{
+
+font-size:22px;
+
+}
+
+.store-banner p{
+
+font-size:13px;
+
+}
+
 .products{
 
 gap:10px;
+
 padding:10px;
 
 }
@@ -679,17 +867,34 @@ id="overlay">
 class="sidebar"
 id="sidebar">
 
-<a href="#" id="homeLink">
+
+<a
+href="#"
+id="homeLink">
+
 🏠 الرئيسية
+
 </a>
 
-<a href="#" id="cartLink">
+
+<a
+href="#"
+id="cartLink">
+
 🛒 السلة
+
 </a>
 
-<a href="#" id="contactLink" target="_blank">
+
+<a
+href="#"
+id="contactLink"
+target="_blank">
+
 📞 اتصل بنا
+
 </a>
+
 
 </div>
 
@@ -699,6 +904,7 @@ id="sidebar">
 ===================================================== -->
 
 <header>
+
 
 <div
 class="menu-btn"
@@ -734,44 +940,49 @@ id="cartCount">
 
 </div>
 
+
 </header>
 
 
 <!-- =====================================================
-     STORE INFORMATION
+     STORE VERTICAL FRAME
 ===================================================== -->
 
-<div class="store-info">
+<div
+class="store-banner">
 
 
-<h1 id="storeName">
+<div
+class="store-banner-image">
+
+
+<img
+id="storeImage"
+
+src=""
+
+alt="صورة المتجر"
+
+>
+
+
+</div>
+
+
+<h1
+id="storeName">
 
 جاري تحميل المتجر...
 
 </h1>
 
 
-<p id="storeDescription">
+<p
+id="storeDescription">
 
 Bienvenue dans notre boutique
 
 </p>
-
-
-<!-- =====================================================
-     STORE IMAGE IN CENTER
-===================================================== -->
-
-<div class="store-image-container">
-
-<img
-id="storeImage"
-class="store-image"
-src=""
-alt="صورة المتجر"
->
-
-</div>
 
 
 </div>
@@ -781,12 +992,15 @@ alt="صورة المتجر"
      SEARCH
 ===================================================== -->
 
-<div class="search-box">
+<div
+class="search-box">
+
 
 <input
 type="text"
 id="searchInput"
 placeholder="ابحث عن منتج...">
+
 
 </div>
 
@@ -799,11 +1013,14 @@ placeholder="ابحث عن منتج...">
 class="products"
 id="productsContainer">
 
-<div class="loading">
+
+<div
+class="loading">
 
 ⏳ جاري تحميل المنتجات...
 
 </div>
+
 
 </div>
 
@@ -826,7 +1043,7 @@ class="floating-cart">
 
 
 /* =====================================================
-   FIREBASE
+   FIREBASE IMPORTS
 ===================================================== */
 
 import {
@@ -864,31 +1081,43 @@ from
 const firebaseConfig = {
 
 apiKey:
+
 "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
 
 authDomain:
+
 "g-glam.firebaseapp.com",
 
 projectId:
+
 "g-glam",
 
 storageBucket:
+
 "g-glam.firebasestorage.app",
 
 messagingSenderId:
+
 "997228419719",
 
 appId:
+
 "1:997228419719:web:f9d88de7ea2c6f457e3622",
 
 measurementId:
+
 "G-WX1K1F83F6"
 
 };
 
 
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
 const app =
 initializeApp(firebaseConfig);
+
 
 const db =
 getFirestore(app);
@@ -903,30 +1132,36 @@ document.getElementById(
 "productsContainer"
 );
 
+
 const searchInput =
 document.getElementById(
 "searchInput"
 );
+
 
 const cartCount =
 document.getElementById(
 "cartCount"
 );
 
+
 const storeNameElement =
 document.getElementById(
 "storeName"
 );
+
 
 const storeDescriptionElement =
 document.getElementById(
 "storeDescription"
 );
 
+
 const headerLogo =
 document.getElementById(
 "headerLogo"
 );
+
 
 const storeImage =
 document.getElementById(
@@ -963,7 +1198,7 @@ localStorage.getItem(
 
 
 /* =====================================================
-   STORE REQUIRED
+   STORE UID REQUIRED
 ===================================================== */
 
 if(!storeUid){
@@ -972,18 +1207,31 @@ productsContainer.innerHTML = `
 
 <div class="empty">
 
-<div style="font-size:50px;">
+<div
+style="
+font-size:50px;
+margin-bottom:15px;
+">
+
 🏪
+
 </div>
 
-<br>
 
 <h2>
+
 لم يتم تحديد المتجر
+
 </h2>
 
-<p style="margin-top:10px;">
-يجب فتح رابط المتجر الخاص بالتاجر.
+
+<p
+style="
+margin-top:10px;
+">
+
+يجب فتح رابط المتجر الخاص بصاحبه.
+
 </p>
 
 </div>
@@ -998,7 +1246,7 @@ throw new Error(
 
 
 /* =====================================================
-   SAVE STORE
+   SAVE CURRENT STORE
 ===================================================== */
 
 localStorage.setItem(
@@ -1026,11 +1274,30 @@ return String(
 value ?? ""
 )
 
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/'/g,
+"&#039;"
+);
 
 }
 
@@ -1078,7 +1345,7 @@ storeSnap.data();
 
 
 /* =====================================================
-   STATUS
+   CHECK STATUS
 ===================================================== */
 
 const status =
@@ -1135,7 +1402,7 @@ name + " | المتجر";
 
 
 /* =====================================================
-   DESCRIPTION
+   STORE DESCRIPTION
 ===================================================== */
 
 storeDescriptionElement.textContent =
@@ -1170,10 +1437,9 @@ image;
 storeImage.style.display =
 "block";
 
-}else{
+}
 
-storeImage.src =
-"";
+else{
 
 storeImage.style.display =
 "none";
@@ -1191,14 +1457,18 @@ document.getElementById(
 );
 
 
-if(currentStore.facebook){
+if(
+currentStore.facebook
+){
 
 contactLink.href =
 currentStore.facebook;
 
 }
 
-else if(currentStore.phone){
+else if(
+currentStore.phone
+){
 
 contactLink.href =
 "tel:" +
@@ -1226,9 +1496,11 @@ console.error(
 error
 );
 
+
 showStoreError(
 "حدث خطأ أثناء تحميل المتجر."
 );
+
 
 return false;
 
@@ -1266,6 +1538,7 @@ let snapshot;
 
 try{
 
+
 const productsQuery =
 query(
 
@@ -1282,10 +1555,12 @@ storeUid
 
 );
 
+
 snapshot =
 await getDocs(
 productsQuery
 );
+
 
 }
 
@@ -1317,6 +1592,7 @@ storeUid
 
 );
 
+
 snapshot =
 await getDocs(
 oldQuery
@@ -1326,7 +1602,7 @@ oldQuery
 
 
 /* =====================================================
-   PRODUCTS
+   PRODUCTS ARRAY
 ===================================================== */
 
 allProducts = [];
@@ -1361,6 +1637,7 @@ console.error(
 error
 );
 
+
 productsContainer.innerHTML = `
 
 <div class="empty">
@@ -1394,14 +1671,21 @@ productsContainer.innerHTML =
 "";
 
 
-if(!products.length){
+if(
+!products.length
+){
 
 productsContainer.innerHTML = `
 
 <div class="empty">
 
-<div style="font-size:45px;">
+<div
+style="
+font-size:45px;
+">
+
 🛍️
+
 </div>
 
 <br>
@@ -1432,6 +1716,7 @@ product.images
 )
 
 &&
+
 product.images.length
 
 ?
@@ -1448,6 +1733,7 @@ product.images[0]
 const name =
 
 product.name ||
+
 "منتج";
 
 
@@ -1483,9 +1769,13 @@ card.innerHTML = `
 
 <img
 
-src="${escapeHtml(image)}"
+src="${escapeHtml(
+image
+)}"
 
-alt="${escapeHtml(name)}"
+alt="${escapeHtml(
+name
+)}"
 
 onerror="
 this.src='https://via.placeholder.com/400x400?text=Product';
@@ -1494,17 +1784,21 @@ this.src='https://via.placeholder.com/400x400?text=Product';
 >
 
 
-<div class="card-content">
+<div
+class="card-content">
 
 
 <h3>
 
-${escapeHtml(name)}
+${escapeHtml(
+name
+)}
 
 </h3>
 
 
-<div class="price">
+<div
+class="price">
 
 ${price} DA
 
@@ -1518,7 +1812,8 @@ outOfStock
 
 `
 
-<div style="
+<div
+style="
 color:#c00;
 font-size:13px;
 font-weight:bold;
@@ -1535,7 +1830,8 @@ margin-bottom:8px;
 
 `
 
-<div style="
+<div
+style="
 color:#777;
 font-size:12px;
 margin-bottom:8px;
@@ -1560,11 +1856,36 @@ class="details-btn">
 
 <button
 class="add-btn"
-${outOfStock ? "disabled" : ""}>
 
-${outOfStock
-? "غير متوفر"
-: "أضف إلى السلة"}
+${
+
+outOfStock
+
+?
+
+"disabled"
+
+:
+
+""
+
+}
+
+>
+
+${
+
+outOfStock
+
+?
+
+"غير متوفر"
+
+:
+
+"أضف إلى السلة"
+
+}
 
 </button>
 
@@ -1614,7 +1935,9 @@ card.querySelector(
 );
 
 
-if(!outOfStock){
+if(
+!outOfStock
+){
 
 addButton.addEventListener(
 "click",
@@ -1643,7 +1966,9 @@ card
    ADD TO CART
 ===================================================== */
 
-function addToCart(product){
+function addToCart(
+product
+){
 
 let cart =
 
@@ -1659,18 +1984,22 @@ localStorage.getItem(
 ===================================================== */
 
 const otherStoreItems =
+
 cart.filter(
 item =>
 
 item.storeUid &&
 
 item.storeUid !== storeUid
+
 );
 
 
-if(otherStoreItems.length){
+if(
+otherStoreItems.length
+){
 
-const change =
+const confirmChange =
 confirm(
 
 "السلة تحتوي منتجات من متجر آخر.\n\n" +
@@ -1680,7 +2009,9 @@ confirm(
 );
 
 
-if(!change){
+if(
+!confirmChange
+){
 
 return;
 
@@ -1701,14 +2032,18 @@ const existing =
 cart.find(
 item =>
 
-item.id === product.id &&
+item.id ===
+product.id &&
 
-item.storeUid === storeUid
+item.storeUid ===
+storeUid
 
 );
 
 
-if(existing){
+if(
+existing
+){
 
 existing.quantity += 1;
 
@@ -1740,6 +2075,7 @@ product.images
 )
 
 &&
+
 product.images.length
 
 ?
@@ -1752,7 +2088,8 @@ product.images[0]
 
 ),
 
-quantity:1,
+quantity:
+1,
 
 color:
 "بدون لون",
@@ -1774,8 +2111,13 @@ currentStore?.name ||
 
 
 localStorage.setItem(
+
 "cart",
-JSON.stringify(cart)
+
+JSON.stringify(
+cart
+)
+
 );
 
 
@@ -1811,10 +2153,13 @@ localStorage.getItem(
 
 
 const storeCart =
+
 cart.filter(
 item =>
 
-item.storeUid === storeUid
+item.storeUid ===
+storeUid
+
 );
 
 
@@ -1825,6 +2170,7 @@ storeCart.forEach(
 item => {
 
 total +=
+
 Number(
 item.quantity || 0
 );
@@ -1853,7 +2199,9 @@ this.value
 .trim();
 
 
-if(!keyword){
+if(
+!keyword
+){
 
 renderProducts(
 allProducts
@@ -1868,6 +2216,7 @@ const filtered =
 
 allProducts.filter(
 product => {
+
 
 const name =
 
@@ -1887,11 +2236,15 @@ product.description || ""
 
 return (
 
-name.includes(keyword)
+name.includes(
+keyword
+)
 
 ||
 
-description.includes(keyword)
+description.includes(
+keyword
+)
 
 );
 
@@ -1976,10 +2329,12 @@ document.getElementById(
 "sidebar"
 );
 
+
 const overlay =
 document.getElementById(
 "overlay"
 );
+
 
 const menuBtn =
 document.getElementById(
@@ -2018,16 +2373,26 @@ overlay.classList.remove(
 
 
 /* =====================================================
-   ERROR
+   STORE ERROR
 ===================================================== */
 
-function showStoreError(message){
+function showStoreError(
+message
+){
 
 productsContainer.innerHTML = `
 
-<div class="empty">
+<div
+class="empty"
+style="
+grid-column:1/-1;
+padding:60px 20px;
+text-align:center;
+">
 
-<div style="
+
+<div
+style="
 font-size:50px;
 margin-bottom:15px;
 ">
@@ -2036,13 +2401,18 @@ margin-bottom:15px;
 
 </div>
 
+
 <h2>
 
-${escapeHtml(message)}
+${escapeHtml(
+message
+)}
 
 </h2>
 
-<p style="
+
+<p
+style="
 margin-top:10px;
 color:#777;
 ">
@@ -2050,6 +2420,7 @@ color:#777;
 تحقق من رابط المتجر.
 
 </p>
+
 
 </div>
 
@@ -2069,7 +2440,9 @@ const storeLoaded =
 await loadStore();
 
 
-if(storeLoaded){
+if(
+storeLoaded
+){
 
 await loadProducts();
 
