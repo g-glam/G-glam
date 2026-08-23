@@ -19,10 +19,6 @@ rel="stylesheet">
 
 <style>
 
-/* =====================================================
-   COLORS
-===================================================== */
-
 :root{
 
 --orange:#F47B20;
@@ -49,11 +45,6 @@ rel="stylesheet">
 
 }
 
-
-/* =====================================================
-   RESET
-===================================================== */
-
 *{
 
 box-sizing:border-box;
@@ -64,11 +55,6 @@ padding:0;
 font-family:"Tajawal",Arial,sans-serif;
 
 }
-
-
-/* =====================================================
-   BODY
-===================================================== */
 
 body{
 
@@ -120,7 +106,7 @@ width:240px;
 
 
 /* =====================================================
-   LOGO
+   LOGO IMAGE
 ===================================================== */
 
 .logo{
@@ -143,15 +129,23 @@ padding:10px;
 
 .logo img{
 
-width:120px;
+width:48px;
 
-height:auto;
-
-max-height:55px;
+height:48px;
 
 object-fit:contain;
 
 display:block;
+
+transition:.3s;
+
+}
+
+.sidebar:hover .logo img{
+
+width:130px;
+
+height:55px;
 
 }
 
@@ -496,6 +490,35 @@ margin-top:13px;
 color:var(--dark-2);
 
 font-weight:700;
+
+}
+
+
+/* =====================================================
+   UID
+===================================================== */
+
+.owner-uid{
+
+font-size:12px;
+
+color:#777;
+
+margin-top:8px;
+
+direction:ltr;
+
+text-align:right;
+
+word-break:break-all;
+
+}
+
+.owner-uid span{
+
+font-weight:700;
+
+color:#333;
 
 }
 
@@ -1432,7 +1455,7 @@ id="logoutBtn">
 <img
 id="topStoreImage"
 class="store-image"
-src="https://via.placeholder.com/100x100?text=G"
+src="logotrans.png"
 alt="صورة المتجر"
 >
 
@@ -1475,10 +1498,6 @@ class="view-store-btn">
 <div class="content">
 
 
-<!-- =====================================================
-     HEADER
-===================================================== -->
-
 <div class="header">
 
 <h1 id="storeName">
@@ -1507,12 +1526,21 @@ class="view-store-btn">
 
 </div>
 
+
+<div class="owner-uid">
+
+🆔 UID:
+
+<span id="ownerUidDisplay">
+
+جاري التحميل...
+
+</span>
+
 </div>
 
+</div>
 
-<!-- =====================================================
-     MESSAGES
-===================================================== -->
 
 <div
 class="message success"
@@ -1525,10 +1553,6 @@ class="message error"
 id="errorMessage">
 </div>
 
-
-<!-- =====================================================
-     STATISTICS
-===================================================== -->
 
 <div class="stats">
 
@@ -1596,10 +1620,6 @@ G-Glam
 </div>
 
 
-<!-- =====================================================
-     ACTIONS
-===================================================== -->
-
 <div class="actions">
 
 
@@ -1645,10 +1665,6 @@ onclick="goOrders()">
 
 </div>
 
-
-<!-- =====================================================
-     PRODUCTS
-===================================================== -->
 
 <div class="section">
 
@@ -1696,15 +1712,11 @@ id="productsContainer">
 </div>
 
 
-<!-- =====================================================
-     FIREBASE
-===================================================== -->
-
 <script type="module">
 
 
 /* =====================================================
-   IMPORTS
+   FIREBASE IMPORTS
 ===================================================== */
 
 import {
@@ -1786,10 +1798,8 @@ measurementId:
 const app =
 initializeApp(firebaseConfig);
 
-
 const db =
 getFirestore(app);
-
 
 const auth =
 getAuth(app);
@@ -1800,57 +1810,34 @@ getAuth(app);
 ===================================================== */
 
 const storeNameElement =
-document.getElementById(
-"storeName"
-);
-
+document.getElementById("storeName");
 
 const storeNameStat =
-document.getElementById(
-"storeNameStat"
-);
-
+document.getElementById("storeNameStat");
 
 const ownerEmailElement =
-document.getElementById(
-"ownerEmail"
-);
+document.getElementById("ownerEmail");
 
+const ownerUidDisplay =
+document.getElementById("ownerUidDisplay");
 
 const productsCount =
-document.getElementById(
-"productsCount"
-);
-
+document.getElementById("productsCount");
 
 const ordersCount =
-document.getElementById(
-"ordersCount"
-);
-
+document.getElementById("ordersCount");
 
 const productsContainer =
-document.getElementById(
-"productsContainer"
-);
-
+document.getElementById("productsContainer");
 
 const topStoreName =
-document.getElementById(
-"topStoreName"
-);
-
+document.getElementById("topStoreName");
 
 const topStoreImage =
-document.getElementById(
-"topStoreImage"
-);
-
+document.getElementById("topStoreImage");
 
 const viewStoreBtn =
-document.getElementById(
-"viewStoreBtn"
-);
+document.getElementById("viewStoreBtn");
 
 
 /* =====================================================
@@ -1865,68 +1852,193 @@ let currentStoreId = "";
 
 let currentStoreName = "G-Glam";
 
+let currentStore = null;
+
 
 /* =====================================================
-   LOAD STORE
+   LOAD STORE BY UID
 ===================================================== */
 
 async function loadStore(){
 
 try{
 
+const user =
+auth.currentUser;
 
-if(!auth.currentUser){
+
+if(!user){
 
 window.location.href =
 "login.html";
 
-return;
+return false;
 
 }
 
 
-const uid =
-auth.currentUser.uid;
-
+/* =====================================================
+   AUTH UID
+===================================================== */
 
 currentOwnerUid =
-uid;
+user.uid;
 
 
 /* =====================================================
-   STORES / UID
+   EMAIL
 ===================================================== */
 
-const storeRef =
+currentOwnerEmail =
+user.email || "";
+
+
+/* =====================================================
+   DISPLAY UID
+===================================================== */
+
+ownerUidDisplay.textContent =
+currentOwnerUid;
+
+ownerEmailElement.textContent =
+currentOwnerEmail;
+
+
+/* =====================================================
+   FIRST METHOD
+   stores/{UID}
+===================================================== */
+
+let storeSnapshot =
+
+await getDoc(
+
 doc(
 db,
 "stores",
-uid
-);
+currentOwnerUid
+)
 
-
-const storeSnapshot =
-await getDoc(
-storeRef
 );
 
 
 /* =====================================================
-   NO STORE
+   SECOND METHOD
+   ownerUid == UID
+===================================================== */
+
+if(!storeSnapshot.exists()){
+
+console.log(
+"Store document ID is not UID. Searching ownerUid..."
+);
+
+
+const ownerQuery =
+query(
+
+collection(
+db,
+"stores"
+),
+
+where(
+"ownerUid",
+"==",
+currentOwnerUid
+)
+
+);
+
+
+const ownerSnapshot =
+await getDocs(
+ownerQuery
+);
+
+
+if(!ownerSnapshot.empty){
+
+storeSnapshot =
+ownerSnapshot.docs[0];
+
+}
+
+}
+
+
+/* =====================================================
+   THIRD METHOD
+   ownerEmail == EMAIL
+===================================================== */
+
+if(!storeSnapshot.exists()){
+
+console.log(
+"Searching store by ownerEmail..."
+);
+
+
+if(currentOwnerEmail){
+
+const emailQuery =
+query(
+
+collection(
+db,
+"stores"
+),
+
+where(
+"ownerEmail",
+"==",
+currentOwnerEmail
+)
+
+);
+
+
+const emailSnapshot =
+await getDocs(
+emailQuery
+);
+
+
+if(!emailSnapshot.empty){
+
+storeSnapshot =
+emailSnapshot.docs[0];
+
+}
+
+}
+
+}
+
+
+/* =====================================================
+   STORE NOT FOUND
 ===================================================== */
 
 if(!storeSnapshot.exists()){
 
 alert(
-"⚠️ لم يتم العثور على متجر مرتبط بهذا الحساب."
+
+"⚠️ لم يتم العثور على متجر مرتبط بهذا الحساب.\n\n" +
+
+"UID:\n" +
+
+currentOwnerUid
+
 );
+
 
 await signOut(auth);
 
 window.location.href =
 "login.html";
 
-return;
+return false;
 
 }
 
@@ -1935,22 +2047,22 @@ return;
    STORE DATA
 ===================================================== */
 
-const store =
+currentStore =
 storeSnapshot.data();
-
 
 currentStoreId =
 storeSnapshot.id;
 
 
 /* =====================================================
-   STATUS
+   STORE STATUS
 ===================================================== */
 
 const status =
 
 String(
-store.status || "pending"
+currentStore.status ||
+"pending"
 )
 
 .toLowerCase()
@@ -1980,7 +2092,7 @@ await signOut(auth);
 window.location.href =
 "login.html";
 
-return;
+return false;
 
 }
 
@@ -1998,7 +2110,9 @@ status === "refused"
 ){
 
 const reason =
-store.rejectionReason ||
+
+currentStore.rejectionReason ||
+
 "لم يتم ذكر سبب الرفض.";
 
 
@@ -2018,13 +2132,13 @@ await signOut(auth);
 window.location.href =
 "login.html";
 
-return;
+return false;
 
 }
 
 
 /* =====================================================
-   APPROVED
+   CHECK APPROVAL
 ===================================================== */
 
 if(
@@ -2044,31 +2158,35 @@ await signOut(auth);
 window.location.href =
 "login.html";
 
-return;
+return false;
 
 }
 
 
 /* =====================================================
-   STORE ACCEPTED
+   STORE NAME
 ===================================================== */
 
 currentStoreName =
 
-store.storeName ||
+currentStore.storeName ||
 
-store.name ||
+currentStore.name ||
 
 "G-Glam";
 
 
+/* =====================================================
+   OWNER EMAIL
+===================================================== */
+
 currentOwnerEmail =
 
-store.ownerEmail ||
+currentStore.ownerEmail ||
 
-store.email ||
+currentStore.email ||
 
-auth.currentUser.email ||
+user.email ||
 
 "";
 
@@ -2079,13 +2197,13 @@ auth.currentUser.email ||
 
 const storeImage =
 
-store.storeImage ||
+currentStore.storeImage ||
 
-store.image ||
+currentStore.image ||
 
-store.logo ||
+currentStore.logo ||
 
-store.photoURL ||
+currentStore.photoURL ||
 
 "";
 
@@ -2095,37 +2213,37 @@ if(storeImage){
 topStoreImage.src =
 storeImage;
 
+}else{
+
+topStoreImage.src =
+"logotrans.png";
+
 }
 
 
 /* =====================================================
-   DISPLAY
+   DISPLAY STORE
 ===================================================== */
 
 storeNameElement.textContent =
 currentStoreName;
 
-
 storeNameStat.textContent =
 currentStoreName;
-
 
 ownerEmailElement.textContent =
 currentOwnerEmail;
 
+ownerUidDisplay.textContent =
+currentOwnerUid;
 
 topStoreName.textContent =
 currentStoreName;
 
 
 /* =====================================================
-   VIEW STORE
+   STORE URL
 ===================================================== */
-
-/*
-   المتجر يفتح مباشرة باستعمال UID
-   الخاص بالحساب المسجل في Firebase Authentication.
-*/
 
 viewStoreBtn.href =
 
@@ -2142,33 +2260,33 @@ currentOwnerUid
 
 localStorage.setItem(
 "storeId",
-currentStoreId
+currentOwnerUid
 );
 
+localStorage.setItem(
+"storeDocumentId",
+currentStoreId
+);
 
 localStorage.setItem(
 "storeName",
 currentStoreName
 );
 
-
 localStorage.setItem(
 "storeOwnerEmail",
 currentOwnerEmail
 );
-
 
 localStorage.setItem(
 "ownerEmail",
 currentOwnerEmail
 );
 
-
 localStorage.setItem(
 "ownerUid",
 currentOwnerUid
 );
-
 
 localStorage.setItem(
 "paymentStatus",
@@ -2190,6 +2308,9 @@ await loadProducts();
 await loadOrders();
 
 
+return true;
+
+
 }catch(error){
 
 console.error(
@@ -2198,24 +2319,15 @@ error
 );
 
 
-if(
-error.code ===
-"permission-denied"
-){
-
-alert(
-"❌ لا توجد صلاحية للوصول إلى بيانات المتجر."
-);
-
-}else{
-
 alert(
 
-"❌ حدث خطأ أثناء تحميل المتجر.\n\n" +
+"❌ حدث خطأ أثناء تحميل بيانات المتجر.\n\n" +
 
 error.message
 
 );
+
+return false;
 
 }
 
@@ -2230,6 +2342,14 @@ async function loadProducts(){
 
 try{
 
+let snapshot;
+
+
+/* =====================================================
+   OWNER UID
+===================================================== */
+
+try{
 
 const q =
 query(
@@ -2247,31 +2367,55 @@ currentOwnerUid
 
 );
 
-
-let snapshot;
-
-
-try{
-
 snapshot =
 await getDocs(q);
 
 }catch(error){
 
+console.log(
+"ownerUid products query failed:",
+error
+);
 
-if(
 
-error.code ===
-"failed-precondition"
+/* =====================================================
+   STORE ID
+===================================================== */
 
-||
+try{
 
-error.code ===
-"permission-denied"
+const q2 =
+query(
 
-){
+collection(
+db,
+"products"
+),
 
-const oldQuery =
+where(
+"storeId",
+"==",
+currentOwnerUid
+)
+
+);
+
+snapshot =
+await getDocs(q2);
+
+}catch(error2){
+
+console.log(
+"storeId products query failed:",
+error2
+);
+
+
+/* =====================================================
+   OLD OWNER EMAIL
+===================================================== */
+
+const q3 =
 query(
 
 collection(
@@ -2288,13 +2432,7 @@ currentOwnerEmail
 );
 
 snapshot =
-await getDocs(
-oldQuery
-);
-
-}else{
-
-throw error;
+await getDocs(q3);
 
 }
 
@@ -2302,7 +2440,7 @@ throw error;
 
 
 /* =====================================================
-   PRODUCTS COUNT
+   COUNT
 ===================================================== */
 
 productsCount.textContent =
@@ -2349,43 +2487,58 @@ return;
 
 
 /* =====================================================
-   DISPLAY
+   PRODUCTS
 ===================================================== */
 
 snapshot.forEach(
-productDoc=>{
+
+productDoc => {
 
 const product =
 productDoc.data();
 
-
 const id =
 productDoc.id;
 
-
 const card =
-document.createElement(
-"div"
-);
-
+document.createElement("div");
 
 card.className =
 "product";
+
+
+const image =
+
+product.image ||
+
+(
+
+Array.isArray(product.images) &&
+
+product.images.length
+
+?
+
+product.images[0]
+
+:
+
+"logotrans.png"
+
+);
 
 
 card.innerHTML = `
 
 <img
 
-src="${
-product.image ||
-"https://via.placeholder.com/400x400?text=G-Glam"
-}"
+src="${escapeHtml(image)}"
 
 alt="${escapeHtml(
-product.name ||
-"منتج"
+product.name || "منتج"
 )}"
+
+onerror="this.src='logotrans.png';"
 
 >
 
@@ -2449,15 +2602,15 @@ class="delete-btn">
 ===================================================== */
 
 card
-.querySelector(
-".edit-btn"
-)
+.querySelector(".edit-btn")
 .addEventListener(
 "click",
 function(){
 
 window.location.href =
+
 "edit-product.html?id=" +
+
 encodeURIComponent(id);
 
 }
@@ -2469,9 +2622,7 @@ encodeURIComponent(id);
 ===================================================== */
 
 card
-.querySelector(
-".delete-btn"
-)
+.querySelector(".delete-btn")
 .addEventListener(
 "click",
 function(){
@@ -2482,11 +2633,10 @@ deleteProduct(id);
 );
 
 
-productsContainer.appendChild(
-card
-);
+productsContainer.appendChild(card);
 
 });
+
 
 }catch(error){
 
@@ -2525,6 +2675,15 @@ async function loadOrders(){
 
 try{
 
+let snapshot;
+
+
+/* =====================================================
+   OWNER UID
+===================================================== */
+
+try{
+
 const q =
 query(
 
@@ -2541,30 +2700,49 @@ currentOwnerUid
 
 );
 
-
-let snapshot;
-
-
-try{
-
 snapshot =
 await getDocs(q);
 
 }catch(error){
 
-if(
+console.log(
+"ownerUid orders query failed:",
+error
+);
 
-error.code ===
-"failed-precondition"
 
-||
+/* =====================================================
+   STORE ID
+===================================================== */
 
-error.code ===
-"permission-denied"
+try{
 
-){
+const q2 =
+query(
 
-const oldQuery =
+collection(
+db,
+"orders"
+),
+
+where(
+"storeId",
+"==",
+currentOwnerUid
+)
+
+);
+
+snapshot =
+await getDocs(q2);
+
+}catch(error2){
+
+/* =====================================================
+   OWNER EMAIL
+===================================================== */
+
+const q3 =
 query(
 
 collection(
@@ -2581,13 +2759,7 @@ currentOwnerEmail
 );
 
 snapshot =
-await getDocs(
-oldQuery
-);
-
-}else{
-
-throw error;
+await getDocs(q3);
 
 }
 
@@ -2697,9 +2869,7 @@ window.location.href =
 ===================================================== */
 
 document
-.getElementById(
-"logoutBtn"
-)
+.getElementById("logoutBtn")
 .addEventListener(
 "click",
 async function(event){
@@ -2722,15 +2892,19 @@ return;
 
 try{
 
-await signOut(
-auth
-);
+await signOut(auth);
 
 
-/* تنظيف بيانات الدخول */
+/* =====================================================
+   CLEAR STORAGE
+===================================================== */
 
 localStorage.removeItem(
 "storeId"
+);
+
+localStorage.removeItem(
+"storeDocumentId"
 );
 
 localStorage.removeItem(
@@ -2776,7 +2950,7 @@ showError(
 
 
 /* =====================================================
-   SUCCESS MESSAGE
+   SUCCESS
 ===================================================== */
 
 function showSuccess(text){
@@ -2809,7 +2983,7 @@ box.style.display =
 
 
 /* =====================================================
-   ERROR MESSAGE
+   ERROR
 ===================================================== */
 
 function showError(text){
@@ -2900,7 +3074,7 @@ return;
 
 
 /* =====================================================
-   USER UID
+   UID
 ===================================================== */
 
 currentOwnerUid =
@@ -2908,19 +3082,26 @@ user.uid;
 
 
 /* =====================================================
-   USER EMAIL
+   EMAIL
 ===================================================== */
 
 currentOwnerEmail =
 user.email || "";
 
 
+/* =====================================================
+   DISPLAY
+===================================================== */
+
+ownerUidDisplay.textContent =
+currentOwnerUid;
+
 ownerEmailElement.textContent =
 currentOwnerEmail;
 
 
 /* =====================================================
-   CHECK STORE
+   LOAD
 ===================================================== */
 
 await loadStore();
@@ -2937,7 +3118,6 @@ console.log(
 );
 
 </script>
-
 
 </body>
 
