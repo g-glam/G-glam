@@ -8,7 +8,7 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>G-Glam | إضافة منتج</title>
+<title>G-Glam | منتجاتي</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
@@ -55,11 +55,9 @@ font-family:"Tajawal",Arial,sans-serif;
 }
 
 body{
-
 background:var(--bg);
 color:var(--text);
 min-height:100vh;
-
 }
 
 
@@ -70,7 +68,6 @@ SIDEBAR
 .sidebar{
 
 position:fixed;
-
 right:0;
 top:0;
 
@@ -78,11 +75,9 @@ height:100vh;
 width:72px;
 
 background:var(--sidebar);
-
 border-left:1px solid var(--border);
 
 overflow:hidden;
-
 transition:.3s;
 
 z-index:1000;
@@ -104,7 +99,6 @@ align-items:center;
 justify-content:center;
 
 font-size:23px;
-
 font-weight:800;
 
 color:var(--dark);
@@ -120,17 +114,13 @@ color:var(--orange);
 }
 
 .menu{
-
 margin-top:18px;
-
 padding:0 10px;
-
 }
 
 .menu a{
 
 display:flex;
-
 align-items:center;
 
 gap:15px;
@@ -154,17 +144,13 @@ transition:.2s;
 }
 
 .menu a:hover{
-
 background:#E3E3E3;
-
 color:var(--dark);
-
 }
 
 .menu a.active{
 
 background:var(--orange);
-
 color:white;
 
 box-shadow:
@@ -209,8 +195,6 @@ margin-right:72px;
 
 padding:25px;
 
-max-width:1200px;
-
 }
 
 
@@ -245,11 +229,9 @@ content:"";
 position:absolute;
 
 right:0;
-
 top:0;
 
 width:5px;
-
 height:100%;
 
 background:var(--orange);
@@ -306,14 +288,96 @@ color:var(--dark);
 
 
 /* =====================================================
-MESSAGE
+TOOLBAR
+===================================================== */
+
+.toolbar{
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+gap:15px;
+
+margin-bottom:20px;
+
+}
+
+.search-box{
+flex:1;
+}
+
+.search-box input{
+
+width:100%;
+
+height:48px;
+
+border:1px solid var(--border);
+
+background:white;
+
+border-radius:13px;
+
+padding:0 17px;
+
+font-size:14px;
+
+outline:none;
+
+}
+
+.search-box input:focus{
+
+border-color:var(--orange);
+
+box-shadow:
+0 0 0 3px rgba(244,123,32,.08);
+
+}
+
+.add-product-btn{
+
+height:48px;
+
+padding:0 20px;
+
+border:none;
+
+border-radius:13px;
+
+background:var(--orange);
+
+color:white;
+
+font-size:14px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+white-space:nowrap;
+
+transition:.2s;
+
+}
+
+.add-product-btn:hover{
+background:var(--orange-dark);
+}
+
+
+/* =====================================================
+MESSAGES
 ===================================================== */
 
 .message{
 
 display:none;
 
-padding:14px 16px;
+padding:13px 16px;
 
 border-radius:12px;
 
@@ -349,10 +413,25 @@ border:1px solid #f1c4ca;
 
 
 /* =====================================================
-FORM CARD
+PRODUCT GRID
 ===================================================== */
 
-.form-card{
+.products-grid{
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:18px;
+
+}
+
+
+/* =====================================================
+PRODUCT CARD
+===================================================== */
+
+.product-card{
 
 background:white;
 
@@ -360,34 +439,347 @@ border:1px solid var(--border);
 
 border-radius:18px;
 
+overflow:hidden;
+
 box-shadow:var(--shadow);
 
-padding:25px;
-
-margin-bottom:20px;
+transition:.25s;
 
 }
 
-.section-title{
+.product-card:hover{
+
+transform:translateY(-3px);
+
+box-shadow:
+0 9px 25px rgba(0,0,0,.08);
+
+}
+
+
+/* =====================================================
+IMAGE
+===================================================== */
+
+.product-image-box{
+
+position:relative;
+
+width:100%;
+
+aspect-ratio:1/1;
+
+background:#F1F1F1;
+
+overflow:hidden;
+
+}
+
+.product-image{
+
+width:100%;
+height:100%;
+
+object-fit:cover;
+
+display:block;
+
+}
+
+.no-image{
+
+width:100%;
+height:100%;
+
+display:flex;
+
+align-items:center;
+justify-content:center;
+
+font-size:55px;
+
+color:#bbb;
+
+}
+
+.image-count{
+
+position:absolute;
+
+left:10px;
+top:10px;
+
+background:rgba(0,0,0,.68);
+
+color:white;
+
+padding:6px 9px;
+
+border-radius:20px;
+
+font-size:12px;
+
+}
+
+
+/* =====================================================
+PRODUCT INFO
+===================================================== */
+
+.product-info{
+padding:15px;
+}
+
+.product-info h3{
+
+font-size:16px;
+
+color:var(--dark);
+
+margin-bottom:8px;
+
+white-space:nowrap;
+
+overflow:hidden;
+
+text-overflow:ellipsis;
+
+}
+
+.product-price{
 
 font-size:18px;
 
 font-weight:800;
 
-color:var(--dark);
+color:var(--orange);
 
-margin-bottom:18px;
-
-padding-bottom:12px;
-
-border-bottom:1px solid var(--border);
+margin-bottom:7px;
 
 }
 
+.product-stock{
+
+font-size:13px;
+
+color:var(--muted);
+
+margin-bottom:7px;
+
+}
+
+.product-stock strong{
+color:var(--dark);
+}
+
+.product-colors,
+.product-sizes{
+
+font-size:12px;
+
+color:var(--muted);
+
+line-height:1.8;
+
+}
+
+
+/* =====================================================
+ACTIONS
+===================================================== */
+
+.product-actions{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:8px;
+
+margin-top:14px;
+
+}
+
+.edit-btn,
+.delete-btn{
+
+border:none;
+
+padding:10px 5px;
+
+border-radius:10px;
+
+font-family:"Tajawal",Arial,sans-serif;
+
+font-size:13px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.2s;
+
+}
+
+.edit-btn{
+
+background:#FFF0E5;
+
+color:var(--orange);
+
+}
+
+.edit-btn:hover{
+background:#FFE2CF;
+}
+
+.delete-btn{
+
+background:#FDEBEC;
+
+color:var(--danger);
+
+}
+
+.delete-btn:hover{
+background:#F8D7DA;
+}
+
+
+/* =====================================================
+LOADING / EMPTY
+===================================================== */
+
+.loading,
+.empty,
+.error-box{
+
+grid-column:1/-1;
+
+background:white;
+
+border:1px solid var(--border);
+
+border-radius:18px;
+
+padding:60px 20px;
+
+text-align:center;
+
+color:var(--muted);
+
+line-height:2;
+
+}
+
+.empty{
+border:1px dashed #D5D5D5;
+}
+
+.error-box{
+
+background:#FDEBEC;
+
+border-color:#F1C4CA;
+
+color:#842029;
+
+}
+
+
+/* =====================================================
+MODAL
+===================================================== */
+
+.modal{
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.48);
+
+display:none;
+
+align-items:center;
+
+justify-content:center;
+
+padding:20px;
+
+z-index:2000;
+
+}
+
+.modal.active{
+display:flex;
+}
+
+.modal-box{
+
+width:100%;
+
+max-width:850px;
+
+max-height:94vh;
+
+overflow-y:auto;
+
+background:white;
+
+border-radius:22px;
+
+padding:24px;
+
+box-shadow:
+0 15px 50px rgba(0,0,0,.20);
+
+}
+
+.modal-header{
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+margin-bottom:20px;
+
+}
+
+.modal-header h2{
+
+font-size:21px;
+
+color:var(--dark);
+
+}
+
+.close-btn{
+
+width:38px;
+height:38px;
+
+border:none;
+
+border-radius:50%;
+
+background:#F2F2F2;
+
+font-size:20px;
+
+cursor:pointer;
+
+}
+
+
+/* =====================================================
+FORM
+===================================================== */
+
 .form-group{
-
-margin-bottom:18px;
-
+margin-bottom:17px;
 }
 
 .form-group label{
@@ -398,9 +790,9 @@ font-size:13px;
 
 font-weight:bold;
 
-color:var(--dark);
-
 margin-bottom:7px;
+
+color:var(--dark);
 
 }
 
@@ -435,17 +827,9 @@ box-shadow:
 
 }
 
-.form-group textarea{
-
-min-height:120px;
-
-resize:vertical;
-
-}
-
 
 /* =====================================================
-DESCRIPTION EDITOR
+DESCRIPTION
 ===================================================== */
 
 .editor-wrapper{
@@ -530,7 +914,7 @@ padding:3px;
 
 .description-editor{
 
-min-height:160px;
+min-height:150px;
 
 padding:13px;
 
@@ -556,7 +940,7 @@ pointer-events:none;
 
 
 /* =====================================================
-COLORS / SIZES
+TAGS
 ===================================================== */
 
 .tag-section{
@@ -657,6 +1041,10 @@ line-height:1;
 
 }
 
+.color-tag{
+padding-right:7px;
+}
+
 .color-dot{
 
 width:19px;
@@ -709,7 +1097,6 @@ gap:10px;
 .stock-visibility-icon{
 
 width:38px;
-
 height:38px;
 
 border-radius:10px;
@@ -717,7 +1104,6 @@ border-radius:10px;
 display:flex;
 
 align-items:center;
-
 justify-content:center;
 
 background:#FFF1E6;
@@ -754,17 +1140,11 @@ color:var(--muted);
 
 }
 
-
-/* =====================================================
-SWITCH
-===================================================== */
-
 .switch{
 
 position:relative;
 
 width:52px;
-
 height:28px;
 
 flex-shrink:0;
@@ -776,7 +1156,6 @@ flex-shrink:0;
 opacity:0;
 
 width:0;
-
 height:0;
 
 }
@@ -804,11 +1183,9 @@ content:"";
 position:absolute;
 
 width:22px;
-
 height:22px;
 
 right:3px;
-
 top:3px;
 
 background:white;
@@ -822,15 +1199,11 @@ transition:.25s;
 }
 
 .switch input:checked + .slider{
-
 background:var(--orange);
-
 }
 
 .switch input:checked + .slider::before{
-
 transform:translateX(-24px);
-
 }
 
 
@@ -838,69 +1211,34 @@ transform:translateX(-24px);
 IMAGES
 ===================================================== */
 
-.image-upload-box{
-
-border:2px dashed #D7D7D7;
-
-border-radius:15px;
-
-padding:25px;
-
-text-align:center;
-
-background:#FAFAFA;
-
-transition:.2s;
-
-}
-
-.image-upload-box:hover{
-
-border-color:var(--orange);
-
-background:#FFF9F5;
-
-}
-
-.image-upload-box input{
-
-margin-top:12px;
-
-width:100%;
-
-}
-
-.image-help{
-
-font-size:12px;
-
-color:var(--muted);
-
-margin-top:8px;
-
-}
-
-.image-preview{
+.edit-images{
 
 display:flex;
 
-flex-wrap:wrap;
-
 gap:10px;
 
-margin-top:15px;
+flex-wrap:wrap;
+
+padding:12px;
+
+background:#FAFAFA;
+
+border:1px solid var(--border);
+
+border-radius:12px;
+
+margin-bottom:10px;
 
 }
 
-.preview-item{
+.edit-image-item{
 
 position:relative;
 
-width:100px;
+width:90px;
+height:90px;
 
-height:100px;
-
-border-radius:11px;
+border-radius:10px;
 
 overflow:hidden;
 
@@ -910,26 +1248,23 @@ background:#F2F2F2;
 
 }
 
-.preview-item img{
+.edit-preview-image{
 
 width:100%;
-
 height:100%;
 
 object-fit:cover;
 
 }
 
-.remove-preview{
+.remove-image-btn{
 
 position:absolute;
 
-top:5px;
-
-right:5px;
+top:4px;
+right:4px;
 
 width:25px;
-
 height:25px;
 
 border:none;
@@ -940,39 +1275,71 @@ background:rgba(220,53,69,.95);
 
 color:white;
 
-cursor:pointer;
+display:flex;
+
+align-items:center;
+justify-content:center;
 
 font-size:16px;
 
-z-index:2;
+cursor:pointer;
+
+z-index:5;
+
+}
+
+.new-image-item{
+border:2px solid var(--orange);
+}
+
+.new-image-label{
+
+position:absolute;
+
+bottom:4px;
+
+left:4px;
+right:4px;
+
+background:rgba(244,123,32,.9);
+
+color:white;
+
+font-size:9px;
+
+text-align:center;
+
+padding:2px;
+
+border-radius:5px;
 
 }
 
 
 /* =====================================================
-BUTTONS
+MODAL ACTIONS
 ===================================================== */
 
-.form-actions{
+.modal-actions{
 
 display:grid;
 
 grid-template-columns:1fr 1fr;
 
-gap:12px;
+gap:10px;
 
-margin-top:25px;
+margin-top:22px;
 
 }
 
 .save-btn,
 .cancel-btn{
 
-height:50px;
+height:47px;
 
 border:none;
 
-border-radius:12px;
+border-radius:11px;
 
 font-size:14px;
 
@@ -987,12 +1354,6 @@ cursor:pointer;
 background:var(--orange);
 
 color:white;
-
-}
-
-.save-btn:hover{
-
-background:var(--orange-dark);
 
 }
 
@@ -1017,12 +1378,34 @@ color:#333;
 RESPONSIVE
 ===================================================== */
 
+@media(max-width:1100px){
+
+.products-grid{
+grid-template-columns:repeat(3,1fr);
+}
+
+}
+
 @media(max-width:800px){
 
+.products-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
 .content{
-
 padding:16px;
+}
 
+.toolbar{
+
+align-items:stretch;
+
+flex-direction:column;
+
+}
+
+.add-product-btn{
+width:100%;
 }
 
 }
@@ -1030,15 +1413,11 @@ padding:16px;
 @media(max-width:550px){
 
 .sidebar{
-
 width:60px;
-
 }
 
 .sidebar:hover{
-
 width:200px;
-
 }
 
 .content{
@@ -1049,53 +1428,70 @@ padding:12px;
 
 }
 
-.form-card{
+.products-grid{
 
-padding:16px;
+grid-template-columns:repeat(2,1fr);
+
+gap:10px;
 
 }
 
-.form-actions{
+.product-info{
+padding:11px;
+}
 
+.product-info h3{
+font-size:14px;
+}
+
+.product-price{
+font-size:16px;
+}
+
+.product-actions{
 grid-template-columns:1fr;
-
-}
-
-.tag-add-row{
-
-flex-direction:column;
-
-}
-
-.tag-add-row button{
-
-height:43px;
-
 }
 
 .account-info{
-
 flex-direction:column;
+}
 
+.modal{
+padding:8px;
+}
+
+.modal-box{
+padding:15px;
+}
+
+.modal-actions{
+grid-template-columns:1fr;
+}
+
+.tag-add-row{
+flex-direction:column;
+}
+
+.tag-add-row button{
+height:43px;
 }
 
 }
 
+@media(max-width:380px){
 
-/* =====================================================
-SCROLLBAR
-===================================================== */
+.products-grid{
+grid-template-columns:1fr;
+}
+
+}
 
 ::-webkit-scrollbar{
-
 width:7px;
-
 }
 
 ::-webkit-scrollbar-track{
-
 background:#F1F1F1;
-
 }
 
 ::-webkit-scrollbar-thumb{
@@ -1107,15 +1503,12 @@ border-radius:10px;
 }
 
 ::-webkit-scrollbar-thumb:hover{
-
 background:var(--orange);
-
 }
 
 </style>
 
 </head>
-
 
 <body>
 
@@ -1127,94 +1520,49 @@ SIDEBAR
 <div class="sidebar">
 
 <div class="logo">
-
 G-<span>Glam</span>
-
 </div>
-
 
 <div class="menu">
 
 <a href="dashboard.html">
-
 <span class="icon">🏠</span>
-
-<span class="text">
-الرئيسية
-</span>
-
+<span class="text">الرئيسية</span>
 </a>
-
 
 <a href="orders.html">
-
 <span class="icon">📦</span>
-
-<span class="text">
-الطلبات
-</span>
-
+<span class="text">الطلبات</span>
 </a>
 
-
-<a href="products.html">
-
+<!-- منتجاتي -->
+<a href="products.html" class="active">
 <span class="icon">🛍️</span>
-
-<span class="text">
-منتجاتي
-</span>
-
+<span class="text">منتجاتي</span>
 </a>
 
-
-<a href="add-product.html"
-class="active">
-
+<!-- إضافة منتج -->
+<a href="add-product.html">
 <span class="icon">➕</span>
-
-<span class="text">
-إضافة منتج
-</span>
-
+<span class="text">إضافة منتج</span>
 </a>
-
 
 <a href="delivery.html">
-
 <span class="icon">🚚</span>
-
-<span class="text">
-أسعار التوصيل
-</span>
-
+<span class="text">أسعار التوصيل</span>
 </a>
-
 
 <a href="settings.html">
-
 <span class="icon">⚙️</span>
-
-<span class="text">
-الإعدادات
-</span>
-
+<span class="text">الإعدادات</span>
 </a>
 
-
-<a href="#"
-id="logoutBtn">
-
+<a href="#" id="logoutBtn">
 <span class="icon">🚪</span>
-
-<span class="text">
-تسجيل الخروج
-</span>
-
+<span class="text">تسجيل الخروج</span>
 </a>
 
 </div>
-
 </div>
 
 
@@ -1224,56 +1572,38 @@ CONTENT
 
 <div class="content">
 
-
 <div class="header">
 
-<h1>
-➕ إضافة منتج
-</h1>
+<h1>🛍️ منتجاتي</h1>
 
 <p>
-أضف منتجًا جديدًا إلى متجرك
+إدارة منتجات متجرك وتعديل جميع بياناتها
 </p>
-
 
 <div class="account-info">
 
-
 <div class="account-item">
-
 🏪 المتجر:
-
 <strong id="storeName">
 جاري تحميل معلومات المتجر...
 </strong>
-
 </div>
 
-
 <div class="account-item">
-
 📧 الحساب:
-
 <strong id="ownerEmail">
 جاري التحميل...
 </strong>
-
 </div>
 
-
 <div class="account-item">
-
 🔐 UID:
-
 <strong id="ownerUid">
 جاري التحميل...
 </strong>
-
 </div>
 
-
 </div>
-
 </div>
 
 
@@ -1282,32 +1612,88 @@ id="successMessage"
 class="message success-message">
 </div>
 
-
 <div
 id="errorMessage"
 class="message error-message">
 </div>
 
 
+<div class="toolbar">
+
+<div class="search-box">
+
+<input
+type="text"
+id="searchInput"
+placeholder="🔎 ابحث عن منتج..."
+>
+
+</div>
+
+<button
+class="add-product-btn"
+id="addProductBtn"
+type="button">
+
+➕ إضافة منتج
+
+</button>
+
+</div>
+
+
+<div
+class="products-grid"
+id="productsContainer">
+
+<div
+class="loading"
+id="loading">
+
+⏳ جاري تحميل معلومات المتجر والمنتجات...
+
+</div>
+
+</div>
+
+</div>
+
+
 <!-- =====================================================
-BASIC INFO
+EDIT MODAL
 ===================================================== -->
 
-<div class="form-card">
+<div
+class="modal"
+id="editModal">
 
-<div class="section-title">
-📦 معلومات المنتج
+<div class="modal-box">
+
+<div class="modal-header">
+
+<h2>
+✏️ تعديل المنتج
+</h2>
+
+<button
+class="close-btn"
+id="closeModal"
+type="button">
+
+×
+</button>
+
 </div>
 
 
 <div class="form-group">
 
 <label>
-اسم المنتج *
+اسم المنتج
 </label>
 
 <input
-id="productName"
+id="editName"
 type="text"
 placeholder="مثال: Lip Gloss"
 >
@@ -1318,11 +1704,11 @@ placeholder="مثال: Lip Gloss"
 <div class="form-group">
 
 <label>
-السعر DA *
+السعر DA
 </label>
 
 <input
-id="productPrice"
+id="editPrice"
 type="number"
 min="0"
 placeholder="مثال: 250"
@@ -1337,110 +1723,50 @@ placeholder="مثال: 250"
 📝 وصف المنتج
 </label>
 
-
 <div class="editor-wrapper">
-
 
 <div class="editor-toolbar">
 
-
-<button
-type="button"
-data-command="bold">
+<button type="button" data-command="bold">
 <b>B</b>
 </button>
 
-
-<button
-type="button"
-data-command="italic">
+<button type="button" data-command="italic">
 <i>I</i>
 </button>
 
-
-<button
-type="button"
-data-command="underline">
+<button type="button" data-command="underline">
 <u>U</u>
 </button>
 
-
-<button
-type="button"
-data-command="strikeThrough">
+<button type="button" data-command="strikeThrough">
 <s>S</s>
 </button>
 
-
 <select id="fontName">
 
-<option value="">
-نوع الخط
-</option>
-
-<option value="Tajawal">
-Tajawal
-</option>
-
-<option value="Arial">
-Arial
-</option>
-
-<option value="Tahoma">
-Tahoma
-</option>
-
-<option value="Verdana">
-Verdana
-</option>
-
-<option value="Georgia">
-Georgia
-</option>
-
-<option value="Times New Roman">
-Times New Roman
-</option>
+<option value="">نوع الخط</option>
+<option value="Tajawal">Tajawal</option>
+<option value="Arial">Arial</option>
+<option value="Tahoma">Tahoma</option>
+<option value="Verdana">Verdana</option>
+<option value="Georgia">Georgia</option>
+<option value="Times New Roman">Times New Roman</option>
 
 </select>
-
 
 <select id="fontSize">
 
-<option value="">
-حجم الخط
-</option>
-
-<option value="1">
-صغير
-</option>
-
-<option value="2">
-صغير نسبيًا
-</option>
-
-<option value="3">
-عادي
-</option>
-
-<option value="4">
-متوسط
-</option>
-
-<option value="5">
-كبير
-</option>
-
-<option value="6">
-كبير جدًا
-</option>
-
-<option value="7">
-ضخم
-</option>
+<option value="">حجم الخط</option>
+<option value="1">صغير</option>
+<option value="2">صغير نسبيًا</option>
+<option value="3">عادي</option>
+<option value="4">متوسط</option>
+<option value="5">كبير</option>
+<option value="6">كبير جدًا</option>
+<option value="7">ضخم</option>
 
 </select>
-
 
 <input
 type="color"
@@ -1448,51 +1774,31 @@ id="fontColor"
 value="#333333"
 >
 
-
-<button
-type="button"
-data-command="justifyRight">
+<button type="button" data-command="justifyRight">
 ≡
 </button>
 
-
-<button
-type="button"
-data-command="justifyCenter">
+<button type="button" data-command="justifyCenter">
 ☰
 </button>
 
-
-<button
-type="button"
-data-command="justifyLeft">
+<button type="button" data-command="justifyLeft">
 ≡
 </button>
 
-
-<button
-type="button"
-data-command="insertUnorderedList">
+<button type="button" data-command="insertUnorderedList">
 •☰
 </button>
 
-
-<button
-type="button"
-data-command="insertOrderedList">
+<button type="button" data-command="insertOrderedList">
 1☰
 </button>
 
-
-<button
-type="button"
-data-command="removeFormat">
+<button type="button" data-command="removeFormat">
 Tx
 </button>
 
-
 </div>
-
 
 <div
 id="descriptionEditor"
@@ -1501,30 +1807,20 @@ contenteditable="true"
 data-placeholder="اكتب وصف المنتج هنا...">
 </div>
 
-
 </div>
 
 </div>
 
-</div>
 
+<div class="form-group">
 
-<!-- =====================================================
-COLORS
-===================================================== -->
-
-<div class="form-card">
-
-<div class="section-title">
+<label>
 🎨 ألوان المنتج
-</div>
-
+</label>
 
 <div class="tag-section">
 
-
 <div class="tag-add-row">
-
 
 <input
 id="newColorName"
@@ -1533,18 +1829,13 @@ type="text"
 placeholder="اسم اللون مثل: وردي، أسود، Beige"
 >
 
-
 <input
 id="newColorValue"
 type="color"
 value="#F47B20"
 title="اختر لونًا"
-style="
-width:50px;
-padding:5px;
-"
+style="width:50px;padding:5px;"
 >
-
 
 <button
 type="button"
@@ -1554,37 +1845,27 @@ id="addColorBtn">
 
 </button>
 
-
 </div>
-
 
 <div
 class="tags-list"
 id="colorsList">
 </div>
 
-
 </div>
 
 </div>
 
 
-<!-- =====================================================
-SIZES
-===================================================== -->
+<div class="form-group">
 
-<div class="form-card">
-
-<div class="section-title">
+<label>
 📏 قياسات المنتج
-</div>
-
+</label>
 
 <div class="tag-section">
 
-
 <div class="tag-add-row">
-
 
 <input
 id="newSize"
@@ -1592,7 +1873,6 @@ class="simple-input"
 type="text"
 placeholder="مثال: S أو M أو L أو 38"
 >
-
 
 <button
 type="button"
@@ -1602,43 +1882,28 @@ id="addSizeBtn">
 
 </button>
 
-
 </div>
-
 
 <div
 class="tags-list"
 id="sizesList">
 </div>
 
-
 </div>
 
-</div>
-
-
-<!-- =====================================================
-STOCK
-===================================================== -->
-
-<div class="form-card">
-
-<div class="section-title">
-📦 المخزون
 </div>
 
 
 <div class="form-group">
 
 <label>
-كمية المخزون *
+المخزون
 </label>
 
 <input
-id="productStock"
+id="editStock"
 type="number"
 min="0"
-value="0"
 placeholder="مثال: 20"
 >
 
@@ -1651,43 +1916,30 @@ placeholder="مثال: 20"
 ظهور المخزون للزبون
 </label>
 
-
 <div class="stock-visibility">
 
-
 <div class="stock-visibility-info">
-
 
 <div class="stock-visibility-icon">
 📦
 </div>
 
-
 <div class="stock-visibility-text">
-
 
 <div
 class="stock-visibility-title"
 id="stockVisibilityTitle">
-
 إظهار المخزون
-
 </div>
-
 
 <div
 class="stock-visibility-description"
 id="stockVisibilityDescription">
-
 سيظهر عدد المنتجات المتبقية للزبون
-
-</div>
-
-
 </div>
 
 </div>
-
+</div>
 
 <label class="switch">
 
@@ -1701,105 +1953,55 @@ checked
 
 </label>
 
-
 </div>
 
 </div>
 
-</div>
 
+<div class="form-group">
 
-<!-- =====================================================
-IMAGES
-===================================================== -->
-
-<div class="form-card">
-
-<div class="section-title">
+<label>
 🖼️ صور المنتج
+</label>
+
+<div
+class="edit-images"
+id="editPreview">
 </div>
-
-
-<div class="image-upload-box">
-
-
-<div style="font-size:45px;">
-📸
-</div>
-
-
-<div style="
-font-weight:bold;
-margin-top:8px;
-">
-
-اختر صور المنتج
-
-</div>
-
-
-<div class="image-help">
-
-يمكنك اختيار أكثر من صورة
-
-</div>
-
 
 <input
-id="productImages"
+id="editImageFile"
 type="file"
 accept="image/*"
 multiple
 >
 
-
-<div
-class="image-preview"
-id="imagePreview">
 </div>
 
 
-</div>
-
-</div>
-
-
-<!-- =====================================================
-ACTIONS
-===================================================== -->
-
-<div class="form-card">
-
-
-<div class="form-actions">
-
+<div class="modal-actions">
 
 <button
 class="save-btn"
-id="saveProduct"
+id="saveEdit"
 type="button">
 
-💾 حفظ المنتج
+💾 حفظ التعديلات
 
 </button>
 
-
 <button
 class="cancel-btn"
-id="cancelBtn"
+id="cancelEdit"
 type="button">
 
 إلغاء
 
 </button>
 
-
 </div>
 
-
 </div>
-
-
 </div>
 
 
@@ -1809,44 +2011,33 @@ FIREBASE
 
 <script type="module">
 
-
 import {
-
 initializeApp
-
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
-
 import {
-
 getFirestore,
+collection,
+query,
+where,
+getDocs,
 doc,
 getDoc,
-collection,
-addDoc,
+updateDoc,
+deleteDoc,
 serverTimestamp
-
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
-
 import {
-
 getAuth,
 onAuthStateChanged,
 signOut
-
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
 
@@ -1902,37 +2093,67 @@ let currentOwnerEmail = "";
 
 let currentStore = null;
 
+let allProducts = [];
+
+let editingProductId = null;
+
+let existingImages = [];
+
+let selectedImages = [];
+
 let editingColors = [];
 
 let editingSizes = [];
-
-let selectedImages = [];
 
 
 /* =====================================================
 ELEMENTS
 ===================================================== */
 
-const productName =
-document.getElementById("productName");
+const productsContainer =
+document.getElementById("productsContainer");
 
-const productPrice =
-document.getElementById("productPrice");
+const loading =
+document.getElementById("loading");
 
-const productStock =
-document.getElementById("productStock");
+const storeNameElement =
+document.getElementById("storeName");
 
-const descriptionEditor =
-document.getElementById("descriptionEditor");
+const ownerEmailElement =
+document.getElementById("ownerEmail");
+
+const ownerUidElement =
+document.getElementById("ownerUid");
+
+const searchInput =
+document.getElementById("searchInput");
+
+const editModal =
+document.getElementById("editModal");
+
+const editName =
+document.getElementById("editName");
+
+const editPrice =
+document.getElementById("editPrice");
+
+const editStock =
+document.getElementById("editStock");
+
+const editImageFile =
+document.getElementById("editImageFile");
+
+const editPreview =
+document.getElementById("editPreview");
+
+const saveEdit =
+document.getElementById("saveEdit");
 
 const showStock =
 document.getElementById("showStock");
 
-const productImages =
-document.getElementById("productImages");
-
-const imagePreview =
-document.getElementById("imagePreview");
+const descriptionEditor =
+document.getElementById("descriptionEditor");
 
 const colorsList =
 document.getElementById("colorsList");
@@ -1949,40 +2170,68 @@ document.getElementById("newColorValue");
 const newSize =
 document.getElementById("newSize");
 
-const saveProduct =
-document.getElementById("saveProduct");
-
 
 /* =====================================================
-ESCAPE
+ESCAPE HTML
 ===================================================== */
 
 function escapeHtml(value){
 
 return String(value ?? "")
-
 .replace(/&/g,"&amp;")
-
 .replace(/</g,"&lt;")
-
 .replace(/>/g,"&gt;")
-
 .replace(/"/g,"&quot;")
-
 .replace(/'/g,"&#039;");
 
 }
 
 
 /* =====================================================
-AUTH
+STOCK
+===================================================== */
+
+function updateStockVisibilityText(){
+
+const title =
+document.getElementById("stockVisibilityTitle");
+
+const description =
+document.getElementById("stockVisibilityDescription");
+
+if(showStock.checked){
+
+title.textContent =
+"إظهار المخزون";
+
+description.textContent =
+"سيظهر عدد المنتجات المتبقية للزبون";
+
+}else{
+
+title.textContent =
+"إخفاء المخزون";
+
+description.textContent =
+"لن يظهر عدد المنتجات المتبقية للزبون";
+
+}
+
+}
+
+showStock.addEventListener(
+"change",
+updateStockVisibilityText
+);
+
+
+/* =====================================================
+AUTHENTICATION
 ===================================================== */
 
 onAuthStateChanged(
-
 auth,
-
-async function(user){
+async user=>{
 
 if(!user){
 
@@ -1994,41 +2243,37 @@ return;
 }
 
 
-currentUser =
-user;
-
-
 /*
 =====================================================
-IMPORTANT
-UID هو أساس الربط
+UID صاحب المتجر
 =====================================================
 */
 
-currentOwnerUid =
-user.uid;
+currentUser = user;
 
-currentOwnerEmail =
-user.email || "";
+currentOwnerUid = user.uid;
+
+currentOwnerEmail = user.email || "";
 
 
-document.getElementById(
-"ownerUid"
-).textContent =
+/*
+عرض معلومات الحساب
+*/
+
+ownerUidElement.textContent =
 currentOwnerUid;
 
+ownerEmailElement.textContent =
+currentOwnerEmail || "بدون بريد";
 
-document.getElementById(
-"ownerEmail"
-).textContent =
-currentOwnerEmail ||
-"بدون بريد";
 
+/*
+تحميل المتجر المرتبط بهذا UID
+*/
 
 await loadStore();
 
 }
-
 );
 
 
@@ -2040,11 +2285,15 @@ async function loadStore(){
 
 try{
 
-
 /*
 =====================================================
-المتجر مربوط مباشرة بـ UID
-stores/{UID}
+المتجر يجب أن يكون:
+
+stores/{ownerUid}
+
+مثال:
+
+stores/abc123UID
 =====================================================
 */
 
@@ -2055,28 +2304,23 @@ db,
 currentOwnerUid
 );
 
-
-const snapshot =
+const storeSnapshot =
 await getDoc(storeRef);
 
 
-if(!snapshot.exists()){
+if(!storeSnapshot.exists()){
 
-document.getElementById(
-"storeName"
-).textContent =
+storeNameElement.textContent =
 "لم يتم العثور على المتجر";
 
+loading.style.display =
+"none";
 
 showError(
-"❌ لم يتم العثور على متجر مرتبط بحسابك.\n\n" +
-"تأكد أن مستند المتجر موجود داخل:\n" +
-"stores/" +
+"❌ لم يتم العثور على متجر مرتبط بحسابك.\n" +
+"UID: " +
 currentOwnerUid
 );
-
-saveProduct.disabled =
-true;
 
 return;
 
@@ -2084,7 +2328,25 @@ return;
 
 
 currentStore =
-snapshot.data();
+storeSnapshot.data();
+
+
+storeNameElement.textContent =
+currentStore.storeName ||
+currentStore.name ||
+currentStore.title ||
+"G-Glam";
+
+
+currentOwnerEmail =
+currentStore.ownerEmail ||
+currentStore.email ||
+currentOwnerEmail;
+
+
+ownerEmailElement.textContent =
+currentOwnerEmail ||
+"غير محدد";
 
 
 const status =
@@ -2096,52 +2358,17 @@ currentStore.status ||
 .trim();
 
 
-document.getElementById(
-"storeName"
-).textContent =
-
-currentStore.storeName ||
-
-currentStore.name ||
-
-currentStore.title ||
-
-"G-Glam";
-
-
-/*
-=====================================================
-البريد للعرض فقط
-=====================================================
-*/
-
-currentOwnerEmail =
-
-currentStore.ownerEmail ||
-
-currentStore.email ||
-
-currentOwnerEmail;
-
-
-document.getElementById(
-"ownerEmail"
-).textContent =
-currentOwnerEmail ||
-"غير محدد";
-
-
 if(
 status === "pending" ||
 status === "waiting" ||
 status === "review"
 ){
 
-saveProduct.disabled =
-true;
+loading.style.display =
+"none";
 
 showError(
-"⏳ متجرك مازال قيد المراجعة.\nلا يمكنك إضافة منتجات حتى تتم الموافقة عليه."
+"⏳ متجرك مازال قيد المراجعة."
 );
 
 return;
@@ -2154,11 +2381,11 @@ status === "rejected" ||
 status === "refused"
 ){
 
-saveProduct.disabled =
-true;
+loading.style.display =
+"none";
 
 showError(
-"❌ تم رفض إنشاء المتجر.\nلا يمكنك إضافة منتجات."
+"❌ تم رفض إنشاء المتجر."
 );
 
 return;
@@ -2166,20 +2393,26 @@ return;
 }
 
 
-saveProduct.disabled =
-false;
+/*
+بعد التأكد من المتجر
+نحمّل منتجات هذا UID فقط
+*/
 
+await loadProducts();
 
 }
 catch(error){
 
-console.error(error);
+console.error(
+"STORE ERROR:",
+error
+);
 
-saveProduct.disabled =
-true;
+loading.style.display =
+"none";
 
 showError(
-"❌ تعذر تحميل معلومات المتجر.\n\n" +
+"❌ تعذر تحميل معلومات المتجر.\n" +
 error.message
 );
 
@@ -2189,52 +2422,838 @@ error.message
 
 
 /* =====================================================
-STOCK TEXT
+LOAD PRODUCTS
 ===================================================== */
 
-function updateStockVisibilityText(){
+async function loadProducts(){
 
-const title =
-document.getElementById(
-"stockVisibilityTitle"
+loading.style.display =
+"block";
+
+productsContainer.innerHTML =
+"";
+
+productsContainer.appendChild(
+loading
 );
+
+
+try{
+
+/*
+=====================================================
+مهم جدًا:
+
+لا نحمّل جميع المنتجات.
+
+نحمّل فقط:
+
+products
+where ownerUid == currentOwnerUid
+
+=====================================================
+*/
+
+const productsQuery =
+query(
+
+collection(
+db,
+"products"
+),
+
+where(
+"ownerUid",
+"==",
+currentOwnerUid
+)
+
+);
+
+
+const snapshot =
+await getDocs(
+productsQuery
+);
+
+
+allProducts = [];
+
+
+snapshot.forEach(
+productDoc=>{
+
+const data =
+productDoc.data();
+
+
+/*
+حماية إضافية
+*/
+
+if(
+data.ownerUid ===
+currentOwnerUid
+){
+
+allProducts.push({
+
+id:
+productDoc.id,
+
+...data
+
+});
+
+}
+
+});
+
+
+loading.style.display =
+"none";
+
+
+if(!allProducts.length){
+
+productsContainer.innerHTML = `
+
+<div class="empty">
+
+<div style="font-size:45px;">
+🛍️
+</div>
+
+لا توجد منتجات في متجرك حتى الآن.
+
+<br><br>
+
+<button
+class="add-product-btn"
+id="emptyAddProductBtn"
+type="button">
+
+➕ إضافة منتج
+
+</button>
+
+</div>
+
+`;
+
+document
+.getElementById("emptyAddProductBtn")
+.addEventListener(
+"click",
+()=>{
+
+window.location.href =
+"add-product.html";
+
+}
+);
+
+return;
+
+}
+
+
+renderProducts(
+allProducts
+);
+
+}
+catch(error){
+
+console.error(
+"PRODUCTS ERROR:",
+error
+);
+
+loading.style.display =
+"none";
+
+productsContainer.innerHTML = `
+
+<div class="error-box">
+
+❌ حدث خطأ أثناء تحميل المنتجات.
+
+<br><br>
+
+${escapeHtml(error.message)}
+
+<br><br>
+
+<button
+class="add-product-btn"
+id="retryProducts"
+type="button">
+
+🔄 إعادة المحاولة
+
+</button>
+
+</div>
+
+`;
+
+document
+.getElementById("retryProducts")
+.addEventListener(
+"click",
+loadProducts
+);
+
+}
+
+}
+
+
+/* =====================================================
+RENDER PRODUCTS
+===================================================== */
+
+function renderProducts(products){
+
+productsContainer.innerHTML =
+"";
+
+
+if(!products.length){
+
+productsContainer.innerHTML = `
+
+<div class="empty">
+
+📭 لا توجد منتجات مطابقة للبحث.
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+products.forEach(
+product=>{
+
+const card =
+document.createElement("div");
+
+card.className =
+"product-card";
+
+
+let images = [];
+
+
+if(
+Array.isArray(product.images)
+){
+
+images =
+product.images.filter(Boolean);
+
+}
+else if(
+product.image
+){
+
+images =
+[product.image];
+
+}
+
+
+const image =
+images[0] || "";
+
+
+const colors =
+Array.isArray(product.colors)
+?
+product.colors
+:
+[];
+
+
+const sizes =
+Array.isArray(product.sizes)
+?
+product.sizes
+:
+[];
+
+
+const stockVisible =
+product.showStock !== false;
+
+
+const colorNames =
+colors.map(
+color=>{
+
+if(
+typeof color === "object"
+){
+
+return color.name || "";
+
+}
+
+return String(color);
+
+}
+).filter(Boolean);
+
+
+card.innerHTML = `
+
+<div class="product-image-box">
+
+${
+image
+
+?
+
+`
+
+<img
+class="product-image"
+src="${escapeHtml(image)}"
+alt="${escapeHtml(product.name || "منتج")}"
+onerror="this.style.display='none';"
+>
+
+`
+
+:
+
+`
+
+<div class="no-image">
+📦
+</div>
+
+`
+}
+
+
+${
+images.length > 1
+
+?
+
+`
+
+<span class="image-count">
+📷 ${images.length}
+</span>
+
+`
+
+:
+
+""
+
+}
+
+</div>
+
+
+<div class="product-info">
+
+<h3>
+${escapeHtml(
+product.name ||
+"منتج بدون اسم"
+)}
+</h3>
+
+
+<div class="product-price">
+
+${Number(product.price || 0)}
+DA
+
+</div>
+
+
+<div class="product-stock">
+
+${
+stockVisible
+
+?
+
+`
+
+المخزون:
+
+<strong>
+${Number(product.stock || 0)}
+</strong>
+
+`
+
+:
+
+`
+
+<span>
+المخزون مخفي
+</span>
+
+`
+}
+
+</div>
+
+
+<div class="product-colors">
+
+🎨
+
+${
+colorNames.length
+?
+escapeHtml(
+colorNames.join("، ")
+)
+:
+"بدون ألوان"
+}
+
+</div>
+
+
+<div class="product-sizes">
+
+📏
+
+${
+sizes.length
+?
+escapeHtml(
+sizes.join("، ")
+)
+:
+"بدون قياسات"
+}
+
+</div>
+
+
+<div class="product-actions">
+
+<button
+class="edit-btn"
+type="button">
+
+✏️ تعديل
+
+</button>
+
+<button
+class="delete-btn"
+type="button">
+
+🗑️ حذف
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+
+card
+.querySelector(".edit-btn")
+.addEventListener(
+"click",
+()=>{
+
+openEditModal(
+product.id
+);
+
+}
+);
+
+
+card
+.querySelector(".delete-btn")
+.addEventListener(
+"click",
+()=>{
+
+deleteProduct(
+product.id
+);
+
+}
+);
+
+
+productsContainer.appendChild(
+card
+);
+
+});
+
+}
+
+
+/* =====================================================
+SEARCH
+===================================================== */
+
+searchInput.addEventListener(
+"input",
+function(){
+
+const keyword =
+this.value
+.trim()
+.toLowerCase();
+
+
+if(!keyword){
+
+renderProducts(
+allProducts
+);
+
+return;
+
+}
+
+
+const filtered =
+allProducts.filter(
+product=>{
+
+const name =
+String(
+product.name || ""
+)
+.toLowerCase();
+
 
 const description =
-document.getElementById(
-"stockVisibilityDescription"
+String(
+product.description || ""
+)
+.toLowerCase();
+
+
+return(
+name.includes(keyword) ||
+description.includes(keyword)
 );
 
+});
 
-if(showStock.checked){
 
-title.textContent =
-"إظهار المخزون";
-
-description.textContent =
-"سيظهر عدد المنتجات المتبقية للزبون";
+renderProducts(
+filtered
+);
 
 }
-else{
-
-title.textContent =
-"إخفاء المخزون";
-
-description.textContent =
-"لن يظهر عدد المنتجات المتبقية للزبون";
-
-}
-
-}
-
-
-showStock.addEventListener(
-"change",
-updateStockVisibilityText
 );
 
 
 /* =====================================================
+OPEN EDIT
+===================================================== */
+
+function openEditModal(productId){
+
+const product =
+allProducts.find(
+p=>p.id === productId
+);
+
+
+if(!product){
+
+alert(
+"المنتج غير موجود."
+);
+
+return;
+
+}
+
+
+/*
+حماية UID
+*/
+
+if(
+product.ownerUid !==
+currentOwnerUid
+){
+
+alert(
+"❌ هذا المنتج لا يخص متجرك."
+);
+
+return;
+
+}
+
+
+editingProductId =
+productId;
+
+
+editName.value =
+product.name || "";
+
+editPrice.value =
+product.price ?? "";
+
+editStock.value =
+product.stock ?? "";
+
+
+/* DESCRIPTION */
+
+descriptionEditor.innerHTML =
+product.description || "";
+
+
+/* COLORS */
+
+editingColors = [];
+
+
+if(
+Array.isArray(product.colors)
+){
+
+product.colors.forEach(
+color=>{
+
+if(
+typeof color === "object"
+){
+
+editingColors.push({
+
+name:
+color.name || "",
+
+value:
+color.value ||
+"#F47B20"
+
+});
+
+}
+else{
+
+editingColors.push({
+
+name:
+String(color),
+
+value:
+"#F47B20"
+
+});
+
+}
+
+});
+
+}
+else if(
+product.colors
+){
+
+String(product.colors)
+.split(",")
+.forEach(
+color=>{
+
+const name =
+color.trim();
+
+if(name){
+
+editingColors.push({
+
+name:name,
+
+value:"#F47B20"
+
+});
+
+}
+
+});
+
+}
+
+
+/* SIZES */
+
+editingSizes = [];
+
+
+if(
+Array.isArray(product.sizes)
+){
+
+editingSizes =
+[...product.sizes];
+
+}
+else if(
+product.sizes
+){
+
+editingSizes =
+String(product.sizes)
+.split(",")
+.map(
+s=>s.trim()
+)
+.filter(Boolean);
+
+}
+
+
+/* STOCK */
+
+showStock.checked =
+product.showStock !== false;
+
+updateStockVisibilityText();
+
+
+/* IMAGES */
+
+existingImages = [];
+
+
+if(
+Array.isArray(product.images)
+){
+
+existingImages =
+[...product.images];
+
+}
+else if(
+product.image
+){
+
+existingImages =
+[product.image];
+
+}
+
+
+selectedImages = [];
+
+editImageFile.value = "";
+
+
+renderColors();
+renderSizes();
+renderEditImages();
+
+
+editModal.classList.add(
+"active"
+);
+
+}
+
+
+/* =====================================================
 COLORS
+===================================================== */
+
+function renderColors(){
+
+colorsList.innerHTML =
+"";
+
+
+editingColors.forEach(
+(color,index)=>{
+
+const tag =
+document.createElement("div");
+
+tag.className =
+"tag color-tag";
+
+
+tag.innerHTML = `
+
+<span
+class="color-dot"
+style="
+background:${escapeHtml(
+color.value || "#F47B20"
+)}
+">
+</span>
+
+<span>
+${escapeHtml(
+color.name
+)}
+</span>
+
+<button
+class="tag-remove"
+type="button">
+
+×
+</button>
+
+`;
+
+
+tag
+.querySelector(".tag-remove")
+.addEventListener(
+"click",
+()=>{
+
+editingColors.splice(
+index,
+1
+);
+
+renderColors();
+
+}
+);
+
+
+colorsList.appendChild(
+tag
+);
+
+});
+
+}
+
+
+/* =====================================================
+ADD COLOR
 ===================================================== */
 
 document
@@ -2247,7 +3266,7 @@ addColor
 
 newColorName.addEventListener(
 "keydown",
-function(event){
+event=>{
 
 if(event.key === "Enter"){
 
@@ -2264,6 +3283,7 @@ function addColor(){
 
 const name =
 newColorName.value.trim();
+
 
 const value =
 newColorValue.value ||
@@ -2284,8 +3304,7 @@ return;
 const exists =
 editingColors.some(
 color=>
-String(color.name)
-.toLowerCase() ===
+color.name.toLowerCase() ===
 name.toLowerCase()
 );
 
@@ -2310,26 +3329,28 @@ value:value
 });
 
 
-newColorName.value =
-"";
+newColorName.value = "";
 
 renderColors();
 
 }
 
 
-function renderColors(){
+/* =====================================================
+SIZES
+===================================================== */
 
-colorsList.innerHTML =
+function renderSizes(){
+
+sizesList.innerHTML =
 "";
 
 
-editingColors.forEach(
-(color,index)=>{
+editingSizes.forEach(
+(size,index)=>{
 
 const tag =
 document.createElement("div");
-
 
 tag.className =
 "tag";
@@ -2337,15 +3358,8 @@ tag.className =
 
 tag.innerHTML = `
 
-<span
-class="color-dot"
-style="
-background:${escapeHtml(color.value)}
-">
-</span>
-
 <span>
-${escapeHtml(color.name)}
+📏 ${escapeHtml(size)}
 </span>
 
 <button
@@ -2358,25 +3372,26 @@ type="button">
 `;
 
 
-tag.querySelector(
-".tag-remove"
-)
+tag
+.querySelector(".tag-remove")
 .addEventListener(
 "click",
 ()=>{
 
-editingColors.splice(
+editingSizes.splice(
 index,
 1
 );
 
-renderColors();
+renderSizes();
 
 }
 );
 
 
-colorsList.appendChild(tag);
+sizesList.appendChild(
+tag
+);
 
 });
 
@@ -2384,7 +3399,7 @@ colorsList.appendChild(tag);
 
 
 /* =====================================================
-SIZES
+ADD SIZE
 ===================================================== */
 
 document
@@ -2397,7 +3412,7 @@ addSize
 
 newSize.addEventListener(
 "keydown",
-function(event){
+event=>{
 
 if(event.key === "Enter"){
 
@@ -2430,7 +3445,8 @@ return;
 const exists =
 editingSizes.some(
 item=>
-String(item).toLowerCase() ===
+String(item)
+.toLowerCase() ===
 size.toLowerCase()
 );
 
@@ -2446,76 +3462,19 @@ return;
 }
 
 
-editingSizes.push(size);
-
-newSize.value =
-"";
-
-renderSizes();
-
-}
-
-
-function renderSizes(){
-
-sizesList.innerHTML =
-"";
-
-
-editingSizes.forEach(
-(size,index)=>{
-
-const tag =
-document.createElement("div");
-
-
-tag.className =
-"tag";
-
-
-tag.innerHTML = `
-
-<span>
-📏 ${escapeHtml(size)}
-</span>
-
-<button
-class="tag-remove"
-type="button">
-
-×
-</button>
-
-`;
-
-
-tag.querySelector(
-".tag-remove"
-)
-.addEventListener(
-"click",
-()=>{
-
-editingSizes.splice(
-index,
-1
+editingSizes.push(
+size
 );
 
+newSize.value = "";
+
 renderSizes();
-
-}
-);
-
-
-sizesList.appendChild(tag);
-
-});
 
 }
 
 
 /* =====================================================
-DESCRIPTION EDITOR
+EDITOR
 ===================================================== */
 
 document
@@ -2529,19 +3488,15 @@ button.addEventListener(
 "click",
 function(){
 
-const command =
-this.dataset.command;
-
 descriptionEditor.focus();
 
 document.execCommand(
-command,
+this.dataset.command,
 false,
 null
 );
 
 }
-
 );
 
 });
@@ -2607,10 +3562,180 @@ this.value
 
 
 /* =====================================================
-IMAGE SELECTION
+EDIT IMAGES
 ===================================================== */
 
-productImages.addEventListener(
+function renderEditImages(){
+
+editPreview.innerHTML =
+"";
+
+
+existingImages.forEach(
+(url,index)=>{
+
+const item =
+document.createElement("div");
+
+item.className =
+"edit-image-item";
+
+
+item.innerHTML = `
+
+<img
+class="edit-preview-image"
+src="${escapeHtml(url)}"
+alt="صورة المنتج"
+>
+
+<button
+class="remove-image-btn"
+type="button">
+
+×
+</button>
+
+`;
+
+
+item
+.querySelector(".remove-image-btn")
+.addEventListener(
+"click",
+()=>{
+
+existingImages.splice(
+index,
+1
+);
+
+renderEditImages();
+
+}
+);
+
+
+editPreview.appendChild(
+item
+);
+
+});
+
+
+selectedImages.forEach(
+(file,index)=>{
+
+const item =
+document.createElement("div");
+
+item.className =
+"edit-image-item new-image-item";
+
+
+item.innerHTML = `
+
+<img
+class="edit-preview-image"
+>
+
+<span class="new-image-label">
+صورة جديدة
+</span>
+
+<button
+class="remove-image-btn"
+type="button">
+
+×
+</button>
+
+`;
+
+
+const img =
+item.querySelector(
+".edit-preview-image"
+);
+
+
+const reader =
+new FileReader();
+
+
+reader.onload =
+event=>{
+
+img.src =
+event.target.result;
+
+};
+
+
+reader.readAsDataURL(
+file
+);
+
+
+item
+.querySelector(".remove-image-btn")
+.addEventListener(
+"click",
+()=>{
+
+selectedImages.splice(
+index,
+1
+);
+
+syncSelectedFiles();
+
+renderEditImages();
+
+}
+);
+
+
+editPreview.appendChild(
+item
+);
+
+});
+
+}
+
+
+/* =====================================================
+SYNC FILES
+===================================================== */
+
+function syncSelectedFiles(){
+
+const dataTransfer =
+new DataTransfer();
+
+
+selectedImages.forEach(
+file=>{
+
+dataTransfer.items.add(
+file
+);
+
+});
+
+
+editImageFile.files =
+dataTransfer.files;
+
+}
+
+
+/* =====================================================
+SELECT IMAGES
+===================================================== */
+
+editImageFile.addEventListener(
 "change",
 function(){
 
@@ -2627,7 +3752,9 @@ if(
 file.type.startsWith("image/")
 ){
 
-selectedImages.push(file);
+selectedImages.push(
+file
+);
 
 }
 
@@ -2636,116 +3763,10 @@ selectedImages.push(file);
 
 syncSelectedFiles();
 
-renderImagePreview();
-
-});
-
-
-/* =====================================================
-SYNC FILE INPUT
-===================================================== */
-
-function syncSelectedFiles(){
-
-const dataTransfer =
-new DataTransfer();
-
-
-selectedImages.forEach(
-file=>{
-
-dataTransfer.items.add(file);
-
-});
-
-
-productImages.files =
-dataTransfer.files;
-
-}
-
-
-/* =====================================================
-IMAGE PREVIEW
-===================================================== */
-
-function renderImagePreview(){
-
-imagePreview.innerHTML =
-"";
-
-
-selectedImages.forEach(
-(file,index)=>{
-
-const item =
-document.createElement("div");
-
-
-item.className =
-"preview-item";
-
-
-item.innerHTML = `
-
-<img
-alt="صورة المنتج"
->
-
-<button
-class="remove-preview"
-type="button">
-
-×
-</button>
-
-`;
-
-
-const img =
-item.querySelector("img");
-
-
-const reader =
-new FileReader();
-
-
-reader.onload =
-event=>{
-
-img.src =
-event.target.result;
-
-};
-
-
-reader.readAsDataURL(file);
-
-
-item
-.querySelector(".remove-preview")
-.addEventListener(
-"click",
-()=>{
-
-selectedImages.splice(
-index,
-1
-);
-
-syncSelectedFiles();
-
-renderImagePreview();
+renderEditImages();
 
 }
 );
-
-
-imagePreview.appendChild(item);
-
-});
-
-}
 
 
 /* =====================================================
@@ -2763,7 +3784,6 @@ formData.append(
 file
 );
 
-
 formData.append(
 "upload_preset",
 "gglam_products"
@@ -2777,11 +3797,9 @@ await fetch(
 
 {
 
-method:
-"POST",
+method:"POST",
 
-body:
-formData
+body:formData
 
 }
 
@@ -2816,27 +3834,36 @@ return data.secure_url;
 
 
 /* =====================================================
-SAVE PRODUCT
+SAVE EDIT
 ===================================================== */
 
-saveProduct.addEventListener(
+saveEdit.addEventListener(
 "click",
-saveProductToFirebase
+saveEditedProduct
 );
 
 
-async function saveProductToFirebase(){
+async function saveEditedProduct(){
+
+if(!editingProductId){
+return;
+}
+
 
 const name =
-productName.value.trim();
+editName.value.trim();
 
 
 const price =
-Number(productPrice.value);
+Number(
+editPrice.value
+);
 
 
 const stock =
-Number(productStock.value);
+Number(
+editStock.value
+);
 
 
 if(!name){
@@ -2878,27 +3905,16 @@ return;
 }
 
 
-/*
-=====================================================
-تأكد مرة أخرى من تسجيل الدخول
-=====================================================
-*/
-
-if(!currentUser){
-
-showError(
-"❌ يجب تسجيل الدخول أولاً."
+const product =
+allProducts.find(
+p=>p.id === editingProductId
 );
 
-return;
 
-}
+if(!product){
 
-
-if(!currentOwnerUid){
-
-showError(
-"❌ لم يتم الحصول على UID الخاص بالحساب."
+alert(
+"المنتج غير موجود."
 );
 
 return;
@@ -2908,99 +3924,37 @@ return;
 
 /*
 =====================================================
-تأكد من وجود المتجر
+حماية مهمة جدًا:
+
+لا يمكن تعديل منتج من متجر آخر
 =====================================================
 */
+
+if(
+product.ownerUid !==
+currentOwnerUid
+){
+
+alert(
+"❌ لا يمكنك تعديل منتج لا يخص متجرك."
+);
+
+return;
+
+}
+
+
+saveEdit.disabled =
+true;
+
+saveEdit.textContent =
+"⏳ جاري الحفظ...";
+
 
 try{
 
-const storeRef =
-doc(
-db,
-"stores",
-currentOwnerUid
-);
-
-
-const storeSnapshot =
-await getDoc(storeRef);
-
-
-if(!storeSnapshot.exists()){
-
-showError(
-"❌ لا يوجد متجر مرتبط بحسابك.\n\n" +
-"UID:\n" +
-currentOwnerUid
-);
-
-return;
-
-}
-
-
-const storeData =
-storeSnapshot.data();
-
-
-const status =
-String(
-storeData.status ||
-"active"
-)
-.toLowerCase()
-.trim();
-
-
-if(
-status === "pending" ||
-status === "waiting" ||
-status === "review"
-){
-
-showError(
-"⏳ المتجر مازال قيد المراجعة."
-);
-
-return;
-
-}
-
-
-if(
-status === "rejected" ||
-status === "refused"
-){
-
-showError(
-"❌ المتجر مرفوض ولا يمكن إضافة منتجات."
-);
-
-return;
-
-}
-
-
-/*
-=====================================================
-تعطيل الزر أثناء الحفظ
-=====================================================
-*/
-
-saveProduct.disabled =
-true;
-
-saveProduct.textContent =
-"⏳ جاري حفظ المنتج...";
-
-
-/*
-=====================================================
-رفع الصور
-=====================================================
-*/
-
-let finalImages = [];
+let finalImages =
+[...existingImages];
 
 
 for(
@@ -3008,28 +3962,20 @@ const file of selectedImages
 ){
 
 const url =
-await uploadToCloudinary(file);
+await uploadToCloudinary(
+file
+);
 
-finalImages.push(url);
+finalImages.push(
+url
+);
 
 }
 
 
-/*
-=====================================================
-الوصف
-=====================================================
-*/
-
 const description =
-descriptionEditor.innerHTML.trim();
+descriptionEditor.innerHTML;
 
-
-/*
-=====================================================
-الألوان
-=====================================================
-*/
 
 const finalColors =
 editingColors.map(
@@ -3045,31 +3991,37 @@ color.value
 );
 
 
+const productRef =
+doc(
+db,
+"products",
+editingProductId
+);
+
+
 /*
 =====================================================
-إنشاء المنتج
+تحديث المنتج مع الحفاظ على UID
 =====================================================
 */
 
-const productData = {
+await updateDoc(
+productRef,
+{
 
-name:
-name,
+name:name,
 
-price:
-price,
+price:price,
 
-description:
-description,
+description:description,
 
-colors:
-finalColors,
+colors:finalColors,
 
-sizes:
-[...editingSizes],
+sizes:[
+...editingSizes
+],
 
-stock:
-stock,
+stock:stock,
 
 showStock:
 showStock.checked,
@@ -3084,131 +4036,49 @@ finalImages[0]
 :
 "",
 
-
-/*
-=====================================================
-IMPORTANT
-ربط المنتج بصاحب المتجر بواسطة UID
-=====================================================
-*/
-
 ownerUid:
 currentOwnerUid,
 
 storeId:
 currentOwnerUid,
 
-
-/*
-=====================================================
-بيانات إضافية
-=====================================================
-*/
-
-ownerEmail:
-currentOwnerEmail ||
-currentUser.email ||
-"",
-
-storeName:
-
-storeData.storeName ||
-
-storeData.name ||
-
-storeData.title ||
-
-"G-Glam",
-
-createdAt:
-serverTimestamp(),
-
 updatedAt:
 serverTimestamp()
 
-};
-
-
-/*
-=====================================================
-SAVE FIRESTORE
-=====================================================
-*/
-
-const productsRef =
-collection(
-db,
-"products"
-);
-
-
-const productRef =
-await addDoc(
-productsRef,
-productData
-);
-
-
-console.log(
-"PRODUCT CREATED:",
-productRef.id
+}
 );
 
 
 showSuccess(
-"✅ تم إضافة المنتج بنجاح.\n\n" +
-"تم ربطه بمتجرك بواسطة UID."
+"✅ تم تعديل المنتج وحفظ جميع التغييرات بنجاح."
 );
 
 
-/*
-=====================================================
-تنظيف النموذج
-=====================================================
-*/
+closeEditModal();
 
-resetForm();
-
-
-/*
-=====================================================
-الانتقال إلى المنتجات
-=====================================================
-*/
-
-setTimeout(
-()=>{
-
-window.location.href =
-"products.html";
-
-},
-1200
-);
-
+await loadProducts();
 
 }
 catch(error){
 
 console.error(
-"ADD PRODUCT ERROR:",
+"UPDATE ERROR:",
 error
 );
 
-
 showError(
-"❌ حدث خطأ أثناء إضافة المنتج:\n\n" +
+"❌ حدث خطأ أثناء حفظ المنتج:\n" +
 error.message
 );
 
 }
 finally{
 
-saveProduct.disabled =
+saveEdit.disabled =
 false;
 
-saveProduct.textContent =
-"💾 حفظ المنتج";
+saveEdit.textContent =
+"💾 حفظ التعديلات";
 
 }
 
@@ -3216,66 +4086,207 @@ saveProduct.textContent =
 
 
 /* =====================================================
-RESET
+CLOSE MODAL
 ===================================================== */
 
-function resetForm(){
+function closeEditModal(){
 
-productName.value =
-"";
+editModal.classList.remove(
+"active"
+);
 
-productPrice.value =
-"";
+editingProductId =
+null;
 
-productStock.value =
-"0";
+existingImages = [];
 
-descriptionEditor.innerHTML =
-"";
+selectedImages = [];
 
-editingColors =
-[];
+editingColors = [];
 
-editingSizes =
-[];
+editingSizes = [];
 
-selectedImages =
-[];
+editImageFile.value = "";
 
-productImages.value =
-"";
+editPreview.innerHTML = "";
 
-colorsList.innerHTML =
-"";
+}
 
-sizesList.innerHTML =
-"";
 
-imagePreview.innerHTML =
-"";
+document
+.getElementById("closeModal")
+.addEventListener(
+"click",
+closeEditModal
+);
 
-showStock.checked =
-true;
 
-updateStockVisibilityText();
+document
+.getElementById("cancelEdit")
+.addEventListener(
+"click",
+closeEditModal
+);
+
+
+editModal.addEventListener(
+"click",
+event=>{
+
+if(
+event.target === editModal
+){
+
+closeEditModal();
+
+}
+
+});
+
+
+/* =====================================================
+DELETE PRODUCT
+===================================================== */
+
+async function deleteProduct(productId){
+
+const product =
+allProducts.find(
+p=>p.id === productId
+);
+
+
+if(!product){
+return;
+}
+
+
+/*
+حماية UID
+*/
+
+if(
+product.ownerUid !==
+currentOwnerUid
+){
+
+alert(
+"❌ لا يمكنك حذف منتج لا يخص متجرك."
+);
+
+return;
+
+}
+
+
+const confirmed =
+confirm(
+
+"هل أنت متأكد من حذف المنتج؟\n\n" +
+(
+product.name ||
+"هذا المنتج"
+)
+
+);
+
+
+if(!confirmed){
+return;
+}
+
+
+try{
+
+const productRef =
+doc(
+db,
+"products",
+productId
+);
+
+
+const snapshot =
+await getDoc(
+productRef
+);
+
+
+if(!snapshot.exists()){
+
+showError(
+"المنتج غير موجود."
+);
+
+return;
+
+}
+
+
+/*
+فحص UID مرة ثانية
+من Firestore مباشرة
+*/
+
+if(
+snapshot.data().ownerUid !==
+currentOwnerUid
+){
+
+alert(
+"❌ لا يمكنك حذف هذا المنتج."
+);
+
+return;
+
+}
+
+
+await deleteDoc(
+productRef
+);
+
+
+showSuccess(
+"✅ تم حذف المنتج بنجاح."
+);
+
+
+await loadProducts();
+
+}
+catch(error){
+
+console.error(
+"DELETE ERROR:",
+error
+);
+
+showError(
+"❌ حدث خطأ أثناء حذف المنتج:\n" +
+error.message
+);
+
+}
 
 }
 
 
 /* =====================================================
-CANCEL
+ADD PRODUCT BUTTON
 ===================================================== */
 
 document
-.getElementById("cancelBtn")
+.getElementById("addProductBtn")
 .addEventListener(
 "click",
-function(){
+()=>{
 
 window.location.href =
-"products.html";
+"add-product.html";
 
-});
+}
+);
 
 
 /* =====================================================
@@ -3286,7 +4297,7 @@ document
 .getElementById("logoutBtn")
 .addEventListener(
 "click",
-async function(event){
+async event=>{
 
 event.preventDefault();
 
@@ -3304,13 +4315,17 @@ return;
 
 try{
 
-await signOut(auth);
+await signOut(
+auth
+);
 
 window.location.href =
 "login.html";
 
 }
 catch(error){
+
+console.error(error);
 
 showError(
 "❌ تعذر تسجيل الخروج."
@@ -3347,6 +4362,17 @@ success.style.display =
 error.style.display =
 "none";
 
+
+setTimeout(
+()=>{
+
+success.style.display =
+"none";
+
+},
+3500
+);
+
 }
 
 
@@ -3378,6 +4404,15 @@ success.style.display =
 /* =====================================================
 INITIAL
 ===================================================== */
+
+ownerUidElement.textContent =
+"جاري التحميل...";
+
+ownerEmailElement.textContent =
+"جاري التحميل...";
+
+storeNameElement.textContent =
+"جاري تحميل معلومات المتجر...";
 
 updateStockVisibilityText();
 
