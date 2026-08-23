@@ -106,9 +106,7 @@ justify-content:space-between;
 
 padding:0 6%;
 
-position:sticky;
-
-top:0;
+position:relative;
 
 z-index:1000;
 
@@ -185,7 +183,7 @@ color:var(--orange);
 
 
 /* =====================================================
-   HEADER BUTTONS
+   HEADER ACTIONS
 ===================================================== */
 
 .header-actions{
@@ -207,9 +205,7 @@ color:#fff;
 
 background:var(--orange);
 
-border:1px solid var(--orange);
-
-padding:10px 17px;
+padding:11px 19px;
 
 border-radius:10px;
 
@@ -217,21 +213,12 @@ font-size:13px;
 
 font-weight:700;
 
-transition:.2s;
-
 white-space:nowrap;
 
 box-shadow:
 
 0 5px 15px
 rgba(244,123,32,.20);
-
-}
-
-
-.login-btn:hover{
-
-background:var(--orange-dark);
 
 }
 
@@ -246,7 +233,7 @@ background:var(--orange-light);
 
 border:1px solid #FFDCC2;
 
-padding:11px 19px;
+padding:10px 17px;
 
 border-radius:10px;
 
@@ -254,9 +241,9 @@ font-size:13px;
 
 font-weight:700;
 
-transition:.2s;
-
 white-space:nowrap;
+
+transition:.2s;
 
 }
 
@@ -314,8 +301,7 @@ align-items:center;
 
 padding:
 
-45px 0
-65px;
+30px 0 45px;
 
 overflow:hidden;
 
@@ -323,7 +309,7 @@ overflow:hidden;
 
 
 /* =====================================================
-   MAIN CONTAINER
+   CONTAINER
 ===================================================== */
 
 .login-container{
@@ -365,14 +351,7 @@ margin-left:-7vw;
 
 padding:
 
-30px 0
-50px;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
+20px 0 40px;
 
 direction:ltr;
 
@@ -380,55 +359,92 @@ direction:ltr;
 
 
 /* =====================================================
-   BIG LOGO IMAGE
+   IMAGE FRAME
 ===================================================== */
 
-.login-image img{
+.image-frame{
+
+position:relative;
+
+width:100%;
+
+background:#fff;
+
+padding:10px;
+
+border-radius:0 18px 18px 0;
+
+box-shadow:
+
+0 25px 65px
+rgba(244,123,32,.18),
+
+0 12px 35px
+rgba(0,0,0,.11);
+
+overflow:hidden;
+
+clip-path:
+
+polygon(
+0% 0%,
+91% 0%,
+100% 100%,
+8% 100%
+);
+
+transform:
+
+rotate(-1.5deg);
+
+transition:.3s;
+
+z-index:2;
+
+}
+
+
+/* =====================================================
+   IMAGE
+===================================================== */
+
+.image-frame img{
 
 display:block;
 
 width:100%;
 
-max-width:700px;
-
-height:auto;
+aspect-ratio:16/10;
 
 object-fit:contain;
 
-filter:
+background:#fff;
 
-drop-shadow(
-0 25px 55px
-rgba(244,123,32,.14)
-);
-
-transition:.3s;
+border-radius:0 10px 10px 0;
 
 }
 
 
-/* =====================================================
-   IMAGE HOVER
-===================================================== */
-
-.login-image img:hover{
+.image-frame:hover{
 
 transform:
 
+rotate(0deg)
 translateY(-5px);
 
-filter:
+box-shadow:
 
-drop-shadow(
-0 30px 65px
-rgba(244,123,32,.20)
-);
+0 30px 75px
+rgba(244,123,32,.23),
+
+0 15px 40px
+rgba(0,0,0,.13);
 
 }
 
 
 /* =====================================================
-   ORANGE DECORATIVE LINES
+   ORANGE DECORATION
 ===================================================== */
 
 .orange-lines{
@@ -461,15 +477,11 @@ opacity:.85;
 }
 
 
-/* =====================================================
-   TOP LINES
-===================================================== */
-
 .orange-line.top-1{
 
 width:150px;
 
-top:20px;
+top:10px;
 
 right:15%;
 
@@ -482,7 +494,7 @@ transform:rotate(48deg);
 
 width:120px;
 
-top:40px;
+top:30px;
 
 right:11%;
 
@@ -497,7 +509,7 @@ opacity:.55;
 
 width:90px;
 
-top:60px;
+top:50px;
 
 right:8%;
 
@@ -507,10 +519,6 @@ opacity:.35;
 
 }
 
-
-/* =====================================================
-   BOTTOM LINES
-===================================================== */
 
 .orange-line.bottom-1{
 
@@ -556,7 +564,7 @@ opacity:.35;
 
 
 /* =====================================================
-   ORANGE DOTS
+   DOTS
 ===================================================== */
 
 .orange-dot{
@@ -578,7 +586,7 @@ z-index:4;
 
 .orange-dot.one{
 
-top:55px;
+top:50px;
 
 right:4%;
 
@@ -587,7 +595,7 @@ right:4%;
 
 .orange-dot.two{
 
-bottom:55px;
+bottom:50px;
 
 left:4%;
 
@@ -595,10 +603,10 @@ left:4%;
 
 
 /* =====================================================
-   LOGIN TEXT / CARD AREA
+   LOGIN SIDE
 ===================================================== */
 
-.login-content{
+.login-side{
 
 order:2;
 
@@ -606,10 +614,8 @@ direction:rtl;
 
 padding:
 
-20px
-7%
-20px
-5%;
+20px 7%
+20px 5%;
 
 position:relative;
 
@@ -619,22 +625,22 @@ z-index:20;
 
 
 /* =====================================================
-   CARD
+   LOGIN CARD
 ===================================================== */
 
 .login-card{
 
 width:100%;
 
-max-width:440px;
+max-width:480px;
 
-margin-right:auto;
+margin:auto;
 
 background:#fff;
 
-border:1px solid #E8E8E8;
+border:1px solid var(--border);
 
-border-radius:20px;
+border-radius:22px;
 
 padding:34px;
 
@@ -644,35 +650,43 @@ box-shadow:
 rgba(0,0,0,.08),
 
 0 8px 25px
-rgba(244,123,32,.08);
+rgba(244,123,32,.07);
 
 }
 
 
 /* =====================================================
-   PLATFORM
+   CARD HEADER
 ===================================================== */
 
-.platform{
+.card-badge{
 
-display:flex;
+display:inline-flex;
 
 align-items:center;
 
 gap:8px;
 
-margin-bottom:13px;
+background:var(--orange-light);
 
 color:var(--orange-dark);
 
-font-size:14px;
+padding:8px 14px;
 
-font-weight:800;
+border-radius:30px;
+
+font-size:12px;
+
+font-weight:700;
+
+border:1px solid #FFE0CA;
+
+margin-bottom:18px;
 
 }
 
 
-.platform-dot{
+.card-badge span{
 
 width:8px;
 
@@ -687,43 +701,33 @@ display:inline-block;
 }
 
 
-/* =====================================================
-   TITLE
-===================================================== */
+.card-title{
 
-.login-title{
-
-font-size:32px;
-
-line-height:1.3;
+font-size:30px;
 
 font-weight:900;
 
 color:#222;
 
-margin-bottom:10px;
+margin-bottom:8px;
 
 }
 
 
-.login-title .orange{
+.card-title .orange{
 
 color:var(--orange);
 
 }
 
 
-/* =====================================================
-   DESCRIPTION
-===================================================== */
+.card-description{
 
-.login-description{
-
-font-size:14px;
+font-size:13px;
 
 line-height:1.9;
 
-color:#777;
+color:#888;
 
 margin-bottom:27px;
 
@@ -731,7 +735,7 @@ margin-bottom:27px;
 
 
 /* =====================================================
-   FORM GROUP
+   FORM
 ===================================================== */
 
 .form-group{
@@ -745,7 +749,7 @@ margin-bottom:18px;
 
 display:block;
 
-font-size:14px;
+font-size:13px;
 
 font-weight:800;
 
@@ -756,22 +760,12 @@ margin-bottom:8px;
 }
 
 
-/* =====================================================
-   INPUT WRAPPER
-===================================================== */
-
 .input-wrapper{
 
 position:relative;
 
-width:100%;
-
 }
 
-
-/* =====================================================
-   INPUT ICON
-===================================================== */
 
 .input-icon{
 
@@ -781,12 +775,11 @@ right:14px;
 
 top:50%;
 
-transform:
-translateY(-50%);
+transform:translateY(-50%);
 
 font-size:17px;
 
-color:#aaa;
+color:#999;
 
 pointer-events:none;
 
@@ -795,26 +788,19 @@ z-index:2;
 }
 
 
-/* =====================================================
-   INPUT
-===================================================== */
-
-input{
+.input-wrapper input{
 
 width:100%;
 
-height:51px;
+height:52px;
 
 padding:
 
-0 45px
-0 48px;
+0 45px 0 45px;
 
-border:
+border:1px solid var(--border);
 
-1px solid #E7E7E7;
-
-border-radius:11px;
+border-radius:12px;
 
 background:#FAFAFA;
 
@@ -829,14 +815,14 @@ transition:.2s;
 }
 
 
-input::placeholder{
+.input-wrapper input::placeholder{
 
 color:#aaa;
 
 }
 
 
-input:focus{
+.input-wrapper input:focus{
 
 border-color:var(--orange);
 
@@ -854,26 +840,29 @@ rgba(244,123,32,.09);
    PASSWORD EYE
 ===================================================== */
 
-.password-toggle{
+.password-eye{
 
 position:absolute;
 
-left:10px;
+left:13px;
 
 top:50%;
 
-transform:
-translateY(-50%);
+transform:translateY(-50%);
 
-width:34px;
+width:32px;
 
-height:34px;
+height:32px;
 
 border:none;
 
 background:transparent;
 
-border-radius:8px;
+font-size:17px;
+
+cursor:pointer;
+
+color:#999;
 
 display:flex;
 
@@ -881,22 +870,14 @@ align-items:center;
 
 justify-content:center;
 
-font-size:18px;
+z-index:3;
 
-color:#999;
-
-cursor:pointer;
-
-transition:.2s;
-
-z-index:5;
+padding:0;
 
 }
 
 
-.password-toggle:hover{
-
-background:var(--orange-light);
+.password-eye:hover{
 
 color:var(--orange);
 
@@ -911,11 +892,11 @@ color:var(--orange);
 
 width:100%;
 
-height:52px;
+height:53px;
 
 border:none;
 
-border-radius:11px;
+border-radius:12px;
 
 background:var(--orange);
 
@@ -927,9 +908,9 @@ font-weight:800;
 
 cursor:pointer;
 
-transition:.25s;
+transition:.2s;
 
-margin-top:5px;
+margin-top:6px;
 
 box-shadow:
 
@@ -943,18 +924,14 @@ rgba(244,123,32,.22);
 
 background:var(--orange-dark);
 
-transform:
-
-translateY(-2px);
+transform:translateY(-2px);
 
 }
 
 
 #loginBtn:active{
 
-transform:
-
-translateY(0);
+transform:translateY(0);
 
 }
 
@@ -978,13 +955,13 @@ transform:none;
 
 display:none;
 
-margin-top:17px;
+margin-top:18px;
 
 padding:13px 14px;
 
 border-radius:11px;
 
-font-size:13px;
+font-size:12px;
 
 line-height:1.8;
 
@@ -992,10 +969,6 @@ text-align:center;
 
 }
 
-
-/* =====================================================
-   MESSAGE TYPES
-===================================================== */
 
 .message-info{
 
@@ -1049,13 +1022,11 @@ border:1px solid #DDD;
 
 text-align:center;
 
-margin-top:22px;
+margin-top:23px;
 
-padding-top:18px;
+padding-top:20px;
 
-border-top:
-
-1px solid #EEEEEE;
+border-top:1px solid #eee;
 
 font-size:13px;
 
@@ -1100,7 +1071,7 @@ gap:6px;
 
 margin-top:16px;
 
-font-size:11px;
+font-size:10px;
 
 color:#aaa;
 
@@ -1108,7 +1079,7 @@ color:#aaa;
 
 
 /* =====================================================
-   TABLET
+   MOBILE
 ===================================================== */
 
 @media(max-width:1000px){
@@ -1136,19 +1107,10 @@ max-height:66px;
 }
 
 
-.login-hero{
-
-padding:
-
-35px 0
-50px;
-
-}
-
-
 .login-container{
 
 grid-template-columns:
+
 56%
 44%;
 
@@ -1164,35 +1126,26 @@ margin-left:-5vw;
 }
 
 
-.login-image img{
-
-max-width:570px;
-
-}
-
-
-.login-content{
+.login-side{
 
 padding:
 
-15px
-5%
-15px
-4%;
+15px 5%
+15px 4%;
 
 }
 
 
 .login-card{
 
-padding:29px;
+padding:28px;
 
 }
 
 
-.login-title{
+.card-title{
 
-font-size:28px;
+font-size:27px;
 
 }
 
@@ -1200,7 +1153,7 @@ font-size:28px;
 
 
 /* =====================================================
-   MOBILE
+   MOBILE 700
 ===================================================== */
 
 @media(max-width:700px){
@@ -1237,7 +1190,7 @@ gap:6px;
 
 .login-btn{
 
-padding:8px 10px;
+padding:8px 11px;
 
 font-size:11px;
 
@@ -1246,7 +1199,7 @@ font-size:11px;
 
 .register-btn{
 
-padding:9px 11px;
+padding:8px 10px;
 
 font-size:11px;
 
@@ -1270,31 +1223,49 @@ min-height:auto;
 
 padding:
 
-35px
-15px
-55px;
+25px 15px 45px;
 
 }
 
-
-/* CONTAINER */
 
 .login-container{
 
 grid-template-columns:1fr;
 
-gap:18px;
+gap:25px;
 
 direction:rtl;
 
 }
 
 
-/* IMAGE */
+/* CARD FIRST */
+
+.login-side{
+
+order:1;
+
+padding:0;
+
+}
+
+
+.login-card{
+
+max-width:500px;
+
+padding:28px 22px;
+
+border-radius:19px;
+
+}
+
+
+/* IMAGE SECOND */
 
 .login-image{
 
-order:1;
+order:2;
 
 width:calc(100% + 30px);
 
@@ -1302,79 +1273,59 @@ margin-left:-15px;
 
 padding:
 
-15px
-0
-20px;
+20px 0 45px;
 
 }
 
 
-.login-image img{
+.image-frame{
 
 width:100%;
 
-max-width:390px;
+padding:7px;
+
+transform:
+
+rotate(-1deg);
+
+clip-path:
+
+polygon(
+0% 0%,
+92% 0%,
+100% 100%,
+7% 100%
+);
 
 }
 
 
-/* CONTENT */
+.image-frame img{
 
-.login-content{
-
-order:2;
-
-padding:0;
-
-display:flex;
-
-justify-content:center;
+aspect-ratio:16/10;
 
 }
 
 
-/* CARD */
+.card-title{
 
-.login-card{
-
-width:100%;
-
-max-width:440px;
-
-padding:
-
-28px 21px;
-
-border-radius:18px;
+font-size:27px;
 
 }
 
 
-/* TITLE */
+.card-description{
 
-.login-title{
-
-font-size:28px;
+font-size:12px;
 
 }
 
-
-/* DESCRIPTION */
-
-.login-description{
-
-font-size:13px;
-
-}
-
-
-/* LINES */
 
 .orange-line.top-1{
 
 width:80px;
 
-top:10px;
+top:15px;
 
 right:30px;
 
@@ -1385,7 +1336,7 @@ right:30px;
 
 width:65px;
 
-top:23px;
+top:28px;
 
 right:20px;
 
@@ -1396,7 +1347,7 @@ right:20px;
 
 width:50px;
 
-top:35px;
+top:40px;
 
 right:12px;
 
@@ -1407,7 +1358,7 @@ right:12px;
 
 width:90px;
 
-bottom:20px;
+bottom:25px;
 
 left:30px;
 
@@ -1418,7 +1369,7 @@ left:30px;
 
 width:70px;
 
-bottom:10px;
+bottom:14px;
 
 left:20px;
 
@@ -1429,38 +1380,9 @@ left:20px;
 
 width:50px;
 
-bottom:3px;
+bottom:5px;
 
 left:12px;
-
-}
-
-
-/* DOTS */
-
-.orange-dot{
-
-width:10px;
-
-height:10px;
-
-}
-
-
-.orange-dot.one{
-
-top:35px;
-
-right:3%;
-
-}
-
-
-.orange-dot.two{
-
-bottom:30px;
-
-left:3%;
 
 }
 
@@ -1482,69 +1404,39 @@ max-height:52px;
 }
 
 
-.header-actions .login-btn{
+.header-actions .register-btn{
 
 display:none;
 
 }
 
 
-.login-hero{
-
-padding:
-
-25px
-12px
-45px;
-
-}
-
-
-.login-image{
-
-padding:
-
-5px
-0
-12px;
-
-}
-
-
-.login-image img{
-
-max-width:300px;
-
-}
-
-
 .login-card{
 
-padding:
-
-24px
-16px;
+padding:24px 17px;
 
 }
 
 
-.login-title{
+.card-title{
 
-font-size:25px;
-
-}
-
-
-.login-description{
-
-font-size:12px;
+font-size:24px;
 
 }
 
 
-input{
+.card-description{
+
+font-size:11px;
+
+}
+
+
+.input-wrapper input{
 
 height:49px;
+
+font-size:13px;
 
 }
 
@@ -1625,20 +1517,17 @@ alt="G-Glam">
 
 </a>
 
-
 <a href="home.html#features">
 
 المميزات
 
 </a>
 
-
 <a href="home.html#how">
 
 كيف يعمل؟
 
 </a>
-
 
 <a href="home.html#contact">
 
@@ -1668,6 +1557,7 @@ class="register-btn">
 إنشاء حساب
 
 </a>
+
 
 </div>
 
@@ -1702,20 +1592,17 @@ id="mobileMenuBtn">
 
 <div class="orange-lines">
 
-
 <div class="orange-line top-1"></div>
 
 <div class="orange-line top-2"></div>
 
 <div class="orange-line top-3"></div>
 
-
 <div class="orange-line bottom-1"></div>
 
 <div class="orange-line bottom-2"></div>
 
 <div class="orange-line bottom-3"></div>
-
 
 </div>
 
@@ -1725,32 +1612,35 @@ id="mobileMenuBtn">
 <div class="orange-dot two"></div>
 
 
+<div class="image-frame">
+
 <img
-
 src="logobig.png"
-
 alt="G-Glam">
 
 </div>
 
 
+</div>
+
+
 <!-- ===================================================
-     LOGIN CONTENT
+     LOGIN SIDE
 =================================================== -->
 
-<div class="login-content">
+<div class="login-side">
 
 
 <div class="login-card">
 
 
 <!-- =================================================
-     PLATFORM
+     BADGE
 ================================================= -->
 
-<div class="platform">
+<div class="card-badge">
 
-<span class="platform-dot"></span>
+<span></span>
 
 منصة G-Glam
 
@@ -1761,28 +1651,23 @@ alt="G-Glam">
      TITLE
 ================================================= -->
 
-<h1 class="login-title">
+<h1 class="card-title">
 
-مرحبًا بك مجددًا
-
-<br>
+مرحبًا بك في
 
 <span class="orange">
 
-سجّل دخولك إلى متجرك
+G-Glam
 
 </span>
 
 </h1>
 
 
-<!-- =================================================
-     DESCRIPTION
-================================================= -->
+<p class="card-description">
 
-<p class="login-description">
-
-أدخل بيانات حسابك للوصول إلى لوحة التحكم الخاصة بمتجرك وإدارة منتجاتك وطلبات زبائنك بسهولة.
+سجل الدخول للوصول إلى لوحة التحكم
+الخاصة بمتجرك وإدارة منتجاتك وطلبات زبائنك.
 
 </p>
 
@@ -1792,7 +1677,6 @@ alt="G-Glam">
 ================================================= -->
 
 <div class="form-group">
-
 
 <label for="email">
 
@@ -1833,7 +1717,6 @@ autocomplete="email">
 
 <div class="form-group">
 
-
 <label for="password">
 
 كلمة المرور
@@ -1866,13 +1749,13 @@ autocomplete="current-password">
 
 type="button"
 
-class="password-toggle"
+class="password-eye"
 
-id="passwordToggle"
+id="togglePassword"
 
 aria-label="إظهار كلمة المرور">
 
-👁️
+👁
 
 </button>
 
@@ -1908,7 +1791,7 @@ id="loginBtn">
 
 <div class="register">
 
-ليس لديك متجر؟
+ليس لديك حساب؟
 
 <a href="register.html">
 
@@ -1925,7 +1808,7 @@ id="loginBtn">
 
 <div class="security-note">
 
-🔐 بيانات الدخول محمية بواسطة Firebase
+🔐 تسجيل دخول آمن بواسطة Firebase
 
 </div>
 
@@ -1940,91 +1823,7 @@ id="loginBtn">
 
 
 <!-- =====================================================
-     MOBILE MENU
-===================================================== -->
-
-<script>
-
-const mobileMenuBtn =
-document.getElementById(
-"mobileMenuBtn"
-);
-
-const nav =
-document.querySelector(
-".nav"
-);
-
-
-mobileMenuBtn.addEventListener(
-"click",
-function(){
-
-if(
-nav.style.display === "flex"
-){
-
-nav.style.display =
-"none";
-
-}
-
-else{
-
-nav.style.display =
-"flex";
-
-nav.style.position =
-"absolute";
-
-nav.style.top =
-"68px";
-
-nav.style.right =
-"15px";
-
-nav.style.left =
-"15px";
-
-nav.style.background =
-"#fff";
-
-nav.style.padding =
-"15px";
-
-nav.style.borderRadius =
-"15px";
-
-nav.style.boxShadow =
-"0 10px 30px rgba(0,0,0,.10)";
-
-nav.style.flexDirection =
-"column";
-
-nav.style.alignItems =
-"stretch";
-
-nav.style.gap =
-"0";
-
-
-nav.querySelectorAll("a")
-.forEach(function(link){
-
-link.style.padding =
-"12px";
-
-});
-
-}
-
-});
-
-</script>
-
-
-<!-- =====================================================
-     FIREBASE
+     SCRIPT
 ===================================================== -->
 
 <script type="module">
@@ -2125,21 +1924,21 @@ document.getElementById("email");
 const passwordInput =
 document.getElementById("password");
 
-const passwordToggle =
-document.getElementById("passwordToggle");
-
 const loginBtn =
 document.getElementById("loginBtn");
 
 const message =
 document.getElementById("message");
 
+const togglePassword =
+document.getElementById("togglePassword");
+
 
 /* =====================================================
-   PASSWORD SHOW / HIDE
+   PASSWORD VISIBILITY
 ===================================================== */
 
-passwordToggle.addEventListener(
+togglePassword.addEventListener(
 
 "click",
 
@@ -2152,10 +1951,10 @@ passwordInput.type === "password"
 passwordInput.type =
 "text";
 
-passwordToggle.textContent =
+togglePassword.textContent =
 "🙈";
 
-passwordToggle.setAttribute(
+togglePassword.setAttribute(
 "aria-label",
 "إخفاء كلمة المرور"
 );
@@ -2167,17 +1966,19 @@ else{
 passwordInput.type =
 "password";
 
-passwordToggle.textContent =
-"👁️";
+togglePassword.textContent =
+"👁";
 
-passwordToggle.setAttribute(
+togglePassword.setAttribute(
 "aria-label",
 "إظهار كلمة المرور"
 );
 
 }
 
-});
+}
+
+);
 
 
 /* =====================================================
@@ -2370,6 +2171,7 @@ const status =
 String(
 
 storeData.status ||
+
 "pending"
 
 )
@@ -2378,9 +2180,7 @@ storeData.status ||
 .trim();
 
 
-/* =================================================
-   APPROVED
-================================================= */
+/* APPROVED */
 
 if(
 
@@ -2447,9 +2247,7 @@ return;
 }
 
 
-/* =================================================
-   REJECTED
-================================================= */
+/* REJECTED */
 
 if(
 
@@ -2494,9 +2292,7 @@ return;
 }
 
 
-/* =================================================
-   PENDING
-================================================= */
+/* PENDING */
 
 showMessage(
 
@@ -2553,7 +2349,9 @@ error.message || ""
 
 }
 
-});
+}
+
+);
 
 }
 
@@ -2609,10 +2407,6 @@ return;
 }
 
 
-/* =================================================
-   DISABLE BUTTON
-================================================= */
-
 loginBtn.disabled =
 true;
 
@@ -2623,9 +2417,7 @@ loginBtn.textContent =
 try{
 
 
-/* =================================================
-   AUTHENTICATION
-================================================= */
+/* AUTH */
 
 const result =
 
@@ -2653,9 +2445,7 @@ throw new Error(
 }
 
 
-/* =================================================
-   FIND STORE
-================================================= */
+/* FIND STORE */
 
 showMessage(
 
@@ -2672,9 +2462,7 @@ user.uid
 );
 
 
-/* =================================================
-   NO STORE
-================================================= */
+/* NO STORE */
 
 if(!store){
 
@@ -2696,9 +2484,7 @@ return;
 }
 
 
-/* =================================================
-   STORE DATA
-================================================= */
+/* STORE DATA */
 
 const storeId =
 store.id;
@@ -2712,6 +2498,7 @@ const status =
 String(
 
 storeData.status ||
+
 "pending"
 
 )
@@ -2720,9 +2507,7 @@ storeData.status ||
 .trim();
 
 
-/* =================================================
-   SAVE
-================================================= */
+/* SAVE */
 
 saveStoreData(
 user,
@@ -2731,9 +2516,7 @@ storeData
 );
 
 
-/* =================================================
-   APPROVED
-================================================= */
+/* APPROVED */
 
 if(
 
@@ -2780,9 +2563,7 @@ return;
 }
 
 
-/* =================================================
-   REJECTED
-================================================= */
+/* REJECTED */
 
 if(
 
@@ -2829,9 +2610,7 @@ return;
 }
 
 
-/* =================================================
-   PENDING
-================================================= */
+/* PENDING */
 
 localStorage.setItem(
 "paymentStatus",
@@ -2852,9 +2631,7 @@ showMessage(
 );
 
 
-/* =================================================
-   REAL TIME
-================================================= */
+/* REAL TIME */
 
 watchStoreStatus(
 user
@@ -2994,7 +2771,7 @@ resetButton();
 
 
 /* =====================================================
-   ENTER KEY - PASSWORD
+   ENTER - PASSWORD
 ===================================================== */
 
 passwordInput.addEventListener(
@@ -3015,7 +2792,7 @@ loginBtn.click();
 
 
 /* =====================================================
-   ENTER KEY - EMAIL
+   ENTER - EMAIL
 ===================================================== */
 
 emailInput.addEventListener(
@@ -3072,6 +2849,91 @@ value ?? ""
 
 }
 
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+const mobileMenuBtn =
+document.getElementById(
+"mobileMenuBtn"
+);
+
+const nav =
+document.querySelector(
+".nav"
+);
+
+
+mobileMenuBtn.addEventListener(
+
+"click",
+
+function(){
+
+if(
+nav.style.display === "flex"
+){
+
+nav.style.display =
+"none";
+
+}
+
+else{
+
+nav.style.display =
+"flex";
+
+nav.style.position =
+"absolute";
+
+nav.style.top =
+"68px";
+
+nav.style.right =
+"15px";
+
+nav.style.left =
+"15px";
+
+nav.style.background =
+"#fff";
+
+nav.style.padding =
+"15px";
+
+nav.style.borderRadius =
+"15px";
+
+nav.style.boxShadow =
+"0 10px 30px rgba(0,0,0,.10)";
+
+nav.style.flexDirection =
+"column";
+
+nav.style.alignItems =
+"stretch";
+
+nav.style.gap =
+"0";
+
+
+nav.querySelectorAll("a")
+.forEach(
+
+function(link){
+
+link.style.padding =
+"12px";
+
+}
+
+);
+
+}
+
+});
 
 </script>
 
