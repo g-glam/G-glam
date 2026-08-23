@@ -120,6 +120,10 @@ width:240px;
 }
 
 
+/* =====================================================
+   LOGO
+===================================================== */
+
 .logo{
 
 height:78px;
@@ -130,24 +134,53 @@ align-items:center;
 
 justify-content:center;
 
-font-size:23px;
-
-font-weight:800;
-
-color:var(--dark);
-
 border-bottom:1px solid #ddd;
 
 white-space:nowrap;
 
-}
-
-.logo span{
-
-color:var(--orange);
+padding:10px;
 
 }
 
+
+.logo img{
+
+width:48px;
+
+height:48px;
+
+object-fit:contain;
+
+display:block;
+
+transition:.3s;
+
+}
+
+
+/*
+   عند فتح الشريط الجانبي
+*/
+
+.sidebar:hover .logo{
+
+justify-content:center;
+
+}
+
+
+.sidebar:hover .logo img{
+
+width:58px;
+
+height:58px;
+
+}
+
+
+/* =====================================================
+   MENU
+===================================================== */
 
 .menu{
 
@@ -1591,9 +1624,15 @@ background:var(--orange);
 
 <div class="sidebar">
 
+
+<!-- LOGO -->
+
 <div class="logo">
 
-G-<span>Glam</span>
+<img
+src="gglamlogo.png"
+alt="G-Glam"
+>
 
 </div>
 
@@ -1967,9 +2006,7 @@ placeholder="مثال: 20"
 </div>
 
 
-<!-- =====================================================
-     STOCK VISIBILITY
-===================================================== -->
+<!-- STOCK VISIBILITY -->
 
 <div class="form-group">
 
@@ -2036,9 +2073,7 @@ checked
 </div>
 
 
-<!-- =====================================================
-     IMAGES
-===================================================== -->
+<!-- IMAGES -->
 
 <div class="form-group">
 
@@ -2214,18 +2249,7 @@ let allProducts = [];
 
 let editingProductId = null;
 
-
-/*
-   الصور الموجودة حاليًا في المنتج
-   والتي لم يتم حذفها.
-*/
-
 let existingImages = [];
-
-
-/*
-   الصور الجديدة التي اختارها المستخدم
-*/
 
 let selectedImages = [];
 
@@ -2378,10 +2402,6 @@ stockVisibilityDescription.textContent =
 }
 
 
-/* =====================================================
-   STOCK SWITCH EVENT
-===================================================== */
-
 showStock.addEventListener(
 "change",
 updateStockVisibilityText
@@ -2409,10 +2429,6 @@ return;
 
 }
 
-
-/*
-   Firebase Authentication UID
-*/
 
 currentUser =
 user;
@@ -2840,11 +2856,6 @@ product.colors
 [];
 
 
-/*
-   نقرأ showStock فقط للمنتج.
-   إذا كان غير موجود، نعتبره ظاهرًا.
-*/
-
 const productShowStock =
 
 product.showStock !== false;
@@ -3159,10 +3170,6 @@ editingProductId =
 productId;
 
 
-/* =====================================================
-   BASIC DATA
-===================================================== */
-
 editName.value =
 product.name || "";
 
@@ -3178,10 +3185,6 @@ product.description || "";
 editStock.value =
 product.stock ?? "";
 
-
-/* =====================================================
-   COLORS
-===================================================== */
 
 if(
 Array.isArray(
@@ -3202,24 +3205,11 @@ product.colors || "";
 }
 
 
-/* =====================================================
-   STOCK VISIBILITY
-===================================================== */
-
-/*
-   إذا لم يكن الحقل موجودًا في المنتج القديم
-   فالقيمة الافتراضية true.
-*/
-
 showStock.checked =
 product.showStock !== false;
 
 updateStockVisibilityText();
 
-
-/* =====================================================
-   CURRENT IMAGES
-===================================================== */
 
 existingImages = [];
 
@@ -3255,24 +3245,12 @@ product.image
 }
 
 
-/*
-   لا توجد صور جديدة عند فتح التعديل
-*/
-
 selectedImages = [];
 
-
-/*
-   إعادة اختيار الملفات
-*/
 
 editImageFile.value =
 "";
 
-
-/*
-   عرض الصور
-*/
 
 renderEditImages();
 
@@ -3293,10 +3271,6 @@ function renderEditImages(){
 editPreview.innerHTML =
 "";
 
-
-/*
-   الصور القديمة التي بقيت
-*/
 
 existingImages.forEach(
 (url,index)=>{
@@ -3331,10 +3305,6 @@ title="حذف الصورة">
 `;
 
 
-/*
-   حذف الصورة القديمة
-*/
-
 item
 .querySelector(
 ".remove-image-btn"
@@ -3360,10 +3330,6 @@ item
 
 });
 
-
-/*
-   الصور الجديدة
-*/
 
 selectedImages.forEach(
 (file,index)=>{
@@ -3426,10 +3392,6 @@ reader.readAsDataURL(
 file
 );
 
-
-/*
-   حذف الصورة الجديدة
-*/
 
 item
 .querySelector(
@@ -3557,20 +3519,11 @@ editImageFile.addEventListener(
 "change",
 function(){
 
-/*
-   نضيف الملفات الجديدة إلى القائمة
-   بدل استبدال الصور الموجودة.
-*/
-
 const files =
 Array.from(
 this.files || []
 );
 
-
-/*
-   إضافة الملفات
-*/
 
 files.forEach(
 file=>{
@@ -3582,16 +3535,7 @@ file
 });
 
 
-/*
-   مزامنة input
-*/
-
 syncSelectedFiles();
-
-
-/*
-   إعادة عرض الصور
-*/
 
 renderEditImages();
 
@@ -3706,10 +3650,6 @@ editStock.value
 );
 
 
-/* =====================================================
-   COLORS
-===================================================== */
-
 const colors =
 
 editColors.value
@@ -3785,10 +3725,6 @@ return;
 }
 
 
-/* =====================================================
-   SECURITY CHECK
-===================================================== */
-
 if(
 product.ownerUid !==
 currentOwnerUid
@@ -3813,20 +3749,12 @@ saveEdit.textContent =
 try{
 
 
-/* =====================================================
-   OLD IMAGES THAT REMAIN
-===================================================== */
-
 let images = [
 
 ...existingImages
 
 ];
 
-
-/* =====================================================
-   UPLOAD NEW IMAGES
-===================================================== */
 
 if(
 selectedImages.length
@@ -3850,10 +3778,6 @@ url
 
 }
 
-
-/* =====================================================
-   UPDATE PRODUCT
-===================================================== */
 
 const productRef =
 doc(
@@ -3882,25 +3806,11 @@ colors,
 stock:
 stock,
 
-/*
-   مهم:
-   تخزين حالة إظهار المخزون
-*/
-
 showStock:
 showStock.checked,
 
-/*
-   الصور النهائية فقط
-*/
-
 images:
 images,
-
-/*
-   الصورة الأولى للتوافق
-   مع الكود القديم
-*/
 
 image:
 images.length
