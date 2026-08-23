@@ -40,8 +40,8 @@ rel="stylesheet">
 --bg:#F7F7F7;
 --white:#FFFFFF;
 
---text:#222222;
---muted:#777777;
+--text:#222;
+--muted:#777;
 
 --border:#E8E8E8;
 
@@ -79,6 +79,10 @@ color:var(--text);
 
 min-height:100vh;
 
+display:flex;
+
+flex-direction:column;
+
 overflow-x:hidden;
 
 }
@@ -106,9 +110,7 @@ justify-content:space-between;
 
 padding:0 6%;
 
-position:relative;
-
-z-index:1000;
+flex-shrink:0;
 
 }
 
@@ -117,7 +119,7 @@ z-index:1000;
    LOGO
 ===================================================== */
 
-.logo{
+.header-logo{
 
 display:flex;
 
@@ -130,7 +132,7 @@ white-space:nowrap;
 }
 
 
-.logo img{
+.header-logo img{
 
 display:block;
 
@@ -146,44 +148,7 @@ object-fit:contain;
 
 
 /* =====================================================
-   NAVIGATION
-===================================================== */
-
-.nav{
-
-display:flex;
-
-align-items:center;
-
-gap:30px;
-
-}
-
-
-.nav a{
-
-text-decoration:none;
-
-color:#555;
-
-font-size:14px;
-
-font-weight:600;
-
-transition:.2s;
-
-}
-
-
-.nav a:hover{
-
-color:var(--orange);
-
-}
-
-
-/* =====================================================
-   HEADER BUTTONS
+   HEADER ACTIONS
 ===================================================== */
 
 .header-actions{
@@ -197,111 +162,62 @@ gap:10px;
 }
 
 
-.login-btn{
+.home-btn{
 
 text-decoration:none;
 
-color:var(--orange-dark);
+color:#555;
 
-background:var(--orange-light);
+background:#fff;
 
-border:1px solid #FFDCC2;
+border:1px solid #ddd;
 
-padding:10px 17px;
+padding:10px 18px;
 
 border-radius:10px;
 
 font-size:13px;
 
 font-weight:700;
-
-white-space:nowrap;
-
-}
-
-
-.register-btn{
-
-text-decoration:none;
-
-color:#fff;
-
-background:var(--orange);
-
-padding:11px 19px;
-
-border-radius:10px;
-
-font-size:13px;
-
-font-weight:700;
-
-white-space:nowrap;
-
-box-shadow:
-
-0 5px 15px
-rgba(244,123,32,.20);
 
 transition:.2s;
 
 }
 
 
-.register-btn:hover{
+.home-btn:hover{
 
-background:var(--orange-dark);
+color:var(--orange);
 
-transform:translateY(-1px);
-
-}
-
-
-/* =====================================================
-   MOBILE MENU
-===================================================== */
-
-.mobile-menu-btn{
-
-display:none;
-
-border:none;
-
-background:transparent;
-
-font-size:25px;
-
-cursor:pointer;
-
-color:#333;
+border-color:var(--orange);
 
 }
 
 
 /* =====================================================
-   LOGIN HERO
+   MAIN
 ===================================================== */
 
-.login-section{
+.main{
 
-min-height:calc(100vh - 82px);
+flex:1;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+padding:35px 6% 45px;
 
 background:
 
 linear-gradient(
 135deg,
 #FFFFFF 0%,
-#FFFFFF 68%,
+#FFFFFF 65%,
 #FFF7F0 100%
 );
-
-display:flex;
-
-align-items:center;
-
-overflow:hidden;
-
-padding:0;
 
 }
 
@@ -314,36 +230,38 @@ padding:0;
 
 width:100%;
 
-max-width:1450px;
-
-margin:0 auto;
+max-width:1250px;
 
 display:grid;
 
 grid-template-columns:
-58%
-42%;
+52%
+48%;
 
 align-items:center;
 
 direction:ltr;
 
+gap:0;
+
 }
 
 
 /* =====================================================
-   LEFT IMAGE
+   IMAGE SIDE
 ===================================================== */
 
-.login-image{
+.image-side{
 
 position:relative;
 
-width:calc(100% + 7vw);
+width:100%;
 
-margin-left:-7vw;
+padding:
 
-padding:25px 0 35px;
+25px
+0
+30px;
 
 direction:ltr;
 
@@ -358,23 +276,23 @@ direction:ltr;
 
 position:relative;
 
-width:100%;
+width:calc(100% + 5vw);
+
+margin-left:-5vw;
 
 background:#fff;
 
 padding:10px;
 
-border-radius:0 18px 18px 0;
+overflow:hidden;
 
 box-shadow:
 
 0 25px 65px
-rgba(244,123,32,.18),
+rgba(244,123,32,.16),
 
 0 12px 35px
-rgba(0,0,0,.11);
-
-overflow:hidden;
+rgba(0,0,0,.10);
 
 clip-path:
 
@@ -396,37 +314,33 @@ z-index:2;
 }
 
 
+.image-frame:hover{
+
+transform:
+
+rotate(0deg)
+translateY(-4px);
+
+box-shadow:
+
+0 30px 75px
+rgba(244,123,32,.21),
+
+0 15px 40px
+rgba(0,0,0,.12);
+
+}
+
+
 .image-frame img{
 
 display:block;
 
 width:100%;
 
-aspect-ratio:16/9;
+aspect-ratio:16/10;
 
-object-fit:contain;
-
-background:#fff;
-
-border-radius:0 10px 10px 0;
-
-}
-
-
-.image-frame:hover{
-
-transform:
-
-rotate(0deg)
-translateY(-5px);
-
-box-shadow:
-
-0 30px 75px
-rgba(244,123,32,.23),
-
-0 15px 40px
-rgba(0,0,0,.13);
+object-fit:cover;
 
 }
 
@@ -460,18 +374,20 @@ border-radius:10px;
 
 transform-origin:right center;
 
-opacity:.85;
+opacity:.8;
 
 }
 
 
+/* TOP */
+
 .orange-line.top-1{
 
-width:150px;
+width:145px;
 
-top:10px;
+top:5px;
 
-right:15%;
+right:14%;
 
 transform:rotate(48deg);
 
@@ -480,11 +396,11 @@ transform:rotate(48deg);
 
 .orange-line.top-2{
 
-width:120px;
+width:115px;
 
-top:30px;
+top:25px;
 
-right:11%;
+right:10%;
 
 transform:rotate(48deg);
 
@@ -495,11 +411,11 @@ opacity:.55;
 
 .orange-line.top-3{
 
-width:90px;
+width:85px;
 
-top:50px;
+top:45px;
 
-right:8%;
+right:7%;
 
 transform:rotate(48deg);
 
@@ -508,13 +424,15 @@ opacity:.35;
 }
 
 
+/* BOTTOM */
+
 .orange-line.bottom-1{
 
-width:170px;
+width:160px;
 
-bottom:30px;
+bottom:25px;
 
-left:15%;
+left:14%;
 
 transform:rotate(42deg);
 
@@ -523,11 +441,11 @@ transform:rotate(42deg);
 
 .orange-line.bottom-2{
 
-width:125px;
+width:120px;
 
-bottom:17px;
+bottom:13px;
 
-left:11%;
+left:10%;
 
 transform:rotate(42deg);
 
@@ -538,11 +456,11 @@ opacity:.55;
 
 .orange-line.bottom-3{
 
-width:90px;
+width:85px;
 
-bottom:5px;
+bottom:3px;
 
-left:8%;
+left:7%;
 
 transform:rotate(42deg);
 
@@ -552,29 +470,29 @@ opacity:.35;
 
 
 /* =====================================================
-   DOTS
+   ORANGE DOTS
 ===================================================== */
 
 .orange-dot{
 
 position:absolute;
 
-width:13px;
+width:12px;
 
-height:13px;
-
-background:var(--orange);
+height:12px;
 
 border-radius:50%;
 
-z-index:4;
+background:var(--orange);
+
+z-index:5;
 
 }
 
 
 .orange-dot.one{
 
-top:50px;
+top:45px;
 
 right:4%;
 
@@ -583,7 +501,7 @@ right:4%;
 
 .orange-dot.two{
 
-bottom:50px;
+bottom:40px;
 
 left:4%;
 
@@ -591,110 +509,66 @@ left:4%;
 
 
 /* =====================================================
-   LOGIN CARD AREA
+   LOGIN CARD SIDE
 ===================================================== */
 
-.login-area{
+.login-side{
 
 direction:rtl;
-
-padding:
-
-15px
-7%
-15px
-5%;
 
 display:flex;
 
 justify-content:center;
 
+align-items:center;
+
+padding:
+
+10px
+0
+10px
+6%;
+
 position:relative;
 
-z-index:20;
+z-index:10;
 
 }
 
 
 /* =====================================================
-   LOGIN CARD
+   CARD
 ===================================================== */
 
 .login-card{
 
 width:100%;
 
-max-width:440px;
+max-width:470px;
 
 background:#fff;
 
-border:1px solid #E8E8E8;
+border:1px solid #EAEAEA;
 
-border-radius:20px;
+border-radius:22px;
 
-padding:30px;
+padding:32px;
 
 box-shadow:
 
-0 18px 50px
+0 15px 45px
 rgba(0,0,0,.08);
 
 }
 
 
 /* =====================================================
-   BADGE
+   CARD TITLE
 ===================================================== */
 
-.login-badge{
+.card-title{
 
-display:inline-flex;
-
-align-items:center;
-
-gap:8px;
-
-background:var(--orange-light);
-
-color:var(--orange-dark);
-
-padding:8px 14px;
-
-border-radius:30px;
-
-font-size:12px;
-
-font-weight:700;
-
-margin-bottom:18px;
-
-border:1px solid #FFE0CA;
-
-}
-
-
-.login-badge span{
-
-width:8px;
-
-height:8px;
-
-border-radius:50%;
-
-background:var(--orange);
-
-display:inline-block;
-
-}
-
-
-/* =====================================================
-   TITLE
-===================================================== */
-
-.login-title{
-
-font-size:30px;
+font-size:27px;
 
 font-weight:900;
 
@@ -705,15 +579,15 @@ margin-bottom:8px;
 }
 
 
-.login-description{
+.card-description{
 
-font-size:14px;
+font-size:13px;
+
+color:#888;
 
 line-height:1.9;
 
-color:#777;
-
-margin-bottom:24px;
+margin-bottom:25px;
 
 }
 
@@ -729,7 +603,7 @@ margin-bottom:17px;
 }
 
 
-.form-group label{
+label{
 
 display:block;
 
@@ -737,19 +611,29 @@ font-size:13px;
 
 font-weight:800;
 
-color:#333;
+color:#444;
 
 margin-bottom:8px;
 
 }
 
 
+/* =====================================================
+   INPUT WRAPPER
+===================================================== */
+
 .input-wrapper{
 
 position:relative;
 
+width:100%;
+
 }
 
+
+/* =====================================================
+   INPUT ICON
+===================================================== */
 
 .input-icon{
 
@@ -763,16 +647,18 @@ transform:translateY(-50%);
 
 font-size:16px;
 
-color:#999;
+z-index:2;
 
 pointer-events:none;
-
-z-index:2;
 
 }
 
 
-.input-wrapper input{
+/* =====================================================
+   INPUT
+===================================================== */
+
+input{
 
 width:100%;
 
@@ -780,12 +666,15 @@ height:50px;
 
 padding:
 
-0 44px
-0 45px;
+0
+45px
+0
+45px;
 
 border:
 
-1px solid #E3E3E3;
+1px solid
+var(--border);
 
 border-radius:11px;
 
@@ -802,11 +691,11 @@ transition:.2s;
 }
 
 
-.input-wrapper input:focus{
-
-border-color:var(--orange);
+input:focus{
 
 background:#fff;
+
+border-color:var(--orange);
 
 box-shadow:
 
@@ -834,9 +723,9 @@ border:none;
 
 background:transparent;
 
-cursor:pointer;
+font-size:18px;
 
-font-size:17px;
+cursor:pointer;
 
 color:#999;
 
@@ -855,6 +744,49 @@ color:var(--orange);
 
 
 /* =====================================================
+   FORGOT PASSWORD
+===================================================== */
+
+.forgot-wrapper{
+
+display:flex;
+
+justify-content:flex-start;
+
+margin-top:-5px;
+
+margin-bottom:18px;
+
+}
+
+
+.forgot-link{
+
+border:none;
+
+background:transparent;
+
+color:var(--orange-dark);
+
+font-size:12px;
+
+font-weight:700;
+
+cursor:pointer;
+
+padding:3px 0;
+
+}
+
+
+.forgot-link:hover{
+
+text-decoration:underline;
+
+}
+
+
+/* =====================================================
    LOGIN BUTTON
 ===================================================== */
 
@@ -866,7 +798,7 @@ height:52px;
 
 border:none;
 
-border-radius:11px;
+border-radius:12px;
 
 background:var(--orange);
 
@@ -878,14 +810,12 @@ font-weight:800;
 
 cursor:pointer;
 
-transition:.2s;
-
-margin-top:5px;
+transition:.25s;
 
 box-shadow:
 
-0 7px 18px
-rgba(244,123,32,.22);
+0 8px 20px
+rgba(244,123,32,.20);
 
 }
 
@@ -894,7 +824,7 @@ rgba(244,123,32,.22);
 
 background:var(--orange-dark);
 
-transform:translateY(-1px);
+transform:translateY(-2px);
 
 }
 
@@ -925,11 +855,11 @@ transform:none;
 
 display:none;
 
-margin-top:16px;
+margin-top:17px;
 
 padding:13px 14px;
 
-border-radius:10px;
+border-radius:11px;
 
 font-size:12px;
 
@@ -973,17 +903,6 @@ border:1px solid #EFC5CA;
 }
 
 
-.message-warning{
-
-background:#EEEEEE;
-
-color:#555;
-
-border:1px solid #DDD;
-
-}
-
-
 /* =====================================================
    REGISTER
 ===================================================== */
@@ -994,7 +913,7 @@ text-align:center;
 
 margin-top:22px;
 
-padding-top:18px;
+padding-top:19px;
 
 border-top:1px solid #eee;
 
@@ -1033,17 +952,135 @@ text-decoration:underline;
 
 display:flex;
 
-align-items:center;
-
 justify-content:center;
 
-gap:6px;
+align-items:center;
+
+gap:5px;
 
 margin-top:15px;
 
 font-size:10px;
 
 color:#aaa;
+
+}
+
+
+/* =====================================================
+   FORGOT PASSWORD BOX
+===================================================== */
+
+.reset-box{
+
+display:none;
+
+margin-top:18px;
+
+padding:17px;
+
+background:#FFF8F2;
+
+border:1px solid #FFE0CA;
+
+border-radius:13px;
+
+}
+
+
+.reset-box-title{
+
+font-size:14px;
+
+font-weight:800;
+
+color:#444;
+
+margin-bottom:7px;
+
+}
+
+
+.reset-box-description{
+
+font-size:11px;
+
+line-height:1.8;
+
+color:#888;
+
+margin-bottom:12px;
+
+}
+
+
+#resetEmail{
+
+height:46px;
+
+padding-right:14px;
+
+padding-left:14px;
+
+margin-bottom:10px;
+
+}
+
+
+.reset-buttons{
+
+display:flex;
+
+gap:8px;
+
+}
+
+
+.reset-send{
+
+flex:1;
+
+height:44px;
+
+border:none;
+
+border-radius:9px;
+
+background:var(--orange);
+
+color:white;
+
+font-weight:800;
+
+cursor:pointer;
+
+}
+
+
+.reset-send:hover{
+
+background:var(--orange-dark);
+
+}
+
+
+.reset-cancel{
+
+width:85px;
+
+height:44px;
+
+border:1px solid #ddd;
+
+border-radius:9px;
+
+background:#fff;
+
+color:#555;
+
+font-weight:700;
+
+cursor:pointer;
 
 }
 
@@ -1058,9 +1095,11 @@ background:#222;
 
 color:#fff;
 
-padding:25px 7%;
+padding:25px 20px;
 
 text-align:center;
+
+flex-shrink:0;
 
 }
 
@@ -1094,13 +1133,6 @@ line-height:1.8;
 }
 
 
-.footer-copy{
-
-margin-top:7px;
-
-}
-
-
 /* =====================================================
    TABLET
 ===================================================== */
@@ -1114,18 +1146,20 @@ padding:0 4%;
 }
 
 
-.nav{
+.header-logo img{
 
-gap:18px;
+width:170px;
 
 }
 
 
-.logo img{
+.main{
 
-width:175px;
+padding:
 
-max-height:66px;
+30px
+4%
+40px;
 
 }
 
@@ -1133,43 +1167,38 @@ max-height:66px;
 .login-container{
 
 grid-template-columns:
-55%
-45%;
+52%
+48%;
 
 }
 
 
-.login-image{
+.login-side{
 
-width:calc(100% + 5vw);
-
-margin-left:-5vw;
-
-}
-
-
-.login-area{
-
-padding:
-
-15px
-5%
-15px
-4%;
+padding-left:4%;
 
 }
 
 
 .login-card{
 
-padding:25px;
+padding:27px;
 
 }
 
 
-.login-title{
+.card-title{
 
-font-size:27px;
+font-size:24px;
+
+}
+
+
+.image-frame{
+
+width:calc(100% + 3vw);
+
+margin-left:-3vw;
 
 }
 
@@ -1191,46 +1220,7 @@ padding:0 15px;
 }
 
 
-.nav{
-
-display:none;
-
-}
-
-
-.mobile-menu-btn{
-
-display:block;
-
-}
-
-
-.header-actions{
-
-gap:6px;
-
-}
-
-
-.login-btn{
-
-padding:8px 10px;
-
-font-size:11px;
-
-}
-
-
-.register-btn{
-
-padding:9px 11px;
-
-font-size:11px;
-
-}
-
-
-.logo img{
+.header-logo img{
 
 width:145px;
 
@@ -1239,35 +1229,44 @@ max-height:58px;
 }
 
 
-/* LOGIN */
+.home-btn{
 
-.login-section{
+padding:8px 11px;
 
-min-height:auto;
+font-size:11px;
+
+}
+
+
+.main{
 
 padding:
 
-30px
+25px
 15px
-45px;
+40px;
 
 }
 
 
 .login-container{
 
-grid-template-columns:1fr;
+display:flex;
 
-gap:28px;
+flex-direction:column;
+
+gap:25px;
 
 direction:rtl;
 
 }
 
 
-.login-area{
+.login-side{
 
 order:1;
+
+width:100%;
 
 padding:0;
 
@@ -1276,60 +1275,42 @@ padding:0;
 
 .login-card{
 
-max-width:100%;
+max-width:500px;
 
 padding:25px 20px;
 
-border-radius:18px;
+border-radius:19px;
 
 }
 
 
-.login-title{
+.card-title{
 
-font-size:27px;
-
-text-align:center;
+font-size:23px;
 
 }
 
 
-.login-description{
+.card-description{
 
-text-align:center;
+font-size:12px;
 
-font-size:13px;
-
-}
-
-
-.login-badge{
-
-display:flex;
-
-width:max-content;
-
-margin:
-
-0 auto
-18px;
+margin-bottom:21px;
 
 }
 
 
 /* IMAGE */
 
-.login-image{
+.image-side{
 
 order:2;
 
-width:calc(100% + 30px);
-
-margin-left:-15px;
+width:100%;
 
 padding:
 
-15px
+10px
 0
 45px;
 
@@ -1338,7 +1319,9 @@ padding:
 
 .image-frame{
 
-width:100%;
+width:calc(100% + 30px);
+
+margin-left:-15px;
 
 padding:7px;
 
@@ -1356,6 +1339,16 @@ polygon(
 }
 
 
+.image-frame:hover{
+
+transform:
+
+translateY(-3px)
+rotate(-1deg);
+
+}
+
+
 .image-frame img{
 
 aspect-ratio:16/10;
@@ -1363,11 +1356,13 @@ aspect-ratio:16/10;
 }
 
 
+/* DECORATIONS */
+
 .orange-line.top-1{
 
 width:80px;
 
-top:15px;
+top:5px;
 
 right:30px;
 
@@ -1378,7 +1373,7 @@ right:30px;
 
 width:65px;
 
-top:28px;
+top:18px;
 
 right:20px;
 
@@ -1389,7 +1384,7 @@ right:20px;
 
 width:50px;
 
-top:40px;
+top:30px;
 
 right:12px;
 
@@ -1400,7 +1395,7 @@ right:12px;
 
 width:90px;
 
-bottom:25px;
+bottom:18px;
 
 left:30px;
 
@@ -1411,7 +1406,7 @@ left:30px;
 
 width:70px;
 
-bottom:14px;
+bottom:9px;
 
 left:20px;
 
@@ -1422,20 +1417,36 @@ left:20px;
 
 width:50px;
 
-bottom:5px;
+bottom:1px;
 
 left:12px;
 
 }
 
 
-/* FOOTER */
+.orange-dot.one{
+
+top:30px;
+
+right:4px;
+
+}
+
+
+.orange-dot.two{
+
+bottom:28px;
+
+left:4px;
+
+}
+
 
 .footer{
 
 padding:
 
-25px
+22px
 15px;
 
 }
@@ -1449,25 +1460,9 @@ padding:
 
 @media(max-width:400px){
 
-.logo img{
+.header-logo img{
 
 width:125px;
-
-max-height:52px;
-
-}
-
-
-.header-actions .login-btn{
-
-display:none;
-
-}
-
-
-.login-section{
-
-padding-top:25px;
 
 }
 
@@ -1476,20 +1471,27 @@ padding-top:25px;
 
 padding:
 
-23px
+22px
 16px;
 
 }
 
 
-.login-title{
+.card-title{
 
-font-size:24px;
+font-size:21px;
 
 }
 
 
-.input-wrapper input{
+.card-description{
+
+font-size:11px;
+
+}
+
+
+input{
 
 height:48px;
 
@@ -1502,39 +1504,19 @@ height:50px;
 
 }
 
-}
 
+.reset-buttons{
 
-/* =====================================================
-   SCROLLBAR
-===================================================== */
-
-::-webkit-scrollbar{
-
-width:7px;
+flex-direction:column;
 
 }
 
 
-::-webkit-scrollbar-track{
+.reset-cancel{
 
-background:#F1F1F1;
-
-}
-
-
-::-webkit-scrollbar-thumb{
-
-background:#CCC;
-
-border-radius:10px;
+width:100%;
 
 }
-
-
-::-webkit-scrollbar-thumb:hover{
-
-background:var(--orange);
 
 }
 
@@ -1555,7 +1537,7 @@ background:var(--orange);
 
 <a
 href="home.html"
-class="logo">
+class="header-logo">
 
 <img
 src="gglamlogo.png"
@@ -1564,78 +1546,27 @@ alt="G-Glam">
 </a>
 
 
-<nav class="nav">
-
-<a href="home.html">
-
-الرئيسية
-
-</a>
-
-
-<a href="home.html#features">
-
-المميزات
-
-</a>
-
-
-<a href="home.html#how">
-
-كيف يعمل؟
-
-</a>
-
-
-<a href="home.html#contact">
-
-تواصل معنا
-
-</a>
-
-</nav>
-
-
 <div class="header-actions">
 
-
 <a
-href="login.html"
-class="login-btn">
+href="home.html"
+class="home-btn">
 
-تسجيل الدخول
-
-</a>
-
-
-<a
-href="register.html"
-class="register-btn">
-
-إنشاء حساب
+الرئيسية
 
 </a>
 
 </div>
 
 
-<button
-class="mobile-menu-btn"
-id="mobileMenuBtn">
-
-☰
-
-</button>
-
 </header>
 
 
-
 <!-- =====================================================
-     LOGIN SECTION
+     MAIN
 ===================================================== -->
 
-<section class="login-section">
+<main class="main">
 
 
 <div class="login-container">
@@ -1645,7 +1576,7 @@ id="mobileMenuBtn">
      IMAGE
 =================================================== -->
 
-<div class="login-image">
+<div class="image-side">
 
 
 <div class="orange-lines">
@@ -1656,7 +1587,6 @@ id="mobileMenuBtn">
 <div class="orange-line top-2"></div>
 
 <div class="orange-line top-3"></div>
-
 
 <div class="orange-line bottom-1"></div>
 
@@ -1684,46 +1614,38 @@ alt="G-Glam">
 </div>
 
 
-
 <!-- ===================================================
-     LOGIN AREA
+     LOGIN
 =================================================== -->
 
-<div class="login-area">
+<div class="login-side">
 
 
 <div class="login-card">
 
 
-<div class="login-badge">
-
-<span></span>
-
-منصة G-Glam
-
-</div>
-
-
-<h1 class="login-title">
+<h1 class="card-title">
 
 تسجيل الدخول
 
 </h1>
 
 
-<p class="login-description">
+<p class="card-description">
 
 أدخل بيانات حسابك للوصول إلى لوحة التحكم الخاصة بمتجرك.
 
 </p>
 
 
-
-<!-- EMAIL -->
+<!-- =================================================
+     EMAIL
+================================================= -->
 
 <div class="form-group">
 
-<label for="email">
+<label
+for="email">
 
 البريد الإلكتروني
 
@@ -1731,7 +1653,6 @@ alt="G-Glam">
 
 
 <div class="input-wrapper">
-
 
 <span class="input-icon">
 
@@ -1750,18 +1671,19 @@ placeholder="example@gmail.com"
 
 autocomplete="email">
 
-
 </div>
 
 </div>
 
 
-
-<!-- PASSWORD -->
+<!-- =================================================
+     PASSWORD
+================================================= -->
 
 <div class="form-group">
 
-<label for="password">
+<label
+for="password">
 
 كلمة المرور
 
@@ -1769,7 +1691,6 @@ autocomplete="email">
 
 
 <div class="input-wrapper">
-
 
 <span class="input-icon">
 
@@ -1796,22 +1717,113 @@ type="button"
 class="password-toggle"
 
 id="passwordToggle"
+
 aria-label="إظهار كلمة المرور">
 
 👁️
 
 </button>
 
-
 </div>
 
 </div>
 
 
+<!-- =================================================
+     FORGOT
+================================================= -->
 
-<!-- LOGIN -->
+<div class="forgot-wrapper">
 
 <button
+
+type="button"
+
+class="forgot-link"
+
+id="forgotBtn">
+
+نسيت كلمة المرور؟
+
+</button>
+
+</div>
+
+
+<!-- =================================================
+     RESET BOX
+================================================= -->
+
+<div
+class="reset-box"
+id="resetBox">
+
+
+<div class="reset-box-title">
+
+🔑 إعادة تعيين كلمة المرور
+
+</div>
+
+
+<div class="reset-box-description">
+
+أدخل البريد الإلكتروني المرتبط بحسابك، وسنرسل لك رابطًا لإعادة تعيين كلمة المرور.
+
+</div>
+
+
+<input
+
+id="resetEmail"
+
+type="email"
+
+placeholder="example@gmail.com"
+
+autocomplete="email">
+
+
+<div class="reset-buttons">
+
+
+<button
+
+type="button"
+
+class="reset-send"
+
+id="resetSendBtn">
+
+إرسال الرابط
+
+</button>
+
+
+<button
+
+type="button"
+
+class="reset-cancel"
+
+id="resetCancelBtn">
+
+إلغاء
+
+</button>
+
+</div>
+
+
+</div>
+
+
+<!-- =================================================
+     LOGIN BUTTON
+================================================= -->
+
+<button
+
 id="loginBtn">
 
 تسجيل الدخول
@@ -1819,27 +1831,35 @@ id="loginBtn">
 </button>
 
 
-<div id="message"></div>
+<!-- =================================================
+     MESSAGE
+================================================= -->
+
+<div
+id="message">
+</div>
 
 
-
-<!-- REGISTER -->
+<!-- =================================================
+     REGISTER
+================================================= -->
 
 <div class="register">
 
-ليس لديك حساب؟
+ليس لديك متجر؟
 
-<a href="register.html">
+<a href="register-store.html">
 
-إنشاء حساب جديد
+إنشاء متجر جديد
 
 </a>
 
 </div>
 
 
-
-<!-- SECURITY -->
+<!-- =================================================
+     SECURITY
+================================================= -->
 
 <div class="security-note">
 
@@ -1855,8 +1875,7 @@ id="loginBtn">
 
 </div>
 
-</section>
-
+</main>
 
 
 <!-- =====================================================
@@ -1880,7 +1899,8 @@ G-<span>Glam</span>
 </p>
 
 
-<p class="footer-copy">
+<p
+style="margin-top:7px;">
 
 © 2026 G-Glam - جميع الحقوق محفوظة
 
@@ -1888,147 +1908,6 @@ G-<span>Glam</span>
 
 
 </footer>
-
-
-
-<!-- =====================================================
-     MOBILE MENU
-===================================================== -->
-
-<script>
-
-const mobileMenuBtn =
-document.getElementById(
-"mobileMenuBtn"
-);
-
-const nav =
-document.querySelector(
-".nav"
-);
-
-
-mobileMenuBtn.addEventListener(
-"click",
-function(){
-
-if(
-nav.style.display === "flex"
-){
-
-nav.style.display =
-"none";
-
-}
-
-else{
-
-nav.style.display =
-"flex";
-
-nav.style.position =
-"absolute";
-
-nav.style.top =
-"68px";
-
-nav.style.right =
-"15px";
-
-nav.style.left =
-"15px";
-
-nav.style.background =
-"#fff";
-
-nav.style.padding =
-"15px";
-
-nav.style.borderRadius =
-"15px";
-
-nav.style.boxShadow =
-"0 10px 30px rgba(0,0,0,.10)";
-
-nav.style.flexDirection =
-"column";
-
-nav.style.alignItems =
-"stretch";
-
-nav.style.gap =
-"0";
-
-nav.querySelectorAll("a")
-.forEach(function(link){
-
-link.style.padding =
-"12px";
-
-});
-
-}
-
-});
-
-
-
-/* =====================================================
-   PASSWORD SHOW / HIDE
-===================================================== */
-
-const passwordInput =
-document.getElementById(
-"password"
-);
-
-const passwordToggle =
-document.getElementById(
-"passwordToggle"
-);
-
-
-passwordToggle.addEventListener(
-"click",
-function(){
-
-if(
-passwordInput.type ===
-"password"
-){
-
-passwordInput.type =
-"text";
-
-passwordToggle.textContent =
-"🙈";
-
-passwordToggle.setAttribute(
-"aria-label",
-"إخفاء كلمة المرور"
-);
-
-}
-
-else{
-
-passwordInput.type =
-"password";
-
-passwordToggle.textContent =
-"👁️";
-
-passwordToggle.setAttribute(
-"aria-label",
-"إظهار كلمة المرور"
-);
-
-}
-
-});
-
-</script>
-
 
 
 <!-- =====================================================
@@ -2056,7 +1935,8 @@ from
 import {
 
 getAuth,
-signInWithEmailAndPassword
+signInWithEmailAndPassword,
+sendPasswordResetEmail
 
 }
 
@@ -2077,7 +1957,6 @@ onSnapshot
 from
 
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-
 
 
 /* =====================================================
@@ -2110,7 +1989,6 @@ measurementId:
 };
 
 
-
 /* =====================================================
    INITIALIZE FIREBASE
 ===================================================== */
@@ -2125,55 +2003,60 @@ const db =
 getFirestore(app);
 
 
-
 /* =====================================================
    ELEMENTS
 ===================================================== */
 
 const emailInput =
-document.getElementById(
-"email"
-);
+document.getElementById("email");
+
+const passwordInput =
+document.getElementById("password");
+
+const passwordToggle =
+document.getElementById("passwordToggle");
 
 const loginBtn =
-document.getElementById(
-"loginBtn"
-);
+document.getElementById("loginBtn");
 
 const message =
-document.getElementById(
-"message"
-);
+document.getElementById("message");
 
+const forgotBtn =
+document.getElementById("forgotBtn");
+
+const resetBox =
+document.getElementById("resetBox");
+
+const resetEmail =
+document.getElementById("resetEmail");
+
+const resetSendBtn =
+document.getElementById("resetSendBtn");
+
+const resetCancelBtn =
+document.getElementById("resetCancelBtn");
 
 
 /* =====================================================
    STORE LISTENER
 ===================================================== */
 
-let storeUnsubscribe =
-null;
-
+let storeUnsubscribe = null;
 
 
 /* =====================================================
    SHOW MESSAGE
 ===================================================== */
 
-function showMessage(
-text,
-type
-){
+function showMessage(text,type){
 
 message.innerHTML =
 text;
 
-message.className =
-"";
+message.className = "";
 
-message.classList.add(
-type
-);
+message.classList.add(type);
 
 message.style.display =
 "block";
@@ -2181,9 +2064,8 @@ message.style.display =
 }
 
 
-
 /* =====================================================
-   RESET BUTTON
+   RESET LOGIN BUTTON
 ===================================================== */
 
 function resetButton(){
@@ -2197,9 +2079,315 @@ loginBtn.textContent =
 }
 
 
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHtml(value){
+
+return String(
+value ?? ""
+)
+
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/'/g,
+"&#039;"
+);
+
+}
+
 
 /* =====================================================
-   FIND STORE
+   SHOW / HIDE PASSWORD
+===================================================== */
+
+passwordToggle.addEventListener(
+
+"click",
+
+function(){
+
+if(
+passwordInput.type === "password"
+){
+
+passwordInput.type =
+"text";
+
+passwordToggle.textContent =
+"🙈";
+
+passwordToggle.setAttribute(
+"aria-label",
+"إخفاء كلمة المرور"
+);
+
+}
+
+else{
+
+passwordInput.type =
+"password";
+
+passwordToggle.textContent =
+"👁️";
+
+passwordToggle.setAttribute(
+"aria-label",
+"إظهار كلمة المرور"
+);
+
+}
+
+}
+
+);
+
+
+/* =====================================================
+   FORGOT PASSWORD - OPEN
+===================================================== */
+
+forgotBtn.addEventListener(
+
+"click",
+
+function(){
+
+resetBox.style.display =
+"block";
+
+message.style.display =
+"none";
+
+
+if(
+!resetEmail.value.trim()
+){
+
+resetEmail.value =
+emailInput.value.trim();
+
+}
+
+
+resetEmail.focus();
+
+}
+
+);
+
+
+/* =====================================================
+   CANCEL RESET
+===================================================== */
+
+resetCancelBtn.addEventListener(
+
+"click",
+
+function(){
+
+resetBox.style.display =
+"none";
+
+}
+
+);
+
+
+/* =====================================================
+   SEND PASSWORD RESET
+===================================================== */
+
+resetSendBtn.addEventListener(
+
+"click",
+
+async function(){
+
+const email =
+resetEmail.value.trim().toLowerCase();
+
+
+if(!email){
+
+showMessage(
+
+"⚠️ يرجى إدخال البريد الإلكتروني.",
+
+"message-error"
+
+);
+
+return;
+
+}
+
+
+/* EMAIL BASIC VALIDATION */
+
+if(
+!email.includes("@")
+){
+
+showMessage(
+
+"⚠️ يرجى إدخال بريد إلكتروني صحيح.",
+
+"message-error"
+
+);
+
+return;
+
+}
+
+
+resetSendBtn.disabled =
+true;
+
+resetSendBtn.textContent =
+"⏳ جاري الإرسال...";
+
+
+try{
+
+
+await sendPasswordResetEmail(
+
+auth,
+
+email
+
+);
+
+
+showMessage(
+
+"✅ تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.<br><br>" +
+
+"افتح البريد واتبع الرابط لاختيار كلمة مرور جديدة.",
+
+"message-success"
+
+);
+
+
+resetSendBtn.disabled =
+false;
+
+resetSendBtn.textContent =
+"إرسال الرابط";
+
+
+}
+
+catch(error){
+
+console.error(
+"PASSWORD RESET ERROR:",
+error
+);
+
+
+let errorMessage =
+"حدث خطأ أثناء إرسال رابط إعادة تعيين كلمة المرور.";
+
+
+if(
+
+error.code ===
+"auth/invalid-email"
+
+){
+
+errorMessage =
+"❌ البريد الإلكتروني غير صحيح.";
+
+}
+
+else if(
+
+error.code ===
+"auth/user-not-found"
+
+){
+
+errorMessage =
+"❌ لا يوجد حساب بهذا البريد الإلكتروني.";
+
+}
+
+else if(
+
+error.code ===
+"auth/too-many-requests"
+
+){
+
+errorMessage =
+"⚠️ تم إجراء محاولات كثيرة. حاولي مرة أخرى لاحقًا.";
+
+}
+
+else if(
+
+error.code ===
+"auth/network-request-failed"
+
+){
+
+errorMessage =
+"⚠️ تأكدي من اتصال الإنترنت.";
+
+}
+
+
+showMessage(
+
+errorMessage,
+
+"message-error"
+
+);
+
+
+resetSendBtn.disabled =
+false;
+
+resetSendBtn.textContent =
+"إرسال الرابط";
+
+}
+
+}
+
+);
+
+
+/* =====================================================
+   FIND STORE BY UID
 ===================================================== */
 
 async function findStore(uid){
@@ -2214,13 +2402,9 @@ uid
 );
 
 const snapshot =
-await getDoc(
-storeRef
-);
+await getDoc(storeRef);
 
-if(
-!snapshot.exists()
-){
+if(!snapshot.exists()){
 
 return null;
 
@@ -2250,7 +2434,6 @@ throw error;
 }
 
 }
-
 
 
 /* =====================================================
@@ -2304,7 +2487,6 @@ storeName
 }
 
 
-
 /* =====================================================
    WATCH STORE STATUS
 ===================================================== */
@@ -2313,9 +2495,7 @@ function watchStoreStatus(
 user
 ){
 
-if(
-storeUnsubscribe
-){
+if(storeUnsubscribe){
 
 storeUnsubscribe();
 
@@ -2341,9 +2521,7 @@ storeRef,
 
 function(snapshot){
 
-if(
-!snapshot.exists()
-){
+if(!snapshot.exists()){
 
 return;
 
@@ -2359,6 +2537,7 @@ const status =
 String(
 
 storeData.status ||
+
 "pending"
 
 )
@@ -2367,8 +2546,9 @@ storeData.status ||
 .trim();
 
 
-
-/* APPROVED */
+/* =====================================================
+   APPROVED
+===================================================== */
 
 if(
 
@@ -2406,9 +2586,7 @@ showMessage(
 );
 
 
-if(
-storeUnsubscribe
-){
+if(storeUnsubscribe){
 
 storeUnsubscribe();
 
@@ -2431,13 +2609,15 @@ window.location.href =
 
 );
 
+
 return;
 
 }
 
 
-
-/* REJECTED */
+/* =====================================================
+   REJECTED
+===================================================== */
 
 if(
 
@@ -2476,13 +2656,15 @@ escapeHtml(reason) +
 
 );
 
+
 return;
 
 }
 
 
-
-/* PENDING */
+/* =====================================================
+   PENDING
+===================================================== */
 
 showMessage(
 
@@ -2546,7 +2728,6 @@ error.message || ""
 }
 
 
-
 /* =====================================================
    LOGIN
 ===================================================== */
@@ -2558,24 +2739,16 @@ loginBtn.addEventListener(
 async function(){
 
 const email =
-
 emailInput.value
 .trim()
 .toLowerCase();
 
 
-const passwordInput =
-document.getElementById(
-"password"
-);
-
 const password =
 passwordInput.value;
 
 
-if(
-!email
-){
+if(!email){
 
 showMessage(
 
@@ -2590,9 +2763,7 @@ return;
 }
 
 
-if(
-!password
-){
+if(!password){
 
 showMessage(
 
@@ -2607,6 +2778,10 @@ return;
 }
 
 
+/* =====================================================
+   DISABLE BUTTON
+===================================================== */
+
 loginBtn.disabled =
 true;
 
@@ -2617,7 +2792,9 @@ loginBtn.textContent =
 try{
 
 
-/* AUTH */
+/* =====================================================
+   FIREBASE AUTHENTICATION
+===================================================== */
 
 const result =
 
@@ -2636,9 +2813,7 @@ const user =
 result.user;
 
 
-if(
-!user
-){
+if(!user){
 
 throw new Error(
 "لم يتم العثور على المستخدم."
@@ -2646,6 +2821,10 @@ throw new Error(
 
 }
 
+
+/* =====================================================
+   GET STORE
+===================================================== */
 
 showMessage(
 
@@ -2656,17 +2835,17 @@ showMessage(
 );
 
 
-/* FIND STORE */
-
 const store =
 await findStore(
 user.uid
 );
 
 
-if(
-!store
-){
+/* =====================================================
+   NO STORE
+===================================================== */
+
+if(!store){
 
 showMessage(
 
@@ -2674,7 +2853,7 @@ showMessage(
 
 "تأكدي من استخدام نفس الحساب الذي تم إنشاء المتجر به.",
 
-"message-warning"
+"message-error"
 
 );
 
@@ -2685,6 +2864,10 @@ return;
 
 }
 
+
+/* =====================================================
+   STORE DATA
+===================================================== */
 
 const storeId =
 store.id;
@@ -2698,6 +2881,7 @@ const status =
 String(
 
 storeData.status ||
+
 "pending"
 
 )
@@ -2706,6 +2890,10 @@ storeData.status ||
 .trim();
 
 
+/* =====================================================
+   SAVE DATA
+===================================================== */
+
 saveStoreData(
 user,
 storeId,
@@ -2713,8 +2901,9 @@ storeData
 );
 
 
-
-/* APPROVED */
+/* =====================================================
+   APPROVED
+===================================================== */
 
 if(
 
@@ -2761,8 +2950,9 @@ return;
 }
 
 
-
-/* REJECTED */
+/* =====================================================
+   REJECTED
+===================================================== */
 
 if(
 
@@ -2809,8 +2999,9 @@ return;
 }
 
 
-
-/* PENDING */
+/* =====================================================
+   PENDING
+===================================================== */
 
 localStorage.setItem(
 "paymentStatus",
@@ -2830,6 +3021,10 @@ showMessage(
 
 );
 
+
+/* =====================================================
+   REAL TIME LISTENER
+===================================================== */
 
 watchStoreStatus(
 user
@@ -2851,6 +3046,10 @@ error
 let errorMessage =
 "حدث خطأ أثناء تسجيل الدخول.";
 
+
+/* =====================================================
+   AUTH ERRORS
+===================================================== */
 
 if(
 
@@ -2968,14 +3167,11 @@ resetButton();
 });
 
 
-
 /* =====================================================
-   ENTER KEY
+   ENTER - PASSWORD
 ===================================================== */
 
-document.getElementById(
-"password"
-).addEventListener(
+passwordInput.addEventListener(
 
 "keydown",
 
@@ -2992,6 +3188,10 @@ loginBtn.click();
 });
 
 
+/* =====================================================
+   ENTER - EMAIL
+===================================================== */
+
 emailInput.addEventListener(
 
 "keydown",
@@ -3002,52 +3202,32 @@ if(
 event.key === "Enter"
 ){
 
-document.getElementById(
-"password"
-).focus();
+passwordInput.focus();
 
 }
 
 });
 
 
-
 /* =====================================================
-   ESCAPE HTML
+   ENTER - RESET EMAIL
 ===================================================== */
 
-function escapeHtml(value){
+resetEmail.addEventListener(
 
-return String(
-value ?? ""
-)
+"keydown",
 
-.replace(
-/&/g,
-"&amp;"
-)
+function(event){
 
-.replace(
-/</g,
-"&lt;"
-)
+if(
+event.key === "Enter"
+){
 
-.replace(
-/>/g,
-"&gt;"
-)
-
-.replace(
-/"/g,
-"&quot;"
-)
-
-.replace(
-/'/g,
-"&#039;"
-);
+resetSendBtn.click();
 
 }
+
+});
 
 </script>
 
