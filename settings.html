@@ -196,324 +196,159 @@ body{
 
 
 /* =====================================================
-   BANNER + صورة المتجر الدائرية
+   منطقة الصور
 ===================================================== */
 
-.store-cover-preview{
+.images-section{
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+}
 
+
+/* =========================
+   معاينة الصور
+========================= */
+
+.store-preview{
     position:relative;
-
     width:100%;
-
     height:260px;
-
     border-radius:18px;
-
-    background:#FFF1E6;
-
-    background-size:cover;
-
-    background-position:center;
-
-    overflow:hidden;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    margin-bottom:25px;
-
-    border:1px solid #F3F4F6;
-
-    box-shadow:
-    0 5px 20px rgba(0,0,0,.07);
-
-}
-
-
-/* طبقة خفيفة فوق صورة الـ Banner */
-
-.store-cover-preview::after{
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    background:
-    linear-gradient(
-        to bottom,
-        rgba(0,0,0,.03),
-        rgba(0,0,0,.10)
-    );
-
-    pointer-events:none;
-
-}
-
-
-/* الصورة الدائرية */
-
-.cover-store-image{
-
-    position:relative;
-
-    z-index:3;
-
-    width:155px;
-
-    height:155px;
-
-    border-radius:50%;
-
-    object-fit:cover;
-
     background:#F3F4F6;
-
-    border:6px solid white;
-
-    box-shadow:
-    0 7px 25px rgba(0,0,0,.20);
-
+    overflow:hidden;
+    border:1px solid #E5E7EB;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
 }
 
 
-/* نص يظهر عندما لا توجد Banner */
+/* =========================
+   الغلاف
+========================= */
 
-.banner-placeholder{
-
+.cover-image{
     position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    background:#F3F4F6;
+}
 
-    z-index:1;
 
-    color:rgba(0,0,0,.28);
+/* طبقة خفيفة */
 
-    font-size:14px;
-
-    font-weight:700;
-
+.store-preview::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        to bottom,
+        rgba(0,0,0,.02),
+        rgba(0,0,0,.08)
+    );
     pointer-events:none;
-
 }
 
 
 /* =========================
-   ألوان الـ Banner
+   الصورة الدائرية
 ========================= */
 
-.banner-colors{
-
-    display:flex;
-
-    flex-wrap:wrap;
-
-    gap:10px;
-
-    margin-bottom:22px;
-
-}
-
-.color-option{
-
-    width:38px;
-
-    height:38px;
-
+.circular-image-box{
+    position:absolute;
+    right:50%;
+    bottom:25px;
+    transform:translateX(50%);
+    z-index:3;
+    width:145px;
+    height:145px;
     border-radius:50%;
-
-    cursor:pointer;
-
-    border:3px solid white;
-
-    box-shadow:
-    0 0 0 1px #D1D5DB;
-
-    transition:.2s;
-
-}
-
-.color-option:hover{
-
-    transform:scale(1.08);
-
-}
-
-.color-option.active{
-
-    box-shadow:
-    0 0 0 3px #F97316;
-
-    transform:scale(1.08);
-
-}
-
-
-/* ألوان جاهزة */
-
-.color-orange{
-    background:#F97316;
-}
-
-.color-peach{
-    background:#FFD6BA;
-}
-
-.color-pink{
-    background:#F8C8DC;
-}
-
-.color-purple{
-    background:#D8C4F1;
-}
-
-.color-blue{
-    background:#C7DDF5;
-}
-
-.color-green{
-    background:#CDE8D4;
-}
-
-.color-yellow{
-    background:#F8E7A8;
-}
-
-.color-red{
-    background:#F2B8B5;
-}
-
-.color-black{
-    background:#222222;
-}
-
-.color-white{
     background:#FFFFFF;
-}
-
-
-/* =========================
-   Banner controls
-========================= */
-
-.banner-controls{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:15px;
-
-    flex-wrap:wrap;
-
-}
-
-.banner-upload-btn{
-
-    display:inline-flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:8px;
-
-    background:#F97316;
-
-    color:white;
-
-    border:none;
-
-    padding:12px 20px;
-
-    border-radius:11px;
-
-    cursor:pointer;
-
-    font-size:14px;
-
-    font-weight:600;
-
-    transition:.2s;
-
-}
-
-.banner-upload-btn:hover{
-
-    background:#EA580C;
-
-}
-
-#bannerInput{
-
-    display:none;
-
-}
-
-.banner-status{
-
-    color:#9CA3AF;
-
-    font-size:12px;
-
-}
-
-
-/* =========================
-   صورة المتجر
-========================= */
-
-.store-image-section{
-    display:flex;
-    align-items:center;
-    gap:25px;
-    flex-wrap:wrap;
-}
-
-.image-wrapper{
-    position:relative;
+    padding:5px;
+    box-shadow:0 7px 25px rgba(0,0,0,.20);
 }
 
 .store-image{
-    width:150px;
-    height:150px;
+    width:100%;
+    height:100%;
     border-radius:50%;
     object-fit:cover;
-    border:5px solid #FFF7ED;
-    box-shadow:0 4px 18px rgba(0,0,0,.08);
+    display:block;
     background:#F3F4F6;
 }
 
-.image-info{
-    flex:1;
-    min-width:220px;
+
+/* =========================
+   نص داخل المعاينة
+========================= */
+
+.preview-label{
+    position:absolute;
+    top:15px;
+    right:15px;
+    z-index:5;
+    background:rgba(255,255,255,.92);
+    color:#374151;
+    padding:7px 12px;
+    border-radius:9px;
+    font-size:12px;
+    font-weight:700;
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
 }
 
-.image-info h3{
+
+/* =========================
+   خيارات الصور
+========================= */
+
+.image-options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+
+.image-option{
+    border:1px solid #E5E7EB;
+    border-radius:14px;
+    padding:17px;
+    background:#FAFAFA;
+    transition:.2s;
+}
+
+.image-option:hover{
+    border-color:#FDBA74;
+    background:#FFF7ED;
+}
+
+
+.image-option h3{
     color:#4B5563;
-    font-size:17px;
-    margin-bottom:8px;
+    font-size:16px;
+    margin-bottom:7px;
 }
 
-.image-info p{
+
+.image-option p{
     color:#9CA3AF;
-    font-size:13px;
-    line-height:1.8;
-    margin-bottom:15px;
+    font-size:12px;
+    line-height:1.7;
+    margin-bottom:13px;
 }
+
 
 .upload-btn{
     display:inline-flex;
     align-items:center;
     justify-content:center;
     gap:8px;
+    width:100%;
     background:#F97316;
     color:white;
     border:none;
-    padding:12px 20px;
-    border-radius:11px;
+    padding:12px 16px;
+    border-radius:10px;
     cursor:pointer;
     font-size:14px;
     font-weight:600;
@@ -524,14 +359,25 @@ body{
     background:#EA580C;
 }
 
-#imageInput{
+.upload-btn.cover-btn{
+    background:#374151;
+}
+
+.upload-btn.cover-btn:hover{
+    background:#1F2937;
+}
+
+
+.file-input{
     display:none;
 }
 
+
 .upload-status{
-    margin-top:10px;
+    margin-top:9px;
     color:#9CA3AF;
-    font-size:12px;
+    font-size:11px;
+    text-align:center;
 }
 
 
@@ -662,41 +508,18 @@ body{
         padding:18px;
     }
 
-    .store-image-section{
-        flex-direction:column;
-        text-align:center;
+    .store-preview{
+        height:230px;
     }
 
-    .image-info{
-        min-width:100%;
-    }
-
-    .store-cover-preview{
-
-        height:210px;
-
-    }
-
-    .cover-store-image{
-
+    .circular-image-box{
         width:125px;
-
         height:125px;
-
+        bottom:20px;
     }
 
-    .banner-controls{
-
-        flex-direction:column;
-
-        align-items:stretch;
-
-    }
-
-    .banner-upload-btn{
-
-        width:100%;
-
+    .image-options{
+        grid-template-columns:1fr;
     }
 
 }
@@ -708,26 +531,24 @@ body{
 
 @media(max-width:400px){
 
-    .store-cover-preview{
-
-        height:185px;
-
+    .content{
+        margin-right:60px;
+        padding:9px;
     }
 
-    .cover-store-image{
+    .store-preview{
+        height:205px;
+    }
 
+    .circular-image-box{
         width:110px;
-
         height:110px;
-
+        bottom:18px;
     }
 
-    .color-option{
-
-        width:34px;
-
-        height:34px;
-
+    .preview-label{
+        font-size:10px;
+        padding:6px 9px;
     }
 
 }
@@ -741,7 +562,7 @@ body{
 
 
 <!-- =========================
-     القائمة
+     القائمة الجانبية
 ========================= -->
 
 <div class="sidebar">
@@ -864,7 +685,7 @@ body{
         </h1>
 
         <p>
-            إدارة معلومات وصورة متجرك
+            إدارة معلومات وصور متجرك
         </p>
 
     </div>
@@ -901,237 +722,143 @@ body{
     </div>
 
 
-    <!-- =====================================================
-         BANNER STORE
-    ===================================================== -->
-
-    <div class="card">
-
-        <div class="card-title">
-
-            🖼️ صورة واجهة المتجر
-
-        </div>
-
-
-        <div class="card-description">
-
-            اختر صورة عرضية تظهر خلف الصورة الدائرية لمتجرك.
-
-        </div>
-
-
-        <!-- المعاينة -->
-
-        <div
-            class="store-cover-preview"
-            id="storeCoverPreview"
-            style="background-color:#FFF1E6;">
-
-            <div
-                class="banner-placeholder"
-                id="bannerPlaceholder">
-
-                صورة واجهة المتجر
-
-            </div>
-
-
-            <img
-                id="coverStoreImage"
-                class="cover-store-image"
-                src="https://via.placeholder.com/300x300?text=G-Glam"
-                alt="صورة المتجر">
-
-        </div>
-
-
-        <!-- الألوان -->
-
-        <div class="form-group">
-
-            <label>
-
-                🎨 اختر لون خلفية الواجهة
-
-            </label>
-
-
-            <div class="banner-colors">
-
-
-                <div
-                    class="color-option color-orange"
-                    data-color="#F97316"
-                    title="برتقالي">
-                </div>
-
-
-                <div
-                    class="color-option color-peach"
-                    data-color="#FFD6BA"
-                    title="خوخي">
-                </div>
-
-
-                <div
-                    class="color-option color-pink"
-                    data-color="#F8C8DC"
-                    title="وردي">
-                </div>
-
-
-                <div
-                    class="color-option color-purple"
-                    data-color="#D8C4F1"
-                    title="بنفسجي">
-                </div>
-
-
-                <div
-                    class="color-option color-blue"
-                    data-color="#C7DDF5"
-                    title="أزرق">
-                </div>
-
-
-                <div
-                    class="color-option color-green"
-                    data-color="#CDE8D4"
-                    title="أخضر">
-                </div>
-
-
-                <div
-                    class="color-option color-yellow"
-                    data-color="#F8E7A8"
-                    title="أصفر">
-                </div>
-
-
-                <div
-                    class="color-option color-red"
-                    data-color="#F2B8B5"
-                    title="أحمر">
-                </div>
-
-
-                <div
-                    class="color-option color-black"
-                    data-color="#222222"
-                    title="أسود">
-                </div>
-
-
-                <div
-                    class="color-option color-white"
-                    data-color="#FFFFFF"
-                    title="أبيض">
-                </div>
-
-
-            </div>
-
-        </div>
-
-
-        <!-- اختيار الصورة -->
-
-        <div class="banner-controls">
-
-
-            <label
-                for="bannerInput"
-                class="banner-upload-btn">
-
-                📷 اختيار صورة الواجهة
-
-            </label>
-
-
-            <input
-                type="file"
-                id="bannerInput"
-                accept="image/jpeg,image/png,image/webp">
-
-
-            <div
-                class="banner-status"
-                id="bannerStatus">
-
-                لم يتم اختيار صورة جديدة.
-
-            </div>
-
-
-        </div>
-
-    </div>
-
-
     <!-- =========================
-         صورة المتجر
+         الصور
     ========================= -->
 
     <div class="card">
 
         <div class="card-title">
-            🏪 صورة المتجر
+            🖼️ صور واجهة المتجر
         </div>
 
         <div class="card-description">
-            اختر صورة تمثل متجرك وتظهر للعملاء.
+            اختر الصورة الدائرية الخاصة بالمتجر وصورة الغلاف التي تظهر خلفها.
         </div>
 
 
-        <div class="store-image-section">
+        <div class="images-section">
 
 
-            <div class="image-wrapper">
+            <!-- =========================
+                 المعاينة
+            ========================= -->
+
+            <div class="store-preview">
+
 
                 <img
-                    id="storeImage"
-                    class="store-image"
-                    src="https://via.placeholder.com/300x300?text=G-Glam"
-                    alt="صورة المتجر">
+                    id="coverImage"
+                    class="cover-image"
+                    src="https://via.placeholder.com/1200x400?text=G-Glam"
+                    alt="صورة غلاف المتجر">
+
+
+                <div class="preview-label">
+                    غلاف المتجر
+                </div>
+
+
+                <div class="circular-image-box">
+
+                    <img
+                        id="storeImage"
+                        class="store-image"
+                        src="https://via.placeholder.com/300x300?text=G-Glam"
+                        alt="صورة المتجر">
+
+                </div>
+
 
             </div>
 
 
-            <div class="image-info">
+            <!-- =========================
+                 الزران
+            ========================= -->
 
-                <h3>
-                    صورة المتجر
-                </h3>
-
-                <p>
-                    اختر صورة واضحة لمتجرك من هاتفك.
-                    الحد الأقصى لحجم الصورة 5MB.
-                </p>
+            <div class="image-options">
 
 
-                <label
-                    for="imageInput"
-                    class="upload-btn">
+                <!-- الصورة الدائرية -->
 
-                    📷 اختيار صورة
+                <div class="image-option">
 
-                </label>
+                    <h3>
+                        ⭕ الصورة الدائرية
+                    </h3>
 
-
-                <input
-                    type="file"
-                    id="imageInput"
-                    accept="image/jpeg,image/png,image/webp">
+                    <p>
+                        هذه الصورة تظهر بشكل دائري وتمثل شعار أو صورة المتجر.
+                    </p>
 
 
-                <div
-                    class="upload-status"
-                    id="uploadStatus">
+                    <label
+                        for="imageInput"
+                        class="upload-btn">
 
-                    لم يتم اختيار صورة جديدة.
+                        📷 اختيار الصورة الدائرية
+
+                    </label>
+
+
+                    <input
+                        type="file"
+                        id="imageInput"
+                        class="file-input"
+                        accept="image/jpeg,image/png,image/webp">
+
+
+                    <div
+                        class="upload-status"
+                        id="uploadStatus">
+
+                        لم يتم اختيار صورة جديدة.
+
+                    </div>
 
                 </div>
+
+
+                <!-- صورة الغلاف -->
+
+                <div class="image-option">
+
+                    <h3>
+                        🖼️ صورة الغلاف
+                    </h3>
+
+                    <p>
+                        اختر صورة عرضية واسعة تظهر خلف الصورة الدائرية في واجهة المتجر.
+                    </p>
+
+
+                    <label
+                        for="coverInput"
+                        class="upload-btn cover-btn">
+
+                        🖼️ اختيار صورة الغلاف
+
+                    </label>
+
+
+                    <input
+                        type="file"
+                        id="coverInput"
+                        class="file-input"
+                        accept="image/jpeg,image/png,image/webp">
+
+
+                    <div
+                        class="upload-status"
+                        id="coverUploadStatus">
+
+                        لم يتم اختيار غلاف جديد.
+
+                    </div>
+
+                </div>
+
 
             </div>
 
@@ -1292,19 +1019,9 @@ document.getElementById(
     "storeImage"
 );
 
-const coverStoreImage =
+const coverImage =
 document.getElementById(
-    "coverStoreImage"
-);
-
-const storeCoverPreview =
-document.getElementById(
-    "storeCoverPreview"
-);
-
-const bannerPlaceholder =
-document.getElementById(
-    "bannerPlaceholder"
+    "coverImage"
 );
 
 const imageInput =
@@ -1312,9 +1029,9 @@ document.getElementById(
     "imageInput"
 );
 
-const bannerInput =
+const coverInput =
 document.getElementById(
-    "bannerInput"
+    "coverInput"
 );
 
 const uploadStatus =
@@ -1322,9 +1039,9 @@ document.getElementById(
     "uploadStatus"
 );
 
-const bannerStatus =
+const coverUploadStatus =
 document.getElementById(
-    "bannerStatus"
+    "coverUploadStatus"
 );
 
 const storeName =
@@ -1364,13 +1081,11 @@ let currentStoreId = "";
 
 let currentStoreImage = "";
 
-let currentBannerImage = "";
-
-let currentBannerColor = "#FFF1E6";
+let currentStoreCoverImage = "";
 
 let selectedImageFile = null;
 
-let selectedBannerFile = null;
+let selectedCoverFile = null;
 
 
 /* =========================
@@ -1393,9 +1108,9 @@ async function loadStore(){
 
 
         /*
-         * الحفاظ على الربط الأساسي:
+         * الحفاظ على نظام G-Glam:
          *
-         * stores / user.uid
+         * stores / Firebase Authentication UID
          */
 
         const storeRef =
@@ -1442,7 +1157,7 @@ async function loadStore(){
 
 
         /* =========================
-           صورة المتجر
+           الصورة الدائرية
         ========================= */
 
         currentStoreImage =
@@ -1450,57 +1165,19 @@ async function loadStore(){
         "";
 
 
-        if(currentStoreImage){
-
-            storeImage.src =
-            currentStoreImage;
-
-            coverStoreImage.src =
-            currentStoreImage;
-
-        }
-
-
         /* =========================
-           صورة الـ Banner
+           صورة الغلاف
         ========================= */
 
-        currentBannerImage =
-        store.bannerImage ||
+        currentStoreCoverImage =
+        store.storeCoverImage ||
+        store.coverImage ||
+        store.storeBanner ||
         "";
 
 
-        if(currentBannerImage){
-
-            storeCoverPreview.style.backgroundImage =
-            `url("${currentBannerImage}")`;
-
-            bannerPlaceholder.style.display =
-            "none";
-
-        }
-
-
         /* =========================
-           لون الـ Banner
-        ========================= */
-
-        currentBannerColor =
-        store.bannerColor ||
-        "#FFF1E6";
-
-
-        storeCoverPreview.style.backgroundColor =
-        currentBannerColor;
-
-
-        selectColorButton(
-            currentBannerColor
-        );
-
-
-        /* =========================
-           المعلومات
+           معلومات المتجر
         ========================= */
 
         storeName.value =
@@ -1517,6 +1194,30 @@ async function loadStore(){
         currentUser.email ||
         store.ownerEmail ||
         "";
+
+
+        /* =========================
+           عرض الصورة الدائرية
+        ========================= */
+
+        if(currentStoreImage){
+
+            storeImage.src =
+            currentStoreImage;
+
+        }
+
+
+        /* =========================
+           عرض الغلاف
+        ========================= */
+
+        if(currentStoreCoverImage){
+
+            coverImage.src =
+            currentStoreCoverImage;
+
+        }
 
 
         /* =========================
@@ -1602,7 +1303,7 @@ function disableSettings(){
     imageInput.disabled =
     true;
 
-    bannerInput.disabled =
+    coverInput.disabled =
     true;
 
     saveBtn.disabled =
@@ -1613,21 +1314,6 @@ function disableSettings(){
 
     storeDescription.disabled =
     true;
-
-
-    document
-    .querySelectorAll(".color-option")
-    .forEach(
-        button => {
-
-            button.style.pointerEvents =
-            "none";
-
-            button.style.opacity =
-            ".5";
-
-        }
-    );
 
 }
 
@@ -1641,7 +1327,7 @@ function enableSettings(){
     imageInput.disabled =
     false;
 
-    bannerInput.disabled =
+    coverInput.disabled =
     false;
 
     saveBtn.disabled =
@@ -1653,103 +1339,12 @@ function enableSettings(){
     storeDescription.disabled =
     false;
 
-
-    document
-    .querySelectorAll(".color-option")
-    .forEach(
-        button => {
-
-            button.style.pointerEvents =
-            "auto";
-
-            button.style.opacity =
-            "1";
-
-        }
-    );
-
 }
-
-
-/* =====================================================
-   اختيار لون الـ Banner
-===================================================== */
-
-document
-.querySelectorAll(".color-option")
-.forEach(
-
-    function(button){
-
-        button.addEventListener(
-            "click",
-            function(){
-
-                const color =
-                this.dataset.color;
-
-
-                currentBannerColor =
-                color;
-
-
-                storeCoverPreview.style.backgroundColor =
-                color;
-
-
-                selectColorButton(
-                    color
-                );
-
-            }
-        );
-
-    }
-
-);
 
 
 /* =========================
-   تحديد اللون المختار
+   اختيار الصورة الدائرية
 ========================= */
-
-function selectColorButton(color){
-
-    document
-    .querySelectorAll(".color-option")
-    .forEach(
-
-        function(button){
-
-            if(
-                button.dataset.color
-                .toLowerCase()
-                ===
-                String(color).toLowerCase()
-            ){
-
-                button.classList.add(
-                    "active"
-                );
-
-            }else{
-
-                button.classList.remove(
-                    "active"
-                );
-
-            }
-
-        }
-
-    );
-
-}
-
-
-/* =====================================================
-   اختيار صورة المتجر الدائرية
-===================================================== */
 
 imageInput.addEventListener(
     "change",
@@ -1769,7 +1364,7 @@ imageInput.addEventListener(
         if(!file.type.startsWith("image/")){
 
             showError(
-                "يرجى اختيار صورة فقط."
+                "يرجى اختيار صورة صحيحة."
             );
 
             this.value = "";
@@ -1782,7 +1377,7 @@ imageInput.addEventListener(
         if(file.size > 5 * 1024 * 1024){
 
             showError(
-                "حجم الصورة يجب ألا يتجاوز 5MB."
+                "حجم الصورة الدائرية يجب ألا يتجاوز 5MB."
             );
 
             this.value = "";
@@ -1806,9 +1401,6 @@ imageInput.addEventListener(
             storeImage.src =
             e.target.result;
 
-            coverStoreImage.src =
-            e.target.result;
-
         };
 
 
@@ -1816,17 +1408,17 @@ imageInput.addEventListener(
 
 
         uploadStatus.textContent =
-        "✅ تم اختيار الصورة. اضغط حفظ لرفعها.";
+        "✅ تم اختيار الصورة الدائرية. اضغط حفظ لرفعها.";
 
     }
 );
 
 
-/* =====================================================
-   اختيار صورة الـ Banner
-===================================================== */
+/* =========================
+   اختيار صورة الغلاف
+========================= */
 
-bannerInput.addEventListener(
+coverInput.addEventListener(
     "change",
     function(){
 
@@ -1844,7 +1436,7 @@ bannerInput.addEventListener(
         if(!file.type.startsWith("image/")){
 
             showError(
-                "يرجى اختيار صورة فقط."
+                "يرجى اختيار صورة صحيحة."
             );
 
             this.value = "";
@@ -1857,7 +1449,7 @@ bannerInput.addEventListener(
         if(file.size > 5 * 1024 * 1024){
 
             showError(
-                "حجم صورة الواجهة يجب ألا يتجاوز 5MB."
+                "حجم صورة الغلاف يجب ألا يتجاوز 5MB."
             );
 
             this.value = "";
@@ -1867,7 +1459,7 @@ bannerInput.addEventListener(
         }
 
 
-        selectedBannerFile =
+        selectedCoverFile =
         file;
 
 
@@ -1878,11 +1470,8 @@ bannerInput.addEventListener(
         reader.onload =
         function(e){
 
-            storeCoverPreview.style.backgroundImage =
-            `url("${e.target.result}")`;
-
-            bannerPlaceholder.style.display =
-            "none";
+            coverImage.src =
+            e.target.result;
 
         };
 
@@ -1890,8 +1479,8 @@ bannerInput.addEventListener(
         reader.readAsDataURL(file);
 
 
-        bannerStatus.textContent =
-        "✅ تم اختيار صورة الواجهة. اضغط حفظ لرفعها.";
+        coverUploadStatus.textContent =
+        "✅ تم اختيار الغلاف. اضغط حفظ لرفعه.";
 
     }
 );
@@ -1974,9 +1563,9 @@ async function uploadToCloudinary(file){
 }
 
 
-/* =====================================================
+/* =========================
    حفظ التغييرات
-===================================================== */
+========================= */
 
 saveBtn.addEventListener(
     "click",
@@ -2014,17 +1603,25 @@ saveBtn.addEventListener(
 
 
             /* =========================
-               صورة المتجر
+               روابط الصور الحالية
             ========================= */
 
             let imageUrl =
             currentStoreImage;
 
 
+            let coverUrl =
+            currentStoreCoverImage;
+
+
+            /* =========================
+               رفع الصورة الدائرية
+            ========================= */
+
             if(selectedImageFile){
 
                 uploadStatus.textContent =
-                "☁️ جاري رفع صورة المتجر...";
+                "☁️ جاري رفع الصورة الدائرية...";
 
 
                 imageUrl =
@@ -2034,33 +1631,29 @@ saveBtn.addEventListener(
 
 
                 uploadStatus.textContent =
-                "✅ تم رفع صورة المتجر بنجاح.";
+                "✅ تم رفع الصورة الدائرية بنجاح.";
 
             }
 
 
             /* =========================
-               صورة الـ Banner
+               رفع الغلاف
             ========================= */
 
-            let bannerUrl =
-            currentBannerImage;
+            if(selectedCoverFile){
+
+                coverUploadStatus.textContent =
+                "☁️ جاري رفع صورة الغلاف...";
 
 
-            if(selectedBannerFile){
-
-                bannerStatus.textContent =
-                "☁️ جاري رفع صورة الواجهة...";
-
-
-                bannerUrl =
+                coverUrl =
                 await uploadToCloudinary(
-                    selectedBannerFile
+                    selectedCoverFile
                 );
 
 
-                bannerStatus.textContent =
-                "✅ تم رفع صورة الواجهة بنجاح.";
+                coverUploadStatus.textContent =
+                "✅ تم رفع الغلاف بنجاح.";
 
             }
 
@@ -2078,7 +1671,7 @@ saveBtn.addEventListener(
 
 
             /* =========================
-               تحديث البيانات
+               تحديث بيانات المتجر
             ========================= */
 
             await updateDoc(
@@ -2094,36 +1687,43 @@ saveBtn.addEventListener(
                     storeImage:
                     imageUrl,
 
-                    bannerImage:
-                    bannerUrl,
-
-                    bannerColor:
-                    currentBannerColor
+                    storeCoverImage:
+                    coverUrl
 
                 }
             );
 
 
-            /* تحديث القيم الحالية */
+            /* =========================
+               تحديث المتغيرات
+            ========================= */
 
             currentStoreImage =
             imageUrl;
 
 
-            currentBannerImage =
-            bannerUrl;
+            currentStoreCoverImage =
+            coverUrl;
 
 
             selectedImageFile =
             null;
 
 
-            selectedBannerFile =
+            selectedCoverFile =
             null;
 
 
+            imageInput.value =
+            "";
+
+
+            coverInput.value =
+            "";
+
+
             showSuccess(
-                "تم حفظ معلومات المتجر والواجهة بنجاح ✅"
+                "تم حفظ معلومات وصور المتجر بنجاح ✅"
             );
 
 
@@ -2155,9 +1755,9 @@ saveBtn.addEventListener(
 );
 
 
-/* =====================================================
+/* =========================
    تسجيل الخروج
-===================================================== */
+========================= */
 
 document
 .getElementById(
@@ -2187,8 +1787,10 @@ document
 
             await signOut(auth);
 
+
             window.location.href =
             "login.html";
+
 
         }catch(error){
 
@@ -2196,6 +1798,7 @@ document
                 "Logout error:",
                 error
             );
+
 
             showError(
                 "حدث خطأ أثناء تسجيل الخروج."
@@ -2208,7 +1811,7 @@ document
 
 
 /* =========================
-   رسائل النجاح والخطأ
+   رسالة نجاح
 ========================= */
 
 function showSuccess(text){
@@ -2222,6 +1825,7 @@ function showSuccess(text){
     box.textContent =
     text;
 
+
     box.style.display =
     "block";
 
@@ -2230,6 +1834,7 @@ function showSuccess(text){
     document.getElementById(
         "errorMessage"
     );
+
 
     errorBox.style.display =
     "none";
@@ -2248,6 +1853,10 @@ function showSuccess(text){
 }
 
 
+/* =========================
+   رسالة خطأ
+========================= */
+
 function showError(text){
 
     const box =
@@ -2259,6 +1868,7 @@ function showError(text){
     box.textContent =
     text;
 
+
     box.style.display =
     "block";
 
@@ -2267,6 +1877,7 @@ function showError(text){
     document.getElementById(
         "successMessage"
     );
+
 
     successBox.style.display =
     "none";
@@ -2285,9 +1896,9 @@ function showError(text){
 }
 
 
-/* =====================================================
+/* =========================
    تسجيل الدخول والتحقق
-===================================================== */
+========================= */
 
 onAuthStateChanged(
 
@@ -2327,7 +1938,7 @@ onAuthStateChanged(
 
 
         /*
-         * تحميل متجر هذا المستخدم
+         * تحميل متجر المستخدم
          *
          * stores / user.uid
          */
