@@ -1851,7 +1851,7 @@ checked>
 <span class="toggle"></span>
 
 <span id="stockToggleText">
-إظهار المخزون
+إظهار المخزون للزبون
 </span>
 
 </label>
@@ -1868,6 +1868,20 @@ id="stock"
 type="number"
 min="0"
 placeholder="مثال: 20">
+
+</div>
+
+<div
+style="
+margin-top:8px;
+font-size:12px;
+color:#888;
+line-height:1.8;
+">
+
+💡 أدخل كمية المخزون إذا كنت تريد متابعة الكمية.
+<br>
+👁️ الخيار أعلاه يتحكم فقط في ظهور كمية المخزون للزبون، ولا يعني إخفاؤها أن المنتج غير متوفر.
 
 </div>
 
@@ -2126,26 +2140,13 @@ file =>
 file.type.startsWith("image/")
 );
 
-
-/*
-إضافة الصور الجديدة إلى القائمة
-بدون حذف الصور المختارة سابقًا
-*/
-
 selectedImages =
 [
 ...selectedImages,
 ...newFiles
 ];
 
-
 renderImagePreviews();
-
-
-/*
-إفراغ input حتى يمكن اختيار
-نفس الصورة مرة أخرى إذا لزم
-*/
 
 imageFile.value = "";
 
@@ -2160,13 +2161,11 @@ function renderImagePreviews(){
 
 previewContainer.innerHTML = "";
 
-
 if(!selectedImages.length){
 
 return;
 
 }
-
 
 selectedImages.forEach(
 (file,index)=>{
@@ -2174,17 +2173,14 @@ selectedImages.forEach(
 const reader =
 new FileReader();
 
-
 reader.onload =
 function(event){
 
 const item =
 document.createElement("div");
 
-
 item.className =
 "preview-item";
-
 
 item.innerHTML = `
 
@@ -2192,13 +2188,9 @@ item.innerHTML = `
 src="${event.target.result}"
 alt="صورة المنتج">
 
-
 <div class="preview-number">
-
 ${index + 1}
-
 </div>
-
 
 <button
 type="button"
@@ -2211,12 +2203,10 @@ title="حذف الصورة">
 
 `;
 
-
 const deleteButton =
 item.querySelector(
 ".delete-image"
 );
-
 
 deleteButton.addEventListener(
 "click",
@@ -2227,19 +2217,15 @@ index,
 1
 );
 
-
 renderImagePreviews();
 
 });
-
-
 
 previewContainer.appendChild(
 item
 );
 
 };
-
 
 reader.readAsDataURL(file);
 
@@ -2298,7 +2284,6 @@ document.createElement("div");
 item.className =
 "option-item";
 
-
 const input =
 document.createElement("input");
 
@@ -2310,7 +2295,6 @@ placeholder;
 
 input.dataset.type =
 label;
-
 
 const deleteButton =
 document.createElement("button");
@@ -2324,10 +2308,8 @@ deleteButton.className =
 deleteButton.title =
 "حذف";
 
-
 deleteButton.textContent =
 "×";
-
 
 deleteButton.addEventListener(
 "click",
@@ -2336,7 +2318,6 @@ function(){
 item.remove();
 
 });
-
 
 item.appendChild(input);
 
@@ -2347,7 +2328,6 @@ deleteButton
 container.appendChild(
 item
 );
-
 
 input.focus();
 
@@ -2380,7 +2360,8 @@ value.length > 0
 
 
 /* =====================================================
-   STOCK SHOW / HIDE
+   STOCK VISIBILITY
+   هذا الخيار خاص بالعرض فقط
 ===================================================== */
 
 stockEnabled.addEventListener(
@@ -2389,19 +2370,13 @@ function(){
 
 if(stockEnabled.checked){
 
-stockRow.style.display =
-"flex";
-
 stockToggleText.textContent =
-"إظهار المخزون";
+"إظهار المخزون للزبون";
 
 }else{
 
-stockRow.style.display =
-"none";
-
 stockToggleText.textContent =
-"إخفاء المخزون";
+"إخفاء المخزون عن الزبون";
 
 }
 
@@ -2419,7 +2394,6 @@ try{
 const user =
 auth.currentUser;
 
-
 if(!user){
 
 window.location.href =
@@ -2428,7 +2402,6 @@ window.location.href =
 return;
 
 }
-
 
 currentUserUid =
 user.uid;
@@ -2439,7 +2412,6 @@ user.email || "";
 
 /* =====================================================
    FIRST METHOD
-   stores/{UID}
 ===================================================== */
 
 let storeSnapshot =
@@ -2456,7 +2428,6 @@ currentUserUid
 
 /* =====================================================
    SECOND METHOD
-   ownerUid == UID
 ===================================================== */
 
 if(!storeSnapshot.exists()){
@@ -2477,12 +2448,10 @@ currentUserUid
 
 );
 
-
 const ownerSnapshot =
 await getDocs(
 ownerQuery
 );
-
 
 if(!ownerSnapshot.empty){
 
@@ -2496,7 +2465,6 @@ ownerSnapshot.docs[0];
 
 /* =====================================================
    THIRD METHOD
-   ownerEmail == EMAIL
 ===================================================== */
 
 if(!storeSnapshot.exists()){
@@ -2519,12 +2487,10 @@ currentUserEmail
 
 );
 
-
 const emailSnapshot =
 await getDocs(
 emailQuery
 );
-
 
 if(!emailSnapshot.empty){
 
@@ -2831,7 +2797,6 @@ async function addProduct(){
 const user =
 auth.currentUser;
 
-
 if(!user){
 
 showError(
@@ -2852,25 +2817,21 @@ document.getElementById("name")
 .value
 .trim();
 
-
 const price =
 Number(
 document.getElementById("price")
 .value
 );
 
-
 const description =
 document.getElementById("description")
 .value
 .trim();
 
-
 const colors =
 getOptions(
 colorsList
 );
-
 
 const sizes =
 getOptions(
@@ -2878,24 +2839,39 @@ sizesList
 );
 
 
-/*
-إذا كان المخزون مخفيًا
-نحفظه كـ null بدل 0
-*/
+/* =====================================================
+   STOCK
+   الكمية مستقلة عن الإظهار
+===================================================== */
+
+const stockInput =
+document.getElementById("stock")
+.value
+.trim();
+
 
 const stock =
-stockEnabled.checked
+
+stockInput === ""
 
 ?
 
-Number(
-document.getElementById("stock")
-.value
-)
+null
 
 :
 
-null;
+Number(
+stockInput
+);
+
+
+/* =====================================================
+   STOCK VISIBLE
+   هذا يحدد العرض فقط
+===================================================== */
+
+const stockVisible =
+stockEnabled.checked;
 
 
 /* =====================================================
@@ -2927,14 +2903,23 @@ return;
 }
 
 
+/*
+إذا أدخل المستخدم كمية،
+يجب أن تكون رقمًا صحيحًا وغير سالبة.
+أما تركها فارغة فهو مسموح.
+*/
+
 if(
-stockEnabled.checked &&
+
+stock !== null &&
 
 (
 
 isNaN(stock) ||
 
-stock < 0
+stock < 0 ||
+
+!Number.isInteger(stock)
 
 )
 
@@ -3067,50 +3052,36 @@ db,
 
 {
 
-/* PRODUCT */
-
 name:name,
 
 price:price,
 
 description:description,
 
-/*
-الألوان
-*/
-
 colors:colors,
-
-/*
-القياسات
-*/
 
 sizes:sizes,
 
 /*
-المخزون
+المخزون الفعلي
+قد يكون رقمًا أو null
 */
 
 stock:stock,
 
 /*
-هل المخزون ظاهر؟
+هذا الحقل خاص بالعرض فقط
+ولا يؤثر على توفر المنتج
 */
 
-stockVisible:
-stockEnabled.checked,
+stockVisible:stockVisible,
 
 /*
-الصورة الأولى
 للتوافق مع النظام القديم
 */
 
 image:
 imageUrls[0],
-
-/*
-جميع الصور
-*/
 
 images:
 imageUrls,
@@ -3164,53 +3135,43 @@ document.getElementById(
 "name"
 ).value = "";
 
-
 document.getElementById(
 "price"
 ).value = "";
-
 
 document.getElementById(
 "description"
 ).value = "";
 
-
 document.getElementById(
 "stock"
 ).value = "";
 
-
 colorsList.innerHTML =
 "";
-
 
 sizesList.innerHTML =
 "";
 
-
 imageFile.value =
 "";
 
-
 previewContainer.innerHTML =
 "";
-
 
 selectedImages = [];
 
 
 /*
-إرجاع المخزون إلى الحالة الافتراضية
+الإعداد الافتراضي:
+إظهار المخزون للزبون
 */
 
 stockEnabled.checked =
 true;
 
-stockRow.style.display =
-"flex";
-
 stockToggleText.textContent =
-"إظهار المخزون";
+"إظهار المخزون للزبون";
 
 
 }catch(error){
@@ -3219,7 +3180,6 @@ console.error(
 "ADD PRODUCT ERROR:",
 error
 );
-
 
 showError(
 
@@ -3254,20 +3214,16 @@ document.getElementById(
 "success"
 );
 
-
 element.textContent =
 message;
 
-
 element.style.display =
 "block";
-
 
 document.getElementById(
 "error"
 ).style.display =
 "none";
-
 
 setTimeout(
 function(){
@@ -3293,14 +3249,11 @@ document.getElementById(
 "error"
 );
 
-
 element.textContent =
 message;
 
-
 element.style.display =
 "block";
-
 
 document.getElementById(
 "success"
@@ -3423,7 +3376,6 @@ console.error(
 error
 );
 
-
 showError(
 "❌ تعذر تسجيل الخروج."
 );
@@ -3450,13 +3402,11 @@ return;
 
 }
 
-
 currentUserUid =
 user.uid;
 
 currentUserEmail =
 user.email || "";
-
 
 await loadStore();
 
