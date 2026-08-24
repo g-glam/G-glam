@@ -13,7 +13,7 @@ content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
 <link rel="preconnect"
-href="https://fonts.gstatic.com"
+href="https://fonts.googleapis.com"
 crossorigin>
 
 <link
@@ -416,67 +416,6 @@ flex-shrink:0;
 background:var(--orange-dark);
 
 transform:translateY(-1px);
-
-}
-
-
-/* =====================================================
-HEADER
-===================================================== */
-
-.header{
-
-background:white;
-
-border:1px solid var(--border);
-
-border-radius:18px;
-
-padding:25px;
-
-box-shadow:var(--shadow);
-
-margin-bottom:20px;
-
-position:relative;
-
-overflow:hidden;
-
-}
-
-.header::before{
-
-content:"";
-
-position:absolute;
-
-right:0;
-
-top:0;
-
-width:5px;
-
-height:100%;
-
-background:var(--orange);
-
-}
-
-.header h1{
-
-font-size:27px;
-
-color:var(--dark);
-
-margin-bottom:7px;
-
-}
-
-.header p{
-
-font-size:14px;
-
-color:var(--muted);
 
 }
 
@@ -2013,21 +1952,6 @@ class="view-store-btn">
 </div>
 
 
-<!-- =====================================================
-HEADER
-===================================================== -->
-
-<div class="header">
-
-<h1>🛍️ منتجاتي</h1>
-
-<p>
-إدارة منتجات متجرك وتعديل جميع بياناتها
-</p>
-
-</div>
-
-
 <div
 id="successMessage"
 class="message success-message">
@@ -2770,11 +2694,6 @@ storeTopName.textContent =
 storeName;
 
 
-/*
-البحث عن صورة المتجر
-مع الحفاظ على توافق الملفات القديمة
-*/
-
 const storeImage =
 currentStore.storeImage ||
 currentStore.image ||
@@ -2836,11 +2755,6 @@ return;
 }
 
 
-/*
-إذا كان المتجر يحتوي على رابط مباشر
-نستخدمه أولاً
-*/
-
 const directUrl =
 currentStore.storeUrl ||
 currentStore.publicUrl ||
@@ -2860,10 +2774,6 @@ return;
 }
 
 
-/*
-إذا كان المتجر يستخدم slug
-*/
-
 const slug =
 currentStore.slug ||
 currentStore.storeSlug;
@@ -2881,11 +2791,6 @@ return;
 
 }
 
-
-/*
-الاحتياط:
-ربط المتجر بالـ UID
-*/
 
 window.open(
 "index.html?store=" +
@@ -2969,10 +2874,6 @@ currentOwnerEmail =
 user.email || "";
 
 
-/*
-تحميل المتجر المرتبط بهذا UID
-*/
-
 await loadStore();
 
 });
@@ -2985,14 +2886,6 @@ LOAD STORE
 async function loadStore(){
 
 try{
-
-/*
-=====================================================
-المتجر:
-
-stores/{ownerUid}
-=====================================================
-*/
 
 const storeRef =
 doc(
@@ -3084,11 +2977,6 @@ return;
 }
 
 
-/*
-بعد التأكد من المتجر
-نحمّل منتجات هذا UID فقط
-*/
-
 await loadProducts();
 
 }
@@ -3130,13 +3018,6 @@ loading
 
 
 try{
-
-/*
-=====================================================
-نحمّل فقط منتجات صاحب الحساب
-بواسطة UID
-=====================================================
-*/
 
 const productsQuery =
 query(
@@ -3711,13 +3592,9 @@ editStock.value =
 product.stock ?? "";
 
 
-/* DESCRIPTION */
-
 descriptionEditor.innerHTML =
 product.description || "";
 
-
-/* COLORS */
 
 editingColors = [];
 
@@ -3792,8 +3669,6 @@ value:"#F47B20"
 }
 
 
-/* SIZES */
-
 editingSizes = [];
 
 
@@ -3820,15 +3695,11 @@ s=>s.trim()
 }
 
 
-/* STOCK */
-
 showStock.checked =
 product.showStock !== false;
 
 updateStockVisibilityText();
 
-
-/* IMAGES */
 
 existingImages = [];
 
@@ -4645,12 +4516,6 @@ return;
 
 }
 
-
-/*
-=====================================================
-حماية UID
-=====================================================
-*/
 
 if(
 product.ownerUid !==
