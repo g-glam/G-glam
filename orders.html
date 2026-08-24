@@ -13,7 +13,7 @@ content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
 <link rel="preconnect"
-href="https://fonts.gstatic.com"
+href="https://fonts.googleapis.com"
 crossorigin>
 
 <link
@@ -197,6 +197,8 @@ white-space:nowrap;
 
 transition:.2s;
 
+position:relative;
+
 }
 
 .menu a:hover{
@@ -242,6 +244,72 @@ font-weight:700;
 .sidebar:hover .text{
 
 opacity:1;
+
+}
+
+
+/* =====================================================
+   NEW ORDERS BADGE
+===================================================== */
+
+.orders-badge{
+
+display:none;
+
+align-items:center;
+
+justify-content:center;
+
+min-width:22px;
+
+height:22px;
+
+padding:0 6px;
+
+margin-right:auto;
+
+border-radius:20px;
+
+background:var(--danger);
+
+color:white;
+
+font-size:11px;
+
+font-weight:800;
+
+line-height:1;
+
+box-shadow:0 2px 7px rgba(220,53,69,.25);
+
+}
+
+.sidebar:hover .orders-badge{
+
+display:flex;
+
+}
+
+
+/* عندما تكون القائمة مطوية */
+
+.sidebar:not(:hover) .orders-badge{
+
+display:flex;
+
+position:absolute;
+
+top:5px;
+
+right:42px;
+
+min-width:17px;
+
+height:17px;
+
+padding:0 4px;
+
+font-size:9px;
 
 }
 
@@ -1544,6 +1612,12 @@ alt="G-Glam"
 الطلبات
 </span>
 
+<span
+class="orders-badge"
+id="newOrdersBadge">
+0
+</span>
+
 </a>
 
 
@@ -2028,6 +2102,9 @@ document.getElementById("shippingOrders");
 const deliveredOrders =
 document.getElementById("deliveredOrders");
 
+const newOrdersBadge =
+document.getElementById("newOrdersBadge");
+
 const productsModal =
 document.getElementById("productsModal");
 
@@ -2160,6 +2237,42 @@ function cleanPhone(phone){
 
 return String(phone || "")
 .replace(/[^\d+]/g,"");
+
+}
+
+
+/* =====================================================
+   UPDATE NEW ORDERS BADGE
+===================================================== */
+
+function updateNewOrdersBadge(count){
+
+const safeCount =
+Number(count || 0);
+
+if(safeCount > 0){
+
+newOrdersBadge.textContent =
+safeCount > 99
+?
+"99+"
+:
+safeCount;
+
+newOrdersBadge.style.display =
+"flex";
+
+}
+
+else{
+
+newOrdersBadge.textContent =
+"0";
+
+newOrdersBadge.style.display =
+"none";
+
+}
 
 }
 
@@ -2740,6 +2853,8 @@ let shipping = 0;
 
 let delivered = 0;
 
+let newOrders = 0;
+
 
 snapshot.forEach(
 orderDoc=>{
@@ -2755,14 +2870,24 @@ order.status ||
 .trim();
 
 
+/* =====================================================
+   NEW ORDERS
+===================================================== */
+
 if(
 status === "قيد المعالجة"
 ){
 
 processing++;
 
+newOrders++;
+
 }
 
+
+/* =====================================================
+   SHIPPING
+===================================================== */
 
 if(
 
@@ -2776,6 +2901,10 @@ shipping++;
 
 }
 
+
+/* =====================================================
+   DELIVERED
+===================================================== */
 
 if(
 
@@ -2800,6 +2929,15 @@ shipping;
 
 deliveredOrders.textContent =
 delivered;
+
+
+/* =====================================================
+   UPDATE SIDEBAR BADGE
+===================================================== */
+
+updateNewOrdersBadge(
+newOrders
+);
 
 
 /* =====================================================
@@ -2899,6 +3037,8 @@ console.error(
 "ORDERS ERROR:",
 error
 );
+
+updateNewOrdersBadge(0);
 
 ordersBody.innerHTML = `
 
