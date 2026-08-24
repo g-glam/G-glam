@@ -36,31 +36,26 @@ rel="stylesheet">
 <style>
 
 /* =====================================================
-   COLORS
+   VARIABLES
 ===================================================== */
 
 :root{
 
---bg:#F4F4F4;
+--orange:#F47B20;
+--orange-dark:#DF6810;
+--orange-light:#FFF1E6;
 
+--bg:#F5F5F5;
 --card:#FFFFFF;
 
---text:#222222;
-
---accent:#F47B20;
-
---accent-dark:#DF6810;
-
---accent-light:#FFF1E6;
-
+--dark:#222222;
+--text:#333333;
 --muted:#777777;
 
 --border:#E8E8E8;
 
 --danger:#D9534F;
-
 --success:#198754;
-
 --success-bg:#EFFAF3;
 
 --shadow:
@@ -95,7 +90,9 @@ background:var(--bg);
 
 color:var(--text);
 
-padding-bottom:100px;
+min-height:100vh;
+
+padding-bottom:105px;
 
 }
 
@@ -106,21 +103,28 @@ padding-bottom:100px;
 
 header{
 
+height:78px;
+
 display:flex;
 
 align-items:center;
 
 justify-content:space-between;
 
-padding:18px 20px;
+padding:0 20px;
 
-background:var(--bg);
+background:white;
+
+border-bottom:1px solid var(--border);
 
 position:sticky;
 
 top:0;
 
-z-index:100;
+z-index:1000;
+
+box-shadow:
+0 2px 12px rgba(0,0,0,.04);
 
 }
 
@@ -137,6 +141,8 @@ align-items:center;
 
 justify-content:center;
 
+height:100%;
+
 }
 
 
@@ -144,9 +150,7 @@ justify-content:center;
 
 width:120px;
 
-height:auto;
-
-max-height:55px;
+height:58px;
 
 object-fit:contain;
 
@@ -162,11 +166,33 @@ display:block;
 .menu-btn,
 .cart-icon{
 
-font-size:27px;
+width:45px;
+
+height:45px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:25px;
 
 cursor:pointer;
 
 position:relative;
+
+border-radius:12px;
+
+transition:.2s;
+
+}
+
+
+.menu-btn:hover,
+.cart-icon:hover{
+
+background:var(--orange-light);
 
 }
 
@@ -179,17 +205,17 @@ position:relative;
 
 position:absolute;
 
-top:-8px;
+top:1px;
 
-left:-8px;
+left:0;
 
-background:var(--accent);
+background:var(--orange);
 
 color:#fff;
 
 font-size:11px;
 
-font-weight:bold;
+font-weight:800;
 
 width:20px;
 
@@ -216,7 +242,7 @@ width:calc(100% - 30px);
 
 max-width:700px;
 
-margin:8px auto 18px;
+margin:12px auto 18px;
 
 background:#fff;
 
@@ -224,7 +250,7 @@ border:1px solid var(--border);
 
 border-radius:18px;
 
-padding:12px 18px;
+padding:13px 18px;
 
 text-align:center;
 
@@ -239,7 +265,7 @@ box-shadow:var(--shadow);
 
 .store-info strong{
 
-color:var(--text);
+color:var(--dark);
 
 font-weight:800;
 
@@ -267,7 +293,6 @@ padding:20px;
 border:1px solid var(--border);
 
 box-shadow:
-
 0 6px 22px rgba(0,0,0,.07);
 
 position:relative;
@@ -295,7 +320,7 @@ width:6px;
 
 height:100%;
 
-background:var(--accent);
+background:var(--orange);
 
 }
 
@@ -310,7 +335,7 @@ display:inline-flex;
 
 align-items:center;
 
-gap:5px;
+gap:6px;
 
 margin-bottom:18px;
 
@@ -318,9 +343,9 @@ padding:10px 15px;
 
 border-radius:12px;
 
-background:var(--accent-light);
+background:var(--orange-light);
 
-color:var(--accent-dark);
+color:var(--orange-dark);
 
 text-decoration:none;
 
@@ -335,9 +360,9 @@ transition:.2s;
 
 .back-btn:hover{
 
-background:var(--accent);
+background:var(--orange);
 
-color:#fff;
+color:white;
 
 }
 
@@ -370,7 +395,7 @@ height:5px;
 
 .gallery-container::-webkit-scrollbar-thumb{
 
-background:var(--accent);
+background:var(--orange);
 
 border-radius:20px;
 
@@ -423,7 +448,7 @@ line-height:1.5;
 
 margin-bottom:8px;
 
-color:var(--text);
+color:var(--dark);
 
 }
 
@@ -438,7 +463,7 @@ font-size:25px;
 
 font-weight:800;
 
-color:var(--accent-dark);
+color:var(--orange-dark);
 
 margin-bottom:18px;
 
@@ -478,7 +503,7 @@ font-size:15px;
 
 font-weight:800;
 
-color:var(--text);
+color:var(--dark);
 
 margin-bottom:9px;
 
@@ -527,10 +552,9 @@ transition:.2s;
 
 select:focus{
 
-border-color:var(--accent);
+border-color:var(--orange);
 
 box-shadow:
-
 0 0 0 3px rgba(244,123,32,.10);
 
 }
@@ -578,17 +602,6 @@ border:1px solid #F5D0D0;
 
 
 /* =====================================================
-   NO STOCK DISPLAY
-===================================================== */
-
-.stock-hidden{
-
-display:none;
-
-}
-
-
-/* =====================================================
    QUANTITY
 ===================================================== */
 
@@ -623,7 +636,7 @@ border:none;
 
 border-radius:50%;
 
-background:var(--accent);
+background:var(--orange);
 
 color:#fff;
 
@@ -646,7 +659,7 @@ justify-content:center;
 
 .qty-btn:hover{
 
-background:var(--accent-dark);
+background:var(--orange-dark);
 
 }
 
@@ -695,7 +708,7 @@ width:90%;
 
 max-width:500px;
 
-background:var(--accent);
+background:var(--orange);
 
 color:#fff;
 
@@ -712,10 +725,9 @@ font-weight:800;
 cursor:pointer;
 
 box-shadow:
-
 0 8px 20px rgba(244,123,32,.25);
 
-z-index:500;
+z-index:1500;
 
 transition:.2s;
 
@@ -724,7 +736,9 @@ transition:.2s;
 
 .floating-add:hover{
 
-background:var(--accent-dark);
+background:var(--orange-dark);
+
+transform:translateX(50%) translateY(-2px);
 
 }
 
@@ -736,6 +750,8 @@ background:#BDBDBD;
 box-shadow:none;
 
 cursor:not-allowed;
+
+transform:translateX(50%);
 
 }
 
@@ -754,19 +770,18 @@ right:-280px;
 
 width:280px;
 
-height:100%;
+height:100vh;
 
 background:#fff;
 
 box-shadow:
-
 -4px 0 15px rgba(0,0,0,.1);
 
-z-index:999;
+z-index:2000;
 
 transition:.3s;
 
-padding-top:30px;
+padding-top:25px;
 
 }
 
@@ -778,19 +793,40 @@ right:0;
 }
 
 
+.sidebar-title{
+
+padding:15px 25px 20px;
+
+font-size:22px;
+
+font-weight:800;
+
+border-bottom:1px solid var(--border);
+
+margin-bottom:5px;
+
+}
+
+
 .sidebar a{
 
-display:block;
+display:flex;
 
-padding:16px 25px;
+align-items:center;
+
+gap:12px;
+
+padding:15px 25px;
 
 text-decoration:none;
 
-color:#222;
+color:#333;
 
-font-size:17px;
+font-size:15px;
 
-border-bottom:1px solid #eee;
+font-weight:600;
+
+border-bottom:1px solid #F2F2F2;
 
 transition:.2s;
 
@@ -799,9 +835,9 @@ transition:.2s;
 
 .sidebar a:hover{
 
-background:var(--accent-light);
+background:var(--orange-light);
 
-color:var(--accent-dark);
+color:var(--orange-dark);
 
 }
 
@@ -820,7 +856,7 @@ background:rgba(0,0,0,.35);
 
 display:none;
 
-z-index:998;
+z-index:1900;
 
 }
 
@@ -859,7 +895,9 @@ line-height:2;
 
 header{
 
-padding:15px 15px;
+height:68px;
+
+padding:0 12px;
 
 }
 
@@ -868,7 +906,7 @@ padding:15px 15px;
 
 width:105px;
 
-max-height:50px;
+height:50px;
 
 }
 
@@ -876,7 +914,11 @@ max-height:50px;
 .menu-btn,
 .cart-icon{
 
-font-size:25px;
+width:42px;
+
+height:42px;
+
+font-size:24px;
 
 }
 
@@ -885,7 +927,7 @@ font-size:25px;
 
 width:calc(100% - 20px);
 
-margin-top:8px;
+margin-top:10px;
 
 margin-bottom:12px;
 
@@ -1026,11 +1068,22 @@ class="sidebar"
 id="sidebar">
 
 
+<div class="sidebar-title">
+
+G-Glam
+
+</div>
+
+
 <a
 href="#"
 id="homeLink">
 
-🏠 الرئيسية
+🏠
+
+<span>
+الرئيسية
+</span>
 
 </a>
 
@@ -1039,16 +1092,25 @@ id="homeLink">
 href="#"
 id="cartLink">
 
-🛒 السلة
+🛒
+
+<span>
+السلة
+</span>
 
 </a>
 
 
 <a
 href="https://www.facebook.com/share/1BNEuBhjHV/"
-target="_blank">
+target="_blank"
+rel="noopener">
 
-📞 اتصل بنا
+📞
+
+<span>
+اتصل بنا
+</span>
 
 </a>
 
@@ -1099,6 +1161,7 @@ class="cart-count">
 </span>
 
 </div>
+
 
 </header>
 
@@ -1153,7 +1216,7 @@ disabled>
 
 
 /* =====================================================
-   FIREBASE
+   FIREBASE IMPORTS
 ===================================================== */
 
 import {
@@ -1163,7 +1226,6 @@ initializeApp
 }
 
 from
-
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
 
@@ -1176,7 +1238,6 @@ getDoc
 }
 
 from
-
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 
@@ -1211,7 +1272,7 @@ measurementId:
 
 
 /* =====================================================
-   INITIALIZE
+   INITIALIZE FIREBASE
 ===================================================== */
 
 const app =
@@ -1306,23 +1367,7 @@ let currentStoreName = "G-Glam";
 
 let quantity = 1;
 
-
-/*
-   stockLimit:
-
-   null = لا توجد كمية محددة
-
-   رقم أكبر من 0 = يوجد مخزون محدد
-
-   0 = المنتج غير متوفر فعليًا
-*/
-
 let stockLimit = null;
-
-
-/*
-   هل المخزون ظاهر للزبون؟
-*/
 
 let stockVisible = false;
 
@@ -1366,20 +1411,19 @@ value ?? ""
 
 
 /* =====================================================
-   NORMALIZE STOCK
+   GET STOCK VALUE
 ===================================================== */
 
 function getStockValue(product){
 
-/*
-   إذا لم يكن الحقل موجودًا أصلًا
-   فهذا يعني لا توجد كمية محددة.
-*/
-
 if(
+
 product.stock === undefined ||
+
 product.stock === null ||
+
 product.stock === ""
+
 ){
 
 return null;
@@ -1391,14 +1435,7 @@ const value =
 Number(product.stock);
 
 
-/*
-   إذا كانت القيمة غير رقمية
-   نتعامل معها كأن المخزون غير محدد.
-*/
-
-if(
-Number.isNaN(value)
-){
+if(Number.isNaN(value)){
 
 return null;
 
@@ -1417,7 +1454,6 @@ return value;
 async function loadProduct(){
 
 try{
-
 
 if(!productId){
 
@@ -1439,7 +1475,7 @@ return;
 
 
 /* =====================================================
-   GET PRODUCT
+   PRODUCT
 ===================================================== */
 
 const productRef =
@@ -1484,7 +1520,7 @@ productSnap.id;
 
 
 /* =====================================================
-   GET STORE ID
+   STORE ID
 ===================================================== */
 
 currentStoreId =
@@ -1520,7 +1556,7 @@ return;
 
 
 /* =====================================================
-   URL STORE PROTECTION
+   STORE PROTECTION
 ===================================================== */
 
 if(
@@ -1553,7 +1589,7 @@ return;
 
 
 /* =====================================================
-   LOAD STORE
+   STORE
 ===================================================== */
 
 await loadStore();
@@ -1571,7 +1607,6 @@ renderProduct();
 ===================================================== */
 
 updateCartCount();
-
 
 }
 
@@ -1614,7 +1649,6 @@ async function loadStore(){
 
 try{
 
-
 const storeRef =
 doc(
 db,
@@ -1652,7 +1686,7 @@ currentStoreName =
 
 
 /* =====================================================
-   STORE LOGO
+   LOGO
 ===================================================== */
 
 storeLogo.innerHTML = `
@@ -1683,7 +1717,7 @@ currentStoreName
 
 
 /* =====================================================
-   NAVIGATION
+   LINKS
 ===================================================== */
 
 homeLink.href =
@@ -1717,7 +1751,6 @@ currentStoreId
 
 };
 
-
 }
 
 catch(error){
@@ -1743,31 +1776,15 @@ currentProduct;
 
 
 /* =====================================================
-   STOCK LOGIC
+   STOCK
 ===================================================== */
 
 stockLimit =
 getStockValue(product);
 
 
-/*
-   إذا لم يوجد stockVisible في المنتج القديم
-   نحاول احترام وجود stock كحل للتوافق.
-
-   المنتجات الجديدة ستستخدم stockVisible بشكل صريح.
-*/
-
-if(
-product.stockVisible === true
-){
-
-stockVisible = true;
-
-}else{
-
-stockVisible = false;
-
-}
+stockVisible =
+product.stockVisible === true;
 
 
 /* =====================================================
@@ -1779,11 +1796,7 @@ let images = [];
 
 if(
 
-Array.isArray(
-product.images
-)
-
-&&
+Array.isArray(product.images) &&
 
 product.images.length
 
@@ -1832,9 +1845,7 @@ alt="${escapeHtml(
 product.name || "منتج"
 )}"
 loading="lazy"
-onerror="
-this.style.display='none'
-"
+onerror="this.style.display='none'"
 >
 
 `;
@@ -1875,11 +1886,7 @@ let colorsHTML = "";
 
 if(
 
-Array.isArray(
-product.colors
-)
-
-&&
+Array.isArray(product.colors) &&
 
 product.colors.length
 
@@ -1895,9 +1902,7 @@ colorsHTML = `
 
 </div>
 
-
-<select
-id="productColors">
+<select id="productColors">
 
 ${
 
@@ -1934,11 +1939,7 @@ let sizesHTML = "";
 
 if(
 
-Array.isArray(
-product.sizes
-)
-
-&&
+Array.isArray(product.sizes) &&
 
 product.sizes.length
 
@@ -1954,9 +1955,7 @@ sizesHTML = `
 
 </div>
 
-
-<select
-id="productSizes">
+<select id="productSizes">
 
 ${
 
@@ -1990,12 +1989,6 @@ ${escapeHtml(size)}
 
 let stockHTML = "";
 
-
-/*
-   الحالة 1:
-   stockVisible = true
-   والكمية موجودة
-*/
 
 if(
 
@@ -2034,23 +2027,6 @@ stockHTML = `
 `;
 
 }
-
-}
-
-
-/*
-   الحالة 2:
-   stockVisible = false
-
-   لا نعرض أي شيء للزبون.
-
-   حتى لو كان stock = 0
-   لا نستخدم الإخفاء كبديل لحالة التوفر.
-*/
-
-else{
-
-stockHTML = "";
 
 }
 
@@ -2164,7 +2140,7 @@ id="plusBtn">
 
 
 /* =====================================================
-   QUANTITY BUTTONS
+   BUTTONS
 ===================================================== */
 
 const minusBtn =
@@ -2198,17 +2174,8 @@ changeQuantity(1);
 
 
 /* =====================================================
-   PRODUCT AVAILABILITY
+   AVAILABILITY
 ===================================================== */
-
-
-/*
-   فقط إذا كان المخزون محددًا صراحةً بـ 0
-   نمنع الشراء.
-
-   أما null = لا توجد كمية محددة
-   فنترك المنتج متاحًا.
-*/
 
 if(stockLimit === 0){
 
@@ -2225,14 +2192,6 @@ addButton.textContent =
 
 minusBtn.disabled = true;
 
-
-/*
-   إذا كانت هناك كمية محددة:
-   نوقف + عند الوصول إليها.
-
-   إذا لم توجد كمية محددة:
-   يبقى + فعالًا دائمًا.
-*/
 
 if(stockLimit !== null){
 
@@ -2256,7 +2215,7 @@ addButton.textContent =
 
 
 /* =====================================================
-   ADD BUTTON
+   ADD
 ===================================================== */
 
 addButton.onclick =
@@ -2288,11 +2247,6 @@ quantity = 1;
 }
 
 
-/*
-   تطبيق حد المخزون فقط إذا كان
-   المخزون محددًا برقم.
-*/
-
 if(
 
 stockLimit !== null &&
@@ -2301,7 +2255,8 @@ quantity > stockLimit
 
 ){
 
-quantity = stockLimit;
+quantity =
+stockLimit;
 
 }
 
@@ -2372,11 +2327,6 @@ return;
 }
 
 
-/*
-   المنتج غير متوفر فقط إذا
-   stock = 0 بشكل صريح.
-*/
-
 if(stockLimit === 0){
 
 alert(
@@ -2387,11 +2337,6 @@ return;
 
 }
 
-
-/*
-   فحص المخزون فقط عندما
-   تكون الكمية محددة.
-*/
 
 if(
 
@@ -2423,13 +2368,9 @@ document.getElementById(
 const color =
 
 colorElement
-
 ?
-
 colorElement.value
-
 :
-
 "بدون لون";
 
 
@@ -2446,13 +2387,9 @@ document.getElementById(
 const size =
 
 sizeElement
-
 ?
-
 sizeElement.value
-
 :
-
 "بدون قياس";
 
 
@@ -2480,7 +2417,9 @@ const itemStore =
 
 item.storeId ||
 
-item.storeUid;
+item.storeUid ||
+
+item.ownerUid;
 
 return (
 
@@ -2518,7 +2457,7 @@ cart = [];
 
 
 /* =====================================================
-   FIND EXISTING
+   EXISTING PRODUCT
 ===================================================== */
 
 let existing =
@@ -2532,7 +2471,9 @@ item.id === currentProductId &&
 
 item.storeId === currentStoreId ||
 
-item.storeUid === currentStoreId
+item.storeUid === currentStoreId ||
+
+item.ownerUid === currentStoreId
 
 ) &&
 
@@ -2548,11 +2489,6 @@ item.size === size
 ===================================================== */
 
 if(existing){
-
-/*
-   التحقق من المخزون فقط
-   إذا كان محددًا.
-*/
 
 if(
 
@@ -2580,8 +2516,6 @@ quantity;
 
 cart.push({
 
-/* PRODUCT */
-
 id:
 currentProductId,
 
@@ -2598,8 +2532,6 @@ description:
 currentProduct.description ||
 "",
 
-/* IMAGES */
-
 image:
 
 currentProduct.image ||
@@ -2611,17 +2543,13 @@ currentProduct.images
 )
 
 &&
-
 currentProduct.images.length
 
 ?
-
 currentProduct.images[0]
 
 :
-
 ""
-
 ),
 
 images:
@@ -2631,14 +2559,9 @@ currentProduct.images
 )
 
 ?
-
 currentProduct.images
-
 :
-
 [],
-
-/* OPTIONS */
 
 color:
 color,
@@ -2653,11 +2576,8 @@ currentProduct.colors
 )
 
 ?
-
 currentProduct.colors
-
 :
-
 [],
 
 sizes:
@@ -2667,14 +2587,9 @@ currentProduct.sizes
 )
 
 ?
-
 currentProduct.sizes
-
 :
-
 [],
-
-/* STOCK */
 
 stock:
 stockLimit,
@@ -2682,12 +2597,8 @@ stockLimit,
 stockVisible:
 stockVisible,
 
-/* QUANTITY */
-
 quantity:
 quantity,
-
-/* STORE */
 
 storeId:
 currentStoreId,
@@ -2704,16 +2615,14 @@ currentStoreName
 
 
 /* =====================================================
-   SAVE CART
+   SAVE
 ===================================================== */
 
 localStorage.setItem(
 
 "cart",
 
-JSON.stringify(
-cart
-)
+JSON.stringify(cart)
 
 );
 
@@ -2723,6 +2632,10 @@ localStorage.setItem(
 currentStoreId
 );
 
+
+/* =====================================================
+   UPDATE COUNT
+===================================================== */
 
 updateCartCount();
 
@@ -2748,12 +2661,12 @@ currentStoreId
 
 
 /* =====================================================
-   UPDATE CART COUNT
+   CART COUNT
 ===================================================== */
 
 function updateCartCount(){
 
-let cart =
+const cart =
 
 JSON.parse(
 localStorage.getItem("cart")
@@ -2770,12 +2683,16 @@ const itemStore =
 
 item.storeId ||
 
-item.storeUid;
+item.storeUid ||
+
+item.ownerUid;
 
 
 if(
 
 !currentStoreId ||
+
+!itemStore ||
 
 itemStore === currentStoreId
 
