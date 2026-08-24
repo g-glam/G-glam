@@ -256,36 +256,6 @@ color:var(--muted);
 
 }
 
-.account-info{
-
-margin-top:15px;
-
-display:flex;
-
-flex-wrap:wrap;
-
-gap:10px;
-
-}
-
-.account-item{
-
-background:#FAFAFA;
-
-border:1px solid var(--border);
-
-padding:9px 13px;
-
-border-radius:10px;
-
-font-size:13px;
-
-}
-
-.account-item strong{
-color:var(--dark);
-}
-
 
 /* =====================================================
 TOOLBAR
@@ -1452,10 +1422,6 @@ font-size:16px;
 grid-template-columns:1fr;
 }
 
-.account-info{
-flex-direction:column;
-}
-
 .modal{
 padding:8px;
 }
@@ -1535,13 +1501,11 @@ G-<span>Glam</span>
 <span class="text">الطلبات</span>
 </a>
 
-<!-- منتجاتي -->
 <a href="products.html" class="active">
 <span class="icon">🛍️</span>
 <span class="text">منتجاتي</span>
 </a>
 
-<!-- إضافة منتج -->
 <a href="add-product.html">
 <span class="icon">➕</span>
 <span class="text">إضافة منتج</span>
@@ -1580,30 +1544,6 @@ CONTENT
 إدارة منتجات متجرك وتعديل جميع بياناتها
 </p>
 
-<div class="account-info">
-
-<div class="account-item">
-🏪 المتجر:
-<strong id="storeName">
-جاري تحميل معلومات المتجر...
-</strong>
-</div>
-
-<div class="account-item">
-📧 الحساب:
-<strong id="ownerEmail">
-جاري التحميل...
-</strong>
-</div>
-
-<div class="account-item">
-🔐 UID:
-<strong id="ownerUid">
-جاري التحميل...
-</strong>
-</div>
-
-</div>
 </div>
 
 
@@ -1650,7 +1590,7 @@ id="productsContainer">
 class="loading"
 id="loading">
 
-⏳ جاري تحميل معلومات المتجر والمنتجات...
+⏳ جاري تحميل المنتجات...
 
 </div>
 
@@ -2116,15 +2056,6 @@ document.getElementById("productsContainer");
 const loading =
 document.getElementById("loading");
 
-const storeNameElement =
-document.getElementById("storeName");
-
-const ownerEmailElement =
-document.getElementById("ownerEmail");
-
-const ownerUidElement =
-document.getElementById("ownerUid");
-
 const searchInput =
 document.getElementById("searchInput");
 
@@ -2257,17 +2188,6 @@ currentOwnerEmail = user.email || "";
 
 
 /*
-عرض معلومات الحساب
-*/
-
-ownerUidElement.textContent =
-currentOwnerUid;
-
-ownerEmailElement.textContent =
-currentOwnerEmail || "بدون بريد";
-
-
-/*
 تحميل المتجر المرتبط بهذا UID
 */
 
@@ -2310,9 +2230,6 @@ await getDoc(storeRef);
 
 if(!storeSnapshot.exists()){
 
-storeNameElement.textContent =
-"لم يتم العثور على المتجر";
-
 loading.style.display =
 "none";
 
@@ -2331,22 +2248,10 @@ currentStore =
 storeSnapshot.data();
 
 
-storeNameElement.textContent =
-currentStore.storeName ||
-currentStore.name ||
-currentStore.title ||
-"G-Glam";
-
-
 currentOwnerEmail =
 currentStore.ownerEmail ||
 currentStore.email ||
 currentOwnerEmail;
-
-
-ownerEmailElement.textContent =
-currentOwnerEmail ||
-"غير محدد";
 
 
 const status =
@@ -4404,15 +4309,6 @@ success.style.display =
 /* =====================================================
 INITIAL
 ===================================================== */
-
-ownerUidElement.textContent =
-"جاري التحميل...";
-
-ownerEmailElement.textContent =
-"جاري التحميل...";
-
-storeNameElement.textContent =
-"جاري تحميل معلومات المتجر...";
 
 updateStockVisibilityText();
 
