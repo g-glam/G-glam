@@ -59,6 +59,10 @@ rel="stylesheet">
 
 --danger:#D9534F;
 
+--success:#198754;
+
+--success-bg:#EFFAF3;
+
 --shadow:
 0 4px 15px rgba(0,0,0,.06);
 
@@ -482,6 +486,17 @@ margin-bottom:9px;
 
 
 /* =====================================================
+   OPTIONS
+===================================================== */
+
+.option-box{
+
+margin-bottom:18px;
+
+}
+
+
+/* =====================================================
    SELECT
 ===================================================== */
 
@@ -501,7 +516,7 @@ color:#222;
 
 font-size:15px;
 
-margin-bottom:18px;
+margin-bottom:5px;
 
 outline:none;
 
@@ -558,6 +573,17 @@ color:#B42318;
 background:#FDECEC;
 
 border:1px solid #F5D0D0;
+
+}
+
+
+/* =====================================================
+   NO STOCK DISPLAY
+===================================================== */
+
+.stock-hidden{
+
+display:none;
 
 }
 
@@ -1074,7 +1100,6 @@ class="cart-count">
 
 </div>
 
-
 </header>
 
 
@@ -1281,7 +1306,25 @@ let currentStoreName = "G-Glam";
 
 let quantity = 1;
 
-let maxStock = 0;
+
+/*
+   stockLimit:
+
+   null = لا توجد كمية محددة
+
+   رقم أكبر من 0 = يوجد مخزون محدد
+
+   0 = المنتج غير متوفر فعليًا
+*/
+
+let stockLimit = null;
+
+
+/*
+   هل المخزون ظاهر للزبون؟
+*/
+
+let stockVisible = false;
 
 
 /* =====================================================
@@ -1318,6 +1361,51 @@ value ?? ""
 /'/g,
 "&#039;"
 );
+
+}
+
+
+/* =====================================================
+   NORMALIZE STOCK
+===================================================== */
+
+function getStockValue(product){
+
+/*
+   إذا لم يكن الحقل موجودًا أصلًا
+   فهذا يعني لا توجد كمية محددة.
+*/
+
+if(
+product.stock === undefined ||
+product.stock === null ||
+product.stock === ""
+){
+
+return null;
+
+}
+
+
+const value =
+Number(product.stock);
+
+
+/*
+   إذا كانت القيمة غير رقمية
+   نتعامل معها كأن المخزون غير محدد.
+*/
+
+if(
+Number.isNaN(value)
+){
+
+return null;
+
+}
+
+
+return value;
 
 }
 
@@ -1655,13 +1743,31 @@ currentProduct;
 
 
 /* =====================================================
-   STOCK
+   STOCK LOGIC
 ===================================================== */
 
-maxStock =
-Number(
-product.stock ?? 0
-);
+stockLimit =
+getStockValue(product);
+
+
+/*
+   إذا لم يوجد stockVisible في المنتج القديم
+   نحاول احترام وجود stock كحل للتوافق.
+
+   المنتجات الجديدة ستستخدم stockVisible بشكل صريح.
+*/
+
+if(
+product.stockVisible === true
+){
+
+stockVisible = true;
+
+}else{
+
+stockVisible = false;
+
+}
 
 
 /* =====================================================
@@ -1781,6 +1887,8 @@ product.colors.length
 
 colorsHTML = `
 
+<div class="option-box">
+
 <div class="box-title">
 
 اختيار اللون
@@ -1810,30 +1918,66 @@ ${escapeHtml(color)}
 
 </select>
 
+</div>
+
 `;
 
-}else{
+}
 
-colorsHTML = `
+
+/* =====================================================
+   SIZES
+===================================================== */
+
+let sizesHTML = "";
+
+
+if(
+
+Array.isArray(
+product.sizes
+)
+
+&&
+
+product.sizes.length
+
+){
+
+sizesHTML = `
+
+<div class="option-box">
 
 <div class="box-title">
 
-اللون
+اختيار القياس
 
 </div>
 
 
 <select
-id="productColors">
+id="productSizes">
+
+${
+
+product.sizes.map(
+size => `
 
 <option
-value="بدون لون">
+value="${escapeHtml(size)}">
 
-بدون لون
+${escapeHtml(size)}
 
 </option>
 
+`
+).join("")
+
+}
+
 </select>
+
+</div>
 
 `;
 
@@ -1847,7 +1991,21 @@ value="بدون لون">
 let stockHTML = "";
 
 
-if(maxStock > 0){
+/*
+   الحالة 1:
+   stockVisible = true
+   والكمية موجودة
+*/
+
+if(
+
+stockVisible &&
+
+stockLimit !== null
+
+){
+
+if(stockLimit > 0){
 
 stockHTML = `
 
@@ -1856,14 +2014,14 @@ stockHTML = `
 ✅ متوفر في المخزون:
 
 <strong>
-${maxStock}
+${stockLimit}
 </strong>
 
 </div>
 
 `;
 
-}else{
+}else if(stockLimit === 0){
 
 stockHTML = `
 
@@ -1874,6 +2032,25 @@ stockHTML = `
 </div>
 
 `;
+
+}
+
+}
+
+
+/*
+   الحالة 2:
+   stockVisible = false
+
+   لا نعرض أي شيء للزبون.
+
+   حتى لو كان stock = 0
+   لا نستخدم الإخفاء كبديل لحالة التوفر.
+*/
+
+else{
+
+stockHTML = "";
 
 }
 
@@ -1940,6 +2117,9 @@ ${stockHTML}
 
 
 ${colorsHTML}
+
+
+${sizesHTML}
 
 
 <div class="box-title">
@@ -2018,10 +2198,19 @@ changeQuantity(1);
 
 
 /* =====================================================
-   STOCK CHECK
+   PRODUCT AVAILABILITY
 ===================================================== */
 
-if(maxStock <= 0){
+
+/*
+   فقط إذا كان المخزون محددًا صراحةً بـ 0
+   نمنع الشراء.
+
+   أما null = لا توجد كمية محددة
+   فنترك المنتج متاحًا.
+*/
+
+if(stockLimit === 0){
 
 minusBtn.disabled = true;
 
@@ -2034,10 +2223,29 @@ addButton.textContent =
 
 }else{
 
-minusBtn.disabled = false;
+minusBtn.disabled = true;
+
+
+/*
+   إذا كانت هناك كمية محددة:
+   نوقف + عند الوصول إليها.
+
+   إذا لم توجد كمية محددة:
+   يبقى + فعالًا دائمًا.
+*/
+
+if(stockLimit !== null){
 
 plusBtn.disabled =
-maxStock <= 1;
+stockLimit <= 1;
+
+}else{
+
+plusBtn.disabled =
+false;
+
+}
+
 
 addButton.disabled = false;
 
@@ -2080,15 +2288,20 @@ quantity = 1;
 }
 
 
+/*
+   تطبيق حد المخزون فقط إذا كان
+   المخزون محددًا برقم.
+*/
+
 if(
 
-maxStock > 0 &&
+stockLimit !== null &&
 
-quantity > maxStock
+quantity > stockLimit
 
 ){
 
-quantity = maxStock;
+quantity = stockLimit;
 
 }
 
@@ -2115,8 +2328,17 @@ document.getElementById(
 
 if(plusBtn){
 
+if(stockLimit !== null){
+
 plusBtn.disabled =
-quantity >= maxStock;
+quantity >= stockLimit;
+
+}else{
+
+plusBtn.disabled =
+false;
+
+}
 
 }
 
@@ -2150,7 +2372,12 @@ return;
 }
 
 
-if(maxStock <= 0){
+/*
+   المنتج غير متوفر فقط إذا
+   stock = 0 بشكل صريح.
+*/
+
+if(stockLimit === 0){
 
 alert(
 "❌ المنتج غير متوفر حاليًا."
@@ -2161,7 +2388,18 @@ return;
 }
 
 
-if(quantity > maxStock){
+/*
+   فحص المخزون فقط عندما
+   تكون الكمية محددة.
+*/
+
+if(
+
+stockLimit !== null &&
+
+quantity > stockLimit
+
+){
 
 alert(
 "❌ الكمية المطلوبة أكبر من المخزون."
@@ -2193,6 +2431,29 @@ colorElement.value
 :
 
 "بدون لون";
+
+
+/* =====================================================
+   SIZE
+===================================================== */
+
+const sizeElement =
+document.getElementById(
+"productSizes"
+);
+
+
+const size =
+
+sizeElement
+
+?
+
+sizeElement.value
+
+:
+
+"بدون قياس";
 
 
 /* =====================================================
@@ -2275,7 +2536,9 @@ item.storeUid === currentStoreId
 
 ) &&
 
-item.color === color
+item.color === color &&
+
+item.size === size
 
 );
 
@@ -2286,11 +2549,18 @@ item.color === color
 
 if(existing){
 
+/*
+   التحقق من المخزون فقط
+   إذا كان محددًا.
+*/
+
 if(
+
+stockLimit !== null &&
 
 existing.quantity + quantity >
 
-maxStock
+stockLimit
 
 ){
 
@@ -2310,17 +2580,10 @@ quantity;
 
 cart.push({
 
+/* PRODUCT */
+
 id:
 currentProductId,
-
-storeId:
-currentStoreId,
-
-storeUid:
-currentStoreId,
-
-storeName:
-currentStoreName,
 
 name:
 currentProduct.name ||
@@ -2330,6 +2593,12 @@ price:
 Number(
 currentProduct.price || 0
 ),
+
+description:
+currentProduct.description ||
+"",
+
+/* IMAGES */
 
 image:
 
@@ -2355,11 +2624,79 @@ currentProduct.images[0]
 
 ),
 
+images:
+
+Array.isArray(
+currentProduct.images
+)
+
+?
+
+currentProduct.images
+
+:
+
+[],
+
+/* OPTIONS */
+
 color:
 color,
 
+size:
+size,
+
+colors:
+
+Array.isArray(
+currentProduct.colors
+)
+
+?
+
+currentProduct.colors
+
+:
+
+[],
+
+sizes:
+
+Array.isArray(
+currentProduct.sizes
+)
+
+?
+
+currentProduct.sizes
+
+:
+
+[],
+
+/* STOCK */
+
+stock:
+stockLimit,
+
+stockVisible:
+stockVisible,
+
+/* QUANTITY */
+
 quantity:
-quantity
+quantity,
+
+/* STORE */
+
+storeId:
+currentStoreId,
+
+storeUid:
+currentStoreId,
+
+storeName:
+currentStoreName
 
 });
 
@@ -2367,7 +2704,7 @@ quantity
 
 
 /* =====================================================
-   SAVE
+   SAVE CART
 ===================================================== */
 
 localStorage.setItem(
