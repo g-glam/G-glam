@@ -197,6 +197,8 @@ white-space:nowrap;
 
 transition:.2s;
 
+position:relative;
+
 }
 
 .menu a:hover{
@@ -250,25 +252,27 @@ opacity:1;
    NEW ORDERS BADGE
 ===================================================== */
 
-.new-orders-badge{
+.orders-badge{
 
-display:flex;
+display:none;
 
 align-items:center;
+
 justify-content:center;
 
-min-width:23px;
-height:23px;
+min-width:22px;
+
+height:22px;
 
 padding:0 6px;
 
 margin-right:auto;
 
-background:#F47B20;
+border-radius:50px;
+
+background:#DC3545;
 
 color:white;
-
-border-radius:50px;
 
 font-size:11px;
 
@@ -276,27 +280,34 @@ font-weight:800;
 
 line-height:1;
 
-box-shadow:0 3px 8px rgba(244,123,32,.25);
-
-opacity:0;
-
-transform:scale(.8);
-
-transition:.25s;
+box-shadow:0 2px 7px rgba(220,53,69,.30);
 
 }
 
-.new-orders-badge.show{
+.orders-badge.show{
 
-opacity:1;
-
-transform:scale(1);
+display:flex;
 
 }
 
-.sidebar:hover .new-orders-badge{
 
-margin-right:auto;
+/* عندما تكون القائمة مغلقة يبقى العداد ظاهرًا بشكل صغير */
+
+.sidebar:not(:hover) .orders-badge{
+
+position:absolute;
+
+top:5px;
+
+right:43px;
+
+min-width:19px;
+
+height:19px;
+
+padding:0 4px;
+
+font-size:9px;
 
 }
 
@@ -1460,16 +1471,6 @@ grid-template-columns:1fr;
 
 }
 
-.new-orders-badge{
-
-min-width:20px;
-
-height:20px;
-
-font-size:10px;
-
-}
-
 }
 
 @media(max-width:450px){
@@ -1610,8 +1611,8 @@ alt="G-Glam"
 </span>
 
 <span
-id="newOrdersBadge"
-class="new-orders-badge">
+class="orders-badge"
+id="newOrdersBadge">
 0
 </span>
 
@@ -2239,84 +2240,54 @@ return String(phone || "")
 
 
 /* =====================================================
-   UPDATE NEW ORDERS BADGE
+   CHECK NEW ORDER
 ===================================================== */
 
-async function updateNewOrdersBadge(){
-
-try{
-
-if(!currentOwnerUid){
-
-return;
-
-}
-
-
-/*
-   مهم:
-   العداد يعتمد على ownerUid الخاص بحساب Firebase
-   الحالي، وليس البريد الإلكتروني.
-*/
-
-const ordersQuery =
-query(
-
-collection(db,"orders"),
-
-where(
-"ownerUid",
-"==",
-currentOwnerUid
-)
-
-);
-
-const snapshot =
-await getDocs(
-ordersQuery
-);
-
-
-let newOrders = 0;
-
-
-snapshot.forEach(
-orderDoc=>{
-
-const order =
-orderDoc.data();
-
+function isNewOrder(order){
 
 const status =
 String(
-order.status ||
-"قيد المعالجة"
+order.status || ""
 )
 .trim();
 
 
 /*
-   الطلب الجديد هو الطلب الذي
-   مازال في حالة قيد المعالجة
+   الطلب الجديد هو:
+   1. قيد المعالجة
+   2. أو لا توجد له حالة بعد
 */
 
-if(
-status === "قيد المعالجة"
-){
+return (
 
-newOrders++;
+status === "" ||
+
+status === "قيد المعالجة"
+
+);
 
 }
 
-});
 
+/* =====================================================
+   UPDATE NEW ORDERS BADGE
+===================================================== */
+
+function updateNewOrdersBadge(count){
+
+const safeCount =
+Number(count || 0);
+
+
+if(safeCount > 0){
 
 newOrdersBadge.textContent =
-newOrders;
+safeCount > 99
+?
+"99+"
+:
+safeCount;
 
-
-if(newOrders > 0){
 
 newOrdersBadge.classList.add(
 "show"
@@ -2326,20 +2297,11 @@ newOrdersBadge.classList.add(
 
 else{
 
+newOrdersBadge.textContent =
+"0";
+
 newOrdersBadge.classList.remove(
 "show"
-);
-
-}
-
-
-}
-
-catch(error){
-
-console.error(
-"NEW ORDERS BADGE ERROR:",
-error
 );
 
 }
@@ -2742,14 +2704,6 @@ localStorage.setItem(
 
 await loadOrders();
 
-
-/*
-   تحديث عداد الطلبات الجديدة
-*/
-
-await updateNewOrdersBadge();
-
-
 return true;
 
 
@@ -2818,6 +2772,13 @@ ordersBody.innerHTML = `
 </tr>
 
 `;
+
+
+/* =====================================================
+   RESET BADGE
+===================================================== */
+
+updateNewOrdersBadge(0);
 
 
 /* =====================================================
@@ -2931,6 +2892,8 @@ let shipping = 0;
 
 let delivered = 0;
 
+let newOrders = 0;
+
 
 snapshot.forEach(
 orderDoc=>{
@@ -2946,14 +2909,36 @@ order.status ||
 .trim();
 
 
+/* =====================================================
+   NEW ORDERS COUNT
+===================================================== */
+
 if(
-status === "قيد المعالجة"
+isNewOrder(order)
+){
+
+newOrders++;
+
+}
+
+
+/* =====================================================
+   PROCESSING
+===================================================== */
+
+if(
+status === "قيد المعالجة" ||
+status === ""
 ){
 
 processing++;
 
 }
 
+
+/* =====================================================
+   SHIPPING
+===================================================== */
 
 if(
 
@@ -2967,6 +2952,10 @@ shipping++;
 
 }
 
+
+/* =====================================================
+   DELIVERED
+===================================================== */
 
 if(
 
@@ -2983,6 +2972,10 @@ delivered++;
 });
 
 
+/* =====================================================
+   UPDATE STATISTICS
+===================================================== */
+
 processingOrders.textContent =
 processing;
 
@@ -2994,10 +2987,12 @@ delivered;
 
 
 /* =====================================================
-   UPDATE NEW ORDERS BADGE
+   UPDATE SIDEBAR BADGE
 ===================================================== */
 
-await updateNewOrdersBadge();
+updateNewOrdersBadge(
+newOrders
+);
 
 
 /* =====================================================
@@ -3097,6 +3092,15 @@ console.error(
 "ORDERS ERROR:",
 error
 );
+
+
+/* =====================================================
+   IMPORTANT
+   KEEP BADGE HIDDEN IF QUERY FAILS
+===================================================== */
+
+updateNewOrdersBadge(0);
+
 
 ordersBody.innerHTML = `
 
@@ -3981,6 +3985,11 @@ showSuccess(
 "✅ تم تحديث حالة الطلب."
 );
 
+
+/* =====================================================
+   RELOAD
+   وهذا يحدث عداد الطلبات أيضًا
+===================================================== */
 
 await loadOrders();
 
