@@ -195,6 +195,272 @@ body{
 }
 
 
+/* =====================================================
+   BANNER + صورة المتجر الدائرية
+===================================================== */
+
+.store-cover-preview{
+
+    position:relative;
+
+    width:100%;
+
+    height:260px;
+
+    border-radius:18px;
+
+    background:#FFF1E6;
+
+    background-size:cover;
+
+    background-position:center;
+
+    overflow:hidden;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin-bottom:25px;
+
+    border:1px solid #F3F4F6;
+
+    box-shadow:
+    0 5px 20px rgba(0,0,0,.07);
+
+}
+
+
+/* طبقة خفيفة فوق صورة الـ Banner */
+
+.store-cover-preview::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+    linear-gradient(
+        to bottom,
+        rgba(0,0,0,.03),
+        rgba(0,0,0,.10)
+    );
+
+    pointer-events:none;
+
+}
+
+
+/* الصورة الدائرية */
+
+.cover-store-image{
+
+    position:relative;
+
+    z-index:3;
+
+    width:155px;
+
+    height:155px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    background:#F3F4F6;
+
+    border:6px solid white;
+
+    box-shadow:
+    0 7px 25px rgba(0,0,0,.20);
+
+}
+
+
+/* نص يظهر عندما لا توجد Banner */
+
+.banner-placeholder{
+
+    position:absolute;
+
+    z-index:1;
+
+    color:rgba(0,0,0,.28);
+
+    font-size:14px;
+
+    font-weight:700;
+
+    pointer-events:none;
+
+}
+
+
+/* =========================
+   ألوان الـ Banner
+========================= */
+
+.banner-colors{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-bottom:22px;
+
+}
+
+.color-option{
+
+    width:38px;
+
+    height:38px;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    border:3px solid white;
+
+    box-shadow:
+    0 0 0 1px #D1D5DB;
+
+    transition:.2s;
+
+}
+
+.color-option:hover{
+
+    transform:scale(1.08);
+
+}
+
+.color-option.active{
+
+    box-shadow:
+    0 0 0 3px #F97316;
+
+    transform:scale(1.08);
+
+}
+
+
+/* ألوان جاهزة */
+
+.color-orange{
+    background:#F97316;
+}
+
+.color-peach{
+    background:#FFD6BA;
+}
+
+.color-pink{
+    background:#F8C8DC;
+}
+
+.color-purple{
+    background:#D8C4F1;
+}
+
+.color-blue{
+    background:#C7DDF5;
+}
+
+.color-green{
+    background:#CDE8D4;
+}
+
+.color-yellow{
+    background:#F8E7A8;
+}
+
+.color-red{
+    background:#F2B8B5;
+}
+
+.color-black{
+    background:#222222;
+}
+
+.color-white{
+    background:#FFFFFF;
+}
+
+
+/* =========================
+   Banner controls
+========================= */
+
+.banner-controls{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+}
+
+.banner-upload-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    background:#F97316;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 20px;
+
+    border-radius:11px;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:.2s;
+
+}
+
+.banner-upload-btn:hover{
+
+    background:#EA580C;
+
+}
+
+#bannerInput{
+
+    display:none;
+
+}
+
+.banner-status{
+
+    color:#9CA3AF;
+
+    font-size:12px;
+
+}
+
+
 /* =========================
    صورة المتجر
 ========================= */
@@ -405,6 +671,65 @@ body{
         min-width:100%;
     }
 
+    .store-cover-preview{
+
+        height:210px;
+
+    }
+
+    .cover-store-image{
+
+        width:125px;
+
+        height:125px;
+
+    }
+
+    .banner-controls{
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+    }
+
+    .banner-upload-btn{
+
+        width:100%;
+
+    }
+
+}
+
+
+/* =========================
+   هاتف صغير
+========================= */
+
+@media(max-width:400px){
+
+    .store-cover-preview{
+
+        height:185px;
+
+    }
+
+    .cover-store-image{
+
+        width:110px;
+
+        height:110px;
+
+    }
+
+    .color-option{
+
+        width:34px;
+
+        height:34px;
+
+    }
+
 }
 
 </style>
@@ -566,11 +891,181 @@ body{
     </div>
 
 
-    <!-- حالة الحساب -->
+    <!-- =========================
+         حالة الحساب
+    ========================= -->
 
     <div
         class="status-box"
         id="statusBox">
+    </div>
+
+
+    <!-- =====================================================
+         BANNER STORE
+    ===================================================== -->
+
+    <div class="card">
+
+        <div class="card-title">
+
+            🖼️ صورة واجهة المتجر
+
+        </div>
+
+
+        <div class="card-description">
+
+            اختر صورة عرضية تظهر خلف الصورة الدائرية لمتجرك.
+
+        </div>
+
+
+        <!-- المعاينة -->
+
+        <div
+            class="store-cover-preview"
+            id="storeCoverPreview"
+            style="background-color:#FFF1E6;">
+
+            <div
+                class="banner-placeholder"
+                id="bannerPlaceholder">
+
+                صورة واجهة المتجر
+
+            </div>
+
+
+            <img
+                id="coverStoreImage"
+                class="cover-store-image"
+                src="https://via.placeholder.com/300x300?text=G-Glam"
+                alt="صورة المتجر">
+
+        </div>
+
+
+        <!-- الألوان -->
+
+        <div class="form-group">
+
+            <label>
+
+                🎨 اختر لون خلفية الواجهة
+
+            </label>
+
+
+            <div class="banner-colors">
+
+
+                <div
+                    class="color-option color-orange"
+                    data-color="#F97316"
+                    title="برتقالي">
+                </div>
+
+
+                <div
+                    class="color-option color-peach"
+                    data-color="#FFD6BA"
+                    title="خوخي">
+                </div>
+
+
+                <div
+                    class="color-option color-pink"
+                    data-color="#F8C8DC"
+                    title="وردي">
+                </div>
+
+
+                <div
+                    class="color-option color-purple"
+                    data-color="#D8C4F1"
+                    title="بنفسجي">
+                </div>
+
+
+                <div
+                    class="color-option color-blue"
+                    data-color="#C7DDF5"
+                    title="أزرق">
+                </div>
+
+
+                <div
+                    class="color-option color-green"
+                    data-color="#CDE8D4"
+                    title="أخضر">
+                </div>
+
+
+                <div
+                    class="color-option color-yellow"
+                    data-color="#F8E7A8"
+                    title="أصفر">
+                </div>
+
+
+                <div
+                    class="color-option color-red"
+                    data-color="#F2B8B5"
+                    title="أحمر">
+                </div>
+
+
+                <div
+                    class="color-option color-black"
+                    data-color="#222222"
+                    title="أسود">
+                </div>
+
+
+                <div
+                    class="color-option color-white"
+                    data-color="#FFFFFF"
+                    title="أبيض">
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- اختيار الصورة -->
+
+        <div class="banner-controls">
+
+
+            <label
+                for="bannerInput"
+                class="banner-upload-btn">
+
+                📷 اختيار صورة الواجهة
+
+            </label>
+
+
+            <input
+                type="file"
+                id="bannerInput"
+                accept="image/jpeg,image/png,image/webp">
+
+
+            <div
+                class="banner-status"
+                id="bannerStatus">
+
+                لم يتم اختيار صورة جديدة.
+
+            </div>
+
+
+        </div>
+
     </div>
 
 
@@ -797,14 +1292,39 @@ document.getElementById(
     "storeImage"
 );
 
+const coverStoreImage =
+document.getElementById(
+    "coverStoreImage"
+);
+
+const storeCoverPreview =
+document.getElementById(
+    "storeCoverPreview"
+);
+
+const bannerPlaceholder =
+document.getElementById(
+    "bannerPlaceholder"
+);
+
 const imageInput =
 document.getElementById(
     "imageInput"
 );
 
+const bannerInput =
+document.getElementById(
+    "bannerInput"
+);
+
 const uploadStatus =
 document.getElementById(
     "uploadStatus"
+);
+
+const bannerStatus =
+document.getElementById(
+    "bannerStatus"
 );
 
 const storeName =
@@ -844,7 +1364,13 @@ let currentStoreId = "";
 
 let currentStoreImage = "";
 
+let currentBannerImage = "";
+
+let currentBannerColor = "#FFF1E6";
+
 let selectedImageFile = null;
+
+let selectedBannerFile = null;
 
 
 /* =========================
@@ -867,8 +1393,7 @@ async function loadStore(){
 
 
         /*
-         * register-store.html
-         * يحفظ المتجر هكذا:
+         * الحفاظ على الربط الأساسي:
          *
          * stores / user.uid
          */
@@ -916,10 +1441,67 @@ async function loadStore(){
         storeSnapshot.id;
 
 
+        /* =========================
+           صورة المتجر
+        ========================= */
+
         currentStoreImage =
         store.storeImage ||
         "";
 
+
+        if(currentStoreImage){
+
+            storeImage.src =
+            currentStoreImage;
+
+            coverStoreImage.src =
+            currentStoreImage;
+
+        }
+
+
+        /* =========================
+           صورة الـ Banner
+        ========================= */
+
+        currentBannerImage =
+        store.bannerImage ||
+        "";
+
+
+        if(currentBannerImage){
+
+            storeCoverPreview.style.backgroundImage =
+            `url("${currentBannerImage}")`;
+
+            bannerPlaceholder.style.display =
+            "none";
+
+        }
+
+
+        /* =========================
+           لون الـ Banner
+        ========================= */
+
+        currentBannerColor =
+        store.bannerColor ||
+        "#FFF1E6";
+
+
+        storeCoverPreview.style.backgroundColor =
+        currentBannerColor;
+
+
+        selectColorButton(
+            currentBannerColor
+        );
+
+
+        /* =========================
+           المعلومات
+        ========================= */
 
         storeName.value =
         store.storeName ||
@@ -937,15 +1519,9 @@ async function loadStore(){
         "";
 
 
-        if(currentStoreImage){
-
-            storeImage.src =
-            currentStoreImage;
-
-        }
-
-
-        /* حالة المتجر */
+        /* =========================
+           حالة المتجر
+        ========================= */
 
         const status =
         store.status ||
@@ -1026,6 +1602,9 @@ function disableSettings(){
     imageInput.disabled =
     true;
 
+    bannerInput.disabled =
+    true;
+
     saveBtn.disabled =
     true;
 
@@ -1034,6 +1613,21 @@ function disableSettings(){
 
     storeDescription.disabled =
     true;
+
+
+    document
+    .querySelectorAll(".color-option")
+    .forEach(
+        button => {
+
+            button.style.pointerEvents =
+            "none";
+
+            button.style.opacity =
+            ".5";
+
+        }
+    );
 
 }
 
@@ -1047,6 +1641,9 @@ function enableSettings(){
     imageInput.disabled =
     false;
 
+    bannerInput.disabled =
+    false;
+
     saveBtn.disabled =
     false;
 
@@ -1056,12 +1653,103 @@ function enableSettings(){
     storeDescription.disabled =
     false;
 
+
+    document
+    .querySelectorAll(".color-option")
+    .forEach(
+        button => {
+
+            button.style.pointerEvents =
+            "auto";
+
+            button.style.opacity =
+            "1";
+
+        }
+    );
+
 }
 
 
+/* =====================================================
+   اختيار لون الـ Banner
+===================================================== */
+
+document
+.querySelectorAll(".color-option")
+.forEach(
+
+    function(button){
+
+        button.addEventListener(
+            "click",
+            function(){
+
+                const color =
+                this.dataset.color;
+
+
+                currentBannerColor =
+                color;
+
+
+                storeCoverPreview.style.backgroundColor =
+                color;
+
+
+                selectColorButton(
+                    color
+                );
+
+            }
+        );
+
+    }
+
+);
+
+
 /* =========================
-   اختيار الصورة
+   تحديد اللون المختار
 ========================= */
+
+function selectColorButton(color){
+
+    document
+    .querySelectorAll(".color-option")
+    .forEach(
+
+        function(button){
+
+            if(
+                button.dataset.color
+                .toLowerCase()
+                ===
+                String(color).toLowerCase()
+            ){
+
+                button.classList.add(
+                    "active"
+                );
+
+            }else{
+
+                button.classList.remove(
+                    "active"
+                );
+
+            }
+
+        }
+
+    );
+
+}
+
+
+/* =====================================================
+   اختيار صورة المتجر الدائرية
+===================================================== */
 
 imageInput.addEventListener(
     "change",
@@ -1118,6 +1806,9 @@ imageInput.addEventListener(
             storeImage.src =
             e.target.result;
 
+            coverStoreImage.src =
+            e.target.result;
+
         };
 
 
@@ -1126,6 +1817,81 @@ imageInput.addEventListener(
 
         uploadStatus.textContent =
         "✅ تم اختيار الصورة. اضغط حفظ لرفعها.";
+
+    }
+);
+
+
+/* =====================================================
+   اختيار صورة الـ Banner
+===================================================== */
+
+bannerInput.addEventListener(
+    "change",
+    function(){
+
+        const file =
+        this.files[0];
+
+
+        if(!file){
+
+            return;
+
+        }
+
+
+        if(!file.type.startsWith("image/")){
+
+            showError(
+                "يرجى اختيار صورة فقط."
+            );
+
+            this.value = "";
+
+            return;
+
+        }
+
+
+        if(file.size > 5 * 1024 * 1024){
+
+            showError(
+                "حجم صورة الواجهة يجب ألا يتجاوز 5MB."
+            );
+
+            this.value = "";
+
+            return;
+
+        }
+
+
+        selectedBannerFile =
+        file;
+
+
+        const reader =
+        new FileReader();
+
+
+        reader.onload =
+        function(e){
+
+            storeCoverPreview.style.backgroundImage =
+            `url("${e.target.result}")`;
+
+            bannerPlaceholder.style.display =
+            "none";
+
+        };
+
+
+        reader.readAsDataURL(file);
+
+
+        bannerStatus.textContent =
+        "✅ تم اختيار صورة الواجهة. اضغط حفظ لرفعها.";
 
     }
 );
@@ -1208,9 +1974,9 @@ async function uploadToCloudinary(file){
 }
 
 
-/* =========================
+/* =====================================================
    حفظ التغييرات
-========================= */
+===================================================== */
 
 saveBtn.addEventListener(
     "click",
@@ -1247,16 +2013,18 @@ saveBtn.addEventListener(
             "⏳ جاري الحفظ...";
 
 
+            /* =========================
+               صورة المتجر
+            ========================= */
+
             let imageUrl =
             currentStoreImage;
 
 
-            /* رفع الصورة */
-
             if(selectedImageFile){
 
                 uploadStatus.textContent =
-                "☁️ جاري رفع الصورة...";
+                "☁️ جاري رفع صورة المتجر...";
 
 
                 imageUrl =
@@ -1266,12 +2034,40 @@ saveBtn.addEventListener(
 
 
                 uploadStatus.textContent =
-                "✅ تم رفع الصورة بنجاح.";
+                "✅ تم رفع صورة المتجر بنجاح.";
 
             }
 
 
-            /* مرجع المتجر */
+            /* =========================
+               صورة الـ Banner
+            ========================= */
+
+            let bannerUrl =
+            currentBannerImage;
+
+
+            if(selectedBannerFile){
+
+                bannerStatus.textContent =
+                "☁️ جاري رفع صورة الواجهة...";
+
+
+                bannerUrl =
+                await uploadToCloudinary(
+                    selectedBannerFile
+                );
+
+
+                bannerStatus.textContent =
+                "✅ تم رفع صورة الواجهة بنجاح.";
+
+            }
+
+
+            /* =========================
+               مرجع المتجر
+            ========================= */
 
             const storeRef =
             doc(
@@ -1281,7 +2077,9 @@ saveBtn.addEventListener(
             );
 
 
-            /* تحديث البيانات */
+            /* =========================
+               تحديث البيانات
+            ========================= */
 
             await updateDoc(
                 storeRef,
@@ -1294,22 +2092,38 @@ saveBtn.addEventListener(
                     storeDescription.value.trim(),
 
                     storeImage:
-                    imageUrl
+                    imageUrl,
+
+                    bannerImage:
+                    bannerUrl,
+
+                    bannerColor:
+                    currentBannerColor
 
                 }
             );
 
 
+            /* تحديث القيم الحالية */
+
             currentStoreImage =
             imageUrl;
+
+
+            currentBannerImage =
+            bannerUrl;
 
 
             selectedImageFile =
             null;
 
 
+            selectedBannerFile =
+            null;
+
+
             showSuccess(
-                "تم حفظ معلومات المتجر بنجاح ✅"
+                "تم حفظ معلومات المتجر والواجهة بنجاح ✅"
             );
 
 
@@ -1341,9 +2155,9 @@ saveBtn.addEventListener(
 );
 
 
-/* =========================
-       تسجيل الخروج
-========================= */
+/* =====================================================
+   تسجيل الخروج
+===================================================== */
 
 document
 .getElementById(
@@ -1471,9 +2285,9 @@ function showError(text){
 }
 
 
-/* =========================
+/* =====================================================
    تسجيل الدخول والتحقق
-========================= */
+===================================================== */
 
 onAuthStateChanged(
 
@@ -1483,7 +2297,6 @@ onAuthStateChanged(
 
         /*
          * إذا لم يكن هناك مستخدم مسجل الدخول
-         * نعيده إلى صفحة تسجيل الدخول
          */
 
         if(!user){
@@ -1497,7 +2310,7 @@ onAuthStateChanged(
 
 
         /*
-         * حفظ المستخدم الحالي
+         * المستخدم الحالي
          */
 
         currentUser =
@@ -1505,7 +2318,7 @@ onAuthStateChanged(
 
 
         /*
-         * عرض البريد الإلكتروني
+         * البريد الإلكتروني
          */
 
         ownerEmail.value =
