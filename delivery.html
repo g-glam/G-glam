@@ -438,92 +438,6 @@ transition:.3s;
 
 
 /* =====================================================
-   HEADER
-===================================================== */
-
-.header{
-
-background:var(--card);
-
-border:1px solid var(--border);
-
-border-radius:18px;
-
-padding:25px;
-
-box-shadow:var(--shadow);
-
-margin-bottom:22px;
-
-position:relative;
-
-overflow:hidden;
-
-}
-
-
-.header::before{
-
-content:"";
-
-position:absolute;
-
-right:0;
-
-top:0;
-
-width:5px;
-
-height:100%;
-
-background:var(--orange);
-
-}
-
-
-.header h1{
-
-font-size:27px;
-
-color:var(--dark-2);
-
-margin-bottom:8px;
-
-}
-
-
-.header p{
-
-color:var(--muted);
-
-font-size:14px;
-
-}
-
-
-.store-info{
-
-font-size:13px;
-
-color:var(--muted);
-
-margin-top:13px;
-
-line-height:1.9;
-
-}
-
-
-.store-info strong{
-
-color:var(--dark-2);
-
-font-weight:700;
-
-}
-
-
-/* =====================================================
    MAIN BOX
 ===================================================== */
 
@@ -588,11 +502,10 @@ flex-wrap:wrap;
 
 
 /* =====================================================
-   BUTTONS
+   BUTTON
 ===================================================== */
 
-.add-btn,
-.import-btn{
+.add-btn{
 
 border:none;
 
@@ -609,11 +522,6 @@ font-weight:700;
 transition:.2s;
 
 font-family:"Tajawal",Arial,sans-serif;
-
-}
-
-
-.add-btn{
 
 background:var(--orange);
 
@@ -634,25 +542,6 @@ transform:translateY(-1px);
 }
 
 
-.import-btn{
-
-background:#FFF1E6;
-
-color:var(--orange-dark);
-
-border:1px solid #FFE0CA;
-
-}
-
-
-.import-btn:hover{
-
-background:#FFE5D2;
-
-}
-
-
-.import-btn:disabled,
 .add-btn:disabled{
 
 opacity:.6;
@@ -1185,20 +1074,6 @@ padding:83px 12px 20px;
 }
 
 
-.header{
-
-padding:20px;
-
-}
-
-
-.header h1{
-
-font-size:23px;
-
-}
-
-
 .box{
 
 padding:15px;
@@ -1227,8 +1102,7 @@ width:100%;
 }
 
 
-.add-btn,
-.import-btn{
+.add-btn{
 
 flex:1;
 
@@ -1333,20 +1207,6 @@ max-width:125px;
 }
 
 
-.header{
-
-padding:17px;
-
-}
-
-
-.header h1{
-
-font-size:21px;
-
-}
-
-
 .box{
 
 padding:12px;
@@ -1361,8 +1221,7 @@ flex-direction:column;
 }
 
 
-.add-btn,
-.import-btn{
+.add-btn{
 
 width:100%;
 
@@ -1581,57 +1440,6 @@ class="view-store-btn">
 
 
 <!-- =====================================================
-     HEADER
-===================================================== -->
-
-<div class="header">
-
-
-<h1>
-
-🚚 أسعار التوصيل
-
-</h1>
-
-
-<p>
-
-إدارة أسعار التوصيل حسب الولاية
-
-</p>
-
-
-<div class="store-info">
-
-
-🏪 المتجر:
-
-<strong id="storeName">
-
-جاري التحميل...
-
-</strong>
-
-
-<br>
-
-
-📧 الحساب:
-
-<strong id="ownerEmail">
-
-جاري التحميل...
-
-</strong>
-
-
-</div>
-
-
-</div>
-
-
-<!-- =====================================================
      DELIVERY BOX
 ===================================================== -->
 
@@ -1649,15 +1457,6 @@ class="view-store-btn">
 
 
 <div class="top-buttons">
-
-
-<button
-class="import-btn"
-id="importBtn">
-
-📥 استيراد الأسعار الحالية
-
-</button>
 
 
 <button
@@ -1981,78 +1780,6 @@ getAuth(app);
 
 
 /* =====================================================
-   DEFAULT DELIVERY TARIFFS
-===================================================== */
-
-const tarifs = {
-
-"Adrar":{office:1100,home:1400},
-"Chlef":{office:450,home:650},
-"Laghouat":{office:700,home:1000},
-"Oum El Bouaghi":{office:500,home:650},
-"Batna":{office:400,home:500},
-"Bejaia":{office:500,home:650},
-"Biskra":{office:600,home:950},
-"Bechar":{office:1100,home:1400},
-"Blida":{office:450,home:650},
-"Bouira":{office:450,home:650},
-"Tamanrasset":{office:1400,home:1600},
-"Tebessa":{office:600,home:950},
-"Tlemcen":{office:500,home:650},
-"Tiaret":{office:500,home:650},
-"Tizi Ouzou":{office:450,home:650},
-"Alger":{office:450,home:700},
-"Djelfa":{office:600,home:900},
-"Jijel":{office:500,home:650},
-"Setif":{office:450,home:650},
-"Saida":{office:600,home:900},
-"Skikda":{office:500,home:650},
-"Sidi Bel Abbes":{office:500,home:650},
-"Annaba":{office:500,home:650},
-"Guelma":{office:600,home:900},
-"Constantine":{office:450,home:650},
-"Medea":{office:450,home:650},
-"Mostaganem":{office:500,home:650},
-"M'Sila":{office:500,home:650},
-"Mascara":{office:600,home:900},
-"Ouargla":{office:800,home:1100},
-"Oran":{office:450,home:650},
-"El Bayadh":{office:800,home:1100},
-"Illizi":{office:1700,home:2000},
-"Bordj Bou Arreridj":{office:450,home:650},
-"Boumerdes":{office:450,home:650},
-"El Tarf":{office:600,home:950},
-"Tindouf":{office:1400,home:1600},
-"Tissemsilt":{office:500,home:650},
-"El Oued":{office:800,home:1100},
-"Khenchela":{office:600,home:900},
-"Souk Ahras":{office:600,home:900},
-"Tipaza":{office:450,home:650},
-"Mila":{office:500,home:650},
-"Ain Defla":{office:450,home:650},
-"Naama":{office:800,home:1100},
-"Ain Temouchent":{office:600,home:900},
-"Ghardaia":{office:800,home:1100},
-"Relizane":{office:500,home:650},
-"El M'Ghair":{office:1100,home:1400},
-"El Menia":{office:1700,home:2000},
-"Ouled Djellal":{office:700,home:1000},
-"Bordj Badji Mokhtar":{office:1000,home:1400},
-"Beni Abbes":{office:1100,home:1400},
-"Timimoun":{office:1700,home:2000},
-"Touggourt":{office:800,home:1100},
-"Djanet":{office:1700,home:2000},
-"In Salah":{office:800,home:1100},
-"In Guezzam":{office:1000,home:1300}
-
-};
-
-
-const wilayaOrder =
-Object.keys(tarifs);
-
-
-/* =====================================================
    ELEMENTS
 ===================================================== */
 
@@ -2079,12 +1806,6 @@ document.getElementById("modalTitle");
 
 const saveBtn =
 document.getElementById("saveBtn");
-
-const storeNameElement =
-document.getElementById("storeName");
-
-const ownerEmailElement =
-document.getElementById("ownerEmail");
 
 const topStoreName =
 document.getElementById("topStoreName");
@@ -2227,31 +1948,8 @@ store.title ||
 "G-Glam";
 
 
-storeNameElement.textContent =
-name;
-
 topStoreName.textContent =
 name;
-
-
-/* =====================================================
-   EMAIL
-===================================================== */
-
-const email =
-
-store.ownerEmail ||
-
-store.email ||
-
-user.email ||
-
-"";
-
-
-ownerEmailElement.textContent =
-email ||
-"غير محدد";
 
 
 /* =====================================================
@@ -2331,12 +2029,18 @@ name
 
 localStorage.setItem(
 "storeOwnerEmail",
-email
+store.ownerEmail ||
+store.email ||
+user.email ||
+""
 );
 
 localStorage.setItem(
 "ownerEmail",
-email
+store.ownerEmail ||
+store.email ||
+user.email ||
+""
 );
 
 localStorage.setItem(
@@ -2353,14 +2057,8 @@ user.uid
 
 else{
 
-storeNameElement.textContent =
-"G-Glam";
-
 topStoreName.textContent =
 "G-Glam";
-
-ownerEmailElement.textContent =
-user.email || "";
 
 topStoreImage.src =
 "logotrans.png";
@@ -2449,29 +2147,6 @@ id:item.id,
 ...item.data()
 
 });
-
-});
-
-
-deliveryItems.sort(
-
-(a,b)=>{
-
-const indexA =
-wilayaOrder.indexOf(a.id);
-
-const indexB =
-wilayaOrder.indexOf(b.id);
-
-
-if(indexA === -1)
-return 1;
-
-if(indexB === -1)
-return -1;
-
-
-return indexA - indexB;
 
 });
 
@@ -2570,18 +2245,8 @@ filtered.forEach(
 
 (item,index)=>{
 
-const originalIndex =
-wilayaOrder.indexOf(
-item.id
-);
-
-
 const number =
-originalIndex === -1
-?
-index + 1
-:
-originalIndex + 1;
+index + 1;
 
 
 const row =
@@ -2958,6 +2623,11 @@ alert(
 "هذه الولاية موجودة بالفعل."
 );
 
+saveBtn.disabled = false;
+
+saveBtn.textContent =
+"💾 حفظ";
+
 return;
 
 }
@@ -3050,129 +2720,6 @@ saveBtn.textContent =
 }
 
 });
-
-
-/* =====================================================
-   IMPORT TARIFFS
-===================================================== */
-
-document
-.getElementById("importBtn")
-.addEventListener(
-"click",
-importTarifs
-);
-
-
-async function importTarifs(){
-
-const ok =
-confirm(
-
-"سيتم استيراد جميع الولايات والأسعار الأساسية إلى Firebase.\n\n" +
-
-"إذا كانت الولاية موجودة سيتم تحديث سعرها.\n\n" +
-
-"هل تريد المتابعة؟"
-
-);
-
-
-if(!ok)
-return;
-
-
-const button =
-document.getElementById(
-"importBtn"
-);
-
-
-button.disabled = true;
-
-button.textContent =
-"⏳ جاري الاستيراد...";
-
-
-try{
-
-let count = 0;
-
-
-for(
-
-const [wilaya,prices]
-
-of Object.entries(tarifs)
-
-){
-
-await setDoc(
-
-doc(
-db,
-"delivery",
-wilaya
-),
-
-{
-
-office:prices.office,
-
-home:prices.home
-
-}
-
-);
-
-
-count++;
-
-}
-
-
-showMessage(
-
-"تم استيراد " +
-count +
-" ولاية بنجاح ✅",
-
-true
-
-);
-
-
-await loadDelivery();
-
-
-}catch(error){
-
-console.error(
-"IMPORT ERROR:",
-error
-);
-
-
-showMessage(
-
-"❌ فشل الاستيراد: " +
-error.message,
-
-false
-
-);
-
-
-}finally{
-
-button.disabled = false;
-
-button.textContent =
-"📥 استيراد الأسعار الحالية";
-
-}
-
-}
 
 
 /* =====================================================
