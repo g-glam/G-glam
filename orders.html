@@ -13,7 +13,7 @@ content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
 <link rel="preconnect"
-href="https://fonts.googleapis.com"
+href="https://fonts.gstatic.com"
 crossorigin>
 
 <link
@@ -197,8 +197,6 @@ white-space:nowrap;
 
 transition:.2s;
 
-position:relative;
-
 }
 
 .menu a:hover{
@@ -252,27 +250,25 @@ opacity:1;
    NEW ORDERS BADGE
 ===================================================== */
 
-.orders-badge{
+.new-orders-badge{
 
-display:none;
+display:flex;
 
 align-items:center;
-
 justify-content:center;
 
-min-width:22px;
-
-height:22px;
+min-width:23px;
+height:23px;
 
 padding:0 6px;
 
 margin-right:auto;
 
-border-radius:20px;
-
-background:var(--danger);
+background:#F47B20;
 
 color:white;
+
+border-radius:50px;
 
 font-size:11px;
 
@@ -280,36 +276,27 @@ font-weight:800;
 
 line-height:1;
 
-box-shadow:0 2px 7px rgba(220,53,69,.25);
+box-shadow:0 3px 8px rgba(244,123,32,.25);
+
+opacity:0;
+
+transform:scale(.8);
+
+transition:.25s;
 
 }
 
-.sidebar:hover .orders-badge{
+.new-orders-badge.show{
 
-display:flex;
+opacity:1;
+
+transform:scale(1);
 
 }
 
+.sidebar:hover .new-orders-badge{
 
-/* عندما تكون القائمة مطوية */
-
-.sidebar:not(:hover) .orders-badge{
-
-display:flex;
-
-position:absolute;
-
-top:5px;
-
-right:42px;
-
-min-width:17px;
-
-height:17px;
-
-padding:0 4px;
-
-font-size:9px;
+margin-right:auto;
 
 }
 
@@ -1473,6 +1460,16 @@ grid-template-columns:1fr;
 
 }
 
+.new-orders-badge{
+
+min-width:20px;
+
+height:20px;
+
+font-size:10px;
+
+}
+
 }
 
 @media(max-width:450px){
@@ -1613,8 +1610,8 @@ alt="G-Glam"
 </span>
 
 <span
-class="orders-badge"
-id="newOrdersBadge">
+id="newOrdersBadge"
+class="new-orders-badge">
 0
 </span>
 
@@ -2245,32 +2242,105 @@ return String(phone || "")
    UPDATE NEW ORDERS BADGE
 ===================================================== */
 
-function updateNewOrdersBadge(count){
+async function updateNewOrdersBadge(){
 
-const safeCount =
-Number(count || 0);
+try{
 
-if(safeCount > 0){
+if(!currentOwnerUid){
+
+return;
+
+}
+
+
+/*
+   مهم:
+   العداد يعتمد على ownerUid الخاص بحساب Firebase
+   الحالي، وليس البريد الإلكتروني.
+*/
+
+const ordersQuery =
+query(
+
+collection(db,"orders"),
+
+where(
+"ownerUid",
+"==",
+currentOwnerUid
+)
+
+);
+
+const snapshot =
+await getDocs(
+ordersQuery
+);
+
+
+let newOrders = 0;
+
+
+snapshot.forEach(
+orderDoc=>{
+
+const order =
+orderDoc.data();
+
+
+const status =
+String(
+order.status ||
+"قيد المعالجة"
+)
+.trim();
+
+
+/*
+   الطلب الجديد هو الطلب الذي
+   مازال في حالة قيد المعالجة
+*/
+
+if(
+status === "قيد المعالجة"
+){
+
+newOrders++;
+
+}
+
+});
+
 
 newOrdersBadge.textContent =
-safeCount > 99
-?
-"99+"
-:
-safeCount;
+newOrders;
 
-newOrdersBadge.style.display =
-"flex";
+
+if(newOrders > 0){
+
+newOrdersBadge.classList.add(
+"show"
+);
 
 }
 
 else{
 
-newOrdersBadge.textContent =
-"0";
+newOrdersBadge.classList.remove(
+"show"
+);
 
-newOrdersBadge.style.display =
-"none";
+}
+
+
+}
+
+catch(error){
+
+console.error(
+"NEW ORDERS BADGE ERROR:",
+error
+);
 
 }
 
@@ -2672,6 +2742,14 @@ localStorage.setItem(
 
 await loadOrders();
 
+
+/*
+   تحديث عداد الطلبات الجديدة
+*/
+
+await updateNewOrdersBadge();
+
+
 return true;
 
 
@@ -2853,8 +2931,6 @@ let shipping = 0;
 
 let delivered = 0;
 
-let newOrders = 0;
-
 
 snapshot.forEach(
 orderDoc=>{
@@ -2870,24 +2946,14 @@ order.status ||
 .trim();
 
 
-/* =====================================================
-   NEW ORDERS
-===================================================== */
-
 if(
 status === "قيد المعالجة"
 ){
 
 processing++;
 
-newOrders++;
-
 }
 
-
-/* =====================================================
-   SHIPPING
-===================================================== */
 
 if(
 
@@ -2901,10 +2967,6 @@ shipping++;
 
 }
 
-
-/* =====================================================
-   DELIVERED
-===================================================== */
 
 if(
 
@@ -2932,12 +2994,10 @@ delivered;
 
 
 /* =====================================================
-   UPDATE SIDEBAR BADGE
+   UPDATE NEW ORDERS BADGE
 ===================================================== */
 
-updateNewOrdersBadge(
-newOrders
-);
+await updateNewOrdersBadge();
 
 
 /* =====================================================
@@ -3037,8 +3097,6 @@ console.error(
 "ORDERS ERROR:",
 error
 );
-
-updateNewOrdersBadge(0);
 
 ordersBody.innerHTML = `
 
