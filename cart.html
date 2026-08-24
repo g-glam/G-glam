@@ -8,11 +8,21 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
+<meta name="theme-color"
+content="#F5F5F5">
+
+<link rel="manifest"
+href="manifest.json">
+
+<link rel="apple-touch-icon"
+href="icons/icon-192.png">
+
 <title>
 السلة | G-Glam
 </title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
 
 <link rel="preconnect"
 href="https://fonts.gstatic.com"
@@ -22,32 +32,41 @@ crossorigin>
 href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800&display=swap"
 rel="stylesheet">
 
+
 <style>
 
 /* =====================================================
-   VARIABLES
+   COLORS
 ===================================================== */
 
 :root{
 
---orange:#F47B20;
---orange-dark:#DF6810;
+--bg:#F4F4F4;
 
---bg:#F7F7F7;
 --card:#FFFFFF;
 
---dark:#222222;
---dark-2:#333333;
+--text:#222222;
 
---text:#333333;
---muted:#888888;
+--accent:#F47B20;
 
---border:#E9E9E9;
+--accent-dark:#DF6810;
 
---danger:#DC3545;
---danger-bg:#FBE7EA;
+--accent-light:#FFF1E6;
 
---shadow:0 4px 18px rgba(0,0,0,.06);
+--muted:#777777;
+
+--border:#E8E8E8;
+
+--danger:#D9534F;
+
+--danger-bg:#FDECEC;
+
+--success:#198754;
+
+--success-bg:#EFFAF3;
+
+--shadow:
+0 4px 15px rgba(0,0,0,.06);
 
 }
 
@@ -68,15 +87,19 @@ font-family:"Tajawal",Arial,sans-serif;
 }
 
 
+/* =====================================================
+   BODY
+===================================================== */
+
 body{
 
 background:var(--bg);
 
 color:var(--text);
 
-min-height:100vh;
-
 padding-bottom:110px;
+
+min-height:100vh;
 
 }
 
@@ -87,49 +110,63 @@ padding-bottom:110px;
 
 header{
 
-height:78px;
-
 display:flex;
 
 align-items:center;
 
 justify-content:space-between;
 
-padding:0 22px;
+padding:18px 20px;
 
-background:white;
-
-border-bottom:1px solid var(--border);
+background:var(--bg);
 
 position:sticky;
 
 top:0;
 
-z-index:1000;
-
-box-shadow:
-0 2px 12px rgba(0,0,0,.04);
+z-index:100;
 
 }
 
+
+/* =====================================================
+   LOGO
+===================================================== */
 
 .logo{
 
-font-size:30px;
+display:flex;
 
-font-weight:800;
+align-items:center;
 
-color:#222;
-
-letter-spacing:-1px;
+justify-content:center;
 
 }
 
+
+.logo img{
+
+width:120px;
+
+height:auto;
+
+max-height:55px;
+
+object-fit:contain;
+
+display:block;
+
+}
+
+
+/* =====================================================
+   MENU + CART
+===================================================== */
 
 .menu-btn,
 .cart-icon{
 
-font-size:24px;
+font-size:27px;
 
 cursor:pointer;
 
@@ -155,32 +192,36 @@ transition:.2s;
 .menu-btn:hover,
 .cart-icon:hover{
 
-background:#FFF1E6;
+background:var(--accent-light);
 
 }
 
+
+/* =====================================================
+   CART COUNT
+===================================================== */
 
 .cart-count{
 
 position:absolute;
 
-top:0;
+top:-5px;
 
-left:0;
+left:-5px;
 
-background:var(--orange);
+background:var(--accent);
 
-color:white;
+color:#fff;
+
+font-size:11px;
+
+font-weight:bold;
 
 width:20px;
 
 height:20px;
 
 border-radius:50%;
-
-font-size:11px;
-
-font-weight:700;
 
 display:flex;
 
@@ -192,127 +233,56 @@ justify-content:center;
 
 
 /* =====================================================
-   SIDEBAR
+   STORE INFO
 ===================================================== */
 
-.sidebar{
+.store-info{
 
-position:fixed;
+width:calc(100% - 30px);
 
-top:0;
+max-width:700px;
 
-right:-280px;
+margin:8px auto 18px;
 
-width:280px;
+background:#fff;
 
-height:100vh;
+border:1px solid var(--border);
 
-background:white;
+border-radius:18px;
 
-box-shadow:-5px 0 20px rgba(0,0,0,.12);
+padding:12px 18px;
 
-z-index:2000;
+text-align:center;
 
-transition:.3s;
+color:var(--muted);
 
-padding-top:25px;
+font-size:14px;
 
-}
-
-
-.sidebar.active{
-
-right:0;
+box-shadow:var(--shadow);
 
 }
 
 
-.sidebar-title{
+.store-info strong{
 
-padding:15px 25px 20px;
-
-font-size:22px;
+color:var(--text);
 
 font-weight:800;
-
-color:#222;
-
-border-bottom:1px solid var(--border);
-
-margin-bottom:10px;
-
-}
-
-
-.sidebar a{
-
-display:flex;
-
-align-items:center;
-
-gap:12px;
-
-padding:15px 25px;
-
-text-decoration:none;
-
-color:#444;
-
-font-size:15px;
-
-font-weight:600;
-
-border-bottom:1px solid #F2F2F2;
-
-transition:.2s;
-
-}
-
-
-.sidebar a:hover{
-
-background:#FFF5ED;
-
-color:var(--orange-dark);
-
-}
-
-
-.overlay{
-
-position:fixed;
-
-inset:0;
-
-background:rgba(0,0,0,.4);
-
-display:none;
-
-z-index:1900;
-
-}
-
-
-.overlay.active{
-
-display:block;
 
 }
 
 
 /* =====================================================
-   CONTAINER
+   MAIN CONTAINER
 ===================================================== */
 
 .container{
 
-width:100%;
+width:calc(100% - 30px);
 
 max-width:900px;
 
-margin:auto;
-
-padding:25px 15px;
+margin:0 auto 30px;
 
 }
 
@@ -325,15 +295,40 @@ padding:25px 15px;
 
 background:var(--card);
 
+border-radius:24px;
+
+padding:20px;
+
 border:1px solid var(--border);
 
-border-radius:18px;
+box-shadow:
 
-padding:22px;
+0 6px 22px rgba(0,0,0,.07);
+
+position:relative;
+
+overflow:hidden;
 
 margin-bottom:20px;
 
-box-shadow:var(--shadow);
+}
+
+
+.card::before{
+
+content:"";
+
+position:absolute;
+
+top:0;
+
+right:0;
+
+width:6px;
+
+height:100%;
+
+background:var(--accent);
 
 }
 
@@ -344,11 +339,11 @@ box-shadow:var(--shadow);
 
 .section-title{
 
-font-size:21px;
+font-size:22px;
 
 font-weight:800;
 
-color:var(--dark);
+color:var(--text);
 
 margin-bottom:20px;
 
@@ -357,6 +352,48 @@ display:flex;
 align-items:center;
 
 gap:8px;
+
+}
+
+
+/* =====================================================
+   BACK BUTTON
+===================================================== */
+
+.back-btn{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:5px;
+
+margin-bottom:18px;
+
+padding:10px 15px;
+
+border-radius:12px;
+
+background:var(--accent-light);
+
+color:var(--accent-dark);
+
+text-decoration:none;
+
+font-size:14px;
+
+font-weight:700;
+
+transition:.2s;
+
+}
+
+
+.back-btn:hover{
+
+background:var(--accent);
+
+color:#fff;
 
 }
 
@@ -371,7 +408,7 @@ position:relative;
 
 border:1px solid var(--border);
 
-border-radius:14px;
+border-radius:17px;
 
 padding:16px;
 
@@ -400,6 +437,21 @@ margin-bottom:0;
 }
 
 
+.item-header{
+
+display:flex;
+
+align-items:flex-start;
+
+justify-content:space-between;
+
+gap:12px;
+
+margin-bottom:10px;
+
+}
+
+
 .item h3{
 
 font-size:17px;
@@ -408,25 +460,116 @@ font-weight:800;
 
 color:#222;
 
-margin-bottom:8px;
+line-height:1.6;
 
 }
 
 
-.item p{
+.item-info{
 
 font-size:14px;
 
 color:#777;
 
-margin-bottom:7px;
+line-height:1.9;
 
 }
 
 
-.item p strong{
+.item-info strong{
 
 color:#333;
+
+}
+
+
+.item-price{
+
+font-size:17px;
+
+font-weight:800;
+
+color:var(--accent-dark);
+
+margin-top:4px;
+
+}
+
+
+/* =====================================================
+   PRODUCT IMAGE
+===================================================== */
+
+.item-layout{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+}
+
+
+.item-image{
+
+width:90px;
+
+height:90px;
+
+flex-shrink:0;
+
+border-radius:14px;
+
+overflow:hidden;
+
+background:#F1F1F1;
+
+border:1px solid var(--border);
+
+}
+
+
+.item-image img{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+display:block;
+
+}
+
+
+.item-content{
+
+flex:1;
+
+min-width:0;
+
+}
+
+
+/* =====================================================
+   OPTIONS
+===================================================== */
+
+.option-line{
+
+font-size:13px;
+
+color:#777;
+
+margin-top:3px;
+
+}
+
+
+.option-line strong{
+
+color:#444;
 
 }
 
@@ -445,26 +588,32 @@ justify-content:center;
 
 gap:16px;
 
-margin:14px 0;
+margin:15px 0;
+
+padding:10px;
+
+background:#F7F7F7;
+
+border-radius:14px;
 
 }
 
 
 .qty-btn{
 
-width:38px;
+width:40px;
 
-height:38px;
+height:40px;
 
 border:none;
 
-border-radius:10px;
+border-radius:50%;
 
-background:var(--orange);
+background:var(--accent);
 
-color:white;
+color:#fff;
 
-font-size:21px;
+font-size:22px;
 
 font-weight:700;
 
@@ -472,29 +621,80 @@ cursor:pointer;
 
 transition:.2s;
 
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
 }
 
 
 .qty-btn:hover{
 
-background:var(--orange-dark);
+background:var(--accent-dark);
 
-transform:translateY(-1px);
+transform:scale(1.04);
+
+}
+
+
+.qty-btn:disabled{
+
+background:#BDBDBD;
+
+cursor:not-allowed;
+
+transform:none;
 
 }
 
 
 .qty-number{
 
-min-width:30px;
+min-width:35px;
 
 text-align:center;
 
-font-size:17px;
+font-size:18px;
 
 font-weight:800;
 
 color:#222;
+
+}
+
+
+/* =====================================================
+   ITEM TOTAL
+===================================================== */
+
+.item-total{
+
+text-align:center;
+
+font-size:15px;
+
+font-weight:700;
+
+padding:10px;
+
+background:#fff;
+
+border-radius:10px;
+
+border:1px solid var(--border);
+
+margin-bottom:10px;
+
+}
+
+
+.item-total strong{
+
+color:var(--accent-dark);
+
+font-size:17px;
 
 }
 
@@ -509,13 +709,13 @@ width:100%;
 
 background:var(--danger-bg);
 
-color:#B52B39;
+color:#B42318;
 
-border:1px solid #F2D0D5;
+border:1px solid #F5D0D0;
 
 padding:10px;
 
-border-radius:10px;
+border-radius:11px;
 
 cursor:pointer;
 
@@ -532,7 +732,7 @@ transition:.2s;
 
 .delete-btn:hover{
 
-background:#F6D1D6;
+background:#F8D9D9;
 
 }
 
@@ -545,7 +745,7 @@ background:#F6D1D6;
 
 text-align:center;
 
-padding:40px 20px;
+padding:50px 20px;
 
 color:#888;
 
@@ -558,26 +758,26 @@ line-height:2;
 
 .empty-icon{
 
-font-size:45px;
+font-size:50px;
 
-margin-bottom:10px;
+margin-bottom:12px;
 
 }
 
 
 .empty-cart button{
 
-margin-top:15px;
+margin-top:18px;
 
-background:var(--orange);
+background:var(--accent);
 
-color:white;
+color:#fff;
 
 border:none;
 
-padding:12px 25px;
+padding:13px 27px;
 
-border-radius:10px;
+border-radius:13px;
 
 font-family:"Tajawal",Arial,sans-serif;
 
@@ -596,7 +796,7 @@ cursor:pointer;
 
 background:#222;
 
-color:white;
+color:#fff;
 
 padding:15px;
 
@@ -615,9 +815,9 @@ margin-top:18px;
 
 .total-box.final{
 
-background:var(--orange);
+background:var(--accent);
 
-font-size:18px;
+font-size:19px;
 
 }
 
@@ -628,7 +828,7 @@ font-size:18px;
 
 .form-group{
 
-margin-bottom:14px;
+margin-bottom:15px;
 
 }
 
@@ -648,18 +848,25 @@ margin-bottom:7px;
 }
 
 
+.required{
+
+color:var(--accent);
+
+}
+
+
 input,
 select{
 
 width:100%;
 
-padding:13px 14px;
+padding:14px 15px;
 
 border:1px solid var(--border);
 
-border-radius:10px;
+border-radius:13px;
 
-background:#FCFCFC;
+background:#F8F8F8;
 
 color:#333;
 
@@ -677,12 +884,13 @@ transition:.2s;
 input:focus,
 select:focus{
 
-border-color:var(--orange);
+border-color:var(--accent);
 
-background:white;
+background:#fff;
 
 box-shadow:
-0 0 0 3px rgba(244,123,32,.08);
+
+0 0 0 3px rgba(244,123,32,.10);
 
 }
 
@@ -693,6 +901,10 @@ cursor:pointer;
 
 }
 
+
+/* =====================================================
+   DELIVERY
+===================================================== */
 
 .delivery-loading{
 
@@ -715,13 +927,13 @@ display:none;
 
 background:var(--danger-bg);
 
-border:1px solid #F0C9CF;
+border:1px solid #F5D0D0;
 
-color:#B52B39;
+color:#B42318;
 
 padding:12px;
 
-border-radius:10px;
+border-radius:11px;
 
 font-size:13px;
 
@@ -733,12 +945,26 @@ text-align:center;
 
 
 /* =====================================================
-   REQUIRED
+   INFO NOTICE
 ===================================================== */
 
-.required{
+.notice{
 
-color:var(--orange);
+background:var(--accent-light);
+
+border:1px solid #FFD8BB;
+
+color:#8A470F;
+
+padding:12px 14px;
+
+border-radius:12px;
+
+font-size:13px;
+
+line-height:1.8;
+
+margin-bottom:18px;
 
 }
 
@@ -761,13 +987,13 @@ width:90%;
 
 max-width:500px;
 
-background:var(--orange);
+background:var(--accent);
 
-color:white;
+color:#fff;
 
 border:none;
 
-padding:15px 20px;
+padding:16px 20px;
 
 border-radius:30px;
 
@@ -780,9 +1006,10 @@ font-family:"Tajawal",Arial,sans-serif;
 cursor:pointer;
 
 box-shadow:
+
 0 8px 22px rgba(244,123,32,.30);
 
-z-index:1500;
+z-index:500;
 
 transition:.2s;
 
@@ -791,7 +1018,7 @@ transition:.2s;
 
 .floating-order:hover{
 
-background:var(--orange-dark);
+background:var(--accent-dark);
 
 transform:translateX(50%) translateY(-2px);
 
@@ -800,11 +1027,128 @@ transform:translateX(50%) translateY(-2px);
 
 .floating-order:disabled{
 
-opacity:.6;
+background:#BDBDBD;
+
+opacity:.8;
 
 cursor:not-allowed;
 
+box-shadow:none;
+
 transform:translateX(50%);
+
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar{
+
+position:fixed;
+
+top:0;
+
+right:-280px;
+
+width:280px;
+
+height:100%;
+
+background:#fff;
+
+box-shadow:
+
+-4px 0 15px rgba(0,0,0,.1);
+
+z-index:999;
+
+transition:.3s;
+
+padding-top:30px;
+
+}
+
+
+.sidebar.active{
+
+right:0;
+
+}
+
+
+.sidebar-title{
+
+padding:0 25px 20px;
+
+font-size:24px;
+
+font-weight:800;
+
+border-bottom:1px solid #eee;
+
+margin-bottom:5px;
+
+}
+
+
+.sidebar a{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+padding:16px 25px;
+
+text-decoration:none;
+
+color:#222;
+
+font-size:16px;
+
+font-weight:600;
+
+border-bottom:1px solid #eee;
+
+transition:.2s;
+
+}
+
+
+.sidebar a:hover{
+
+background:var(--accent-light);
+
+color:var(--accent-dark);
+
+}
+
+
+/* =====================================================
+   OVERLAY
+===================================================== */
+
+.overlay{
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.35);
+
+display:none;
+
+z-index:998;
+
+}
+
+
+.overlay.active{
+
+display:block;
 
 }
 
@@ -817,49 +1161,72 @@ transform:translateX(50%);
 
 text-align:center;
 
-padding:30px;
+padding:50px 20px;
 
-color:#888;
+color:var(--muted);
 
-font-size:14px;
+font-size:15px;
+
+line-height:2;
 
 }
 
 
 /* =====================================================
-   RESPONSIVE
+   MOBILE
 ===================================================== */
 
 @media(max-width:600px){
 
 header{
 
-height:68px;
-
-padding:0 12px;
+padding:15px 15px;
 
 }
 
 
-.logo{
+.logo img{
 
-font-size:26px;
+width:105px;
+
+max-height:50px;
+
+}
+
+
+.menu-btn,
+.cart-icon{
+
+font-size:25px;
+
+}
+
+
+.store-info{
+
+width:calc(100% - 20px);
+
+margin-top:8px;
+
+margin-bottom:12px;
 
 }
 
 
 .container{
 
-padding:15px 10px;
+width:calc(100% - 20px);
+
+margin-bottom:20px;
 
 }
 
 
 .card{
 
-padding:16px;
+padding:15px;
 
-border-radius:15px;
+border-radius:20px;
 
 }
 
@@ -871,16 +1238,99 @@ font-size:19px;
 }
 
 
+.item-layout{
+
+gap:10px;
+
+}
+
+
+.item-image{
+
+width:75px;
+
+height:75px;
+
+}
+
+
+.item h3{
+
+font-size:15px;
+
+}
+
+
+.item-info{
+
+font-size:13px;
+
+}
+
+
 .floating-order{
 
-bottom:12px;
+width:calc(100% - 30px);
 
-width:92%;
+font-size:16px;
+
+}
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media(max-width:400px){
+
+.logo img{
+
+width:100px;
+
+}
+
+
+.container{
+
+width:calc(100% - 16px);
+
+}
+
+
+.card{
+
+padding:13px;
+
+}
+
+
+.item{
+
+padding:12px;
+
+}
+
+
+.item-image{
+
+width:68px;
+
+height:68px;
+
+}
+
+
+.qty-btn{
+
+width:38px;
+
+height:38px;
 
 }
 
 }
-
 
 </style>
 
@@ -916,7 +1366,9 @@ G-Glam
 </div>
 
 
-<a href="index.html">
+<a
+href="#"
+id="homeLink">
 
 🏠
 
@@ -927,7 +1379,9 @@ G-Glam
 </a>
 
 
-<a href="cart.html">
+<a
+href="#"
+id="cartLink">
 
 🛒
 
@@ -942,10 +1396,10 @@ G-Glam
 href="https://www.facebook.com/share/1BNEuBhjHV/"
 target="_blank">
 
-📘
+📞
 
 <span>
-Facebook
+اتصل بنا
 </span>
 
 </a>
@@ -970,16 +1424,20 @@ id="menuBtn">
 </div>
 
 
-<div class="logo">
+<div
+class="logo">
 
-G-Glam
+<img
+src="logotrans.png"
+alt="G-Glam"
+>
 
 </div>
 
 
 <div
 class="cart-icon"
-onclick="window.location.href='cart.html'">
+id="cartButton">
 
 🛒
 
@@ -998,14 +1456,27 @@ id="cartCount">
 
 
 <!-- =====================================================
-     CONTENT
+     STORE INFO
+===================================================== -->
+
+<div
+class="store-info"
+id="storeInfo">
+
+جاري تحميل المتجر...
+
+</div>
+
+
+<!-- =====================================================
+     MAIN
 ===================================================== -->
 
 <div class="container">
 
 
 <!-- =====================================================
-     CART
+     CART CARD
 ===================================================== -->
 
 <div class="card">
@@ -1018,7 +1489,8 @@ id="cartCount">
 </div>
 
 
-<div id="cart-items">
+<div
+id="cart-items">
 
 <div class="loading">
 
@@ -1042,10 +1514,11 @@ id="productsTotal">
 
 
 <!-- =====================================================
-     CUSTOMER INFORMATION
+     CUSTOMER CARD
 ===================================================== -->
 
-<div class="card">
+<div
+class="card">
 
 
 <div class="section-title">
@@ -1055,12 +1528,19 @@ id="productsTotal">
 </div>
 
 
-<div
-class="form-group">
+<div class="notice">
+
+📦 يرجى إدخال معلوماتك بشكل صحيح حتى يتمكن المتجر من التواصل معك لتأكيد الطلب.
+
+</div>
+
+
+<div class="form-group">
 
 <label>
 
 الاسم واللقب
+
 <span class="required">*</span>
 
 </label>
@@ -1074,12 +1554,12 @@ autocomplete="name">
 </div>
 
 
-<div
-class="form-group">
+<div class="form-group">
 
 <label>
 
 رقم الهاتف
+
 <span class="required">*</span>
 
 </label>
@@ -1093,16 +1573,15 @@ autocomplete="tel">
 </div>
 
 
-<div
-class="form-group">
+<div class="form-group">
 
 <label>
 
 الولاية
+
 <span class="required">*</span>
 
 </label>
-
 
 <select id="wilaya">
 
@@ -1129,12 +1608,10 @@ class="delivery-loading">
 <div
 id="deliveryError"
 class="delivery-error">
-
 </div>
 
 
-<div
-class="form-group">
+<div class="form-group">
 
 <label>
 
@@ -1151,8 +1628,7 @@ autocomplete="address-level2">
 </div>
 
 
-<div
-class="form-group">
+<div class="form-group">
 
 <label>
 
@@ -1169,12 +1645,12 @@ autocomplete="street-address">
 </div>
 
 
-<div
-class="form-group">
+<div class="form-group">
 
 <label>
 
 نوع التوصيل
+
 <span class="required">*</span>
 
 </label>
@@ -1236,7 +1712,8 @@ id="finalTotal">
 <button
 class="floating-order"
 id="orderBtn"
-onclick="sendOrder()">
+onclick="sendOrder()"
+disabled>
 
 📦 إرسال الطلب
 
@@ -1261,6 +1738,7 @@ initializeApp
 }
 
 from
+
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
 
@@ -1270,11 +1748,14 @@ getFirestore,
 collection,
 addDoc,
 serverTimestamp,
-getDocs
+getDocs,
+doc,
+getDoc
 
 }
 
 from
+
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 
@@ -1313,7 +1794,9 @@ measurementId:
 ===================================================== */
 
 const app =
-initializeApp(firebaseConfig);
+initializeApp(
+firebaseConfig
+);
 
 
 const db =
@@ -1321,20 +1804,17 @@ getFirestore(app);
 
 
 /* =====================================================
-   VARIABLES
+   URL PARAMETERS
 ===================================================== */
 
-let cart =
-JSON.parse(
-localStorage.getItem("cart")
-) || [];
+const params =
+new URLSearchParams(
+window.location.search
+);
 
 
-let productsTotal = 0;
-
-let deliveryCost = 0;
-
-let deliveryItems = [];
+const urlStoreId =
+params.get("store");
 
 
 /* =====================================================
@@ -1395,6 +1875,346 @@ document.getElementById(
 );
 
 
+const storeInfo =
+document.getElementById(
+"storeInfo"
+);
+
+
+const cartCount =
+document.getElementById(
+"cartCount"
+);
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let cart =
+
+JSON.parse(
+localStorage.getItem("cart")
+) || [];
+
+
+let productsTotal = 0;
+
+let deliveryCost = 0;
+
+let deliveryItems = [];
+
+let currentStoreId =
+urlStoreId ||
+localStorage.getItem("cartStoreId") ||
+null;
+
+let currentStoreName =
+"G-Glam";
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHtml(value){
+
+return String(
+value ?? ""
+)
+
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/'/g,
+"&#039;"
+);
+
+}
+
+
+/* =====================================================
+   GET ITEM STORE
+===================================================== */
+
+function getItemStoreId(item){
+
+return (
+
+item.storeId ||
+
+item.storeUid ||
+
+item.ownerUid ||
+
+""
+
+);
+
+}
+
+
+/* =====================================================
+   GET STORE OWNER UID
+===================================================== */
+
+function getStoreOwnerUid(){
+
+/*
+   الأولوية للمتجر الموجود في المنتجات.
+   هذا يحافظ على ربط الطلب بصاحب المتجر.
+*/
+
+for(const item of cart){
+
+const ownerUid =
+item.ownerUid ||
+item.storeUid ||
+item.storeId;
+
+if(ownerUid){
+
+if(
+!currentStoreId ||
+ownerUid === currentStoreId
+){
+
+return ownerUid;
+
+}
+
+}
+
+}
+
+
+/*
+   fallback من localStorage
+*/
+
+const ownerUid =
+localStorage.getItem(
+"ownerUid"
+);
+
+
+if(ownerUid){
+
+return ownerUid;
+
+}
+
+
+/*
+   fallback storeId
+*/
+
+const storeId =
+localStorage.getItem(
+"storeId"
+);
+
+
+if(storeId){
+
+return storeId;
+
+}
+
+
+return null;
+
+}
+
+
+/* =====================================================
+   FILTER STORE CART
+===================================================== */
+
+function getCurrentStoreCart(){
+
+if(!currentStoreId){
+
+return cart;
+
+}
+
+
+return cart.filter(
+item => {
+
+const itemStore =
+getItemStoreId(item);
+
+return (
+
+!itemStore ||
+
+itemStore === currentStoreId
+
+);
+
+});
+
+}
+
+
+/* =====================================================
+   LOAD STORE
+===================================================== */
+
+async function loadStore(){
+
+try{
+
+if(!currentStoreId){
+
+storeInfo.innerHTML = `
+
+متجر:
+
+<strong>
+G-Glam
+</strong>
+
+`;
+
+return;
+
+}
+
+
+const storeRef =
+doc(
+db,
+"stores",
+currentStoreId
+);
+
+
+const storeSnap =
+await getDoc(
+storeRef
+);
+
+
+if(storeSnap.exists()){
+
+const store =
+storeSnap.data();
+
+
+currentStoreName =
+
+store.storeName ||
+
+store.name ||
+
+"G-Glam";
+
+}else{
+
+currentStoreName =
+"G-Glam";
+
+}
+
+
+storeInfo.innerHTML = `
+
+متجر:
+
+<strong>
+${escapeHtml(
+currentStoreName
+)}
+</strong>
+
+`;
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+document.getElementById(
+"homeLink"
+).href =
+
+"index.html?store=" +
+
+encodeURIComponent(
+currentStoreId
+);
+
+
+document.getElementById(
+"cartLink"
+).href =
+
+"cart.html?store=" +
+
+encodeURIComponent(
+currentStoreId
+);
+
+
+document.getElementById(
+"cartButton"
+).onclick =
+function(){
+
+window.location.href =
+
+"cart.html?store=" +
+
+encodeURIComponent(
+currentStoreId
+);
+
+};
+
+
+}catch(error){
+
+console.error(
+"STORE LOAD ERROR:",
+error
+);
+
+storeInfo.innerHTML = `
+
+متجر:
+
+<strong>
+G-Glam
+</strong>
+
+`;
+
+}
+
+}
+
+
 /* =====================================================
    LOAD DELIVERY FROM FIREBASE
 ===================================================== */
@@ -1443,13 +2263,16 @@ docSnap.data();
 
 deliveryItems.push({
 
-id:docSnap.id,
+id:
+docSnap.id,
 
-office:Number(
+office:
+Number(
 data.office || 0
 ),
 
-home:Number(
+home:
+Number(
 data.home || 0
 )
 
@@ -1459,12 +2282,13 @@ data.home || 0
 
 
 /* =====================================================
-   SORT ALPHABETICALLY
+   SORT
 ===================================================== */
 
 deliveryItems.sort(
 
-(a,b)=>
+(a,b) =>
+
 a.id.localeCompare(
 b.id,
 "ar"
@@ -1474,7 +2298,7 @@ b.id,
 
 
 /* =====================================================
-   DISPLAY WILAYAS
+   DISPLAY
 ===================================================== */
 
 wilayaSelect.innerHTML = `
@@ -1488,7 +2312,9 @@ wilayaSelect.innerHTML = `
 `;
 
 
-if(deliveryItems.length === 0){
+if(
+deliveryItems.length === 0
+){
 
 wilayaSelect.innerHTML = `
 
@@ -1553,6 +2379,7 @@ wilayaSelect.innerHTML = `
 
 
 deliveryError.textContent =
+
 "❌ تعذر تحميل أسعار التوصيل. يرجى المحاولة مرة أخرى.";
 
 
@@ -1569,7 +2396,7 @@ deliveryLoading.style.display =
 
 
 /* =====================================================
-   GET DELIVERY ITEM
+   GET DELIVERY
 ===================================================== */
 
 function getDeliveryItem(){
@@ -1602,12 +2429,16 @@ const type =
 deliveryTypeSelect.value;
 
 
-if(!item || !type){
+if(
+!item ||
+!type
+){
 
 deliveryCost = 0;
 
 
 deliveryPriceElement.innerText =
+
 "سعر التوصيل: --";
 
 
@@ -1618,7 +2449,9 @@ return;
 }
 
 
-if(type === "إلى المكتب"){
+if(
+type === "إلى المكتب"
+){
 
 deliveryCost =
 item.office;
@@ -1652,7 +2485,12 @@ function updateFinalTotal(){
 finalTotalElement.innerText =
 
 "المجموع النهائي: " +
-(productsTotal + deliveryCost) +
+
+(
+productsTotal +
+deliveryCost
+) +
+
 " DA";
 
 }
@@ -1664,12 +2502,18 @@ finalTotalElement.innerText =
 
 function displayCart(){
 
+const storeCart =
+getCurrentStoreCart();
+
+
 cartContainer.innerHTML = "";
 
 productsTotal = 0;
 
 
-if(cart.length === 0){
+if(
+storeCart.length === 0
+){
 
 cartContainer.innerHTML = `
 
@@ -1690,7 +2534,7 @@ cartContainer.innerHTML = `
 <br>
 
 <button
-onclick="window.location.href='index.html'">
+onclick="window.location.href='index.html${currentStoreId ? "?store="+encodeURIComponent(currentStoreId) : ""}'">
 
 العودة إلى المتجر
 
@@ -1702,11 +2546,11 @@ onclick="window.location.href='index.html'">
 
 
 productsTotalElement.innerText =
+
 "مجموع المنتجات: 0 DA";
 
 
 updateFinalTotal();
-
 
 orderBtn.disabled = true;
 
@@ -1718,9 +2562,10 @@ return;
 orderBtn.disabled = false;
 
 
-cart.forEach(
+storeCart.forEach(
 
-(item,index)=>{
+(item) => {
+
 
 const qty =
 Number(
@@ -1738,7 +2583,8 @@ const total =
 price * qty;
 
 
-productsTotal += total;
+productsTotal +=
+total;
 
 
 const div =
@@ -1751,7 +2597,103 @@ div.className =
 "item";
 
 
+const image =
+
+item.image ||
+
+(
+Array.isArray(
+item.images
+)
+
+&&
+
+item.images.length
+
+?
+
+item.images[0]
+
+:
+
+""
+);
+
+
+const color =
+
+item.color ||
+
+"بدون لون";
+
+
+const size =
+
+item.size ||
+
+"بدون قياس";
+
+
+const realIndex =
+cart.indexOf(
+item
+);
+
+
 div.innerHTML = `
+
+<div class="item-layout">
+
+
+<div class="item-image">
+
+${
+image
+
+?
+
+`
+
+<img
+src="${escapeHtml(image)}"
+alt="${escapeHtml(
+item.name || "منتج"
+)}"
+onerror="
+this.style.display='none'
+">
+
+`
+
+:
+
+`
+
+<span
+style="
+width:100%;
+height:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:30px;
+">
+
+📷
+
+</span>
+
+`
+
+}
+
+</div>
+
+
+<div class="item-content">
+
+
+<div class="item-header">
 
 <h3>
 
@@ -1761,8 +2703,10 @@ item.name || "منتج"
 
 </h3>
 
+</div>
 
-<p>
+
+<div class="item-info">
 
 السعر:
 
@@ -1770,7 +2714,34 @@ item.name || "منتج"
 ${price} DA
 </strong>
 
-</p>
+</div>
+
+
+<div class="option-line">
+
+اللون:
+
+<strong>
+${escapeHtml(color)}
+</strong>
+
+</div>
+
+
+<div class="option-line">
+
+القياس:
+
+<strong>
+${escapeHtml(size)}
+</strong>
+
+</div>
+
+
+</div>
+
+</div>
 
 
 <div class="qty-box">
@@ -1779,14 +2750,15 @@ ${price} DA
 <button
 class="qty-btn"
 data-action="minus"
-data-index="${index}">
+data-index="${realIndex}">
 
 −
 
 </button>
 
 
-<span class="qty-number">
+<span
+class="qty-number">
 
 ${qty}
 
@@ -1796,7 +2768,7 @@ ${qty}
 <button
 class="qty-btn"
 data-action="plus"
-data-index="${index}">
+data-index="${realIndex}">
 
 +
 
@@ -1806,21 +2778,21 @@ data-index="${index}">
 </div>
 
 
-<p>
+<div class="item-total">
 
-المجموع:
+مجموع المنتج:
 
 <strong>
 ${total} DA
 </strong>
 
-</p>
+</div>
 
 
 <button
 class="delete-btn"
 data-action="delete"
-data-index="${index}">
+data-index="${realIndex}">
 
 🗑️ حذف المنتج
 
@@ -1881,29 +2853,75 @@ button.dataset.action;
 if(
 isNaN(index) ||
 !cart[index]
-)
+){
+
 return;
-
-
-if(action === "plus"){
-
-cart[index].quantity =
-Number(
-cart[index].quantity || 1
-) + 1;
 
 }
 
 
-if(action === "minus"){
+if(
+action === "plus"
+){
+
+const currentQty =
+Number(
+cart[index].quantity || 1
+);
+
+
+const stock =
+
+cart[index].stock;
+
+
+if(
+
+stock !== null &&
+
+stock !== undefined &&
+
+stock !== "" &&
+
+!Number.isNaN(
+Number(stock)
+)
+
+&&
+
+currentQty >= Number(stock)
+
+){
+
+alert(
+"❌ لا توجد كمية إضافية متوفرة."
+);
+
+return;
+
+}
+
 
 cart[index].quantity =
+currentQty + 1;
+
+}
+
+
+if(
+action === "minus"
+){
+
+cart[index].quantity =
+
 Number(
 cart[index].quantity || 1
 ) - 1;
 
 
-if(cart[index].quantity < 1){
+if(
+cart[index].quantity < 1
+){
 
 cart[index].quantity = 1;
 
@@ -1912,7 +2930,9 @@ cart[index].quantity = 1;
 }
 
 
-if(action === "delete"){
+if(
+action === "delete"
+){
 
 cart.splice(
 index,
@@ -1922,11 +2942,17 @@ index,
 }
 
 
+/* =====================================================
+   SAVE
+===================================================== */
+
 localStorage.setItem(
 
 "cart",
 
-JSON.stringify(cart)
+JSON.stringify(
+cart
+)
 
 );
 
@@ -1944,94 +2970,28 @@ updateCartCount();
 
 function updateCartCount(){
 
-const savedCart =
-
-JSON.parse(
-localStorage.getItem("cart")
-) || [];
+const storeCart =
+getCurrentStoreCart();
 
 
 let total = 0;
 
 
-savedCart.forEach(
+storeCart.forEach(
 
 item => {
 
-total += Number(
+total +=
+
+Number(
 item.quantity || 1
 );
 
 });
 
 
-document.getElementById(
-"cartCount"
-).textContent =
+cartCount.textContent =
 total;
-
-}
-
-
-/* =====================================================
-   GET STORE OWNER UID
-===================================================== */
-
-function getStoreOwnerUid(){
-
-/*
-   نبحث أولاً داخل المنتجات الموجودة في السلة.
-   المنتجات في مشروع G-Glam يجب أن تحتوي ownerUid.
-*/
-
-for(const item of cart){
-
-if(
-item.ownerUid
-){
-
-return item.ownerUid;
-
-}
-
-}
-
-
-/*
-   fallback من localStorage
-*/
-
-const ownerUid =
-localStorage.getItem(
-"ownerUid"
-);
-
-
-if(ownerUid){
-
-return ownerUid;
-
-}
-
-
-/*
-   بعض صفحات المشروع تستخدم storeId
-*/
-
-const storeId =
-localStorage.getItem(
-"storeId"
-);
-
-
-if(storeId){
-
-return storeId;
-
-}
-
-
-return null;
 
 }
 
@@ -2043,16 +3003,26 @@ return null;
 window.sendOrder =
 async function(){
 
-if(cart.length === 0){
+const storeCart =
+getCurrentStoreCart();
+
+
+if(
+storeCart.length === 0
+){
 
 alert(
-"السلة فارغة"
+"السلة فارغة."
 );
 
 return;
 
 }
 
+
+/* =====================================================
+   CUSTOMER
+===================================================== */
 
 const name =
 document.getElementById(
@@ -2086,6 +3056,10 @@ const delivery =
 deliveryTypeSelect.value;
 
 
+/* =====================================================
+   OWNER UID
+===================================================== */
+
 const ownerUid =
 getStoreOwnerUid();
 
@@ -2110,12 +3084,15 @@ return;
 }
 
 
-if(!ownerUid){
+if(
+!ownerUid
+){
 
 alert(
 
-"تعذر تحديد المتجر الذي ينتمي إليه الطلب. " +
-"يرجى العودة إلى المتجر وإعادة المحاولة."
+"تعذر تحديد المتجر الذي ينتمي إليه الطلب.\n\n" +
+
+"يرجى العودة إلى صفحة المتجر وإعادة المحاولة."
 
 );
 
@@ -2132,7 +3109,9 @@ const deliveryItem =
 getDeliveryItem();
 
 
-if(!deliveryItem){
+if(
+!deliveryItem
+){
 
 alert(
 "تعذر العثور على سعر التوصيل لهذه الولاية."
@@ -2160,52 +3139,148 @@ try{
 
 
 /* =====================================================
+   CLEAN PRODUCTS
+===================================================== */
+
+const orderProducts =
+
+storeCart.map(
+
+item => ({
+
+id:
+item.id || "",
+
+name:
+item.name || "منتج",
+
+price:
+Number(
+item.price || 0
+),
+
+quantity:
+Number(
+item.quantity || 1
+),
+
+total:
+Number(
+item.price || 0
+) *
+Number(
+item.quantity || 1
+),
+
+image:
+item.image || "",
+
+color:
+item.color || "بدون لون",
+
+size:
+item.size || "بدون قياس",
+
+storeId:
+item.storeId ||
+item.storeUid ||
+ownerUid,
+
+ownerUid:
+item.ownerUid ||
+item.storeUid ||
+item.storeId ||
+ownerUid
+
+})
+
+);
+
+
+/* =====================================================
    ORDER DATA
 ===================================================== */
 
 const orderData = {
 
-ownerUid:ownerUid,
+ownerUid:
 
-name:name,
+ownerUid,
 
-phone:phone,
+storeId:
 
-wilaya:wilaya,
+currentStoreId ||
+ownerUid,
 
-commune:commune,
+storeName:
 
-address:address,
+currentStoreName,
 
-delivery:delivery,
+name:
 
-deliveryPrice:deliveryCost,
+name,
 
-products:cart,
+phone:
 
-productsTotal:productsTotal,
+phone,
+
+wilaya:
+
+wilaya,
+
+commune:
+
+commune,
+
+address:
+
+address,
+
+delivery:
+
+delivery,
+
+deliveryPrice:
+
+deliveryCost,
+
+products:
+
+orderProducts,
+
+productsTotal:
+
+productsTotal,
 
 total:
-productsTotal + deliveryCost,
 
-status:"تم التأكيد",
+productsTotal +
+deliveryCost,
 
-note:"",
+status:
+
+"تم التأكيد",
+
+note:
+
+"",
 
 date:
+
 new Date()
 .toLocaleString(
 "ar-DZ"
 ),
 
 createdAt:
+
 serverTimestamp()
 
 };
 
 
 /* =====================================================
-   SAVE ORDER
+   SAVE
 ===================================================== */
 
 await addDoc(
@@ -2229,13 +3304,68 @@ alert(
 );
 
 
+/*
+   حذف المنتجات الخاصة بهذا المتجر
+   فقط، دون المساس بمنتجات متجر آخر.
+*/
+
+cart = cart.filter(
+
+item => {
+
+const itemStore =
+getItemStoreId(item);
+
+
+return (
+
+currentStoreId &&
+
+itemStore &&
+
+itemStore !== currentStoreId
+
+);
+
+});
+
+
+if(
+cart.length === 0
+){
+
 localStorage.removeItem(
 "cart"
 );
 
+}else{
+
+localStorage.setItem(
+
+"cart",
+
+JSON.stringify(
+cart
+)
+
+);
+
+
+}
+
+
+localStorage.removeItem(
+"cartStoreId"
+);
+
 
 window.location.href =
-"index.html";
+
+"index.html?store=" +
+
+encodeURIComponent(
+currentStoreId || ownerUid
+);
 
 
 }catch(error){
@@ -2249,7 +3379,9 @@ error
 alert(
 
 "❌ فشل إرسال الطلب.\n\n" +
+
 "السبب: " +
+
 error.message
 
 );
@@ -2309,7 +3441,7 @@ document
 
 "click",
 
-()=>{
+function(){
 
 sidebar.classList.add(
 "active"
@@ -2326,7 +3458,7 @@ overlay.addEventListener(
 
 "click",
 
-()=>{
+function(){
 
 sidebar.classList.remove(
 "active"
@@ -2340,46 +3472,10 @@ overlay.classList.remove(
 
 
 /* =====================================================
-   ESCAPE HTML
-===================================================== */
-
-function escapeHtml(value){
-
-return String(
-value ?? ""
-)
-
-.replace(
-/&/g,
-"&amp;"
-)
-
-.replace(
-/</g,
-"&lt;"
-)
-
-.replace(
-/>/g,
-"&gt;"
-)
-
-.replace(
-/"/g,
-"&quot;"
-)
-
-.replace(
-/'/g,
-"&#039;"
-);
-
-}
-
-
-/* =====================================================
    START
 ===================================================== */
+
+await loadStore();
 
 displayCart();
 
@@ -2393,6 +3489,52 @@ console.log(
 );
 
 </script>
+
+
+<!-- =====================================================
+     SERVICE WORKER
+===================================================== -->
+
+<script>
+
+if(
+"serviceWorker" in navigator
+){
+
+window.addEventListener(
+"load",
+function(){
+
+navigator.serviceWorker
+.register(
+"service-worker.js"
+)
+
+.then(
+function(){
+
+console.log(
+"G-Glam PWA جاهز"
+);
+
+})
+
+.catch(
+function(error){
+
+console.log(
+"خطأ في PWA:",
+error
+);
+
+});
+
+});
+
+}
+
+</script>
+
 
 </body>
 
