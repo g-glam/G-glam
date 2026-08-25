@@ -43,9 +43,46 @@ rel="stylesheet">
 --danger:#DC3545;
 --danger-bg:#FDEBEC;
 
+--input:#FFFFFF;
+--soft:#FAFAFA;
+--hover:#E3E3E3;
+
 --shadow:0 4px 18px rgba(0,0,0,.055);
 
 }
+
+
+/* =====================================================
+DARK MODE VARIABLES
+===================================================== */
+
+body.dark-mode{
+
+--bg:#151515;
+--sidebar:#202020;
+--card:#242424;
+
+--text:#E8E8E8;
+--dark:#FFFFFF;
+--muted:#A9A9A9;
+
+--border:#383838;
+
+--success-bg:#183526;
+--danger-bg:#3A2024;
+
+--input:#292929;
+--soft:#202020;
+--hover:#303030;
+
+--shadow:0 5px 20px rgba(0,0,0,.25);
+
+}
+
+
+/* =====================================================
+GENERAL
+===================================================== */
 
 *{
 
@@ -63,6 +100,10 @@ background:var(--bg);
 color:var(--text);
 
 min-height:100vh;
+
+transition:
+background .25s ease,
+color .25s ease;
 
 }
 
@@ -82,9 +123,9 @@ height:100vh;
 
 width:75px;
 
-background:#EEEEEE;
+background:var(--sidebar);
 
-border-left:1px solid #E3E3E3;
+border-left:1px solid var(--border);
 
 overflow:hidden;
 
@@ -117,7 +158,7 @@ align-items:center;
 
 justify-content:center;
 
-border-bottom:1px solid #DDDDDD;
+border-bottom:1px solid var(--border);
 
 white-space:nowrap;
 
@@ -176,7 +217,7 @@ margin-bottom:7px;
 
 border-radius:12px;
 
-color:#555;
+color:var(--muted);
 
 text-decoration:none;
 
@@ -188,7 +229,7 @@ transition:.2s;
 
 .menu a:hover{
 
-background:#E3E3E3;
+background:var(--hover);
 
 color:var(--dark);
 
@@ -250,7 +291,7 @@ left:0;
 
 height:78px;
 
-background:white;
+background:var(--card);
 
 border-bottom:1px solid var(--border);
 
@@ -268,6 +309,74 @@ box-shadow:
 0 2px 12px rgba(0,0,0,.04);
 
 transition:.3s;
+
+}
+
+
+/* =====================================================
+TOPBAR RIGHT SIDE
+===================================================== */
+
+.topbar-right{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+}
+
+
+/* =====================================================
+DARK MODE BUTTON
+===================================================== */
+
+.theme-toggle{
+
+width:46px;
+
+height:46px;
+
+border:1px solid var(--border);
+
+border-radius:12px;
+
+background:var(--soft);
+
+color:var(--text);
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:21px;
+
+cursor:pointer;
+
+transition:.25s;
+
+flex-shrink:0;
+
+}
+
+.theme-toggle:hover{
+
+background:var(--orange);
+
+border-color:var(--orange);
+
+color:white;
+
+transform:translateY(-1px);
+
+}
+
+.theme-toggle:active{
+
+transform:scale(.94);
 
 }
 
@@ -330,7 +439,7 @@ min-width:0;
 
 font-size:11px;
 
-color:#999;
+color:var(--muted);
 
 margin-bottom:2px;
 
@@ -342,7 +451,7 @@ font-size:16px;
 
 font-weight:800;
 
-color:#222;
+color:var(--dark);
 
 white-space:nowrap;
 
@@ -388,6 +497,16 @@ white-space:nowrap;
 border:1px solid #FFE0CA;
 
 cursor:pointer;
+
+}
+
+body.dark-mode .view-store-btn{
+
+background:#38271D;
+
+border-color:#5A3824;
+
+color:#FF9A52;
 
 }
 
@@ -445,6 +564,14 @@ border:1px solid #c9ead7;
 
 }
 
+body.dark-mode .success-message{
+
+color:#8BE0B0;
+
+border-color:#28583D;
+
+}
+
 .error-message{
 
 background:var(--danger-bg);
@@ -452,6 +579,14 @@ background:var(--danger-bg);
 color:#842029;
 
 border:1px solid #f1c4ca;
+
+}
+
+body.dark-mode .error-message{
+
+color:#FF9CA7;
+
+border-color:#64333A;
 
 }
 
@@ -488,7 +623,9 @@ height:48px;
 
 border:1px solid var(--border);
 
-background:white;
+background:var(--input);
+
+color:var(--text);
 
 border-radius:13px;
 
@@ -497,6 +634,14 @@ padding:0 17px;
 font-size:14px;
 
 outline:none;
+
+transition:.2s;
+
+}
+
+.search-box input::placeholder{
+
+color:var(--muted);
 
 }
 
@@ -563,7 +708,7 @@ PRODUCT CARD
 
 .product-card{
 
-background:white;
+background:var(--card);
 
 border:1px solid var(--border);
 
@@ -582,7 +727,7 @@ transition:.25s;
 transform:translateY(-3px);
 
 box-shadow:
-0 9px 25px rgba(0,0,0,.08);
+0 9px 25px rgba(0,0,0,.12);
 
 }
 
@@ -602,6 +747,12 @@ aspect-ratio:1/1;
 background:#F1F1F1;
 
 overflow:hidden;
+
+}
+
+body.dark-mode .product-image-box{
+
+background:#303030;
 
 }
 
@@ -767,9 +918,23 @@ color:var(--orange);
 
 }
 
+body.dark-mode .edit-btn{
+
+background:#3A291F;
+
+color:#FF9A52;
+
+}
+
 .edit-btn:hover{
 
 background:#FFE2CF;
+
+}
+
+body.dark-mode .edit-btn:hover{
+
+background:#4A3224;
 
 }
 
@@ -781,9 +946,23 @@ color:var(--danger);
 
 }
 
+body.dark-mode .delete-btn{
+
+background:#3A2226;
+
+color:#FF8E99;
+
+}
+
 .delete-btn:hover{
 
 background:#F8D7DA;
+
+}
+
+body.dark-mode .delete-btn:hover{
+
+background:#4A292E;
 
 }
 
@@ -798,7 +977,7 @@ LOADING / EMPTY
 
 grid-column:1/-1;
 
-background:white;
+background:var(--card);
 
 border:1px solid var(--border);
 
@@ -822,11 +1001,19 @@ border:1px dashed #D5D5D5;
 
 .error-box{
 
-background:#FDEBEC;
+background:var(--danger-bg);
 
 border-color:#F1C4CA;
 
 color:#842029;
+
+}
+
+body.dark-mode .error-box{
+
+border-color:#64333A;
+
+color:#FF9CA7;
 
 }
 
@@ -841,7 +1028,7 @@ position:fixed;
 
 inset:0;
 
-background:rgba(0,0,0,.48);
+background:rgba(0,0,0,.60);
 
 display:none;
 
@@ -871,14 +1058,16 @@ max-height:94vh;
 
 overflow-y:auto;
 
-background:white;
+background:var(--card);
+
+color:var(--text);
 
 border-radius:22px;
 
 padding:24px;
 
 box-shadow:
-0 15px 50px rgba(0,0,0,.20);
+0 15px 50px rgba(0,0,0,.30);
 
 }
 
@@ -912,11 +1101,19 @@ border:none;
 
 border-radius:50%;
 
-background:#F2F2F2;
+background:var(--soft);
+
+color:var(--text);
 
 font-size:20px;
 
 cursor:pointer;
+
+}
+
+.close-btn:hover{
+
+background:var(--hover);
 
 }
 
@@ -961,7 +1158,16 @@ font-size:14px;
 
 outline:none;
 
-background:white;
+background:var(--input);
+
+color:var(--text);
+
+}
+
+.form-group input::placeholder,
+.simple-input::placeholder{
+
+color:var(--muted);
 
 }
 
@@ -989,7 +1195,7 @@ border-radius:13px;
 
 overflow:hidden;
 
-background:white;
+background:var(--input);
 
 }
 
@@ -1005,7 +1211,7 @@ gap:5px;
 
 padding:8px;
 
-background:#F8F8F8;
+background:var(--soft);
 
 border-bottom:1px solid var(--border);
 
@@ -1017,11 +1223,13 @@ border-bottom:1px solid var(--border);
 
 height:34px;
 
-border:1px solid #DDD;
+border:1px solid var(--border);
 
 border-radius:7px;
 
-background:white;
+background:var(--input);
+
+color:var(--text);
 
 cursor:pointer;
 
@@ -1044,6 +1252,14 @@ font-weight:bold;
 background:#FFF1E6;
 
 border-color:#FFD1AD;
+
+}
+
+body.dark-mode .editor-toolbar button:hover{
+
+background:#3A291F;
+
+border-color:#66422C;
 
 }
 
@@ -1073,7 +1289,9 @@ font-size:15px;
 
 line-height:1.9;
 
-background:white;
+background:var(--input);
+
+color:var(--text);
 
 }
 
@@ -1094,7 +1312,7 @@ TAGS
 
 .tag-section{
 
-background:#FAFAFA;
+background:var(--soft);
 
 border:1px solid var(--border);
 
@@ -1156,9 +1374,11 @@ align-items:center;
 
 gap:7px;
 
-background:white;
+background:var(--input);
 
-border:1px solid #DDD;
+border:1px solid var(--border);
+
+color:var(--text);
 
 padding:7px 10px;
 
@@ -1225,7 +1445,7 @@ justify-content:space-between;
 
 gap:15px;
 
-background:#FAFAFA;
+background:var(--soft);
 
 border:1px solid var(--border);
 
@@ -1262,6 +1482,12 @@ justify-content:center;
 background:#FFF1E6;
 
 font-size:19px;
+
+}
+
+body.dark-mode .stock-visibility-icon{
+
+background:#3A291F;
 
 }
 
@@ -1382,7 +1608,7 @@ flex-wrap:wrap;
 
 padding:12px;
 
-background:#FAFAFA;
+background:var(--soft);
 
 border:1px solid var(--border);
 
@@ -1536,9 +1762,38 @@ cursor:not-allowed;
 
 .cancel-btn{
 
-background:#EEEEEE;
+background:var(--hover);
 
-color:#333;
+color:var(--text);
+
+}
+
+
+/* =====================================================
+DARK MODE DATE / FILE INPUT
+===================================================== */
+
+body.dark-mode input[type="file"]{
+
+color:var(--text);
+
+}
+
+body.dark-mode input[type="file"]::file-selector-button{
+
+background:#333;
+
+color:#FFF;
+
+border:1px solid #555;
+
+padding:8px 12px;
+
+border-radius:8px;
+
+cursor:pointer;
+
+margin-left:10px;
 
 }
 
@@ -1653,6 +1908,22 @@ max-width:120px;
 
 }
 
+.topbar-right{
+
+gap:6px;
+
+}
+
+.theme-toggle{
+
+width:40px;
+
+height:40px;
+
+font-size:18px;
+
+}
+
 .view-store-btn{
 
 padding:8px 10px;
@@ -1763,6 +2034,11 @@ font-size:18px;
 
 }
 
+
+/* =====================================================
+SCROLLBAR
+===================================================== */
+
 ::-webkit-scrollbar{
 
 width:7px;
@@ -1771,7 +2047,7 @@ width:7px;
 
 ::-webkit-scrollbar-track{
 
-background:#F1F1F1;
+background:var(--soft);
 
 }
 
@@ -1784,6 +2060,18 @@ border-radius:10px;
 }
 
 ::-webkit-scrollbar-thumb:hover{
+
+background:var(--orange);
+
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb{
+
+background:#555;
+
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb:hover{
 
 background:var(--orange);
 
@@ -1908,6 +2196,22 @@ id="topStoreName">
 </div>
 
 
+<div class="topbar-right">
+
+<!-- زر الوضع الليلي -->
+
+<button
+type="button"
+id="themeToggle"
+class="theme-toggle"
+title="تفعيل الوضع الليلي"
+aria-label="تغيير الوضع">
+
+🌙
+
+</button>
+
+
 <a
 href="#"
 id="viewStoreBtn"
@@ -1916,6 +2220,8 @@ class="view-store-btn">
 👁️ عرض المتجر
 
 </a>
+
+</div>
 
 </div>
 
@@ -2617,6 +2923,120 @@ const newSize =
 document.getElementById(
 "newSize"
 );
+
+const themeToggle =
+document.getElementById(
+"themeToggle"
+);
+
+
+/* =====================================================
+DARK MODE
+===================================================== */
+
+function applyTheme(){
+
+const savedTheme =
+localStorage.getItem(
+"gGlamTheme"
+);
+
+
+if(savedTheme === "dark"){
+
+document.body.classList.add(
+"dark-mode"
+);
+
+themeToggle.textContent =
+"☀️";
+
+themeToggle.title =
+"تفعيل الوضع النهاري";
+
+themeToggle.setAttribute(
+"aria-label",
+"تفعيل الوضع النهاري"
+);
+
+}
+else{
+
+document.body.classList.remove(
+"dark-mode"
+);
+
+themeToggle.textContent =
+"🌙";
+
+themeToggle.title =
+"تفعيل الوضع الليلي";
+
+themeToggle.setAttribute(
+"aria-label",
+"تفعيل الوضع الليلي"
+);
+
+}
+
+}
+
+
+/* تطبيق الوضع المحفوظ قبل تحميل باقي الصفحة */
+
+applyTheme();
+
+
+themeToggle.addEventListener(
+"click",
+()=>{
+
+const dark =
+document.body.classList.toggle(
+"dark-mode"
+);
+
+
+if(dark){
+
+localStorage.setItem(
+"gGlamTheme",
+"dark"
+);
+
+themeToggle.textContent =
+"☀️";
+
+themeToggle.title =
+"تفعيل الوضع النهاري";
+
+themeToggle.setAttribute(
+"aria-label",
+"تفعيل الوضع النهاري"
+);
+
+}
+else{
+
+localStorage.setItem(
+"gGlamTheme",
+"light"
+);
+
+themeToggle.textContent =
+"🌙";
+
+themeToggle.title =
+"تفعيل الوضع الليلي";
+
+themeToggle.setAttribute(
+"aria-label",
+"تفعيل الوضع الليلي"
+);
+
+}
+
+});
 
 
 /* =====================================================
