@@ -53,29 +53,29 @@ rel="stylesheet">
 
 
 /* =====================================================
-DARK MODE VARIABLES
+BLUE DARK MODE
 ===================================================== */
 
 body.dark-mode{
 
---bg:#151515;
---sidebar:#202020;
---card:#242424;
+--bg:#07111F;
+--sidebar:#0B1B2E;
+--card:#10243A;
 
---text:#E8E8E8;
+--text:#EAF4FF;
 --dark:#FFFFFF;
---muted:#A9A9A9;
+--muted:#9DB3C9;
 
---border:#383838;
+--border:#1D3A55;
 
---success-bg:#183526;
---danger-bg:#3A2024;
+--success-bg:#123A32;
+--danger-bg:#3B2028;
 
---input:#292929;
---soft:#202020;
---hover:#303030;
+--input:#0D2034;
+--soft:#0B1B2E;
+--hover:#16344E;
 
---shadow:0 5px 20px rgba(0,0,0,.25);
+--shadow:0 5px 20px rgba(0,0,0,.35);
 
 }
 
@@ -502,11 +502,11 @@ cursor:pointer;
 
 body.dark-mode .view-store-btn{
 
-background:#38271D;
+background:#102E4A;
 
-border-color:#5A3824;
+border-color:#1D4B70;
 
-color:#FF9A52;
+color:#65B8FF;
 
 }
 
@@ -752,7 +752,7 @@ overflow:hidden;
 
 body.dark-mode .product-image-box{
 
-background:#303030;
+background:#102A43;
 
 }
 
@@ -920,9 +920,9 @@ color:var(--orange);
 
 body.dark-mode .edit-btn{
 
-background:#3A291F;
+background:#102E4A;
 
-color:#FF9A52;
+color:#65B8FF;
 
 }
 
@@ -934,7 +934,7 @@ background:#FFE2CF;
 
 body.dark-mode .edit-btn:hover{
 
-background:#4A3224;
+background:#17466A;
 
 }
 
@@ -948,7 +948,7 @@ color:var(--danger);
 
 body.dark-mode .delete-btn{
 
-background:#3A2226;
+background:#3A2028;
 
 color:#FF8E99;
 
@@ -1257,9 +1257,9 @@ border-color:#FFD1AD;
 
 body.dark-mode .editor-toolbar button:hover{
 
-background:#3A291F;
+background:#102E4A;
 
-border-color:#66422C;
+border-color:#1D4B70;
 
 }
 
@@ -1487,7 +1487,7 @@ font-size:19px;
 
 body.dark-mode .stock-visibility-icon{
 
-background:#3A291F;
+background:#102E4A;
 
 }
 
@@ -1770,7 +1770,7 @@ color:var(--text);
 
 
 /* =====================================================
-DARK MODE DATE / FILE INPUT
+DARK MODE FILE INPUT
 ===================================================== */
 
 body.dark-mode input[type="file"]{
@@ -1781,11 +1781,11 @@ color:var(--text);
 
 body.dark-mode input[type="file"]::file-selector-button{
 
-background:#333;
+background:#16344E;
 
-color:#FFF;
+color:#EAF4FF;
 
-border:1px solid #555;
+border:1px solid #2A5273;
 
 padding:8px 12px;
 
@@ -2067,13 +2067,13 @@ background:var(--orange);
 
 body.dark-mode ::-webkit-scrollbar-thumb{
 
-background:#555;
+background:#31516D;
 
 }
 
 body.dark-mode ::-webkit-scrollbar-thumb:hover{
 
-background:var(--orange);
+background:#65B8FF;
 
 }
 
@@ -2198,8 +2198,6 @@ id="topStoreName">
 
 <div class="topbar-right">
 
-<!-- زر الوضع الليلي -->
-
 <button
 type="button"
 id="themeToggle"
@@ -2232,22 +2230,16 @@ CONTENT
 
 <div class="content">
 
-
 <div
 id="successMessage"
 class="message success-message">
 </div>
-
 
 <div
 id="errorMessage"
 class="message error-message">
 </div>
 
-
-<!-- =====================================================
-TOOLBAR
-===================================================== -->
 
 <div class="toolbar">
 
@@ -2273,10 +2265,6 @@ type="button">
 
 </div>
 
-
-<!-- =====================================================
-PRODUCTS
-===================================================== -->
 
 <div
 class="products-grid"
@@ -2715,10 +2703,6 @@ type="button">
 </div>
 
 
-<!-- =====================================================
-FIREBASE
-===================================================== -->
-
 <script type="module">
 
 import {
@@ -2726,7 +2710,6 @@ initializeApp
 }
 from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-
 
 import {
 getFirestore,
@@ -2743,7 +2726,6 @@ serverTimestamp
 from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
-
 import {
 getAuth,
 onAuthStateChanged,
@@ -2752,10 +2734,6 @@ signOut
 from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
-
-/* =====================================================
-CONFIG
-===================================================== */
 
 const firebaseConfig = {
 
@@ -2786,170 +2764,99 @@ measurementId:
 const app =
 initializeApp(firebaseConfig);
 
-
 const db =
 getFirestore(app);
-
 
 const auth =
 getAuth(app);
 
 
-/* =====================================================
-VARIABLES
-===================================================== */
-
 let currentUser = null;
-
 let currentOwnerUid = "";
-
 let currentOwnerEmail = "";
-
 let currentStore = null;
-
 let allProducts = [];
-
 let editingProductId = null;
-
 let existingImages = [];
-
 let selectedImages = [];
-
 let editingColors = [];
-
 let editingSizes = [];
 
 
-/* =====================================================
-ELEMENTS
-===================================================== */
-
 const productsContainer =
-document.getElementById(
-"productsContainer"
-);
+document.getElementById("productsContainer");
 
 const loading =
-document.getElementById(
-"loading"
-);
+document.getElementById("loading");
 
 const topStoreName =
-document.getElementById(
-"topStoreName"
-);
+document.getElementById("topStoreName");
 
 const topStoreImage =
-document.getElementById(
-"topStoreImage"
-);
+document.getElementById("topStoreImage");
 
 const viewStoreBtn =
-document.getElementById(
-"viewStoreBtn"
-);
+document.getElementById("viewStoreBtn");
 
 const searchInput =
-document.getElementById(
-"searchInput"
-);
+document.getElementById("searchInput");
 
 const editModal =
-document.getElementById(
-"editModal"
-);
+document.getElementById("editModal");
 
 const editName =
-document.getElementById(
-"editName"
-);
+document.getElementById("editName");
 
 const editPrice =
-document.getElementById(
-"editPrice"
-);
+document.getElementById("editPrice");
 
 const editStock =
-document.getElementById(
-"editStock"
-);
+document.getElementById("editStock");
 
 const editImageFile =
-document.getElementById(
-"editImageFile"
-);
+document.getElementById("editImageFile");
 
 const editPreview =
-document.getElementById(
-"editPreview"
-);
+document.getElementById("editPreview");
 
 const saveEdit =
-document.getElementById(
-"saveEdit"
-);
+document.getElementById("saveEdit");
 
 const showStock =
-document.getElementById(
-"showStock"
-);
+document.getElementById("showStock");
 
 const descriptionEditor =
-document.getElementById(
-"descriptionEditor"
-);
+document.getElementById("descriptionEditor");
 
 const colorsList =
-document.getElementById(
-"colorsList"
-);
+document.getElementById("colorsList");
 
 const sizesList =
-document.getElementById(
-"sizesList"
-);
+document.getElementById("sizesList");
 
 const newColorName =
-document.getElementById(
-"newColorName"
-);
+document.getElementById("newColorName");
 
 const newColorValue =
-document.getElementById(
-"newColorValue"
-);
+document.getElementById("newColorValue");
 
 const newSize =
-document.getElementById(
-"newSize"
-);
+document.getElementById("newSize");
 
 const themeToggle =
-document.getElementById(
-"themeToggle"
-);
+document.getElementById("themeToggle");
 
-
-/* =====================================================
-DARK MODE
-===================================================== */
 
 function applyTheme(){
 
 const savedTheme =
-localStorage.getItem(
-"gGlamTheme"
-);
-
+localStorage.getItem("gGlamTheme");
 
 if(savedTheme === "dark"){
 
-document.body.classList.add(
-"dark-mode"
-);
+document.body.classList.add("dark-mode");
 
-themeToggle.textContent =
-"☀️";
+themeToggle.textContent = "☀️";
 
 themeToggle.title =
 "تفعيل الوضع النهاري";
@@ -2962,12 +2869,9 @@ themeToggle.setAttribute(
 }
 else{
 
-document.body.classList.remove(
-"dark-mode"
-);
+document.body.classList.remove("dark-mode");
 
-themeToggle.textContent =
-"🌙";
+themeToggle.textContent = "🌙";
 
 themeToggle.title =
 "تفعيل الوضع الليلي";
@@ -2982,8 +2886,6 @@ themeToggle.setAttribute(
 }
 
 
-/* تطبيق الوضع المحفوظ قبل تحميل باقي الصفحة */
-
 applyTheme();
 
 
@@ -2992,10 +2894,7 @@ themeToggle.addEventListener(
 ()=>{
 
 const dark =
-document.body.classList.toggle(
-"dark-mode"
-);
-
+document.body.classList.toggle("dark-mode");
 
 if(dark){
 
@@ -3004,8 +2903,7 @@ localStorage.setItem(
 "dark"
 );
 
-themeToggle.textContent =
-"☀️";
+themeToggle.textContent = "☀️";
 
 themeToggle.title =
 "تفعيل الوضع النهاري";
@@ -3023,8 +2921,7 @@ localStorage.setItem(
 "light"
 );
 
-themeToggle.textContent =
-"🌙";
+themeToggle.textContent = "🌙";
 
 themeToggle.title =
 "تفعيل الوضع الليلي";
@@ -3039,30 +2936,18 @@ themeToggle.setAttribute(
 });
 
 
-/* =====================================================
-ESCAPE HTML
-===================================================== */
-
 function escapeHtml(value){
 
 return String(value ?? "")
 
 .replace(/&/g,"&amp;")
-
 .replace(/</g,"&lt;")
-
 .replace(/>/g,"&gt;")
-
 .replace(/"/g,"&quot;")
-
 .replace(/'/g,"&#039;");
 
 }
 
-
-/* =====================================================
-STORE TOP BAR
-===================================================== */
 
 function loadStoreHeader(){
 
@@ -3072,17 +2957,14 @@ return;
 
 }
 
-
 const storeName =
 currentStore.storeName ||
 currentStore.name ||
 currentStore.title ||
 "G-Glam";
 
-
 topStoreName.textContent =
 storeName;
-
 
 const storeImage =
 currentStore.storeImage ||
@@ -3093,7 +2975,6 @@ currentStore.storeLogo ||
 currentStore.logoUrl ||
 currentStore.imageUrl ||
 "";
-
 
 if(storeImage){
 
@@ -3111,16 +2992,11 @@ topStoreImage.src =
 }
 
 
-/* =====================================================
-VIEW STORE
-===================================================== */
-
 viewStoreBtn.addEventListener(
 "click",
 event=>{
 
 event.preventDefault();
-
 
 if(!currentStore){
 
@@ -3128,13 +3004,11 @@ return;
 
 }
 
-
 const directUrl =
 currentStore.storeUrl ||
 currentStore.publicUrl ||
 currentStore.shopUrl ||
 currentStore.url;
-
 
 if(directUrl){
 
@@ -3147,11 +3021,9 @@ return;
 
 }
 
-
 const slug =
 currentStore.slug ||
 currentStore.storeSlug;
-
 
 if(slug){
 
@@ -3165,7 +3037,6 @@ return;
 
 }
 
-
 window.open(
 "index.html?store=" +
 encodeURIComponent(currentOwnerUid),
@@ -3174,10 +3045,6 @@ encodeURIComponent(currentOwnerUid),
 
 });
 
-
-/* =====================================================
-STOCK
-===================================================== */
 
 function updateStockVisibilityText(){
 
@@ -3190,7 +3057,6 @@ const description =
 document.getElementById(
 "stockVisibilityDescription"
 );
-
 
 if(showStock.checked){
 
@@ -3220,10 +3086,6 @@ updateStockVisibilityText
 );
 
 
-/* =====================================================
-AUTHENTICATION
-===================================================== */
-
 onAuthStateChanged(
 auth,
 async user=>{
@@ -3237,7 +3099,6 @@ return;
 
 }
 
-
 currentUser =
 user;
 
@@ -3247,15 +3108,10 @@ user.uid;
 currentOwnerEmail =
 user.email || "";
 
-
 await loadStore();
 
 });
 
-
-/* =====================================================
-LOAD STORE
-===================================================== */
 
 async function loadStore(){
 
@@ -3268,12 +3124,8 @@ db,
 currentOwnerUid
 );
 
-
 const storeSnapshot =
-await getDoc(
-storeRef
-);
-
+await getDoc(storeRef);
 
 if(!storeSnapshot.exists()){
 
@@ -3293,19 +3145,15 @@ return;
 
 }
 
-
 currentStore =
 storeSnapshot.data();
 
-
 loadStoreHeader();
-
 
 currentOwnerEmail =
 currentStore.ownerEmail ||
 currentStore.email ||
 currentOwnerEmail;
-
 
 const status =
 String(
@@ -3314,7 +3162,6 @@ currentStore.status ||
 )
 .toLowerCase()
 .trim();
-
 
 if(
 status === "pending" ||
@@ -3333,7 +3180,6 @@ return;
 
 }
 
-
 if(
 status === "rejected" ||
 status === "refused"
@@ -3349,7 +3195,6 @@ showError(
 return;
 
 }
-
 
 await loadProducts();
 
@@ -3374,10 +3219,6 @@ error.message
 }
 
 
-/* =====================================================
-LOAD PRODUCTS
-===================================================== */
-
 async function loadProducts(){
 
 loading.style.display =
@@ -3390,41 +3231,24 @@ productsContainer.appendChild(
 loading
 );
 
-
 try{
 
 const productsQuery =
 query(
-
-collection(
-db,
-"products"
-),
-
-where(
-"ownerUid",
-"==",
-currentOwnerUid
-)
-
+collection(db,"products"),
+where("ownerUid","==",currentOwnerUid)
 );
-
 
 const snapshot =
-await getDocs(
-productsQuery
-);
-
+await getDocs(productsQuery);
 
 allProducts = [];
-
 
 snapshot.forEach(
 productDoc=>{
 
 const data =
 productDoc.data();
-
 
 if(
 data.ownerUid ===
@@ -3444,10 +3268,8 @@ productDoc.id,
 
 });
 
-
 loading.style.display =
 "none";
-
 
 if(!allProducts.length){
 
@@ -3473,14 +3295,10 @@ type="button">
 </button>
 
 </div>
-
 `;
 
-
 document
-.getElementById(
-"emptyAddProductBtn"
-)
+.getElementById("emptyAddProductBtn")
 .addEventListener(
 "click",
 ()=>{
@@ -3495,10 +3313,7 @@ return;
 
 }
 
-
-renderProducts(
-allProducts
-);
+renderProducts(allProducts);
 
 }
 catch(error){
@@ -3533,14 +3348,10 @@ type="button">
 </button>
 
 </div>
-
 `;
 
-
 document
-.getElementById(
-"retryProducts"
-)
+.getElementById("retryProducts")
 .addEventListener(
 "click",
 loadProducts
@@ -3551,15 +3362,10 @@ loadProducts
 }
 
 
-/* =====================================================
-RENDER PRODUCTS
-===================================================== */
-
 function renderProducts(products){
 
 productsContainer.innerHTML =
 "";
-
 
 if(!products.length){
 
@@ -3577,21 +3383,16 @@ return;
 
 }
 
-
 products.forEach(
 product=>{
 
 const card =
-document.createElement(
-"div"
-);
+document.createElement("div");
 
 card.className =
 "product-card";
 
-
 let images = [];
-
 
 if(
 Array.isArray(product.images)
@@ -3601,19 +3402,15 @@ images =
 product.images.filter(Boolean);
 
 }
-else if(
-product.image
-){
+else if(product.image){
 
 images =
 [product.image];
 
 }
 
-
 const image =
 images[0] || "";
-
 
 const colors =
 Array.isArray(product.colors)
@@ -3622,7 +3419,6 @@ product.colors
 :
 [];
 
-
 const sizes =
 Array.isArray(product.sizes)
 ?
@@ -3630,10 +3426,8 @@ product.sizes
 :
 [];
 
-
 const stockVisible =
 product.showStock !== false;
-
 
 const colorNames =
 colors.map(
@@ -3652,60 +3446,42 @@ return String(color);
 }
 ).filter(Boolean);
 
-
 card.innerHTML = `
 
 <div class="product-image-box">
 
 ${
 image
-
 ?
-
 `
-
 <img
 class="product-image"
 src="${escapeHtml(image)}"
 alt="${escapeHtml(product.name || "منتج")}"
 onerror="this.style.display='none';"
 >
-
 `
-
 :
-
 `
-
 <div class="no-image">
 📦
 </div>
-
 `
 }
-
 
 ${
 images.length > 1
-
 ?
-
 `
-
 <span class="image-count">
 📷 ${images.length}
 </span>
-
 `
-
 :
-
 ""
-
 }
 
 </div>
-
 
 <div class="product-info">
 
@@ -3716,7 +3492,6 @@ product.name ||
 )}
 </h3>
 
-
 <div class="product-price">
 
 ${Number(product.price || 0)}
@@ -3724,37 +3499,27 @@ DA
 
 </div>
 
-
 <div class="product-stock">
 
 ${
 stockVisible
-
 ?
-
 `
-
 المخزون:
 
 <strong>
 ${Number(product.stock || 0)}
 </strong>
-
 `
-
 :
-
 `
-
 <span>
 المخزون مخفي
 </span>
-
 `
 }
 
 </div>
-
 
 <div class="product-colors">
 
@@ -3772,7 +3537,6 @@ colorNames.join("، ")
 
 </div>
 
-
 <div class="product-sizes">
 
 📏
@@ -3788,7 +3552,6 @@ sizes.join("، ")
 }
 
 </div>
-
 
 <div class="product-actions">
 
@@ -3811,14 +3574,10 @@ type="button">
 </div>
 
 </div>
-
 `;
 
-
 card
-.querySelector(
-".edit-btn"
-)
+.querySelector(".edit-btn")
 .addEventListener(
 "click",
 ()=>{
@@ -3830,11 +3589,8 @@ product.id
 }
 );
 
-
 card
-.querySelector(
-".delete-btn"
-)
+.querySelector(".delete-btn")
 .addEventListener(
 "click",
 ()=>{
@@ -3846,7 +3602,6 @@ product.id
 }
 );
 
-
 productsContainer.appendChild(
 card
 );
@@ -3856,10 +3611,6 @@ card
 }
 
 
-/* =====================================================
-SEARCH
-===================================================== */
-
 searchInput.addEventListener(
 "input",
 function(){
@@ -3868,7 +3619,6 @@ const keyword =
 this.value
 .trim()
 .toLowerCase();
-
 
 if(!keyword){
 
@@ -3880,7 +3630,6 @@ return;
 
 }
 
-
 const filtered =
 allProducts.filter(
 product=>{
@@ -3888,16 +3637,12 @@ product=>{
 const name =
 String(
 product.name || ""
-)
-.toLowerCase();
-
+).toLowerCase();
 
 const description =
 String(
 product.description || ""
-)
-.toLowerCase();
-
+).toLowerCase();
 
 return(
 name.includes(keyword) ||
@@ -3906,18 +3651,12 @@ description.includes(keyword)
 
 });
 
-
 renderProducts(
 filtered
 );
 
-}
-);
+});
 
-
-/* =====================================================
-OPEN EDIT
-===================================================== */
 
 function openEditModal(productId){
 
@@ -3925,7 +3664,6 @@ const product =
 allProducts.find(
 p=>p.id === productId
 );
-
 
 if(!product){
 
@@ -3936,7 +3674,6 @@ alert(
 return;
 
 }
-
 
 if(
 product.ownerUid !==
@@ -3951,10 +3688,8 @@ return;
 
 }
 
-
 editingProductId =
 productId;
-
 
 editName.value =
 product.name || "";
@@ -3965,13 +3700,10 @@ product.price ?? "";
 editStock.value =
 product.stock ?? "";
 
-
 descriptionEditor.innerHTML =
 product.description || "";
 
-
 editingColors = [];
-
 
 if(
 Array.isArray(product.colors)
@@ -4013,9 +3745,7 @@ value:
 });
 
 }
-else if(
-product.colors
-){
+else if(product.colors){
 
 String(product.colors)
 .split(",")
@@ -4024,7 +3754,6 @@ color=>{
 
 const name =
 color.trim();
-
 
 if(name){
 
@@ -4042,9 +3771,7 @@ value:"#F47B20"
 
 }
 
-
 editingSizes = [];
-
 
 if(
 Array.isArray(product.sizes)
@@ -4054,9 +3781,7 @@ editingSizes =
 [...product.sizes];
 
 }
-else if(
-product.sizes
-){
+else if(product.sizes){
 
 editingSizes =
 String(product.sizes)
@@ -4068,15 +3793,12 @@ s=>s.trim()
 
 }
 
-
 showStock.checked =
 product.showStock !== false;
 
 updateStockVisibilityText();
 
-
 existingImages = [];
-
 
 if(
 Array.isArray(product.images)
@@ -4086,27 +3808,22 @@ existingImages =
 [...product.images];
 
 }
-else if(
-product.image
-){
+else if(product.image){
 
 existingImages =
 [product.image];
 
 }
 
-
 selectedImages = [];
 
 editImageFile.value = "";
-
 
 renderColors();
 
 renderSizes();
 
 renderEditImages();
-
 
 editModal.classList.add(
 "active"
@@ -4115,27 +3832,19 @@ editModal.classList.add(
 }
 
 
-/* =====================================================
-COLORS
-===================================================== */
-
 function renderColors(){
 
 colorsList.innerHTML =
 "";
 
-
 editingColors.forEach(
 (color,index)=>{
 
 const tag =
-document.createElement(
-"div"
-);
+document.createElement("div");
 
 tag.className =
 "tag color-tag";
-
 
 tag.innerHTML = `
 
@@ -4161,14 +3870,10 @@ type="button">
 ×
 
 </button>
-
 `;
 
-
 tag
-.querySelector(
-".tag-remove"
-)
+.querySelector(".tag-remove")
 .addEventListener(
 "click",
 ()=>{
@@ -4183,7 +3888,6 @@ renderColors();
 }
 );
 
-
 colorsList.appendChild(
 tag
 );
@@ -4193,19 +3897,12 @@ tag
 }
 
 
-/* =====================================================
-ADD COLOR
-===================================================== */
-
 document
-.getElementById(
-"addColorBtn"
-)
+.getElementById("addColorBtn")
 .addEventListener(
 "click",
 addColor
 );
-
 
 newColorName.addEventListener(
 "keydown",
@@ -4227,11 +3924,9 @@ function addColor(){
 const name =
 newColorName.value.trim();
 
-
 const value =
 newColorValue.value ||
 "#F47B20";
-
 
 if(!name){
 
@@ -4243,14 +3938,12 @@ return;
 
 }
 
-
 const exists =
 editingColors.some(
 color=>
 color.name.toLowerCase() ===
 name.toLowerCase()
 );
-
 
 if(exists){
 
@@ -4262,7 +3955,6 @@ return;
 
 }
 
-
 editingColors.push({
 
 name:name,
@@ -4271,7 +3963,6 @@ value:value
 
 });
 
-
 newColorName.value = "";
 
 renderColors();
@@ -4279,27 +3970,19 @@ renderColors();
 }
 
 
-/* =====================================================
-SIZES
-===================================================== */
-
 function renderSizes(){
 
 sizesList.innerHTML =
 "";
 
-
 editingSizes.forEach(
 (size,index)=>{
 
 const tag =
-document.createElement(
-"div"
-);
+document.createElement("div");
 
 tag.className =
 "tag";
-
 
 tag.innerHTML = `
 
@@ -4314,14 +3997,10 @@ type="button">
 ×
 
 </button>
-
 `;
 
-
 tag
-.querySelector(
-".tag-remove"
-)
+.querySelector(".tag-remove")
 .addEventListener(
 "click",
 ()=>{
@@ -4336,7 +4015,6 @@ renderSizes();
 }
 );
 
-
 sizesList.appendChild(
 tag
 );
@@ -4346,19 +4024,12 @@ tag
 }
 
 
-/* =====================================================
-ADD SIZE
-===================================================== */
-
 document
-.getElementById(
-"addSizeBtn"
-)
+.getElementById("addSizeBtn")
 .addEventListener(
 "click",
 addSize
 );
-
 
 newSize.addEventListener(
 "keydown",
@@ -4380,7 +4051,6 @@ function addSize(){
 const size =
 newSize.value.trim();
 
-
 if(!size){
 
 alert(
@@ -4391,7 +4061,6 @@ return;
 
 }
 
-
 const exists =
 editingSizes.some(
 item=>
@@ -4399,7 +4068,6 @@ String(item)
 .toLowerCase() ===
 size.toLowerCase()
 );
-
 
 if(exists){
 
@@ -4411,10 +4079,7 @@ return;
 
 }
 
-
-editingSizes.push(
-size
-);
+editingSizes.push(size);
 
 newSize.value = "";
 
@@ -4422,10 +4087,6 @@ renderSizes();
 
 }
 
-
-/* =====================================================
-EDITOR
-===================================================== */
 
 document
 .querySelectorAll(
@@ -4453,9 +4114,7 @@ null
 
 
 document
-.getElementById(
-"fontName"
-)
+.getElementById("fontName")
 .addEventListener(
 "change",
 function(){
@@ -4476,9 +4135,7 @@ this.value
 
 
 document
-.getElementById(
-"fontSize"
-)
+.getElementById("fontSize")
 .addEventListener(
 "change",
 function(){
@@ -4499,9 +4156,7 @@ this.value
 
 
 document
-.getElementById(
-"fontColor"
-)
+.getElementById("fontColor")
 .addEventListener(
 "input",
 function(){
@@ -4517,27 +4172,19 @@ this.value
 });
 
 
-/* =====================================================
-EDIT IMAGES
-===================================================== */
-
 function renderEditImages(){
 
 editPreview.innerHTML =
 "";
 
-
 existingImages.forEach(
 (url,index)=>{
 
 const item =
-document.createElement(
-"div"
-);
+document.createElement("div");
 
 item.className =
 "edit-image-item";
-
 
 item.innerHTML = `
 
@@ -4554,14 +4201,10 @@ type="button">
 ×
 
 </button>
-
 `;
 
-
 item
-.querySelector(
-".remove-image-btn"
-)
+.querySelector(".remove-image-btn")
 .addEventListener(
 "click",
 ()=>{
@@ -4576,25 +4219,20 @@ renderEditImages();
 }
 );
 
-
 editPreview.appendChild(
 item
 );
 
 });
 
-
 selectedImages.forEach(
 (file,index)=>{
 
 const item =
-document.createElement(
-"div"
-);
+document.createElement("div");
 
 item.className =
 "edit-image-item new-image-item";
-
 
 item.innerHTML = `
 
@@ -4613,19 +4251,15 @@ type="button">
 ×
 
 </button>
-
 `;
-
 
 const img =
 item.querySelector(
 ".edit-preview-image"
 );
 
-
 const reader =
 new FileReader();
-
 
 reader.onload =
 event=>{
@@ -4635,16 +4269,10 @@ event.target.result;
 
 };
 
-
-reader.readAsDataURL(
-file
-);
-
+reader.readAsDataURL(file);
 
 item
-.querySelector(
-".remove-image-btn"
-)
+.querySelector(".remove-image-btn")
 .addEventListener(
 "click",
 ()=>{
@@ -4661,7 +4289,6 @@ renderEditImages();
 }
 );
 
-
 editPreview.appendChild(
 item
 );
@@ -4671,35 +4298,23 @@ item
 }
 
 
-/* =====================================================
-SYNC FILES
-===================================================== */
-
 function syncSelectedFiles(){
 
 const dataTransfer =
 new DataTransfer();
 
-
 selectedImages.forEach(
 file=>{
 
-dataTransfer.items.add(
-file
-);
+dataTransfer.items.add(file);
 
 });
-
 
 editImageFile.files =
 dataTransfer.files;
 
 }
 
-
-/* =====================================================
-SELECT IMAGES
-===================================================== */
 
 editImageFile.addEventListener(
 "change",
@@ -4709,7 +4324,6 @@ const files =
 Array.from(
 this.files || []
 );
-
 
 files.forEach(
 file=>{
@@ -4726,36 +4340,27 @@ file
 
 });
 
-
 syncSelectedFiles();
 
 renderEditImages();
 
-}
-);
+});
 
-
-/* =====================================================
-CLOUDINARY
-===================================================== */
 
 async function uploadToCloudinary(file){
 
 const formData =
 new FormData();
 
-
 formData.append(
 "file",
 file
 );
 
-
 formData.append(
 "upload_preset",
 "gglam_products"
 );
-
 
 const response =
 await fetch(
@@ -4772,7 +4377,6 @@ body:formData
 
 );
 
-
 if(!response.ok){
 
 throw new Error(
@@ -4781,10 +4385,8 @@ throw new Error(
 
 }
 
-
 const data =
 await response.json();
-
 
 if(!data.secure_url){
 
@@ -4794,15 +4396,10 @@ throw new Error(
 
 }
 
-
 return data.secure_url;
 
 }
 
-
-/* =====================================================
-SAVE EDIT
-===================================================== */
 
 saveEdit.addEventListener(
 "click",
@@ -4818,22 +4415,14 @@ return;
 
 }
 
-
 const name =
 editName.value.trim();
 
-
 const price =
-Number(
-editPrice.value
-);
-
+Number(editPrice.value);
 
 const stock =
-Number(
-editStock.value
-);
-
+Number(editStock.value);
 
 if(!name){
 
@@ -4844,7 +4433,6 @@ alert(
 return;
 
 }
-
 
 if(
 Number.isNaN(price) ||
@@ -4859,7 +4447,6 @@ return;
 
 }
 
-
 if(
 Number.isNaN(stock) ||
 stock < 0
@@ -4873,12 +4460,10 @@ return;
 
 }
 
-
 const product =
 allProducts.find(
 p=>p.id === editingProductId
 );
-
 
 if(!product){
 
@@ -4889,7 +4474,6 @@ alert(
 return;
 
 }
-
 
 if(
 product.ownerUid !==
@@ -4904,20 +4488,16 @@ return;
 
 }
 
-
 saveEdit.disabled =
 true;
 
-
 saveEdit.textContent =
 "⏳ جاري الحفظ...";
-
 
 try{
 
 let finalImages =
 [...existingImages];
-
 
 for(
 const file of selectedImages
@@ -4934,10 +4514,8 @@ url
 
 }
 
-
 const description =
 descriptionEditor.innerHTML;
-
 
 const finalColors =
 editingColors.map(
@@ -4952,14 +4530,12 @@ color.value
 })
 );
 
-
 const productRef =
 doc(
 db,
 "products",
 editingProductId
 );
-
 
 await updateDoc(
 productRef,
@@ -5004,11 +4580,9 @@ serverTimestamp()
 }
 );
 
-
 showSuccess(
 "✅ تم تعديل المنتج وحفظ جميع التغييرات بنجاح."
 );
-
 
 closeEditModal();
 
@@ -5041,10 +4615,6 @@ saveEdit.textContent =
 }
 
 
-/* =====================================================
-CLOSE MODAL
-===================================================== */
-
 function closeEditModal(){
 
 editModal.classList.remove(
@@ -5070,24 +4640,18 @@ editPreview.innerHTML = "";
 
 
 document
-.getElementById(
-"closeModal"
-)
+.getElementById("closeModal")
 .addEventListener(
 "click",
 closeEditModal
 );
-
 
 document
-.getElementById(
-"cancelEdit"
-)
+.getElementById("cancelEdit")
 .addEventListener(
 "click",
 closeEditModal
 );
-
 
 editModal.addEventListener(
 "click",
@@ -5104,10 +4668,6 @@ closeEditModal();
 });
 
 
-/* =====================================================
-DELETE PRODUCT
-===================================================== */
-
 async function deleteProduct(productId){
 
 const product =
@@ -5115,13 +4675,11 @@ allProducts.find(
 p=>p.id === productId
 );
 
-
 if(!product){
 
 return;
 
 }
-
 
 if(
 product.ownerUid !==
@@ -5136,25 +4694,20 @@ return;
 
 }
 
-
 const confirmed =
 confirm(
-
 "هل أنت متأكد من حذف المنتج؟\n\n" +
 (
 product.name ||
 "هذا المنتج"
 )
-
 );
-
 
 if(!confirmed){
 
 return;
 
 }
-
 
 try{
 
@@ -5165,12 +4718,8 @@ db,
 productId
 );
 
-
 const snapshot =
-await getDoc(
-productRef
-);
-
+await getDoc(productRef);
 
 if(!snapshot.exists()){
 
@@ -5181,7 +4730,6 @@ showError(
 return;
 
 }
-
 
 if(
 snapshot.data().ownerUid !==
@@ -5196,16 +4744,13 @@ return;
 
 }
 
-
 await deleteDoc(
 productRef
 );
 
-
 showSuccess(
 "✅ تم حذف المنتج بنجاح."
 );
-
 
 await loadProducts();
 
@@ -5227,14 +4772,8 @@ error.message
 }
 
 
-/* =====================================================
-ADD PRODUCT BUTTON
-===================================================== */
-
 document
-.getElementById(
-"addProductBtn"
-)
+.getElementById("addProductBtn")
 .addEventListener(
 "click",
 ()=>{
@@ -5246,26 +4785,18 @@ window.location.href =
 );
 
 
-/* =====================================================
-LOGOUT
-===================================================== */
-
 document
-.getElementById(
-"logoutBtn"
-)
+.getElementById("logoutBtn")
 .addEventListener(
 "click",
 async event=>{
 
 event.preventDefault();
 
-
 const confirmed =
 confirm(
 "هل تريد تسجيل الخروج؟"
 );
-
 
 if(!confirmed){
 
@@ -5273,12 +4804,9 @@ return;
 
 }
 
-
 try{
 
-await signOut(
-auth
-);
+await signOut(auth);
 
 window.location.href =
 "login.html";
@@ -5297,10 +4825,6 @@ showError(
 });
 
 
-/* =====================================================
-MESSAGES
-===================================================== */
-
 function showSuccess(message){
 
 const success =
@@ -5313,7 +4837,6 @@ document.getElementById(
 "errorMessage"
 );
 
-
 success.textContent =
 message;
 
@@ -5322,7 +4845,6 @@ success.style.display =
 
 error.style.display =
 "none";
-
 
 setTimeout(
 ()=>{
@@ -5349,7 +4871,6 @@ document.getElementById(
 "successMessage"
 );
 
-
 error.textContent =
 message;
 
@@ -5361,10 +4882,6 @@ success.style.display =
 
 }
 
-
-/* =====================================================
-INITIAL
-===================================================== */
 
 topStoreName.textContent =
 "جاري تحميل المتجر...";
