@@ -5,8 +5,7 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>G-Glam | إعدادات المتجر</title>
 
@@ -21,15 +20,58 @@ content="width=device-width, initial-scale=1.0">
     font-family:'Tajawal',sans-serif;
 }
 
-body{
-    background:#F7F7F5;
-    color:#374151;
-    min-height:100vh;
+:root{
+    --bg:#F7F7F5;
+    --card:#FFFFFF;
+    --text:#374151;
+    --text-secondary:#6B7280;
+    --border:#E5E7EB;
+    --orange:#F97316;
+    --orange-hover:#EA580C;
+    --sidebar:#FFFFFF;
+    --hover:#FFF7ED;
+    --input:#FFFFFF;
+    --input-text:#374151;
 }
 
 
 /* =========================
-   القائمة الجانبية
+   الوضع الليلي
+========================= */
+
+body.dark-mode{
+
+    --bg:#0B1220;
+    --card:#111827;
+    --text:#F3F4F6;
+    --text-secondary:#9CA3AF;
+    --border:#263244;
+    --sidebar:#0F172A;
+    --hover:#172033;
+    --input:#172033;
+    --input-text:#F3F4F6;
+
+    background:var(--bg);
+    color:var(--text);
+}
+
+
+/* =========================
+   BODY
+========================= */
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    transition:
+        background .3s,
+        color .3s;
+}
+
+
+/* =========================
+   SIDEBAR
 ========================= */
 
 .sidebar{
@@ -38,17 +80,22 @@ body{
     top:0;
     height:100vh;
     width:70px;
-    background:#FFFFFF;
-    color:#374151;
+    background:var(--sidebar);
+    color:var(--text);
     overflow:hidden;
     transition:.3s;
     z-index:1000;
-    border-left:1px solid #E5E7EB;
+    border-left:1px solid var(--border);
 }
 
 .sidebar:hover{
     width:230px;
 }
+
+
+/* =========================
+   LOGO
+========================= */
 
 .logo{
     height:75px;
@@ -57,10 +104,15 @@ body{
     justify-content:center;
     font-size:22px;
     font-weight:800;
-    color:#F97316;
-    border-bottom:1px solid #E5E7EB;
+    color:var(--orange);
+    border-bottom:1px solid var(--border);
     white-space:nowrap;
 }
+
+
+/* =========================
+   MENU
+========================= */
 
 .menu{
     margin-top:20px;
@@ -71,20 +123,20 @@ body{
     align-items:center;
     gap:15px;
     padding:15px;
-    color:#6B7280;
+    color:var(--text-secondary);
     text-decoration:none;
     white-space:nowrap;
     transition:.2s;
 }
 
 .menu a:hover{
-    background:#FFF7ED;
-    color:#F97316;
+    background:var(--hover);
+    color:var(--orange);
 }
 
 .menu a.active{
-    background:#FFF7ED;
-    color:#F97316;
+    background:var(--hover);
+    color:var(--orange);
     font-weight:700;
 }
 
@@ -120,21 +172,22 @@ body{
 ========================= */
 
 .header{
-    background:#FFFFFF;
+    background:var(--card);
     padding:22px;
     border-radius:18px;
     box-shadow:0 3px 15px rgba(0,0,0,.04);
     margin-bottom:20px;
+    border:1px solid var(--border);
 }
 
 .header h1{
     font-size:27px;
-    color:#374151;
+    color:var(--text);
     margin-bottom:7px;
 }
 
 .header p{
-    color:#6B7280;
+    color:var(--text-secondary);
     font-size:14px;
 }
 
@@ -170,45 +223,158 @@ body{
 
 
 /* =========================
-   البطاقات
+   الوضع الليلي
+========================= */
+
+.theme-card{
+    background:var(--card);
+    padding:20px 22px;
+    border-radius:18px;
+    box-shadow:0 3px 15px rgba(0,0,0,.04);
+    margin-bottom:20px;
+    border:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.theme-info{
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.theme-icon{
+    width:44px;
+    height:44px;
+    border-radius:12px;
+
+    background:#0B2A5B;
+    color:white;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:21px;
+
+    box-shadow:
+        0 5px 15px rgba(11,42,91,.25);
+}
+
+.theme-title{
+    color:var(--text);
+    font-size:16px;
+    font-weight:800;
+}
+
+.theme-description{
+    color:var(--text-secondary);
+    font-size:12px;
+    margin-top:3px;
+}
+
+
+/* =========================
+   TOGGLE
+========================= */
+
+.theme-toggle{
+    position:relative;
+    width:58px;
+    height:32px;
+    flex-shrink:0;
+}
+
+.theme-toggle input{
+    opacity:0;
+    width:0;
+    height:0;
+}
+
+.toggle-slider{
+    position:absolute;
+    inset:0;
+    cursor:pointer;
+
+    background:#D1D5DB;
+
+    border-radius:50px;
+
+    transition:.3s;
+
+    box-shadow:
+        inset 0 1px 3px rgba(0,0,0,.15);
+}
+
+.toggle-slider::before{
+    content:"";
+
+    position:absolute;
+
+    width:24px;
+    height:24px;
+
+    right:4px;
+    top:4px;
+
+    background:white;
+
+    border-radius:50%;
+
+    transition:.3s;
+
+    box-shadow:
+        0 2px 6px rgba(0,0,0,.20);
+}
+
+.theme-toggle input:checked + .toggle-slider{
+    background:#0B2A5B;
+}
+
+.theme-toggle input:checked + .toggle-slider::before{
+    transform:translateX(-26px);
+}
+
+
+/* =========================
+   CARDS
 ========================= */
 
 .card{
-    background:#FFFFFF;
+    background:var(--card);
     padding:25px;
     border-radius:18px;
     box-shadow:0 3px 15px rgba(0,0,0,.04);
     margin-bottom:20px;
+    border:1px solid var(--border);
 }
 
 .card-title{
     font-size:20px;
     font-weight:700;
-    color:#374151;
+    color:var(--text);
     margin-bottom:6px;
 }
 
 .card-description{
-    color:#9CA3AF;
+    color:var(--text-secondary);
     font-size:13px;
     margin-bottom:22px;
 }
 
 
-/* =====================================================
-   منطقة الصور
-===================================================== */
+/* =========================
+   الصور
+========================= */
 
 .images-section{
     display:flex;
     flex-direction:column;
     gap:22px;
 }
-
-
-/* =========================
-   معاينة الصور
-========================= */
 
 .store-preview{
     position:relative;
@@ -217,14 +383,9 @@ body{
     border-radius:18px;
     background:#F3F4F6;
     overflow:hidden;
-    border:1px solid #E5E7EB;
+    border:1px solid var(--border);
     box-shadow:0 5px 20px rgba(0,0,0,.06);
 }
-
-
-/* =========================
-   الغلاف
-========================= */
 
 .cover-image{
     position:absolute;
@@ -234,9 +395,6 @@ body{
     object-fit:cover;
     background:#F3F4F6;
 }
-
-
-/* طبقة خفيفة */
 
 .store-preview::after{
     content:"";
@@ -249,11 +407,6 @@ body{
     );
     pointer-events:none;
 }
-
-
-/* =========================
-   الصورة الدائرية
-========================= */
 
 .circular-image-box{
     position:absolute;
@@ -278,11 +431,6 @@ body{
     background:#F3F4F6;
 }
 
-
-/* =========================
-   نص داخل المعاينة
-========================= */
-
 .preview-label{
     position:absolute;
     top:15px;
@@ -297,46 +445,37 @@ body{
     box-shadow:0 3px 10px rgba(0,0,0,.08);
 }
 
-
-/* =========================
-   خيارات الصور
-========================= */
-
 .image-options{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:15px;
 }
 
-
 .image-option{
-    border:1px solid #E5E7EB;
+    border:1px solid var(--border);
     border-radius:14px;
     padding:17px;
-    background:#FAFAFA;
+    background:var(--card);
     transition:.2s;
 }
 
 .image-option:hover{
     border-color:#FDBA74;
-    background:#FFF7ED;
+    background:var(--hover);
 }
 
-
 .image-option h3{
-    color:#4B5563;
+    color:var(--text);
     font-size:16px;
     margin-bottom:7px;
 }
 
-
 .image-option p{
-    color:#9CA3AF;
+    color:var(--text-secondary);
     font-size:12px;
     line-height:1.7;
     margin-bottom:13px;
 }
-
 
 .upload-btn{
     display:inline-flex;
@@ -344,7 +483,7 @@ body{
     justify-content:center;
     gap:8px;
     width:100%;
-    background:#F97316;
+    background:var(--orange);
     color:white;
     border:none;
     padding:12px 16px;
@@ -356,7 +495,7 @@ body{
 }
 
 .upload-btn:hover{
-    background:#EA580C;
+    background:var(--orange-hover);
 }
 
 .upload-btn.cover-btn{
@@ -367,15 +506,13 @@ body{
     background:#1F2937;
 }
 
-
 .file-input{
     display:none;
 }
 
-
 .upload-status{
     margin-top:9px;
-    color:#9CA3AF;
+    color:var(--text-secondary);
     font-size:11px;
     text-align:center;
 }
@@ -391,7 +528,7 @@ body{
 
 .form-group label{
     display:block;
-    color:#4B5563;
+    color:var(--text);
     font-size:14px;
     font-weight:600;
     margin-bottom:8px;
@@ -400,9 +537,9 @@ body{
 .form-group input,
 .form-group textarea{
     width:100%;
-    border:1px solid #E5E7EB;
-    background:#FFFFFF;
-    color:#374151;
+    border:1px solid var(--border);
+    background:var(--input);
+    color:var(--input-text);
     padding:13px 14px;
     border-radius:11px;
     outline:none;
@@ -412,13 +549,18 @@ body{
 
 .form-group input:focus,
 .form-group textarea:focus{
-    border-color:#F97316;
+    border-color:var(--orange);
     box-shadow:0 0 0 3px rgba(249,115,22,.10);
 }
 
 .form-group textarea{
     min-height:110px;
     resize:vertical;
+}
+
+.form-group input:disabled,
+.form-group textarea:disabled{
+    opacity:.6;
 }
 
 
@@ -428,7 +570,7 @@ body{
 
 .save-btn{
     width:100%;
-    background:#F97316;
+    background:var(--orange);
     color:white;
     border:none;
     padding:14px;
@@ -440,7 +582,7 @@ body{
 }
 
 .save-btn:hover{
-    background:#EA580C;
+    background:var(--orange-hover);
 }
 
 .save-btn:disabled{
@@ -478,6 +620,39 @@ body{
 
 
 /* =========================
+   الوضع الليلي - العناصر الثابتة
+========================= */
+
+body.dark-mode .header,
+body.dark-mode .card,
+body.dark-mode .theme-card{
+    box-shadow:
+        0 5px 20px rgba(0,0,0,.20);
+}
+
+body.dark-mode .store-preview{
+    background:#172033;
+}
+
+body.dark-mode .preview-label{
+    background:rgba(17,24,39,.92);
+    color:#F3F4F6;
+}
+
+body.dark-mode .circular-image-box{
+    background:#111827;
+}
+
+body.dark-mode .upload-btn.cover-btn{
+    background:#334155;
+}
+
+body.dark-mode .upload-btn.cover-btn:hover{
+    background:#475569;
+}
+
+
+/* =========================
    الهاتف
 ========================= */
 
@@ -508,6 +683,23 @@ body{
         padding:18px;
     }
 
+    .theme-card{
+        padding:17px;
+    }
+
+    .theme-title{
+        font-size:14px;
+    }
+
+    .theme-description{
+        font-size:11px;
+    }
+
+    .theme-icon{
+        width:40px;
+        height:40px;
+    }
+
     .store-preview{
         height:230px;
     }
@@ -534,6 +726,42 @@ body{
     .content{
         margin-right:60px;
         padding:9px;
+    }
+
+    .theme-card{
+        padding:14px;
+    }
+
+    .theme-info{
+        gap:9px;
+    }
+
+    .theme-icon{
+        width:36px;
+        height:36px;
+        font-size:18px;
+    }
+
+    .theme-title{
+        font-size:13px;
+    }
+
+    .theme-description{
+        font-size:10px;
+    }
+
+    .theme-toggle{
+        width:52px;
+        height:29px;
+    }
+
+    .toggle-slider::before{
+        width:21px;
+        height:21px;
+    }
+
+    .theme-toggle input:checked + .toggle-slider::before{
+        transform:translateX(-23px);
     }
 
     .store-preview{
@@ -713,6 +941,46 @@ body{
 
 
     <!-- =========================
+         زر الوضع الليلي
+    ========================= -->
+
+    <div class="theme-card">
+
+        <div class="theme-info">
+
+            <div class="theme-icon">
+                🌙
+            </div>
+
+            <div>
+
+                <div class="theme-title">
+                    الوضع الليلي
+                </div>
+
+                <div class="theme-description">
+                    تفعيل المظهر الأزرق الداكن للوحة التحكم
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <label class="theme-toggle">
+
+            <input
+                type="checkbox"
+                id="darkModeToggle">
+
+            <span class="toggle-slider"></span>
+
+        </label>
+
+    </div>
+
+
+    <!-- =========================
          حالة الحساب
     ========================= -->
 
@@ -739,10 +1007,6 @@ body{
 
         <div class="images-section">
 
-
-            <!-- =========================
-                 المعاينة
-            ========================= -->
 
             <div class="store-preview">
 
@@ -773,14 +1037,8 @@ body{
             </div>
 
 
-            <!-- =========================
-                 الزران
-            ========================= -->
-
             <div class="image-options">
 
-
-                <!-- الصورة الدائرية -->
 
                 <div class="image-option">
 
@@ -819,8 +1077,6 @@ body{
 
                 </div>
 
-
-                <!-- صورة الغلاف -->
 
                 <div class="image-option">
 
@@ -938,6 +1194,69 @@ body{
 
 
 <script type="module">
+
+
+/* =========================
+   الوضع الليلي
+========================= */
+
+const darkModeToggle =
+document.getElementById("darkModeToggle");
+
+
+function applyDarkMode(){
+
+    const darkMode =
+    localStorage.getItem("gglamDarkMode") === "true";
+
+
+    if(darkMode){
+
+        document.body.classList.add(
+            "dark-mode"
+        );
+
+        darkModeToggle.checked =
+        true;
+
+    }else{
+
+        document.body.classList.remove(
+            "dark-mode"
+        );
+
+        darkModeToggle.checked =
+        false;
+
+    }
+
+}
+
+
+applyDarkMode();
+
+
+darkModeToggle.addEventListener(
+    "change",
+    function(){
+
+        const enabled =
+        this.checked;
+
+
+        document.body.classList.toggle(
+            "dark-mode",
+            enabled
+        );
+
+
+        localStorage.setItem(
+            "gglamDarkMode",
+            enabled ? "true" : "false"
+        );
+
+    }
+);
 
 
 /* =========================
@@ -1108,8 +1427,6 @@ async function loadStore(){
 
 
         /*
-         * الحفاظ على نظام G-Glam:
-         *
          * stores / Firebase Authentication UID
          */
 
@@ -1156,18 +1473,10 @@ async function loadStore(){
         storeSnapshot.id;
 
 
-        /* =========================
-           الصورة الدائرية
-        ========================= */
-
         currentStoreImage =
         store.storeImage ||
         "";
 
-
-        /* =========================
-           صورة الغلاف
-        ========================= */
 
         currentStoreCoverImage =
         store.storeCoverImage ||
@@ -1175,10 +1484,6 @@ async function loadStore(){
         store.storeBanner ||
         "";
 
-
-        /* =========================
-           معلومات المتجر
-        ========================= */
 
         storeName.value =
         store.storeName ||
@@ -1196,10 +1501,6 @@ async function loadStore(){
         "";
 
 
-        /* =========================
-           عرض الصورة الدائرية
-        ========================= */
-
         if(currentStoreImage){
 
             storeImage.src =
@@ -1208,10 +1509,6 @@ async function loadStore(){
         }
 
 
-        /* =========================
-           عرض الغلاف
-        ========================= */
-
         if(currentStoreCoverImage){
 
             coverImage.src =
@@ -1219,10 +1516,6 @@ async function loadStore(){
 
         }
 
-
-        /* =========================
-           حالة المتجر
-        ========================= */
 
         const status =
         store.status ||
@@ -1602,10 +1895,6 @@ saveBtn.addEventListener(
             "⏳ جاري الحفظ...";
 
 
-            /* =========================
-               روابط الصور الحالية
-            ========================= */
-
             let imageUrl =
             currentStoreImage;
 
@@ -1613,10 +1902,6 @@ saveBtn.addEventListener(
             let coverUrl =
             currentStoreCoverImage;
 
-
-            /* =========================
-               رفع الصورة الدائرية
-            ========================= */
 
             if(selectedImageFile){
 
@@ -1636,10 +1921,6 @@ saveBtn.addEventListener(
             }
 
 
-            /* =========================
-               رفع الغلاف
-            ========================= */
-
             if(selectedCoverFile){
 
                 coverUploadStatus.textContent =
@@ -1658,10 +1939,6 @@ saveBtn.addEventListener(
             }
 
 
-            /* =========================
-               مرجع المتجر
-            ========================= */
-
             const storeRef =
             doc(
                 db,
@@ -1669,10 +1946,6 @@ saveBtn.addEventListener(
                 currentStoreId
             );
 
-
-            /* =========================
-               تحديث بيانات المتجر
-            ========================= */
 
             await updateDoc(
                 storeRef,
@@ -1693,10 +1966,6 @@ saveBtn.addEventListener(
                 }
             );
 
-
-            /* =========================
-               تحديث المتغيرات
-            ========================= */
 
             currentStoreImage =
             imageUrl;
@@ -1906,10 +2175,6 @@ onAuthStateChanged(
 
     async function(user){
 
-        /*
-         * إذا لم يكن هناك مستخدم مسجل الدخول
-         */
-
         if(!user){
 
             window.location.href =
@@ -1920,28 +2185,14 @@ onAuthStateChanged(
         }
 
 
-        /*
-         * المستخدم الحالي
-         */
-
         currentUser =
         user;
 
-
-        /*
-         * البريد الإلكتروني
-         */
 
         ownerEmail.value =
         user.email ||
         "";
 
-
-        /*
-         * تحميل متجر المستخدم
-         *
-         * stores / user.uid
-         */
 
         await loadStore();
 
