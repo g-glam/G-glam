@@ -43,7 +43,27 @@ rel="stylesheet">
 
 --shadow:0 4px 18px rgba(0,0,0,.06);
 
+/* NIGHT BLUE */
+
+--night-bg:#071426;
+--night-sidebar:#0B1B30;
+--night-card:#0E2138;
+--night-card-2:#102942;
+--night-text:#EAF3FF;
+--night-dark:#FFFFFF;
+--night-muted:#9EB2C9;
+--night-border:#1D3854;
+--night-input:#0A1C31;
+--night-hover:#14304D;
+--night-blue:#123A63;
+--night-blue-light:#174B7D;
+
 }
+
+
+/* =====================================================
+GLOBAL
+===================================================== */
 
 *{
 
@@ -55,11 +75,45 @@ font-family:"Tajawal",Arial,sans-serif;
 
 }
 
+html{
+
+transition:
+background-color .3s,
+color .3s;
+
+}
+
 body{
 
 background:var(--bg);
 color:var(--text);
 min-height:100vh;
+
+transition:
+background-color .3s,
+color .3s;
+
+}
+
+
+/* =====================================================
+DARK MODE
+===================================================== */
+
+body.dark-mode{
+
+--bg:#071426;
+--sidebar:#0B1B30;
+--card:#0E2138;
+
+--text:#EAF3FF;
+--dark:#FFFFFF;
+--muted:#9EB2C9;
+
+--border:#1D3854;
+--input:#0A1C31;
+
+--night-hover:#14304D;
 
 }
 
@@ -108,7 +162,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 
-border-bottom:1px solid #DDDDDD;
+border-bottom:1px solid var(--border);
 
 white-space:nowrap;
 padding:10px;
@@ -169,10 +223,23 @@ transition:.2s;
 
 }
 
+body.dark-mode .menu a{
+
+color:#B9C9DA;
+
+}
+
 .menu a:hover{
 
 background:#E3E3E3;
 color:#222;
+
+}
+
+body.dark-mode .menu a:hover{
+
+background:#14304D;
+color:#FFFFFF;
 
 }
 
@@ -244,6 +311,20 @@ transition:.3s;
 
 }
 
+body.dark-mode .topbar{
+
+background:#0B1B30;
+
+box-shadow:
+0 2px 15px rgba(0,0,0,.25);
+
+}
+
+
+/* =====================================================
+STORE TOP
+===================================================== */
+
 .store-top{
 
 display:flex;
@@ -289,6 +370,12 @@ margin-bottom:2px;
 
 }
 
+body.dark-mode .store-label{
+
+color:#8298B0;
+
+}
+
 .store-top-name{
 
 font-size:16px;
@@ -304,6 +391,83 @@ text-overflow:ellipsis;
 max-width:250px;
 
 }
+
+body.dark-mode .store-top-name{
+
+color:#FFFFFF;
+
+}
+
+
+/* =====================================================
+TOP ACTIONS
+===================================================== */
+
+.top-actions{
+
+display:flex;
+align-items:center;
+
+gap:9px;
+
+}
+
+
+/* =====================================================
+DARK MODE BUTTON
+===================================================== */
+
+.theme-btn{
+
+width:44px;
+height:44px;
+
+border:none;
+
+border-radius:12px;
+
+background:#0B2542;
+
+color:#DDEEFF;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:20px;
+
+cursor:pointer;
+
+border:1px solid #1C4770;
+
+box-shadow:
+0 4px 12px rgba(5,25,50,.18);
+
+transition:
+background .25s,
+transform .2s,
+color .25s;
+
+}
+
+.theme-btn:hover{
+
+background:#123A63;
+
+transform:translateY(-1px);
+
+}
+
+.theme-btn:active{
+
+transform:scale(.95);
+
+}
+
+
+/* =====================================================
+VIEW STORE
+===================================================== */
 
 .view-store-btn{
 
@@ -334,6 +498,23 @@ border:1px solid #FFE0CA;
 }
 
 .view-store-btn:hover{
+
+background:var(--orange);
+color:white;
+
+}
+
+body.dark-mode .view-store-btn{
+
+background:#102E4D;
+
+color:#FFB06E;
+
+border-color:#1E4B70;
+
+}
+
+body.dark-mode .view-store-btn:hover{
 
 background:var(--orange);
 color:white;
@@ -427,7 +608,7 @@ color:var(--dark);
 
 .box{
 
-background:white;
+background:var(--card);
 
 border:1px solid var(--border);
 
@@ -514,7 +695,7 @@ textarea:focus{
 
 border-color:var(--orange);
 
-background:white;
+background:var(--card);
 
 box-shadow:
 0 0 0 3px rgba(244,123,32,.10);
@@ -533,7 +714,7 @@ min-height:100px;
 
 
 /* =====================================================
-RICH TEXT DESCRIPTION
+RICH TEXT
 ===================================================== */
 
 .editor-wrapper{
@@ -544,7 +725,7 @@ border-radius:12px;
 
 overflow:hidden;
 
-background:white;
+background:var(--card);
 
 transition:.2s;
 
@@ -571,7 +752,7 @@ gap:5px;
 
 padding:8px;
 
-background:#FAFAFA;
+background:var(--input);
 
 border-bottom:1px solid var(--border);
 
@@ -604,12 +785,30 @@ transition:.2s;
 
 }
 
+body.dark-mode .editor-toolbar button,
+body.dark-mode .editor-toolbar select{
+
+background:#102942;
+
+border-color:#294763;
+
+color:#EAF3FF;
+
+}
+
 .editor-toolbar button:hover,
 .editor-toolbar select:hover{
 
 border-color:var(--orange);
 
 background:#FFF5EE;
+
+}
+
+body.dark-mode .editor-toolbar button:hover,
+body.dark-mode .editor-toolbar select:hover{
+
+background:#173B5D;
 
 }
 
@@ -634,7 +833,6 @@ outline:none;
 position:relative;
 
 display:flex;
-
 align-items:center;
 
 }
@@ -669,6 +867,12 @@ margin:0 3px;
 
 }
 
+body.dark-mode .editor-divider{
+
+background:#294763;
+
+}
+
 .description-editor{
 
 min-height:150px;
@@ -685,9 +889,9 @@ direction:rtl;
 
 text-align:right;
 
-background:white;
+background:var(--card);
 
-color:#333;
+color:var(--dark);
 
 }
 
@@ -705,7 +909,7 @@ pointer-events:none;
 
 font-size:11px;
 
-color:#888;
+color:var(--muted);
 
 margin-top:7px;
 
@@ -773,6 +977,23 @@ color:white;
 
 }
 
+body.dark-mode .add-option-btn{
+
+background:#102E4D;
+
+color:#FFB06E;
+
+border-color:#214C70;
+
+}
+
+body.dark-mode .add-option-btn:hover{
+
+background:var(--orange);
+color:white;
+
+}
+
 .option-list{
 
 display:flex;
@@ -790,7 +1011,7 @@ align-items:center;
 
 gap:7px;
 
-background:#FAFAFA;
+background:var(--input);
 
 border:1px solid var(--border);
 
@@ -806,7 +1027,7 @@ width:120px;
 
 padding:7px 9px;
 
-background:white;
+background:var(--card);
 
 border-radius:8px;
 
@@ -878,7 +1099,7 @@ align-items:center;
 gap:8px;
 
 font-size:13px;
-color:#555;
+color:var(--text);
 
 cursor:pointer;
 
@@ -954,7 +1175,7 @@ border-radius:14px;
 
 padding:20px;
 
-background:#FAFAFA;
+background:var(--input);
 
 text-align:center;
 
@@ -967,6 +1188,12 @@ transition:.2s;
 border-color:var(--orange);
 
 background:#FFF9F5;
+
+}
+
+body.dark-mode .image-upload:hover{
+
+background:#102A43;
 
 }
 
@@ -1206,6 +1433,27 @@ border:1px solid #F0CACA;
 
 
 /* =====================================================
+DARK MESSAGE
+===================================================== */
+
+body.dark-mode .success{
+
+background:#0C3325;
+color:#79D7A5;
+border-color:#1D6849;
+
+}
+
+body.dark-mode .error{
+
+background:#3A151A;
+color:#FF9292;
+border-color:#713038;
+
+}
+
+
+/* =====================================================
 MOBILE
 ===================================================== */
 
@@ -1269,6 +1517,15 @@ max-width:150px;
 
 padding:8px 10px;
 font-size:11px;
+
+}
+
+.theme-btn{
+
+width:40px;
+height:40px;
+
+font-size:18px;
 
 }
 
@@ -1342,6 +1599,21 @@ width:200px;
 
 right:60px;
 height:68px;
+
+}
+
+.top-actions{
+
+gap:6px;
+
+}
+
+.theme-btn{
+
+width:38px;
+height:38px;
+
+font-size:17px;
 
 }
 
@@ -1452,6 +1724,13 @@ font-size:18px;
 
 }
 
+.theme-btn{
+
+width:40px;
+height:40px;
+
+}
+
 .option-item{
 
 width:100%;
@@ -1503,6 +1782,18 @@ border-radius:10px;
 ::-webkit-scrollbar-thumb:hover{
 
 background:var(--orange);
+
+}
+
+body.dark-mode::-webkit-scrollbar-track{
+
+background:#071426;
+
+}
+
+body.dark-mode::-webkit-scrollbar-thumb{
+
+background:#294763;
 
 }
 
@@ -1638,6 +1929,25 @@ id="topStoreName">
 
 </div>
 
+
+<div class="top-actions">
+
+
+<!-- =====================================================
+DARK MODE BUTTON
+===================================================== -->
+
+<button
+type="button"
+id="themeBtn"
+class="theme-btn"
+title="الوضع الليلي">
+
+🌙
+
+</button>
+
+
 <a
 href="#"
 id="viewStoreBtn"
@@ -1646,6 +1956,8 @@ class="view-store-btn">
 👁️ عرض المتجر
 
 </a>
+
+</div>
 
 </div>
 
@@ -1743,20 +2055,17 @@ placeholder="مثال: 250">
 
 
 <!-- =====================================================
-DESCRIPTION - RICH TEXT
+DESCRIPTION
 ===================================================== -->
 
 <div class="form-group">
 
 <label>
-
 وصف المنتج
-
 </label>
 
 
 <div class="editor-wrapper">
-
 
 <div class="editor-toolbar">
 
@@ -1808,21 +2117,37 @@ title="يتوسطه خط">
 id="fontSizeSelect"
 title="حجم الخط">
 
-<option value="">حجم الخط</option>
+<option value="">
+حجم الخط
+</option>
 
-<option value="1">صغير جدًا</option>
+<option value="1">
+صغير جدًا
+</option>
 
-<option value="2">صغير</option>
+<option value="2">
+صغير
+</option>
 
-<option value="3">عادي</option>
+<option value="3">
+عادي
+</option>
 
-<option value="4">متوسط</option>
+<option value="4">
+متوسط
+</option>
 
-<option value="5">كبير</option>
+<option value="5">
+كبير
+</option>
 
-<option value="6">كبير جدًا</option>
+<option value="6">
+كبير جدًا
+</option>
 
-<option value="7">ضخم</option>
+<option value="7">
+ضخم
+</option>
 
 </select>
 
@@ -1911,9 +2236,9 @@ Tx
 id="description"
 class="description-editor"
 contenteditable="true"
-spellcheck="true"
-></div>
+spellcheck="true">
 
+</div>
 
 </div>
 
@@ -2121,6 +2446,78 @@ type="button">
 
 
 /* =====================================================
+DARK MODE
+===================================================== */
+
+const themeBtn =
+document.getElementById("themeBtn");
+
+
+function applyTheme(){
+
+const darkMode =
+localStorage.getItem("gGlamDarkMode") === "true";
+
+if(darkMode){
+
+document.body.classList.add("dark-mode");
+
+themeBtn.textContent = "☀️";
+
+themeBtn.title =
+"تفعيل الوضع النهاري";
+
+}else{
+
+document.body.classList.remove("dark-mode");
+
+themeBtn.textContent = "🌙";
+
+themeBtn.title =
+"تفعيل الوضع الليلي";
+
+}
+
+}
+
+
+themeBtn.addEventListener(
+"click",
+function(){
+
+const isDark =
+document.body.classList.toggle(
+"dark-mode"
+);
+
+localStorage.setItem(
+"gGlamDarkMode",
+isDark
+);
+
+if(isDark){
+
+themeBtn.textContent = "☀️";
+
+themeBtn.title =
+"تفعيل الوضع النهاري";
+
+}else{
+
+themeBtn.textContent = "🌙";
+
+themeBtn.title =
+"تفعيل الوضع الليلي";
+
+}
+
+});
+
+
+applyTheme();
+
+
+/* =====================================================
 FIREBASE IMPORTS
 ===================================================== */
 
@@ -2220,12 +2617,6 @@ document.getElementById("loadingMessage");
 
 const formContainer =
 document.getElementById("formContainer");
-
-const storeNameElement =
-document.getElementById("storeName");
-
-const ownerEmailElement =
-document.getElementById("ownerEmail");
 
 const topStoreName =
 document.getElementById("topStoreName");
@@ -3374,13 +3765,7 @@ document.getElementById(
 "price"
 ).value = "";
 
-
-/*
-مسح محرر الوصف
-*/
-
 descriptionEditor.innerHTML = "";
-
 
 document.getElementById(
 "stock"
