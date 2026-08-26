@@ -8,7 +8,8 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<meta name="theme-color" content="#F47B20">
+<meta name="theme-color"
+content="#F7F7F7">
 
 <title>G-Glam | شركات التوصيل</title>
 
@@ -20,2069 +21,3756 @@ href="https://fonts.gstatic.com"
 crossorigin>
 
 <link
-href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800&display=swap"
 rel="stylesheet">
+
 
 <style>
 
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+:root{
+
+--orange:#F47B20;
+--orange-dark:#DF6810;
+
+--bg:#F7F7F7;
+--card:#FFFFFF;
+
+--dark:#222222;
+--text:#333333;
+--muted:#888888;
+
+--border:#E9E9E9;
+
+--success:#198754;
+--success-bg:#E5F5EC;
+
+--danger:#DC3545;
+--danger-bg:#FBE7EA;
+
+--blue:#1769AA;
+--blue-bg:#EAF4FF;
+
+--shadow:
+0 4px 18px rgba(0,0,0,.06);
+
 }
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+
+box-sizing:border-box;
+
+margin:0;
+padding:0;
+
+font-family:"Tajawal",Arial,sans-serif;
+
+}
+
 
 body{
-    font-family:"Cairo",sans-serif;
-    background:#f6f7f9;
-    color:#222;
-    min-height:100vh;
-}
 
-button,
-input,
-select{
-    font-family:inherit;
-}
+background:var(--bg);
 
-button{
-    cursor:pointer;
-}
+color:var(--text);
 
-/* =========================
-   HEADER
-========================= */
+min-height:100vh;
 
-.header{
-
-    height:78px;
-
-    background:#fff;
-
-    border-bottom:1px solid #e5e5e5;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    padding:0 28px;
-
-    position:sticky;
-
-    top:0;
-
-    z-index:100;
+transition:
+background .3s,
+color .3s;
 
 }
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar{
+
+position:fixed;
+
+right:0;
+top:0;
+
+height:100vh;
+
+width:75px;
+
+background:#EEEEEE;
+
+color:#444;
+
+overflow:hidden;
+
+transition:.3s;
+
+z-index:1100;
+
+box-shadow:
+-3px 0 15px rgba(0,0,0,.04);
+
+border-left:1px solid #E3E3E3;
+
+}
+
+.sidebar:hover{
+
+width:240px;
+
+}
+
+
+/* =====================================================
+   LOGO
+===================================================== */
 
 .logo{
 
-    display:flex;
+height:78px;
 
-    align-items:center;
+display:flex;
 
-    gap:12px;
+align-items:center;
 
-    font-size:23px;
+justify-content:center;
 
-    font-weight:800;
+border-bottom:1px solid #DDDDDD;
 
-    color:#f47b20;
+white-space:nowrap;
+
+padding:10px;
 
 }
 
 .logo img{
 
-    width:48px;
+width:48px;
 
-    height:48px;
+height:48px;
 
-    object-fit:contain;
+object-fit:contain;
 
-}
+display:block;
 
-.back-btn{
-
-    border:none;
-
-    background:#f5f5f5;
-
-    color:#333;
-
-    padding:10px 18px;
-
-    border-radius:12px;
-
-    font-weight:700;
-
-    transition:.2s;
+transition:.3s;
 
 }
 
-.back-btn:hover{
+.sidebar:hover .logo img{
 
-    background:#eeeeee;
+width:130px;
 
-}
-
-/* =========================
-   CONTAINER
-========================= */
-
-.container{
-
-    width:min(1180px,94%);
-
-    margin:30px auto 60px;
+height:55px;
 
 }
 
-/* =========================
-   TITLE
-========================= */
+
+/* =====================================================
+   MENU
+===================================================== */
+
+.menu{
+
+margin-top:18px;
+
+padding:0 10px;
+
+}
+
+.menu a{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+height:52px;
+
+padding:0 10px;
+
+margin-bottom:7px;
+
+border-radius:12px;
+
+color:#555;
+
+text-decoration:none;
+
+white-space:nowrap;
+
+transition:.2s;
+
+}
+
+.menu a:hover{
+
+background:#E3E3E3;
+
+color:#222;
+
+}
+
+.menu a.active{
+
+background:var(--orange);
+
+color:white;
+
+box-shadow:
+0 5px 15px rgba(244,123,32,.22);
+
+}
+
+.icon{
+
+min-width:35px;
+
+text-align:center;
+
+font-size:20px;
+
+}
+
+.text{
+
+opacity:0;
+
+transition:.25s;
+
+font-size:14px;
+
+font-weight:700;
+
+}
+
+.sidebar:hover .text{
+
+opacity:1;
+
+}
+
+
+/* =====================================================
+   TOP BAR
+===================================================== */
+
+.topbar{
+
+position:fixed;
+
+top:0;
+
+right:75px;
+
+left:0;
+
+height:78px;
+
+background:white;
+
+border-bottom:1px solid var(--border);
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:0 25px;
+
+z-index:1000;
+
+box-shadow:
+0 2px 12px rgba(0,0,0,.04);
+
+transition:.3s;
+
+}
+
+
+/* =====================================================
+   STORE TOP
+===================================================== */
+
+.store-top{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+min-width:0;
+
+}
+
+
+.store-image{
+
+width:48px;
+
+height:48px;
+
+border-radius:50%;
+
+object-fit:cover;
+
+background:#F1F1F1;
+
+border:2px solid #FFE0C8;
+
+flex-shrink:0;
+
+}
+
+
+.store-details{
+
+display:flex;
+
+flex-direction:column;
+
+min-width:0;
+
+}
+
+
+.store-label{
+
+font-size:11px;
+
+color:#999;
+
+margin-bottom:2px;
+
+}
+
+
+.store-top-name{
+
+font-size:16px;
+
+font-weight:800;
+
+color:#222;
+
+white-space:nowrap;
+
+overflow:hidden;
+
+text-overflow:ellipsis;
+
+max-width:250px;
+
+}
+
+
+/* =====================================================
+   TOP ACTIONS
+===================================================== */
+
+.topbar-actions{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+}
+
+
+.theme-btn{
+
+width:42px;
+
+height:42px;
+
+border-radius:12px;
+
+border:1px solid #E5E5E5;
+
+background:#F7F7F7;
+
+color:#333;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:20px;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.theme-btn:hover{
+
+background:#FFF1E6;
+
+border-color:#FFD2B0;
+
+transform:translateY(-1px);
+
+}
+
+
+.view-store-btn{
+
+display:flex;
+
+align-items:center;
+
+gap:7px;
+
+background:#FFF1E6;
+
+color:var(--orange-dark);
+
+text-decoration:none;
+
+padding:10px 15px;
+
+border-radius:11px;
+
+font-size:13px;
+
+font-weight:700;
+
+transition:.2s;
+
+white-space:nowrap;
+
+border:1px solid #FFE0CA;
+
+}
+
+.view-store-btn:hover{
+
+background:var(--orange);
+
+color:white;
+
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.content{
+
+margin-right:75px;
+
+padding:103px 25px 30px;
+
+}
+
+
+/* =====================================================
+   PAGE HEADER
+===================================================== */
+
+.page-header{
+
+background:white;
+
+border:1px solid var(--border);
+
+border-radius:18px;
+
+padding:24px;
+
+box-shadow:var(--shadow);
+
+margin-bottom:20px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+gap:20px;
+
+}
 
 .page-title{
 
-    margin-bottom:25px;
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+}
+
+.page-icon{
+
+width:52px;
+
+height:52px;
+
+border-radius:15px;
+
+background:#FFF1E6;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:26px;
 
 }
 
 .page-title h1{
 
-    font-size:28px;
+font-size:23px;
 
-    font-weight:800;
+font-weight:800;
 
-    margin-bottom:7px;
+color:var(--dark);
+
+margin-bottom:4px;
 
 }
 
 .page-title p{
 
-    color:#777;
+font-size:13px;
 
-    font-size:14px;
-
-}
-
-/* =========================
-   NOTICE
-========================= */
-
-.security-notice{
-
-    background:#fff8f2;
-
-    border:1px solid #ffd8ba;
-
-    border-right:5px solid #f47b20;
-
-    border-radius:15px;
-
-    padding:18px 20px;
-
-    margin-bottom:25px;
+color:var(--muted);
 
 }
 
-.security-notice strong{
 
-    display:block;
+/* =====================================================
+   MESSAGE
+===================================================== */
 
-    color:#d9660d;
+.message{
 
-    margin-bottom:6px;
+display:none;
 
-    font-size:15px;
+padding:14px 18px;
 
-}
+border-radius:12px;
 
-.security-notice p{
+margin-bottom:18px;
 
-    color:#666;
+text-align:center;
 
-    font-size:13px;
+font-size:14px;
 
-    line-height:1.8;
-
-}
-
-/* =========================
-   GRID
-========================= */
-
-.grid{
-
-    display:grid;
-
-    grid-template-columns:
-    repeat(auto-fit,minmax(280px,1fr));
-
-    gap:20px;
+font-weight:600;
 
 }
 
-/* =========================
-   COMPANY CARD
-========================= */
+.success{
 
-.company-card{
+background:var(--success-bg);
 
-    background:#fff;
+color:#155724;
 
-    border:1px solid #e7e7e7;
-
-    border-radius:20px;
-
-    padding:22px;
-
-    box-shadow:
-    0 5px 18px rgba(0,0,0,.04);
-
-    transition:.25s;
-
-    position:relative;
+border:1px solid #c5e8d3;
 
 }
 
-.company-card:hover{
+.error{
 
-    transform:translateY(-3px);
+background:var(--danger-bg);
 
-    box-shadow:
-    0 10px 25px rgba(0,0,0,.07);
+color:#721c24;
 
-}
-
-.company-card.selected{
-
-    border:2px solid #f47b20;
+border:1px solid #efc7cc;
 
 }
 
-.company-head{
 
-    display:flex;
+/* =====================================================
+   CURRENT COMPANY
+===================================================== */
 
-    align-items:center;
+.current-box{
 
-    justify-content:space-between;
+background:white;
 
-    margin-bottom:20px;
+border:1px solid var(--border);
 
-}
+border-radius:18px;
 
-.company-info{
+padding:22px;
 
-    display:flex;
+box-shadow:var(--shadow);
 
-    align-items:center;
-
-    gap:13px;
-
-}
-
-.company-icon{
-
-    width:55px;
-
-    height:55px;
-
-    border-radius:15px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    background:#fff3e9;
-
-    font-size:27px;
+margin-bottom:22px;
 
 }
 
-.company-name{
+.current-header{
 
-    font-size:18px;
+display:flex;
 
-    font-weight:800;
+align-items:center;
 
-}
+justify-content:space-between;
 
-.company-code{
-
-    font-size:11px;
-
-    color:#999;
-
-    margin-top:2px;
+margin-bottom:18px;
 
 }
 
-/* =========================
-   STATUS
-========================= */
+.current-header h2{
+
+font-size:18px;
+
+font-weight:800;
+
+color:var(--dark);
+
+}
 
 .status{
 
-    font-size:11px;
+padding:7px 12px;
 
-    padding:5px 9px;
+border-radius:20px;
 
-    border-radius:20px;
+font-size:12px;
 
-    font-weight:700;
+font-weight:800;
 
 }
 
 .status.active{
 
-    color:#18794e;
+background:var(--success-bg);
 
-    background:#e8f8ef;
-
-}
-
-.status.inactive{
-
-    color:#888;
-
-    background:#f1f1f1;
+color:var(--success);
 
 }
 
-/* =========================
-   DESCRIPTION
-========================= */
+.status.none{
 
-.description{
+background:#F2F2F2;
 
-    font-size:13px;
-
-    color:#777;
-
-    line-height:1.8;
-
-    min-height:48px;
-
-    margin-bottom:18px;
+color:#777;
 
 }
 
-/* =========================
-   ACTIONS
-========================= */
+.current-content{
 
-.actions{
+display:flex;
 
-    display:flex;
+align-items:center;
 
-    gap:9px;
+gap:16px;
 
-    flex-wrap:wrap;
+padding:16px;
 
-}
+border-radius:14px;
 
-.btn{
+background:#FAFAFA;
 
-    border:none;
-
-    border-radius:11px;
-
-    padding:10px 13px;
-
-    font-weight:700;
-
-    font-size:12px;
-
-    transition:.2s;
+border:1px solid #EEEEEE;
 
 }
 
-.btn-primary{
+.current-logo{
 
-    background:#f47b20;
+width:58px;
 
-    color:#fff;
+height:58px;
 
-}
+border-radius:14px;
 
-.btn-primary:hover{
+display:flex;
 
-    background:#dc6710;
+align-items:center;
 
-}
+justify-content:center;
 
-.btn-secondary{
+font-size:28px;
 
-    background:#f2f3f5;
+background:#FFF1E6;
 
-    color:#333;
-
-}
-
-.btn-secondary:hover{
-
-    background:#e7e8ea;
+flex-shrink:0;
 
 }
 
-/* =========================
-   DEFAULT BADGE
-========================= */
+.current-info h3{
 
-.default-badge{
+font-size:17px;
 
-    display:none;
+font-weight:800;
 
-    position:absolute;
-
-    top:14px;
-
-    left:14px;
-
-    background:#f47b20;
-
-    color:#fff;
-
-    font-size:10px;
-
-    padding:5px 9px;
-
-    border-radius:20px;
-
-    font-weight:700;
+margin-bottom:5px;
 
 }
 
-.company-card.selected .default-badge{
+.current-info p{
 
-    display:block;
+font-size:13px;
+
+color:var(--muted);
 
 }
 
-/* =========================
+
+/* =====================================================
+   COMPANIES
+===================================================== */
+
+.section-title{
+
+font-size:20px;
+
+font-weight:800;
+
+color:var(--dark);
+
+margin:0 0 16px;
+
+}
+
+.companies{
+
+display:grid;
+
+grid-template-columns:
+repeat(3,1fr);
+
+gap:18px;
+
+}
+
+
+/* =====================================================
+   COMPANY CARD
+===================================================== */
+
+.company-card{
+
+background:white;
+
+border:2px solid var(--border);
+
+border-radius:18px;
+
+padding:20px;
+
+box-shadow:var(--shadow);
+
+transition:.25s;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.company-card:hover{
+
+transform:translateY(-3px);
+
+box-shadow:
+0 9px 28px rgba(0,0,0,.09);
+
+}
+
+.company-card.selected{
+
+border-color:var(--orange);
+
+box-shadow:
+0 7px 25px rgba(244,123,32,.13);
+
+}
+
+.company-card.selected::before{
+
+content:"✓";
+
+position:absolute;
+
+top:12px;
+
+left:12px;
+
+width:28px;
+
+height:28px;
+
+border-radius:50%;
+
+background:var(--orange);
+
+color:white;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-weight:800;
+
+}
+
+
+.company-top{
+
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+margin-bottom:18px;
+
+}
+
+.company-logo{
+
+width:62px;
+
+height:62px;
+
+border-radius:16px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:31px;
+
+background:#F5F5F5;
+
+border:1px solid #E7E7E7;
+
+flex-shrink:0;
+
+}
+
+.company-name{
+
+font-size:18px;
+
+font-weight:800;
+
+color:var(--dark);
+
+margin-bottom:4px;
+
+}
+
+.company-description{
+
+font-size:12px;
+
+color:var(--muted);
+
+line-height:1.7;
+
+}
+
+
+.company-features{
+
+border-top:1px solid var(--border);
+
+padding-top:14px;
+
+margin-bottom:16px;
+
+}
+
+.feature{
+
+display:flex;
+
+align-items:center;
+
+gap:8px;
+
+font-size:13px;
+
+margin-bottom:8px;
+
+color:#555;
+
+}
+
+.feature:last-child{
+
+margin-bottom:0;
+
+}
+
+.feature-icon{
+
+font-size:15px;
+
+}
+
+
+/* =====================================================
+   SELECT BUTTON
+===================================================== */
+
+.select-company{
+
+width:100%;
+
+height:44px;
+
+border:none;
+
+border-radius:11px;
+
+background:#FFF1E6;
+
+color:var(--orange-dark);
+
+font-size:14px;
+
+font-weight:800;
+
+cursor:pointer;
+
+transition:.2s;
+
+}
+
+.select-company:hover{
+
+background:var(--orange);
+
+color:white;
+
+}
+
+.company-card.selected
+.select-company{
+
+background:var(--orange);
+
+color:white;
+
+}
+
+
+/* =====================================================
    SETTINGS
-========================= */
+===================================================== */
 
-.settings-card{
+.settings-section{
 
-    margin-top:25px;
+background:white;
 
-    background:#fff;
+border:1px solid var(--border);
 
-    border:1px solid #e7e7e7;
+border-radius:18px;
 
-    border-radius:20px;
+padding:22px;
 
-    padding:25px;
+box-shadow:var(--shadow);
 
-}
-
-.settings-card h2{
-
-    font-size:19px;
-
-    margin-bottom:6px;
+margin-top:22px;
 
 }
 
-.settings-card>p{
+.settings-title{
 
-    color:#888;
+font-size:19px;
 
-    font-size:13px;
+font-weight:800;
 
-    margin-bottom:22px;
+color:var(--dark);
+
+margin-bottom:5px;
+
+}
+
+.settings-description{
+
+font-size:13px;
+
+color:var(--muted);
+
+margin-bottom:20px;
 
 }
 
 .form-grid{
 
-    display:grid;
+display:grid;
 
-    grid-template-columns:
-    repeat(auto-fit,minmax(230px,1fr));
+grid-template-columns:
+repeat(2,1fr);
 
-    gap:18px;
+gap:16px;
 
 }
 
 .field{
 
-    display:flex;
+display:flex;
 
-    flex-direction:column;
+flex-direction:column;
 
-    gap:7px;
+gap:7px;
+
+}
+
+.field.full{
+
+grid-column:
+1/-1;
 
 }
 
 .field label{
 
-    font-size:13px;
+font-size:13px;
 
-    font-weight:700;
+font-weight:700;
+
+color:var(--dark);
 
 }
 
 .field input,
 .field select{
 
-    width:100%;
+width:100%;
 
-    border:1px solid #ddd;
+height:46px;
 
-    border-radius:11px;
+border:1px solid #DDD;
 
-    padding:12px;
+border-radius:11px;
 
-    outline:none;
+padding:0 13px;
 
-    background:#fff;
+outline:none;
 
-    transition:.2s;
+font-size:14px;
+
+background:white;
+
+color:#333;
+
+transition:.2s;
 
 }
 
 .field input:focus,
 .field select:focus{
 
-    border-color:#f47b20;
+border-color:var(--orange);
 
-    box-shadow:
-    0 0 0 3px rgba(244,123,32,.08);
-
-}
-
-/* =========================
-   TOGGLE
-========================= */
-
-.toggle-row{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    background:#fafafa;
-
-    border:1px solid #eee;
-
-    border-radius:13px;
-
-    padding:13px 15px;
-
-    margin-top:20px;
+box-shadow:
+0 0 0 3px rgba(244,123,32,.10);
 
 }
 
-.toggle-text strong{
 
-    display:block;
+/* =====================================================
+   SECURITY NOTICE
+===================================================== */
 
-    font-size:13px;
+.security{
 
-}
+margin-top:18px;
 
-.toggle-text span{
+padding:15px;
 
-    display:block;
+border-radius:13px;
 
-    font-size:11px;
+background:var(--blue-bg);
 
-    color:#999;
+border:1px solid #CFE6FA;
 
-    margin-top:3px;
+color:#185886;
 
-}
+font-size:13px;
 
-.switch{
-
-    position:relative;
-
-    width:48px;
-
-    height:27px;
+line-height:1.8;
 
 }
 
-.switch input{
+.security strong{
 
-    opacity:0;
-
-    width:0;
-
-    height:0;
+font-weight:800;
 
 }
 
-.slider{
 
-    position:absolute;
-
-    inset:0;
-
-    background:#ccc;
-
-    border-radius:30px;
-
-    transition:.2s;
-
-}
-
-.slider:before{
-
-    content:"";
-
-    position:absolute;
-
-    width:21px;
-
-    height:21px;
-
-    left:3px;
-
-    top:3px;
-
-    background:#fff;
-
-    border-radius:50%;
-
-    transition:.2s;
-
-    box-shadow:0 2px 5px rgba(0,0,0,.15);
-
-}
-
-.switch input:checked + .slider{
-
-    background:#f47b20;
-
-}
-
-.switch input:checked + .slider:before{
-
-    transform:translateX(21px);
-
-}
-
-/* =========================
-   SAVE
-========================= */
+/* =====================================================
+   SAVE BUTTON
+===================================================== */
 
 .save-area{
 
-    margin-top:22px;
+display:flex;
 
-    display:flex;
+justify-content:flex-start;
 
-    justify-content:flex-start;
+margin-top:20px;
 
 }
 
 .save-btn{
 
-    background:#f47b20;
+height:46px;
 
-    color:#fff;
+padding:0 25px;
 
-    border:none;
+border:none;
 
-    border-radius:12px;
+border-radius:11px;
 
-    padding:13px 25px;
+background:var(--orange);
 
-    font-size:14px;
+color:white;
 
-    font-weight:800;
+font-size:14px;
 
-    min-width:150px;
+font-weight:800;
+
+cursor:pointer;
+
+transition:.2s;
+
+}
+
+.save-btn:hover{
+
+background:var(--orange-dark);
+
+transform:translateY(-1px);
 
 }
 
 .save-btn:disabled{
 
-    opacity:.6;
+opacity:.6;
 
-    cursor:not-allowed;
+cursor:not-allowed;
+
+transform:none;
 
 }
 
-/* =========================
+
+/* =====================================================
    LOADING
-========================= */
+===================================================== */
 
 .loading{
 
-    text-align:center;
+padding:35px;
 
-    padding:60px 20px;
+text-align:center;
 
-    color:#888;
+color:var(--muted);
 
-    grid-column:1/-1;
-
-}
-
-.spinner{
-
-    width:35px;
-
-    height:35px;
-
-    border:4px solid #eee;
-
-    border-top-color:#f47b20;
-
-    border-radius:50%;
-
-    margin:0 auto 15px;
-
-    animation:spin .8s linear infinite;
+font-size:14px;
 
 }
 
-@keyframes spin{
 
-    to{
-        transform:rotate(360deg);
-    }
+/* =====================================================
+   DARK MODE
+===================================================== */
 
-}
+@media(min-width:1000px){
 
-/* =========================
-   EMPTY
-========================= */
+body.dark-mode{
 
-.empty{
+--bg:#07111F;
 
-    background:#fff;
+--card:#0D1B2A;
 
-    border:1px dashed #ddd;
+--dark:#F4F7FB;
 
-    border-radius:18px;
+--text:#E8EEF5;
 
-    padding:40px;
+--muted:#AAB7C7;
 
-    text-align:center;
+--border:#1D334A;
 
-    color:#888;
+background:#07111F;
 
-}
-
-/* =========================
-   TOAST
-========================= */
-
-.toast{
-
-    position:fixed;
-
-    bottom:25px;
-
-    right:25px;
-
-    background:#222;
-
-    color:#fff;
-
-    padding:13px 18px;
-
-    border-radius:12px;
-
-    font-size:13px;
-
-    opacity:0;
-
-    transform:translateY(20px);
-
-    pointer-events:none;
-
-    transition:.3s;
-
-    z-index:9999;
-
-    max-width:330px;
+color:#E8EEF5;
 
 }
 
-.toast.show{
 
-    opacity:1;
+/* TOPBAR */
 
-    transform:translateY(0);
+body.dark-mode .topbar{
 
-}
+background:#07111F;
 
-.toast.success{
+border-bottom-color:#172A40;
 
-    background:#16834b;
-
-}
-
-.toast.error{
-
-    background:#c93636;
+box-shadow:
+0 2px 15px rgba(0,0,0,.25);
 
 }
 
-/* =========================
+
+/* SIDEBAR */
+
+body.dark-mode .sidebar{
+
+background:#0A1726;
+
+color:#E8EEF5;
+
+border-left-color:#1A2D42;
+
+box-shadow:
+-4px 0 20px rgba(0,0,0,.35);
+
+}
+
+body.dark-mode .menu a{
+
+color:#C9D4DF;
+
+}
+
+body.dark-mode .menu a:hover{
+
+background:#17283A;
+
+color:#fff;
+
+}
+
+
+/* STORE */
+
+body.dark-mode .store-label{
+
+color:#7F91A6;
+
+}
+
+body.dark-mode .store-top-name{
+
+color:#F4F7FB;
+
+}
+
+body.dark-mode .store-image{
+
+background:#142538;
+
+border-color:#5A3A22;
+
+}
+
+
+/* BUTTONS */
+
+body.dark-mode .theme-btn{
+
+background:#17283A;
+
+color:#FFD28F;
+
+border-color:#29425B;
+
+}
+
+body.dark-mode .view-store-btn{
+
+background:#17283A;
+
+color:#FF8C32;
+
+border-color:#5A3A22;
+
+}
+
+body.dark-mode .view-store-btn:hover{
+
+background:#F47B20;
+
+color:#fff;
+
+}
+
+
+/* CARDS */
+
+body.dark-mode .page-header,
+body.dark-mode .current-box,
+body.dark-mode .company-card,
+body.dark-mode .settings-section{
+
+background:#0D1B2A;
+
+border-color:#1D334A;
+
+box-shadow:
+0 8px 28px rgba(0,0,0,.30);
+
+}
+
+
+/* TEXT */
+
+body.dark-mode .page-title h1,
+body.dark-mode .current-header h2,
+body.dark-mode .company-name,
+body.dark-mode .settings-title,
+body.dark-mode .field label{
+
+color:#F4F7FB;
+
+}
+
+body.dark-mode .page-title p,
+body.dark-mode .company-description,
+body.dark-mode .settings-description{
+
+color:#AAB7C7;
+
+}
+
+
+/* CURRENT */
+
+body.dark-mode .current-content{
+
+background:#102234;
+
+border-color:#1D334A;
+
+}
+
+body.dark-mode .current-info h3{
+
+color:#F4F7FB;
+
+}
+
+body.dark-mode .current-logo{
+
+background:#17283A;
+
+}
+
+
+/* COMPANY */
+
+body.dark-mode .company-logo{
+
+background:#142538;
+
+border-color:#29425B;
+
+}
+
+body.dark-mode .company-features{
+
+border-color:#1D334A;
+
+}
+
+body.dark-mode .feature{
+
+color:#C9D4DF;
+
+}
+
+body.dark-mode .select-company{
+
+background:#17283A;
+
+color:#FF9A4D;
+
+}
+
+body.dark-mode .company-card.selected
+.select-company{
+
+background:#F47B20;
+
+color:#fff;
+
+}
+
+
+/* FORM */
+
+body.dark-mode .field input,
+body.dark-mode .field select{
+
+background:#102234;
+
+color:#F4F7FB;
+
+border-color:#29425B;
+
+}
+
+body.dark-mode .field input:focus,
+body.dark-mode .field select:focus{
+
+border-color:#F47B20;
+
+}
+
+
+/* SECURITY */
+
+body.dark-mode .security{
+
+background:#102A40;
+
+border-color:#214D6D;
+
+color:#9DD7FF;
+
+}
+
+
+/* MESSAGES */
+
+body.dark-mode .success{
+
+background:#173426;
+
+color:#8DE0B2;
+
+border-color:#285B40;
+
+}
+
+body.dark-mode .error{
+
+background:#351B20;
+
+color:#FF8B86;
+
+border-color:#5A292E;
+
+}
+
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media(max-width:1000px){
+
+.companies{
+
+grid-template-columns:
+repeat(2,1fr);
+
+}
+
+}
+
+
+/* =====================================================
    MOBILE
-========================= */
+===================================================== */
 
-@media(max-width:650px){
+@media(max-width:700px){
 
-    .header{
+.sidebar{
 
-        height:70px;
-
-        padding:0 14px;
-
-    }
-
-    .logo{
-
-        font-size:19px;
-
-    }
-
-    .logo img{
-
-        width:42px;
-
-        height:42px;
-
-    }
-
-    .container{
-
-        width:94%;
-
-        margin-top:22px;
-
-    }
-
-    .page-title h1{
-
-        font-size:23px;
-
-    }
-
-    .security-notice{
-
-        padding:15px;
-
-    }
-
-    .company-card{
-
-        padding:18px;
-
-    }
-
-    .settings-card{
-
-        padding:18px;
-
-    }
-
-    .save-area{
-
-        width:100%;
-
-    }
-
-    .save-btn{
-
-        width:100%;
-
-    }
+width:60px;
 
 }
+
+.sidebar:hover{
+
+width:200px;
+
+}
+
+.topbar{
+
+right:60px;
+
+height:68px;
+
+padding:0 12px;
+
+}
+
+.content{
+
+margin-right:60px;
+
+padding:
+83px 12px 25px;
+
+}
+
+.store-image{
+
+width:42px;
+
+height:42px;
+
+}
+
+.store-top-name{
+
+font-size:14px;
+
+max-width:140px;
+
+}
+
+.view-store-btn{
+
+padding:8px 10px;
+
+font-size:11px;
+
+}
+
+.page-header{
+
+padding:18px;
+
+align-items:flex-start;
+
+}
+
+.page-title h1{
+
+font-size:19px;
+
+}
+
+.page-title p{
+
+font-size:12px;
+
+}
+
+.companies{
+
+grid-template-columns:1fr;
+
+}
+
+.form-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.field.full{
+
+grid-column:auto;
+
+}
+
+.current-content{
+
+align-items:flex-start;
+
+}
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media(max-width:380px){
+
+.view-store-btn{
+
+font-size:0;
+
+width:40px;
+
+height:40px;
+
+padding:0;
+
+justify-content:center;
+
+}
+
+.view-store-btn::before{
+
+content:"👁️";
+
+font-size:18px;
+
+}
+
+.page-icon{
+
+width:45px;
+
+height:45px;
+
+font-size:23px;
+
+}
+
+}
+
+
+/* =====================================================
+   SCROLLBAR
+===================================================== */
+
+::-webkit-scrollbar{
+
+width:7px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:#F1F1F1;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:#CCC;
+
+border-radius:10px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+background:var(--orange);
+
+}
+
 
 </style>
 
 </head>
 
+
 <body>
 
-<header class="header">
 
-    <div class="logo">
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
 
-        <!-- إذا كان لديك شعار G-Glam ضع المسار الصحيح هنا -->
+<div class="sidebar">
 
-        <img
-        src="icons/icon-192.png"
-        alt="G-Glam"
-        onerror="this.style.display='none'">
+<div class="logo">
 
-        <span>G-Glam</span>
+<img
+src="logotrans.png"
+alt="G-Glam">
 
-    </div>
+</div>
 
-    <button
-    class="back-btn"
-    onclick="goBack()">
 
-        ← العودة
+<div class="menu">
 
-    </button>
 
-</header>
+<a href="dashboard.html">
 
+<span class="icon">🏠</span>
 
-<main class="container">
+<span class="text">
+الرئيسية
+</span>
 
-    <section class="page-title">
+</a>
 
-        <h1>شركات التوصيل</h1>
 
-        <p>
-            اختر شركة التوصيل التي سيستخدمها متجرك لإرسال الطلبات.
-        </p>
+<a href="orders.html">
 
-    </section>
+<span class="icon">📦</span>
 
+<span class="text">
+الطلبات
+</span>
 
-    <section class="security-notice">
+</a>
 
-        <strong>
-            🔐 نظام آمن لإرسال الشحنات
-        </strong>
 
-        <p>
-            هذه الصفحة لا ترسل الطلبات مباشرة إلى شركات التوصيل،
-            ولا تحتوي على مفاتيح API أو كلمات مرور.
-            عند الضغط على زر 🚚 إرسال الطلب في صفحة الطلبات،
-            سيتم تنفيذ العملية لاحقًا من خلال Firebase Cloud Functions
-            أو Backend آمن.
-        </p>
+<a href="products.html">
 
-    </section>
+<span class="icon">🛍️</span>
 
+<span class="text">
+المنتجات
+</span>
 
-    <section id="companiesContainer"
-             class="grid">
+</a>
 
-        <div class="loading">
 
-            <div class="spinner"></div>
+<a href="add-product.html">
 
-            جارٍ تحميل شركات التوصيل...
+<span class="icon">➕</span>
 
-        </div>
+<span class="text">
+إضافة منتج
+</span>
 
-    </section>
+</a>
 
 
-    <section class="settings-card">
+<a href="delivery-companies.html"
+class="active">
 
-        <h2>إعدادات التوصيل</h2>
+<span class="icon">🚚</span>
 
-        <p>
-            هذه الإعدادات تخص متجرك الحالي فقط.
-        </p>
+<span class="text">
+شركات التوصيل
+</span>
 
+</a>
 
-        <div class="form-grid">
 
-            <div class="field">
+<a href="delivery.html">
 
-                <label>
-                    شركة التوصيل الافتراضية
-                </label>
+<span class="icon">💰</span>
 
-                <select id="defaultCompany">
+<span class="text">
+أسعار التوصيل
+</span>
 
-                    <option value="">
-                        اختر الشركة
-                    </option>
+</a>
 
-                </select>
 
-            </div>
+<a href="settings.html">
 
+<span class="icon">⚙️</span>
 
-            <div class="field">
+<span class="text">
+الإعدادات
+</span>
 
-                <label>
-                    طريقة إرسال الطلب
-                </label>
+</a>
 
-                <select id="sendMode">
 
-                    <option value="backend">
-                        Backend / Cloud Functions
-                    </option>
+<a href="#"
+id="logoutBtn">
 
-                    <option value="manual">
-                        إرسال يدوي
-                    </option>
+<span class="icon">🚪</span>
 
-                </select>
+<span class="text">
+تسجيل الخروج
+</span>
 
-            </div>
+</a>
 
-        </div>
 
+</div>
 
-        <div class="toggle-row">
+</div>
 
-            <div class="toggle-text">
 
-                <strong>
-                    تفعيل إرسال الطلبات للشحن
-                </strong>
+<!-- =====================================================
+     TOP BAR
+===================================================== -->
 
-                <span>
-                    يسمح لصفحة الطلبات بإظهار زر إرسال الشحنة.
-                </span>
+<div class="topbar">
 
-            </div>
 
-            <label class="switch">
+<div class="store-top">
 
-                <input
-                type="checkbox"
-                id="shippingEnabled">
 
-                <span class="slider"></span>
+<img
+id="topStoreImage"
+class="store-image"
+src="logotrans.png"
+alt="صورة المتجر">
 
-            </label>
 
-        </div>
+<div class="store-details">
 
+<div class="store-label">
+متجرك
+</div>
 
-        <div class="save-area">
+<div
+class="store-top-name"
+id="topStoreName">
 
-            <button
-            id="saveSettingsBtn"
-            class="save-btn"
-            onclick="saveSettings()">
+جاري التحميل...
 
-                حفظ الإعدادات
+</div>
 
-            </button>
+</div>
 
-        </div>
+</div>
 
-    </section>
 
-</main>
+<div class="topbar-actions">
 
 
-<div id="toast"
-     class="toast"></div>
+<button
+type="button"
+class="theme-btn"
+id="themeBtn"
+title="الوضع الليلي">
 
+🌙
+
+</button>
+
+
+<a
+href="#"
+id="viewStoreBtn"
+class="view-store-btn">
+
+👁️ عرض المتجر
+
+</a>
+
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     CONTENT
+===================================================== -->
+
+<div class="content">
+
+
+<!-- PAGE HEADER -->
+
+<div class="page-header">
+
+<div class="page-title">
+
+<div class="page-icon">
+🚚
+</div>
+
+<div>
+
+<h1>
+شركات التوصيل
+</h1>
+
+<p>
+اختر شركة التوصيل التي تريد استخدامها لإرسال طلبات متجرك.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- MESSAGES -->
+
+<div
+class="message success"
+id="successMessage">
+</div>
+
+
+<div
+class="message error"
+id="errorMessage">
+</div>
+
+
+<!-- =====================================================
+     CURRENT COMPANY
+===================================================== -->
+
+<div class="current-box">
+
+<div class="current-header">
+
+<h2>
+شركة التوصيل الحالية
+</h2>
+
+<span
+class="status none"
+id="currentStatus">
+
+غير محددة
+
+</span>
+
+</div>
+
+
+<div
+class="current-content"
+id="currentCompany">
+
+<div class="loading">
+
+⏳ جاري تحميل إعدادات التوصيل...
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     COMPANIES
+===================================================== -->
+
+<h2 class="section-title">
+
+اختر شركة التوصيل
+
+</h2>
+
+
+<div class="companies">
+
+
+<!-- YALIDINE -->
+
+<div
+class="company-card"
+id="companyCardYalidine"
+data-company="yalidine">
+
+<div class="company-top">
+
+<div class="company-logo">
+🚚
+</div>
+
+<div>
+
+<div class="company-name">
+Yalidine
+</div>
+
+<div class="company-description">
+خدمة توصيل للطلبات داخل الجزائر.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="company-features">
+
+<div class="feature">
+
+<span class="feature-icon">📍</span>
+
+<span>
+تغطية واسعة للولايات
+</span>
+
+</div>
+
+
+<div class="feature">
+
+<span class="feature-icon">📦</span>
+
+<span>
+إدارة الشحنات والطلبات
+</span>
+
+</div>
+
+
+<div class="feature">
+
+<span class="feature-icon">🔐</span>
+
+<span>
+الربط الفعلي عبر Backend
+</span>
+
+</div>
+
+</div>
+
+
+<button
+class="select-company"
+data-company="yalidine">
+
+اختيار Yalidine
+
+</button>
+
+</div>
+
+
+<!-- ZR -->
+
+<div
+class="company-card"
+id="companyCardZR"
+data-company="zr">
+
+<div class="company-top">
+
+<div class="company-logo">
+🚛
+</div>
+
+<div>
+
+<div class="company-name">
+ZR Express
+</div>
+
+<div class="company-description">
+شركة توصيل للمتاجر والطلبات داخل الجزائر.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="company-features">
+
+<div class="feature">
+
+<span class="feature-icon">📍</span>
+
+<span>
+خدمات توصيل داخل الجزائر
+</span>
+
+</div>
+
+
+<div class="feature">
+
+<span class="feature-icon">📦</span>
+
+<span>
+إدارة الشحنات
+</span>
+
+</div>
+
+
+<div class="feature">
+
+<span class="feature-icon">🔐</span>
+
+<span>
+الربط الفعلي عبر Backend
+</span>
+
+</div>
+
+</div>
+
+
+<button
+class="select-company"
+data-company="zr">
+
+اختيار ZR Express
+
+</button>
+
+</div>
+
+
+<!-- MAYSTRO -->
+
+<div
+class="company-card"
+id="companyCardMaystro"
+data-company="maystro">
+
+<div class="company-top">
+
+<div class="company-logo">
+📦
+</div>
+
+<div>
+
+<div class="company-name">
+Maystro
+</div>
+
+<div class="company-description">
+حلول شحن وتوصيل للمتاجر الإلكترونية.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="company-features">
+
+<div class="feature">
+
+<span class="feature-icon">📍</span>
+
+<span>
+توصيل للطلبات
+</span>
+
+</div>
+
+
+<div class="feature">
+
+<span class="feature-icon">📦</span>
+
+<span>
+متابعة الشحنات
+</span>
+
+</div>
+
+
+<div class="feature">
+
+<span class="feature-icon">🔐</span>
+
+<span>
+الربط الفعلي عبر Backend
+</span>
+
+</div>
+
+</div>
+
+
+<button
+class="select-company"
+data-company="maystro">
+
+اختيار Maystro
+
+</button>
+
+</div>
+
+
+</div>
+
+
+<!-- =====================================================
+     SETTINGS
+===================================================== -->
+
+<div
+class="settings-section"
+id="settingsSection"
+style="display:none;">
+
+<div class="settings-title">
+
+إعدادات شركة التوصيل
+
+</div>
+
+
+<div class="settings-description">
+
+هذه البيانات تحفظ لإعداد الربط مع الشركة.
+لا تضع مفاتيح API السرية هنا؛ سيتم استخدام Backend / Firebase Cloud Functions للاتصال الفعلي بالشركة.
+
+</div>
+
+
+<div class="form-grid">
+
+
+<div class="field">
+
+<label for="companyAccount">
+
+معرّف الحساب / Account ID
+
+</label>
+
+<input
+type="text"
+id="companyAccount"
+placeholder="اختياري">
+
+</div>
+
+
+<div class="field">
+
+<label for="companyCode">
+
+رمز الحساب / Store Code
+
+</label>
+
+<input
+type="text"
+id="companyCode"
+placeholder="اختياري">
+
+</div>
+
+
+<div class="field full">
+
+<label for="companyNote">
+
+ملاحظات
+
+</label>
+
+<input
+type="text"
+id="companyNote"
+placeholder="ملاحظات اختيارية">
+
+</div>
+
+
+</div>
+
+
+<div class="security">
+
+<strong>🔐 حماية المفاتيح:</strong>
+
+لا يتم طلب أو تخزين API Secret أو API Token السري في هذا الملف.
+الربط الفعلي مع API شركات التوصيل يجب أن يتم من الخادم / Cloud Functions حتى لا تظهر المفاتيح في المتصفح.
+
+</div>
+
+
+<div class="save-area">
+
+<button
+class="save-btn"
+id="saveBtn">
+
+💾 حفظ إعدادات شركة التوصيل
+
+</button>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<!-- =====================================================
+     FIREBASE
+===================================================== -->
 
 <script type="module">
 
-/* =========================================================
-   FIREBASE
-========================================================= */
+
+/* =====================================================
+   FIREBASE IMPORTS
+===================================================== */
 
 import {
-    initializeApp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+initializeApp
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
 
 import {
-    getAuth,
-    onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+getFirestore,
+doc,
+getDoc,
+setDoc,
+collection,
+query,
+where,
+getDocs,
+serverTimestamp
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
 
 import {
-    getFirestore,
-    collection,
-    doc,
-    getDocs,
-    getDoc,
-    setDoc,
-    query,
-    where,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+getAuth,
+onAuthStateChanged,
+signOut
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
 
-/* =========================================================
+/* =====================================================
    FIREBASE CONFIG
-   ضع بيانات مشروع G-Glam هنا
-========================================================= */
+===================================================== */
 
 const firebaseConfig = {
 
-    apiKey: "YOUR_FIREBASE_API_KEY",
+apiKey:
+"AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
 
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
+authDomain:
+"g-glam.firebaseapp.com",
 
-    projectId: "YOUR_PROJECT_ID",
+projectId:
+"g-glam",
 
-    storageBucket: "YOUR_PROJECT.appspot.com",
+storageBucket:
+"g-glam.firebasestorage.app",
 
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+messagingSenderId:
+"997228419719",
 
-    appId: "YOUR_FIREBASE_APP_ID"
+appId:
+"1:997228419719:web:f9d88de7ea2c6f457e3622",
 
-};
-
-
-/* =========================================================
-   INIT
-========================================================= */
-
-const app = initializeApp(firebaseConfig);
-
-const auth = getAuth(app);
-
-const db = getFirestore(app);
-
-
-/* =========================================================
-   GLOBAL STATE
-========================================================= */
-
-let currentUser = null;
-
-let companies = [];
-
-let currentSettings = {
-
-    defaultCompanyId: "",
-
-    sendMode: "backend",
-
-    shippingEnabled: false
+measurementId:
+"G-WX1K1F83F6"
 
 };
 
 
-/* =========================================================
-   COMPANY DEFINITIONS
-=========================================================
+/* =====================================================
+   INITIALIZE
+===================================================== */
 
-   هذه ليست مفاتيح API.
+const app =
+initializeApp(firebaseConfig);
 
-   هي فقط معلومات تعريفية عن الشركات.
+const db =
+getFirestore(app);
 
-   Cloud Functions لاحقًا تستخدم provider
-   لمعرفة API الذي يجب استدعاؤه.
-========================================================= */
-
-const fallbackCompanies = [
-
-    {
-        id: "yalidine",
-        name: "Yalidine",
-        provider: "yalidine",
-        backendProvider: "yalidine",
-        icon: "🚚",
-        description:
-        "خدمة توصيل يمكن ربطها لاحقًا مع Backend الخاص بـ G-Glam.",
-        enabled: true
-    },
-
-    {
-        id: "zr",
-        name: "ZR Express",
-        provider: "zr",
-        backendProvider: "zr",
-        icon: "📦",
-        description:
-        "شركة توصيل يمكن ربطها لاحقًا من خلال Firebase Cloud Functions.",
-        enabled: true
-    },
-
-    {
-        id: "maystro",
-        name: "Maystro",
-        provider: "maystro",
-        backendProvider: "maystro",
-        icon: "🛵",
-        description:
-        "خدمة توصيل سيتم تنفيذ الاتصال بها من خلال Backend آمن.",
-        enabled: true
-    }
-
-];
+const auth =
+getAuth(app);
 
 
-/* =========================================================
-   AUTH
-========================================================= */
+/* =====================================================
+   ELEMENTS
+===================================================== */
 
-onAuthStateChanged(auth, async (user) => {
+const themeBtn =
+document.getElementById("themeBtn");
 
-    if(!user){
+const topStoreName =
+document.getElementById("topStoreName");
 
-        showToast(
-            "يجب تسجيل الدخول أولاً.",
-            "error"
-        );
+const topStoreImage =
+document.getElementById("topStoreImage");
 
-        setTimeout(() => {
+const viewStoreBtn =
+document.getElementById("viewStoreBtn");
 
-            window.location.href =
-            "store-login.html";
+const currentCompany =
+document.getElementById("currentCompany");
 
-        },1200);
+const currentStatus =
+document.getElementById("currentStatus");
 
-        return;
+const settingsSection =
+document.getElementById("settingsSection");
 
-    }
+const companyAccount =
+document.getElementById("companyAccount");
+
+const companyCode =
+document.getElementById("companyCode");
+
+const companyNote =
+document.getElementById("companyNote");
+
+const saveBtn =
+document.getElementById("saveBtn");
 
 
-    currentUser = user;
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let currentOwnerUid = "";
+
+let currentOwnerEmail = "";
+
+let currentStoreId = "";
+
+let currentStoreName = "G-Glam";
+
+let currentStore = null;
+
+let selectedCompany = "";
 
 
-    await loadCompanies();
+/* =====================================================
+   COMPANY DATA
+===================================================== */
 
-    await loadStoreSettings();
+const companies = {
+
+yalidine:{
+
+name:"Yalidine",
+
+icon:"🚚",
+
+description:
+"خدمة توصيل للطلبات داخل الجزائر."
+
+},
+
+zr:{
+
+name:"ZR Express",
+
+icon:"🚛",
+
+description:
+"شركة توصيل للمتاجر والطلبات داخل الجزائر."
+
+},
+
+maystro:{
+
+name:"Maystro",
+
+icon:"📦",
+
+description:
+"حلول شحن وتوصيل للمتاجر الإلكترونية."
+
+}
+
+};
+
+
+/* =====================================================
+   THEME
+===================================================== */
+
+function applyTheme(){
+
+const isDesktop =
+window.innerWidth >= 1000;
+
+const savedTheme =
+localStorage.getItem(
+"gGlamDashboardTheme"
+);
+
+
+if(
+isDesktop &&
+savedTheme === "dark"
+){
+
+document.body.classList.add(
+"dark-mode"
+);
+
+themeBtn.textContent =
+"☀️";
+
+themeBtn.title =
+"الوضع الفاتح";
+
+}else{
+
+document.body.classList.remove(
+"dark-mode"
+);
+
+themeBtn.textContent =
+"🌙";
+
+themeBtn.title =
+"الوضع الليلي";
+
+}
+
+}
+
+
+themeBtn.addEventListener(
+"click",
+function(){
+
+if(window.innerWidth < 1000){
+
+return;
+
+}
+
+const isDark =
+document.body.classList.toggle(
+"dark-mode"
+);
+
+localStorage.setItem(
+
+"gGlamDashboardTheme",
+
+isDark
+? "dark"
+: "light"
+
+);
+
+themeBtn.textContent =
+isDark
+? "☀️"
+: "🌙";
+
+themeBtn.title =
+isDark
+? "الوضع الفاتح"
+: "الوضع الليلي";
 
 });
 
 
-/* =========================================================
-   LOAD COMPANIES
-========================================================= */
+window.addEventListener(
+"resize",
+applyTheme
+);
 
-async function loadCompanies(){
+applyTheme();
 
-    const container =
-    document.getElementById(
-        "companiesContainer"
-    );
 
-    try{
+/* =====================================================
+   SHOW MESSAGE
+===================================================== */
 
-        /*
-         * الشركات الأساسية.
-         *
-         * في حال كانت لديك collection باسم
-         * deliveryCompanies في Firestore،
-         * سيتم قراءتها.
-         *
-         * وإذا لم تكن موجودة،
-         * نستخدم الشركات الافتراضية.
-         */
+function showSuccess(text){
 
-        const snapshot =
-        await getDocs(
-            collection(
-                db,
-                "deliveryCompanies"
-            )
-        );
+const box =
+document.getElementById(
+"successMessage"
+);
 
+box.textContent =
+text;
 
-        if(!snapshot.empty){
+box.style.display =
+"block";
 
-            companies =
-            snapshot.docs.map(
-                item => ({
-
-                    id:item.id,
-
-                    ...item.data()
-
-                })
-            );
-
-        }else{
-
-            companies =
-            fallbackCompanies;
-
-        }
-
-
-        renderCompanies();
-
-    }catch(error){
-
-        console.error(
-            "loadCompanies:",
-            error
-        );
-
-
-        companies =
-        fallbackCompanies;
-
-
-        renderCompanies();
-
-    }
-
-}
-
-
-/* =========================================================
-   RENDER
-========================================================= */
-
-function renderCompanies(){
-
-    const container =
-    document.getElementById(
-        "companiesContainer"
-    );
-
-
-    if(!companies.length){
-
-        container.innerHTML = `
-
-            <div class="empty">
-
-                لا توجد شركات توصيل متاحة حالياً.
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    container.innerHTML = "";
-
-
-    companies.forEach(company => {
-
-        const isDefault =
-        currentSettings.defaultCompanyId ===
-        company.id;
-
-
-        const enabled =
-        company.enabled !== false;
-
-
-        const card =
-        document.createElement("div");
-
-
-        card.className =
-        "company-card" +
-        (isDefault ? " selected" : "");
-
-
-        card.id =
-        "company-" + company.id;
-
-
-        card.innerHTML = `
-
-            <div class="default-badge">
-                الافتراضية
-            </div>
-
-
-            <div class="company-head">
-
-                <div class="company-info">
-
-                    <div class="company-icon">
-                        ${company.icon || "🚚"}
-                    </div>
-
-                    <div>
-
-                        <div class="company-name">
-                            ${escapeHtml(
-                                company.name || company.id
-                            )}
-                        </div>
-
-                        <div class="company-code">
-                            ${escapeHtml(
-                                company.provider || company.id
-                            )}
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <span class="status ${
-                    enabled
-                    ? "active"
-                    : "inactive"
-                }">
-
-                    ${
-                        enabled
-                        ? "متاحة"
-                        : "غير متاحة"
-                    }
-
-                </span>
-
-            </div>
-
-
-            <div class="description">
-
-                ${escapeHtml(
-                    company.description || ""
-                )}
-
-            </div>
-
-
-            <div class="actions">
-
-                <button
-                class="btn btn-primary"
-                data-id="${company.id}"
-                data-action="default">
-
-                    ${
-                        isDefault
-                        ? "✓ الشركة الافتراضية"
-                        : "اختيار كافتراضية"
-                    }
-
-                </button>
-
-
-                ${
-                    enabled
-                    ?
-                    `
-                    <button
-                    class="btn btn-secondary"
-                    data-id="${company.id}"
-                    data-action="test">
-
-                        فحص الربط
-
-                    </button>
-                    `
-                    :
-                    ""
-                }
-
-            </div>
-
-        `;
-
-
-        container.appendChild(card);
-
-    });
-
-
-    bindCompanyActions();
-
-    updateDefaultSelect();
-
-}
-
-
-/* =========================================================
-   COMPANY ACTIONS
-========================================================= */
-
-function bindCompanyActions(){
-
-    document
-    .querySelectorAll(
-        "[data-action='default']"
-    )
-    .forEach(button => {
-
-        button.addEventListener(
-            "click",
-            async () => {
-
-                const id =
-                button.dataset.id;
-
-                await chooseDefaultCompany(id);
-
-            }
-        );
-
-    });
-
-
-    document
-    .querySelectorAll(
-        "[data-action='test']"
-    )
-    .forEach(button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                const id =
-                button.dataset.id;
-
-                testBackendConnection(id);
-
-            }
-        );
-
-    });
-
-}
-
-
-/* =========================================================
-   CHOOSE DEFAULT
-========================================================= */
-
-async function chooseDefaultCompany(id){
-
-    const company =
-    companies.find(
-        item => item.id === id
-    );
-
-
-    if(!company){
-
-        showToast(
-            "شركة التوصيل غير موجودة.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    if(company.enabled === false){
-
-        showToast(
-            "هذه الشركة غير متاحة حالياً.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    currentSettings.defaultCompanyId =
-    id;
-
-
-    renderCompanies();
-
-
-    await saveSettings(false);
-
-
-    showToast(
-        "تم اختيار شركة التوصيل الافتراضية.",
-        "success"
-    );
-
-}
-
-
-/* =========================================================
-   LOAD STORE SETTINGS
-========================================================= */
-
-async function loadStoreSettings(){
-
-    if(!currentUser){
-
-        return;
-
-    }
-
-
-    try{
-
-        /*
-         * مهم:
-         * نستخدم UID وليس email.
-         *
-         * المسار:
-         *
-         * stores/{UID}/delivery/settings
-         *
-         * أو يمكن توحيده مع بنية مشروعك الحالية.
-         */
-
-        const settingsRef =
-        doc(
-            db,
-            "stores",
-            currentUser.uid,
-            "delivery",
-            "settings"
-        );
-
-
-        const snapshot =
-        await getDoc(settingsRef);
-
-
-        if(snapshot.exists()){
-
-            const data =
-            snapshot.data();
-
-
-            currentSettings = {
-
-                defaultCompanyId:
-                data.defaultCompanyId || "",
-
-                sendMode:
-                data.sendMode || "backend",
-
-                shippingEnabled:
-                data.shippingEnabled === true
-
-            };
-
-        }
-
-
-        applySettingsToUI();
-
-        renderCompanies();
-
-    }catch(error){
-
-        console.error(
-            "loadStoreSettings:",
-            error
-        );
-
-        showToast(
-            "تعذر تحميل إعدادات التوصيل.",
-            "error"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   APPLY SETTINGS
-========================================================= */
-
-function applySettingsToUI(){
-
-    document.getElementById(
-        "defaultCompany"
-    ).value =
-    currentSettings.defaultCompanyId;
-
-
-    document.getElementById(
-        "sendMode"
-    ).value =
-    currentSettings.sendMode;
-
-
-    document.getElementById(
-        "shippingEnabled"
-    ).checked =
-    currentSettings.shippingEnabled;
-
-}
-
-
-/* =========================================================
-   UPDATE SELECT
-========================================================= */
-
-function updateDefaultSelect(){
-
-    const select =
-    document.getElementById(
-        "defaultCompany"
-    );
-
-
-    select.innerHTML = `
-
-        <option value="">
-            اختر الشركة
-        </option>
-
-    `;
-
-
-    companies
-    .filter(
-        company =>
-        company.enabled !== false
-    )
-    .forEach(company => {
-
-        const option =
-        document.createElement(
-            "option"
-        );
-
-
-        option.value =
-        company.id;
-
-
-        option.textContent =
-        company.name;
-
-
-        select.appendChild(option);
-
-    });
-
-
-    select.value =
-    currentSettings.defaultCompanyId;
-
-
-    select.onchange = () => {
-
-        currentSettings.defaultCompanyId =
-        select.value;
-
-        renderCompanies();
-
-    };
-
-}
-
-
-/* =========================================================
-   SAVE SETTINGS
-========================================================= */
-
-window.saveSettings =
-async function(showMessage = true){
-
-    if(!currentUser){
-
-        showToast(
-            "لم يتم تسجيل الدخول.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    const button =
-    document.getElementById(
-        "saveSettingsBtn"
-    );
-
-
-    if(button){
-
-        button.disabled = true;
-
-        button.textContent =
-        "جارٍ الحفظ...";
-
-    }
-
-
-    try{
-
-        const defaultCompanyId =
-        document.getElementById(
-            "defaultCompany"
-        ).value;
-
-
-        const sendMode =
-        document.getElementById(
-            "sendMode"
-        ).value;
-
-
-        const shippingEnabled =
-        document.getElementById(
-            "shippingEnabled"
-        ).checked;
-
-
-        /*
-         * منع تفعيل الشحن بدون شركة.
-         */
-
-        if(
-            shippingEnabled &&
-            !defaultCompanyId
-        ){
-
-            throw new Error(
-                "اختر شركة توصيل افتراضية أولاً."
-            );
-
-        }
-
-
-        const selectedCompany =
-        companies.find(
-            company =>
-            company.id === defaultCompanyId
-        );
-
-
-        /*
-         * البيانات التي نحفظها لا تحتوي
-         * على API Key أو Secret.
-         */
-
-        const data = {
-
-            ownerUid:
-            currentUser.uid,
-
-            defaultCompanyId:
-            defaultCompanyId,
-
-            defaultProvider:
-            selectedCompany
-            ? selectedCompany.provider
-            : null,
-
-            sendMode:
-            sendMode,
-
-            shippingEnabled:
-            shippingEnabled,
-
-            updatedAt:
-            serverTimestamp()
-
-        };
-
-
-        const settingsRef =
-        doc(
-            db,
-            "stores",
-            currentUser.uid,
-            "delivery",
-            "settings"
-        );
-
-
-        await setDoc(
-            settingsRef,
-            data,
-            {
-                merge:true
-            }
-        );
-
-
-        currentSettings = {
-
-            defaultCompanyId,
-
-            sendMode,
-
-            shippingEnabled
-
-        };
-
-
-        renderCompanies();
-
-
-        if(showMessage){
-
-            showToast(
-                "تم حفظ إعدادات التوصيل بنجاح.",
-                "success"
-            );
-
-        }
-
-    }catch(error){
-
-        console.error(
-            "saveSettings:",
-            error
-        );
-
-
-        showToast(
-            error.message ||
-            "حدث خطأ أثناء حفظ الإعدادات.",
-            "error"
-        );
-
-    }finally{
-
-        if(button){
-
-            button.disabled = false;
-
-            button.textContent =
-            "حفظ الإعدادات";
-
-        }
-
-    }
-
-};
-
-
-/* =========================================================
-   BACKEND TEST
-=========================================================
-
-   مهم جداً:
-
-   هذه الدالة حالياً لا ترسل أي طلب
-   إلى Yalidine / ZR / Maystro.
-
-   لاحقاً يمكن استبدالها باستدعاء
-   Firebase Callable Function مثل:
-
-   httpsCallable(
-       functions,
-       "testDeliveryConnection"
-   )
-
-   بدون وضع API Key في المتصفح.
-========================================================= */
-
-function testBackendConnection(id){
-
-    const company =
-    companies.find(
-        item => item.id === id
-    );
-
-
-    if(!company){
-
-        return;
-
-    }
-
-
-    showToast(
-
-        `الربط مع ${company.name} سيتم فحصه من خلال Backend في المرحلة القادمة.`,
-
-        "success"
-
-    );
-
-}
-
-
-/* =========================================================
-   BACK
-========================================================= */
-
-window.goBack =
+setTimeout(
 function(){
 
-    if(
-        window.history.length > 1
-    ){
+box.style.display =
+"none";
 
-        window.history.back();
-
-    }else{
-
-        window.location.href =
-        "dashboard.html";
-
-    }
-
-};
-
-
-/* =========================================================
-   TOAST
-========================================================= */
-
-function showToast(
-    message,
-    type = ""
-){
-
-    const toast =
-    document.getElementById(
-        "toast"
-    );
-
-
-    toast.textContent =
-    message;
-
-
-    toast.className =
-    "toast show " + type;
-
-
-    clearTimeout(
-        window.toastTimer
-    );
-
-
-    window.toastTimer =
-    setTimeout(
-        () => {
-
-            toast.className =
-            "toast";
-
-        },
-        3500
-    );
+},
+3500
+);
 
 }
 
 
-/* =========================================================
+function showError(text){
+
+const box =
+document.getElementById(
+"errorMessage"
+);
+
+box.textContent =
+text;
+
+box.style.display =
+"block";
+
+setTimeout(
+function(){
+
+box.style.display =
+"none";
+
+},
+5000
+);
+
+}
+
+
+/* =====================================================
+   LOAD STORE
+===================================================== */
+
+async function loadStore(){
+
+try{
+
+const user =
+auth.currentUser;
+
+if(!user){
+
+window.location.href =
+"login.html";
+
+return false;
+
+}
+
+
+currentOwnerUid =
+user.uid;
+
+currentOwnerEmail =
+user.email || "";
+
+
+/* =====================================================
+   FIRST:
+   stores/{UID}
+===================================================== */
+
+let storeSnapshot =
+await getDoc(
+
+doc(
+db,
+"stores",
+currentOwnerUid
+)
+
+);
+
+
+/* =====================================================
+   SECOND:
+   ownerUid == UID
+===================================================== */
+
+if(!storeSnapshot.exists()){
+
+const q =
+query(
+
+collection(
+db,
+"stores"
+),
+
+where(
+"ownerUid",
+"==",
+currentOwnerUid
+)
+
+);
+
+const snapshot =
+await getDocs(q);
+
+if(!snapshot.empty){
+
+storeSnapshot =
+snapshot.docs[0];
+
+}
+
+}
+
+
+/* =====================================================
+   THIRD:
+   ownerEmail == EMAIL
+===================================================== */
+
+if(!storeSnapshot.exists()){
+
+if(currentOwnerEmail){
+
+const q =
+query(
+
+collection(
+db,
+"stores"
+),
+
+where(
+"ownerEmail",
+"==",
+currentOwnerEmail
+)
+
+);
+
+const snapshot =
+await getDocs(q);
+
+if(!snapshot.empty){
+
+storeSnapshot =
+snapshot.docs[0];
+
+}
+
+}
+
+}
+
+
+/* =====================================================
+   NOT FOUND
+===================================================== */
+
+if(!storeSnapshot.exists()){
+
+alert(
+"⚠️ لم يتم العثور على متجر مرتبط بهذا الحساب."
+);
+
+await signOut(auth);
+
+window.location.href =
+"login.html";
+
+return false;
+
+}
+
+
+/* =====================================================
+   STORE DATA
+===================================================== */
+
+currentStore =
+storeSnapshot.data();
+
+currentStoreId =
+storeSnapshot.id;
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+const status =
+
+String(
+currentStore.status ||
+"pending"
+)
+.toLowerCase()
+.trim();
+
+
+if(
+
+status === "pending" ||
+status === "waiting" ||
+status === "review"
+
+){
+
+alert(
+"⏳ طلب إنشاء متجرك مازال قيد المراجعة."
+);
+
+await signOut(auth);
+
+window.location.href =
+"login.html";
+
+return false;
+
+}
+
+
+if(
+
+status === "rejected" ||
+status === "refused"
+
+){
+
+alert(
+"❌ تم رفض طلب إنشاء المتجر."
+);
+
+await signOut(auth);
+
+window.location.href =
+"login.html";
+
+return false;
+
+}
+
+
+if(
+
+status !== "active" &&
+status !== "approved"
+
+){
+
+alert(
+"⚠️ لا يمكنك الدخول إلى لوحة التحكم حاليًا."
+);
+
+await signOut(auth);
+
+window.location.href =
+"login.html";
+
+return false;
+
+}
+
+
+/* =====================================================
+   STORE NAME
+===================================================== */
+
+currentStoreName =
+
+currentStore.storeName ||
+
+currentStore.name ||
+
+"G-Glam";
+
+
+currentOwnerEmail =
+
+currentStore.ownerEmail ||
+
+currentStore.email ||
+
+user.email ||
+
+"";
+
+
+/* =====================================================
+   STORE IMAGE
+===================================================== */
+
+const storeImage =
+
+currentStore.storeImage ||
+
+currentStore.image ||
+
+currentStore.logo ||
+
+currentStore.photoURL ||
+
+"";
+
+
+if(storeImage){
+
+topStoreImage.src =
+storeImage;
+
+}else{
+
+topStoreImage.src =
+"logotrans.png";
+
+}
+
+
+/* =====================================================
+   DISPLAY
+===================================================== */
+
+topStoreName.textContent =
+currentStoreName;
+
+
+viewStoreBtn.href =
+
+"index.html?store=" +
+
+encodeURIComponent(
+currentOwnerUid
+);
+
+
+/* =====================================================
+   LOCAL STORAGE
+===================================================== */
+
+localStorage.setItem(
+"storeId",
+currentOwnerUid
+);
+
+localStorage.setItem(
+"storeDocumentId",
+currentStoreId
+);
+
+localStorage.setItem(
+"storeName",
+currentStoreName
+);
+
+localStorage.setItem(
+"ownerUid",
+currentOwnerUid
+);
+
+localStorage.setItem(
+"ownerEmail",
+currentOwnerEmail
+);
+
+localStorage.setItem(
+"storeOwnerEmail",
+currentOwnerEmail
+);
+
+localStorage.setItem(
+"paymentStatus",
+"approved"
+);
+
+
+/* =====================================================
+   LOAD DELIVERY SETTINGS
+===================================================== */
+
+await loadDeliverySettings();
+
+
+return true;
+
+
+}catch(error){
+
+console.error(
+"LOAD STORE ERROR:",
+error
+);
+
+showError(
+"❌ حدث خطأ أثناء تحميل بيانات المتجر: " +
+error.message
+);
+
+return false;
+
+}
+
+}
+
+
+/* =====================================================
+   DELIVERY SETTINGS DOCUMENT
+=====================================================
+
+   COLLECTION:
+   deliveryCompanies
+
+   DOCUMENT:
+   OWNER UID
+
+   Example:
+
+   deliveryCompanies/
+       USER_UID
+
+   {
+       ownerUid,
+       ownerEmail,
+       storeId,
+       storeName,
+       selectedCompany,
+       companyName,
+       accountId,
+       storeCode,
+       note,
+       active,
+       createdAt,
+       updatedAt
+   }
+
+===================================================== */
+
+async function loadDeliverySettings(){
+
+try{
+
+const ref =
+doc(
+
+db,
+"deliveryCompanies",
+currentOwnerUid
+
+);
+
+
+const snapshot =
+await getDoc(ref);
+
+
+if(!snapshot.exists()){
+
+selectedCompany = "";
+
+updateCurrentCompany();
+
+return;
+
+}
+
+
+const data =
+snapshot.data();
+
+
+/* =====================================================
+   SELECTED COMPANY
+===================================================== */
+
+selectedCompany =
+
+data.selectedCompany ||
+
+data.company ||
+
+"";
+
+
+/* =====================================================
+   FORM DATA
+===================================================== */
+
+companyAccount.value =
+
+data.accountId ||
+
+data.account ||
+
+"";
+
+
+companyCode.value =
+
+data.storeCode ||
+
+data.code ||
+
+"";
+
+
+companyNote.value =
+
+data.note ||
+
+"";
+
+
+/* =====================================================
+   UPDATE UI
+===================================================== */
+
+updateCompanyCards();
+
+updateCurrentCompany();
+
+
+}catch(error){
+
+console.error(
+"DELIVERY SETTINGS ERROR:",
+error
+);
+
+showError(
+"❌ تعذر تحميل إعدادات شركات التوصيل."
+);
+
+}
+
+}
+
+
+/* =====================================================
+   UPDATE COMPANY CARDS
+===================================================== */
+
+function updateCompanyCards(){
+
+document
+.querySelectorAll(
+".company-card"
+)
+.forEach(card => {
+
+const company =
+card.dataset.company;
+
+if(
+company === selectedCompany
+){
+
+card.classList.add(
+"selected"
+);
+
+}else{
+
+card.classList.remove(
+"selected"
+);
+
+}
+
+});
+
+
+document
+.querySelectorAll(
+".select-company"
+)
+.forEach(button => {
+
+const company =
+button.dataset.company;
+
+if(
+company === selectedCompany
+){
+
+button.textContent =
+"✓ الشركة الحالية";
+
+}else{
+
+if(company === "yalidine"){
+
+button.textContent =
+"اختيار Yalidine";
+
+}
+
+if(company === "zr"){
+
+button.textContent =
+"اختيار ZR Express";
+
+}
+
+if(company === "maystro"){
+
+button.textContent =
+"اختيار Maystro";
+
+}
+
+}
+
+});
+
+}
+
+
+/* =====================================================
+   CURRENT COMPANY
+===================================================== */
+
+function updateCurrentCompany(){
+
+if(!selectedCompany){
+
+currentStatus.textContent =
+"غير محددة";
+
+currentStatus.className =
+"status none";
+
+currentCompany.innerHTML = `
+
+<div class="current-logo">
+🚚
+</div>
+
+<div class="current-info">
+
+<h3>
+لم يتم اختيار شركة توصيل
+</h3>
+
+<p>
+اختر شركة من القائمة أدناه لربطها بمتجرك.
+</p>
+
+</div>
+
+`;
+
+settingsSection.style.display =
+"none";
+
+updateCompanyCards();
+
+return;
+
+}
+
+
+const company =
+companies[selectedCompany];
+
+
+if(!company){
+
+return;
+
+}
+
+
+currentStatus.textContent =
+"مفعّلة";
+
+currentStatus.className =
+"status active";
+
+
+currentCompany.innerHTML = `
+
+<div class="current-logo">
+
+${company.icon}
+
+</div>
+
+<div class="current-info">
+
+<h3>
+${escapeHtml(company.name)}
+</h3>
+
+<p>
+${escapeHtml(company.description)}
+</p>
+
+</div>
+
+`;
+
+
+settingsSection.style.display =
+"block";
+
+
+updateCompanyCards();
+
+}
+
+
+/* =====================================================
+   SELECT COMPANY
+===================================================== */
+
+document
+.querySelectorAll(
+".select-company"
+)
+.forEach(button => {
+
+button.addEventListener(
+"click",
+function(){
+
+selectedCompany =
+this.dataset.company;
+
+updateCompanyCards();
+
+updateCurrentCompany();
+
+window.scrollTo({
+
+top:
+document.body.scrollHeight,
+
+behavior:
+"smooth"
+
+});
+
+});
+
+});
+
+
+/* =====================================================
+   SAVE SETTINGS
+===================================================== */
+
+saveBtn.addEventListener(
+"click",
+async function(){
+
+if(!currentOwnerUid){
+
+showError(
+"❌ لم يتم التعرف على حساب صاحب المتجر."
+);
+
+return;
+
+}
+
+
+if(!selectedCompany){
+
+showError(
+"⚠️ اختر شركة توصيل أولًا."
+);
+
+return;
+
+}
+
+
+const company =
+companies[selectedCompany];
+
+
+saveBtn.disabled =
+true;
+
+saveBtn.textContent =
+"⏳ جاري الحفظ...";
+
+
+try{
+
+
+/* =====================================================
+   DOCUMENT REFERENCE
+===================================================== */
+
+const ref =
+doc(
+
+db,
+"deliveryCompanies",
+currentOwnerUid
+
+);
+
+
+/* =====================================================
+   DATA
+===================================================== */
+
+const data = {
+
+ownerUid:
+currentOwnerUid,
+
+ownerEmail:
+currentOwnerEmail,
+
+storeId:
+currentOwnerUid,
+
+storeDocumentId:
+currentStoreId,
+
+storeName:
+currentStoreName,
+
+selectedCompany:
+selectedCompany,
+
+company:
+selectedCompany,
+
+companyName:
+company.name,
+
+accountId:
+companyAccount.value.trim(),
+
+storeCode:
+companyCode.value.trim(),
+
+note:
+companyNote.value.trim(),
+
+active:
+true,
+
+backendConnected:
+false,
+
+updatedAt:
+serverTimestamp()
+
+};
+
+
+/* =====================================================
+   SAVE
+===================================================== */
+
+await setDoc(
+
+ref,
+
+data,
+
+{
+merge:true
+}
+
+);
+
+
+/* =====================================================
+   UPDATE STORE DOCUMENT
+   ALSO KEEP DELIVERY INFO INSIDE STORE
+===================================================== */
+
+try{
+
+const storeRef =
+doc(
+
+db,
+"stores",
+currentStoreId
+
+);
+
+
+await setDoc(
+
+storeRef,
+
+{
+
+deliveryCompany:
+selectedCompany,
+
+deliveryCompanyName:
+company.name,
+
+deliveryCompanyActive:
+true,
+
+deliveryCompanyUpdatedAt:
+serverTimestamp()
+
+},
+
+{
+merge:true
+}
+
+);
+
+}catch(storeUpdateError){
+
+console.warn(
+"STORE DELIVERY UPDATE WARNING:",
+storeUpdateError
+);
+
+}
+
+
+/* =====================================================
+   LOCAL STORAGE
+===================================================== */
+
+localStorage.setItem(
+
+"deliveryCompany",
+
+selectedCompany
+
+);
+
+localStorage.setItem(
+
+"deliveryCompanyName",
+
+company.name
+
+);
+
+
+/* =====================================================
+   SUCCESS
+===================================================== */
+
+showSuccess(
+
+"✅ تم حفظ شركة التوصيل " +
+
+company.name +
+
+" بنجاح."
+
+);
+
+
+updateCurrentCompany();
+
+
+}catch(error){
+
+console.error(
+"SAVE DELIVERY COMPANY ERROR:",
+error
+);
+
+
+showError(
+
+"❌ تعذر حفظ إعدادات شركة التوصيل.\n" +
+
+error.message
+
+);
+
+}finally{
+
+saveBtn.disabled =
+false;
+
+saveBtn.textContent =
+"💾 حفظ إعدادات شركة التوصيل";
+
+}
+
+});
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+document
+.getElementById("logoutBtn")
+.addEventListener(
+"click",
+async function(event){
+
+event.preventDefault();
+
+
+const ok =
+confirm(
+"هل تريد تسجيل الخروج؟"
+);
+
+
+if(!ok){
+
+return;
+
+}
+
+
+try{
+
+await signOut(auth);
+
+
+localStorage.removeItem(
+"storeId"
+);
+
+localStorage.removeItem(
+"storeDocumentId"
+);
+
+localStorage.removeItem(
+"ownerUid"
+);
+
+localStorage.removeItem(
+"ownerEmail"
+);
+
+localStorage.removeItem(
+"storeOwnerEmail"
+);
+
+localStorage.removeItem(
+"storeName"
+);
+
+localStorage.removeItem(
+"paymentStatus"
+);
+
+localStorage.removeItem(
+"deliveryCompany"
+);
+
+localStorage.removeItem(
+"deliveryCompanyName"
+);
+
+
+window.location.href =
+"login.html";
+
+
+}catch(error){
+
+console.error(
+"LOGOUT ERROR:",
+error
+);
+
+showError(
+"❌ تعذر تسجيل الخروج."
+);
+
+}
+
+});
+
+
+/* =====================================================
    ESCAPE HTML
-========================================================= */
+===================================================== */
 
 function escapeHtml(value){
 
-    return String(value ?? "")
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-    .replace(
-        /</g,
-        "&lt;"
-    )
-    .replace(
-        />/g,
-        "&gt;"
-    )
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-    .replace(
-        /'/g,
-        "&#039;"
-    );
+return String(
+value ?? ""
+)
+
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/'/g,
+"&#039;"
+);
 
 }
+
+
+/* =====================================================
+   AUTH
+===================================================== */
+
+onAuthStateChanged(
+
+auth,
+
+async function(user){
+
+if(!user){
+
+window.location.href =
+"login.html";
+
+return;
+
+}
+
+
+currentOwnerUid =
+user.uid;
+
+currentOwnerEmail =
+user.email || "";
+
+
+await loadStore();
+
+});
+
+
+/* =====================================================
+   START
+===================================================== */
+
+console.log(
+"G-Glam Delivery Companies Started"
+);
 
 </script>
 
