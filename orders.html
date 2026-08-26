@@ -62,7 +62,6 @@ rel="stylesheet">
 
 /* =====================================================
    DARK MODE COLORS
-   نفس ألوان dashboard.html
 ===================================================== */
 
 --dark-bg:#07111F;
@@ -986,7 +985,7 @@ border-bottom:none;
 
 
 /* =====================================================
-   ORDER ID
+   ORDER NUMBER
 ===================================================== */
 
 .order-number{
@@ -998,6 +997,8 @@ color:var(--orange);
 direction:ltr;
 
 white-space:nowrap;
+
+font-size:15px;
 
 }
 
@@ -2154,10 +2155,6 @@ align-items:center;
 gap:10px;
 ">
 
-<!-- =====================================================
-     DARK MODE BUTTON
-===================================================== -->
-
 <button
 type="button"
 id="themeToggle"
@@ -2190,10 +2187,6 @@ class="view-store-btn">
 
 <div class="content">
 
-
-<!-- =====================================================
-     MESSAGES
-===================================================== -->
 
 <div
 class="message success"
@@ -3599,54 +3592,25 @@ ordersBody.innerHTML =
 "";
 
 
+/*
+   الرقم التسلسلي يبدأ من 1
+   ويُعطى حسب ترتيب الطلبات:
+   الأحدث = 1
+   ثم 2
+   ثم 3...
+*/
+
 orders.forEach(
-item=>{
+(item,index)=>{
 
 renderOrder(
 item.id,
-item.data
+item.data,
+index + 1
 );
 
 });
 
-
-}
-
-catch(error){
-
-console.error(
-"ORDERS ERROR:",
-error
-);
-
-updateNewOrdersBadge(0);
-
-
-ordersBody.innerHTML = `
-
-<tr>
-
-<td colspan="12">
-
-<div class="empty">
-
-❌ حدث خطأ أثناء تحميل الطلبات.
-
-<br><br>
-
-${escapeHtml(
-error.message
-)}
-
-</div>
-
-</td>
-
-</tr>
-
-`;
-
-}
 
 }
 
@@ -3655,7 +3619,11 @@ error.message
    RENDER ORDER
 ===================================================== */
 
-function renderOrder(id,order){
+function renderOrder(
+id,
+order,
+orderNumber
+){
 
 const tr =
 document.createElement("tr");
@@ -3706,9 +3674,7 @@ tr.innerHTML = `
 
 <div class="order-number">
 
-#${escapeHtml(
-id.slice(-6).toUpperCase()
-)}
+#${orderNumber}
 
 </div>
 
