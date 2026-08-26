@@ -8,6 +8,9 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
+<meta name="theme-color"
+content="#F47B20">
+
 <title>G-Glam | لوحة تحكم المتجر</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,6 +21,10 @@ href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800&
 rel="stylesheet">
 
 <style>
+
+/* =====================================================
+   VARIABLES
+===================================================== */
 
 :root{
 
@@ -41,6 +48,9 @@ rel="stylesheet">
 --danger:#DC3545;
 --danger-bg:#FBE7EA;
 
+--blue:#1769AA;
+--blue-bg:#EAF4FF;
+
 --shadow:0 4px 18px rgba(0,0,0,.06);
 
 }
@@ -58,6 +68,13 @@ margin:0;
 padding:0;
 
 font-family:"Tajawal",Arial,sans-serif;
+
+}
+
+
+html{
+
+scroll-behavior:smooth;
 
 }
 
@@ -301,10 +318,6 @@ min-width:0;
 }
 
 
-/* =====================================================
-   STORE IMAGE
-===================================================== */
-
 .store-image{
 
 width:48px;
@@ -368,7 +381,7 @@ max-width:250px;
 
 
 /* =====================================================
-   TOPBAR ACTIONS
+   TOP ACTIONS
 ===================================================== */
 
 .topbar-actions{
@@ -383,7 +396,7 @@ gap:10px;
 
 
 /* =====================================================
-   DARK MODE BUTTON
+   THEME
 ===================================================== */
 
 .theme-btn{
@@ -525,7 +538,7 @@ border:1px solid #efc7cc;
 
 
 /* =====================================================
-   STATISTICS
+   STATS
 ===================================================== */
 
 .stats{
@@ -613,7 +626,7 @@ color:var(--dark);
 
 display:grid;
 
-grid-template-columns:repeat(2,1fr);
+grid-template-columns:repeat(3,1fr);
 
 gap:18px;
 
@@ -699,6 +712,23 @@ margin-bottom:8px;
 color:var(--muted);
 
 font-size:14px;
+
+}
+
+
+/* =====================================================
+   DELIVERY ACTION
+===================================================== */
+
+.delivery-action::before{
+
+background:#1769AA;
+
+}
+
+.delivery-action h3{
+
+color:#1769AA;
 
 }
 
@@ -982,7 +1012,7 @@ line-height:1.8;
 
 
 /* =====================================================
-   DESKTOP DARK MODE
+   DARK MODE DESKTOP
 ===================================================== */
 
 @media(min-width:1000px){
@@ -990,15 +1020,12 @@ line-height:1.8;
 body.dark-mode{
 
 --bg:#07111F;
-
 --card:#0D1B2A;
 
 --dark:#F4F7FB;
-
 --dark-2:#E8EEF5;
 
 --text:#E8EEF5;
-
 --muted:#AAB7C7;
 
 --border:#1D334A;
@@ -1080,7 +1107,7 @@ border-color:#5A3A22;
 }
 
 
-/* THEME BUTTON */
+/* THEME */
 
 body.dark-mode .theme-btn{
 
@@ -1169,6 +1196,15 @@ color:#F4F7FB;
 }
 
 
+/* DELIVERY */
+
+body.dark-mode .delivery-action h3{
+
+color:#65B7FF;
+
+}
+
+
 /* PRODUCTS */
 
 body.dark-mode .product{
@@ -1213,7 +1249,7 @@ color:#AAB7C7;
 }
 
 
-/* PRODUCT BUTTONS */
+/* BUTTONS */
 
 body.dark-mode .edit-btn{
 
@@ -1304,57 +1340,6 @@ background:#F47B20;
 
 
 /* =====================================================
-   MOBILE TOP BAR
-===================================================== */
-
-@media(max-width:700px){
-
-.topbar{
-
-right:60px;
-
-height:68px;
-
-padding:0 12px;
-
-}
-
-.store-image{
-
-width:42px;
-
-height:42px;
-
-}
-
-.store-top-name{
-
-font-size:14px;
-
-max-width:150px;
-
-}
-
-.view-store-btn{
-
-padding:8px 10px;
-
-font-size:11px;
-
-}
-
-.content{
-
-margin-right:60px;
-
-padding:83px 12px 20px;
-
-}
-
-}
-
-
-/* =====================================================
    TABLET
 ===================================================== */
 
@@ -1365,8 +1350,6 @@ padding:83px 12px 20px;
 grid-template-columns:repeat(3,1fr);
 
 }
-
-/* MOBILE/TABLET ALWAYS LIGHT */
 
 body.dark-mode{
 
@@ -1431,6 +1414,12 @@ font-size:24px;
 
 }
 
+.actions{
+
+grid-template-columns:1fr;
+
+}
+
 .products{
 
 grid-template-columns:repeat(2,1fr);
@@ -1464,6 +1453,8 @@ right:60px;
 
 height:68px;
 
+padding:0 12px;
+
 }
 
 .content{
@@ -1471,6 +1462,36 @@ height:68px;
 padding:83px 12px 20px;
 
 margin-right:60px;
+
+}
+
+.store-image{
+
+width:42px;
+
+height:42px;
+
+}
+
+.store-label{
+
+display:none;
+
+}
+
+.store-top-name{
+
+font-size:14px;
+
+max-width:120px;
+
+}
+
+.view-store-btn{
+
+padding:8px 10px;
+
+font-size:11px;
 
 }
 
@@ -1523,18 +1544,6 @@ gap:10px;
 .product img{
 
 height:150px;
-
-}
-
-.store-label{
-
-display:none;
-
-}
-
-.store-top-name{
-
-max-width:120px;
 
 }
 
@@ -1611,33 +1620,6 @@ border-radius:10px;
 ::-webkit-scrollbar-thumb:hover{
 
 background:var(--orange);
-
-}
-
-
-/* =====================================================
-   DARK SCROLLBAR
-===================================================== */
-
-@media(min-width:1000px){
-
-body.dark-mode::-webkit-scrollbar-track{
-
-background:#07111F;
-
-}
-
-body.dark-mode::-webkit-scrollbar-thumb{
-
-background:#263E57;
-
-}
-
-body.dark-mode::-webkit-scrollbar-thumb:hover{
-
-background:#F47B20;
-
-}
 
 }
 
@@ -1724,6 +1706,21 @@ class="active">
 </a>
 
 
+<!-- =====================================================
+     DELIVERY COMPANIES
+===================================================== -->
+
+<a href="delivery-companies.html">
+
+<span class="icon">🚛</span>
+
+<span class="text">
+شركات التوصيل
+</span>
+
+</a>
+
+
 <a href="settings.html">
 
 <span class="icon">⚙️</span>
@@ -1760,14 +1757,12 @@ id="logoutBtn">
 
 <div class="store-top">
 
-
 <img
 id="topStoreImage"
 class="store-image"
 src="logotrans.png"
 alt="صورة المتجر"
 >
-
 
 <div class="store-details">
 
@@ -1790,10 +1785,6 @@ id="topStoreName">
 
 <div class="topbar-actions">
 
-
-<!-- =====================================================
-     DARK MODE
-===================================================== -->
 
 <button
 type="button"
@@ -1840,6 +1831,10 @@ id="errorMessage">
 </div>
 
 
+<!-- =====================================================
+     STATISTICS
+===================================================== -->
+
 <div class="stats">
 
 
@@ -1850,7 +1845,6 @@ id="errorMessage">
 🛍️ منتجاتي
 
 </div>
-
 
 <div
 class="stat-value"
@@ -1871,7 +1865,6 @@ id="productsCount">
 
 </div>
 
-
 <div
 class="stat-value"
 id="ordersCount">
@@ -1891,7 +1884,6 @@ id="ordersCount">
 
 </div>
 
-
 <div
 class="stat-value"
 id="storeNameStat">
@@ -1902,8 +1894,13 @@ G-Glam
 
 </div>
 
+
 </div>
 
+
+<!-- =====================================================
+     QUICK ACTIONS
+===================================================== -->
 
 <div class="actions">
 
@@ -1913,16 +1910,11 @@ class="action"
 onclick="goAddProduct()">
 
 <h3>
-
 ➕ إضافة منتج
-
 </h3>
 
-
 <p>
-
 إضافة منتج جديد إلى متجرك
-
 </p>
 
 </button>
@@ -1933,16 +1925,26 @@ class="action"
 onclick="goOrders()">
 
 <h3>
-
 📦 الطلبات
-
 </h3>
 
+<p>
+عرض وإدارة طلبات الزبائن
+</p>
+
+</button>
+
+
+<button
+class="action delivery-action"
+onclick="goDeliveryCompanies()">
+
+<h3>
+🚛 شركات التوصيل
+</h3>
 
 <p>
-
-عرض وإدارة طلبات الزبائن
-
+اختيار وإدارة شركات التوصيل لمتجرك
 </p>
 
 </button>
@@ -1951,18 +1953,17 @@ onclick="goOrders()">
 </div>
 
 
-<div class="section">
+<!-- =====================================================
+     PRODUCTS
+===================================================== -->
 
+<div class="section">
 
 <div class="section-header">
 
-
 <h2>
-
 🛍️ أحدث منتجاتي
-
 </h2>
-
 
 <button
 class="add-btn"
@@ -1972,7 +1973,6 @@ onclick="goAddProduct()">
 
 </button>
 
-
 </div>
 
 
@@ -1980,16 +1980,13 @@ onclick="goAddProduct()">
 class="products"
 id="productsContainer">
 
-
 <div class="empty">
 
 ⏳ جاري تحميل المنتجات...
 
 </div>
 
-
 </div>
-
 
 </div>
 
@@ -2077,7 +2074,7 @@ measurementId:
 
 
 /* =====================================================
-   INITIALIZE
+   INITIALIZE FIREBASE
 ===================================================== */
 
 const app =
@@ -2091,13 +2088,52 @@ getAuth(app);
 
 
 /* =====================================================
-   DARK MODE
-   DESKTOP ONLY
+   ELEMENTS
 ===================================================== */
 
 const themeBtn =
 document.getElementById("themeBtn");
 
+const storeNameStat =
+document.getElementById("storeNameStat");
+
+const productsCount =
+document.getElementById("productsCount");
+
+const ordersCount =
+document.getElementById("ordersCount");
+
+const productsContainer =
+document.getElementById("productsContainer");
+
+const topStoreName =
+document.getElementById("topStoreName");
+
+const topStoreImage =
+document.getElementById("topStoreImage");
+
+const viewStoreBtn =
+document.getElementById("viewStoreBtn");
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let currentOwnerUid = "";
+
+let currentOwnerEmail = "";
+
+let currentStoreId = "";
+
+let currentStoreName = "G-Glam";
+
+let currentStore = null;
+
+
+/* =====================================================
+   THEME
+===================================================== */
 
 function applyTheme(){
 
@@ -2142,19 +2178,9 @@ themeBtn.title =
 }
 
 
-/* =====================================================
-   THEME TOGGLE
-===================================================== */
-
 themeBtn.addEventListener(
-
 "click",
-
 function(){
-
-/*
-   الوضع الليلي للكمبيوتر فقط
-*/
 
 if(
 window.innerWidth < 1000
@@ -2163,7 +2189,6 @@ window.innerWidth < 1000
 return;
 
 }
-
 
 const isDark =
 document.body.classList.toggle(
@@ -2196,69 +2221,17 @@ isDark
 });
 
 
-/* =====================================================
-   RESIZE
-===================================================== */
-
 window.addEventListener(
-
 "resize",
-
 applyTheme
-
 );
 
-
-/* =====================================================
-   APPLY SAVED THEME IMMEDIATELY
-===================================================== */
 
 applyTheme();
 
 
 /* =====================================================
-   ELEMENTS
-===================================================== */
-
-const storeNameStat =
-document.getElementById("storeNameStat");
-
-const productsCount =
-document.getElementById("productsCount");
-
-const ordersCount =
-document.getElementById("ordersCount");
-
-const productsContainer =
-document.getElementById("productsContainer");
-
-const topStoreName =
-document.getElementById("topStoreName");
-
-const topStoreImage =
-document.getElementById("topStoreImage");
-
-const viewStoreBtn =
-document.getElementById("viewStoreBtn");
-
-
-/* =====================================================
-   VARIABLES
-===================================================== */
-
-let currentOwnerEmail = "";
-
-let currentOwnerUid = "";
-
-let currentStoreId = "";
-
-let currentStoreName = "G-Glam";
-
-let currentStore = null;
-
-
-/* =====================================================
-   LOAD STORE BY UID
+   LOAD STORE
 ===================================================== */
 
 async function loadStore(){
@@ -2279,16 +2252,19 @@ return false;
 }
 
 
+/* =====================================================
+   AUTH UID
+===================================================== */
+
 currentOwnerUid =
 user.uid;
-
 
 currentOwnerEmail =
 user.email || "";
 
 
 /* =====================================================
-   FIRST METHOD
+   METHOD 1
    stores/{UID}
 ===================================================== */
 
@@ -2306,14 +2282,16 @@ currentOwnerUid
 
 
 /* =====================================================
-   SECOND METHOD
+   METHOD 2
    ownerUid == UID
 ===================================================== */
 
-if(!storeSnapshot.exists()){
+if(
+!storeSnapshot.exists()
+){
 
 console.log(
-"Store document ID is not UID. Searching ownerUid..."
+"Searching store by ownerUid..."
 );
 
 
@@ -2340,7 +2318,9 @@ ownerQuery
 );
 
 
-if(!ownerSnapshot.empty){
+if(
+!ownerSnapshot.empty
+){
 
 storeSnapshot =
 ownerSnapshot.docs[0];
@@ -2351,11 +2331,13 @@ ownerSnapshot.docs[0];
 
 
 /* =====================================================
-   THIRD METHOD
+   METHOD 3
    ownerEmail == EMAIL
 ===================================================== */
 
-if(!storeSnapshot.exists()){
+if(
+!storeSnapshot.exists()
+){
 
 console.log(
 "Searching store by ownerEmail..."
@@ -2387,7 +2369,9 @@ emailQuery
 );
 
 
-if(!emailSnapshot.empty){
+if(
+!emailSnapshot.empty
+){
 
 storeSnapshot =
 emailSnapshot.docs[0];
@@ -2403,7 +2387,9 @@ emailSnapshot.docs[0];
    STORE NOT FOUND
 ===================================================== */
 
-if(!storeSnapshot.exists()){
+if(
+!storeSnapshot.exists()
+){
 
 alert(
 
@@ -2438,7 +2424,7 @@ storeSnapshot.id;
 
 
 /* =====================================================
-   STORE STATUS
+   STATUS
 ===================================================== */
 
 const status =
@@ -2593,7 +2579,7 @@ topStoreImage.src =
 
 
 /* =====================================================
-   DISPLAY STORE
+   DISPLAY
 ===================================================== */
 
 storeNameStat.textContent =
@@ -2707,6 +2693,10 @@ try{
 let snapshot;
 
 
+/* =====================================================
+   ownerUid
+===================================================== */
+
 try{
 
 const q =
@@ -2736,6 +2726,10 @@ error
 );
 
 
+/* =====================================================
+   storeId
+===================================================== */
+
 try{
 
 const q2 =
@@ -2764,6 +2758,10 @@ console.log(
 error2
 );
 
+
+/* =====================================================
+   ownerEmail
+===================================================== */
 
 const q3 =
 query(
@@ -2824,6 +2822,10 @@ return;
 }
 
 
+/* =====================================================
+   PRODUCTS LOOP
+===================================================== */
+
 snapshot.forEach(
 
 productDoc => {
@@ -2833,6 +2835,7 @@ productDoc.data();
 
 const id =
 productDoc.id;
+
 
 const card =
 document.createElement("div");
@@ -2909,7 +2912,6 @@ product.stock || 0
 
 <div class="product-buttons">
 
-
 <button
 class="edit-btn">
 
@@ -2925,11 +2927,14 @@ class="delete-btn">
 
 </button>
 
-
 </div>
 
 `;
 
+
+/* =====================================================
+   EDIT
+===================================================== */
 
 card
 .querySelector(".edit-btn")
@@ -2946,6 +2951,10 @@ encodeURIComponent(id);
 }
 );
 
+
+/* =====================================================
+   DELETE
+===================================================== */
 
 card
 .querySelector(".delete-btn")
@@ -3004,6 +3013,10 @@ try{
 let snapshot;
 
 
+/* =====================================================
+   ownerUid
+===================================================== */
+
 try{
 
 const q =
@@ -3033,6 +3046,10 @@ error
 );
 
 
+/* =====================================================
+   storeId
+===================================================== */
+
 try{
 
 const q2 =
@@ -3055,6 +3072,16 @@ snapshot =
 await getDocs(q2);
 
 }catch(error2){
+
+console.log(
+"storeId orders query failed:",
+error2
+);
+
+
+/* =====================================================
+   ownerEmail
+===================================================== */
 
 const q3 =
 query(
@@ -3178,6 +3205,15 @@ window.location.href =
 };
 
 
+window.goDeliveryCompanies =
+function(){
+
+window.location.href =
+"delivery-companies.html";
+
+};
+
+
 /* =====================================================
    LOGOUT
 ===================================================== */
@@ -3208,6 +3244,10 @@ try{
 
 await signOut(auth);
 
+
+/* =====================================================
+   CLEAR STORE DATA
+===================================================== */
 
 localStorage.removeItem(
 "storeId"
@@ -3260,7 +3300,7 @@ showError(
 
 
 /* =====================================================
-   SUCCESS
+   SUCCESS MESSAGE
 ===================================================== */
 
 function showSuccess(text){
@@ -3293,7 +3333,7 @@ box.style.display =
 
 
 /* =====================================================
-   ERROR
+   ERROR MESSAGE
 ===================================================== */
 
 function showError(text){
@@ -3364,7 +3404,7 @@ value ?? ""
 
 
 /* =====================================================
-   AUTHENTICATION
+   AUTH
 ===================================================== */
 
 onAuthStateChanged(
