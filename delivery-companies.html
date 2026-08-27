@@ -995,6 +995,12 @@ border-left-color:#1A2D42;
 
 }
 
+body.dark-mode .logo{
+
+border-bottom-color:#1A2D42;
+
+}
+
 body.dark-mode .menu a{
 
 color:#C9D4DF;
@@ -1418,7 +1424,8 @@ alt="G-Glam"
 </a>
 
 
-<a href="delivery-companies.html"
+<a
+href="delivery-companies.html"
 class="active">
 
 <span class="icon">
@@ -1445,7 +1452,8 @@ class="active">
 </a>
 
 
-<a href="#"
+<a
+href="#"
 id="logoutBtn">
 
 <span class="icon">
@@ -2115,7 +2123,11 @@ import {
 getFirestore,
 doc,
 getDoc,
-setDoc
+setDoc,
+collection,
+query,
+where,
+getDocs
 
 }
 
@@ -2168,7 +2180,7 @@ measurementId:
 
 
 /* =====================================================
-INITIALIZE
+INITIALIZE FIREBASE
 ===================================================== */
 
 const app =
@@ -2314,7 +2326,7 @@ applyTheme();
 
 
 /* =====================================================
-SHOW MESSAGE
+SHOW SUCCESS
 ===================================================== */
 
 function showSuccess(message){
@@ -2323,6 +2335,14 @@ const box =
 document.getElementById(
 "successMessage"
 );
+
+const errorBox =
+document.getElementById(
+"errorMessage"
+);
+
+errorBox.style.display =
+"none";
 
 box.textContent =
 message;
@@ -2348,12 +2368,24 @@ box.style.display =
 }
 
 
+/* =====================================================
+SHOW ERROR
+===================================================== */
+
 function showError(message){
 
 const box =
 document.getElementById(
 "errorMessage"
 );
+
+const successBox =
+document.getElementById(
+"successMessage"
+);
+
+successBox.style.display =
+"none";
 
 box.textContent =
 message;
@@ -2373,23 +2405,29 @@ box.style.display =
 "none";
 
 },
-5000
+6000
 );
 
 }
 
 
 /* =====================================================
-COMPANY FIELDS
+COMPANIES
 ===================================================== */
 
 const companies = [
+
 "yalidine",
 "zr",
 "maystro",
 "ecotrack"
+
 ];
 
+
+/* =====================================================
+HIDE ALL COMPANY FIELDS
+===================================================== */
 
 function hideAllFields(){
 
@@ -2409,6 +2447,7 @@ fields.classList.remove(
 
 }
 
+
 const card =
 document.querySelector(
 `.company-card[data-company="${company}"]`
@@ -2422,11 +2461,14 @@ card.classList.remove(
 
 }
 
-}
-);
+});
 
 }
 
+
+/* =====================================================
+SHOW COMPANY FIELDS
+===================================================== */
 
 function showCompanyFields(company){
 
@@ -2516,50 +2558,234 @@ currentUid =
 user.uid;
 
 
-/* =====================================================
-FIRST:
-stores/{UID}
-===================================================== */
-
-let storeSnapshot =
-await getDoc(
-
-doc(
-db,
-"stores",
+console.log(
+"G-Glam AUTH UID:",
 currentUid
-)
-
 );
 
 
 /* =====================================================
-SECOND:
-LOCAL STORAGE DOCUMENT
+STORE SNAPSHOT
 ===================================================== */
 
-if(!storeSnapshot.exists()){
+let storeSnapshot = null;
+
+
+/* =====================================================
+METHOD 1:
+stores/{UID}
+===================================================== */
+
+const uidStoreRef =
+doc(
+db,
+"stores",
+currentUid
+);
+
+
+const uidStoreSnapshot =
+await getDoc(
+uidStoreRef
+);
+
+
+if(
+uidStoreSnapshot.exists()
+){
+
+storeSnapshot =
+uidStoreSnapshot;
+
+
+console.log(
+"STORE FOUND BY DOCUMENT UID:",
+currentUid
+);
+
+}
+
+
+/* =====================================================
+METHOD 2:
+SEARCH BY ownerUid
+===================================================== */
+
+if(!storeSnapshot){
+
+console.log(
+"stores/{UID} not found."
+);
+
+console.log(
+"Searching stores by ownerUid..."
+);
+
+
+const storesRef =
+collection(
+db,
+"stores"
+);
+
+
+const ownerQuery =
+query(
+storesRef,
+where(
+"ownerUid",
+"==",
+currentUid
+)
+);
+
+
+const ownerSnapshot =
+await getDocs(
+ownerQuery
+);
+
+
+if(
+!ownerSnapshot.empty
+){
+
+storeSnapshot =
+ownerSnapshot.docs[0];
+
+
+console.log(
+"STORE FOUND BY ownerUid:",
+storeSnapshot.id
+);
+
+}
+
+}
+
+
+/* =====================================================
+METHOD 3:
+SEARCH BY uid FIELD
+===================================================== */
+
+if(!storeSnapshot){
+
+console.log(
+"Searching stores by uid field..."
+);
+
+
+const storesRef =
+collection(
+db,
+"stores"
+);
+
+
+const uidQuery =
+query(
+storesRef,
+where(
+"uid",
+"==",
+currentUid
+)
+);
+
+
+const uidSnapshot =
+await getDocs(
+uidQuery
+);
+
+
+if(
+!uidSnapshot.empty
+){
+
+storeSnapshot =
+uidSnapshot.docs[0];
+
+
+console.log(
+"STORE FOUND BY uid FIELD:",
+storeSnapshot.id
+);
+
+}
+
+}
+
+
+/* =====================================================
+METHOD 4:
+LOCAL STORAGE FALLBACK
+===================================================== */
+
+if(!storeSnapshot){
 
 const localStoreId =
 localStorage.getItem(
 "storeDocumentId"
 );
 
+
 if(
 localStoreId &&
 localStoreId !== currentUid
 ){
 
-storeSnapshot =
-await getDoc(
+console.log(
+"Trying local storeDocumentId:",
+localStoreId
+);
 
+
+const localStoreRef =
 doc(
 db,
 "stores",
 localStoreId
-)
-
 );
+
+
+const localSnapshot =
+await getDoc(
+localStoreRef
+);
+
+
+if(
+localSnapshot.exists()
+){
+
+const localData =
+localSnapshot.data();
+
+
+const localOwnerUid =
+localData.ownerUid ||
+localData.uid ||
+"";
+
+
+if(
+localOwnerUid === currentUid
+){
+
+storeSnapshot =
+localSnapshot;
+
+
+console.log(
+"STORE FOUND BY LOCAL STORAGE:",
+localStoreId
+);
+
+}
+
+}
 
 }
 
@@ -2570,16 +2796,31 @@ localStoreId
 NOT FOUND
 ===================================================== */
 
-if(!storeSnapshot.exists()){
+if(!storeSnapshot){
+
+console.error(
+"STORE NOT FOUND"
+);
+
+console.error(
+"AUTH UID:",
+currentUid
+);
+
 
 showError(
 "لم يتم العثور على متجر مرتبط بهذا الحساب."
 );
 
+
 return false;
 
 }
 
+
+/* =====================================================
+STORE DATA
+===================================================== */
 
 currentStore =
 storeSnapshot.data();
@@ -2588,8 +2829,53 @@ currentStoreId =
 storeSnapshot.id;
 
 
+console.log(
+"CURRENT STORE DOCUMENT ID:",
+currentStoreId
+);
+
+console.log(
+"CURRENT STORE DATA:",
+currentStore
+);
+
+
 /* =====================================================
-STATUS
+OWNER SECURITY CHECK
+===================================================== */
+
+if(
+currentStore.ownerUid &&
+currentStore.ownerUid !== currentUid
+){
+
+console.error(
+"OWNER UID MISMATCH"
+);
+
+console.error(
+"AUTH UID:",
+currentUid
+);
+
+console.error(
+"STORE OWNER UID:",
+currentStore.ownerUid
+);
+
+
+showError(
+"هذا المتجر غير مرتبط بحسابك."
+);
+
+
+return false;
+
+}
+
+
+/* =====================================================
+STORE STATUS
 ===================================================== */
 
 const status =
@@ -2602,9 +2888,13 @@ currentStore.status ||
 
 
 if(
+
 status === "pending" ||
+
 status === "waiting" ||
+
 status === "review"
+
 ){
 
 showError(
@@ -2617,8 +2907,11 @@ return false;
 
 
 if(
+
 status === "rejected" ||
+
 status === "refused"
+
 ){
 
 showError(
@@ -2639,6 +2932,10 @@ const storeName =
 currentStore.storeName ||
 
 currentStore.name ||
+
+currentStore.shopName ||
+
+currentStore.title ||
 
 "G-Glam";
 
@@ -2666,6 +2963,21 @@ currentStore.photoURL ||
 
 topStoreImage.src =
 image;
+
+
+/* =====================================================
+STORE IMAGE ERROR FALLBACK
+===================================================== */
+
+topStoreImage.onerror =
+function(){
+
+this.onerror = null;
+
+this.src =
+"logotrans.png";
+
+};
 
 
 /* =====================================================
@@ -2721,10 +3033,12 @@ console.error(
 error
 );
 
+
 showError(
 "تعذر تحميل بيانات المتجر: " +
 error.message
 );
+
 
 return false;
 
@@ -2750,11 +3064,18 @@ const settings =
 currentStore.deliveryCompany ||
 {};
 
+
 const provider =
 settings.provider ||
+
 currentStore.deliveryProvider ||
+
 "";
 
+
+/* =====================================================
+ACTIVE COMPANY
+===================================================== */
 
 if(provider){
 
@@ -2763,9 +3084,11 @@ document.querySelector(
 `input[name="deliveryCompany"][value="${provider}"]`
 );
 
+
 if(radio){
 
-radio.checked = true;
+radio.checked =
+true;
 
 showCompanyFields(
 provider
@@ -2784,11 +3107,14 @@ companies.forEach(
 company => {
 
 const config =
+
 (
 currentStore.deliveryCompanies &&
 currentStore.deliveryCompanies[company]
 )
+
 ||
+
 {};
 
 
@@ -2824,7 +3150,94 @@ badge.className =
 
 
 /* =====================================================
-LOAD NON-SENSITIVE SETTINGS
+YALIDINE
+===================================================== */
+
+if(
+provider === "yalidine"
+){
+
+const config =
+
+(
+currentStore.deliveryCompanies &&
+currentStore.deliveryCompanies.yalidine
+)
+
+||
+
+{};
+
+
+document.getElementById(
+"yalidineApiUrl"
+).value =
+config.apiUrl ||
+"";
+
+}
+
+
+/* =====================================================
+ZR
+===================================================== */
+
+if(
+provider === "zr"
+){
+
+const config =
+
+(
+currentStore.deliveryCompanies &&
+currentStore.deliveryCompanies.zr
+)
+
+||
+
+{};
+
+
+document.getElementById(
+"zrApiUrl"
+).value =
+config.apiUrl ||
+"";
+
+}
+
+
+/* =====================================================
+MAYSTRO
+===================================================== */
+
+if(
+provider === "maystro"
+){
+
+const config =
+
+(
+currentStore.deliveryCompanies &&
+currentStore.deliveryCompanies.maystro
+)
+
+||
+
+{};
+
+
+document.getElementById(
+"maystroApiUrl"
+).value =
+config.apiUrl ||
+"";
+
+}
+
+
+/* =====================================================
+ECOTRACK
 ===================================================== */
 
 if(
@@ -2832,11 +3245,14 @@ provider === "ecotrack"
 ){
 
 const config =
+
 (
 currentStore.deliveryCompanies &&
 currentStore.deliveryCompanies.ecotrack
 )
+
 ||
+
 {};
 
 
@@ -2855,72 +3271,6 @@ config.clientId ||
 
 }
 
-
-if(
-provider === "yalidine"
-){
-
-const config =
-(
-currentStore.deliveryCompanies &&
-currentStore.deliveryCompanies.yalidine
-)
-||
-{};
-
-
-document.getElementById(
-"yalidineApiUrl"
-).value =
-config.apiUrl ||
-"";
-
-}
-
-
-if(
-provider === "zr"
-){
-
-const config =
-(
-currentStore.deliveryCompanies &&
-currentStore.deliveryCompanies.zr
-)
-||
-{};
-
-
-document.getElementById(
-"zrApiUrl"
-).value =
-config.apiUrl ||
-"";
-
-}
-
-
-if(
-provider === "maystro"
-){
-
-const config =
-(
-currentStore.deliveryCompanies &&
-currentStore.deliveryCompanies.maystro
-)
-||
-{};
-
-
-document.getElementById(
-"maystroApiUrl"
-).value =
-config.apiUrl ||
-"";
-
-}
-
 }
 
 
@@ -2934,6 +3284,7 @@ const selected =
 document.querySelector(
 'input[name="deliveryCompany"]:checked'
 );
+
 
 return selected
 ? selected.value
@@ -2961,6 +3312,17 @@ return;
 }
 
 
+if(!currentStore){
+
+showError(
+"لم يتم تحميل بيانات المتجر."
+);
+
+return;
+
+}
+
+
 const provider =
 getSelectedCompany();
 
@@ -2979,15 +3341,19 @@ return;
 saveBtn.disabled =
 true;
 
+
 saveBtn.innerHTML =
-'<i class="fa-solid fa-spinner fa-spin"></i><span>جاري الحفظ...</span>';
+
+'<i class="fa-solid fa-spinner fa-spin"></i>' +
+
+'<span>جاري الحفظ...</span>';
 
 
 try{
 
 
 /* =====================================================
-CURRENT COMPANY NAME
+COMPANY NAMES
 ===================================================== */
 
 const names = {
@@ -3008,7 +3374,7 @@ ecotrack:
 
 
 /* =====================================================
-DELIVERY COMPANIES
+EXISTING DELIVERY COMPANIES
 ===================================================== */
 
 const deliveryCompanies = {
@@ -3016,40 +3382,6 @@ const deliveryCompanies = {
 ...(currentStore.deliveryCompanies || {})
 
 };
-
-
-/* =====================================================
-ECOTRACK
-===================================================== */
-
-if(
-provider === "ecotrack"
-){
-
-deliveryCompanies.ecotrack = {
-
-enabled:true,
-
-configured:true,
-
-name:"EcoTrack",
-
-apiUrl:
-document.getElementById(
-"ecotrackApiUrl"
-).value.trim(),
-
-clientId:
-document.getElementById(
-"ecotrackClientId"
-).value.trim(),
-
-updatedAt:
-new Date().toISOString()
-
-};
-
-}
 
 
 /* =====================================================
@@ -3140,23 +3472,44 @@ new Date().toISOString()
 
 
 /* =====================================================
-STORE UPDATE
+ECOTRACK
 ===================================================== */
 
-const storeRef =
-doc(
-db,
-"stores",
-currentUid
-);
+if(
+provider === "ecotrack"
+){
+
+deliveryCompanies.ecotrack = {
+
+enabled:true,
+
+configured:true,
+
+name:"EcoTrack",
+
+apiUrl:
+document.getElementById(
+"ecotrackApiUrl"
+).value.trim(),
+
+clientId:
+document.getElementById(
+"ecotrackClientId"
+).value.trim(),
+
+updatedAt:
+new Date().toISOString()
+
+};
+
+}
 
 
-const updateData = {
+/* =====================================================
+DELIVERY COMPANY
+===================================================== */
 
-ownerUid:
-currentUid,
-
-deliveryCompany: {
+const deliveryCompany = {
 
 active:true,
 
@@ -3171,7 +3524,20 @@ configured:true,
 updatedAt:
 new Date().toISOString()
 
-},
+};
+
+
+/* =====================================================
+STORE UPDATE DATA
+===================================================== */
+
+const updateData = {
+
+ownerUid:
+currentUid,
+
+deliveryCompany:
+deliveryCompany,
 
 deliveryCompanies:
 deliveryCompanies
@@ -3180,22 +3546,9 @@ deliveryCompanies
 
 
 /* =====================================================
-UPDATE STORE
+IMPORTANT:
+UPDATE REAL STORE DOCUMENT
 ===================================================== */
-
-if(
-currentStoreId === currentUid
-){
-
-await setDoc(
-storeRef,
-updateData,
-{
-merge:true
-}
-);
-
-}else{
 
 await setDoc(
 
@@ -3214,14 +3567,21 @@ merge:true
 );
 
 
-/*
-نحافظ على stores/{UID}
-ليصبح الربط متوافقًا مع dashboard.
-*/
+/* =====================================================
+KEEP stores/{UID} IN SYNC
+===================================================== */
+
+if(
+currentStoreId !== currentUid
+){
 
 await setDoc(
 
-storeRef,
+doc(
+db,
+"stores",
+currentUid
+),
 
 {
 
@@ -3229,10 +3589,10 @@ ownerUid:
 currentUid,
 
 deliveryCompany:
-updateData.deliveryCompany,
+deliveryCompany,
 
 deliveryCompanies:
-updateData.deliveryCompanies
+deliveryCompanies
 
 },
 
@@ -3242,20 +3602,25 @@ merge:true
 
 );
 
+}
+
 
 /* =====================================================
-UPDATE LOCAL
+UPDATE LOCAL DATA
 ===================================================== */
 
 currentStore.deliveryCompany =
-updateData.deliveryCompany;
+deliveryCompany;
 
 currentStore.deliveryCompanies =
-updateData.deliveryCompanies;
+deliveryCompanies;
+
+currentStore.ownerUid =
+currentUid;
 
 
 /* =====================================================
-BADGES
+UPDATE BADGES
 ===================================================== */
 
 companies.forEach(
@@ -3266,28 +3631,18 @@ document.getElementById(
 company + "Badge"
 );
 
-if(
-company === provider
-){
 
-badge.textContent =
-"مفعلة";
+const config =
 
-badge.className =
-"badge badge-active";
+deliveryCompanies[company] ||
 
-}else{
+{};
 
-const existing =
-currentStore.deliveryCompanies &&
-currentStore.deliveryCompanies[company];
 
 if(
-existing &&
-(
-existing.enabled ||
-existing.configured
-)
+company === provider ||
+config.enabled ||
+config.configured
 ){
 
 badge.textContent =
@@ -3306,10 +3661,12 @@ badge.className =
 
 }
 
-}
-
 });
 
+
+/* =====================================================
+SUCCESS
+===================================================== */
 
 showSuccess(
 "تم حفظ شركة " +
@@ -3325,18 +3682,24 @@ console.error(
 error
 );
 
+
 showError(
 "حدث خطأ أثناء حفظ إعدادات شركة التوصيل. " +
 error.message
 );
+
 
 }finally{
 
 saveBtn.disabled =
 false;
 
+
 saveBtn.innerHTML =
-'<i class="fa-solid fa-floppy-disk"></i><span>حفظ إعدادات شركة التوصيل</span>';
+
+'<i class="fa-solid fa-floppy-disk"></i>' +
+
+'<span>حفظ إعدادات شركة التوصيل</span>';
 
 }
 
@@ -3373,6 +3736,11 @@ try{
 
 await signOut(auth);
 
+
+/* =====================================================
+CLEAR USER LOCAL DATA
+===================================================== */
+
 localStorage.removeItem(
 "storeId"
 );
@@ -3401,6 +3769,7 @@ localStorage.removeItem(
 "paymentStatus"
 );
 
+
 window.location.href =
 "login.html";
 
@@ -3412,6 +3781,7 @@ console.error(
 error
 );
 
+
 showError(
 "تعذر تسجيل الخروج."
 );
@@ -3422,7 +3792,7 @@ showError(
 
 
 /* =====================================================
-AUTH
+AUTH STATE
 ===================================================== */
 
 onAuthStateChanged(
@@ -3437,6 +3807,20 @@ window.location.href =
 return;
 
 }
+
+
+currentUser =
+user;
+
+currentUid =
+user.uid;
+
+
+console.log(
+"AUTHENTICATED USER UID:",
+currentUid
+);
+
 
 await loadStore();
 
