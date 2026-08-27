@@ -8,6 +8,9 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
+<meta name="theme-color"
+content="#F47B20">
+
 <title>G-Glam | أسعار التوصيل</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,6 +19,18 @@ content="width=device-width, initial-scale=1.0">
 <link
 href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800&display=swap"
 rel="stylesheet">
+
+<!-- =====================================================
+     FONT AWESOME
+===================================================== -->
+
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+crossorigin="anonymous"
+referrerpolicy="no-referrer"
+>
+
 
 <style>
 
@@ -55,6 +70,7 @@ rel="stylesheet">
 
 --shadow:0 4px 18px rgba(0,0,0,.06);
 
+
 /* =====================================================
    NIGHT BLUE
 ===================================================== */
@@ -62,10 +78,13 @@ rel="stylesheet">
 --night:#0B1F3A;
 --night-2:#102B4F;
 --night-3:#163A67;
+
 --night-text:#EAF3FF;
 --night-muted:#9FB4CC;
+
 --night-border:#24476F;
 --night-input:#102A49;
+
 --night-table:#0F2948;
 --night-hover:#16375D;
 
@@ -250,16 +269,39 @@ box-shadow:
 }
 
 
+/* =====================================================
+   FONT AWESOME ICON
+===================================================== */
+
 .icon{
 
 min-width:35px;
 
-text-align:center;
+width:35px;
 
-font-size:20px;
+height:35px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:18px;
 
 }
 
+
+.icon i{
+
+display:block;
+
+}
+
+
+/* =====================================================
+   MENU TEXT
+===================================================== */
 
 .text{
 
@@ -435,7 +477,7 @@ align-items:center;
 
 justify-content:center;
 
-font-size:20px;
+font-size:18px;
 
 cursor:pointer;
 
@@ -456,6 +498,13 @@ background:var(--night);
 color:white;
 
 transform:translateY(-1px);
+
+}
+
+
+.theme-toggle i{
+
+transition:.25s;
 
 }
 
@@ -500,6 +549,13 @@ border:1px solid #FFE0CA;
 background:var(--orange);
 
 color:white;
+
+}
+
+
+.view-store-btn i{
+
+font-size:15px;
 
 }
 
@@ -618,6 +674,14 @@ color:white;
 box-shadow:
 0 4px 10px rgba(244,123,32,.18);
 
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:8px;
+
 }
 
 
@@ -643,11 +707,22 @@ cursor:not-allowed;
    SEARCH
 ===================================================== */
 
+.search-wrapper{
+
+position:relative;
+
+width:100%;
+
+margin-bottom:18px;
+
+}
+
+
 .search{
 
 width:100%;
 
-padding:13px 15px;
+padding:13px 45px 13px 15px;
 
 border:1px solid var(--border);
 
@@ -661,11 +736,28 @@ background:var(--input);
 
 color:var(--text);
 
-margin-bottom:18px;
-
 transition:.2s;
 
 font-family:"Tajawal",Arial,sans-serif;
+
+}
+
+
+.search-icon{
+
+position:absolute;
+
+right:16px;
+
+top:50%;
+
+transform:translateY(-50%);
+
+color:var(--muted);
+
+font-size:15px;
+
+pointer-events:none;
 
 }
 
@@ -685,6 +777,13 @@ background:white;
 
 box-shadow:
 0 0 0 3px rgba(244,123,32,.08);
+
+}
+
+
+.search:focus + .search-icon{
+
+color:var(--orange);
 
 }
 
@@ -799,6 +898,14 @@ font-weight:700;
 
 transition:.2s;
 
+display:inline-flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:6px;
+
 }
 
 
@@ -836,6 +943,14 @@ background:#F6D1D6;
 }
 
 
+.edit-btn i,
+.delete-btn i{
+
+font-size:13px;
+
+}
+
+
 /* =====================================================
    EMPTY
 ===================================================== */
@@ -851,6 +966,13 @@ color:var(--muted);
 font-size:14px;
 
 line-height:1.8;
+
+}
+
+
+.loading-icon{
+
+margin-left:6px;
 
 }
 
@@ -1073,6 +1195,14 @@ font-size:14px;
 
 font-weight:700;
 
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:7px;
+
 }
 
 
@@ -1282,6 +1412,20 @@ background:#153657;
 }
 
 
+body.dark-mode .search-icon{
+
+color:#9FB4CC;
+
+}
+
+
+body.dark-mode .search:focus + .search-icon{
+
+color:var(--orange);
+
+}
+
+
 body.dark-mode .table-container{
 
 border-color:var(--night-border);
@@ -1299,6 +1443,13 @@ color:#DCE9F7;
 body.dark-mode td{
 
 color:#DCE9F7;
+
+}
+
+
+body.dark-mode .price{
+
+color:#FFB56E;
 
 }
 
@@ -1586,9 +1737,7 @@ justify-content:center;
 }
 
 
-.view-store-btn::before{
-
-content:"👁️";
+.view-store-btn i{
 
 font-size:18px;
 
@@ -1754,7 +1903,9 @@ alt="G-Glam"
 
 <a href="dashboard.html">
 
-<span class="icon">🏠</span>
+<span class="icon">
+<i class="fa-solid fa-house"></i>
+</span>
 
 <span class="text">
 الرئيسية
@@ -1765,7 +1916,9 @@ alt="G-Glam"
 
 <a href="orders.html">
 
-<span class="icon">📦</span>
+<span class="icon">
+<i class="fa-solid fa-box"></i>
+</span>
 
 <span class="text">
 الطلبات
@@ -1776,7 +1929,9 @@ alt="G-Glam"
 
 <a href="products.html">
 
-<span class="icon">🛍️</span>
+<span class="icon">
+<i class="fa-solid fa-bag-shopping"></i>
+</span>
 
 <span class="text">
 المنتجات
@@ -1787,7 +1942,9 @@ alt="G-Glam"
 
 <a href="add-product.html">
 
-<span class="icon">➕</span>
+<span class="icon">
+<i class="fa-solid fa-plus"></i>
+</span>
 
 <span class="text">
 إضافة منتج
@@ -1799,7 +1956,9 @@ alt="G-Glam"
 <a href="delivery.html"
 class="active">
 
-<span class="icon">🚚</span>
+<span class="icon">
+<i class="fa-solid fa-truck"></i>
+</span>
 
 <span class="text">
 أسعار التوصيل
@@ -1810,7 +1969,9 @@ class="active">
 
 <a href="settings.html">
 
-<span class="icon">⚙️</span>
+<span class="icon">
+<i class="fa-solid fa-gear"></i>
+</span>
 
 <span class="text">
 الإعدادات
@@ -1822,7 +1983,9 @@ class="active">
 <a href="#"
 id="logoutBtn">
 
-<span class="icon">🚪</span>
+<span class="icon">
+<i class="fa-solid fa-right-from-bracket"></i>
+</span>
 
 <span class="text">
 تسجيل الخروج
@@ -1892,7 +2055,7 @@ class="theme-toggle"
 title="الوضع الليلي"
 aria-label="تبديل الوضع الليلي">
 
-🌙
+<i class="fa-solid fa-moon"></i>
 
 </button>
 
@@ -1902,13 +2065,16 @@ href="#"
 id="viewStoreBtn"
 class="view-store-btn">
 
-👁️ عرض المتجر
+<i class="fa-solid fa-eye"></i>
+
+<span>
+عرض المتجر
+</span>
 
 </a>
 
 
 </div>
-
 
 </div>
 
@@ -1944,13 +2110,16 @@ class="view-store-btn">
 class="add-btn"
 id="addBtn">
 
-➕ إضافة ولاية
+<i class="fa-solid fa-plus"></i>
+
+<span>
+إضافة ولاية
+</span>
 
 </button>
 
 
 </div>
-
 
 </div>
 
@@ -1975,11 +2144,17 @@ class="message error">
      SEARCH
 ===================================================== -->
 
+<div class="search-wrapper">
+
 <input
 id="searchInput"
 class="search"
 type="search"
-placeholder="🔎 البحث عن ولاية...">
+placeholder="البحث عن ولاية...">
+
+<i class="fa-solid fa-magnifying-glass search-icon"></i>
+
+</div>
 
 
 <!-- =====================================================
@@ -2033,7 +2208,9 @@ id="deliveryList">
 colspan="5"
 class="empty">
 
-⏳ جاري تحميل الولايات...
+<i class="fa-solid fa-spinner fa-spin loading-icon"></i>
+
+جاري تحميل الولايات...
 
 </td>
 
@@ -2140,7 +2317,11 @@ min="0">
 class="cancel"
 id="cancelBtn">
 
+<i class="fa-solid fa-xmark"></i>
+
+<span>
 إلغاء
+</span>
 
 </button>
 
@@ -2149,7 +2330,11 @@ id="cancelBtn">
 class="save"
 id="saveBtn">
 
-💾 حفظ
+<i class="fa-solid fa-floppy-disk"></i>
+
+<span>
+حفظ
+</span>
 
 </button>
 
@@ -2189,7 +2374,8 @@ document.body.classList.add(
 "dark-mode"
 );
 
-themeToggle.textContent = "☀️";
+themeToggle.innerHTML =
+'<i class="fa-solid fa-sun"></i>';
 
 themeToggle.title =
 "الوضع النهاري";
@@ -2205,7 +2391,8 @@ document.body.classList.remove(
 "dark-mode"
 );
 
-themeToggle.textContent = "🌙";
+themeToggle.innerHTML =
+'<i class="fa-solid fa-moon"></i>';
 
 themeToggle.title =
 "الوضع الليلي";
@@ -2240,8 +2427,8 @@ localStorage.setItem(
 "dark"
 );
 
-themeToggle.textContent =
-"☀️";
+themeToggle.innerHTML =
+'<i class="fa-solid fa-sun"></i>';
 
 themeToggle.title =
 "الوضع النهاري";
@@ -2258,8 +2445,8 @@ localStorage.setItem(
 "light"
 );
 
-themeToggle.textContent =
-"🌙";
+themeToggle.innerHTML =
+'<i class="fa-solid fa-moon"></i>';
 
 themeToggle.title =
 "الوضع الليلي";
@@ -2671,7 +2858,7 @@ error
 
 showMessage(
 
-"❌ حدث خطأ أثناء تحميل بيانات المتجر: " +
+"حدث خطأ أثناء تحميل بيانات المتجر: " +
 error.message,
 
 false
@@ -2697,7 +2884,9 @@ list.innerHTML = `
 colspan="5"
 class="empty">
 
-⏳ جاري تحميل الولايات...
+<i class="fa-solid fa-spinner fa-spin loading-icon"></i>
+
+جاري تحميل الولايات...
 
 </td>
 
@@ -2756,7 +2945,9 @@ list.innerHTML = `
 colspan="5"
 class="empty">
 
-❌ حدث خطأ أثناء تحميل أسعار التوصيل.
+<i class="fa-solid fa-circle-exclamation"></i>
+
+حدث خطأ أثناء تحميل أسعار التوصيل.
 
 <br><br>
 
@@ -2814,7 +3005,11 @@ list.innerHTML = `
 colspan="5"
 class="empty">
 
-📭 لا توجد ولاية مطابقة للبحث.
+<i class="fa-solid fa-inbox"></i>
+
+<br>
+
+لا توجد ولاية مطابقة للبحث.
 
 </td>
 
@@ -2892,7 +3087,11 @@ class="edit-btn"
 data-action="edit"
 data-id="${escapeAttribute(item.id)}">
 
-✏️ تعديل
+<i class="fa-solid fa-pen"></i>
+
+<span>
+تعديل
+</span>
 
 </button>
 
@@ -2902,7 +3101,11 @@ class="delete-btn"
 data-action="delete"
 data-id="${escapeAttribute(item.id)}">
 
-🗑️ حذف
+<i class="fa-solid fa-trash"></i>
+
+<span>
+حذف
+</span>
 
 </button>
 
@@ -2944,6 +3147,8 @@ homeInput.value = "";
 wilayaInput.disabled = false;
 
 modal.classList.add("active");
+
+wilayaInput.focus();
 
 });
 
@@ -3047,6 +3252,8 @@ true;
 
 modal.classList.add("active");
 
+officeInput.focus();
+
 }
 
 
@@ -3080,7 +3287,7 @@ id
 
 
 showMessage(
-"تم حذف الولاية بنجاح ✅",
+"تم حذف الولاية بنجاح",
 true
 );
 
@@ -3098,7 +3305,7 @@ error
 
 showMessage(
 
-"❌ حدث خطأ أثناء الحذف: " +
+"حدث خطأ أثناء الحذف: " +
 error.message,
 
 false
@@ -3186,8 +3393,8 @@ try{
 
 saveBtn.disabled = true;
 
-saveBtn.textContent =
-"⏳ جاري الحفظ...";
+saveBtn.innerHTML =
+'<i class="fa-solid fa-spinner fa-spin"></i><span>جاري الحفظ...</span>';
 
 
 if(!editingId){
@@ -3211,8 +3418,8 @@ alert(
 
 saveBtn.disabled = false;
 
-saveBtn.textContent =
-"💾 حفظ";
+saveBtn.innerHTML =
+'<i class="fa-solid fa-floppy-disk"></i><span>حفظ</span>';
 
 return;
 
@@ -3239,7 +3446,7 @@ home:home
 
 
 showMessage(
-"تمت إضافة الولاية بنجاح ✅",
+"تمت إضافة الولاية بنجاح",
 true
 );
 
@@ -3266,7 +3473,7 @@ home:home
 
 
 showMessage(
-"تم تعديل الأسعار بنجاح ✅",
+"تم تعديل الأسعار بنجاح",
 true
 );
 
@@ -3288,7 +3495,7 @@ error
 
 showMessage(
 
-"❌ حدث خطأ أثناء الحفظ: " +
+"حدث خطأ أثناء الحفظ: " +
 error.message,
 
 false
@@ -3300,8 +3507,8 @@ false
 
 saveBtn.disabled = false;
 
-saveBtn.textContent =
-"💾 حفظ";
+saveBtn.innerHTML =
+'<i class="fa-solid fa-floppy-disk"></i><span>حفظ</span>';
 
 }
 
@@ -3390,7 +3597,7 @@ error
 
 
 alert(
-"❌ تعذر تسجيل الخروج."
+"تعذر تسجيل الخروج."
 );
 
 }
