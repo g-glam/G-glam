@@ -1664,7 +1664,7 @@ API Key
 <input
 type="password"
 id="yalidineApiKey"
-placeholder="يُفضل حفظه في Backend فقط"
+placeholder="أدخل API Key"
 autocomplete="off"
 >
 
@@ -1773,7 +1773,7 @@ API Key
 <input
 type="password"
 id="zrApiKey"
-placeholder="يُفضل حفظه في Backend فقط"
+placeholder="أدخل API Key"
 autocomplete="off"
 >
 
@@ -1882,7 +1882,7 @@ API Key
 <input
 type="password"
 id="maystroApiKey"
-placeholder="يُفضل حفظه في Backend فقط"
+placeholder="أدخل API Key"
 autocomplete="off"
 >
 
@@ -1991,7 +1991,7 @@ API Key
 <input
 type="password"
 id="ecotrackApiKey"
-placeholder="لا تضع مفتاح الإنتاج هنا"
+placeholder="أدخل API Key"
 autocomplete="off"
 >
 
@@ -3100,7 +3100,7 @@ provider
 
 
 /* =====================================================
-BADGES
+BADGES & LOAD ALL INPUT VALUES
 ===================================================== */
 
 companies.forEach(
@@ -3150,126 +3150,49 @@ badge.className =
 
 
 /* =====================================================
-YALIDINE
+YALIDINE LOAD
 ===================================================== */
 
-if(
-provider === "yalidine"
-){
+const yalidineConfig = currentStore.deliveryCompanies?.yalidine || {};
 
-const config =
+document.getElementById("yalidineApiKey").value = yalidineConfig.apiKey || "";
 
-(
-currentStore.deliveryCompanies &&
-currentStore.deliveryCompanies.yalidine
-)
-
-||
-
-{};
-
-
-document.getElementById(
-"yalidineApiUrl"
-).value =
-config.apiUrl ||
-"";
-
-}
+document.getElementById("yalidineApiUrl").value = yalidineConfig.apiUrl || "";
 
 
 /* =====================================================
-ZR
+ZR LOAD
 ===================================================== */
 
-if(
-provider === "zr"
-){
+const zrConfig = currentStore.deliveryCompanies?.zr || {};
 
-const config =
+document.getElementById("zrApiKey").value = zrConfig.apiKey || "";
 
-(
-currentStore.deliveryCompanies &&
-currentStore.deliveryCompanies.zr
-)
-
-||
-
-{};
-
-
-document.getElementById(
-"zrApiUrl"
-).value =
-config.apiUrl ||
-"";
-
-}
+document.getElementById("zrApiUrl").value = zrConfig.apiUrl || "";
 
 
 /* =====================================================
-MAYSTRO
+MAYSTRO LOAD
 ===================================================== */
 
-if(
-provider === "maystro"
-){
+const maystroConfig = currentStore.deliveryCompanies?.maystro || {};
 
-const config =
+document.getElementById("maystroApiKey").value = maystroConfig.apiKey || "";
 
-(
-currentStore.deliveryCompanies &&
-currentStore.deliveryCompanies.maystro
-)
-
-||
-
-{};
-
-
-document.getElementById(
-"maystroApiUrl"
-).value =
-config.apiUrl ||
-"";
-
-}
+document.getElementById("maystroApiUrl").value = maystroConfig.apiUrl || "";
 
 
 /* =====================================================
-ECOTRACK
+ECOTRACK LOAD
 ===================================================== */
 
-if(
-provider === "ecotrack"
-){
+const ecotrackConfig = currentStore.deliveryCompanies?.ecotrack || {};
 
-const config =
+document.getElementById("ecotrackApiKey").value = ecotrackConfig.apiKey || "";
 
-(
-currentStore.deliveryCompanies &&
-currentStore.deliveryCompanies.ecotrack
-)
+document.getElementById("ecotrackApiUrl").value = ecotrackConfig.apiUrl || "";
 
-||
-
-{};
-
-
-document.getElementById(
-"ecotrackApiUrl"
-).value =
-config.apiUrl ||
-"";
-
-
-document.getElementById(
-"ecotrackClientId"
-).value =
-config.clientId ||
-"";
-
-}
+document.getElementById("ecotrackClientId").value = ecotrackConfig.clientId || "";
 
 }
 
@@ -3385,7 +3308,7 @@ const deliveryCompanies = {
 
 
 /* =====================================================
-YALIDINE
+YALIDINE SAVE
 ===================================================== */
 
 if(
@@ -3399,6 +3322,11 @@ enabled:true,
 configured:true,
 
 name:"Yalidine",
+
+apiKey:
+document.getElementById(
+"yalidineApiKey"
+).value.trim(),
 
 apiUrl:
 document.getElementById(
@@ -3414,7 +3342,7 @@ new Date().toISOString()
 
 
 /* =====================================================
-ZR
+ZR SAVE
 ===================================================== */
 
 if(
@@ -3428,6 +3356,11 @@ enabled:true,
 configured:true,
 
 name:"ZR Express",
+
+apiKey:
+document.getElementById(
+"zrApiKey"
+).value.trim(),
 
 apiUrl:
 document.getElementById(
@@ -3443,7 +3376,7 @@ new Date().toISOString()
 
 
 /* =====================================================
-MAYSTRO
+MAYSTRO SAVE
 ===================================================== */
 
 if(
@@ -3457,6 +3390,11 @@ enabled:true,
 configured:true,
 
 name:"Maystro Delivery",
+
+apiKey:
+document.getElementById(
+"maystroApiKey"
+).value.trim(),
 
 apiUrl:
 document.getElementById(
@@ -3472,7 +3410,7 @@ new Date().toISOString()
 
 
 /* =====================================================
-ECOTRACK
+ECOTRACK SAVE
 ===================================================== */
 
 if(
@@ -3486,6 +3424,11 @@ enabled:true,
 configured:true,
 
 name:"EcoTrack",
+
+apiKey:
+document.getElementById(
+"ecotrackApiKey"
+).value.trim(),
 
 apiUrl:
 document.getElementById(
