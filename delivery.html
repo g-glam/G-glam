@@ -454,6 +454,16 @@ color:var(--dark);
 
 }
 
+.action-buttons{
+
+display:flex;
+
+gap:10px;
+
+flex-wrap:wrap;
+
+}
+
 .add-btn{
 
 border:none;
@@ -485,6 +495,40 @@ gap:8px;
 .add-btn:hover{
 
 background:var(--orange-dark);
+
+}
+
+.auto-btn{
+
+border:1px solid var(--orange);
+
+padding:11px 17px;
+
+border-radius:10px;
+
+cursor:pointer;
+
+font-size:14px;
+
+font-weight:700;
+
+background:#FFF1E6;
+
+color:var(--orange-dark);
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:8px;
+
+}
+
+.auto-btn:hover{
+
+background:#FFE4D0;
 
 }
 
@@ -1000,11 +1044,14 @@ color:#DCE9F7;
 
 }
 
-body.dark-mode .edit-btn{
+body.dark-mode .edit-btn,
+body.dark-mode .auto-btn{
 
 background:#193553;
 
 color:#BFD8F2;
+
+border-color:var(--night-border);
 
 }
 
@@ -1083,7 +1130,13 @@ font-size:11px;
 
 }
 
-.add-btn{
+.action-buttons{
+
+width:100%;
+
+}
+
+.add-btn, .auto-btn{
 
 flex:1;
 
@@ -1386,6 +1439,19 @@ class="view-store-btn">
 ولايات التوصيل
 </h2>
 
+<div class="action-buttons">
+
+<button
+class="auto-btn"
+id="autoSeedBtn">
+
+<i class="fa-solid fa-bolt"></i>
+
+<span>
+تعبئة الـ 58 ولاية تلقائياً
+</span>
+
+</button>
 
 <button
 class="add-btn"
@@ -1398,6 +1464,8 @@ id="addBtn">
 </span>
 
 </button>
+
+</div>
 
 
 </div>
@@ -1633,6 +1701,7 @@ doc,
 setDoc,
 deleteDoc,
 getDoc,
+writeBatch,
 serverTimestamp
 }
 from
@@ -1720,6 +1789,9 @@ document.getElementById("modalTitle");
 const saveBtn =
 document.getElementById("saveBtn");
 
+const autoSeedBtn =
+document.getElementById("autoSeedBtn");
+
 const topStoreName =
 document.getElementById("topStoreName");
 
@@ -1734,7 +1806,7 @@ document.getElementById("themeToggle");
 
 
 /* =====================================================
-   VARIABLES
+   VARIABLES & WILAYAS LIST
 ===================================================== */
 
 let currentUser = null;
@@ -1743,26 +1815,71 @@ let deliveryItems = [];
 
 let editingId = null;
 
+const wilayasList = [
+  { id: "01 - Adrar", office: 600, home: 1000 },
+  { id: "02 - Chlef", office: 400, home: 700 },
+  { id: "03 - Laghouat", office: 500, home: 800 },
+  { id: "04 - Oum El Bouaghi", office: 400, home: 700 },
+  { id: "05 - Batna", office: 400, home: 600 },
+  { id: "06 - Béjaïa", office: 400, home: 700 },
+  { id: "07 - Biskra", office: 500, home: 800 },
+  { id: "08 - Béchar", office: 600, home: 1000 },
+  { id: "09 - Blida", office: 300, home: 500 },
+  { id: "10 - Bouira", office: 400, home: 600 },
+  { id: "11 - Tamanrasset", office: 800, home: 1400 },
+  { id: "12 - Tébessa", office: 400, home: 700 },
+  { id: "13 - Tlemcen", office: 400, home: 700 },
+  { id: "14 - Tiaret", office: 400, home: 700 },
+  { id: "15 - Tizi Ouzou", office: 400, home: 600 },
+  { id: "16 - Alger", office: 300, home: 500 },
+  { id: "17 - Djelfa", office: 500, home: 800 },
+  { id: "18 - Jijel", office: 400, home: 700 },
+  { id: "19 - Sétif", office: 400, home: 600 },
+  { id: "20 - Saïda", office: 400, home: 700 },
+  { id: "21 - Skikda", office: 400, home: 700 },
+  { id: "22 - Sidi Bel Abbès", office: 400, home: 700 },
+  { id: "23 - Annaba", office: 400, home: 700 },
+  { id: "24 - Guelma", office: 400, home: 700 },
+  { id: "25 - Constantine", office: 400, home: 600 },
+  { id: "26 - Médéa", office: 400, home: 600 },
+  { id: "27 - Mostaganem", office: 400, home: 700 },
+  { id: "28 - M'Sila", office: 400, home: 700 },
+  { id: "29 - Mascara", office: 400, home: 700 },
+  { id: "30 - Ouargla", office: 500, home: 900 },
+  { id: "31 - Oran", office: 400, home: 600 },
+  { id: "32 - El Bayadh", office: 500, home: 900 },
+  { id: "33 - Illizi", office: 800, home: 1400 },
+  { id: "34 - Bordj Bou Arréridj", office: 400, home: 600 },
+  { id: "35 - Boumerdès", office: 300, home: 500 },
+  { id: "36 - El Tarf", office: 400, home: 700 },
+  { id: "37 - Tindouf", office: 800, home: 1400 },
+  { id: "38 - Tissemsilt", office: 400, home: 700 },
+  { id: "39 - El Oued", office: 500, home: 900 },
+  { id: "40 - Khenchela", office: 400, home: 700 },
+  { id: "41 - Souk Ahras", office: 400, home: 700 },
+  { id: "42 - Tipaza", office: 350, home: 550 },
+  { id: "43 - Mila", office: 400, home: 700 },
+  { id: "44 - Aïn Defla", office: 400, home: 650 },
+  { id: "45 - Naâma", office: 500, home: 900 },
+  { id: "46 - Aïn Témouchent", office: 400, home: 700 },
+  { id: "47 - Ghardaïa", office: 500, home: 900 },
+  { id: "48 - Relizane", office: 400, home: 700 },
+  { id: "49 - Timimoun", office: 600, home: 1000 },
+  { id: "50 - Bordj Badji Mokhtar", office: 900, home: 1500 },
+  { id: "51 - Ouled Djellal", office: 500, home: 800 },
+  { id: "52 - Béni Abbès", office: 600, home: 1000 },
+  { id: "53 - In Salah", office: 800, home: 1300 },
+  { id: "54 - In Guezzam", office: 900, home: 1500 },
+  { id: "55 - Touggourt", office: 500, home: 900 },
+  { id: "56 - Djanet", office: 800, home: 1400 },
+  { id: "57 - El M'Ghair", office: 500, home: 850 },
+  { id: "58 - El Meniaa", office: 600, home: 1000 }
+];
+
 
 /* =====================================================
    DELIVERY PATH
 ===================================================== */
-
-/*
-   مهم:
-
-   أسعار التوصيل خاصة بكل متجر.
-
-   المسار:
-
-   stores/{UID}/delivery/{wilaya}
-
-   مثال:
-
-   stores/C8Zx1XPqbLRlHx0kyfQd7nNRCcQ2/delivery/Batna
-
-   لا يوجد ownerUid داخل وثيقة delivery.
-*/
 
 function getDeliveryCollection(){
 
@@ -1897,15 +2014,6 @@ currentUser = user;
 
 
 try{
-
-
-/*
-   المتجر مرتبط مباشرة بـ UID.
-
-   مثال:
-
-   stores/C8Zx1XPqbLRlHx0kyfQd7nNRCcQ2
-*/
 
 const storeRef =
 doc(
@@ -2062,13 +2170,6 @@ class="empty">
 
 
 try{
-
-
-/*
-   القراءة من:
-
-   stores/{UID}/delivery
-*/
 
 const snapshot =
 await getDocs(
@@ -2316,6 +2417,100 @@ return number.toLocaleString(
 
 
 /* =====================================================
+   AUTO SEED 58 WILAYAS
+===================================================== */
+
+autoSeedBtn.addEventListener(
+"click",
+async () => {
+
+if (!currentUser) {
+
+showMessage(
+"المستخدم غير مسجل الدخول.",
+false
+);
+
+return;
+
+}
+
+
+const ok = confirm(
+"هل ترغبين في إدخال أسعار التوصيل الـ 58 ولاية تلقائياً دفعة واحدة؟"
+);
+
+
+if (!ok) return;
+
+
+try {
+
+autoSeedBtn.disabled = true;
+
+autoSeedBtn.innerHTML =
+'<i class="fa-solid fa-spinner fa-spin"></i> <span>جاري التعبئة...</span>';
+
+
+const batch = writeBatch(db);
+
+
+wilayasList.forEach(w => {
+
+const docRef = getDeliveryDocument(w.id);
+
+batch.set(docRef, {
+
+office: w.office,
+
+home: w.home,
+
+updatedAt: serverTimestamp()
+
+}, { merge: true });
+
+});
+
+
+await batch.commit();
+
+
+showMessage(
+"تمت إضافة جميع الولايات الـ 58 بنجاح!",
+true
+);
+
+
+await loadDelivery();
+
+
+} catch (error) {
+
+console.error(
+"AUTO SEED ERROR:",
+error
+);
+
+
+showMessage(
+"حدث خطأ أثناء التعبئة التلقائية: " + error.message,
+false
+);
+
+} finally {
+
+autoSeedBtn.disabled = false;
+
+autoSeedBtn.innerHTML =
+'<i class="fa-solid fa-bolt"></i> <span>تعبئة الـ 58 ولاية تلقائياً</span>';
+
+}
+
+}
+);
+
+
+/* =====================================================
    ADD BUTTON
 ===================================================== */
 
@@ -2510,12 +2705,6 @@ return;
 try{
 
 
-/*
-   حذف:
-
-   stores/{UID}/delivery/{wilaya}
-*/
-
 await deleteDoc(
 getDeliveryDocument(id)
 );
@@ -2699,14 +2888,6 @@ return;
 }
 
 
-/*
-   إنشاء وثيقة:
-
-   stores/{UID}/delivery/{wilaya}
-
-   بدون ownerUid.
-*/
-
 await setDoc(
 
 getDeliveryDocument(wilaya),
@@ -2742,18 +2923,6 @@ true
 
 else{
 
-
-/*
-   تعديل:
-
-   stores/{UID}/delivery/{editingId}
-
-   لا نغير اسم الولاية.
-
-   لا نغير مسار الوثيقة.
-
-   لا يوجد ownerUid.
-*/
 
 await setDoc(
 
