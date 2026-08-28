@@ -8,7 +8,7 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>G-Glam | إعداد أسعار التوصيل</title>
+<title>G-Glam | أسعار التوصيل</title>
 
 <style>
 
@@ -17,95 +17,280 @@ content="width=device-width, initial-scale=1.0">
 }
 
 body{
+    margin:0;
     font-family:Arial,sans-serif;
     background:#F5F0E8;
-    padding:30px 15px;
-    text-align:center;
-    margin:0;
+    color:#222;
 }
 
 .container{
-    max-width:850px;
+    max-width:1100px;
     margin:auto;
+    padding:25px 15px 50px;
 }
 
-h1{
-    color:#222;
-    margin-bottom:10px;
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    background:#fff;
+    border-radius:18px;
+    padding:22px;
+    margin-bottom:20px;
+    box-shadow:0 4px 15px rgba(0,0,0,.06);
 }
 
-p{
-    color:#555;
+.header h1{
+    margin:0 0 8px;
+    font-size:26px;
+}
+
+.header p{
+    margin:0;
+    color:#666;
     line-height:1.8;
 }
 
-.info{
-    background:#fff;
-    padding:18px;
-    border-radius:15px;
-    margin:20px 0;
-    text-align:right;
-    box-shadow:0 3px 12px rgba(0,0,0,.06);
-    line-height:2;
+.store-info{
+    margin-top:15px;
+    padding:12px 15px;
+    background:#f7f7f7;
+    border-radius:10px;
+    font-size:14px;
 }
 
-.info strong{
-    color:#222;
+#storeName{
+    font-weight:bold;
 }
 
-.path{
-    direction:ltr;
-    text-align:left;
-    background:#f3f3f3;
-    padding:8px 12px;
-    border-radius:8px;
-    margin-top:5px;
-    word-break:break-all;
+/* =========================
+   ACTIONS
+========================= */
+
+.actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
 }
 
 button{
-    background:#222;
-    color:white;
     border:none;
-    padding:15px 25px;
-    border-radius:12px;
-    font-size:17px;
+    border-radius:10px;
+    padding:12px 18px;
+    font-size:15px;
     cursor:pointer;
-    width:100%;
-    max-width:380px;
 }
 
-button:hover{
-    background:#444;
+.primary{
+    background:#222;
+    color:#fff;
+}
+
+.secondary{
+    background:#fff;
+    color:#222;
+    border:1px solid #ddd;
+}
+
+.danger{
+    background:#c62828;
+    color:#fff;
 }
 
 button:disabled{
-    opacity:.6;
+    opacity:.5;
     cursor:not-allowed;
 }
 
-#result{
-    background:white;
-    margin-top:20px;
-    padding:20px;
-    border-radius:15px;
+/* =========================
+   TABLE
+========================= */
+
+.table-container{
+    background:#fff;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 4px 15px rgba(0,0,0,.06);
+}
+
+.table-wrapper{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:700px;
+}
+
+thead{
+    background:#222;
+    color:#fff;
+}
+
+th,
+td{
+    padding:13px 10px;
+    border-bottom:1px solid #eee;
+    text-align:center;
+}
+
+th{
+    font-weight:bold;
+}
+
+td:first-child,
+th:first-child{
     text-align:right;
-    white-space:pre-line;
-    line-height:1.9;
-    box-shadow:0 3px 12px rgba(0,0,0,.06);
-    word-break:break-word;
+}
+
+input{
+    width:120px;
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    text-align:center;
+    font-size:15px;
+    outline:none;
+}
+
+input:focus{
+    border-color:#222;
+}
+
+.actions-cell{
+    display:flex;
+    justify-content:center;
+    gap:6px;
+}
+
+.edit-btn{
+    background:#eee;
+    color:#222;
+}
+
+.delete-btn{
+    background:#ffe5e5;
+    color:#c62828;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+#status{
+    margin:20px 0;
+    padding:15px;
+    border-radius:12px;
+    background:#fff;
+    line-height:1.8;
+    display:none;
 }
 
 .success{
-    color:green;
+    display:block !important;
+    color:#176b2c;
+    background:#eaf7ed !important;
 }
 
 .error{
-    color:#c00;
+    display:block !important;
+    color:#a30000;
+    background:#ffecec !important;
 }
 
-.warning{
-    color:#a05a00;
+.info{
+    display:block !important;
+    color:#555;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:1000;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:430px;
+    background:#fff;
+    border-radius:18px;
+    padding:25px;
+}
+
+.modal-box h2{
+    margin-top:0;
+}
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:7px;
+    font-weight:bold;
+}
+
+.form-group input{
+    width:100%;
+}
+
+.modal-actions{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+.modal-actions button{
+    flex:1;
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty{
+    padding:40px 20px;
+    text-align:center;
+    color:#777;
+}
+
+.counter{
+    margin-bottom:15px;
+    color:#666;
+    font-size:14px;
+}
+
+@media(max-width:600px){
+
+    .container{
+        padding:15px 10px 40px;
+    }
+
+    .header h1{
+        font-size:22px;
+    }
+
+    input{
+        width:100px;
+    }
+
 }
 
 </style>
@@ -115,58 +300,221 @@ button:disabled{
 
 <body>
 
+
 <div class="container">
 
-<h1>🚚 إعداد أسعار التوصيل</h1>
 
-<p>
-سيتم تجهيز أسعار التوصيل الخاصة بهذا المتجر
-اعتمادًا على الأسعار الافتراضية التي وضعتها الإدارة.
-</p>
+<!-- =========================
+     HEADER
+========================= -->
 
+<div class="header">
 
-<div class="info">
+    <h1>🚚 أسعار التوصيل</h1>
 
-<div>
-<strong>المتجر:</strong>
-<span id="storeName">جاري التحقق...</span>
-</div>
+    <p>
+        يمكنك إدارة أسعار التوصيل الخاصة بمتجرك.
+        يمكنك تعديل السعر أو حذف ولاية أو إضافة ولاية جديدة.
+    </p>
 
-<div>
-<strong>UID:</strong>
-<span id="userUid">جاري التحقق...</span>
-</div>
+    <div class="store-info">
 
-<div style="margin-top:10px;">
+        <div>
+            <strong>المتجر:</strong>
+            <span id="storeName">
+                جاري التحميل...
+            </span>
+        </div>
 
-<strong>الأسعار الافتراضية:</strong>
+        <div style="margin-top:7px;">
 
-<div class="path">
-delivery/{wilaya}
-</div>
+            <strong>UID:</strong>
 
-</div>
+            <span id="storeUid">
+                جاري التحقق...
+            </span>
 
-<div style="margin-top:10px;">
+        </div>
 
-<strong>أسعار المتجر الخاصة:</strong>
-
-<div class="path">
-stores/{UID}/delivery/{wilaya}
-</div>
-
-</div>
+    </div>
 
 </div>
 
 
-<button id="startBtn" disabled>
-تهيئة أسعار التوصيل للمتجر
+<!-- =========================
+     ACTION BUTTONS
+========================= -->
+
+<div class="actions">
+
+    <button
+        id="initializeBtn"
+        class="secondary"
+        disabled>
+        تحميل الأسعار الافتراضية
+    </button>
+
+    <button
+        id="addBtn"
+        class="primary"
+        disabled>
+        ➕ إضافة ولاية
+    </button>
+
+    <button
+        id="saveBtn"
+        class="primary"
+        disabled>
+        💾 حفظ التغييرات
+    </button>
+
+</div>
+
+
+<div id="status"></div>
+
+
+<div class="counter">
+
+    عدد الولايات:
+    <strong id="count">
+        0
+    </strong>
+
+</div>
+
+
+<!-- =========================
+     TABLE
+========================= -->
+
+<div class="table-container">
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+الولاية
+</th>
+
+<th>
+التوصيل للمكتب
+</th>
+
+<th>
+التوصيل للمنزل
+</th>
+
+<th>
+الإجراءات
+</th>
+
+</tr>
+
+</thead>
+
+<tbody id="deliveryTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<!-- =========================
+     ADD / EDIT MODAL
+========================= -->
+
+<div
+    id="modal"
+    class="modal">
+
+<div class="modal-box">
+
+<h2 id="modalTitle">
+إضافة ولاية
+</h2>
+
+
+<div class="form-group">
+
+<label>
+اسم الولاية
+</label>
+
+<input
+    id="wilayaInput"
+    type="text"
+    placeholder="مثال: Batna">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+سعر التوصيل للمكتب (DA)
+</label>
+
+<input
+    id="officeInput"
+    type="number"
+    min="0"
+    step="1"
+    placeholder="400">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+سعر التوصيل للمنزل (DA)
+</label>
+
+<input
+    id="homeInput"
+    type="number"
+    min="0"
+    step="1"
+    placeholder="500">
+
+</div>
+
+
+<div class="modal-actions">
+
+<button
+    id="cancelBtn"
+    class="secondary">
+
+إلغاء
+
 </button>
 
 
-<div id="result">
-⏳ جاري التحقق من تسجيل الدخول...
+<button
+    id="confirmBtn"
+    class="primary">
+
+حفظ
+
+</button>
+
+</div>
+
 </div>
 
 </div>
@@ -177,7 +525,7 @@ stores/{UID}/delivery/{wilaya}
 
 
 /* =====================================================
-   FIREBASE
+   FIREBASE IMPORTS
 ===================================================== */
 
 import {
@@ -192,7 +540,8 @@ import {
     getDoc,
     collection,
     getDocs,
-    writeBatch
+    setDoc,
+    deleteDoc
 }
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
@@ -230,16 +579,14 @@ const firebaseConfig = {
 
 
 /* =====================================================
-   INITIALIZE
+   INITIALIZE FIREBASE
 ===================================================== */
 
 const app =
 initializeApp(firebaseConfig);
 
-
 const db =
 getFirestore(app);
-
 
 const auth =
 getAuth(app);
@@ -250,342 +597,629 @@ getAuth(app);
    ELEMENTS
 ===================================================== */
 
-const result =
-document.getElementById("result");
-
-
-const startBtn =
-document.getElementById("startBtn");
-
-
 const storeNameElement =
 document.getElementById("storeName");
 
+const storeUidElement =
+document.getElementById("storeUid");
 
-const userUidElement =
-document.getElementById("userUid");
+const deliveryTable =
+document.getElementById("deliveryTable");
+
+const countElement =
+document.getElementById("count");
+
+const statusElement =
+document.getElementById("status");
+
+const initializeBtn =
+document.getElementById("initializeBtn");
+
+const addBtn =
+document.getElementById("addBtn");
+
+const saveBtn =
+document.getElementById("saveBtn");
+
+const modal =
+document.getElementById("modal");
+
+const modalTitle =
+document.getElementById("modalTitle");
+
+const wilayaInput =
+document.getElementById("wilayaInput");
+
+const officeInput =
+document.getElementById("officeInput");
+
+const homeInput =
+document.getElementById("homeInput");
+
+const cancelBtn =
+document.getElementById("cancelBtn");
+
+const confirmBtn =
+document.getElementById("confirmBtn");
 
 
 
 /* =====================================================
-   CURRENT USER
+   VARIABLES
 ===================================================== */
 
 let currentUser = null;
 
+let deliveryData = {};
+
+let editingWilaya = null;
+
 
 
 /* =====================================================
-   AUTH STATE
+   STATUS
 ===================================================== */
 
-onAuthStateChanged(auth, async (user)=>{
+function showStatus(message,type="info"){
 
-    if(!user){
+    statusElement.innerText =
+    message;
 
-        currentUser = null;
+    statusElement.className =
+    "";
 
-        startBtn.disabled = true;
+    statusElement.classList.add(type);
 
-        storeNameElement.innerText =
-        "غير مسجل الدخول";
+}
 
-        userUidElement.innerText =
-        "-";
 
-        result.innerText =
-        "❌ لا يوجد مستخدم مسجل الدخول.\n\n" +
-        "يجب تسجيل الدخول إلى حساب المتجر أولاً.";
 
-        result.className =
-        "error";
+/* =====================================================
+   RENDER TABLE
+===================================================== */
+
+function renderTable(){
+
+    deliveryTable.innerHTML = "";
+
+
+    const wilayas =
+    Object.keys(deliveryData)
+    .sort(
+        (a,b)=>
+        a.localeCompare(b)
+    );
+
+
+    countElement.innerText =
+    wilayas.length;
+
+
+    if(wilayas.length === 0){
+
+        deliveryTable.innerHTML = `
+
+        <tr>
+
+        <td
+            colspan="4"
+            class="empty">
+
+            لا توجد ولايات حتى الآن.
+
+            <br><br>
+
+            اضغطي على
+            "إضافة ولاية"
+            لإضافة ولاية.
+
+        </td>
+
+        </tr>
+
+        `;
 
         return;
     }
 
 
-    currentUser = user;
+    wilayas.forEach(
+    (wilaya)=>{
+
+        const data =
+        deliveryData[wilaya];
 
 
-    userUidElement.innerText =
-    user.uid;
+        const row =
+        document.createElement("tr");
+
+
+        row.innerHTML = `
+
+        <td>
+            ${escapeHtml(wilaya)}
+        </td>
+
+        <td>
+
+            <input
+                type="number"
+                min="0"
+                step="1"
+                value="${Number(data.office) || 0}"
+                data-wilaya="${escapeAttr(wilaya)}"
+                data-type="office">
+
+        </td>
+
+        <td>
+
+            <input
+                type="number"
+                min="0"
+                step="1"
+                value="${Number(data.home) || 0}"
+                data-wilaya="${escapeAttr(wilaya)}"
+                data-type="home">
+
+        </td>
+
+        <td>
+
+            <div class="actions-cell">
+
+                <button
+                    class="edit-btn"
+                    data-edit="${escapeAttr(wilaya)}">
+
+                    ✏️ تعديل
+
+                </button>
+
+                <button
+                    class="delete-btn"
+                    data-delete="${escapeAttr(wilaya)}">
+
+                    🗑️ حذف
+
+                </button>
+
+            </div>
+
+        </td>
+
+        `;
+
+
+        deliveryTable.appendChild(row);
+
+    });
+
+
+    /* =========================================
+       INPUT EVENTS
+    ========================================= */
+
+    deliveryTable
+    .querySelectorAll("input")
+    .forEach(
+    (input)=>{
+
+        input.addEventListener(
+        "change",
+        ()=>{
+
+            const wilaya =
+            input.dataset.wilaya;
+
+            const type =
+            input.dataset.type;
+
+            let value =
+            Number(input.value);
+
+
+            if(
+                !Number.isFinite(value) ||
+                value < 0
+            ){
+
+                value = 0;
+
+                input.value = 0;
+
+            }
+
+
+            if(
+                !deliveryData[wilaya]
+            ){
+
+                deliveryData[wilaya] = {};
+
+            }
+
+
+            deliveryData[wilaya][type] =
+            value;
+
+        });
+
+    });
+
+
+    /* =========================================
+       EDIT EVENTS
+    ========================================= */
+
+    deliveryTable
+    .querySelectorAll("[data-edit]")
+    .forEach(
+    (button)=>{
+
+        button.addEventListener(
+        "click",
+        ()=>{
+
+            const wilaya =
+            button.dataset.edit;
+
+            openEditModal(wilaya);
+
+        });
+
+    });
+
+
+    /* =========================================
+       DELETE EVENTS
+    ========================================= */
+
+    deliveryTable
+    .querySelectorAll("[data-delete]")
+    .forEach(
+    (button)=>{
+
+        button.addEventListener(
+        "click",
+        ()=>{
+
+            const wilaya =
+            button.dataset.delete;
+
+            deleteWilaya(wilaya);
+
+        });
+
+    });
+
+}
+
+
+
+/* =====================================================
+   HTML ESCAPE
+===================================================== */
+
+function escapeHtml(value){
+
+    return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+function escapeAttr(value){
+
+    return escapeHtml(value);
+
+}
+
+
+
+/* =====================================================
+   LOAD STORE
+===================================================== */
+
+async function loadStore(){
+
+    const storeRef =
+    doc(
+        db,
+        "stores",
+        currentUser.uid
+    );
+
+
+    const snapshot =
+    await getDoc(storeRef);
+
+
+    if(!snapshot.exists()){
+
+        throw new Error(
+            "لم يتم العثور على وثيقة المتجر."
+        );
+
+    }
+
+
+    const store =
+    snapshot.data();
+
+
+    storeNameElement.innerText =
+    store.storeName ||
+    store.name ||
+    "متجرك";
+
+
+    storeUidElement.innerText =
+    currentUser.uid;
+
+}
+
+
+
+/* =====================================================
+   LOAD STORE DELIVERY
+===================================================== */
+
+async function loadStoreDelivery(){
+
+    const deliveryRef =
+    collection(
+        db,
+        "stores",
+        currentUser.uid,
+        "delivery"
+    );
+
+
+    const snapshot =
+    await getDocs(
+        deliveryRef
+    );
+
+
+    deliveryData = {};
+
+
+    snapshot.forEach(
+    (item)=>{
+
+        const data =
+        item.data();
+
+
+        deliveryData[item.id] = {
+
+            office:
+            Number(data.office) || 0,
+
+            home:
+            Number(data.home) || 0
+
+        };
+
+    });
+
+
+    renderTable();
+
+
+    if(snapshot.empty){
+
+        showStatus(
+            "لم يتم إعداد أسعار التوصيل لهذا المتجر بعد. يمكنك تحميل الأسعار الافتراضية.",
+            "info"
+        );
+
+    }else{
+
+        showStatus(
+            "تم تحميل أسعار التوصيل الخاصة بمتجرك.",
+            "success"
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   LOAD DEFAULT DELIVERY
+===================================================== */
+
+async function loadDefaultDelivery(){
+
+    initializeBtn.disabled =
+    true;
+
+
+    showStatus(
+        "⏳ جاري قراءة الأسعار الافتراضية...",
+        "info"
+    );
 
 
     try{
 
-        /* =============================================
-           GET STORE
-        ============================================= */
-
-        const storeRef =
-        doc(
+        const defaultRef =
+        collection(
             db,
-            "stores",
-            user.uid
+            "delivery"
         );
 
 
-        const storeSnapshot =
-        await getDoc(storeRef);
+        const snapshot =
+        await getDocs(
+            defaultRef
+        );
 
 
-        if(!storeSnapshot.exists()){
+        if(snapshot.empty){
 
-            startBtn.disabled = true;
+            throw new Error(
+                "Collection delivery العامة فارغة."
+            );
 
-            storeNameElement.innerText =
-            "غير موجود";
-
-            result.innerText =
-            "❌ لم يتم العثور على متجر مرتبط بهذا الحساب.\n\n" +
-            "UID:\n" +
-            user.uid;
-
-            result.className =
-            "error";
-
-            return;
         }
 
 
-        const storeData =
-        storeSnapshot.data();
+        let added = 0;
 
 
-        storeNameElement.innerText =
-        storeData.storeName ||
-        storeData.name ||
-        "متجرك";
+        snapshot.forEach(
+        (item)=>{
+
+            const data =
+            item.data();
 
 
-        startBtn.disabled = false;
+            /* =====================================
+               لا نكتب فوق سعر موجود للمتجر
+            ===================================== */
+
+            if(
+                deliveryData[item.id]
+            ){
+
+                return;
+
+            }
 
 
-        result.innerText =
-        "✅ تم العثور على متجرك.\n\n" +
-        "يمكنك الآن تهيئة أسعار التوصيل.";
+            deliveryData[item.id] = {
 
-        result.className =
-        "";
+                office:
+                Number(data.office) || 0,
+
+                home:
+                Number(data.home) || 0
+
+            };
+
+
+            added++;
+
+        });
+
+
+        renderTable();
+
+
+        showStatus(
+
+            "✅ تمت إضافة " +
+            added +
+            " ولاية من الأسعار الافتراضية. " +
+            "الأسعار الموجودة مسبقًا لم تتغير.",
+
+            "success"
+
+        );
 
     }catch(error){
 
         console.error(error);
 
-        startBtn.disabled = true;
+        showStatus(
+            "❌ خطأ: " +
+            error.message,
+            "error"
+        );
 
-        result.innerText =
-        "❌ حدث خطأ أثناء التحقق من المتجر:\n\n" +
-        error.message;
-
-        result.className =
-        "error";
     }
 
-});
+
+    initializeBtn.disabled =
+    false;
+
+}
 
 
 
 /* =====================================================
-   INITIALIZE DELIVERY FOR STORE
+   SAVE ALL CHANGES
 ===================================================== */
 
-startBtn.addEventListener(
-"click",
-async ()=>{
+async function saveAll(){
 
     if(!currentUser){
 
-        alert(
-            "يجب تسجيل الدخول إلى حساب المتجر أولاً."
-        );
-
         return;
+
     }
 
 
-    const confirmed =
-    confirm(
+    saveBtn.disabled =
+    true;
 
-        "سيتم نسخ أسعار التوصيل الافتراضية إلى متجرك.\n\n" +
 
-        "الأسعار الموجودة مسبقًا في متجرك " +
-        "لن يتم استبدالها.\n\n" +
-
-        "هل تريدين المتابعة؟"
-
+    showStatus(
+        "⏳ جاري حفظ التغييرات...",
+        "info"
     );
-
-
-    if(!confirmed){
-
-        return;
-    }
-
-
-    startBtn.disabled = true;
-
-
-    result.innerText =
-    "⏳ جاري قراءة الأسعار الافتراضية...\n";
 
 
     try{
 
-
-        /* =============================================
-           1. GET DEFAULT DELIVERY COLLECTION
-        ============================================= */
-
-        const defaultDeliveryRef =
-        collection(
-            db,
-            "delivery"
+        const wilayas =
+        Object.keys(
+            deliveryData
         );
 
 
-        const defaultSnapshot =
-        await getDocs(
-            defaultDeliveryRef
-        );
+        for(
+            const wilaya
+            of wilayas
+        ){
 
+            const data =
+            deliveryData[wilaya];
 
-        if(defaultSnapshot.empty){
-
-            throw new Error(
-                "لم يتم العثور على أي أسعار في Collection delivery العامة."
-            );
-
-        }
-
-
-        result.innerText =
-        "⏳ تم العثور على " +
-        defaultSnapshot.size +
-        " ولاية.\n\n" +
-        "جاري فحص أسعار متجرك...";
-
-
-
-        /* =============================================
-           2. STORE DELIVERY SUBCOLLECTION
-        ============================================= */
-
-        const storeDeliveryRef =
-        collection(
-            db,
-            "stores",
-            currentUser.uid,
-            "delivery"
-        );
-
-
-        const existingSnapshot =
-        await getDocs(
-            storeDeliveryRef
-        );
-
-
-        const existingWilayas =
-        new Set();
-
-
-        existingSnapshot.forEach(
-        (deliveryDoc)=>{
-
-            existingWilayas.add(
-                deliveryDoc.id
-            );
-
-        });
-
-
-
-        /* =============================================
-           3. PREPARE BATCH
-        ============================================= */
-
-        let batch =
-        writeBatch(db);
-
-
-        let operationCount = 0;
-
-        let addedCount = 0;
-
-        let existingCount = 0;
-
-
-        const addedWilayas = [];
-
-
-
-        /* =============================================
-           4. COPY DEFAULT PRICES
-           ONLY IF WILAYA DOES NOT EXIST
-        ============================================= */
-
-        defaultSnapshot.forEach(
-        (wilayaDoc)=>{
-
-            const wilaya =
-            wilayaDoc.id;
-
-
-            const defaultData =
-            wilayaDoc.data();
-
-
-            /* -----------------------------------------
-               Already exists
-            ----------------------------------------- */
-
-            if(
-                existingWilayas.has(wilaya)
-            ){
-
-                existingCount++;
-
-                return;
-
-            }
-
-
-
-            /* -----------------------------------------
-               Validate prices
-            ----------------------------------------- */
 
             const office =
-            Number(defaultData.office);
+            Number(data.office);
 
 
             const home =
-            Number(defaultData.home);
+            Number(data.home);
 
 
             if(
                 !Number.isFinite(office) ||
-                !Number.isFinite(home)
+                office < 0
             ){
 
-                console.warn(
-                    "أسعار غير صالحة:",
-                    wilaya,
-                    defaultData
+                throw new Error(
+                    "سعر المكتب غير صحيح في: " +
+                    wilaya
                 );
-
-                return;
 
             }
 
 
+            if(
+                !Number.isFinite(home) ||
+                home < 0
+            ){
 
-            /* -----------------------------------------
-               Store-specific document
-            ----------------------------------------- */
+                throw new Error(
+                    "سعر المنزل غير صحيح في: " +
+                    wilaya
+                );
 
-            const storeWilayaRef =
+            }
+
+
+            const wilayaRef =
             doc(
                 db,
                 "stores",
@@ -595,9 +1229,9 @@ async ()=>{
             );
 
 
-            batch.set(
+            await setDoc(
 
-                storeWilayaRef,
+                wilayaRef,
 
                 {
 
@@ -605,142 +1239,432 @@ async ()=>{
 
                     home: home
 
+                },
+
+                {
+
+                    merge:true
+
                 }
 
             );
 
-
-            operationCount++;
-
-            addedCount++;
-
-            addedWilayas.push(
-                wilaya
-            );
-
-
-        });
-
-
-
-        /* =============================================
-           5. FIRESTORE BATCH LIMIT
-        ============================================= */
-
-        if(operationCount > 0){
-
-            await batch.commit();
-
         }
 
 
-
-        /* =============================================
-           6. RESULT
-        ============================================= */
-
-        let message =
-        "🎉 تمت تهيئة أسعار التوصيل بنجاح!\n\n";
-
-
-        message +=
-        "المتجر:\n" +
-        (
-            document.getElementById(
-                "storeName"
-            ).innerText
-        ) +
-        "\n\n";
-
-
-        message +=
-        "UID:\n" +
-        currentUser.uid +
-        "\n\n";
-
-
-        message +=
-        "الأسعار الافتراضية:\n" +
-        defaultSnapshot.size +
-        " ولاية\n\n";
-
-
-        message +=
-        "تمت إضافة:\n" +
-        addedCount +
-        " ولاية\n\n";
-
-
-        message +=
-        "كانت موجودة مسبقًا:\n" +
-        existingCount +
-        " ولاية\n\n";
-
-
-        message +=
-        "المسار:\n" +
-        "stores/" +
-        currentUser.uid +
-        "/delivery/{wilaya}\n\n";
-
-
-        if(
-            addedCount === 0 &&
-            existingCount > 0
-        ){
-
-            message +=
-            "ℹ️ جميع الولايات موجودة مسبقًا.\n" +
-            "لم يتم تغيير أي سعر.";
-
-        }else{
-
-            message +=
-            "✅ تم نسخ الأسعار الافتراضية.\n" +
-            "يمكن الآن للتاجر تعديل أسعار متجره.";
-
-        }
-
-
-        result.innerText =
-        message;
-
-
-        result.className =
-        "success";
-
-
-        alert(
-            "تم تجهيز أسعار التوصيل الخاصة بالمتجر بنجاح ✅"
+        showStatus(
+            "✅ تم حفظ جميع أسعار التوصيل الخاصة بمتجرك بنجاح.",
+            "success"
         );
+
+
+        await loadStoreDelivery();
 
 
     }catch(error){
 
-        console.error(
-            "Delivery initialization error:",
-            error
-        );
+        console.error(error);
 
-
-        result.innerText =
-        "❌ حدث خطأ أثناء تجهيز أسعار التوصيل:\n\n" +
-        error.message +
-        "\n\n" +
-        "تحققي من Firestore Rules وتسجيل الدخول.";
-
-        result.className =
-        "error";
-
-
-        alert(
-            "حدث خطأ أثناء حفظ أسعار التوصيل."
+        showStatus(
+            "❌ حدث خطأ أثناء الحفظ:\n" +
+            error.message,
+            "error"
         );
 
     }
 
 
-    startBtn.disabled = false;
+    saveBtn.disabled =
+    false;
+
+}
+
+
+
+/* =====================================================
+   DELETE WILAYA
+===================================================== */
+
+async function deleteWilaya(wilaya){
+
+    const confirmed =
+    confirm(
+
+        "هل تريد حذف ولاية " +
+        wilaya +
+        " من أسعار التوصيل الخاصة بمتجرك؟"
+
+    );
+
+
+    if(!confirmed){
+
+        return;
+
+    }
+
+
+    try{
+
+        const wilayaRef =
+        doc(
+            db,
+            "stores",
+            currentUser.uid,
+            "delivery",
+            wilaya
+        );
+
+
+        await deleteDoc(
+            wilayaRef
+        );
+
+
+        delete deliveryData[wilaya];
+
+
+        renderTable();
+
+
+        showStatus(
+            "✅ تم حذف " +
+            wilaya +
+            " من متجرك.",
+            "success"
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+        showStatus(
+            "❌ تعذر حذف الولاية:\n" +
+            error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+function openAddModal(){
+
+    editingWilaya = null;
+
+    modalTitle.innerText =
+    "إضافة ولاية";
+
+    wilayaInput.value =
+    "";
+
+    officeInput.value =
+    "";
+
+    homeInput.value =
+    "";
+
+    wilayaInput.disabled =
+    false;
+
+    modal.classList.add(
+        "show"
+    );
+
+    wilayaInput.focus();
+
+}
+
+
+
+function openEditModal(wilaya){
+
+    editingWilaya =
+    wilaya;
+
+
+    modalTitle.innerText =
+    "تعديل " + wilaya;
+
+
+    wilayaInput.value =
+    wilaya;
+
+
+    officeInput.value =
+    deliveryData[wilaya].office;
+
+
+    homeInput.value =
+    deliveryData[wilaya].home;
+
+
+    /*
+       لا نسمح بتغيير اسم الولاية
+       من شاشة التعديل.
+       يمكن حذفها وإضافة ولاية أخرى.
+    */
+
+    wilayaInput.disabled =
+    true;
+
+
+    modal.classList.add(
+        "show"
+    );
+
+
+    officeInput.focus();
+
+}
+
+
+
+function closeModal(){
+
+    modal.classList.remove(
+        "show"
+    );
+
+    editingWilaya =
+    null;
+
+}
+
+
+
+async function confirmModal(){
+
+    const wilaya =
+    wilayaInput.value.trim();
+
+
+    const office =
+    Number(
+        officeInput.value
+    );
+
+
+    const home =
+    Number(
+        homeInput.value
+    );
+
+
+    if(!wilaya){
+
+        alert(
+            "أدخلي اسم الولاية."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        !Number.isFinite(office) ||
+        office < 0
+    ){
+
+        alert(
+            "أدخلي سعر مكتب صحيح."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        !Number.isFinite(home) ||
+        home < 0
+    ){
+
+        alert(
+            "أدخلي سعر منزل صحيح."
+        );
+
+        return;
+
+    }
+
+
+
+    /* =========================================
+       EDIT EXISTING
+    ========================================= */
+
+    if(editingWilaya){
+
+        deliveryData[editingWilaya] = {
+
+            office: office,
+
+            home: home
+
+        };
+
+    }
+
+
+
+    /* =========================================
+       ADD NEW
+    ========================================= */
+
+    else{
+
+        if(
+            deliveryData[wilaya]
+        ){
+
+            alert(
+                "هذه الولاية موجودة بالفعل."
+            );
+
+            return;
+
+        }
+
+
+        deliveryData[wilaya] = {
+
+            office: office,
+
+            home: home
+
+        };
+
+    }
+
+
+    renderTable();
+
+    closeModal();
+
+
+    showStatus(
+        "تم تعديل البيانات. اضغطي «حفظ التغييرات» لتثبيتها.",
+        "info"
+    );
+
+}
+
+
+
+/* =====================================================
+   EVENTS
+===================================================== */
+
+addBtn.addEventListener(
+    "click",
+    openAddModal
+);
+
+
+cancelBtn.addEventListener(
+    "click",
+    closeModal
+);
+
+
+confirmBtn.addEventListener(
+    "click",
+    confirmModal
+);
+
+
+saveBtn.addEventListener(
+    "click",
+    saveAll
+);
+
+
+initializeBtn.addEventListener(
+    "click",
+    loadDefaultDelivery
+);
+
+
+/* إغلاق النافذة عند الضغط خارجها */
+
+modal.addEventListener(
+    "click",
+    (event)=>{
+
+        if(
+            event.target === modal
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   AUTH
+===================================================== */
+
+onAuthStateChanged(
+auth,
+async (user)=>{
+
+    if(!user){
+
+        showStatus(
+            "❌ يجب تسجيل الدخول إلى حساب المتجر أولاً.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    currentUser =
+    user;
+
+
+    try{
+
+        await loadStore();
+
+        await loadStoreDelivery();
+
+
+        initializeBtn.disabled =
+        false;
+
+        addBtn.disabled =
+        false;
+
+        saveBtn.disabled =
+        false;
+
+
+    }catch(error){
+
+        console.error(error);
+
+        showStatus(
+            "❌ تعذر تحميل المتجر:\n" +
+            error.message,
+            "error"
+        );
+
+    }
 
 });
 
@@ -748,4 +1672,5 @@ async ()=>{
 </script>
 
 </body>
+
 </html>
