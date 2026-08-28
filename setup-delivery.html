@@ -2,16 +2,54 @@
 <html lang="ar" dir="rtl">
 
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>إعداد أسعار التوصيل</title>
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>G-Glam | إعداد أسعار التوصيل</title>
 
 <style>
+
+*{
+    box-sizing:border-box;
+}
+
 body{
     font-family:Arial,sans-serif;
     background:#F5F0E8;
-    padding:30px;
+    padding:30px 15px;
     text-align:center;
+    margin:0;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+}
+
+h1{
+    color:#222;
+    margin-bottom:10px;
+}
+
+p{
+    color:#555;
+    line-height:1.8;
+}
+
+.info{
+    background:#fff;
+    padding:15px;
+    border-radius:15px;
+    margin:20px 0;
+    text-align:right;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.info strong{
+    color:#222;
 }
 
 button{
@@ -22,6 +60,17 @@ button{
     border-radius:12px;
     font-size:17px;
     cursor:pointer;
+    width:100%;
+    max-width:350px;
+}
+
+button:hover{
+    background:#444;
+}
+
+button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
 }
 
 #result{
@@ -31,39 +80,87 @@ button{
     border-radius:15px;
     text-align:right;
     white-space:pre-line;
+    line-height:1.8;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
 }
+
+.success{
+    color:green;
+}
+
+.error{
+    color:#c00;
+}
+
 </style>
+
 </head>
 
+
 <body>
+
+<div class="container">
 
 <h1>🚚 إعداد أسعار التوصيل</h1>
 
 <p>
-اضغطي الزر لإضافة جميع الولايات إلى Firebase
+سيتم حفظ أسعار التوصيل داخل متجر صاحب الحساب الحالي.
 </p>
+
+<div class="info">
+
+<div>
+<strong>طريقة الربط:</strong>
+Firebase Authentication UID
+</div>
+
+<div style="margin-top:8px;">
+<strong>مكان التخزين:</strong>
+stores / UID / delivery
+</div>
+
+</div>
 
 <br>
 
 <button id="startBtn">
-إضافة أسعار التوصيل
+إضافة أسعار التوصيل للمتجر
 </button>
 
 <div id="result">
 لم يبدأ التنفيذ بعد...
 </div>
 
+</div>
+
+
 <script type="module">
 
-import { initializeApp }
+
+/* =========================================
+   FIREBASE
+========================================= */
+
+import {
+    initializeApp
+}
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
 
 import {
     getFirestore,
     doc,
+    getDoc,
     setDoc
 }
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+
+import {
+    getAuth,
+    onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
 
 const firebaseConfig = {
@@ -85,13 +182,73 @@ const firebaseConfig = {
 };
 
 
-const app = initializeApp(firebaseConfig);
+const app =
+initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
 
+const db =
+getFirestore(app);
+
+
+const auth =
+getAuth(app);
+
+
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const result =
+document.getElementById("result");
+
+
+const startBtn =
+document.getElementById("startBtn");
+
+
+
+/* =========================================
+   CURRENT USER
+========================================= */
+
+let currentUser = null;
+
+
+
+onAuthStateChanged(auth, async (user)=>{
+
+    if(user){
+
+        currentUser = user;
+
+        result.innerText =
+        "✅ تم تسجيل الدخول.\n\n" +
+        "UID:\n" +
+        user.uid +
+        "\n\nيمكنك الآن إضافة أسعار التوصيل لهذا المتجر.";
+
+    }else{
+
+        currentUser = null;
+
+        startBtn.disabled = true;
+
+        result.innerText =
+        "❌ لا يوجد مستخدم مسجل الدخول.\n\n" +
+        "يجب تسجيل الدخول إلى حساب المتجر أولاً.";
+
+    }
+
+});
+
+
+
+/* =========================================
+   DELIVERY TARIFFS
+========================================= */
 
 const tarifs = {
-
 
 "Adrar":{office:1100,home:1400},
 "Chlef":{office:450,home:650},
@@ -156,68 +313,190 @@ const tarifs = {
 };
 
 
-const result =
-document.getElementById("result");
 
+/* =========================================
+   ADD DELIVERY PRICES
+========================================= */
 
-document
-.getElementById("startBtn")
-.addEventListener("click", async ()=>{
+startBtn.addEventListener(
+"click",
+async ()=>{
+
+    if(!currentUser){
+
+        alert(
+            "يجب تسجيل الدخول إلى حساب المتجر أولاً."
+        );
+
+        return;
+    }
+
 
     const confirmAction =
     confirm(
-        "هل تريدين إضافة جميع أسعار التوصيل إلى Firebase؟"
+
+        "هل تريدين إضافة أسعار التوصيل لهذا المتجر؟\n\n" +
+
+        "سيتم حفظ الأسعار داخل:\n" +
+
+        "stores/" +
+
+        currentUser.uid +
+
+        "/delivery"
+
     );
 
-    if(!confirmAction) return;
+
+    if(!confirmAction){
+
+        return;
+
+    }
+
+
+    startBtn.disabled = true;
 
 
     result.innerText =
-    "⏳ جاري إضافة الولايات...\n";
-
-
-    let count = 0;
+    "⏳ جاري تجهيز أسعار التوصيل...\n";
 
 
     try{
 
-        for(const [wilaya, prices] of Object.entries(tarifs)){
 
-            await setDoc(
+        /* =====================================
+           1. التأكد من وجود المتجر
+        ===================================== */
 
-                doc(
-                    db,
-                    "delivery",
-                    wilaya
-                ),
+        const storeRef =
+        doc(
+            db,
+            "stores",
+            currentUser.uid
+        );
 
-                {
-                    office: prices.office,
-                    home: prices.home
-                }
 
+        const storeSnapshot =
+        await getDoc(storeRef);
+
+
+        if(!storeSnapshot.exists()){
+
+            throw new Error(
+                "لم يتم العثور على متجر مرتبط بهذا الحساب."
             );
 
-            count++;
-
-            result.innerText +=
-            "✅ " + wilaya +
-            " : مكتب " +
-            prices.office +
-            " / منزل " +
-            prices.home +
-            "\n";
         }
 
 
-        result.innerText +=
-        "\n🎉 تم بنجاح!\n" +
+
+        /* =====================================
+           2. تجهيز Map الأسعار
+        ===================================== */
+
+        const deliveryData = {};
+
+
+        for(
+            const [wilaya, prices]
+            of Object.entries(tarifs)
+        ){
+
+            deliveryData[wilaya] = {
+
+                office: prices.office,
+
+                home: prices.home
+
+            };
+
+        }
+
+
+
+        /* =====================================
+           3. حفظ delivery داخل المتجر
+        ===================================== */
+
+        await setDoc(
+
+            storeRef,
+
+            {
+
+                delivery: deliveryData
+
+            },
+
+            {
+
+                merge:true
+
+            }
+
+        );
+
+
+
+        /* =====================================
+           4. عرض النتيجة
+        ===================================== */
+
+        let output =
+        "🎉 تم حفظ أسعار التوصيل بنجاح!\n\n";
+
+
+        output +=
+        "المتجر:\n" +
+        currentUser.uid +
+        "\n\n";
+
+
+        output +=
+        "مكان التخزين:\n" +
+        "stores/" +
+        currentUser.uid +
+        " → delivery\n\n";
+
+
+        output +=
         "عدد الولايات: " +
-        count;
+        Object.keys(tarifs).length +
+        "\n\n";
+
+
+        output +=
+        "تفاصيل الأسعار:\n\n";
+
+
+        for(
+            const [wilaya, prices]
+            of Object.entries(tarifs)
+        ){
+
+            output +=
+            "✅ " +
+            wilaya +
+            " : مكتب " +
+            prices.office +
+            " DA / منزل " +
+            prices.home +
+            " DA\n";
+
+        }
+
+
+        result.innerText =
+        output;
+
+
+        result.className =
+        "success";
 
 
         alert(
-            "تمت إضافة جميع أسعار التوصيل بنجاح ✅"
+            "تم حفظ أسعار التوصيل الخاصة بالمتجر بنجاح ✅"
         );
 
 
@@ -225,18 +504,27 @@ document
 
         console.error(error);
 
-        result.innerText +=
-        "\n❌ حدث خطأ:\n" +
+
+        result.innerText =
+        "❌ حدث خطأ أثناء الحفظ:\n\n" +
         error.message;
 
 
+        result.className =
+        "error";
+
+
         alert(
-            "حدث خطأ أثناء الحفظ"
+            "حدث خطأ أثناء حفظ أسعار التوصيل."
         );
 
     }
 
+
+    startBtn.disabled = false;
+
 });
+
 
 </script>
 
