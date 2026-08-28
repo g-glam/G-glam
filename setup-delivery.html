@@ -25,7 +25,7 @@ body{
 }
 
 .container{
-    max-width:700px;
+    max-width:850px;
     margin:auto;
 }
 
@@ -41,15 +41,26 @@ p{
 
 .info{
     background:#fff;
-    padding:15px;
+    padding:18px;
     border-radius:15px;
     margin:20px 0;
     text-align:right;
     box-shadow:0 3px 12px rgba(0,0,0,.06);
+    line-height:2;
 }
 
 .info strong{
     color:#222;
+}
+
+.path{
+    direction:ltr;
+    text-align:left;
+    background:#f3f3f3;
+    padding:8px 12px;
+    border-radius:8px;
+    margin-top:5px;
+    word-break:break-all;
 }
 
 button{
@@ -61,7 +72,7 @@ button{
     font-size:17px;
     cursor:pointer;
     width:100%;
-    max-width:350px;
+    max-width:380px;
 }
 
 button:hover{
@@ -80,8 +91,9 @@ button:disabled{
     border-radius:15px;
     text-align:right;
     white-space:pre-line;
-    line-height:1.8;
+    line-height:1.9;
     box-shadow:0 3px 12px rgba(0,0,0,.06);
+    word-break:break-word;
 }
 
 .success{
@@ -90,6 +102,10 @@ button:disabled{
 
 .error{
     color:#c00;
+}
+
+.warning{
+    color:#a05a00;
 }
 
 </style>
@@ -104,42 +120,65 @@ button:disabled{
 <h1>🚚 إعداد أسعار التوصيل</h1>
 
 <p>
-سيتم حفظ أسعار التوصيل داخل متجر صاحب الحساب الحالي.
+سيتم تجهيز أسعار التوصيل الخاصة بهذا المتجر
+اعتمادًا على الأسعار الافتراضية التي وضعتها الإدارة.
 </p>
+
 
 <div class="info">
 
 <div>
-<strong>طريقة الربط:</strong>
-Firebase Authentication UID
+<strong>المتجر:</strong>
+<span id="storeName">جاري التحقق...</span>
 </div>
 
-<div style="margin-top:8px;">
-<strong>مكان التخزين:</strong>
-stores / UID / delivery
+<div>
+<strong>UID:</strong>
+<span id="userUid">جاري التحقق...</span>
+</div>
+
+<div style="margin-top:10px;">
+
+<strong>الأسعار الافتراضية:</strong>
+
+<div class="path">
+delivery/{wilaya}
 </div>
 
 </div>
 
-<br>
+<div style="margin-top:10px;">
 
-<button id="startBtn">
-إضافة أسعار التوصيل للمتجر
+<strong>أسعار المتجر الخاصة:</strong>
+
+<div class="path">
+stores/{UID}/delivery/{wilaya}
+</div>
+
+</div>
+
+</div>
+
+
+<button id="startBtn" disabled>
+تهيئة أسعار التوصيل للمتجر
 </button>
 
+
 <div id="result">
-لم يبدأ التنفيذ بعد...
+⏳ جاري التحقق من تسجيل الدخول...
 </div>
 
 </div>
+
 
 
 <script type="module">
 
 
-/* =========================================
+/* =====================================================
    FIREBASE
-========================================= */
+===================================================== */
 
 import {
     initializeApp
@@ -151,7 +190,9 @@ import {
     getFirestore,
     doc,
     getDoc,
-    setDoc
+    collection,
+    getDocs,
+    writeBatch
 }
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
@@ -162,6 +203,11 @@ import {
 }
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
+
+
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
 
 const firebaseConfig = {
 
@@ -182,6 +228,11 @@ const firebaseConfig = {
 };
 
 
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
 const app =
 initializeApp(firebaseConfig);
 
@@ -195,9 +246,9 @@ getAuth(app);
 
 
 
-/* =========================================
+/* =====================================================
    ELEMENTS
-========================================= */
+===================================================== */
 
 const result =
 document.getElementById("result");
@@ -207,116 +258,137 @@ const startBtn =
 document.getElementById("startBtn");
 
 
+const storeNameElement =
+document.getElementById("storeName");
 
-/* =========================================
+
+const userUidElement =
+document.getElementById("userUid");
+
+
+
+/* =====================================================
    CURRENT USER
-========================================= */
+===================================================== */
 
 let currentUser = null;
 
 
 
+/* =====================================================
+   AUTH STATE
+===================================================== */
+
 onAuthStateChanged(auth, async (user)=>{
 
-    if(user){
-
-        currentUser = user;
-
-        result.innerText =
-        "✅ تم تسجيل الدخول.\n\n" +
-        "UID:\n" +
-        user.uid +
-        "\n\nيمكنك الآن إضافة أسعار التوصيل لهذا المتجر.";
-
-    }else{
+    if(!user){
 
         currentUser = null;
 
         startBtn.disabled = true;
 
+        storeNameElement.innerText =
+        "غير مسجل الدخول";
+
+        userUidElement.innerText =
+        "-";
+
         result.innerText =
         "❌ لا يوجد مستخدم مسجل الدخول.\n\n" +
         "يجب تسجيل الدخول إلى حساب المتجر أولاً.";
 
+        result.className =
+        "error";
+
+        return;
+    }
+
+
+    currentUser = user;
+
+
+    userUidElement.innerText =
+    user.uid;
+
+
+    try{
+
+        /* =============================================
+           GET STORE
+        ============================================= */
+
+        const storeRef =
+        doc(
+            db,
+            "stores",
+            user.uid
+        );
+
+
+        const storeSnapshot =
+        await getDoc(storeRef);
+
+
+        if(!storeSnapshot.exists()){
+
+            startBtn.disabled = true;
+
+            storeNameElement.innerText =
+            "غير موجود";
+
+            result.innerText =
+            "❌ لم يتم العثور على متجر مرتبط بهذا الحساب.\n\n" +
+            "UID:\n" +
+            user.uid;
+
+            result.className =
+            "error";
+
+            return;
+        }
+
+
+        const storeData =
+        storeSnapshot.data();
+
+
+        storeNameElement.innerText =
+        storeData.storeName ||
+        storeData.name ||
+        "متجرك";
+
+
+        startBtn.disabled = false;
+
+
+        result.innerText =
+        "✅ تم العثور على متجرك.\n\n" +
+        "يمكنك الآن تهيئة أسعار التوصيل.";
+
+        result.className =
+        "";
+
+    }catch(error){
+
+        console.error(error);
+
+        startBtn.disabled = true;
+
+        result.innerText =
+        "❌ حدث خطأ أثناء التحقق من المتجر:\n\n" +
+        error.message;
+
+        result.className =
+        "error";
     }
 
 });
 
 
 
-/* =========================================
-   DELIVERY TARIFFS
-========================================= */
-
-const tarifs = {
-
-"Adrar":{office:1100,home:1400},
-"Chlef":{office:450,home:650},
-"Laghouat":{office:700,home:1000},
-"Oum El Bouaghi":{office:500,home:650},
-"Batna":{office:400,home:500},
-"Bejaia":{office:500,home:650},
-"Biskra":{office:600,home:950},
-"Bechar":{office:1100,home:1400},
-"Blida":{office:450,home:650},
-"Bouira":{office:450,home:650},
-"Tamanrasset":{office:1400,home:1600},
-"Tebessa":{office:600,home:950},
-"Tlemcen":{office:500,home:650},
-"Tiaret":{office:500,home:650},
-"Tizi Ouzou":{office:450,home:650},
-"Alger":{office:450,home:700},
-"Djelfa":{office:600,home:900},
-"Jijel":{office:500,home:650},
-"Setif":{office:450,home:650},
-"Saida":{office:600,home:900},
-"Skikda":{office:500,home:650},
-"Sidi Bel Abbes":{office:500,home:650},
-"Annaba":{office:500,home:650},
-"Guelma":{office:600,home:900},
-"Constantine":{office:450,home:650},
-"Medea":{office:450,home:650},
-"Mostaganem":{office:500,home:650},
-"M'Sila":{office:500,home:650},
-"Mascara":{office:600,home:900},
-"Ouargla":{office:800,home:1100},
-"Oran":{office:450,home:650},
-"El Bayadh":{office:800,home:1100},
-"Illizi":{office:1700,home:2000},
-"Bordj Bou Arreridj":{office:450,home:650},
-"Boumerdes":{office:450,home:650},
-"El Tarf":{office:600,home:950},
-"Tindouf":{office:1400,home:1600},
-"Tissemsilt":{office:500,home:650},
-"El Oued":{office:800,home:1100},
-"Khenchela":{office:600,home:900},
-"Souk Ahras":{office:600,home:900},
-"Tipaza":{office:450,home:650},
-"Mila":{office:500,home:650},
-"Ain Defla":{office:450,home:650},
-"Naama":{office:800,home:1100},
-"Ain Temouchent":{office:600,home:900},
-"Ghardaia":{office:800,home:1100},
-"Relizane":{office:500,home:650},
-
-"El M'Ghair":{office:1100,home:1400},
-"El Menia":{office:1700,home:2000},
-"Ouled Djellal":{office:700,home:1000},
-"Bordj Badji Mokhtar":{office:1000,home:1400},
-"Beni Abbes":{office:1100,home:1400},
-"Timimoun":{office:1700,home:2000},
-"Touggourt":{office:800,home:1100},
-"Djanet":{office:1700,home:2000},
-"In Salah":{office:800,home:1100},
-"In Guezzam":{office:1000,home:1300}
-
-};
-
-
-
-/* =========================================
-   ADD DELIVERY PRICES
-========================================= */
+/* =====================================================
+   INITIALIZE DELIVERY FOR STORE
+===================================================== */
 
 startBtn.addEventListener(
 "click",
@@ -332,26 +404,22 @@ async ()=>{
     }
 
 
-    const confirmAction =
+    const confirmed =
     confirm(
 
-        "هل تريدين إضافة أسعار التوصيل لهذا المتجر؟\n\n" +
+        "سيتم نسخ أسعار التوصيل الافتراضية إلى متجرك.\n\n" +
 
-        "سيتم حفظ الأسعار داخل:\n" +
+        "الأسعار الموجودة مسبقًا في متجرك " +
+        "لن يتم استبدالها.\n\n" +
 
-        "stores/" +
-
-        currentUser.uid +
-
-        "/delivery"
+        "هل تريدين المتابعة؟"
 
     );
 
 
-    if(!confirmAction){
+    if(!confirmed){
 
         return;
-
     }
 
 
@@ -359,136 +427,283 @@ async ()=>{
 
 
     result.innerText =
-    "⏳ جاري تجهيز أسعار التوصيل...\n";
+    "⏳ جاري قراءة الأسعار الافتراضية...\n";
 
 
     try{
 
 
-        /* =====================================
-           1. التأكد من وجود المتجر
-        ===================================== */
+        /* =============================================
+           1. GET DEFAULT DELIVERY COLLECTION
+        ============================================= */
 
-        const storeRef =
-        doc(
+        const defaultDeliveryRef =
+        collection(
             db,
-            "stores",
-            currentUser.uid
+            "delivery"
         );
 
 
-        const storeSnapshot =
-        await getDoc(storeRef);
+        const defaultSnapshot =
+        await getDocs(
+            defaultDeliveryRef
+        );
 
 
-        if(!storeSnapshot.exists()){
+        if(defaultSnapshot.empty){
 
             throw new Error(
-                "لم يتم العثور على متجر مرتبط بهذا الحساب."
+                "لم يتم العثور على أي أسعار في Collection delivery العامة."
             );
 
         }
 
 
+        result.innerText =
+        "⏳ تم العثور على " +
+        defaultSnapshot.size +
+        " ولاية.\n\n" +
+        "جاري فحص أسعار متجرك...";
 
-        /* =====================================
-           2. تجهيز Map الأسعار
-        ===================================== */
-
-        const deliveryData = {};
 
 
-        for(
-            const [wilaya, prices]
-            of Object.entries(tarifs)
-        ){
+        /* =============================================
+           2. STORE DELIVERY SUBCOLLECTION
+        ============================================= */
 
-            deliveryData[wilaya] = {
+        const storeDeliveryRef =
+        collection(
+            db,
+            "stores",
+            currentUser.uid,
+            "delivery"
+        );
 
-                office: prices.office,
 
-                home: prices.home
+        const existingSnapshot =
+        await getDocs(
+            storeDeliveryRef
+        );
 
-            };
+
+        const existingWilayas =
+        new Set();
+
+
+        existingSnapshot.forEach(
+        (deliveryDoc)=>{
+
+            existingWilayas.add(
+                deliveryDoc.id
+            );
+
+        });
+
+
+
+        /* =============================================
+           3. PREPARE BATCH
+        ============================================= */
+
+        let batch =
+        writeBatch(db);
+
+
+        let operationCount = 0;
+
+        let addedCount = 0;
+
+        let existingCount = 0;
+
+
+        const addedWilayas = [];
+
+
+
+        /* =============================================
+           4. COPY DEFAULT PRICES
+           ONLY IF WILAYA DOES NOT EXIST
+        ============================================= */
+
+        defaultSnapshot.forEach(
+        (wilayaDoc)=>{
+
+            const wilaya =
+            wilayaDoc.id;
+
+
+            const defaultData =
+            wilayaDoc.data();
+
+
+            /* -----------------------------------------
+               Already exists
+            ----------------------------------------- */
+
+            if(
+                existingWilayas.has(wilaya)
+            ){
+
+                existingCount++;
+
+                return;
+
+            }
+
+
+
+            /* -----------------------------------------
+               Validate prices
+            ----------------------------------------- */
+
+            const office =
+            Number(defaultData.office);
+
+
+            const home =
+            Number(defaultData.home);
+
+
+            if(
+                !Number.isFinite(office) ||
+                !Number.isFinite(home)
+            ){
+
+                console.warn(
+                    "أسعار غير صالحة:",
+                    wilaya,
+                    defaultData
+                );
+
+                return;
+
+            }
+
+
+
+            /* -----------------------------------------
+               Store-specific document
+            ----------------------------------------- */
+
+            const storeWilayaRef =
+            doc(
+                db,
+                "stores",
+                currentUser.uid,
+                "delivery",
+                wilaya
+            );
+
+
+            batch.set(
+
+                storeWilayaRef,
+
+                {
+
+                    office: office,
+
+                    home: home
+
+                }
+
+            );
+
+
+            operationCount++;
+
+            addedCount++;
+
+            addedWilayas.push(
+                wilaya
+            );
+
+
+        });
+
+
+
+        /* =============================================
+           5. FIRESTORE BATCH LIMIT
+        ============================================= */
+
+        if(operationCount > 0){
+
+            await batch.commit();
 
         }
 
 
 
-        /* =====================================
-           3. حفظ delivery داخل المتجر
-        ===================================== */
+        /* =============================================
+           6. RESULT
+        ============================================= */
 
-        await setDoc(
-
-            storeRef,
-
-            {
-
-                delivery: deliveryData
-
-            },
-
-            {
-
-                merge:true
-
-            }
-
-        );
+        let message =
+        "🎉 تمت تهيئة أسعار التوصيل بنجاح!\n\n";
 
 
-
-        /* =====================================
-           4. عرض النتيجة
-        ===================================== */
-
-        let output =
-        "🎉 تم حفظ أسعار التوصيل بنجاح!\n\n";
-
-
-        output +=
+        message +=
         "المتجر:\n" +
+        (
+            document.getElementById(
+                "storeName"
+            ).innerText
+        ) +
+        "\n\n";
+
+
+        message +=
+        "UID:\n" +
         currentUser.uid +
         "\n\n";
 
 
-        output +=
-        "مكان التخزين:\n" +
+        message +=
+        "الأسعار الافتراضية:\n" +
+        defaultSnapshot.size +
+        " ولاية\n\n";
+
+
+        message +=
+        "تمت إضافة:\n" +
+        addedCount +
+        " ولاية\n\n";
+
+
+        message +=
+        "كانت موجودة مسبقًا:\n" +
+        existingCount +
+        " ولاية\n\n";
+
+
+        message +=
+        "المسار:\n" +
         "stores/" +
         currentUser.uid +
-        " → delivery\n\n";
+        "/delivery/{wilaya}\n\n";
 
 
-        output +=
-        "عدد الولايات: " +
-        Object.keys(tarifs).length +
-        "\n\n";
-
-
-        output +=
-        "تفاصيل الأسعار:\n\n";
-
-
-        for(
-            const [wilaya, prices]
-            of Object.entries(tarifs)
+        if(
+            addedCount === 0 &&
+            existingCount > 0
         ){
 
-            output +=
-            "✅ " +
-            wilaya +
-            " : مكتب " +
-            prices.office +
-            " DA / منزل " +
-            prices.home +
-            " DA\n";
+            message +=
+            "ℹ️ جميع الولايات موجودة مسبقًا.\n" +
+            "لم يتم تغيير أي سعر.";
+
+        }else{
+
+            message +=
+            "✅ تم نسخ الأسعار الافتراضية.\n" +
+            "يمكن الآن للتاجر تعديل أسعار متجره.";
 
         }
 
 
         result.innerText =
-        output;
+        message;
 
 
         result.className =
@@ -496,19 +711,23 @@ async ()=>{
 
 
         alert(
-            "تم حفظ أسعار التوصيل الخاصة بالمتجر بنجاح ✅"
+            "تم تجهيز أسعار التوصيل الخاصة بالمتجر بنجاح ✅"
         );
 
 
     }catch(error){
 
-        console.error(error);
+        console.error(
+            "Delivery initialization error:",
+            error
+        );
 
 
         result.innerText =
-        "❌ حدث خطأ أثناء الحفظ:\n\n" +
-        error.message;
-
+        "❌ حدث خطأ أثناء تجهيز أسعار التوصيل:\n\n" +
+        error.message +
+        "\n\n" +
+        "تحققي من Firestore Rules وتسجيل الدخول.";
 
         result.className =
         "error";
