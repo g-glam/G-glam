@@ -1,2916 +1,2957 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8">
 
-<head>
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <meta charset="UTF-8">
+<title>G-Glam | الطلبات</title>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+>
 
-    <title>G-Glam | الطلبات</title>
+<link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+>
 
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
+<link
+    href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+>
 
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
+<style>
 
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    >
+    :root {
 
-    <style>
+        --orange: #F47B20;
+        --orange-dark: #DF6810;
 
-        :root {
+        --bg: #F5F5F5;
+        --sidebar: #EEEEEE;
 
-            --orange: #F47B20;
-            --orange-dark: #DF6810;
+        --card: #FFFFFF;
 
-            --bg: #F5F5F5;
-            --sidebar: #EEEEEE;
+        --text: #333333;
+        --dark: #222222;
+        --muted: #777777;
 
-            --card: #FFFFFF;
+        --border: #E5E5E5;
 
-            --text: #333333;
-            --dark: #222222;
-            --muted: #777777;
+        --success: #198754;
+        --success-bg: #E8F7EE;
 
-            --border: #E5E5E5;
+        --danger: #DC3545;
+        --danger-bg: #FDEBEC;
 
-            --success: #198754;
-            --success-bg: #E8F7EE;
+        --blue: #2563EB;
+        --blue-bg: #EAF1FF;
 
-            --danger: #DC3545;
-            --danger-bg: #FDEBEC;
+        --purple: #7C3AED;
+        --purple-bg: #F3E8FF;
 
-            --blue: #2563EB;
-            --blue-bg: #EAF1FF;
+        --warning: #D97706;
+        --warning-bg: #FFF4E5;
 
-            --purple: #7C3AED;
-            --purple-bg: #F3E8FF;
+        --shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
 
-            --warning: #D97706;
-            --warning-bg: #FFF4E5;
+        --dark-bg: #07111F;
+        --dark-sidebar: #0A1726;
+        --dark-card: #0D1B2A;
+        --dark-card-2: #102234;
+        --dark-text: #F4F7FB;
+        --dark-muted: #AAB7C7;
+        --dark-border: #1D334A;
 
-            --shadow: 0 4px 18px rgba(0, 0, 0, .06);
+    }
 
-            --dark-bg: #07111F;
-            --dark-sidebar: #0A1726;
-            --dark-card: #0D1B2A;
-            --dark-card-2: #102234;
 
-            --dark-text: #F4F7FB;
-            --dark-muted: #AAB7C7;
+    * {
 
-            --dark-border: #1D334A;
+        box-sizing: border-box;
+
+        margin: 0;
+
+        padding: 0;
+
+        font-family: "Tajawal", sans-serif;
+
+    }
+
+
+    body {
+
+        background: var(--bg);
+
+        color: var(--text);
+
+        min-height: 100vh;
+
+        transition:
+            background 0.25s ease,
+            color 0.25s ease;
+
+    }
+
+
+    /* =====================================================
+       THEME BUTTON
+    ===================================================== */
+
+    .theme-toggle {
+
+        border: 1px solid var(--border);
+
+        background: #F5F5F5;
+
+        color: #333;
+
+        width: 42px;
+
+        height: 42px;
+
+        border-radius: 12px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        font-size: 18px;
+
+        cursor: pointer;
+
+        transition: 0.25s;
+
+        flex-shrink: 0;
+
+    }
+
+
+    .theme-toggle:hover {
+
+        background: var(--orange);
+
+        color: white;
+
+        border-color: var(--orange);
+
+        transform: translateY(-1px);
+
+    }
+
+
+    /* =====================================================
+       DARK MODE
+    ===================================================== */
+
+    body.dark-mode {
+
+        background: var(--dark-bg);
+
+        color: var(--dark-text);
+
+    }
+
+
+    /* =====================================================
+       SIDEBAR
+    ===================================================== */
+
+    .sidebar {
+
+        position: fixed;
+
+        right: 0;
+
+        top: 0;
+
+        height: 100vh;
+
+        width: 75px;
+
+        background: var(--sidebar);
+
+        border-left: 1px solid var(--border);
+
+        overflow: hidden;
+
+        transition: 0.3s;
+
+        z-index: 1200;
+
+        box-shadow:
+            -3px 0 15px rgba(0, 0, 0, 0.04);
+
+    }
+
+
+    .sidebar:hover {
+
+        width: 240px;
+
+    }
+
+
+    body.dark-mode .sidebar {
+
+        background: var(--dark-sidebar);
+
+        border-left-color: var(--dark-border);
+
+        box-shadow:
+            -4px 0 20px rgba(0, 0, 0, 0.35);
+
+    }
+
+
+    /* =====================================================
+       LOGO
+    ===================================================== */
+
+    .logo {
+
+        height: 78px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-bottom: 1px solid #DDDDDD;
+
+        white-space: nowrap;
+
+        padding: 10px;
+
+    }
+
+
+    body.dark-mode .logo {
+
+        border-bottom-color: var(--dark-border);
+
+    }
+
+
+    .logo img {
+
+        width: 48px;
+
+        height: 48px;
+
+        object-fit: contain;
+
+        display: block;
+
+        transition: 0.3s;
+
+    }
+
+
+    .sidebar:hover .logo img {
+
+        width: 130px;
+
+        height: 55px;
+
+    }
+
+
+    /* =====================================================
+       MENU
+    ===================================================== */
+
+    .menu {
+
+        margin-top: 18px;
+
+        padding: 0 10px;
+
+    }
+
+
+    .menu a {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 15px;
+
+        height: 52px;
+
+        padding: 0 10px;
+
+        margin-bottom: 7px;
+
+        border-radius: 12px;
+
+        color: #555;
+
+        text-decoration: none;
+
+        white-space: nowrap;
+
+        transition: 0.2s;
+
+        position: relative;
+
+    }
+
+
+    .menu a:hover {
+
+        background: #E2E2E2;
+
+        color: var(--dark);
+
+    }
+
+
+    body.dark-mode .menu a {
+
+        color: #C9D4DF;
+
+    }
+
+
+    body.dark-mode .menu a:hover {
+
+        background: #17283A;
+
+        color: #FFFFFF;
+
+    }
+
+
+    .menu a.active {
+
+        background: var(--orange);
+
+        color: white;
+
+        box-shadow:
+            0 5px 15px rgba(244, 123, 32, 0.20);
+
+    }
+
+
+    /* =====================================================
+       ICONS
+    ===================================================== */
+
+    .icon {
+
+        width: 35px;
+
+        min-width: 35px;
+
+        height: 35px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        text-align: center;
+
+        font-size: 18px;
+
+        transition: 0.25s;
+
+    }
+
+
+    .icon i {
+
+        font-size: 18px;
+
+        width: 20px;
+
+        text-align: center;
+
+    }
+
+
+    .menu a:hover .icon {
+
+        transform: scale(1.08);
+
+    }
+
+
+    .menu a.active .icon {
+
+        color: white;
+
+    }
+
+
+    /* =====================================================
+       MENU TEXT
+    ===================================================== */
+
+    .text {
+
+        opacity: 0;
+
+        transition: 0.25s;
+
+        font-size: 14px;
+
+        font-weight: 700;
+
+    }
+
+
+    .sidebar:hover .text {
+
+        opacity: 1;
+
+    }
+
+
+    /* =====================================================
+       TOPBAR
+    ===================================================== */
+
+    .topbar {
+
+        position: fixed;
+
+        top: 0;
+
+        right: 75px;
+
+        left: 0;
+
+        height: 78px;
+
+        background: white;
+
+        border-bottom: 1px solid var(--border);
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        padding: 0 25px;
+
+        z-index: 1100;
+
+        box-shadow:
+            0 2px 12px rgba(0, 0, 0, 0.04);
+
+        transition: 0.3s;
+
+    }
+
+
+    body.dark-mode .topbar {
+
+        background: var(--dark-card);
+
+        border-bottom-color: var(--dark-border);
+
+        box-shadow:
+            0 2px 15px rgba(0, 0, 0, 0.25);
+
+    }
+
+
+    /* =====================================================
+       STORE TOP
+    ===================================================== */
+
+    .store-top {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 12px;
+
+        min-width: 0;
+
+    }
+
+
+    .store-image {
+
+        width: 48px;
+
+        height: 48px;
+
+        border-radius: 50%;
+
+        object-fit: cover;
+
+        background: #F1F1F1;
+
+        border: 2px solid #FFE0C8;
+
+        flex-shrink: 0;
+
+    }
+
+
+    body.dark-mode .store-image {
+
+        background: #142538;
+
+        border-color: #5A3A22;
+
+    }
+
+
+    .store-details {
+
+        display: flex;
+
+        flex-direction: column;
+
+        min-width: 0;
+
+    }
+
+
+    .store-label {
+
+        font-size: 11px;
+
+        color: #999;
+
+        margin-bottom: 2px;
+
+    }
+
+
+    body.dark-mode .store-label {
+
+        color: #7F91A6;
+
+    }
+
+
+    .store-top-name {
+
+        font-size: 16px;
+
+        font-weight: 800;
+
+        color: #222;
+
+        white-space: nowrap;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+
+        max-width: 250px;
+
+    }
+
+
+    body.dark-mode .store-top-name {
+
+        color: #F4F7FB;
+
+    }
+
+
+    /* =====================================================
+       VIEW STORE
+    ===================================================== */
+
+    .view-store-btn {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 7px;
+
+        background: #FFF1E6;
+
+        color: var(--orange-dark);
+
+        text-decoration: none;
+
+        padding: 10px 15px;
+
+        border-radius: 11px;
+
+        font-size: 13px;
+
+        font-weight: 700;
+
+        transition: 0.2s;
+
+        white-space: nowrap;
+
+        border: 1px solid #FFE0CA;
+
+    }
+
+
+    .view-store-btn:hover {
+
+        background: var(--orange);
+
+        color: white;
+
+    }
+
+
+    body.dark-mode .view-store-btn {
+
+        background: #17283A;
+
+        color: #FF8C32;
+
+        border-color: #5A3A22;
+
+    }
+
+
+    body.dark-mode .view-store-btn:hover {
+
+        background: var(--orange);
+
+        color: white;
+
+    }
+
+
+    /* =====================================================
+       CONTENT
+    ===================================================== */
+
+    .content {
+
+        margin-right: 75px;
+
+        padding: 103px 25px 25px;
+
+        transition: 0.3s;
+
+    }
+
+
+    /* =====================================================
+       MESSAGES
+    ===================================================== */
+
+    .message {
+
+        display: none;
+
+        padding: 13px 18px;
+
+        border-radius: 12px;
+
+        margin-bottom: 18px;
+
+        text-align: center;
+
+        font-size: 14px;
+
+        font-weight: 600;
+
+    }
+
+
+    .success {
+
+        background: var(--success-bg);
+
+        color: #155724;
+
+        border: 1px solid #C5E8D3;
+
+    }
+
+
+    .error {
+
+        background: var(--danger-bg);
+
+        color: #721C24;
+
+        border: 1px solid #EFC7CC;
+
+    }
+
+
+    body.dark-mode .success {
+
+        background: #173426;
+
+        color: #8DE0B2;
+
+        border-color: #285B40;
+
+    }
+
+
+    body.dark-mode .error {
+
+        background: #351B20;
+
+        color: #FF8B86;
+
+        border-color: #5A292E;
+
+    }
+
+
+    /* =====================================================
+       STATISTICS
+    ===================================================== */
+
+    .stats {
+
+        display: grid;
+
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 18px;
+
+        margin-bottom: 22px;
+
+    }
+
+
+    .stat {
+
+        background: white;
+
+        border: 1px solid var(--border);
+
+        border-radius: 18px;
+
+        padding: 22px;
+
+        box-shadow: var(--shadow);
+
+        position: relative;
+
+        overflow: hidden;
+
+    }
+
+
+    body.dark-mode .stat {
+
+        background: var(--dark-card);
+
+        border-color: var(--dark-border);
+
+        box-shadow:
+            0 8px 28px rgba(0, 0, 0, 0.30);
+
+    }
+
+
+    .stat::after {
+
+        content: "";
+
+        position: absolute;
+
+        bottom: 0;
+
+        right: 0;
+
+        height: 3px;
+
+        width: 100%;
+
+        background: var(--orange);
+
+    }
+
+
+    .stat-title {
+
+        color: var(--muted);
+
+        font-size: 14px;
+
+        margin-bottom: 10px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+    }
+
+
+    .stat-title i {
+
+        font-size: 16px;
+
+        color: var(--orange);
+
+    }
+
+
+    body.dark-mode .stat-title {
+
+        color: var(--dark-muted);
+
+    }
+
+
+    .stat-value {
+
+        font-size: 28px;
+
+        font-weight: 800;
+
+        color: var(--dark);
+
+    }
+
+
+    body.dark-mode .stat-value {
+
+        color: var(--dark-text);
+
+    }
+
+
+    /* =====================================================
+       SECTION
+    ===================================================== */
+
+    .section {
+
+        background: white;
+
+        border: 1px solid var(--border);
+
+        padding: 22px;
+
+        border-radius: 18px;
+
+        box-shadow: var(--shadow);
+
+    }
+
+
+    body.dark-mode .section {
+
+        background: var(--dark-card);
+
+        border-color: var(--dark-border);
+
+        box-shadow:
+            0 8px 28px rgba(0, 0, 0, 0.30);
+
+    }
+
+
+    /* =====================================================
+       SECTION HEADER
+    ===================================================== */
+
+    .section-header {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 15px;
+
+        margin-bottom: 20px;
+
+    }
+
+
+    .section-header h2 {
+
+        font-size: 21px;
+
+        font-weight: 800;
+
+        color: var(--dark);
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 9px;
+
+    }
+
+
+    .section-header h2 i {
+
+        color: var(--orange);
+
+        font-size: 20px;
+
+    }
+
+
+    body.dark-mode .section-header h2 {
+
+        color: var(--dark-text);
+
+    }
+
+
+    body.dark-mode .section-header h2 i {
+
+        color: #FF8C32;
+
+    }
+
+
+    /* =====================================================
+       TABLE
+    ===================================================== */
+
+    .table-wrapper {
+
+        width: 100%;
+
+        overflow-x: auto;
+
+        border: 1px solid var(--border);
+
+        border-radius: 14px;
+
+    }
+
+
+    body.dark-mode .table-wrapper {
+
+        border-color: var(--dark-border);
+
+    }
+
+
+    .orders-table {
+
+        width: 100%;
+
+        min-width: 1250px;
+
+        border-collapse: collapse;
+
+        background: white;
+
+    }
+
+
+    body.dark-mode .orders-table {
+
+        background: var(--dark-card);
+
+    }
+
+
+    .orders-table thead {
+
+        background: #F1F1F1;
+
+    }
+
+
+    body.dark-mode .orders-table thead {
+
+        background: #17283A;
+
+    }
+
+
+    .orders-table th {
+
+        padding: 15px 12px;
+
+        font-size: 13px;
+
+        font-weight: 800;
+
+        color: #444;
+
+        border-bottom: 1px solid var(--border);
+
+        white-space: nowrap;
+
+        text-align: center;
+
+    }
+
+
+    body.dark-mode .orders-table th {
+
+        color: #F4F7FB;
+
+        border-bottom-color: var(--dark-border);
+
+    }
+
+
+    .orders-table td {
+
+        padding: 13px 10px;
+
+        font-size: 13px;
+
+        border-bottom: 1px solid #EEEEEE;
+
+        vertical-align: middle;
+
+        text-align: center;
+
+    }
+
+
+    body.dark-mode .orders-table td {
+
+        color: #E8EEF5;
+
+        border-bottom-color: #1D334A;
+
+    }
+
+
+    .orders-table tbody tr {
+
+        transition: 0.2s;
+
+    }
+
+
+    .orders-table tbody tr:hover {
+
+        background: #FAFAFA;
+
+    }
+
+
+    body.dark-mode .orders-table tbody tr:hover {
+
+        background: #13283B;
+
+    }
+
+
+    .orders-table tbody tr:last-child td {
+
+        border-bottom: none;
+
+    }
+
+
+    /* =====================================================
+       ORDER NUMBER
+    ===================================================== */
+
+    .order-number {
+
+        font-weight: 800;
+
+        color: var(--orange);
+
+        direction: ltr;
+
+        white-space: nowrap;
+
+        font-size: 15px;
+
+    }
+
+
+    /* =====================================================
+       DATE
+    ===================================================== */
+
+    .date-cell {
+
+        white-space: nowrap;
+
+        color: #555;
+
+        font-size: 12px;
+
+    }
+
+
+    body.dark-mode .date-cell {
+
+        color: #B7C3D0;
+
+    }
+
+
+    /* =====================================================
+       CUSTOMER
+    ===================================================== */
+
+    .customer-name {
+
+        font-weight: 700;
+
+        color: var(--dark);
+
+    }
+
+
+    body.dark-mode .customer-name {
+
+        color: #F4F7FB;
+
+    }
+
+
+    /* =====================================================
+       PHONE
+    ===================================================== */
+
+    .customer-phone {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 5px;
+
+        padding: 7px 10px;
+
+        border: none;
+
+        border-radius: 9px;
+
+        background: #F3F3F3;
+
+        color: var(--dark);
+
+        font-family: "Tajawal", sans-serif;
+
+        font-size: 12px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+
+        transition: 0.2s;
+
+        white-space: nowrap;
+
+    }
+
+
+    body.dark-mode .customer-phone {
+
+        background: #17283A;
+
+        color: #F1F1F1;
+
+    }
+
+
+    .customer-phone:hover {
+
+        background: var(--orange);
+
+        color: white;
+
+    }
+
+
+    /* =====================================================
+       ADDRESS
+    ===================================================== */
+
+    .address-cell {
+
+        max-width: 180px;
+
+        white-space: normal;
+
+        line-height: 1.7;
+
+    }
+
+
+    /* =====================================================
+       DELIVERY
+    ===================================================== */
+
+    .delivery-cell {
+
+        line-height: 1.7;
+
+    }
+
+
+    .delivery-type {
+
+        font-weight: 700;
+
+        color: var(--dark);
+
+    }
+
+
+    body.dark-mode .delivery-type {
+
+        color: #F1F1F1;
+
+    }
+
+
+    .delivery-price {
+
+        font-size: 11px;
+
+        color: var(--muted);
+
+    }
+
+
+    body.dark-mode .delivery-price {
+
+        color: #AAB7C7;
+
+    }
+
+
+    /* =====================================================
+       PRODUCTS BUTTON
+    ===================================================== */
+
+    .products-btn {
+
+        border: none;
+
+        background: #FFF4E8;
+
+        color: var(--orange-dark);
+
+        padding: 9px 13px;
+
+        border-radius: 9px;
+
+        font-family: "Tajawal", sans-serif;
+
+        font-size: 12px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+
+        white-space: nowrap;
+
+        transition: 0.2s;
+
+    }
+
+
+    body.dark-mode .products-btn {
+
+        background: #17283A;
+
+        color: #FF9A4D;
+
+    }
+
+
+    .products-btn:hover {
+
+        background: var(--orange);
+
+        color: white;
+
+    }
+
+
+    /* =====================================================
+       TOTAL
+    ===================================================== */
+
+    .total-cell {
+
+        font-size: 15px;
+
+        font-weight: 800;
+
+        color: var(--orange);
+
+        white-space: nowrap;
+
+    }
+
+
+    /* =====================================================
+       NOTES
+    ===================================================== */
+
+    .notes-box {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 6px;
+
+        min-width: 190px;
+
+    }
+
+
+    .notes-input {
+
+        width: 140px;
+
+        padding: 9px 10px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 9px;
+
+        font-family: "Tajawal", sans-serif;
+
+        font-size: 12px;
+
+        outline: none;
+
+        background: #FAFAFA;
+
+    }
+
+
+    body.dark-mode .notes-input {
+
+        background: #17283A;
+
+        color: white;
+
+        border-color: #29425B;
+
+    }
+
+
+    body.dark-mode .notes-input::placeholder {
+
+        color: #8FA0B3;
+
+    }
+
+
+    .notes-input:focus {
+
+        border-color: var(--orange);
+
+        background: white;
+
+        box-shadow:
+            0 0 0 3px rgba(244, 123, 32, 0.08);
+
+    }
+
+
+    body.dark-mode .notes-input:focus {
+
+        background: #20364B;
+
+    }
+
+
+    .notes-save {
+
+        border: none;
+
+        background: var(--orange);
+
+        color: white;
+
+        padding: 9px 10px;
+
+        border-radius: 9px;
+
+        font-family: "Tajawal", sans-serif;
+
+        font-size: 12px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+
+    }
+
+
+    .notes-save:hover {
+
+        background: var(--orange-dark);
+
+    }
+
+
+    /* =====================================================
+       STATUS
+    ===================================================== */
+
+    .status-select {
+
+        min-width: 140px;
+
+        padding: 9px 10px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 9px;
+
+        background: white;
+
+        font-family: "Tajawal", sans-serif;
+
+        font-size: 12px;
+
+        font-weight: 700;
+
+        outline: none;
+
+        cursor: pointer;
+
+    }
+
+
+    body.dark-mode .status-select {
+
+        background: #17283A;
+
+        color: white;
+
+        border-color: #29425B;
+
+    }
+
+
+    .status-select:focus {
+
+        border-color: var(--orange);
+
+        box-shadow:
+            0 0 0 3px rgba(244, 123, 32, 0.08);
+
+    }
+
+
+    /* =====================================================
+       DELETE
+    ===================================================== */
+
+    .delete-btn {
+
+        border: none;
+
+        background: var(--danger-bg);
+
+        color: var(--danger);
+
+        padding: 9px 12px;
+
+        border-radius: 9px;
+
+        font-family: "Tajawal", sans-serif;
+
+        font-size: 12px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+
+        white-space: nowrap;
+
+        transition: 0.2s;
+
+    }
+
+
+    body.dark-mode .delete-btn {
+
+        background: #351B20;
+
+        color: #FF8B86;
+
+    }
+
+
+    .delete-btn:hover {
+
+        background: var(--danger);
+
+        color: white;
+
+    }
+
+
+    /* =====================================================
+       EMPTY / LOADING
+    ===================================================== */
+
+    .empty {
+
+        padding: 55px 20px;
+
+        text-align: center;
+
+        color: var(--muted);
+
+        line-height: 2;
+
+    }
+
+
+    .empty-icon {
+
+        font-size: 32px;
+
+        margin-bottom: 8px;
+
+    }
+
+
+    .loading {
+
+        padding: 55px 20px;
+
+        text-align: center;
+
+        color: var(--muted);
+
+    }
+
+
+    body.dark-mode .empty,
+    body.dark-mode .loading {
+
+        color: #AAB7C7;
+
+    }
+
+
+    /* =====================================================
+       MODAL
+    ===================================================== */
+
+    .modal-overlay {
+
+        position: fixed;
+
+        inset: 0;
+
+        background: rgba(0, 0, 0, 0.45);
+
+        display: none;
+
+        align-items: center;
+
+        justify-content: center;
+
+        padding: 20px;
+
+        z-index: 3000;
+
+    }
+
+
+    .modal-overlay.active {
+
+        display: flex;
+
+    }
+
+
+    .modal {
+
+        background: white;
+
+        width: 100%;
+
+        max-width: 650px;
+
+        max-height: 90vh;
+
+        overflow-y: auto;
+
+        border-radius: 18px;
+
+        box-shadow:
+            0 15px 50px rgba(0, 0, 0, 0.20);
+
+    }
+
+
+    body.dark-mode .modal {
+
+        background: var(--dark-card);
+
+        color: var(--dark-text);
+
+    }
+
+
+    .modal-header {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        padding: 18px 20px;
+
+        border-bottom: 1px solid var(--border);
+
+    }
+
+
+    body.dark-mode .modal-header {
+
+        border-bottom-color: var(--dark-border);
+
+    }
+
+
+    .modal-header h3 {
+
+        font-size: 19px;
+
+        font-weight: 800;
+
+        color: var(--dark);
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 9px;
+
+    }
+
+
+    .modal-header h3 i {
+
+        color: var(--orange);
+
+    }
+
+
+    body.dark-mode .modal-header h3 {
+
+        color: #F4F7FB;
+
+    }
+
+
+    body.dark-mode .modal-header h3 i {
+
+        color: #FF8C32;
+
+    }
+
+
+    .close-modal {
+
+        width: 35px;
+
+        height: 35px;
+
+        border: none;
+
+        border-radius: 50%;
+
+        background: #F1F1F1;
+
+        font-size: 20px;
+
+        cursor: pointer;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+    }
+
+
+    body.dark-mode .close-modal {
+
+        background: #17283A;
+
+        color: white;
+
+    }
+
+
+    .close-modal:hover {
+
+        background: #E5E5E5;
+
+    }
+
+
+    body.dark-mode .close-modal:hover {
+
+        background: #20364B;
+
+    }
+
+
+    .modal-body {
+
+        padding: 20px;
+
+    }
+
+
+    /* =====================================================
+       MODAL PRODUCT
+    ===================================================== */
+
+    .modal-product {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 14px;
+
+        padding: 13px 0;
+
+        border-bottom: 1px solid #EEEEEE;
+
+    }
+
+
+    body.dark-mode .modal-product {
+
+        border-bottom-color: #1D334A;
+
+    }
+
+
+    .modal-product:last-child {
+
+        border-bottom: none;
+
+    }
+
+
+    .modal-product-image {
+
+        width: 70px;
+
+        height: 70px;
+
+        border-radius: 12px;
+
+        object-fit: cover;
+
+        background: #F1F1F1;
+
+        flex-shrink: 0;
+
+    }
+
+
+    body.dark-mode .modal-product-image {
+
+        background: #142538;
+
+    }
+
+
+    .modal-product-info {
+
+        flex: 1;
+
+        min-width: 0;
+
+    }
+
+
+    .modal-product-name {
+
+        font-weight: 800;
+
+        color: var(--dark);
+
+        margin-bottom: 5px;
+
+    }
+
+
+    body.dark-mode .modal-product-name {
+
+        color: #F4F7FB;
+
+    }
+
+
+    .modal-product-detail {
+
+        font-size: 12px;
+
+        color: var(--muted);
+
+        line-height: 1.8;
+
+    }
+
+
+    body.dark-mode .modal-product-detail {
+
+        color: #AAB7C7;
+
+    }
+
+
+    .modal-product-total {
+
+        font-weight: 800;
+
+        color: var(--orange);
+
+        white-space: nowrap;
+
+    }
+
+
+    /* =====================================================
+       PHONE OPTIONS
+    ===================================================== */
+
+    .phone-options {
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 12px;
+
+    }
+
+
+    .phone-option {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 8px;
+
+        padding: 15px;
+
+        border-radius: 12px;
+
+        text-decoration: none;
+
+        font-family: "Tajawal", sans-serif;
+
+        font-weight: 800;
+
+        font-size: 14px;
+
+    }
+
+
+    .call-option {
+
+        background: #E8F5E9;
+
+        color: #2E7D32;
+
+    }
+
+
+    .whatsapp-option {
+
+        background: #E8F7EE;
+
+        color: #16833A;
+
+    }
+
+
+    /* =====================================================
+       RESPONSIVE
+    ===================================================== */
+
+    @media (max-width: 1000px) {
+
+        .stats {
+
+            grid-template-columns: repeat(2, 1fr);
 
         }
 
-
-        * {
-
-            box-sizing: border-box;
-
-            margin: 0;
-            padding: 0;
-
-            font-family: "Tajawal", sans-serif;
-
-        }
+    }
 
 
-        body {
-
-            background: var(--bg);
-
-            color: var(--text);
-
-            min-height: 100vh;
-
-            transition:
-                background .25s ease,
-                color .25s ease;
-
-        }
-
-
-        /* =====================================================
-           THEME BUTTON
-        ===================================================== */
-
-        .theme-toggle {
-
-            border: 1px solid var(--border);
-
-            background: #F5F5F5;
-
-            color: #333;
-
-            width: 42px;
-            height: 42px;
-
-            border-radius: 12px;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            font-size: 18px;
-
-            cursor: pointer;
-
-            transition: .25s;
-
-            flex-shrink: 0;
-
-        }
-
-
-        .theme-toggle:hover {
-
-            background: var(--orange);
-
-            color: white;
-
-            border-color: var(--orange);
-
-            transform: translateY(-1px);
-
-        }
-
-
-        /* =====================================================
-           DARK MODE
-        ===================================================== */
-
-        body.dark-mode {
-
-            background: var(--dark-bg);
-
-            color: var(--dark-text);
-
-        }
-
-
-        /* =====================================================
-           SIDEBAR
-        ===================================================== */
+    @media (max-width: 800px) {
 
         .sidebar {
 
-            position: fixed;
-
-            right: 0;
-            top: 0;
-
-            height: 100vh;
-
-            width: 75px;
-
-            background: var(--sidebar);
-
-            border-left: 1px solid var(--border);
-
-            overflow: hidden;
-
-            transition: .3s;
-
-            z-index: 1200;
-
-            box-shadow:
-                -3px 0 15px rgba(0, 0, 0, .04);
+            width: 65px;
 
         }
 
 
         .sidebar:hover {
 
-            width: 240px;
+            width: 210px;
 
         }
 
-
-        body.dark-mode .sidebar {
-
-            background: var(--dark-sidebar);
-
-            border-left-color: var(--dark-border);
-
-            box-shadow:
-                -4px 0 20px rgba(0, 0, 0, .35);
-
-        }
-
-
-        /* =====================================================
-           LOGO
-        ===================================================== */
-
-        .logo {
-
-            height: 78px;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            border-bottom: 1px solid #DDDDDD;
-
-            white-space: nowrap;
-
-            padding: 10px;
-
-        }
-
-
-        body.dark-mode .logo {
-
-            border-bottom-color: var(--dark-border);
-
-        }
-
-
-        .logo img {
-
-            width: 48px;
-            height: 48px;
-
-            object-fit: contain;
-
-            display: block;
-
-            transition: .3s;
-
-        }
-
-
-        .sidebar:hover .logo img {
-
-            width: 130px;
-            height: 55px;
-
-        }
-
-
-        /* =====================================================
-           MENU
-        ===================================================== */
-
-        .menu {
-
-            margin-top: 18px;
-
-            padding: 0 10px;
-
-        }
-
-
-        .menu a {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 15px;
-
-            height: 52px;
-
-            padding: 0 10px;
-
-            margin-bottom: 7px;
-
-            border-radius: 12px;
-
-            color: #555;
-
-            text-decoration: none;
-
-            white-space: nowrap;
-
-            transition: .2s;
-
-            position: relative;
-
-        }
-
-
-        .menu a:hover {
-
-            background: #E2E2E2;
-
-            color: var(--dark);
-
-        }
-
-
-        body.dark-mode .menu a {
-
-            color: #C9D4DF;
-
-        }
-
-
-        body.dark-mode .menu a:hover {
-
-            background: #17283A;
-
-            color: #FFF;
-
-        }
-
-
-        .menu a.active {
-
-            background: var(--orange);
-
-            color: white;
-
-            box-shadow:
-                0 5px 15px rgba(244, 123, 32, .20);
-
-        }
-
-
-        /* =====================================================
-           ICONS
-        ===================================================== */
-
-        .icon {
-
-            width: 35px;
-
-            min-width: 35px;
-
-            height: 35px;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            text-align: center;
-
-            font-size: 18px;
-
-            transition: .25s;
-
-        }
-
-
-        .icon i {
-
-            font-size: 18px;
-
-            width: 20px;
-
-            text-align: center;
-
-        }
-
-
-        .menu a:hover .icon {
-
-            transform: scale(1.08);
-
-        }
-
-
-        .menu a.active .icon {
-
-            color: white;
-
-        }
-
-
-        /* =====================================================
-           MENU TEXT
-        ===================================================== */
-
-        .text {
-
-            opacity: 0;
-
-            transition: .25s;
-
-            font-size: 14px;
-
-            font-weight: 700;
-
-        }
-
-
-        .sidebar:hover .text {
-
-            opacity: 1;
-
-        }
-
-
-        /* =====================================================
-           TOPBAR
-        ===================================================== */
 
         .topbar {
 
-            position: fixed;
-
-            top: 0;
-
-            right: 75px;
-
-            left: 0;
-
-            height: 78px;
-
-            background: white;
-
-            border-bottom: 1px solid var(--border);
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            padding: 0 25px;
-
-            z-index: 1100;
-
-            box-shadow:
-                0 2px 12px rgba(0, 0, 0, .04);
-
-            transition: .3s;
+            right: 65px;
 
         }
 
 
-        body.dark-mode .topbar {
+        .content {
 
-            background: var(--dark-card);
+            margin-right: 65px;
 
-            border-bottom-color: var(--dark-border);
+            padding-top: 93px;
 
-            box-shadow:
-                0 2px 15px rgba(0, 0, 0, .25);
+        }
+
+    }
+
+
+    @media (max-width: 700px) {
+
+        .sidebar {
+
+            width: 60px;
 
         }
 
 
-        /* =====================================================
-           STORE TOP
-        ===================================================== */
+        .sidebar:hover {
 
-        .store-top {
+            width: 200px;
 
-            display: flex;
+        }
 
-            align-items: center;
 
-            gap: 12px;
+        .topbar {
 
-            min-width: 0;
+            right: 60px;
+
+            height: 68px;
+
+            padding: 0 12px;
 
         }
 
 
         .store-image {
 
-            width: 48px;
-            height: 48px;
+            width: 42px;
 
-            border-radius: 50%;
-
-            object-fit: cover;
-
-            background: #F1F1F1;
-
-            border: 2px solid #FFE0C8;
-
-            flex-shrink: 0;
-
-        }
-
-
-        body.dark-mode .store-image {
-
-            background: #142538;
-
-            border-color: #5A3A22;
-
-        }
-
-
-        .store-details {
-
-            display: flex;
-
-            flex-direction: column;
-
-            min-width: 0;
-
-        }
-
-
-        .store-label {
-
-            font-size: 11px;
-
-            color: #999;
-
-            margin-bottom: 2px;
-
-        }
-
-
-        body.dark-mode .store-label {
-
-            color: #7F91A6;
+            height: 42px;
 
         }
 
 
         .store-top-name {
 
-            font-size: 16px;
+            font-size: 14px;
 
-            font-weight: 800;
-
-            color: #222;
-
-            white-space: nowrap;
-
-            overflow: hidden;
-
-            text-overflow: ellipsis;
-
-            max-width: 250px;
+            max-width: 150px;
 
         }
 
-
-        body.dark-mode .store-top-name {
-
-            color: #F4F7FB;
-
-        }
-
-
-        /* =====================================================
-           VIEW STORE
-        ===================================================== */
 
         .view-store-btn {
 
-            display: flex;
+            padding: 8px 10px;
 
-            align-items: center;
-
-            gap: 7px;
-
-            background: #FFF1E6;
-
-            color: var(--orange-dark);
-
-            text-decoration: none;
-
-            padding: 10px 15px;
-
-            border-radius: 11px;
-
-            font-size: 13px;
-
-            font-weight: 700;
-
-            transition: .2s;
-
-            white-space: nowrap;
-
-            border: 1px solid #FFE0CA;
+            font-size: 11px;
 
         }
 
 
-        .view-store-btn:hover {
+        .theme-toggle {
 
-            background: var(--orange);
+            width: 40px;
 
-            color: white;
+            height: 40px;
 
-        }
-
-
-        body.dark-mode .view-store-btn {
-
-            background: #17283A;
-
-            color: #FF8C32;
-
-            border-color: #5A3A22;
+            font-size: 18px;
 
         }
 
-
-        body.dark-mode .view-store-btn:hover {
-
-            background: var(--orange);
-
-            color: white;
-
-        }
-
-
-        /* =====================================================
-           CONTENT
-        ===================================================== */
 
         .content {
 
-            margin-right: 75px;
+            margin-right: 60px;
 
-            padding: 103px 25px 25px;
-
-            transition: .3s;
+            padding: 83px 12px 20px;
 
         }
 
 
-        /* =====================================================
-           MESSAGES
-        ===================================================== */
+        .section {
 
-        .message {
-
-            display: none;
-
-            padding: 13px 18px;
-
-            border-radius: 12px;
-
-            margin-bottom: 18px;
-
-            text-align: center;
-
-            font-size: 14px;
-
-            font-weight: 600;
+            padding: 14px;
 
         }
 
-
-        .success {
-
-            background: var(--success-bg);
-
-            color: #155724;
-
-            border: 1px solid #C5E8D3;
-
-        }
-
-
-        .error {
-
-            background: var(--danger-bg);
-
-            color: #721C24;
-
-            border: 1px solid #EFC7CC;
-
-        }
-
-
-        body.dark-mode .success {
-
-            background: #173426;
-
-            color: #8DE0B2;
-
-            border-color: #285B40;
-
-        }
-
-
-        body.dark-mode .error {
-
-            background: #351B20;
-
-            color: #FF8B86;
-
-            border-color: #5A292E;
-
-        }
-
-
-        /* =====================================================
-           STATISTICS
-        ===================================================== */
 
         .stats {
 
-            display: grid;
-
-            grid-template-columns: repeat(3, 1fr);
-
-            gap: 18px;
-
-            margin-bottom: 22px;
+            gap: 10px;
 
         }
 
 
         .stat {
 
-            background: white;
-
-            border: 1px solid var(--border);
-
-            border-radius: 18px;
-
-            padding: 22px;
-
-            box-shadow: var(--shadow);
-
-            position: relative;
-
-            overflow: hidden;
-
-        }
-
-
-        body.dark-mode .stat {
-
-            background: var(--dark-card);
-
-            border-color: var(--dark-border);
-
-            box-shadow:
-                0 8px 28px rgba(0, 0, 0, .30);
-
-        }
-
-
-        .stat::after {
-
-            content: "";
-
-            position: absolute;
-
-            bottom: 0;
-
-            right: 0;
-
-            height: 3px;
-
-            width: 100%;
-
-            background: var(--orange);
-
-        }
-
-
-        .stat-title {
-
-            color: var(--muted);
-
-            font-size: 14px;
-
-            margin-bottom: 10px;
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 8px;
-
-        }
-
-
-        .stat-title i {
-
-            font-size: 16px;
-
-            color: var(--orange);
-
-        }
-
-
-        body.dark-mode .stat-title {
-
-            color: var(--dark-muted);
+            padding: 16px;
 
         }
 
 
         .stat-value {
 
-            font-size: 28px;
-
-            font-weight: 800;
-
-            color: var(--dark);
+            font-size: 24px;
 
         }
 
 
-        body.dark-mode .stat-value {
+        .phone-options {
 
-            color: var(--dark-text);
-
-        }
-
-
-        /* =====================================================
-           SECTION
-        ===================================================== */
-
-        .section {
-
-            background: white;
-
-            border: 1px solid var(--border);
-
-            padding: 22px;
-
-            border-radius: 18px;
-
-            box-shadow: var(--shadow);
+            grid-template-columns: 1fr;
 
         }
 
-
-        body.dark-mode .section {
-
-            background: var(--dark-card);
-
-            border-color: var(--dark-border);
-
-            box-shadow:
-                0 8px 28px rgba(0, 0, 0, .30);
-
-        }
+    }
 
 
-        /* =====================================================
-           SECTION HEADER
-        ===================================================== */
+    @media (max-width: 450px) {
 
-        .section-header {
+        .stats {
 
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            gap: 15px;
-
-            margin-bottom: 20px;
+            grid-template-columns: 1fr 1fr;
 
         }
 
 
         .section-header h2 {
 
-            font-size: 21px;
-
-            font-weight: 800;
-
-            color: var(--dark);
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 9px;
-
-        }
-
-
-        .section-header h2 i {
-
-            color: var(--orange);
-
-            font-size: 20px;
-
-        }
-
-
-        body.dark-mode .section-header h2 {
-
-            color: var(--dark-text);
-
-        }
-
-
-        body.dark-mode .section-header h2 i {
-
-            color: #FF8C32;
-
-        }
-
-
-        /* =====================================================
-           TABLE
-        ===================================================== */
-
-        .table-wrapper {
-
-            width: 100%;
-
-            overflow-x: auto;
-
-            border: 1px solid var(--border);
-
-            border-radius: 14px;
-
-        }
-
-
-        body.dark-mode .table-wrapper {
-
-            border-color: var(--dark-border);
-
-        }
-
-
-        .orders-table {
-
-            width: 100%;
-
-            min-width: 1250px;
-
-            border-collapse: collapse;
-
-            background: white;
-
-        }
-
-
-        body.dark-mode .orders-table {
-
-            background: var(--dark-card);
-
-        }
-
-
-        .orders-table thead {
-
-            background: #F1F1F1;
-
-        }
-
-
-        body.dark-mode .orders-table thead {
-
-            background: #17283A;
-
-        }
-
-
-        .orders-table th {
-
-            padding: 15px 12px;
-
-            font-size: 13px;
-
-            font-weight: 800;
-
-            color: #444;
-
-            border-bottom: 1px solid var(--border);
-
-            white-space: nowrap;
-
-            text-align: center;
-
-        }
-
-
-        body.dark-mode .orders-table th {
-
-            color: #F4F7FB;
-
-            border-bottom-color: var(--dark-border);
-
-        }
-
-
-        .orders-table td {
-
-            padding: 13px 10px;
-
-            font-size: 13px;
-
-            border-bottom: 1px solid #EEEEEE;
-
-            vertical-align: middle;
-
-            text-align: center;
-
-        }
-
-
-        body.dark-mode .orders-table td {
-
-            color: #E8EEF5;
-
-            border-bottom-color: #1D334A;
-
-        }
-
-
-        .orders-table tbody tr {
-
-            transition: .2s;
-
-        }
-
-
-        .orders-table tbody tr:hover {
-
-            background: #FAFAFA;
-
-        }
-
-
-        body.dark-mode .orders-table tbody tr:hover {
-
-            background: #13283B;
-
-        }
-
-
-        .orders-table tbody tr:last-child td {
-
-            border-bottom: none;
-
-        }
-
-
-        /* =====================================================
-           ORDER NUMBER
-        ===================================================== */
-
-        .order-number {
-
-            font-weight: 800;
-
-            color: var(--orange);
-
-            direction: ltr;
-
-            white-space: nowrap;
-
-            font-size: 15px;
-
-        }
-
-
-        /* =====================================================
-           DATE
-        ===================================================== */
-
-        .date-cell {
-
-            white-space: nowrap;
-
-            color: #555;
-
-            font-size: 12px;
-
-        }
-
-
-        body.dark-mode .date-cell {
-
-            color: #B7C3D0;
-
-        }
-
-
-        /* =====================================================
-           CUSTOMER
-        ===================================================== */
-
-        .customer-name {
-
-            font-weight: 700;
-
-            color: var(--dark);
-
-        }
-
-
-        body.dark-mode .customer-name {
-
-            color: #F4F7FB;
-
-        }
-
-
-        /* =====================================================
-           PHONE
-        ===================================================== */
-
-        .customer-phone {
-
-            display: inline-flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            gap: 5px;
-
-            padding: 7px 10px;
-
-            border: none;
-
-            border-radius: 9px;
-
-            background: #F3F3F3;
-
-            color: var(--dark);
-
-            font-family: "Tajawal", sans-serif;
-
-            font-size: 12px;
-
-            font-weight: 700;
-
-            cursor: pointer;
-
-            transition: .2s;
-
-            white-space: nowrap;
-
-        }
-
-
-        body.dark-mode .customer-phone {
-
-            background: #17283A;
-
-            color: #F1F1F1;
-
-        }
-
-
-        .customer-phone:hover {
-
-            background: var(--orange);
-
-            color: white;
-
-        }
-
-
-        /* =====================================================
-           ADDRESS
-        ===================================================== */
-
-        .address-cell {
-
-            max-width: 180px;
-
-            white-space: normal;
-
-            line-height: 1.7;
-
-        }
-
-
-        /* =====================================================
-           DELIVERY
-        ===================================================== */
-
-        .delivery-cell {
-
-            line-height: 1.7;
-
-        }
-
-
-        .delivery-type {
-
-            font-weight: 700;
-
-            color: var(--dark);
-
-        }
-
-
-        body.dark-mode .delivery-type {
-
-            color: #F1F1F1;
-
-        }
-
-
-        .delivery-price {
-
-            font-size: 11px;
-
-            color: var(--muted);
-
-        }
-
-
-        body.dark-mode .delivery-price {
-
-            color: #AAB7C7;
-
-        }
-
-
-        /* =====================================================
-           PRODUCTS
-        ===================================================== */
-
-        .products-btn {
-
-            border: none;
-
-            background: #FFF4E8;
-
-            color: var(--orange-dark);
-
-            padding: 9px 13px;
-
-            border-radius: 9px;
-
-            font-family: "Tajawal", sans-serif;
-
-            font-size: 12px;
-
-            font-weight: 700;
-
-            cursor: pointer;
-
-            white-space: nowrap;
-
-            transition: .2s;
-
-        }
-
-
-        body.dark-mode .products-btn {
-
-            background: #17283A;
-
-            color: #FF9A4D;
-
-        }
-
-
-        .products-btn:hover {
-
-            background: var(--orange);
-
-            color: white;
-
-        }
-
-
-        /* =====================================================
-           TOTAL
-        ===================================================== */
-
-        .total-cell {
-
-            font-size: 15px;
-
-            font-weight: 800;
-
-            color: var(--orange);
-
-            white-space: nowrap;
-
-        }
-
-
-        /* =====================================================
-           NOTES
-        ===================================================== */
-
-        .notes-box {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 6px;
-
-            min-width: 190px;
-
-        }
-
-
-        .notes-input {
-
-            width: 140px;
-
-            padding: 9px 10px;
-
-            border: 1px solid var(--border);
-
-            border-radius: 9px;
-
-            font-family: "Tajawal", sans-serif;
-
-            font-size: 12px;
-
-            outline: none;
-
-            background: #FAFAFA;
-
-        }
-
-
-        body.dark-mode .notes-input {
-
-            background: #17283A;
-
-            color: white;
-
-            border-color: #29425B;
-
-        }
-
-
-        body.dark-mode .notes-input::placeholder {
-
-            color: #8FA0B3;
-
-        }
-
-
-        .notes-input:focus {
-
-            border-color: var(--orange);
-
-            background: white;
-
-            box-shadow:
-                0 0 0 3px rgba(244, 123, 32, .08);
-
-        }
-
-
-        body.dark-mode .notes-input:focus {
-
-            background: #20364B;
-
-        }
-
-
-        .notes-save {
-
-            border: none;
-
-            background: var(--orange);
-
-            color: white;
-
-            padding: 9px 10px;
-
-            border-radius: 9px;
-
-            font-family: "Tajawal", sans-serif;
-
-            font-size: 12px;
-
-            font-weight: 700;
-
-            cursor: pointer;
-
-        }
-
-
-        .notes-save:hover {
-
-            background: var(--orange-dark);
-
-        }
-
-
-        /* =====================================================
-           STATUS
-        ===================================================== */
-
-        .status-select {
-
-            min-width: 135px;
-
-            padding: 9px 10px;
-
-            border: 1px solid var(--border);
-
-            border-radius: 9px;
-
-            background: white;
-
-            font-family: "Tajawal", sans-serif;
-
-            font-size: 12px;
-
-            font-weight: 700;
-
-            outline: none;
-
-            cursor: pointer;
-
-        }
-
-
-        body.dark-mode .status-select {
-
-            background: #17283A;
-
-            color: white;
-
-            border-color: #29425B;
-
-        }
-
-
-        .status-select:focus {
-
-            border-color: var(--orange);
-
-            box-shadow:
-                0 0 0 3px rgba(244, 123, 32, .08);
-
-        }
-
-
-        /* =====================================================
-           DELETE
-        ===================================================== */
-
-        .delete-btn {
-
-            border: none;
-
-            background: var(--danger-bg);
-
-            color: var(--danger);
-
-            padding: 9px 12px;
-
-            border-radius: 9px;
-
-            font-family: "Tajawal", sans-serif;
-
-            font-size: 12px;
-
-            font-weight: 700;
-
-            cursor: pointer;
-
-            white-space: nowrap;
-
-            transition: .2s;
-
-        }
-
-
-        body.dark-mode .delete-btn {
-
-            background: #351B20;
-
-            color: #FF8B86;
-
-        }
-
-
-        .delete-btn:hover {
-
-            background: var(--danger);
-
-            color: white;
-
-        }
-
-
-        /* =====================================================
-           EMPTY
-        ===================================================== */
-
-        .empty {
-
-            padding: 55px 20px;
-
-            text-align: center;
-
-            color: var(--muted);
-
-            line-height: 2;
-
-        }
-
-
-        .empty-icon {
-
-            font-size: 32px;
-
-            margin-bottom: 8px;
-
-        }
-
-
-        .loading {
-
-            padding: 55px 20px;
-
-            text-align: center;
-
-            color: var(--muted);
-
-        }
-
-
-        body.dark-mode .empty,
-        body.dark-mode .loading {
-
-            color: #AAB7C7;
-
-        }
-
-
-        /* =====================================================
-           MODAL
-        ===================================================== */
-
-        .modal-overlay {
-
-            position: fixed;
-
-            inset: 0;
-
-            background: rgba(0, 0, 0, .45);
-
-            display: none;
-
-            align-items: center;
-
-            justify-content: center;
-
-            padding: 20px;
-
-            z-index: 3000;
-
-        }
-
-
-        .modal-overlay.active {
-
-            display: flex;
+            font-size: 18px;
 
         }
 
 
         .modal {
 
-            background: white;
-
-            width: 100%;
-
-            max-width: 650px;
-
-            max-height: 90vh;
-
-            overflow-y: auto;
-
-            border-radius: 18px;
-
-            box-shadow:
-                0 15px 50px rgba(0, 0, 0, .20);
+            max-height: 94vh;
 
         }
 
-
-        body.dark-mode .modal {
-
-            background: var(--dark-card);
-
-            color: var(--dark-text);
-
-        }
+    }
 
 
-        .modal-header {
+    @media (max-width: 380px) {
 
-            display: flex;
+        .view-store-btn {
 
-            align-items: center;
+            font-size: 0;
 
-            justify-content: space-between;
+            width: 40px;
 
-            padding: 18px 20px;
+            height: 40px;
 
-            border-bottom: 1px solid var(--border);
-
-        }
-
-
-        body.dark-mode .modal-header {
-
-            border-bottom-color: var(--dark-border);
-
-        }
-
-
-        .modal-header h3 {
-
-            font-size: 19px;
-
-            font-weight: 800;
-
-            color: var(--dark);
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 9px;
-
-        }
-
-
-        .modal-header h3 i {
-
-            color: var(--orange);
-
-        }
-
-
-        body.dark-mode .modal-header h3 {
-
-            color: #F4F7FB;
-
-        }
-
-
-        body.dark-mode .modal-header h3 i {
-
-            color: #FF8C32;
-
-        }
-
-
-        .close-modal {
-
-            width: 35px;
-
-            height: 35px;
-
-            border: none;
-
-            border-radius: 50%;
-
-            background: #F1F1F1;
-
-            font-size: 20px;
-
-            cursor: pointer;
-
-            display: flex;
-
-            align-items: center;
+            padding: 0;
 
             justify-content: center;
 
         }
 
 
-        body.dark-mode .close-modal {
+        .view-store-btn::before {
 
-            background: #17283A;
+            content: "\f06e";
 
-            color: white;
+            font-family: "Font Awesome 6 Free";
 
-        }
+            font-weight: 900;
 
-
-        .close-modal:hover {
-
-            background: #E5E5E5;
+            font-size: 18px;
 
         }
 
 
-        body.dark-mode .close-modal:hover {
+        .store-label {
 
-            background: #20364B;
-
-        }
-
-
-        .modal-body {
-
-            padding: 20px;
+            display: none;
 
         }
 
 
-        /* =====================================================
-           MODAL PRODUCT
-        ===================================================== */
+        .store-top-name {
 
-        .modal-product {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 14px;
-
-            padding: 13px 0;
-
-            border-bottom: 1px solid #EEEEEE;
+            max-width: 120px;
 
         }
 
+    }
 
-        body.dark-mode .modal-product {
 
-            border-bottom-color: #1D334A;
+    /* =====================================================
+       SCROLLBAR
+    ===================================================== */
 
-        }
+    ::-webkit-scrollbar {
 
+        width: 7px;
 
-        .modal-product:last-child {
+        height: 7px;
 
-            border-bottom: none;
+    }
 
-        }
 
+    ::-webkit-scrollbar-track {
 
-        .modal-product-image {
+        background: #F1F1F1;
 
-            width: 70px;
+    }
 
-            height: 70px;
 
-            border-radius: 12px;
+    body.dark-mode ::-webkit-scrollbar-track {
 
-            object-fit: cover;
+        background: #07111F;
 
-            background: #F1F1F1;
+    }
 
-            flex-shrink: 0;
 
-        }
+    ::-webkit-scrollbar-thumb {
 
+        background: #CCC;
 
-        body.dark-mode .modal-product-image {
+        border-radius: 10px;
 
-            background: #142538;
+    }
 
-        }
 
+    body.dark-mode ::-webkit-scrollbar-thumb {
 
-        .modal-product-info {
+        background: #263E57;
 
-            flex: 1;
+    }
 
-            min-width: 0;
 
-        }
+    ::-webkit-scrollbar-thumb:hover {
 
+        background: var(--orange);
 
-        .modal-product-name {
+    }
 
-            font-weight: 800;
+</style>
 
-            color: var(--dark);
+</head><body><!-- =====================================================
+     SIDEBAR
+===================================================== -->
 
-            margin-bottom: 5px;
+<div class="sidebar">
 
-        }
+    <div class="logo">
 
-
-        body.dark-mode .modal-product-name {
-
-            color: #F4F7FB;
-
-        }
-
-
-        .modal-product-detail {
-
-            font-size: 12px;
-
-            color: var(--muted);
-
-            line-height: 1.8;
-
-        }
-
-
-        body.dark-mode .modal-product-detail {
-
-            color: #AAB7C7;
-
-        }
-
-
-        .modal-product-total {
-
-            font-weight: 800;
-
-            color: var(--orange);
-
-            white-space: nowrap;
-
-        }
-
-
-        /* =====================================================
-           PHONE OPTIONS
-        ===================================================== */
-
-        .phone-options {
-
-            display: grid;
-
-            grid-template-columns: 1fr 1fr;
-
-            gap: 12px;
-
-        }
-
-
-        .phone-option {
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            gap: 8px;
-
-            padding: 15px;
-
-            border-radius: 12px;
-
-            text-decoration: none;
-
-            font-family: "Tajawal", sans-serif;
-
-            font-weight: 800;
-
-            font-size: 14px;
-
-        }
-
-
-        .call-option {
-
-            background: #E8F5E9;
-
-            color: #2E7D32;
-
-        }
-
-
-        .whatsapp-option {
-
-            background: #E8F7EE;
-
-            color: #16833A;
-
-        }
-
-
-        /* =====================================================
-           RESPONSIVE
-        ===================================================== */
-
-        @media (max-width: 1000px) {
-
-            .stats {
-
-                grid-template-columns: repeat(2, 1fr);
-
-            }
-
-        }
-
-
-        @media (max-width: 800px) {
-
-            .sidebar {
-
-                width: 65px;
-
-            }
-
-
-            .sidebar:hover {
-
-                width: 210px;
-
-            }
-
-
-            .topbar {
-
-                right: 65px;
-
-            }
-
-
-            .content {
-
-                margin-right: 65px;
-
-                padding-top: 93px;
-
-            }
-
-        }
-
-
-        @media (max-width: 700px) {
-
-            .sidebar {
-
-                width: 60px;
-
-            }
-
-
-            .sidebar:hover {
-
-                width: 200px;
-
-            }
-
-
-            .topbar {
-
-                right: 60px;
-
-                height: 68px;
-
-                padding: 0 12px;
-
-            }
-
-
-            .store-image {
-
-                width: 42px;
-
-                height: 42px;
-
-            }
-
-
-            .store-top-name {
-
-                font-size: 14px;
-
-                max-width: 150px;
-
-            }
-
-
-            .view-store-btn {
-
-                padding: 8px 10px;
-
-                font-size: 11px;
-
-            }
-
-
-            .theme-toggle {
-
-                width: 40px;
-
-                height: 40px;
-
-                font-size: 18px;
-
-            }
-
-
-            .content {
-
-                margin-right: 60px;
-
-                padding: 83px 12px 20px;
-
-            }
-
-
-            .section {
-
-                padding: 14px;
-
-            }
-
-
-            .stats {
-
-                gap: 10px;
-
-            }
-
-
-            .stat {
-
-                padding: 16px;
-
-            }
-
-
-            .stat-value {
-
-                font-size: 24px;
-
-            }
-
-
-            .phone-options {
-
-                grid-template-columns: 1fr;
-
-            }
-
-        }
-
-
-        @media (max-width: 450px) {
-
-            .stats {
-
-                grid-template-columns: 1fr 1fr;
-
-            }
-
-
-            .section-header h2 {
-
-                font-size: 18px;
-
-            }
-
-
-            .modal {
-
-                max-height: 94vh;
-
-            }
-
-        }
-
-
-        @media (max-width: 380px) {
-
-            .view-store-btn {
-
-                font-size: 0;
-
-                width: 40px;
-
-                height: 40px;
-
-                padding: 0;
-
-                justify-content: center;
-
-            }
-
-
-            .view-store-btn::before {
-
-                content: "\f06e";
-
-                font-family: "Font Awesome 6 Free";
-
-                font-weight: 900;
-
-                font-size: 18px;
-
-            }
-
-
-            .store-label {
-
-                display: none;
-
-            }
-
-
-            .store-top-name {
-
-                max-width: 120px;
-
-            }
-
-        }
-
-
-        /* =====================================================
-           SCROLLBAR
-        ===================================================== */
-
-        ::-webkit-scrollbar {
-
-            width: 7px;
-
-            height: 7px;
-
-        }
-
-
-        ::-webkit-scrollbar-track {
-
-            background: #F1F1F1;
-
-        }
-
-
-        body.dark-mode ::-webkit-scrollbar-track {
-
-            background: #07111F;
-
-        }
-
-
-        ::-webkit-scrollbar-thumb {
-
-            background: #CCC;
-
-            border-radius: 10px;
-
-        }
-
-
-        body.dark-mode ::-webkit-scrollbar-thumb {
-
-            background: #263E57;
-
-        }
-
-
-        ::-webkit-scrollbar-thumb:hover {
-
-            background: var(--orange);
-
-        }
-
-
-        body.dark-mode ::-webkit-scrollbar-thumb:hover {
-
-            background: var(--orange);
-
-        }
-
-    </style>
-
-</head>
-
-
-<body>
-
-
-    <!-- =====================================================
-         SIDEBAR
-    ===================================================== -->
-
-    <div class="sidebar">
-
-        <div class="logo">
-
-            <img
-                src="logotrans.png"
-                alt="G-Glam"
-            >
-
-        </div>
-
-
-        <div class="menu">
-
-
-            <a href="dashboard.html">
-
-                <span class="icon">
-
-                    <i class="fa-solid fa-house"></i>
-
-                </span>
-
-                <span class="text">
-                    الرئيسية
-                </span>
-
-            </a>
-
-
-            <a
-                href="orders.html"
-                class="active"
-            >
-
-                <span class="icon">
-
-                    <i class="fa-solid fa-clipboard-list"></i>
-
-                </span>
-
-                <span class="text">
-                    الطلبات
-                </span>
-
-            </a>
-
-
-            <a href="products.html">
-
-                <span class="icon">
-
-                    <i class="fa-solid fa-bag-shopping"></i>
-
-                </span>
-
-                <span class="text">
-                    المنتجات
-                </span>
-
-            </a>
-
-
-            <a href="add-product.html">
-
-                <span class="icon">
-
-                    <i class="fa-solid fa-circle-plus"></i>
-
-                </span>
-
-                <span class="text">
-                    إضافة منتج
-                </span>
-
-            </a>
-
-
-            <a href="delivery.html">
-
-                <span class="icon">
-
-                    <i class="fa-solid fa-location-dot"></i>
-
-                </span>
-
-                <span class="text">
-                    أسعار التوصيل
-                </span>
-
-            </a>
-
-
-            <a href="settings.html">
-
-                <span class="icon">
-
-                    <i class="fa-solid fa-gear"></i>
-
-                </span>
-
-                <span class="text">
-                    الإعدادات
-                </span>
-
-            </a>
-
-
-            <a
-                href="#"
-                id="logoutBtn"
-            >
-
-                <span class="icon">
-
-                    <i class="fa-solid fa-right-from-bracket"></i>
-
-                </span>
-
-                <span class="text">
-                    تسجيل الخروج
-                </span>
-
-            </a>
-
-
-        </div>
-
-    </div>
-
-
-    <!-- =====================================================
-         TOPBAR
-    ===================================================== -->
-
-    <div class="topbar">
-
-        <div class="store-top">
-
-            <img
-                id="topStoreImage"
-                class="store-image"
-                src="logotrans.png"
-                alt="صورة المتجر"
-            >
-
-            <div class="store-details">
-
-                <div class="store-label">
-                    متجرك
-                </div>
-
-                <div
-                    class="store-top-name"
-                    id="topStoreName"
-                >
-                    جاري التحميل...
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div
-            style="
-                display:flex;
-                align-items:center;
-                gap:10px;
-            "
+        <img
+            src="logotrans.png"
+            alt="G-Glam"
         >
 
-            <button
-                type="button"
-                id="themeToggle"
-                class="theme-toggle"
-                title="الوضع الليلي"
-                aria-label="تغيير الوضع"
-            >
-
-                <i class="fa-solid fa-moon"></i>
-
-            </button>
-
-
-            <a
-                href="#"
-                id="viewStoreBtn"
-                class="view-store-btn"
-            >
-
-                <i class="fa-solid fa-eye"></i>
-
-                عرض المتجر
-
-            </a>
-
-        </div>
-
     </div>
 
 
-    <!-- =====================================================
-         CONTENT
-    ===================================================== -->
+    <div class="menu">
 
-    <div class="content">
 
+        <a href="dashboard.html">
 
-        <div
-            class="message success"
-            id="successMessage"
-        ></div>
+            <span class="icon">
 
+                <i class="fa-solid fa-house"></i>
 
-        <div
-            class="message error"
-            id="errorMessage"
-        ></div>
+            </span>
 
+            <span class="text">
 
-        <!-- =====================================================
-             STATISTICS
-        ===================================================== -->
+                الرئيسية
 
-        <div class="stats">
+            </span>
 
+        </a>
 
-            <div class="stat">
 
-                <div class="stat-title">
+        <a
+            href="orders.html"
+            class="active"
+        >
 
-                    <i class="fa-solid fa-box"></i>
+            <span class="icon">
 
-                    إجمالي الطلبات
+                <i class="fa-solid fa-clipboard-list"></i>
 
-                </div>
+            </span>
 
-                <div
-                    class="stat-value"
-                    id="totalOrders"
-                >
-                    0
-                </div>
+            <span class="text">
 
-            </div>
+                الطلبات
 
+            </span>
 
-            <div class="stat">
+        </a>
 
-                <div class="stat-title">
 
-                    <i class="fa-solid fa-circle-check"></i>
+        <a href="products.html">
 
-                    تم التأكيد
+            <span class="icon">
 
-                </div>
+                <i class="fa-solid fa-bag-shopping"></i>
 
-                <div
-                    class="stat-value"
-                    id="confirmedOrders"
-                >
-                    0
-                </div>
+            </span>
 
-            </div>
+            <span class="text">
 
+                المنتجات
 
-            <div class="stat">
+            </span>
 
-                <div class="stat-title">
+        </a>
 
-                    <i class="fa-solid fa-truck-fast"></i>
 
-                    قيد الشحن
+        <a href="add-product.html">
 
-                </div>
+            <span class="icon">
 
-                <div
-                    class="stat-value"
-                    id="shippingOrders"
-                >
-                    0
-                </div>
+                <i class="fa-solid fa-circle-plus"></i>
 
-            </div>
+            </span>
 
+            <span class="text">
 
-            <div class="stat">
+                إضافة منتج
 
-                <div class="stat-title">
+            </span>
 
-                    <i class="fa-solid fa-circle-check"></i>
+        </a>
 
-                    تم التسليم
 
-                </div>
+        <a href="delivery.html">
 
-                <div
-                    class="stat-value"
-                    id="deliveredOrders"
-                >
-                    0
-                </div>
+            <span class="icon">
 
-            </div>
+                <i class="fa-solid fa-location-dot"></i>
 
+            </span>
 
-        </div>
+            <span class="text">
 
+                أسعار التوصيل
 
-        <!-- =====================================================
-             ORDERS
-        ===================================================== -->
+            </span>
 
-        <div class="section">
+        </a>
 
-            <div class="section-header">
 
-                <h2>
+        <a href="settings.html">
 
-                    <i class="fa-solid fa-clipboard-list"></i>
+            <span class="icon">
 
-                    طلبات متجري
+                <i class="fa-solid fa-gear"></i>
 
-                </h2>
+            </span>
 
-            </div>
+            <span class="text">
 
+                الإعدادات
 
-            <div class="table-wrapper">
+            </span>
 
-                <table class="orders-table">
+        </a>
 
-                    <thead>
 
-                        <tr>
+        <a
+            href="#"
+            id="logoutBtn"
+        >
 
-                            <th>
-                                رقم الطلب
-                            </th>
+            <span class="icon">
 
-                            <th>
-                                التاريخ
-                            </th>
+                <i class="fa-solid fa-right-from-bracket"></i>
 
-                            <th>
-                                الزبون
-                            </th>
+            </span>
 
-                            <th>
-                                الهاتف
-                            </th>
+            <span class="text">
 
-                            <th>
-                                الولاية
-                            </th>
+                تسجيل الخروج
 
-                            <th>
-                                العنوان
-                            </th>
+            </span>
 
-                            <th>
-                                التوصيل
-                            </th>
+        </a>
 
-                            <th>
-                                المنتجات
-                            </th>
-
-                            <th>
-                                المجموع
-                            </th>
-
-                            <th>
-                                الملاحظات
-                            </th>
-
-                            <th>
-                                الحالة
-                            </th>
-
-                            <th>
-                                إجراءات
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody id="ordersBody">
-
-                        <tr>
-
-                            <td colspan="12">
-
-                                <div class="loading">
-
-                                    <i class="fa-solid fa-spinner fa-spin"></i>
-
-                                    جاري تحميل الطلبات...
-
-                                </div>
-
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </div>
 
     </div>
 
+</div>
 
-    <!-- =====================================================
-         PRODUCTS MODAL
-    ===================================================== -->
 
-    <div
-        class="modal-overlay"
-        id="productsModal"
-    >
+<!-- =====================================================
+     TOPBAR
+===================================================== -->
 
-        <div class="modal">
+<div class="topbar">
 
-            <div class="modal-header">
+    <div class="store-top">
 
-                <h3>
+        <img
+            id="topStoreImage"
+            class="store-image"
+            src="logotrans.png"
+            alt="صورة المتجر"
+        >
 
-                    <i class="fa-solid fa-bag-shopping"></i>
 
-                    تفاصيل المنتجات
+        <div class="store-details">
 
-                </h3>
+            <div class="store-label">
 
-                <button
-                    class="close-modal"
-                    id="closeProductsModal"
-                    aria-label="إغلاق"
-                >
-
-                    <i class="fa-solid fa-xmark"></i>
-
-                </button>
+                متجرك
 
             </div>
 
 
             <div
-                class="modal-body"
-                id="productsModalBody"
+                class="store-top-name"
+                id="topStoreName"
+            >
+
+                جاري التحميل...
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        style="
+            display:flex;
+            align-items:center;
+            gap:10px;
+        "
+    >
+
+        <button
+            type="button"
+            id="themeToggle"
+            class="theme-toggle"
+            title="الوضع الليلي"
+            aria-label="تغيير الوضع"
+        >
+
+            <i class="fa-solid fa-moon"></i>
+
+        </button>
+
+
+        <a
+            href="#"
+            id="viewStoreBtn"
+            class="view-store-btn"
+        >
+
+            <i class="fa-solid fa-eye"></i>
+
+            عرض المتجر
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     CONTENT
+===================================================== -->
+
+<div class="content">
+
+
+    <div
+        class="message success"
+        id="successMessage"
+    ></div>
+
+
+    <div
+        class="message error"
+        id="errorMessage"
+    ></div>
+
+
+    <!-- =====================================================
+         STATISTICS
+    ===================================================== -->
+
+    <div class="stats">
+
+
+        <div class="stat">
+
+            <div class="stat-title">
+
+                <i class="fa-solid fa-box"></i>
+
+                إجمالي الطلبات
+
+            </div>
+
+
+            <div
+                class="stat-value"
+                id="totalOrders"
+            >
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-title">
+
+                <i class="fa-solid fa-hourglass-half"></i>
+
+                قيد المراجعة
+
+            </div>
+
+
+            <div
+                class="stat-value"
+                id="reviewOrders"
+            >
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-title">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                تم التأكيد
+
+            </div>
+
+
+            <div
+                class="stat-value"
+                id="confirmedOrders"
+            >
+
+                0
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =====================================================
+         ORDERS SECTION
+    ===================================================== -->
+
+    <div class="section">
+
+        <div class="section-header">
+
+            <h2>
+
+                <i class="fa-solid fa-clipboard-list"></i>
+
+                طلبات متجري
+
+            </h2>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table class="orders-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            رقم الطلب
+                        </th>
+
+                        <th>
+                            التاريخ
+                        </th>
+
+                        <th>
+                            الزبون
+                        </th>
+
+                        <th>
+                            الهاتف
+                        </th>
+
+                        <th>
+                            الولاية
+                        </th>
+
+                        <th>
+                            العنوان
+                        </th>
+
+                        <th>
+                            التوصيل
+                        </th>
+
+                        <th>
+                            المنتجات
+                        </th>
+
+                        <th>
+                            المجموع
+                        </th>
+
+                        <th>
+                            الملاحظات
+                        </th>
+
+                        <th>
+                            الحالة
+                        </th>
+
+                        <th>
+                            إجراءات
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="ordersBody">
+
+                    <tr>
+
+                        <td colspan="12">
+
+                            <div class="loading">
+
+                                <i class="fa-solid fa-spinner fa-spin"></i>
+
+                                جاري تحميل الطلبات...
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     PRODUCTS MODAL
+===================================================== -->
+
+<div
+    class="modal-overlay"
+    id="productsModal"
+>
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h3>
+
+                <i class="fa-solid fa-bag-shopping"></i>
+
+                تفاصيل المنتجات
+
+            </h3>
+
+
+            <button
+                class="close-modal"
+                id="closeProductsModal"
+                aria-label="إغلاق"
+            >
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <div
+            class="modal-body"
+            id="productsModalBody"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     PHONE MODAL
+===================================================== -->
+
+<div
+    class="modal-overlay"
+    id="phoneModal"
+>
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h3>
+
+                <i class="fa-solid fa-phone"></i>
+
+                التواصل مع الزبون
+
+            </h3>
+
+
+            <button
+                class="close-modal"
+                id="closePhoneModal"
+                aria-label="إغلاق"
+            >
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <div
+                class="phone-options"
+                id="phoneOptions"
             ></div>
 
         </div>
 
     </div>
 
-
-    <!-- =====================================================
-         PHONE MODAL
-    ===================================================== -->
-
-    <div
-        class="modal-overlay"
-        id="phoneModal"
-    >
-
-        <div class="modal">
-
-            <div class="modal-header">
-
-                <h3>
-
-                    <i class="fa-solid fa-phone"></i>
-
-                    التواصل مع الزبون
-
-                </h3>
-
-                <button
-                    class="close-modal"
-                    id="closePhoneModal"
-                    aria-label="إغلاق"
-                >
-
-                    <i class="fa-solid fa-xmark"></i>
-
-                </button>
-
-            </div>
+</div>
 
 
-            <div class="modal-body">
+<!-- =====================================================
+     FIREBASE
+===================================================== -->
 
-                <div
-                    class="phone-options"
-                    id="phoneOptions"
-                ></div>
+<script type="module">
 
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <script type="module">
+    import {
+        initializeApp
+    }
+    from
+    "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
 
-        /* =====================================================
-           FIREBASE IMPORTS
-        ===================================================== */
+    import {
+        getFirestore,
+        collection,
+        getDocs,
+        query,
+        where,
+        doc,
+        getDoc,
+        updateDoc,
+        deleteDoc
+    }
+    from
+    "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
-        import {
-            initializeApp
+
+    import {
+        getAuth,
+        onAuthStateChanged,
+        signOut
+    }
+    from
+    "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+
+    /* =====================================================
+       FIREBASE CONFIG
+    ===================================================== */
+
+    const firebaseConfig = {
+
+        apiKey:
+            "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+
+        authDomain:
+            "g-glam.firebaseapp.com",
+
+        projectId:
+            "g-glam",
+
+        storageBucket:
+            "g-glam.firebasestorage.app",
+
+        messagingSenderId:
+            "997228419719",
+
+        appId:
+            "1:997228419719:web:f9d88de7ea2c6f457e3622",
+
+        measurementId:
+            "G-WX1K1F83F6"
+
+    };
+
+
+    /* =====================================================
+       INITIALIZE
+    ===================================================== */
+
+    const app =
+        initializeApp(firebaseConfig);
+
+
+    const db =
+        getFirestore(app);
+
+
+    const auth =
+        getAuth(app);
+
+
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+    const topStoreName =
+        document.getElementById(
+            "topStoreName"
+        );
+
+
+    const topStoreImage =
+        document.getElementById(
+            "topStoreImage"
+        );
+
+
+    const viewStoreBtn =
+        document.getElementById(
+            "viewStoreBtn"
+        );
+
+
+    const ordersBody =
+        document.getElementById(
+            "ordersBody"
+        );
+
+
+    const totalOrders =
+        document.getElementById(
+            "totalOrders"
+        );
+
+
+    const reviewOrders =
+        document.getElementById(
+            "reviewOrders"
+        );
+
+
+    const confirmedOrders =
+        document.getElementById(
+            "confirmedOrders"
+        );
+
+
+    const productsModal =
+        document.getElementById(
+            "productsModal"
+        );
+
+
+    const productsModalBody =
+        document.getElementById(
+            "productsModalBody"
+        );
+
+
+    const phoneModal =
+        document.getElementById(
+            "phoneModal"
+        );
+
+
+    const phoneOptions =
+        document.getElementById(
+            "phoneOptions"
+        );
+
+
+    const themeToggle =
+        document.getElementById(
+            "themeToggle"
+        );
+
+
+    /* =====================================================
+       VARIABLES
+    ===================================================== */
+
+    let currentOwnerUid = "";
+
+    let currentOwnerEmail = "";
+
+    let currentStoreId = "";
+
+    let currentStoreName = "G-Glam";
+
+    let currentStore = null;
+
+
+    /* =====================================================
+       THEME
+    ===================================================== */
+
+    function applyTheme() {
+
+        const darkMode =
+            localStorage.getItem(
+                "gGlamDarkMode"
+            ) === "true";
+
+
+        if (darkMode) {
+
+            document.body.classList.add(
+                "dark-mode"
+            );
+
+
+            themeToggle.innerHTML =
+                '<i class="fa-solid fa-sun"></i>';
+
+
+            themeToggle.title =
+                "الوضع النهاري";
+
         }
-        from
-        "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+        else {
+
+            document.body.classList.remove(
+                "dark-mode"
+            );
 
 
-        import {
-            getFirestore,
-            collection,
-            getDocs,
-            query,
-            where,
-            doc,
-            getDoc,
-            updateDoc,
-            deleteDoc
+            themeToggle.innerHTML =
+                '<i class="fa-solid fa-moon"></i>';
+
+
+            themeToggle.title =
+                "الوضع الليلي";
+
         }
-        from
-        "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+    }
 
 
-        import {
-            getAuth,
-            onAuthStateChanged,
-            signOut
-        }
-        from
-        "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-
-
-        /* =====================================================
-           FIREBASE CONFIG
-        ===================================================== */
-
-        const firebaseConfig = {
-
-            apiKey:
-                "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
-
-            authDomain:
-                "g-glam.firebaseapp.com",
-
-            projectId:
-                "g-glam",
-
-            storageBucket:
-                "g-glam.firebasestorage.app",
-
-            messagingSenderId:
-                "997228419719",
-
-            appId:
-                "1:997228419719:web:f9d88de7ea2c6f457e3622",
-
-            measurementId:
-                "G-WX1K1F83F6"
-
-        };
-
-
-        /* =====================================================
-           INITIALIZE FIREBASE
-        ===================================================== */
-
-        const app =
-            initializeApp(firebaseConfig);
-
-
-        const db =
-            getFirestore(app);
-
-
-        const auth =
-            getAuth(app);
-
-
-        /* =====================================================
-           ELEMENTS
-        ===================================================== */
-
-        const topStoreName =
-            document.getElementById(
-                "topStoreName"
-            );
-
-
-        const topStoreImage =
-            document.getElementById(
-                "topStoreImage"
-            );
-
-
-        const viewStoreBtn =
-            document.getElementById(
-                "viewStoreBtn"
-            );
-
-
-        const ordersBody =
-            document.getElementById(
-                "ordersBody"
-            );
-
-
-        const totalOrders =
-            document.getElementById(
-                "totalOrders"
-            );
-
-
-        const confirmedOrders =
-            document.getElementById(
-                "confirmedOrders"
-            );
-
-
-        const shippingOrders =
-            document.getElementById(
-                "shippingOrders"
-            );
-
-
-        const deliveredOrders =
-            document.getElementById(
-                "deliveredOrders"
-            );
-
-
-        const productsModal =
-            document.getElementById(
-                "productsModal"
-            );
-
-
-        const productsModalBody =
-            document.getElementById(
-                "productsModalBody"
-            );
-
-
-        const phoneModal =
-            document.getElementById(
-                "phoneModal"
-            );
-
-
-        const phoneOptions =
-            document.getElementById(
-                "phoneOptions"
-            );
-
-
-        const themeToggle =
-            document.getElementById(
-                "themeToggle"
-            );
-
-
-        /* =====================================================
-           VARIABLES
-        ===================================================== */
-
-        let currentOwnerUid = "";
-
-        let currentOwnerEmail = "";
-
-        let currentStoreId = "";
-
-        let currentStoreName = "G-Glam";
-
-        let currentStore = null;
-
-
-        /* =====================================================
-           THEME
-        ===================================================== */
-
-        function applyTheme() {
+    themeToggle.addEventListener(
+        "click",
+        () => {
 
             const darkMode =
-                localStorage.getItem(
-                    "gGlamDarkMode"
-                ) === "true";
-
-
-            if (darkMode) {
-
-                document.body.classList.add(
+                document.body.classList.toggle(
                     "dark-mode"
                 );
 
+
+            localStorage.setItem(
+                "gGlamDarkMode",
+                darkMode
+                    ? "true"
+                    : "false"
+            );
+
+
+            if (darkMode) {
 
                 themeToggle.innerHTML =
                     '<i class="fa-solid fa-sun"></i>';
@@ -2923,11 +2964,6 @@
 
             else {
 
-                document.body.classList.remove(
-                    "dark-mode"
-                );
-
-
                 themeToggle.innerHTML =
                     '<i class="fa-solid fa-moon"></i>';
 
@@ -2938,926 +2974,843 @@
             }
 
         }
+    );
 
 
-        themeToggle.addEventListener(
-            "click",
-            () => {
+    applyTheme();
 
-                const darkMode =
-                    document.body.classList.toggle(
-                        "dark-mode"
+
+    /* =====================================================
+       ESCAPE HTML
+    ===================================================== */
+
+    function escapeHtml(value) {
+
+        return String(value ?? "")
+
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+
+            .replace(
+                /</g,
+                "&lt;"
+            )
+
+            .replace(
+                />/g,
+                "&gt;"
+            )
+
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+
+    /* =====================================================
+       FORMAT DATE
+    ===================================================== */
+
+    function formatDate(timestamp) {
+
+        if (!timestamp) {
+
+            return "غير محدد";
+
+        }
+
+
+        try {
+
+            let date;
+
+
+            if (timestamp.toDate) {
+
+                date =
+                    timestamp.toDate();
+
+            }
+
+            else if (timestamp.seconds) {
+
+                date =
+                    new Date(
+                        timestamp.seconds * 1000
                     );
 
+            }
 
-                localStorage.setItem(
-                    "gGlamDarkMode",
-                    darkMode
-                        ? "true"
-                        : "false"
-                );
+            else {
 
-
-                if (darkMode) {
-
-                    themeToggle.innerHTML =
-                        '<i class="fa-solid fa-sun"></i>';
-
-                    themeToggle.title =
-                        "الوضع النهاري";
-
-                }
-
-                else {
-
-                    themeToggle.innerHTML =
-                        '<i class="fa-solid fa-moon"></i>';
-
-                    themeToggle.title =
-                        "الوضع الليلي";
-
-                }
+                date =
+                    new Date(timestamp);
 
             }
-        );
 
 
-        applyTheme();
-
-
-        /* =====================================================
-           ESCAPE HTML
-        ===================================================== */
-
-        function escapeHtml(value) {
-
-            return String(value ?? "")
-
-                .replace(
-                    /&/g,
-                    "&amp;"
-                )
-
-                .replace(
-                    /</g,
-                    "&lt;"
-                )
-
-                .replace(
-                    />/g,
-                    "&gt;"
-                )
-
-                .replace(
-                    /"/g,
-                    "&quot;"
-                )
-
-                .replace(
-                    /'/g,
-                    "&#039;"
-                );
-
-        }
-
-
-        /* =====================================================
-           FORMAT DATE
-        ===================================================== */
-
-        function formatDate(timestamp) {
-
-            if (!timestamp) {
+            if (isNaN(date.getTime())) {
 
                 return "غير محدد";
 
             }
 
 
-            try {
-
-                let date;
-
-
-                if (timestamp.toDate) {
-
-                    date =
-                        timestamp.toDate();
-
+            return date.toLocaleDateString(
+                "ar-DZ",
+                {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit"
                 }
+            )
 
-                else if (timestamp.seconds) {
+            +
 
-                    date =
-                        new Date(
-                            timestamp.seconds * 1000
-                        );
+            " "
 
+            +
+
+            date.toLocaleTimeString(
+                "ar-DZ",
+                {
+                    hour: "2-digit",
+                    minute: "2-digit"
                 }
+            );
 
-                else {
+        }
 
-                    date =
-                        new Date(timestamp);
+        catch (error) {
 
-                }
+            return "غير محدد";
 
+        }
 
-                if (isNaN(date.getTime())) {
-
-                    return "غير محدد";
-
-                }
+    }
 
 
-                return date.toLocaleDateString(
-                    "ar-DZ",
-                    {
-                        year: "numeric",
-                        month: "2-digit",
-                        day: "2-digit"
-                    }
-                )
-                +
-                " "
-                +
-                date.toLocaleTimeString(
-                    "ar-DZ",
-                    {
-                        hour: "2-digit",
-                        minute: "2-digit"
-                    }
+    /* =====================================================
+       CLEAN PHONE
+    ===================================================== */
+
+    function cleanPhone(phone) {
+
+        return String(phone || "")
+
+            .replace(
+                /[^\d+]/g,
+                ""
+            );
+
+    }
+
+
+    /* =====================================================
+       NORMALIZE STATUS
+    ===================================================== */
+
+    function normalizeStatus(order) {
+
+        const rawStatus =
+            String(
+                order.status || ""
+            )
+            .trim();
+
+
+        /*
+         * إذا لم تكن هناك حالة محفوظة
+         * نعتبر الطلب جديدًا وقيد المراجعة.
+         */
+
+        if (!rawStatus) {
+
+            return "قيد المراجعة";
+
+        }
+
+
+        /*
+         * توافق مع الحالات القديمة
+         */
+
+        if (
+            rawStatus === "قيد المعالجة"
+        ) {
+
+            return "قيد المراجعة";
+
+        }
+
+
+        if (
+            rawStatus === "تم التأكيد"
+        ) {
+
+            return "تم التأكيد";
+
+        }
+
+
+        return rawStatus;
+
+    }
+
+
+    /* =====================================================
+       LOAD STORE
+    ===================================================== */
+
+    async function loadStore() {
+
+        try {
+
+            const user =
+                auth.currentUser;
+
+
+            if (!user) {
+
+                window.location.href =
+                    "login.html";
+
+                return false;
+
+            }
+
+
+            currentOwnerUid =
+                user.uid;
+
+
+            currentOwnerEmail =
+                user.email || "";
+
+
+            let storeSnapshot =
+
+                await getDoc(
+
+                    doc(
+                        db,
+                        "stores",
+                        currentOwnerUid
+                    )
+
                 );
 
-            }
 
-            catch (error) {
+            /* =================================================
+               FALLBACK OWNER UID
+            ================================================= */
 
-                return "غير محدد";
+            if (!storeSnapshot.exists()) {
 
-            }
+                const ownerQuery =
+                    query(
 
-        }
-
-
-        /* =====================================================
-           CLEAN PHONE
-        ===================================================== */
-
-        function cleanPhone(phone) {
-
-            return String(phone || "")
-                .replace(
-                    /[^\d+]/g,
-                    ""
-                );
-
-        }
-
-
-        /* =====================================================
-           STATUS HELPERS
-        ===================================================== */
-
-        function normalizeStatus(status) {
-
-            const value =
-                String(
-                    status || ""
-                )
-                .trim();
-
-
-            if (
-                value === "" ||
-                value === "قيد المعالجة"
-            ) {
-
-                return "قيد المراجعة";
-
-            }
-
-
-            if (
-                value === "تأكيد" ||
-                value === "تم التأكيد" ||
-                value === "تم التاكيد"
-            ) {
-
-                return "تم التأكيد";
-
-            }
-
-
-            return value;
-
-        }
-
-
-        /* =====================================================
-           LOAD STORE
-        ===================================================== */
-
-        async function loadStore() {
-
-            try {
-
-                const user =
-                    auth.currentUser;
-
-
-                if (!user) {
-
-                    window.location.href =
-                        "login.html";
-
-                    return false;
-
-                }
-
-
-                currentOwnerUid =
-                    user.uid;
-
-
-                currentOwnerEmail =
-                    user.email || "";
-
-
-                let storeSnapshot =
-                    await getDoc(
-                        doc(
+                        collection(
                             db,
-                            "stores",
+                            "stores"
+                        ),
+
+                        where(
+                            "ownerUid",
+                            "==",
                             currentOwnerUid
                         )
+
                     );
 
 
-                /* =====================================================
-                   FALLBACK OWNER UID
-                ===================================================== */
+                const ownerSnapshot =
+                    await getDocs(
+                        ownerQuery
+                    );
 
-                if (!storeSnapshot.exists()) {
 
-                    const ownerQuery =
+                if (
+                    !ownerSnapshot.empty
+                ) {
+
+                    storeSnapshot =
+                        ownerSnapshot.docs[0];
+
+                }
+
+            }
+
+
+            /* =================================================
+               FALLBACK EMAIL
+            ================================================= */
+
+            if (!storeSnapshot.exists()) {
+
+                if (currentOwnerEmail) {
+
+                    const emailQuery =
                         query(
+
                             collection(
                                 db,
                                 "stores"
                             ),
+
                             where(
-                                "ownerUid",
+                                "ownerEmail",
                                 "==",
-                                currentOwnerUid
+                                currentOwnerEmail
                             )
+
                         );
 
 
-                    const ownerSnapshot =
+                    const emailSnapshot =
                         await getDocs(
-                            ownerQuery
+                            emailQuery
                         );
 
 
-                    if (!ownerSnapshot.empty) {
+                    if (
+                        !emailSnapshot.empty
+                    ) {
 
                         storeSnapshot =
-                            ownerSnapshot.docs[0];
+                            emailSnapshot.docs[0];
 
                     }
 
                 }
-
-
-                /* =====================================================
-                   FALLBACK EMAIL
-                ===================================================== */
-
-                if (!storeSnapshot.exists()) {
-
-                    if (currentOwnerEmail) {
-
-                        const emailQuery =
-                            query(
-                                collection(
-                                    db,
-                                    "stores"
-                                ),
-                                where(
-                                    "ownerEmail",
-                                    "==",
-                                    currentOwnerEmail
-                                )
-                            );
-
-
-                        const emailSnapshot =
-                            await getDocs(
-                                emailQuery
-                            );
-
-
-                        if (!emailSnapshot.empty) {
-
-                            storeSnapshot =
-                                emailSnapshot.docs[0];
-
-                        }
-
-                    }
-
-                }
-
-
-                /* =====================================================
-                   STORE NOT FOUND
-                ===================================================== */
-
-                if (!storeSnapshot.exists()) {
-
-                    alert(
-                        "⚠️ لم يتم العثور على متجر مرتبط بهذا الحساب."
-                    );
-
-
-                    await signOut(auth);
-
-
-                    window.location.href =
-                        "login.html";
-
-
-                    return false;
-
-                }
-
-
-                currentStore =
-                    storeSnapshot.data();
-
-
-                currentStoreId =
-                    storeSnapshot.id;
-
-
-                /* =====================================================
-                   STORE STATUS
-                ===================================================== */
-
-                const status =
-                    String(
-                        currentStore.status ||
-                        "pending"
-                    )
-                    .toLowerCase()
-                    .trim();
-
-
-                if (
-                    status === "pending" ||
-                    status === "waiting" ||
-                    status === "review"
-                ) {
-
-                    alert(
-                        "⏳ طلب إنشاء متجرك مازال قيد المراجعة من طرف الإدارة."
-                    );
-
-
-                    await signOut(auth);
-
-
-                    window.location.href =
-                        "login.html";
-
-
-                    return false;
-
-                }
-
-
-                if (
-                    status === "rejected" ||
-                    status === "refused"
-                ) {
-
-                    alert(
-                        "❌ تم رفض طلب إنشاء المتجر.\n\n" +
-                        "سبب الرفض:\n" +
-                        (
-                            currentStore.rejectionReason ||
-                            "لم يتم ذكر سبب الرفض."
-                        )
-                    );
-
-
-                    await signOut(auth);
-
-
-                    window.location.href =
-                        "login.html";
-
-
-                    return false;
-
-                }
-
-
-                if (
-                    status !== "active" &&
-                    status !== "approved"
-                ) {
-
-                    alert(
-                        "⚠️ لا يمكنك الدخول إلى لوحة المتجر حاليًا."
-                    );
-
-
-                    await signOut(auth);
-
-
-                    window.location.href =
-                        "login.html";
-
-
-                    return false;
-
-                }
-
-
-                /* =====================================================
-                   STORE NAME
-                ===================================================== */
-
-                currentStoreName =
-                    currentStore.storeName ||
-                    currentStore.name ||
-                    "G-Glam";
-
-
-                /* =====================================================
-                   OWNER EMAIL
-                ===================================================== */
-
-                currentOwnerEmail =
-                    currentStore.ownerEmail ||
-                    currentStore.email ||
-                    user.email ||
-                    "";
-
-
-                /* =====================================================
-                   STORE IMAGE
-                ===================================================== */
-
-                const storeImage =
-                    currentStore.storeImage ||
-                    currentStore.image ||
-                    currentStore.logo ||
-                    currentStore.photoURL ||
-                    "";
-
-
-                topStoreName.textContent =
-                    currentStoreName;
-
-
-                if (storeImage) {
-
-                    topStoreImage.src =
-                        storeImage;
-
-                }
-
-                else {
-
-                    topStoreImage.src =
-                        "logotrans.png";
-
-                }
-
-
-                /* =====================================================
-                   STORE URL
-                ===================================================== */
-
-                viewStoreBtn.href =
-                    "index.html?store=" +
-                    encodeURIComponent(
-                        currentOwnerUid
-                    );
-
-
-                /* =====================================================
-                   LOCAL STORAGE
-                ===================================================== */
-
-                localStorage.setItem(
-                    "storeId",
-                    currentOwnerUid
-                );
-
-
-                localStorage.setItem(
-                    "storeDocumentId",
-                    currentStoreId
-                );
-
-
-                localStorage.setItem(
-                    "storeName",
-                    currentStoreName
-                );
-
-
-                localStorage.setItem(
-                    "storeOwnerEmail",
-                    currentOwnerEmail
-                );
-
-
-                localStorage.setItem(
-                    "ownerEmail",
-                    currentOwnerEmail
-                );
-
-
-                localStorage.setItem(
-                    "ownerUid",
-                    currentOwnerUid
-                );
-
-
-                localStorage.setItem(
-                    "paymentStatus",
-                    "approved"
-                );
-
-
-                await loadOrders();
-
-
-                return true;
 
             }
 
-            catch (error) {
 
-                console.error(
-                    "STORE ERROR:",
-                    error
+            /* =================================================
+               STORE NOT FOUND
+            ================================================= */
+
+            if (!storeSnapshot.exists()) {
+
+                alert(
+
+                    "⚠️ لم يتم العثور على متجر مرتبط بهذا الحساب."
+
                 );
 
 
-                ordersBody.innerHTML = `
+                await signOut(auth);
 
-                    <tr>
 
-                        <td colspan="12">
-
-                            <div class="empty">
-
-                                <i class="fa-solid fa-circle-exclamation"></i>
-
-                                <br><br>
-
-                                ❌ حدث خطأ أثناء تحميل معلومات المتجر.
-
-                                <br><br>
-
-                                ${escapeHtml(
-                                    error.message
-                                )}
-
-                            </div>
-
-                        </td>
-
-                    </tr>
-
-                `;
+                window.location.href =
+                    "login.html";
 
 
                 return false;
 
             }
 
+
+            currentStore =
+                storeSnapshot.data();
+
+
+            currentStoreId =
+                storeSnapshot.id;
+
+
+            /* =================================================
+               STORE STATUS
+            ================================================= */
+
+            const status =
+
+                String(
+                    currentStore.status ||
+                    "pending"
+                )
+                .toLowerCase()
+                .trim();
+
+
+            if (
+
+                status === "pending" ||
+
+                status === "waiting" ||
+
+                status === "review"
+
+            ) {
+
+                alert(
+                    "⏳ طلب إنشاء متجرك مازال قيد المراجعة من طرف الإدارة."
+                );
+
+
+                await signOut(auth);
+
+
+                window.location.href =
+                    "login.html";
+
+
+                return false;
+
+            }
+
+
+            if (
+
+                status === "rejected" ||
+
+                status === "refused"
+
+            ) {
+
+                alert(
+
+                    "❌ تم رفض طلب إنشاء المتجر.\n\n" +
+
+                    "سبب الرفض:\n" +
+
+                    (
+                        currentStore.rejectionReason ||
+                        "لم يتم ذكر سبب الرفض."
+                    )
+
+                );
+
+
+                await signOut(auth);
+
+
+                window.location.href =
+                    "login.html";
+
+
+                return false;
+
+            }
+
+
+            if (
+
+                status !== "active" &&
+
+                status !== "approved"
+
+            ) {
+
+                alert(
+                    "⚠️ لا يمكنك الدخول إلى لوحة المتجر حاليًا."
+                );
+
+
+                await signOut(auth);
+
+
+                window.location.href =
+                    "login.html";
+
+
+                return false;
+
+            }
+
+
+            /* =================================================
+               STORE NAME
+            ================================================= */
+
+            currentStoreName =
+
+                currentStore.storeName ||
+
+                currentStore.name ||
+
+                "G-Glam";
+
+
+            /* =================================================
+               OWNER EMAIL
+            ================================================= */
+
+            currentOwnerEmail =
+
+                currentStore.ownerEmail ||
+
+                currentStore.email ||
+
+                user.email ||
+
+                "";
+
+
+            /* =================================================
+               STORE IMAGE
+            ================================================= */
+
+            const storeImage =
+
+                currentStore.storeImage ||
+
+                currentStore.image ||
+
+                currentStore.logo ||
+
+                currentStore.photoURL ||
+
+                "";
+
+
+            topStoreName.textContent =
+                currentStoreName;
+
+
+            if (storeImage) {
+
+                topStoreImage.src =
+                    storeImage;
+
+            }
+
+            else {
+
+                topStoreImage.src =
+                    "logotrans.png";
+
+            }
+
+
+            /* =================================================
+               STORE URL
+            ================================================= */
+
+            viewStoreBtn.href =
+
+                "index.html?store=" +
+
+                encodeURIComponent(
+                    currentOwnerUid
+                );
+
+
+            /* =================================================
+               LOCAL STORAGE
+            ================================================= */
+
+            localStorage.setItem(
+                "storeId",
+                currentOwnerUid
+            );
+
+
+            localStorage.setItem(
+                "storeDocumentId",
+                currentStoreId
+            );
+
+
+            localStorage.setItem(
+                "storeName",
+                currentStoreName
+            );
+
+
+            localStorage.setItem(
+                "storeOwnerEmail",
+                currentOwnerEmail
+            );
+
+
+            localStorage.setItem(
+                "ownerEmail",
+                currentOwnerEmail
+            );
+
+
+            localStorage.setItem(
+                "ownerUid",
+                currentOwnerUid
+            );
+
+
+            localStorage.setItem(
+                "paymentStatus",
+                "approved"
+            );
+
+
+            /* =================================================
+               LOAD ORDERS
+            ================================================= */
+
+            await loadOrders();
+
+
+            return true;
+
         }
 
+        catch (error) {
 
-        /* =====================================================
-           LOAD ORDERS
-        ===================================================== */
+            console.error(
+                "STORE ERROR:",
+                error
+            );
 
-        async function loadOrders() {
+
+            ordersBody.innerHTML = `
+
+                <tr>
+
+                    <td colspan="12">
+
+                        <div class="empty">
+
+                            <i class="fa-solid fa-circle-exclamation"></i>
+
+                            <br>
+
+                            ❌ حدث خطأ أثناء تحميل معلومات المتجر.
+
+                            <br><br>
+
+                            ${escapeHtml(
+                                error.message
+                            )}
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+
+            return false;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       LOAD ORDERS
+    ===================================================== */
+
+    async function loadOrders() {
+
+        try {
+
+            ordersBody.innerHTML = `
+
+                <tr>
+
+                    <td colspan="12">
+
+                        <div class="loading">
+
+                            <i class="fa-solid fa-spinner fa-spin"></i>
+
+                            جاري تحميل طلبات متجرك...
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+
+            let snapshot;
+
+
+            /* =================================================
+               METHOD 1
+               ownerUid
+            ================================================= */
 
             try {
 
-                ordersBody.innerHTML = `
+                const ordersQuery =
+                    query(
 
-                    <tr>
+                        collection(
+                            db,
+                            "orders"
+                        ),
 
-                        <td colspan="12">
+                        where(
+                            "ownerUid",
+                            "==",
+                            currentOwnerUid
+                        )
 
-                            <div class="loading">
-
-                                <i class="fa-solid fa-spinner fa-spin"></i>
-
-                                جاري تحميل طلبات متجرك...
-
-                            </div>
-
-                        </td>
-
-                    </tr>
-
-                `;
-
-
-                let snapshot;
-
-
-                /* =====================================================
-                   METHOD 1 - ownerUid
-                ===================================================== */
-
-                try {
-
-                    const ordersQuery =
-                        query(
-                            collection(
-                                db,
-                                "orders"
-                            ),
-                            where(
-                                "ownerUid",
-                                "==",
-                                currentOwnerUid
-                            )
-                        );
-
-
-                    snapshot =
-                        await getDocs(
-                            ordersQuery
-                        );
-
-                }
-
-                catch (error) {
-
-                    console.log(
-                        "ownerUid query failed:",
-                        error
                     );
 
 
-                    /* =====================================================
-                       METHOD 2 - storeId
-                    ===================================================== */
-
-                    try {
-
-                        const ordersQuery2 =
-                            query(
-                                collection(
-                                    db,
-                                    "orders"
-                                ),
-                                where(
-                                    "storeId",
-                                    "==",
-                                    currentOwnerUid
-                                )
-                            );
-
-
-                        snapshot =
-                            await getDocs(
-                                ordersQuery2
-                            );
-
-                    }
-
-                    catch (error2) {
-
-                        console.log(
-                            "storeId query failed:",
-                            error2
-                        );
-
-
-                        /* =====================================================
-                           METHOD 3 - ownerEmail
-                        ===================================================== */
-
-                        const ordersQuery3 =
-                            query(
-                                collection(
-                                    db,
-                                    "orders"
-                                ),
-                                where(
-                                    "ownerEmail",
-                                    "==",
-                                    currentOwnerEmail
-                                )
-                            );
-
-
-                        snapshot =
-                            await getDocs(
-                                ordersQuery3
-                            );
-
-                    }
-
-                }
-
-
-                /* =====================================================
-                   STATISTICS
-                ===================================================== */
-
-                totalOrders.textContent =
-                    snapshot.size;
-
-
-                let confirmed = 0;
-
-                let shipping = 0;
-
-                let delivered = 0;
-
-
-                snapshot.forEach(
-                    orderDoc => {
-
-                        const order =
-                            orderDoc.data();
-
-
-                        const status =
-                            normalizeStatus(
-                                order.status
-                            );
-
-
-                        if (
-                            status === "تم التأكيد"
-                        ) {
-
-                            confirmed++;
-
-                        }
-
-
-                        if (
-                            status === "قيد الشحن" ||
-                            status === "تم الشحن"
-                        ) {
-
-                            shipping++;
-
-                        }
-
-
-                        if (
-                            status === "تم التسليم" ||
-                            status === "تم التوصيل"
-                        ) {
-
-                            delivered++;
-
-                        }
-
-                    }
-                );
-
-
-                confirmedOrders.textContent =
-                    confirmed;
-
-
-                shippingOrders.textContent =
-                    shipping;
-
-
-                deliveredOrders.textContent =
-                    delivered;
-
-
-                /* =====================================================
-                   EMPTY
-                ===================================================== */
-
-                if (snapshot.empty) {
-
-                    ordersBody.innerHTML = `
-
-                        <tr>
-
-                            <td colspan="12">
-
-                                <div class="empty">
-
-                                    <div class="empty-icon">
-
-                                        <i class="fa-solid fa-box-open"></i>
-
-                                    </div>
-
-                                    لا توجد طلبات في متجرك لحد الآن.
-
-                                    <br>
-
-                                    ستظهر طلبات زبائن متجرك هنا.
-
-                                </div>
-
-                            </td>
-
-                        </tr>
-
-                    `;
-
-
-                    return;
-
-                }
-
-
-                /* =====================================================
-                   ORDERS ARRAY
-                ===================================================== */
-
-                const orders =
-                    snapshot.docs.map(
-                        orderDoc => ({
-
-                            id:
-                                orderDoc.id,
-
-                            data:
-                                orderDoc.data()
-
-                        })
+                snapshot =
+                    await getDocs(
+                        ordersQuery
                     );
-
-
-                /* =====================================================
-                   SORT
-                ===================================================== */
-
-                orders.sort(
-                    (a, b) => {
-
-                        const aTime =
-                            a.data.createdAt?.seconds ||
-                            0;
-
-
-                        const bTime =
-                            b.data.createdAt?.seconds ||
-                            0;
-
-
-                        return bTime - aTime;
-
-                    }
-                );
-
-
-                ordersBody.innerHTML =
-                    "";
-
-
-                /* =====================================================
-                   RENDER
-                ===================================================== */
-
-                orders.forEach(
-                    (item, index) => {
-
-                        renderOrder(
-                            item.id,
-                            item.data,
-                            index + 1
-                        );
-
-                    }
-                );
 
             }
 
             catch (error) {
 
-                console.error(
-                    "ORDERS ERROR:",
+                console.log(
+                    "ownerUid query failed:",
                     error
                 );
 
+
+                /* =============================================
+                   METHOD 2
+                   storeId
+                ============================================= */
+
+                try {
+
+                    const ordersQuery2 =
+                        query(
+
+                            collection(
+                                db,
+                                "orders"
+                            ),
+
+                            where(
+                                "storeId",
+                                "==",
+                                currentOwnerUid
+                            )
+
+                        );
+
+
+                    snapshot =
+                        await getDocs(
+                            ordersQuery2
+                        );
+
+                }
+
+                catch (error2) {
+
+                    console.log(
+                        "storeId query failed:",
+                        error2
+                    );
+
+
+                    /* =========================================
+                       METHOD 3
+                       ownerEmail
+                    ========================================= */
+
+                    const ordersQuery3 =
+                        query(
+
+                            collection(
+                                db,
+                                "orders"
+                            ),
+
+                            where(
+                                "ownerEmail",
+                                "==",
+                                currentOwnerEmail
+                            )
+
+                        );
+
+
+                    snapshot =
+                        await getDocs(
+                            ordersQuery3
+                        );
+
+                }
+
+            }
+
+
+            /* =================================================
+               STATISTICS
+            ================================================= */
+
+            totalOrders.textContent =
+                snapshot.size;
+
+
+            let reviewCount = 0;
+
+            let confirmedCount = 0;
+
+
+            snapshot.forEach(
+                orderDoc => {
+
+                    const order =
+                        orderDoc.data();
+
+
+                    const status =
+                        normalizeStatus(
+                            order
+                        );
+
+
+                    if (
+                        status ===
+                        "قيد المراجعة"
+                    ) {
+
+                        reviewCount++;
+
+                    }
+
+
+                    if (
+                        status ===
+                        "تم التأكيد"
+                    ) {
+
+                        confirmedCount++;
+
+                    }
+
+                }
+            );
+
+
+            reviewOrders.textContent =
+                reviewCount;
+
+
+            confirmedOrders.textContent =
+                confirmedCount;
+
+
+            /* =================================================
+               EMPTY
+            ================================================= */
+
+            if (snapshot.empty) {
 
                 ordersBody.innerHTML = `
 
@@ -3867,17 +3820,17 @@
 
                             <div class="empty">
 
-                                <i class="fa-solid fa-circle-exclamation"></i>
+                                <div class="empty-icon">
 
-                                <br><br>
+                                    <i class="fa-solid fa-box-open"></i>
 
-                                ❌ حدث خطأ أثناء تحميل الطلبات.
+                                </div>
 
-                                <br><br>
+                                لا توجد طلبات في متجرك لحد الآن.
 
-                                ${escapeHtml(
-                                    error.message
-                                )}
+                                <br>
+
+                                ستظهر طلبات زبائن متجرك هنا.
 
                             </div>
 
@@ -3887,1306 +3840,1438 @@
 
                 `;
 
+
+                return;
+
             }
 
-        }
 
+            /* =================================================
+               ORDERS ARRAY
+            ================================================= */
 
-        /* =====================================================
-           RENDER ORDER
-        ===================================================== */
+            const orders =
+                snapshot.docs.map(
+                    orderDoc => ({
 
-        function renderOrder(
-            id,
-            order,
-            orderNumber
-        ) {
+                        id:
+                            orderDoc.id,
 
-            const tr =
-                document.createElement(
-                    "tr"
+                        data:
+                            orderDoc.data()
+
+                    })
                 );
 
 
-            const status =
-                normalizeStatus(
-                    order.status
-                );
+            /* =================================================
+               SORT
+            ================================================= */
+
+            orders.sort(
+                (a, b) => {
+
+                    const aTime =
+                        a.data.createdAt?.seconds ||
+                        0;
 
 
-            const phone =
-                cleanPhone(
-                    order.phone
-                );
+                    const bTime =
+                        b.data.createdAt?.seconds ||
+                        0;
 
 
-            const products =
-                Array.isArray(
-                    order.products
-                )
-                    ? order.products
-                    : [];
-
-
-            let productsCount = 0;
-
-
-            products.forEach(
-                product => {
-
-                    productsCount +=
-                        Number(
-                            product.quantity || 1
-                        );
+                    return bTime - aTime;
 
                 }
             );
 
 
-            const formattedOrderNumber =
-                String(
-                    orderNumber
-                )
-                .padStart(
-                    4,
-                    "0"
-                );
-
-
-            /*
-             * إصلاح نوع التوصيل:
-             * يتم فحص أكثر من اسم محتمل للحقل
-             * حتى يظهر بشكل صحيح حسب طريقة
-             * تخزين الطلب في Firestore.
-             */
-
-            const deliveryType =
-                order.deliveryType ||
-                order.delivery ||
-                order.deliveryMethod ||
-                order.shippingType ||
-                order.shippingMethod ||
-                order.typeDelivery ||
-                "غير محدد";
-
-
-            const deliveryPrice =
-                Number(
-                    order.deliveryPrice ||
-                    order.shippingPrice ||
-                    order.shippingCost ||
-                    0
-                );
-
-
-            tr.innerHTML = `
-
-                <td>
-
-                    <div class="order-number">
-
-                        #${formattedOrderNumber}
-
-                    </div>
-
-                </td>
-
-
-                <td>
-
-                    <div class="date-cell">
-
-                        ${formatDate(
-                            order.createdAt
-                        )}
-
-                    </div>
-
-                </td>
-
-
-                <td>
-
-                    <div class="customer-name">
-
-                        ${escapeHtml(
-                            order.name ||
-                            order.customerName ||
-                            order.customer ||
-                            "غير محدد"
-                        )}
-
-                    </div>
-
-                </td>
-
-
-                <td>
-
-                    <button
-                        class="customer-phone"
-                        data-phone="${escapeHtml(phone)}"
-                    >
-
-                        <i class="fa-solid fa-phone"></i>
-
-                        ${escapeHtml(
-                            order.phone ||
-                            "غير محدد"
-                        )}
-
-                    </button>
-
-                </td>
-
-
-                <td>
-
-                    ${escapeHtml(
-                        order.wilaya ||
-                        order.state ||
-                        "غير محدد"
-                    )}
-
-                </td>
-
-
-                <td>
-
-                    <div class="address-cell">
-
-                        ${escapeHtml(
-                            order.address ||
-                            order.commune ||
-                            order.location ||
-                            "غير محدد"
-                        )}
-
-                    </div>
-
-                </td>
-
-
-                <td>
-
-                    <div class="delivery-cell">
-
-                        <div class="delivery-type">
-
-                            <i class="fa-solid fa-truck"></i>
-
-                            ${escapeHtml(
-                                deliveryType
-                            )}
-
-                        </div>
-
-
-                        <div class="delivery-price">
-
-                            ${deliveryPrice}
-                            DA
-
-                        </div>
-
-                    </div>
-
-                </td>
-
-
-                <td>
-
-                    <button
-                        class="products-btn"
-                    >
-
-                        <i class="fa-solid fa-bag-shopping"></i>
-
-                        عرض المنتجات
-
-                        <br>
-
-                        <small>
-
-                            ${productsCount}
-                            قطعة
-
-                        </small>
-
-                    </button>
-
-                </td>
-
-
-                <td>
-
-                    <div class="total-cell">
-
-                        ${Number(
-                            order.total ||
-                            0
-                        )}
-                        DA
-
-                    </div>
-
-                </td>
-
-
-                <td>
-
-                    <div class="notes-box">
-
-                        <input
-                            class="notes-input"
-                            type="text"
-                            value="${escapeHtml(
-                                order.notes ||
-                                ""
-                            )}"
-                            placeholder="اكتب ملاحظة..."
-                        >
-
-
-                        <button
-                            class="notes-save"
-                            title="حفظ الملاحظة"
-                        >
-
-                            <i class="fa-solid fa-floppy-disk"></i>
-
-                        </button>
-
-                    </div>
-
-                </td>
-
-
-                <td>
-
-                    <select
-                        class="status-select"
-                    >
-
-                        <option
-                            value="قيد المراجعة"
-                            ${status === "قيد المراجعة"
-                                ? "selected"
-                                : ""}
-                        >
-
-                            قيد المراجعة
-
-                        </option>
-
-
-                        <option
-                            value="تم التأكيد"
-                            ${status === "تم التأكيد"
-                                ? "selected"
-                                : ""}
-                        >
-
-                            تم التأكيد
-
-                        </option>
-
-
-                        <option
-                            value="إلغاء"
-                            ${status === "إلغاء"
-                                ? "selected"
-                                : ""}
-                        >
-
-                            إلغاء
-
-                        </option>
-
-
-                        <option
-                            value="جاهز"
-                            ${status === "جاهز"
-                                ? "selected"
-                                : ""}
-                        >
-
-                            جاهز
-
-                        </option>
-
-
-                        <option
-                            value="قيد الشحن"
-                            ${status === "قيد الشحن"
-                                ? "selected"
-                                : ""}
-                        >
-
-                            قيد الشحن
-
-                        </option>
-
-
-                        <option
-                            value="تم التسليم"
-                            ${status === "تم التسليم"
-                                ? "selected"
-                                : ""}
-                        >
-
-                            تم التسليم
-
-                        </option>
-
-                    </select>
-
-                </td>
-
-
-                <td>
-
-                    <button
-                        class="delete-btn"
-                    >
-
-                        <i class="fa-solid fa-trash"></i>
-
-                        حذف
-
-                    </button>
-
-                </td>
-
-            `;
-
-
-            /* =====================================================
-               PHONE
-            ===================================================== */
-
-            tr
-                .querySelector(
-                    ".customer-phone"
-                )
-                .addEventListener(
-                    "click",
-                    () => {
-
-                        openPhoneModal(
-                            phone
-                        );
-
-                    }
-                );
-
-
-            /* =====================================================
-               PRODUCTS
-            ===================================================== */
-
-            tr
-                .querySelector(
-                    ".products-btn"
-                )
-                .addEventListener(
-                    "click",
-                    () => {
-
-                        openProductsModal(
-                            products
-                        );
-
-                    }
-                );
-
-
-            /* =====================================================
-               NOTES
-            ===================================================== */
-
-            tr
-                .querySelector(
-                    ".notes-save"
-                )
-                .addEventListener(
-                    "click",
-                    () => {
-
-                        const input =
-                            tr.querySelector(
-                                ".notes-input"
-                            );
-
-
-                        saveNotes(
-                            id,
-                            input.value
-                        );
-
-                    }
-                );
-
-
-            /* =====================================================
-               STATUS
-            ===================================================== */
-
-            tr
-                .querySelector(
-                    ".status-select"
-                )
-                .addEventListener(
-                    "change",
-                    async event => {
-
-                        await updateStatus(
-                            id,
-                            event.target.value
-                        );
-
-                    }
-                );
-
-
-            /* =====================================================
-               DELETE
-            ===================================================== */
-
-            tr
-                .querySelector(
-                    ".delete-btn"
-                )
-                .addEventListener(
-                    "click",
-                    () => {
-
-                        deleteOrder(
-                            id
-                        );
-
-                    }
-                );
-
-
-            ordersBody.appendChild(
-                tr
-            );
-
-        }
-
-
-        /* =====================================================
-           PHONE MODAL
-        ===================================================== */
-
-        function openPhoneModal(
-            phone
-        ) {
-
-            if (!phone) {
-
-                showError(
-                    "❌ رقم الهاتف غير موجود."
-                );
-
-                return;
-
-            }
-
-
-            const encoded =
-                phone.replace(
-                    "+",
-                    ""
-                );
-
-
-            phoneOptions.innerHTML = `
-
-                <a
-                    class="phone-option call-option"
-                    href="tel:${escapeHtml(phone)}"
-                >
-
-                    <i class="fa-solid fa-phone"></i>
-
-                    اتصال بالزبون
-
-                </a>
-
-
-                <a
-                    class="phone-option whatsapp-option"
-                    href="https://wa.me/${escapeHtml(encoded)}"
-                    target="_blank"
-                    rel="noopener"
-                >
-
-                    <i class="fa-brands fa-whatsapp"></i>
-
-                    فتح WhatsApp
-
-                </a>
-
-            `;
-
-
-            phoneModal.classList.add(
-                "active"
-            );
-
-        }
-
-
-        /* =====================================================
-           PRODUCTS MODAL
-        ===================================================== */
-
-        function openProductsModal(
-            products
-        ) {
-
-            productsModalBody.innerHTML =
+            /* =================================================
+               CLEAR
+            ================================================= */
+
+            ordersBody.innerHTML =
                 "";
 
 
-            if (!products.length) {
+            /* =================================================
+               RENDER
+            ================================================= */
 
-                productsModalBody.innerHTML = `
+            orders.forEach(
+                (item, index) => {
 
-                    <div class="empty">
-
-                        <i class="fa-solid fa-box-open"></i>
-
-                        <br>
-
-                        لا توجد تفاصيل للمنتجات.
-
-                    </div>
-
-                `;
-
-
-                productsModal.classList.add(
-                    "active"
-                );
-
-
-                return;
-
-            }
-
-
-            products.forEach(
-                product => {
-
-                    const quantity =
-                        Number(
-                            product.quantity || 1
-                        );
-
-
-                    const price =
-                        Number(
-                            product.price || 0
-                        );
-
-
-                    const total =
-                        price * quantity;
-
-
-                    const image =
-                        product.image ||
-                        (
-                            Array.isArray(
-                                product.images
-                            ) &&
-                            product.images.length
-                        )
-                            ? product.images[0]
-                            : "";
-
-
-                    const div =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    div.className =
-                        "modal-product";
-
-
-                    div.innerHTML = `
-
-                        <img
-                            class="modal-product-image"
-                            src="${escapeHtml(image)}"
-                            alt="${escapeHtml(
-                                product.name ||
-                                "منتج"
-                            )}"
-                            onerror="this.style.display='none';"
-                        >
-
-
-                        <div class="modal-product-info">
-
-                            <div class="modal-product-name">
-
-                                ${escapeHtml(
-                                    product.name ||
-                                    "منتج"
-                                )}
-
-                            </div>
-
-
-                            <div class="modal-product-detail">
-
-                                الكمية:
-
-                                <strong>
-                                    ${quantity}
-                                </strong>
-
-                                <br>
-
-                                السعر:
-
-                                <strong>
-                                    ${price}
-                                    DA
-                                </strong>
-
-                                ${
-                                    product.color
-                                        ? `
-                                            <br>
-
-                                            اللون:
-
-                                            <strong>
-                                                ${escapeHtml(
-                                                    product.color
-                                                )}
-                                            </strong>
-                                          `
-                                        : ""
-                                }
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="modal-product-total">
-
-                            ${total}
-                            DA
-
-                        </div>
-
-                    `;
-
-
-                    productsModalBody.appendChild(
-                        div
+                    renderOrder(
+                        item.id,
+                        item.data,
+                        index + 1
                     );
 
                 }
             );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "ORDERS ERROR:",
+                error
+            );
+
+
+            ordersBody.innerHTML = `
+
+                <tr>
+
+                    <td colspan="12">
+
+                        <div class="empty">
+
+                            <i class="fa-solid fa-circle-exclamation"></i>
+
+                            <br>
+
+                            ❌ حدث خطأ أثناء تحميل الطلبات.
+
+                            <br><br>
+
+                            ${escapeHtml(
+                                error.message
+                            )}
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       RENDER ORDER
+    ===================================================== */
+
+    function renderOrder(
+        id,
+        order,
+        orderNumber
+    ) {
+
+        const tr =
+            document.createElement("tr");
+
+
+        /*
+         * الطلب الذي لا يملك status
+         * يعتبر قيد المراجعة.
+         */
+
+        const status =
+            normalizeStatus(
+                order
+            );
+
+
+        const phone =
+            cleanPhone(
+                order.phone
+            );
+
+
+        const products =
+            Array.isArray(
+                order.products
+            )
+                ? order.products
+                : [];
+
+
+        let productsCount = 0;
+
+
+        products.forEach(
+            product => {
+
+                productsCount +=
+                    Number(
+                        product.quantity || 1
+                    );
+
+            }
+        );
+
+
+        /* =================================================
+           ORDER NUMBER
+        ================================================= */
+
+        const formattedOrderNumber =
+
+            String(
+                orderNumber
+            )
+            .padStart(
+                4,
+                "0"
+            );
+
+
+        tr.innerHTML = `
+
+            <td>
+
+                <div class="order-number">
+
+                    #${formattedOrderNumber}
+
+                </div>
+
+            </td>
+
+
+            <td>
+
+                <div class="date-cell">
+
+                    ${formatDate(
+                        order.createdAt
+                    )}
+
+                </div>
+
+            </td>
+
+
+            <td>
+
+                <div class="customer-name">
+
+                    ${escapeHtml(
+                        order.name ||
+                        order.customerName ||
+                        "غير محدد"
+                    )}
+
+                </div>
+
+            </td>
+
+
+            <td>
+
+                <button
+                    class="customer-phone"
+                    data-phone="${escapeHtml(
+                        phone
+                    )}"
+                >
+
+                    <i class="fa-solid fa-phone"></i>
+
+                    ${escapeHtml(
+                        order.phone ||
+                        "غير محدد"
+                    )}
+
+                </button>
+
+            </td>
+
+
+            <td>
+
+                ${escapeHtml(
+                    order.wilaya ||
+                    "غير محدد"
+                )}
+
+            </td>
+
+
+            <td>
+
+                <div class="address-cell">
+
+                    ${escapeHtml(
+                        order.address ||
+                        order.commune ||
+                        "غير محدد"
+                    )}
+
+                </div>
+
+            </td>
+
+
+            <td>
+
+                <div class="delivery-cell">
+
+                    <div class="delivery-type">
+
+                        ${escapeHtml(
+                            order.deliveryType ||
+                            order.delivery ||
+                            order.shippingType ||
+                            order.deliveryMethod ||
+                            "غير محدد"
+                        )}
+
+                    </div>
+
+
+                    <div class="delivery-price">
+
+                        ${Number(
+                            order.deliveryPrice ||
+                            order.shippingPrice ||
+                            0
+                        )}
+
+                        DA
+
+                    </div>
+
+                </div>
+
+            </td>
+
+
+            <td>
+
+                <button
+                    class="products-btn"
+                >
+
+                    <i class="fa-solid fa-bag-shopping"></i>
+
+                    عرض المنتجات
+
+                    <br>
+
+                    <small>
+
+                        ${productsCount}
+
+                        قطعة
+
+                    </small>
+
+                </button>
+
+            </td>
+
+
+            <td>
+
+                <div class="total-cell">
+
+                    ${Number(
+                        order.total ||
+                        0
+                    )}
+
+                    DA
+
+                </div>
+
+            </td>
+
+
+            <td>
+
+                <div class="notes-box">
+
+                    <input
+                        class="notes-input"
+                        type="text"
+                        value="${escapeHtml(
+                            order.notes ||
+                            ""
+                        )}"
+                        placeholder="اكتب ملاحظة..."
+                    >
+
+
+                    <button
+                        class="notes-save"
+                        title="حفظ الملاحظة"
+                    >
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+
+                    </button>
+
+                </div>
+
+            </td>
+
+
+            <td>
+
+                <select
+                    class="status-select"
+                >
+
+                    <option
+                        value="قيد المراجعة"
+                        ${status === "قيد المراجعة"
+                            ? "selected"
+                            : ""}
+                    >
+
+                        قيد المراجعة
+
+                    </option>
+
+
+                    <option
+                        value="تم التأكيد"
+                        ${status === "تم التأكيد"
+                            ? "selected"
+                            : ""}
+                    >
+
+                        تم التأكيد
+
+                    </option>
+
+
+                    <option
+                        value="إلغاء"
+                        ${status === "إلغاء"
+                            ? "selected"
+                            : ""}
+                    >
+
+                        إلغاء
+
+                    </option>
+
+
+                    <option
+                        value="جاهز"
+                        ${status === "جاهز"
+                            ? "selected"
+                            : ""}
+                    >
+
+                        جاهز
+
+                    </option>
+
+
+                    <option
+                        value="قيد الشحن"
+                        ${status === "قيد الشحن"
+                            ? "selected"
+                            : ""}
+                    >
+
+                        قيد الشحن
+
+                    </option>
+
+
+                    <option
+                        value="تم التسليم"
+                        ${status === "تم التسليم"
+                            ? "selected"
+                            : ""}
+                    >
+
+                        تم التسليم
+
+                    </option>
+
+                </select>
+
+            </td>
+
+
+            <td>
+
+                <button
+                    class="delete-btn"
+                >
+
+                    <i class="fa-solid fa-trash"></i>
+
+                    حذف
+
+                </button>
+
+            </td>
+
+        `;
+
+
+        /* =================================================
+           PHONE
+        ================================================= */
+
+        tr
+            .querySelector(
+                ".customer-phone"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    openPhoneModal(
+                        phone
+                    );
+
+                }
+            );
+
+
+        /* =================================================
+           PRODUCTS
+        ================================================= */
+
+        tr
+            .querySelector(
+                ".products-btn"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    openProductsModal(
+                        products
+                    );
+
+                }
+            );
+
+
+        /* =================================================
+           NOTES
+        ================================================= */
+
+        tr
+            .querySelector(
+                ".notes-save"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    const input =
+                        tr.querySelector(
+                            ".notes-input"
+                        );
+
+
+                    saveNotes(
+                        id,
+                        input.value
+                    );
+
+                }
+            );
+
+
+        /* =================================================
+           STATUS
+        ================================================= */
+
+        tr
+            .querySelector(
+                ".status-select"
+            )
+            .addEventListener(
+                "change",
+                async event => {
+
+                    await updateStatus(
+                        id,
+                        event.target.value
+                    );
+
+                }
+            );
+
+
+        /* =================================================
+           DELETE
+        ================================================= */
+
+        tr
+            .querySelector(
+                ".delete-btn"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    deleteOrder(
+                        id
+                    );
+
+                }
+            );
+
+
+        ordersBody.appendChild(
+            tr
+        );
+
+    }
+
+
+    /* =====================================================
+       PHONE MODAL
+    ===================================================== */
+
+    function openPhoneModal(phone) {
+
+        if (!phone) {
+
+            showError(
+                "❌ رقم الهاتف غير موجود."
+            );
+
+            return;
+
+        }
+
+
+        const encoded =
+            phone.replace(
+                "+",
+                ""
+            );
+
+
+        phoneOptions.innerHTML = `
+
+            <a
+                class="phone-option call-option"
+                href="tel:${escapeHtml(
+                    phone
+                )}"
+            >
+
+                <i class="fa-solid fa-phone"></i>
+
+                اتصال بالزبون
+
+            </a>
+
+
+            <a
+                class="phone-option whatsapp-option"
+                href="https://wa.me/${escapeHtml(
+                    encoded
+                )}"
+                target="_blank"
+                rel="noopener"
+            >
+
+                <i class="fa-brands fa-whatsapp"></i>
+
+                فتح WhatsApp
+
+            </a>
+
+        `;
+
+
+        phoneModal.classList.add(
+            "active"
+        );
+
+    }
+
+
+    /* =====================================================
+       PRODUCTS MODAL
+    ===================================================== */
+
+    function openProductsModal(
+        products
+    ) {
+
+        productsModalBody.innerHTML =
+            "";
+
+
+        if (!products.length) {
+
+            productsModalBody.innerHTML = `
+
+                <div class="empty">
+
+                    <i class="fa-solid fa-box-open"></i>
+
+                    <br>
+
+                    لا توجد تفاصيل للمنتجات.
+
+                </div>
+
+            `;
 
 
             productsModal.classList.add(
                 "active"
             );
 
+
+            return;
+
         }
 
 
-        /* =====================================================
-           CLOSE PRODUCTS MODAL
-        ===================================================== */
+        products.forEach(
+            product => {
 
-        document
-            .getElementById(
-                "closeProductsModal"
-            )
-            .addEventListener(
-                "click",
-                () => {
-
-                    productsModal.classList.remove(
-                        "active"
+                const quantity =
+                    Number(
+                        product.quantity ||
+                        1
                     );
 
-                }
-            );
 
-
-        /* =====================================================
-           CLOSE PHONE MODAL
-        ===================================================== */
-
-        document
-            .getElementById(
-                "closePhoneModal"
-            )
-            .addEventListener(
-                "click",
-                () => {
-
-                    phoneModal.classList.remove(
-                        "active"
+                const price =
+                    Number(
+                        product.price ||
+                        0
                     );
 
-                }
-            );
+
+                const total =
+                    price *
+                    quantity;
 
 
-        /* =====================================================
-           CLICK OUTSIDE MODALS
-        ===================================================== */
+                const image =
 
-        productsModal.addEventListener(
-            "click",
-            event => {
+                    product.image ||
 
-                if (
-                    event.target ===
-                    productsModal
-                ) {
+                    (
 
-                    productsModal.classList.remove(
-                        "active"
+                        Array.isArray(
+                            product.images
+                        )
+
+                        &&
+
+                        product.images.length
+
+                            ?
+
+                        product.images[0]
+
+                            :
+
+                        ""
+
                     );
 
-                }
+
+                const div =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                div.className =
+                    "modal-product";
+
+
+                div.innerHTML = `
+
+                    <img
+                        class="modal-product-image"
+                        src="${escapeHtml(
+                            image
+                        )}"
+                        alt="${escapeHtml(
+                            product.name ||
+                            "منتج"
+                        )}"
+                        onerror="this.style.display='none';"
+                    >
+
+
+                    <div class="modal-product-info">
+
+                        <div class="modal-product-name">
+
+                            ${escapeHtml(
+                                product.name ||
+                                "منتج"
+                            )}
+
+                        </div>
+
+
+                        <div class="modal-product-detail">
+
+                            الكمية:
+
+                            <strong>
+                                ${quantity}
+                            </strong>
+
+                            <br>
+
+                            السعر:
+
+                            <strong>
+                                ${price} DA
+                            </strong>
+
+                            ${
+                                product.color
+                                    ?
+                                `
+                                    <br>
+
+                                    اللون:
+
+                                    <strong>
+
+                                        ${escapeHtml(
+                                            product.color
+                                        )}
+
+                                    </strong>
+                                `
+                                    :
+                                ""
+                            }
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="modal-product-total">
+
+                        ${total} DA
+
+                    </div>
+
+                `;
+
+
+                productsModalBody.appendChild(
+                    div
+                );
 
             }
         );
 
 
-        phoneModal.addEventListener(
+        productsModal.classList.add(
+            "active"
+        );
+
+    }
+
+
+    /* =====================================================
+       CLOSE PRODUCTS MODAL
+    ===================================================== */
+
+    document
+        .getElementById(
+            "closeProductsModal"
+        )
+        .addEventListener(
             "click",
-            event => {
+            () => {
 
-                if (
-                    event.target ===
-                    phoneModal
-                ) {
-
-                    phoneModal.classList.remove(
-                        "active"
-                    );
-
-                }
+                productsModal.classList.remove(
+                    "active"
+                );
 
             }
         );
 
 
-        /* =====================================================
-           SAVE NOTES
-        ===================================================== */
+    /* =====================================================
+       CLOSE PHONE MODAL
+    ===================================================== */
 
-        async function saveNotes(
-            id,
-            notes
-        ) {
+    document
+        .getElementById(
+            "closePhoneModal"
+        )
+        .addEventListener(
+            "click",
+            () => {
 
-            try {
-
-                const orderRef =
-                    doc(
-                        db,
-                        "orders",
-                        id
-                    );
-
-
-                const snapshot =
-                    await getDoc(
-                        orderRef
-                    );
-
-
-                if (!snapshot.exists()) {
-
-                    showError(
-                        "❌ الطلب غير موجود."
-                    );
-
-                    return;
-
-                }
-
-
-                const data =
-                    snapshot.data();
-
-
-                if (
-                    data.ownerUid !==
-                    currentOwnerUid
-                ) {
-
-                    showError(
-                        "❌ لا يمكنك تعديل طلب لا يخص متجرك."
-                    );
-
-                    return;
-
-                }
-
-
-                await updateDoc(
-                    orderRef,
-                    {
-
-                        notes:
-                            String(
-                                notes || ""
-                            )
-                            .trim()
-
-                    }
-                );
-
-
-                showSuccess(
-                    "تم حفظ الملاحظة بنجاح"
+                phoneModal.classList.remove(
+                    "active"
                 );
 
             }
-
-            catch (error) {
-
-                console.error(
-                    "NOTES ERROR:",
-                    error
-                );
+        );
 
 
-                showError(
-                    "❌ تعذر حفظ الملاحظة."
+    /* =====================================================
+       CLICK OUTSIDE MODALS
+    ===================================================== */
+
+    productsModal.addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target ===
+                productsModal
+            ) {
+
+                productsModal.classList.remove(
+                    "active"
                 );
 
             }
 
         }
+    );
 
 
-        /* =====================================================
-           UPDATE STATUS
-        ===================================================== */
+    phoneModal.addEventListener(
+        "click",
+        event => {
 
-        async function updateStatus(
-            id,
-            newStatus
-        ) {
+            if (
+                event.target ===
+                phoneModal
+            ) {
 
-            try {
-
-                const orderRef =
-                    doc(
-                        db,
-                        "orders",
-                        id
-                    );
-
-
-                const snapshot =
-                    await getDoc(
-                        orderRef
-                    );
-
-
-                if (!snapshot.exists()) {
-
-                    showError(
-                        "❌ الطلب غير موجود."
-                    );
-
-                    return;
-
-                }
-
-
-                const data =
-                    snapshot.data();
-
-
-                if (
-                    data.ownerUid !==
-                    currentOwnerUid
-                ) {
-
-                    showError(
-                        "❌ لا يمكنك تعديل طلب لا يخص متجرك."
-                    );
-
-                    return;
-
-                }
-
-
-                await updateDoc(
-                    orderRef,
-                    {
-
-                        status:
-                            newStatus
-
-                    }
-                );
-
-
-                showSuccess(
-                    "تم تحديث حالة الطلب بنجاح"
-                );
-
-
-                await loadOrders();
-
-            }
-
-            catch (error) {
-
-                console.error(
-                    "STATUS ERROR:",
-                    error
-                );
-
-
-                showError(
-                    "❌ تعذر تحديث حالة الطلب."
+                phoneModal.classList.remove(
+                    "active"
                 );
 
             }
 
         }
+    );
 
 
-        /* =====================================================
-           DELETE ORDER
-        ===================================================== */
+    /* =====================================================
+       SAVE NOTES
+    ===================================================== */
 
-        async function deleteOrder(
-            id
-        ) {
+    async function saveNotes(
+        id,
+        notes
+    ) {
 
-            const confirmed =
-                confirm(
-                    "⚠️ هل أنت متأكد من حذف هذه الطلبية؟\n\n" +
-                    "لا يمكن التراجع عن الحذف."
+        try {
+
+            const orderRef =
+                doc(
+                    db,
+                    "orders",
+                    id
                 );
 
 
-            if (!confirmed) {
+            const snapshot =
+                await getDoc(
+                    orderRef
+                );
+
+
+            if (!snapshot.exists()) {
+
+                showError(
+                    "❌ الطلب غير موجود."
+                );
 
                 return;
 
             }
 
 
-            try {
-
-                const orderRef =
-                    doc(
-                        db,
-                        "orders",
-                        id
-                    );
+            const data =
+                snapshot.data();
 
 
-                const snapshot =
-                    await getDoc(
-                        orderRef
-                    );
+            if (
+                data.ownerUid &&
+                data.ownerUid !==
+                currentOwnerUid
+            ) {
+
+                showError(
+                    "❌ لا يمكنك تعديل طلب لا يخص متجرك."
+                );
+
+                return;
+
+            }
 
 
-                if (!snapshot.exists()) {
+            await updateDoc(
+                orderRef,
+                {
 
-                    showError(
-                        "❌ الطلب غير موجود."
-                    );
-
-                    return;
-
-                }
-
-
-                const data =
-                    snapshot.data();
-
-
-                if (
-                    data.ownerUid !==
-                    currentOwnerUid
-                ) {
-
-                    showError(
-                        "❌ لا يمكنك حذف طلب لا يخص متجرك."
-                    );
-
-                    return;
+                    notes:
+                        String(
+                            notes || ""
+                        ).trim()
 
                 }
+            );
 
 
-                await deleteDoc(
+            showSuccess(
+                "تم حفظ الملاحظة بنجاح"
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "NOTES ERROR:",
+                error
+            );
+
+
+            showError(
+                "❌ تعذر حفظ الملاحظة."
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       UPDATE STATUS
+    ===================================================== */
+
+    async function updateStatus(
+        id,
+        newStatus
+    ) {
+
+        try {
+
+            const orderRef =
+                doc(
+                    db,
+                    "orders",
+                    id
+                );
+
+
+            const snapshot =
+                await getDoc(
                     orderRef
                 );
 
 
-                showSuccess(
-                    "تم حذف الطلبية بنجاح"
-                );
-
-
-                await loadOrders();
-
-            }
-
-            catch (error) {
-
-                console.error(
-                    "DELETE ERROR:",
-                    error
-                );
-
+            if (!snapshot.exists()) {
 
                 showError(
-                    "❌ تعذر حذف الطلبية.\n" +
-                    error.message
+                    "❌ الطلب غير موجود."
                 );
+
+                return;
 
             }
 
-        }
+
+            const data =
+                snapshot.data();
 
 
-        /* =====================================================
-           SUCCESS MESSAGE
-        ===================================================== */
+            if (
+                data.ownerUid &&
+                data.ownerUid !==
+                currentOwnerUid
+            ) {
 
-        function showSuccess(
-            text
-        ) {
-
-            const box =
-                document.getElementById(
-                    "successMessage"
+                showError(
+                    "❌ لا يمكنك تعديل طلب لا يخص متجرك."
                 );
 
+                return;
 
-            box.textContent =
-                text;
-
-
-            box.style.display =
-                "block";
+            }
 
 
-            document.getElementById(
-                "errorMessage"
-            ).style.display =
-                "none";
+            await updateDoc(
+                orderRef,
+                {
 
-
-            setTimeout(
-                () => {
-
-                    box.style.display =
-                        "none";
-
-                },
-                3000
-            );
-
-        }
-
-
-        /* =====================================================
-           ERROR MESSAGE
-        ===================================================== */
-
-        function showError(
-            text
-        ) {
-
-            const box =
-                document.getElementById(
-                    "errorMessage"
-                );
-
-
-            box.textContent =
-                text;
-
-
-            box.style.display =
-                "block";
-
-
-            document.getElementById(
-                "successMessage"
-            ).style.display =
-                "none";
-
-
-            setTimeout(
-                () => {
-
-                    box.style.display =
-                        "none";
-
-                },
-                5000
-            );
-
-        }
-
-
-        /* =====================================================
-           LOGOUT
-        ===================================================== */
-
-        document
-            .getElementById(
-                "logoutBtn"
-            )
-            .addEventListener(
-                "click",
-                async event => {
-
-                    event.preventDefault();
-
-
-                    const ok =
-                        confirm(
-                            "هل تريد تسجيل الخروج؟"
-                        );
-
-
-                    if (!ok) {
-
-                        return;
-
-                    }
-
-
-                    try {
-
-                        await signOut(
-                            auth
-                        );
-
-
-                        localStorage.removeItem(
-                            "storeId"
-                        );
-
-
-                        localStorage.removeItem(
-                            "storeDocumentId"
-                        );
-
-
-                        localStorage.removeItem(
-                            "ownerUid"
-                        );
-
-
-                        localStorage.removeItem(
-                            "ownerEmail"
-                        );
-
-
-                        localStorage.removeItem(
-                            "storeOwnerEmail"
-                        );
-
-
-                        localStorage.removeItem(
-                            "storeName"
-                        );
-
-
-                        localStorage.removeItem(
-                            "paymentStatus"
-                        );
-
-
-                        window.location.href =
-                            "login.html";
-
-                    }
-
-                    catch (error) {
-
-                        console.error(
-                            "LOGOUT ERROR:",
-                            error
-                        );
-
-
-                        showError(
-                            "❌ تعذر تسجيل الخروج."
-                        );
-
-                    }
+                    status:
+                        newStatus
 
                 }
             );
 
 
-        /* =====================================================
-           AUTH STATE
-        ===================================================== */
+            showSuccess(
+                "تم تحديث حالة الطلب بنجاح"
+            );
 
-        onAuthStateChanged(
-            auth,
-            async user => {
 
-                if (!user) {
+            await loadOrders();
 
-                    window.location.href =
-                        "login.html";
+        }
+
+        catch (error) {
+
+            console.error(
+                "STATUS ERROR:",
+                error
+            );
+
+
+            showError(
+                "❌ تعذر تحديث حالة الطلب."
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       DELETE ORDER
+    ===================================================== */
+
+    async function deleteOrder(
+        id
+    ) {
+
+        const confirmed =
+            confirm(
+
+                "⚠️ هل أنت متأكد من حذف هذه الطلبية؟\n\n" +
+
+                "لا يمكن التراجع عن الحذف."
+
+            );
+
+
+        if (!confirmed) {
+
+            return;
+
+        }
+
+
+        try {
+
+            const orderRef =
+                doc(
+                    db,
+                    "orders",
+                    id
+                );
+
+
+            const snapshot =
+                await getDoc(
+                    orderRef
+                );
+
+
+            if (!snapshot.exists()) {
+
+                showError(
+                    "❌ الطلب غير موجود."
+                );
+
+                return;
+
+            }
+
+
+            const data =
+                snapshot.data();
+
+
+            if (
+                data.ownerUid &&
+                data.ownerUid !==
+                currentOwnerUid
+            ) {
+
+                showError(
+                    "❌ لا يمكنك حذف طلب لا يخص متجرك."
+                );
+
+                return;
+
+            }
+
+
+            await deleteDoc(
+                orderRef
+            );
+
+
+            showSuccess(
+                "تم حذف الطلبية بنجاح"
+            );
+
+
+            await loadOrders();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "DELETE ERROR:",
+                error
+            );
+
+
+            showError(
+
+                "❌ تعذر حذف الطلبية.\n" +
+
+                error.message
+
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       SUCCESS MESSAGE
+    ===================================================== */
+
+    function showSuccess(
+        text
+    ) {
+
+        const box =
+            document.getElementById(
+                "successMessage"
+            );
+
+
+        box.textContent =
+            text;
+
+
+        box.style.display =
+            "block";
+
+
+        document
+            .getElementById(
+                "errorMessage"
+            )
+            .style.display =
+                "none";
+
+
+        setTimeout(
+            () => {
+
+                box.style.display =
+                    "none";
+
+            },
+            3000
+        );
+
+    }
+
+
+    /* =====================================================
+       ERROR MESSAGE
+    ===================================================== */
+
+    function showError(
+        text
+    ) {
+
+        const box =
+            document.getElementById(
+                "errorMessage"
+            );
+
+
+        box.textContent =
+            text;
+
+
+        box.style.display =
+            "block";
+
+
+        document
+            .getElementById(
+                "successMessage"
+            )
+            .style.display =
+                "none";
+
+
+        setTimeout(
+            () => {
+
+                box.style.display =
+                    "none";
+
+            },
+            5000
+        );
+
+    }
+
+
+    /* =====================================================
+       LOGOUT
+    ===================================================== */
+
+    document
+        .getElementById(
+            "logoutBtn"
+        )
+        .addEventListener(
+            "click",
+            async event => {
+
+                event.preventDefault();
+
+
+                const ok =
+                    confirm(
+                        "هل تريد تسجيل الخروج؟"
+                    );
+
+
+                if (!ok) {
 
                     return;
 
                 }
 
 
-                currentOwnerUid =
-                    user.uid;
+                try {
+
+                    await signOut(
+                        auth
+                    );
 
 
-                currentOwnerEmail =
-                    user.email || "";
+                    localStorage.removeItem(
+                        "storeId"
+                    );
 
 
-                await loadStore();
+                    localStorage.removeItem(
+                        "storeDocumentId"
+                    );
+
+
+                    localStorage.removeItem(
+                        "ownerUid"
+                    );
+
+
+                    localStorage.removeItem(
+                        "ownerEmail"
+                    );
+
+
+                    localStorage.removeItem(
+                        "storeOwnerEmail"
+                    );
+
+
+                    localStorage.removeItem(
+                        "storeName"
+                    );
+
+
+                    localStorage.removeItem(
+                        "paymentStatus"
+                    );
+
+
+                    window.location.href =
+                        "login.html";
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "LOGOUT ERROR:",
+                        error
+                    );
+
+
+                    showError(
+                        "❌ تعذر تسجيل الخروج."
+                    );
+
+                }
 
             }
         );
 
 
-        /* =====================================================
-           START
-        ===================================================== */
+    /* =====================================================
+       AUTH STATE
+    ===================================================== */
 
-        console.log(
-            "G-Glam Orders Dashboard Started"
-        );
+    onAuthStateChanged(
+        auth,
+        async user => {
 
-    </script>
+            if (!user) {
+
+                window.location.href =
+                    "login.html";
+
+                return;
+
+            }
+
+
+            currentOwnerUid =
+                user.uid;
+
+
+            currentOwnerEmail =
+                user.email || "";
+
+
+            await loadStore();
+
+        }
+    );
+
+
+    /* =====================================================
+       START
+    ===================================================== */
+
+    console.log(
+        "G-Glam Orders Dashboard Started"
+    );
+
+</script>
 
 </body>
-
 </html>
