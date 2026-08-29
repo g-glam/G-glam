@@ -237,7 +237,7 @@
 
             border-radius: 24px;
 
-            padding: 30px 20px 25px;
+            padding: 0 20px 25px;
 
             text-align: center;
 
@@ -274,6 +274,53 @@
 
             background: var(--accent);
 
+            z-index: 10;
+
+        }
+
+
+        /* ==========================================
+           STORE COVER
+           يتم تحميله من storeCoverImage
+        ========================================== */
+
+        .store-cover {
+
+            width: calc(100% + 40px);
+
+            height: 180px;
+
+            margin:
+                0 -20px 25px;
+
+            border-radius:
+                24px 24px 0 0;
+
+            overflow: hidden;
+
+            display: none;
+
+            background: #F1F1F1;
+
+            border: none;
+
+            position: relative;
+
+        }
+
+
+        .store-cover img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+            object-position: center;
+
+            display: block;
+
         }
 
 
@@ -306,7 +353,7 @@
 
             background: #F1F1F1;
 
-            border: 5px solid #FFFFFF;
+            border: 5px solid var(--card);
 
             box-shadow:
                 0 6px 20px rgba(0, 0, 0, .12);
@@ -317,42 +364,8 @@
 
 
         /* ==========================================
-           STORE COVER
+           STORE NAME
         ========================================== */
-
-        .store-cover {
-
-            width: 100%;
-
-            height: 170px;
-
-            margin: 0 auto 20px;
-
-            border-radius: 18px;
-
-            overflow: hidden;
-
-            display: none;
-
-            background: #F1F1F1;
-
-            border: 1px solid var(--border);
-
-        }
-
-
-        .store-cover img {
-
-            width: 100%;
-
-            height: 100%;
-
-            object-fit: cover;
-
-            display: block;
-
-        }
-
 
         .store-banner h1 {
 
@@ -366,6 +379,10 @@
 
         }
 
+
+        /* ==========================================
+           STORE DESCRIPTION
+        ========================================== */
 
         .store-banner p {
 
@@ -636,7 +653,8 @@
 
             padding: 10px;
 
-            border: 2px solid var(--accent);
+            border:
+                2px solid var(--accent);
 
             border-radius: 12px;
 
@@ -1091,8 +1109,6 @@
 
             .store-cover {
 
-                border-color: var(--border);
-
                 background: #142538;
 
             }
@@ -1155,7 +1171,23 @@
                 margin-top: 12px;
 
                 padding:
-                    25px 15px 22px;
+                    0 15px 22px;
+
+            }
+
+
+            .store-cover {
+
+                width:
+                    calc(100% + 30px);
+
+                height: 125px;
+
+                margin:
+                    0 -15px 20px;
+
+                border-radius:
+                    24px 24px 0 0;
 
             }
 
@@ -1165,15 +1197,6 @@
                 width: 100px;
 
                 height: 100px;
-
-            }
-
-
-            .store-cover {
-
-                height: 125px;
-
-                border-radius: 15px;
 
             }
 
@@ -1398,7 +1421,7 @@
 
     <!-- ==========================================
          SVG ICONS
-    =========================================== -->
+    ========================================== -->
 
     <svg
         style="display:none"
@@ -1593,7 +1616,7 @@
 
     <!-- ==========================================
          OVERLAY
-    =========================================== -->
+    ========================================== -->
 
     <div
         class="overlay"
@@ -1603,7 +1626,7 @@
 
     <!-- ==========================================
          SIDEBAR
-    =========================================== -->
+    ========================================== -->
 
     <div
         class="sidebar"
@@ -1663,7 +1686,7 @@
 
     <!-- ==========================================
          HEADER
-    =========================================== -->
+    ========================================== -->
 
     <header>
 
@@ -1715,22 +1738,14 @@
 
     <!-- ==========================================
          STORE INFORMATION
-    =========================================== -->
+         الترتيب:
+         الغلاف
+         صورة المتجر
+         الاسم
+         الوصف
+    ========================================== -->
 
     <div class="store-banner">
-
-
-        <!-- صورة المتجر -->
-
-        <div class="store-banner-image">
-
-            <img
-                id="storeImage"
-                src=""
-                alt="صورة المتجر"
-            >
-
-        </div>
 
 
         <!-- غلاف المتجر -->
@@ -1744,6 +1759,19 @@
                 id="storeCoverImage"
                 src=""
                 alt="غلاف المتجر"
+            >
+
+        </div>
+
+
+        <!-- صورة المتجر -->
+
+        <div class="store-banner-image">
+
+            <img
+                id="storeImage"
+                src=""
+                alt="صورة المتجر"
             >
 
         </div>
@@ -1771,7 +1799,7 @@
 
     <!-- ==========================================
          SEARCH
-    =========================================== -->
+    ========================================== -->
 
     <div class="search-box">
 
@@ -1786,7 +1814,7 @@
 
     <!-- ==========================================
          PRODUCTS
-    =========================================== -->
+    ========================================== -->
 
     <div
         class="products"
@@ -1810,7 +1838,7 @@
 
     <!-- ==========================================
          FLOATING CART
-    =========================================== -->
+    ========================================== -->
 
     <a
         href="#"
@@ -1831,7 +1859,7 @@
 
     <!-- ==========================================
          FIREBASE
-    =========================================== -->
+    ========================================== -->
 
     <script type="module">
 
@@ -1867,6 +1895,10 @@
         from
         "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
+
+        /* ==========================================
+           FIREBASE CONFIG
+        ========================================== */
 
         const firebaseConfig = {
 
@@ -1905,6 +1937,10 @@
                 app
             );
 
+
+        /* ==========================================
+           ELEMENTS
+        ========================================== */
 
         const productsContainer =
             document.getElementById(
@@ -2355,25 +2391,25 @@
                 /* ==========================================
                    غلاف المتجر
                    
-                   يدعم:
-                   storeCover
-                   cover
-                   banner
-                   storeBanner
-                   coverImage
+                   الحقل الأساسي:
+                   storeCoverImage
+                   
+                   مع دعم الحقول القديمة
                 ========================================== */
 
                 const cover =
 
+                    currentStore.storeCoverImage
+                    ||
                     currentStore.storeCover
+                    ||
+                    currentStore.coverImage
                     ||
                     currentStore.cover
                     ||
                     currentStore.banner
                     ||
                     currentStore.storeBanner
-                    ||
-                    currentStore.coverImage
                     ||
                     "";
 
@@ -2389,6 +2425,10 @@
                 }
 
                 else {
+
+                    storeCoverImage.removeAttribute(
+                        "src"
+                    );
 
                     storeCover.style.display =
                         "none";
@@ -2695,11 +2735,13 @@
 
 
                     /*
-                     * المخزون يستخدم فقط
-                     * لمعرفة هل المنتج متوفر
-                     *
-                     * لن يتم عرض الرقم للمستخدم
-                     */
+
+                     المخزون يستخدم فقط
+                     لمعرفة هل المنتج متوفر.
+
+                     الرقم لا يظهر للمستخدم.
+
+                    */
 
                     const stock =
                         Number(
@@ -2789,17 +2831,10 @@
 
                                 :
 
-                                `
-
-                                `
+                                ``
 
                             }
 
-
-                            <!--
-                                زر عرض المنتج
-                                بخلفية شفافة وحدود ملونة
-                            -->
 
                             <button
                                 class="details-btn"
@@ -3373,7 +3408,7 @@
 
     <!-- ==========================================
          SERVICE WORKER
-    =========================================== -->
+    ========================================== -->
 
     <script>
 
