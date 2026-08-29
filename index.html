@@ -1584,38 +1584,34 @@ document.getElementById(
 
 
 /* =====================================================
-   GET STORE UID
+   GET STORE IDENTIFIER (SLUG OR UID)
 ===================================================== */
 
-const params =
-new URLSearchParams(
-window.location.search
-);
+const params = new URLSearchParams(window.location.search);
+let rawStoreParam = params.get("store");
 
-
-let storeUid =
-params.get("store");
-
-
-/* =====================================================
-   FALLBACK
-===================================================== */
-
-if(!storeUid){
-
-storeUid =
-localStorage.getItem(
-"storeId"
-);
-
+// في حال تم فتح الرابط مباشرة مثل domain.com/myshop
+if (!rawStoreParam) {
+  const pathParts = window.location.pathname.split('/').filter(p => p && p !== 'index.html');
+  if (pathParts.length > 0) {
+    rawStoreParam = pathParts[pathParts.length - 1];
+  }
 }
 
+// Fallback من التخزين المحلي
+if (!rawStoreParam) {
+  rawStoreParam = localStorage.getItem("storeSlug") || localStorage.getItem("storeId");
+}
+
+let storeIdentifier = rawStoreParam;
+let storeUid = null;
+
 
 /* =====================================================
-   STORE UID REQUIRED
+   CHECK IDENTIFIER REQUIRED
 ===================================================== */
 
-if(!storeUid){
+if(!storeIdentifier){
 
 productsContainer.innerHTML = `
 
@@ -1653,20 +1649,10 @@ margin-top:10px;
 `;
 
 throw new Error(
-"STORE UID NOT FOUND"
+"STORE IDENTIFIER NOT FOUND"
 );
 
 }
-
-
-/* =====================================================
-   SAVE CURRENT STORE
-===================================================== */
-
-localStorage.setItem(
-"storeId",
-storeUid
-);
 
 
 /* =====================================================
@@ -1717,6 +1703,19 @@ value ?? ""
 
 
 /* =====================================================
+   UPDATE NAVIGATION LINKS
+===================================================== */
+
+function updateNavigationLinks() {
+  const storeParamVal = currentStore?.slug || storeUid || storeIdentifier;
+
+  document.getElementById("homeLink").href = "index.html?store=" + encodeURIComponent(storeParamVal);
+  document.getElementById("cartLink").href = "cart.html?store=" + encodeURIComponent(storeParamVal);
+  document.getElementById("floatingCart").href = "cart.html?store=" + encodeURIComponent(storeParamVal);
+}
+
+
+/* =====================================================
    LOAD STORE
 ===================================================== */
 
@@ -1724,42 +1723,41 @@ async function loadStore(){
 
 try{
 
+let storeSnap = null;
 
-const storeRef =
-doc(
-db,
-"stores",
-storeUid
+// 1. البحث باستخدام slug أولاً
+const slugQuery = query(
+  collection(db, "stores"),
+  where("slug", "==", storeIdentifier)
 );
+const slugSnap = await getDocs(slugQuery);
 
+if (!slugSnap.empty) {
+  const docObj = slugSnap.docs[0];
+  currentStore = docObj.data();
+  storeUid = docObj.id; // تعيين الـ ownerUid الحقيقي للمتجر
+} else {
+  // 2. إذا لم يجد بالـ slug، نحاول البحث مباشرة بالـ UID كـ Document ID
+  const storeRef = doc(db, "stores", storeIdentifier);
+  storeSnap = await getDoc(storeRef);
 
-const storeSnap =
-await getDoc(
-storeRef
-);
-
-
-/* =====================================================
-   STORE NOT FOUND
-===================================================== */
-
-if(!storeSnap.exists()){
-
-showStoreError(
-"المتجر غير موجود."
-);
-
-return false;
-
+  if (storeSnap.exists()) {
+    currentStore = storeSnap.data();
+    storeUid = storeSnap.id;
+  } else {
+    showStoreError("المتجر غير موجود.");
+    return false;
+  }
 }
 
-
 /* =====================================================
-   STORE DATA
+   SAVE CURRENT STORE DATA
 ===================================================== */
 
-currentStore =
-storeSnap.data();
+localStorage.setItem("storeId", storeUid);
+if (currentStore.slug) {
+  localStorage.setItem("storeSlug", currentStore.slug);
+}
 
 
 /* =====================================================
@@ -1897,6 +1895,8 @@ contactLink.href =
 
 }
 
+// تحديث روابط التنقل
+updateNavigationLinks();
 
 return true;
 
@@ -2321,6 +2321,8 @@ card
 "click",
 function(){
 
+const storeParamVal = currentStore?.slug || storeUid;
+
 window.location.href =
 
 "product.html?id=" +
@@ -2332,7 +2334,7 @@ product.id
 "&store=" +
 
 encodeURIComponent(
-storeUid
+storeParamVal
 );
 
 }
@@ -2673,47 +2675,8 @@ filtered
 
 
 /* =====================================================
-   NAVIGATION
+   NAVIGATION BUTTONS
 ===================================================== */
-
-document
-.getElementById(
-"homeLink"
-)
-.href =
-
-"index.html?store=" +
-
-encodeURIComponent(
-storeUid
-);
-
-
-document
-.getElementById(
-"cartLink"
-)
-.href =
-
-"cart.html?store=" +
-
-encodeURIComponent(
-storeUid
-);
-
-
-document
-.getElementById(
-"floatingCart"
-)
-.href =
-
-"cart.html?store=" +
-
-encodeURIComponent(
-storeUid
-);
-
 
 document
 .getElementById(
@@ -2723,12 +2686,14 @@ document
 "click",
 function(){
 
+const storeParamVal = currentStore?.slug || storeUid || storeIdentifier;
+
 window.location.href =
 
 "cart.html?store=" +
 
 encodeURIComponent(
-storeUid
+storeParamVal
 );
 
 });
