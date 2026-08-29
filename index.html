@@ -388,6 +388,10 @@
         }
 
 
+        /* =====================================================
+           STORE NAME IN HEADER
+        ===================================================== */
+
         .logo {
 
             position: absolute;
@@ -405,18 +409,34 @@
 
             justify-content: center;
 
+            width: max-content;
+
+            max-width: 55%;
+
+            text-align: center;
+
         }
 
 
-        .logo img {
+        .logo span {
 
-            width: 145px;
+            color:
+                var(--accent);
 
-            max-height: 52px;
+            font-size: 27px;
 
-            object-fit: contain;
+            line-height: 1.2;
 
-            display: block;
+            font-weight: 800;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            transition:
+                color .25s ease;
 
         }
 
@@ -551,25 +571,59 @@
 
         .store-info {
 
-            width: 100%;
-
             text-align: center;
 
             padding:
-                35px 20px 32px;
+                0 20px 32px;
 
             position: relative;
 
         }
 
 
-        /* =====================================================
-           STORE NAME
-        ===================================================== */
+        .store-banner-image {
+
+            width: 145px;
+
+            height: 145px;
+
+            margin:
+                -72px auto 18px;
+
+            position: relative;
+
+            z-index: 5;
+
+        }
+
+
+        .store-banner-image img {
+
+            width: 145px;
+
+            height: 145px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            display: block;
+
+            background: var(--card);
+
+            border:
+                5px solid var(--bg);
+
+            box-shadow:
+                0 7px 22px
+                rgba(0, 0, 0, .25);
+
+        }
+
 
         .store-banner h1 {
 
-            font-size: 38px;
+            font-size: 34px;
 
             line-height: 1.3;
 
@@ -577,9 +631,7 @@
 
             color: var(--text);
 
-            margin-bottom: 7px;
-
-            letter-spacing: .2px;
+            margin-bottom: 4px;
 
         }
 
@@ -1104,8 +1156,7 @@
 
 
         /* =====================================================
-           SIDEBAR
-           القائمة من اليمين
+           SIDEBAR - RIGHT SIDE
         ===================================================== */
 
         .sidebar {
@@ -1148,6 +1199,8 @@
         .sidebar.active {
 
             right: 0;
+
+            left: auto;
 
         }
 
@@ -1290,11 +1343,16 @@
             }
 
 
-            .logo img {
+            .logo {
 
-                width: 120px;
+                max-width: 55%;
 
-                max-height: 45px;
+            }
+
+
+            .logo span {
+
+                font-size: 21px;
 
             }
 
@@ -1326,17 +1384,40 @@
             }
 
 
+            .store-banner-image {
+
+                width: 112px;
+
+                height: 112px;
+
+                margin:
+                    -56px auto 15px;
+
+            }
+
+
+            .store-banner-image img {
+
+                width: 112px;
+
+                height: 112px;
+
+                border-width: 4px;
+
+            }
+
+
             .store-info {
 
                 padding:
-                    25px 15px 25px;
+                    0 15px 25px;
 
             }
 
 
             .store-banner h1 {
 
-                font-size: 28px;
+                font-size: 27px;
 
             }
 
@@ -1389,8 +1470,7 @@
 
             .card-content {
 
-                padding:
-                    9px;
+                padding: 9px;
 
             }
 
@@ -1442,6 +1522,13 @@
             .store-cover {
 
                 height: 160px;
+
+            }
+
+
+            .logo span {
+
+                font-size: 18px;
 
             }
 
@@ -1732,7 +1819,6 @@
 
     <!-- =====================================================
          SIDEBAR
-         القائمة من اليمين
     ===================================================== -->
 
     <div
@@ -1810,12 +1896,16 @@
         </div>
 
 
+        <!--
+            تم حذف صورة logotrans.png
+            واستبدالها باسم المتجر.
+        -->
+
         <div class="logo">
 
-            <img
-                src="logotrans.png"
-                alt="G-Glam"
-            >
+            <span id="headerStoreName">
+                جاري التحميل...
+            </span>
 
         </div>
 
@@ -1848,6 +1938,7 @@
 
     <section class="store-section">
 
+
         <div
             class="store-cover"
             id="storeCover"
@@ -1864,6 +1955,18 @@
 
         <div class="store-info">
 
+
+            <div class="store-banner-image">
+
+                <img
+                    id="storeImage"
+                    src=""
+                    alt="صورة المتجر"
+                >
+
+            </div>
+
+
             <div class="store-banner">
 
                 <h1 id="storeName">
@@ -1876,6 +1979,7 @@
                 </p>
 
             </div>
+
 
         </div>
 
@@ -2057,6 +2161,12 @@
         const storeNameElement =
             document.getElementById(
                 "storeName"
+            );
+
+
+        const headerStoreName =
+            document.getElementById(
+                "headerStoreName"
             );
 
 
@@ -2346,6 +2456,7 @@
 
             try {
 
+
                 if (
                     !storeIdentifier
                 ) {
@@ -2468,6 +2579,14 @@
                     name;
 
 
+                /*
+                 * اسم المتجر في الهيدر
+                 */
+
+                headerStoreName.textContent =
+                    name;
+
+
                 document.title =
                     name +
                     " | المتجر";
@@ -2482,6 +2601,41 @@
                     currentStore.description
                     ||
                     "Bienvenue dans notre boutique";
+
+
+                /* =================================================
+                   STORE IMAGE
+                ================================================= */
+
+                const image =
+
+                    currentStore.storeImage
+                    ||
+                    currentStore.image
+                    ||
+                    currentStore.logo
+                    ||
+                    currentStore.photoURL
+                    ||
+                    "";
+
+
+                if (image) {
+
+                    storeImage.src =
+                        image;
+
+                    storeImage.style.display =
+                        "block";
+
+                }
+
+                else {
+
+                    storeImage.style.display =
+                        "none";
+
+                }
 
 
                 /* =================================================
@@ -2595,6 +2749,7 @@
         async function loadProducts() {
 
             try {
+
 
                 productsContainer.innerHTML = `
 
@@ -2776,6 +2931,7 @@
 
             products.forEach(
                 product => {
+
 
                     const image =
 
@@ -3231,6 +3387,7 @@
             "input",
             function() {
 
+
                 const keyword =
 
                     this.value
@@ -3255,6 +3412,7 @@
 
                     allProducts.filter(
                         product => {
+
 
                             const name =
 
@@ -3417,6 +3575,10 @@
 
         function showStoreError(message) {
 
+            headerStoreName.textContent =
+                "G-Glam";
+
+
             productsContainer.innerHTML = `
 
                 <div class="empty">
@@ -3517,9 +3679,11 @@
                                 );
 
                             }
+
                         );
 
                 }
+
             );
 
         }
