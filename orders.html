@@ -10,11 +10,6 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <meta
-        name="theme-color"
-        content="#F47B20"
-    >
-
     <title>G-Glam | الطلبات</title>
 
     <link
@@ -65,13 +60,22 @@
             --blue: #2563EB;
             --blue-bg: #EAF1FF;
 
-            --shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+            --purple: #7C3AED;
+            --purple-bg: #F3E8FF;
+
+            --warning: #D97706;
+            --warning-bg: #FFF4E5;
+
+            --shadow: 0 4px 18px rgba(0, 0, 0, .06);
 
             --dark-bg: #07111F;
             --dark-sidebar: #0A1726;
             --dark-card: #0D1B2A;
+            --dark-card-2: #102234;
+
             --dark-text: #F4F7FB;
             --dark-muted: #AAB7C7;
+
             --dark-border: #1D334A;
 
         }
@@ -82,7 +86,6 @@
             box-sizing: border-box;
 
             margin: 0;
-
             padding: 0;
 
             font-family: "Tajawal", sans-serif;
@@ -99,17 +102,8 @@
             min-height: 100vh;
 
             transition:
-                background 0.25s ease,
-                color 0.25s ease;
-
-        }
-
-
-        body.dark-mode {
-
-            background: var(--dark-bg);
-
-            color: var(--dark-text);
+                background .25s ease,
+                color .25s ease;
 
         }
 
@@ -124,10 +118,9 @@
 
             background: #F5F5F5;
 
-            color: #333333;
+            color: #333;
 
             width: 42px;
-
             height: 42px;
 
             border-radius: 12px;
@@ -135,14 +128,15 @@
             display: flex;
 
             align-items: center;
-
             justify-content: center;
 
             font-size: 18px;
 
             cursor: pointer;
 
-            transition: 0.25s;
+            transition: .25s;
+
+            flex-shrink: 0;
 
         }
 
@@ -155,16 +149,20 @@
 
             border-color: var(--orange);
 
+            transform: translateY(-1px);
+
         }
 
 
-        body.dark-mode .theme-toggle {
+        /* =====================================================
+           DARK MODE
+        ===================================================== */
 
-            background: #17283A;
+        body.dark-mode {
 
-            color: white;
+            background: var(--dark-bg);
 
-            border-color: var(--dark-border);
+            color: var(--dark-text);
 
         }
 
@@ -178,12 +176,11 @@
             position: fixed;
 
             right: 0;
-
             top: 0;
 
-            width: 75px;
-
             height: 100vh;
+
+            width: 75px;
 
             background: var(--sidebar);
 
@@ -191,11 +188,12 @@
 
             overflow: hidden;
 
-            transition: 0.3s;
+            transition: .3s;
 
             z-index: 1200;
 
-            box-shadow: -3px 0 15px rgba(0, 0, 0, 0.04);
+            box-shadow:
+                -3px 0 15px rgba(0, 0, 0, .04);
 
         }
 
@@ -213,6 +211,9 @@
 
             border-left-color: var(--dark-border);
 
+            box-shadow:
+                -4px 0 20px rgba(0, 0, 0, .35);
+
         }
 
 
@@ -227,10 +228,11 @@
             display: flex;
 
             align-items: center;
-
             justify-content: center;
 
             border-bottom: 1px solid #DDDDDD;
+
+            white-space: nowrap;
 
             padding: 10px;
 
@@ -247,10 +249,13 @@
         .logo img {
 
             width: 48px;
-
             height: 48px;
 
             object-fit: contain;
+
+            display: block;
+
+            transition: .3s;
 
         }
 
@@ -258,7 +263,6 @@
         .sidebar:hover .logo img {
 
             width: 130px;
-
             height: 55px;
 
         }
@@ -293,13 +297,13 @@
 
             border-radius: 12px;
 
-            color: #555555;
+            color: #555;
 
             text-decoration: none;
 
             white-space: nowrap;
 
-            transition: 0.2s;
+            transition: .2s;
 
             position: relative;
 
@@ -326,7 +330,7 @@
 
             background: #17283A;
 
-            color: white;
+            color: #FFF;
 
         }
 
@@ -337,8 +341,15 @@
 
             color: white;
 
+            box-shadow:
+                0 5px 15px rgba(244, 123, 32, .20);
+
         }
 
+
+        /* =====================================================
+           ICONS
+        ===================================================== */
 
         .icon {
 
@@ -351,19 +362,51 @@
             display: flex;
 
             align-items: center;
-
             justify-content: center;
+
+            text-align: center;
 
             font-size: 18px;
 
+            transition: .25s;
+
         }
 
+
+        .icon i {
+
+            font-size: 18px;
+
+            width: 20px;
+
+            text-align: center;
+
+        }
+
+
+        .menu a:hover .icon {
+
+            transform: scale(1.08);
+
+        }
+
+
+        .menu a.active .icon {
+
+            color: white;
+
+        }
+
+
+        /* =====================================================
+           MENU TEXT
+        ===================================================== */
 
         .text {
 
             opacity: 0;
 
-            transition: 0.25s;
+            transition: .25s;
 
             font-size: 14px;
 
@@ -375,63 +418,6 @@
         .sidebar:hover .text {
 
             opacity: 1;
-
-        }
-
-
-        /* =====================================================
-           ORDERS BADGE
-        ===================================================== */
-
-        .orders-badge {
-
-            display: none;
-
-            align-items: center;
-
-            justify-content: center;
-
-            min-width: 22px;
-
-            height: 22px;
-
-            padding: 0 6px;
-
-            margin-right: auto;
-
-            border-radius: 50px;
-
-            background: #DC3545;
-
-            color: white;
-
-            font-size: 11px;
-
-            font-weight: 800;
-
-        }
-
-
-        .orders-badge.show {
-
-            display: flex;
-
-        }
-
-
-        .sidebar:not(:hover) .orders-badge {
-
-            position: absolute;
-
-            top: 5px;
-
-            right: 43px;
-
-            min-width: 19px;
-
-            height: 19px;
-
-            font-size: 9px;
 
         }
 
@@ -466,7 +452,10 @@
 
             z-index: 1100;
 
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+            box-shadow:
+                0 2px 12px rgba(0, 0, 0, .04);
+
+            transition: .3s;
 
         }
 
@@ -477,8 +466,15 @@
 
             border-bottom-color: var(--dark-border);
 
+            box-shadow:
+                0 2px 15px rgba(0, 0, 0, .25);
+
         }
 
+
+        /* =====================================================
+           STORE TOP
+        ===================================================== */
 
         .store-top {
 
@@ -496,7 +492,6 @@
         .store-image {
 
             width: 48px;
-
             height: 48px;
 
             border-radius: 50%;
@@ -506,6 +501,17 @@
             background: #F1F1F1;
 
             border: 2px solid #FFE0C8;
+
+            flex-shrink: 0;
+
+        }
+
+
+        body.dark-mode .store-image {
+
+            background: #142538;
+
+            border-color: #5A3A22;
 
         }
 
@@ -525,7 +531,16 @@
 
             font-size: 11px;
 
-            color: #999999;
+            color: #999;
+
+            margin-bottom: 2px;
+
+        }
+
+
+        body.dark-mode .store-label {
+
+            color: #7F91A6;
 
         }
 
@@ -536,7 +551,7 @@
 
             font-weight: 800;
 
-            color: #222222;
+            color: #222;
 
             white-space: nowrap;
 
@@ -549,13 +564,6 @@
         }
 
 
-        body.dark-mode .store-label {
-
-            color: #7F91A6;
-
-        }
-
-
         body.dark-mode .store-top-name {
 
             color: #F4F7FB;
@@ -563,16 +571,9 @@
         }
 
 
-        .top-actions {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 10px;
-
-        }
-
+        /* =====================================================
+           VIEW STORE
+        ===================================================== */
 
         .view-store-btn {
 
@@ -596,6 +597,10 @@
 
             font-weight: 700;
 
+            transition: .2s;
+
+            white-space: nowrap;
+
             border: 1px solid #FFE0CA;
 
         }
@@ -610,91 +615,22 @@
         }
 
 
-        /* =====================================================
-           NOTIFICATION BUTTON
-        ===================================================== */
+        body.dark-mode .view-store-btn {
 
-        .notification-btn {
+            background: #17283A;
 
-            position: relative;
+            color: #FF8C32;
 
-            width: 42px;
-
-            height: 42px;
-
-            border: 1px solid var(--border);
-
-            border-radius: 12px;
-
-            background: #FFFFFF;
-
-            color: #555555;
-
-            cursor: pointer;
-
-            font-size: 17px;
+            border-color: #5A3A22;
 
         }
 
 
-        .notification-btn:hover {
+        body.dark-mode .view-store-btn:hover {
 
             background: var(--orange);
 
             color: white;
-
-            border-color: var(--orange);
-
-        }
-
-
-        body.dark-mode .notification-btn {
-
-            background: #17283A;
-
-            color: white;
-
-            border-color: var(--dark-border);
-
-        }
-
-
-        .notification-dot {
-
-            display: none;
-
-            position: absolute;
-
-            top: -5px;
-
-            left: -5px;
-
-            min-width: 18px;
-
-            height: 18px;
-
-            padding: 0 4px;
-
-            border-radius: 50px;
-
-            background: #DC3545;
-
-            color: white;
-
-            font-size: 9px;
-
-            font-weight: 800;
-
-            align-items: center;
-
-            justify-content: center;
-
-        }
-
-
-        .notification-dot.show {
-
-            display: flex;
 
         }
 
@@ -708,6 +644,8 @@
             margin-right: 75px;
 
             padding: 103px 25px 25px;
+
+            transition: .3s;
 
         }
 
@@ -780,123 +718,7 @@
 
 
         /* =====================================================
-           LIVE NOTIFICATION
-        ===================================================== */
-
-        .live-notification {
-
-            display: none;
-
-            position: fixed;
-
-            top: 92px;
-
-            left: 25px;
-
-            width: min(380px, calc(100vw - 110px));
-
-            background: white;
-
-            border: 1px solid #FFD3B0;
-
-            border-right: 5px solid var(--orange);
-
-            border-radius: 15px;
-
-            padding: 16px;
-
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.16);
-
-            z-index: 5000;
-
-            animation: notificationIn 0.3s ease;
-
-        }
-
-
-        .live-notification.show {
-
-            display: block;
-
-        }
-
-
-        body.dark-mode .live-notification {
-
-            background: var(--dark-card);
-
-            border-color: var(--dark-border);
-
-            border-right-color: var(--orange);
-
-        }
-
-
-        .live-notification-title {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 9px;
-
-            font-weight: 800;
-
-            font-size: 16px;
-
-            margin-bottom: 7px;
-
-        }
-
-
-        .live-notification-title i {
-
-            color: var(--orange);
-
-        }
-
-
-        .live-notification-text {
-
-            color: #666666;
-
-            font-size: 13px;
-
-            line-height: 1.8;
-
-        }
-
-
-        body.dark-mode .live-notification-text {
-
-            color: var(--dark-muted);
-
-        }
-
-
-        @keyframes notificationIn {
-
-            from {
-
-                transform: translateY(-15px);
-
-                opacity: 0;
-
-            }
-
-            to {
-
-                transform: translateY(0);
-
-                opacity: 1;
-
-            }
-
-        }
-
-
-        /* =====================================================
-           STATS
+           STATISTICS
         ===================================================== */
 
         .stats {
@@ -936,6 +758,9 @@
             background: var(--dark-card);
 
             border-color: var(--dark-border);
+
+            box-shadow:
+                0 8px 28px rgba(0, 0, 0, .30);
 
         }
 
@@ -977,6 +802,8 @@
 
 
         .stat-title i {
+
+            font-size: 16px;
 
             color: var(--orange);
 
@@ -1033,8 +860,15 @@
 
             border-color: var(--dark-border);
 
+            box-shadow:
+                0 8px 28px rgba(0, 0, 0, .30);
+
         }
 
+
+        /* =====================================================
+           SECTION HEADER
+        ===================================================== */
 
         .section-header {
 
@@ -1043,6 +877,8 @@
             align-items: center;
 
             justify-content: space-between;
+
+            gap: 15px;
 
             margin-bottom: 20px;
 
@@ -1070,12 +906,21 @@
 
             color: var(--orange);
 
+            font-size: 20px;
+
         }
 
 
         body.dark-mode .section-header h2 {
 
             color: var(--dark-text);
+
+        }
+
+
+        body.dark-mode .section-header h2 i {
+
+            color: #FF8C32;
 
         }
 
@@ -1112,6 +957,15 @@
 
             border-collapse: collapse;
 
+            background: white;
+
+        }
+
+
+        body.dark-mode .orders-table {
+
+            background: var(--dark-card);
+
         }
 
 
@@ -1137,7 +991,7 @@
 
             font-weight: 800;
 
-            color: #444444;
+            color: #444;
 
             border-bottom: 1px solid var(--border);
 
@@ -1181,6 +1035,13 @@
         }
 
 
+        .orders-table tbody tr {
+
+            transition: .2s;
+
+        }
+
+
         .orders-table tbody tr:hover {
 
             background: #FAFAFA;
@@ -1194,6 +1055,17 @@
 
         }
 
+
+        .orders-table tbody tr:last-child td {
+
+            border-bottom: none;
+
+        }
+
+
+        /* =====================================================
+           ORDER NUMBER
+        ===================================================== */
 
         .order-number {
 
@@ -1210,16 +1082,31 @@
         }
 
 
+        /* =====================================================
+           DATE
+        ===================================================== */
+
         .date-cell {
 
             white-space: nowrap;
 
-            color: #555555;
+            color: #555;
 
             font-size: 12px;
 
         }
 
+
+        body.dark-mode .date-cell {
+
+            color: #B7C3D0;
+
+        }
+
+
+        /* =====================================================
+           CUSTOMER
+        ===================================================== */
 
         .customer-name {
 
@@ -1232,16 +1119,22 @@
 
         body.dark-mode .customer-name {
 
-            color: white;
+            color: #F4F7FB;
 
         }
 
+
+        /* =====================================================
+           PHONE
+        ===================================================== */
 
         .customer-phone {
 
             display: inline-flex;
 
             align-items: center;
+
+            justify-content: center;
 
             gap: 5px;
 
@@ -1255,11 +1148,17 @@
 
             color: var(--dark);
 
+            font-family: "Tajawal", sans-serif;
+
             font-size: 12px;
 
             font-weight: 700;
 
             cursor: pointer;
+
+            transition: .2s;
+
+            white-space: nowrap;
 
         }
 
@@ -1268,32 +1167,49 @@
 
             background: #17283A;
 
+            color: #F1F1F1;
+
+        }
+
+
+        .customer-phone:hover {
+
+            background: var(--orange);
+
             color: white;
 
         }
 
 
+        /* =====================================================
+           ADDRESS
+        ===================================================== */
+
         .address-cell {
 
             max-width: 180px;
+
+            white-space: normal;
 
             line-height: 1.7;
 
         }
 
 
+        /* =====================================================
+           DELIVERY
+        ===================================================== */
+
         .delivery-cell {
 
             line-height: 1.7;
-
-            min-width: 120px;
 
         }
 
 
         .delivery-type {
 
-            font-weight: 800;
+            font-weight: 700;
 
             color: var(--dark);
 
@@ -1302,26 +1218,30 @@
 
         body.dark-mode .delivery-type {
 
-            color: white;
+            color: #F1F1F1;
 
         }
 
 
         .delivery-price {
 
-            color: var(--muted);
-
             font-size: 11px;
+
+            color: var(--muted);
 
         }
 
 
         body.dark-mode .delivery-price {
 
-            color: var(--dark-muted);
+            color: #AAB7C7;
 
         }
 
+
+        /* =====================================================
+           PRODUCTS
+        ===================================================== */
 
         .products-btn {
 
@@ -1335,11 +1255,17 @@
 
             border-radius: 9px;
 
+            font-family: "Tajawal", sans-serif;
+
             font-size: 12px;
 
             font-weight: 700;
 
             cursor: pointer;
+
+            white-space: nowrap;
+
+            transition: .2s;
 
         }
 
@@ -1353,6 +1279,19 @@
         }
 
 
+        .products-btn:hover {
+
+            background: var(--orange);
+
+            color: white;
+
+        }
+
+
+        /* =====================================================
+           TOTAL
+        ===================================================== */
+
         .total-cell {
 
             font-size: 15px;
@@ -1365,6 +1304,10 @@
 
         }
 
+
+        /* =====================================================
+           NOTES
+        ===================================================== */
 
         .notes-box {
 
@@ -1389,9 +1332,13 @@
 
             border-radius: 9px;
 
-            outline: none;
+            font-family: "Tajawal", sans-serif;
 
             font-size: 12px;
+
+            outline: none;
+
+            background: #FAFAFA;
 
         }
 
@@ -1403,6 +1350,32 @@
             color: white;
 
             border-color: #29425B;
+
+        }
+
+
+        body.dark-mode .notes-input::placeholder {
+
+            color: #8FA0B3;
+
+        }
+
+
+        .notes-input:focus {
+
+            border-color: var(--orange);
+
+            background: white;
+
+            box-shadow:
+                0 0 0 3px rgba(244, 123, 32, .08);
+
+        }
+
+
+        body.dark-mode .notes-input:focus {
+
+            background: #20364B;
 
         }
 
@@ -1419,14 +1392,31 @@
 
             border-radius: 9px;
 
+            font-family: "Tajawal", sans-serif;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
             cursor: pointer;
 
         }
 
 
+        .notes-save:hover {
+
+            background: var(--orange-dark);
+
+        }
+
+
+        /* =====================================================
+           STATUS
+        ===================================================== */
+
         .status-select {
 
-            min-width: 130px;
+            min-width: 135px;
 
             padding: 9px 10px;
 
@@ -1435,6 +1425,8 @@
             border-radius: 9px;
 
             background: white;
+
+            font-family: "Tajawal", sans-serif;
 
             font-size: 12px;
 
@@ -1458,6 +1450,20 @@
         }
 
 
+        .status-select:focus {
+
+            border-color: var(--orange);
+
+            box-shadow:
+                0 0 0 3px rgba(244, 123, 32, .08);
+
+        }
+
+
+        /* =====================================================
+           DELETE
+        ===================================================== */
+
         .delete-btn {
 
             border: none;
@@ -1470,11 +1476,17 @@
 
             border-radius: 9px;
 
+            font-family: "Tajawal", sans-serif;
+
             font-size: 12px;
 
             font-weight: 700;
 
             cursor: pointer;
+
+            white-space: nowrap;
+
+            transition: .2s;
 
         }
 
@@ -1488,9 +1500,20 @@
         }
 
 
-        .empty,
+        .delete-btn:hover {
 
-        .loading {
+            background: var(--danger);
+
+            color: white;
+
+        }
+
+
+        /* =====================================================
+           EMPTY
+        ===================================================== */
+
+        .empty {
 
             padding: 55px 20px;
 
@@ -1503,8 +1526,36 @@
         }
 
 
+        .empty-icon {
+
+            font-size: 32px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .loading {
+
+            padding: 55px 20px;
+
+            text-align: center;
+
+            color: var(--muted);
+
+        }
+
+
+        body.dark-mode .empty,
+        body.dark-mode .loading {
+
+            color: #AAB7C7;
+
+        }
+
+
         /* =====================================================
-           MODALS
+           MODAL
         ===================================================== */
 
         .modal-overlay {
@@ -1513,7 +1564,7 @@
 
             inset: 0;
 
-            background: rgba(0, 0, 0, 0.45);
+            background: rgba(0, 0, 0, .45);
 
             display: none;
 
@@ -1549,12 +1600,17 @@
 
             border-radius: 18px;
 
+            box-shadow:
+                0 15px 50px rgba(0, 0, 0, .20);
+
         }
 
 
         body.dark-mode .modal {
 
             background: var(--dark-card);
+
+            color: var(--dark-text);
 
         }
 
@@ -1570,6 +1626,13 @@
             padding: 18px 20px;
 
             border-bottom: 1px solid var(--border);
+
+        }
+
+
+        body.dark-mode .modal-header {
+
+            border-bottom-color: var(--dark-border);
 
         }
 
@@ -1591,16 +1654,23 @@
         }
 
 
-        body.dark-mode .modal-header h3 {
+        .modal-header h3 i {
 
-            color: white;
+            color: var(--orange);
 
         }
 
 
-        .modal-header h3 i {
+        body.dark-mode .modal-header h3 {
 
-            color: var(--orange);
+            color: #F4F7FB;
+
+        }
+
+
+        body.dark-mode .modal-header h3 i {
+
+            color: #FF8C32;
 
         }
 
@@ -1617,7 +1687,38 @@
 
             background: #F1F1F1;
 
+            font-size: 20px;
+
             cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+
+        body.dark-mode .close-modal {
+
+            background: #17283A;
+
+            color: white;
+
+        }
+
+
+        .close-modal:hover {
+
+            background: #E5E5E5;
+
+        }
+
+
+        body.dark-mode .close-modal:hover {
+
+            background: #20364B;
 
         }
 
@@ -1628,6 +1729,10 @@
 
         }
 
+
+        /* =====================================================
+           MODAL PRODUCT
+        ===================================================== */
 
         .modal-product {
 
@@ -1644,6 +1749,20 @@
         }
 
 
+        body.dark-mode .modal-product {
+
+            border-bottom-color: #1D334A;
+
+        }
+
+
+        .modal-product:last-child {
+
+            border-bottom: none;
+
+        }
+
+
         .modal-product-image {
 
             width: 70px;
@@ -1656,12 +1775,23 @@
 
             background: #F1F1F1;
 
+            flex-shrink: 0;
+
+        }
+
+
+        body.dark-mode .modal-product-image {
+
+            background: #142538;
+
         }
 
 
         .modal-product-info {
 
             flex: 1;
+
+            min-width: 0;
 
         }
 
@@ -1670,7 +1800,16 @@
 
             font-weight: 800;
 
+            color: var(--dark);
+
             margin-bottom: 5px;
+
+        }
+
+
+        body.dark-mode .modal-product-name {
+
+            color: #F4F7FB;
 
         }
 
@@ -1686,14 +1825,27 @@
         }
 
 
+        body.dark-mode .modal-product-detail {
+
+            color: #AAB7C7;
+
+        }
+
+
         .modal-product-total {
 
             font-weight: 800;
 
             color: var(--orange);
 
+            white-space: nowrap;
+
         }
 
+
+        /* =====================================================
+           PHONE OPTIONS
+        ===================================================== */
 
         .phone-options {
 
@@ -1722,7 +1874,11 @@
 
             text-decoration: none;
 
+            font-family: "Tajawal", sans-serif;
+
             font-weight: 800;
+
+            font-size: 14px;
 
         }
 
@@ -1753,7 +1909,41 @@
 
             .stats {
 
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+
+                width: 65px;
+
+            }
+
+
+            .sidebar:hover {
+
+                width: 210px;
+
+            }
+
+
+            .topbar {
+
+                right: 65px;
+
+            }
+
+
+            .content {
+
+                margin-right: 65px;
+
+                padding-top: 93px;
 
             }
 
@@ -1782,7 +1972,45 @@
 
                 height: 68px;
 
-                padding: 0 10px;
+                padding: 0 12px;
+
+            }
+
+
+            .store-image {
+
+                width: 42px;
+
+                height: 42px;
+
+            }
+
+
+            .store-top-name {
+
+                font-size: 14px;
+
+                max-width: 150px;
+
+            }
+
+
+            .view-store-btn {
+
+                padding: 8px 10px;
+
+                font-size: 11px;
+
+            }
+
+
+            .theme-toggle {
+
+                width: 40px;
+
+                height: 40px;
+
+                font-size: 18px;
 
             }
 
@@ -1796,23 +2024,69 @@
             }
 
 
-            .stats {
+            .section {
 
-                grid-template-columns: 1fr;
+                padding: 14px;
+
+            }
+
+
+            .stats {
 
                 gap: 10px;
 
             }
 
 
-            .store-top-name {
+            .stat {
 
-                max-width: 130px;
-
-                font-size: 14px;
+                padding: 16px;
 
             }
 
+
+            .stat-value {
+
+                font-size: 24px;
+
+            }
+
+
+            .phone-options {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 450px) {
+
+            .stats {
+
+                grid-template-columns: 1fr 1fr;
+
+            }
+
+
+            .section-header h2 {
+
+                font-size: 18px;
+
+            }
+
+
+            .modal {
+
+                max-height: 94vh;
+
+            }
+
+        }
+
+
+        @media (max-width: 380px) {
 
             .view-store-btn {
 
@@ -1829,27 +2103,88 @@
             }
 
 
-            .view-store-btn i {
+            .view-store-btn::before {
 
-                font-size: 17px;
+                content: "\f06e";
 
-            }
+                font-family: "Font Awesome 6 Free";
 
+                font-weight: 900;
 
-            .notification-btn {
-
-                width: 40px;
-
-                height: 40px;
+                font-size: 18px;
 
             }
 
 
-            .phone-options {
+            .store-label {
 
-                grid-template-columns: 1fr;
+                display: none;
 
             }
+
+
+            .store-top-name {
+
+                max-width: 120px;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           SCROLLBAR
+        ===================================================== */
+
+        ::-webkit-scrollbar {
+
+            width: 7px;
+
+            height: 7px;
+
+        }
+
+
+        ::-webkit-scrollbar-track {
+
+            background: #F1F1F1;
+
+        }
+
+
+        body.dark-mode ::-webkit-scrollbar-track {
+
+            background: #07111F;
+
+        }
+
+
+        ::-webkit-scrollbar-thumb {
+
+            background: #CCC;
+
+            border-radius: 10px;
+
+        }
+
+
+        body.dark-mode ::-webkit-scrollbar-thumb {
+
+            background: #263E57;
+
+        }
+
+
+        ::-webkit-scrollbar-thumb:hover {
+
+            background: var(--orange);
+
+        }
+
+
+        body.dark-mode ::-webkit-scrollbar-thumb:hover {
+
+            background: var(--orange);
 
         }
 
@@ -1879,6 +2214,7 @@
 
         <div class="menu">
 
+
             <a href="dashboard.html">
 
                 <span class="icon">
@@ -1907,13 +2243,6 @@
 
                 <span class="text">
                     الطلبات
-                </span>
-
-                <span
-                    class="orders-badge"
-                    id="newOrdersBadge"
-                >
-                    0
                 </span>
 
             </a>
@@ -1996,6 +2325,7 @@
 
             </a>
 
+
         </div>
 
     </div>
@@ -2034,32 +2364,20 @@
         </div>
 
 
-        <div class="top-actions">
-
-            <button
-                type="button"
-                id="notificationButton"
-                class="notification-btn"
-                title="الإشعارات"
-            >
-
-                <i class="fa-solid fa-bell"></i>
-
-                <span
-                    id="notificationDot"
-                    class="notification-dot"
-                >
-                    0
-                </span>
-
-            </button>
-
+        <div
+            style="
+                display:flex;
+                align-items:center;
+                gap:10px;
+            "
+        >
 
             <button
                 type="button"
                 id="themeToggle"
                 class="theme-toggle"
                 title="الوضع الليلي"
+                aria-label="تغيير الوضع"
             >
 
                 <i class="fa-solid fa-moon"></i>
@@ -2085,35 +2403,6 @@
 
 
     <!-- =====================================================
-         LIVE NOTIFICATION
-    ===================================================== -->
-
-    <div
-        id="liveNotification"
-        class="live-notification"
-    >
-
-        <div class="live-notification-title">
-
-            <i class="fa-solid fa-bell"></i>
-
-            طلب جديد
-
-        </div>
-
-        <div
-            id="liveNotificationText"
-            class="live-notification-text"
-        >
-
-            وصل طلب جديد إلى متجرك.
-
-        </div>
-
-    </div>
-
-
-    <!-- =====================================================
          CONTENT
     ===================================================== -->
 
@@ -2123,20 +2412,18 @@
         <div
             class="message success"
             id="successMessage"
-        >
-        </div>
+        ></div>
 
 
         <div
             class="message error"
             id="errorMessage"
-        >
-        </div>
+        ></div>
 
 
-        <!-- =================================================
+        <!-- =====================================================
              STATISTICS
-        ================================================= -->
+        ===================================================== -->
 
         <div class="stats">
 
@@ -2224,9 +2511,9 @@
         </div>
 
 
-        <!-- =================================================
+        <!-- =====================================================
              ORDERS
-        ================================================= -->
+        ===================================================== -->
 
         <div class="section">
 
@@ -2357,6 +2644,7 @@
                 <button
                     class="close-modal"
                     id="closeProductsModal"
+                    aria-label="إغلاق"
                 >
 
                     <i class="fa-solid fa-xmark"></i>
@@ -2369,8 +2657,7 @@
             <div
                 class="modal-body"
                 id="productsModalBody"
-            >
-            </div>
+            ></div>
 
         </div>
 
@@ -2401,6 +2688,7 @@
                 <button
                     class="close-modal"
                     id="closePhoneModal"
+                    aria-label="إغلاق"
                 >
 
                     <i class="fa-solid fa-xmark"></i>
@@ -2415,8 +2703,7 @@
                 <div
                     class="phone-options"
                     id="phoneOptions"
-                >
-                </div>
+                ></div>
 
             </div>
 
@@ -2425,65 +2712,40 @@
     </div>
 
 
-    <!-- =====================================================
-         JAVASCRIPT
-    ===================================================== -->
-
     <script type="module">
 
 
         /* =====================================================
-           FIREBASE
+           FIREBASE IMPORTS
         ===================================================== */
 
         import {
-
             initializeApp
-
         }
-
         from
         "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
 
         import {
-
             getFirestore,
-
             collection,
-
             getDocs,
-
             query,
-
             where,
-
             doc,
-
             getDoc,
-
             updateDoc,
-
-            deleteDoc,
-
-            onSnapshot
-
+            deleteDoc
         }
-
         from
         "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 
         import {
-
             getAuth,
-
             onAuthStateChanged,
-
             signOut
-
         }
-
         from
         "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
@@ -2518,6 +2780,10 @@
         };
 
 
+        /* =====================================================
+           INITIALIZE FIREBASE
+        ===================================================== */
+
         const app =
             initializeApp(firebaseConfig);
 
@@ -2535,75 +2801,81 @@
         ===================================================== */
 
         const topStoreName =
-            document.getElementById("topStoreName");
+            document.getElementById(
+                "topStoreName"
+            );
 
 
         const topStoreImage =
-            document.getElementById("topStoreImage");
+            document.getElementById(
+                "topStoreImage"
+            );
 
 
         const viewStoreBtn =
-            document.getElementById("viewStoreBtn");
+            document.getElementById(
+                "viewStoreBtn"
+            );
 
 
         const ordersBody =
-            document.getElementById("ordersBody");
+            document.getElementById(
+                "ordersBody"
+            );
 
 
         const totalOrders =
-            document.getElementById("totalOrders");
+            document.getElementById(
+                "totalOrders"
+            );
 
 
         const confirmedOrders =
-            document.getElementById("confirmedOrders");
+            document.getElementById(
+                "confirmedOrders"
+            );
 
 
         const shippingOrders =
-            document.getElementById("shippingOrders");
+            document.getElementById(
+                "shippingOrders"
+            );
 
 
         const deliveredOrders =
-            document.getElementById("deliveredOrders");
-
-
-        const newOrdersBadge =
-            document.getElementById("newOrdersBadge");
-
-
-        const notificationButton =
-            document.getElementById("notificationButton");
-
-
-        const notificationDot =
-            document.getElementById("notificationDot");
-
-
-        const liveNotification =
-            document.getElementById("liveNotification");
-
-
-        const liveNotificationText =
-            document.getElementById("liveNotificationText");
+            document.getElementById(
+                "deliveredOrders"
+            );
 
 
         const productsModal =
-            document.getElementById("productsModal");
+            document.getElementById(
+                "productsModal"
+            );
 
 
         const productsModalBody =
-            document.getElementById("productsModalBody");
+            document.getElementById(
+                "productsModalBody"
+            );
 
 
         const phoneModal =
-            document.getElementById("phoneModal");
+            document.getElementById(
+                "phoneModal"
+            );
 
 
         const phoneOptions =
-            document.getElementById("phoneOptions");
+            document.getElementById(
+                "phoneOptions"
+            );
 
 
         const themeToggle =
-            document.getElementById("themeToggle");
+            document.getElementById(
+                "themeToggle"
+            );
 
 
         /* =====================================================
@@ -2620,16 +2892,6 @@
 
         let currentStore = null;
 
-        let ordersUnsubscribe = null;
-
-        let firstSnapshotLoaded = false;
-
-        let knownOrderIds = new Set();
-
-        let notificationCount = 0;
-
-        let notificationTimer = null;
-
 
         /* =====================================================
            THEME
@@ -2643,18 +2905,37 @@
                 ) === "true";
 
 
-            document.body.classList.toggle(
-                "dark-mode",
-                darkMode
-            );
+            if (darkMode) {
+
+                document.body.classList.add(
+                    "dark-mode"
+                );
 
 
-            themeToggle.innerHTML =
-                darkMode
+                themeToggle.innerHTML =
+                    '<i class="fa-solid fa-sun"></i>';
 
-                    ? '<i class="fa-solid fa-sun"></i>'
 
-                    : '<i class="fa-solid fa-moon"></i>';
+                themeToggle.title =
+                    "الوضع النهاري";
+
+            }
+
+            else {
+
+                document.body.classList.remove(
+                    "dark-mode"
+                );
+
+
+                themeToggle.innerHTML =
+                    '<i class="fa-solid fa-moon"></i>';
+
+
+                themeToggle.title =
+                    "الوضع الليلي";
+
+            }
 
         }
 
@@ -2677,12 +2958,25 @@
                 );
 
 
-                themeToggle.innerHTML =
-                    darkMode
+                if (darkMode) {
 
-                        ? '<i class="fa-solid fa-sun"></i>'
+                    themeToggle.innerHTML =
+                        '<i class="fa-solid fa-sun"></i>';
 
-                        : '<i class="fa-solid fa-moon"></i>';
+                    themeToggle.title =
+                        "الوضع النهاري";
+
+                }
+
+                else {
+
+                    themeToggle.innerHTML =
+                        '<i class="fa-solid fa-moon"></i>';
+
+                    themeToggle.title =
+                        "الوضع الليلي";
+
+                }
 
             }
         );
@@ -2728,7 +3022,7 @@
 
 
         /* =====================================================
-           DATE
+           FORMAT DATE
         ===================================================== */
 
         function formatDate(timestamp) {
@@ -2776,36 +3070,28 @@
                 }
 
 
-                return (
-
-                    date.toLocaleDateString(
-                        "ar-DZ",
-                        {
-                            year: "numeric",
-                            month: "2-digit",
-                            day: "2-digit"
-                        }
-                    )
-
-                    +
-
-                    " "
-
-                    +
-
-                    date.toLocaleTimeString(
-                        "ar-DZ",
-                        {
-                            hour: "2-digit",
-                            minute: "2-digit"
-                        }
-                    )
-
+                return date.toLocaleDateString(
+                    "ar-DZ",
+                    {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit"
+                    }
+                )
+                +
+                " "
+                +
+                date.toLocaleTimeString(
+                    "ar-DZ",
+                    {
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    }
                 );
 
             }
 
-            catch {
+            catch (error) {
 
                 return "غير محدد";
 
@@ -2815,13 +3101,16 @@
 
 
         /* =====================================================
-           PHONE
+           CLEAN PHONE
         ===================================================== */
 
         function cleanPhone(phone) {
 
             return String(phone || "")
-                .replace(/[^\d+]/g, "");
+                .replace(
+                    /[^\d+]/g,
+                    ""
+                );
 
         }
 
@@ -2830,343 +3119,37 @@
            STATUS HELPERS
         ===================================================== */
 
-        function isConfirmedStatus(status) {
+        function normalizeStatus(status) {
 
             const value =
-                String(status || "")
-                    .trim();
+                String(
+                    status || ""
+                )
+                .trim();
 
 
-            return (
+            if (
+                value === "" ||
+                value === "قيد المعالجة"
+            ) {
 
+                return "قيد المراجعة";
+
+            }
+
+
+            if (
                 value === "تأكيد" ||
-
                 value === "تم التأكيد" ||
-
-                value === "مؤكد"
-
-            );
-
-        }
-
-
-        function isShippingStatus(status) {
-
-            const value =
-                String(status || "")
-                    .trim();
-
-
-            return (
-
-                value === "قيد الشحن" ||
-
-                value === "تم الشحن"
-
-            );
-
-        }
-
-
-        function isDeliveredStatus(status) {
-
-            const value =
-                String(status || "")
-                    .trim();
-
-
-            return (
-
-                value === "تم التسليم" ||
-
-                value === "تم التوصيل"
-
-            );
-
-        }
-
-
-        /* =====================================================
-           UPDATE BADGE
-        ===================================================== */
-
-        function updateBadge(count) {
-
-            const safeCount =
-                Number(count || 0);
-
-
-            newOrdersBadge.textContent =
-                safeCount > 99
-                    ? "99+"
-                    : safeCount;
-
-
-            notificationDot.textContent =
-                safeCount > 99
-                    ? "99+"
-                    : safeCount;
-
-
-            if (safeCount > 0) {
-
-                newOrdersBadge.classList.add("show");
-
-                notificationDot.classList.add("show");
-
-            }
-
-            else {
-
-                newOrdersBadge.classList.remove("show");
-
-                notificationDot.classList.remove("show");
-
-            }
-
-        }
-
-
-        /* =====================================================
-           SOUND
-        ===================================================== */
-
-        function playNotificationSound() {
-
-            try {
-
-                const AudioContext =
-                    window.AudioContext ||
-                    window.webkitAudioContext;
-
-
-                if (!AudioContext) {
-
-                    return;
-
-                }
-
-
-                const audioContext =
-                    new AudioContext();
-
-
-                const oscillator =
-                    audioContext.createOscillator();
-
-
-                const gain =
-                    audioContext.createGain();
-
-
-                oscillator.type =
-                    "sine";
-
-
-                oscillator.frequency.value =
-                    880;
-
-
-                gain.gain.setValueAtTime(
-                    0.0001,
-                    audioContext.currentTime
-                );
-
-
-                gain.gain.exponentialRampToValueAtTime(
-                    0.25,
-                    audioContext.currentTime + 0.02
-                );
-
-
-                gain.gain.exponentialRampToValueAtTime(
-                    0.0001,
-                    audioContext.currentTime + 0.45
-                );
-
-
-                oscillator.connect(gain);
-
-                gain.connect(
-                    audioContext.destination
-                );
-
-
-                oscillator.start();
-
-                oscillator.stop(
-                    audioContext.currentTime + 0.5
-                );
-
-            }
-
-            catch (error) {
-
-                console.log(
-                    "Notification sound unavailable:",
-                    error
-                );
-
-            }
-
-        }
-
-
-        /* =====================================================
-           BROWSER NOTIFICATION
-        ===================================================== */
-
-        async function requestBrowserNotification() {
-
-            if (
-                !("Notification" in window)
+                value === "تم التاكيد"
             ) {
 
-                return false;
+                return "تم التأكيد";
 
             }
 
 
-            if (
-                Notification.permission ===
-                "granted"
-            ) {
-
-                return true;
-
-            }
-
-
-            if (
-                Notification.permission ===
-                "denied"
-            ) {
-
-                return false;
-
-            }
-
-
-            try {
-
-                const permission =
-                    await Notification.requestPermission();
-
-
-                return (
-                    permission ===
-                    "granted"
-                );
-
-            }
-
-            catch {
-
-                return false;
-
-            }
-
-        }
-
-
-        async function sendBrowserNotification(
-            customerName
-        ) {
-
-            const allowed =
-                await requestBrowserNotification();
-
-
-            if (!allowed) {
-
-                return;
-
-            }
-
-
-            try {
-
-                new Notification(
-                    "🔔 طلب جديد - G-Glam",
-                    {
-                        body:
-                            "وصل طلب جديد من " +
-                            (
-                                customerName ||
-                                "زبون"
-                            ),
-
-                        icon:
-                            "logotrans.png",
-
-                        tag:
-                            "g-glam-new-order"
-
-                    }
-                );
-
-            }
-
-            catch {
-
-                // بعض المتصفحات تمنع Notification
-                // إذا لم تكن الصفحة في حالة مناسبة.
-
-            }
-
-        }
-
-
-        /* =====================================================
-           SHOW LIVE NOTIFICATION
-        ===================================================== */
-
-        function showLiveNotification(order) {
-
-            const customerName =
-                order.name ||
-                order.customerName ||
-                "زبون";
-
-
-            liveNotificationText.textContent =
-                "وصل طلب جديد من " +
-                customerName +
-                " إلى متجرك.";
-
-
-            liveNotification.classList.add(
-                "show"
-            );
-
-
-            if (notificationTimer) {
-
-                clearTimeout(
-                    notificationTimer
-                );
-
-            }
-
-
-            notificationTimer =
-                setTimeout(
-                    () => {
-
-                        liveNotification.classList.remove(
-                            "show"
-                        );
-
-                    },
-                    7000
-                );
-
-
-            playNotificationSound();
-
-            sendBrowserNotification(
-                customerName
-            );
+            return value;
 
         }
 
@@ -3177,525 +3160,355 @@
 
         async function loadStore() {
 
-            const user =
-                auth.currentUser;
+            try {
+
+                const user =
+                    auth.currentUser;
 
 
-            if (!user) {
+                if (!user) {
 
-                window.location.href =
-                    "login.html";
+                    window.location.href =
+                        "login.html";
 
-                return false;
+                    return false;
 
-            }
-
-
-            currentOwnerUid =
-                user.uid;
+                }
 
 
-            currentOwnerEmail =
-                user.email || "";
+                currentOwnerUid =
+                    user.uid;
 
 
-            let storeSnapshot =
-                await getDoc(
-                    doc(
-                        db,
-                        "stores",
-                        currentOwnerUid
-                    )
-                );
+                currentOwnerEmail =
+                    user.email || "";
 
 
-            if (!storeSnapshot.exists()) {
-
-                const ownerQuery =
-                    query(
-                        collection(
+                let storeSnapshot =
+                    await getDoc(
+                        doc(
                             db,
-                            "stores"
-                        ),
-
-                        where(
-                            "ownerUid",
-                            "==",
+                            "stores",
                             currentOwnerUid
                         )
                     );
 
 
-                const ownerSnapshot =
-                    await getDocs(
-                        ownerQuery
-                    );
+                /* =====================================================
+                   FALLBACK OWNER UID
+                ===================================================== */
 
+                if (!storeSnapshot.exists()) {
 
-                if (
-                    !ownerSnapshot.empty
-                ) {
-
-                    storeSnapshot =
-                        ownerSnapshot.docs[0];
-
-                }
-
-            }
-
-
-            if (!storeSnapshot.exists()) {
-
-                if (currentOwnerEmail) {
-
-                    const emailQuery =
+                    const ownerQuery =
                         query(
                             collection(
                                 db,
                                 "stores"
                             ),
-
                             where(
-                                "ownerEmail",
+                                "ownerUid",
                                 "==",
-                                currentOwnerEmail
+                                currentOwnerUid
                             )
                         );
 
 
-                    const emailSnapshot =
+                    const ownerSnapshot =
                         await getDocs(
-                            emailQuery
+                            ownerQuery
                         );
 
 
-                    if (
-                        !emailSnapshot.empty
-                    ) {
+                    if (!ownerSnapshot.empty) {
 
                         storeSnapshot =
-                            emailSnapshot.docs[0];
+                            ownerSnapshot.docs[0];
 
                     }
 
                 }
 
-            }
+
+                /* =====================================================
+                   FALLBACK EMAIL
+                ===================================================== */
+
+                if (!storeSnapshot.exists()) {
+
+                    if (currentOwnerEmail) {
+
+                        const emailQuery =
+                            query(
+                                collection(
+                                    db,
+                                    "stores"
+                                ),
+                                where(
+                                    "ownerEmail",
+                                    "==",
+                                    currentOwnerEmail
+                                )
+                            );
 
 
-            if (!storeSnapshot.exists()) {
-
-                alert(
-                    "⚠️ لم يتم العثور على متجر مرتبط بهذا الحساب."
-                );
-
-
-                await signOut(auth);
-
-                window.location.href =
-                    "login.html";
-
-                return false;
-
-            }
+                        const emailSnapshot =
+                            await getDocs(
+                                emailQuery
+                            );
 
 
-            currentStore =
-                storeSnapshot.data();
+                        if (!emailSnapshot.empty) {
+
+                            storeSnapshot =
+                                emailSnapshot.docs[0];
+
+                        }
+
+                    }
+
+                }
 
 
-            currentStoreId =
-                storeSnapshot.id;
+                /* =====================================================
+                   STORE NOT FOUND
+                ===================================================== */
+
+                if (!storeSnapshot.exists()) {
+
+                    alert(
+                        "⚠️ لم يتم العثور على متجر مرتبط بهذا الحساب."
+                    );
 
 
-            const status =
-                String(
-                    currentStore.status ||
-                    "pending"
-                )
+                    await signOut(auth);
+
+
+                    window.location.href =
+                        "login.html";
+
+
+                    return false;
+
+                }
+
+
+                currentStore =
+                    storeSnapshot.data();
+
+
+                currentStoreId =
+                    storeSnapshot.id;
+
+
+                /* =====================================================
+                   STORE STATUS
+                ===================================================== */
+
+                const status =
+                    String(
+                        currentStore.status ||
+                        "pending"
+                    )
                     .toLowerCase()
                     .trim();
 
 
-            if (
-                status === "pending" ||
-                status === "waiting" ||
-                status === "review"
-            ) {
+                if (
+                    status === "pending" ||
+                    status === "waiting" ||
+                    status === "review"
+                ) {
 
-                alert(
-                    "⏳ طلب إنشاء متجرك مازال قيد المراجعة من طرف الإدارة."
-                );
-
-
-                await signOut(auth);
-
-                window.location.href =
-                    "login.html";
-
-                return false;
-
-            }
+                    alert(
+                        "⏳ طلب إنشاء متجرك مازال قيد المراجعة من طرف الإدارة."
+                    );
 
 
-            if (
-                status === "rejected" ||
-                status === "refused"
-            ) {
-
-                alert(
-                    "❌ تم رفض طلب إنشاء المتجر."
-                );
+                    await signOut(auth);
 
 
-                await signOut(auth);
-
-                window.location.href =
-                    "login.html";
-
-                return false;
-
-            }
+                    window.location.href =
+                        "login.html";
 
 
-            if (
-                status !== "active" &&
-                status !== "approved"
-            ) {
+                    return false;
 
-                alert(
-                    "⚠️ لا يمكنك الدخول إلى لوحة المتجر حاليًا."
-                );
+                }
 
 
-                await signOut(auth);
+                if (
+                    status === "rejected" ||
+                    status === "refused"
+                ) {
 
-                window.location.href =
-                    "login.html";
-
-                return false;
-
-            }
-
-
-            currentStoreName =
-                currentStore.storeName ||
-                currentStore.name ||
-                "G-Glam";
-
-
-            currentOwnerEmail =
-                currentStore.ownerEmail ||
-                currentStore.email ||
-                user.email ||
-                "";
+                    alert(
+                        "❌ تم رفض طلب إنشاء المتجر.\n\n" +
+                        "سبب الرفض:\n" +
+                        (
+                            currentStore.rejectionReason ||
+                            "لم يتم ذكر سبب الرفض."
+                        )
+                    );
 
 
-            const storeImage =
-                currentStore.storeImage ||
-                currentStore.image ||
-                currentStore.logo ||
-                currentStore.photoURL ||
-                "";
+                    await signOut(auth);
 
 
-            topStoreName.textContent =
-                currentStoreName;
+                    window.location.href =
+                        "login.html";
 
 
-            topStoreImage.src =
-                storeImage ||
-                "logotrans.png";
+                    return false;
+
+                }
 
 
-            viewStoreBtn.href =
-                "index.html?store=" +
-                encodeURIComponent(
+                if (
+                    status !== "active" &&
+                    status !== "approved"
+                ) {
+
+                    alert(
+                        "⚠️ لا يمكنك الدخول إلى لوحة المتجر حاليًا."
+                    );
+
+
+                    await signOut(auth);
+
+
+                    window.location.href =
+                        "login.html";
+
+
+                    return false;
+
+                }
+
+
+                /* =====================================================
+                   STORE NAME
+                ===================================================== */
+
+                currentStoreName =
+                    currentStore.storeName ||
+                    currentStore.name ||
+                    "G-Glam";
+
+
+                /* =====================================================
+                   OWNER EMAIL
+                ===================================================== */
+
+                currentOwnerEmail =
+                    currentStore.ownerEmail ||
+                    currentStore.email ||
+                    user.email ||
+                    "";
+
+
+                /* =====================================================
+                   STORE IMAGE
+                ===================================================== */
+
+                const storeImage =
+                    currentStore.storeImage ||
+                    currentStore.image ||
+                    currentStore.logo ||
+                    currentStore.photoURL ||
+                    "";
+
+
+                topStoreName.textContent =
+                    currentStoreName;
+
+
+                if (storeImage) {
+
+                    topStoreImage.src =
+                        storeImage;
+
+                }
+
+                else {
+
+                    topStoreImage.src =
+                        "logotrans.png";
+
+                }
+
+
+                /* =====================================================
+                   STORE URL
+                ===================================================== */
+
+                viewStoreBtn.href =
+                    "index.html?store=" +
+                    encodeURIComponent(
+                        currentOwnerUid
+                    );
+
+
+                /* =====================================================
+                   LOCAL STORAGE
+                ===================================================== */
+
+                localStorage.setItem(
+                    "storeId",
                     currentOwnerUid
                 );
 
 
-            localStorage.setItem(
-                "storeId",
-                currentOwnerUid
-            );
+                localStorage.setItem(
+                    "storeDocumentId",
+                    currentStoreId
+                );
 
 
-            localStorage.setItem(
-                "storeDocumentId",
-                currentStoreId
-            );
+                localStorage.setItem(
+                    "storeName",
+                    currentStoreName
+                );
 
 
-            localStorage.setItem(
-                "storeName",
-                currentStoreName
-            );
+                localStorage.setItem(
+                    "storeOwnerEmail",
+                    currentOwnerEmail
+                );
 
 
-            localStorage.setItem(
-                "ownerUid",
-                currentOwnerUid
-            );
+                localStorage.setItem(
+                    "ownerEmail",
+                    currentOwnerEmail
+                );
 
 
-            localStorage.setItem(
-                "ownerEmail",
-                currentOwnerEmail
-            );
+                localStorage.setItem(
+                    "ownerUid",
+                    currentOwnerUid
+                );
 
 
-            await loadOrders();
+                localStorage.setItem(
+                    "paymentStatus",
+                    "approved"
+                );
 
 
-            return true;
-
-        }
+                await loadOrders();
 
 
-        /* =====================================================
-           GET ORDERS QUERY
-        ===================================================== */
-
-        async function getOrdersSnapshot() {
-
-            let snapshot;
-
-
-            try {
-
-                const q =
-                    query(
-                        collection(
-                            db,
-                            "orders"
-                        ),
-
-                        where(
-                            "ownerUid",
-                            "==",
-                            currentOwnerUid
-                        )
-                    );
-
-
-                snapshot =
-                    await getDocs(q);
-
-
-                if (
-                    !snapshot.empty
-                ) {
-
-                    return snapshot;
-
-                }
+                return true;
 
             }
 
             catch (error) {
 
-                console.log(
-                    "ownerUid query:",
+                console.error(
+                    "STORE ERROR:",
                     error
                 );
 
-            }
-
-
-            try {
-
-                const q =
-                    query(
-                        collection(
-                            db,
-                            "orders"
-                        ),
-
-                        where(
-                            "storeId",
-                            "==",
-                            currentOwnerUid
-                        )
-                    );
-
-
-                snapshot =
-                    await getDocs(q);
-
-
-                if (
-                    !snapshot.empty
-                ) {
-
-                    return snapshot;
-
-                }
-
-            }
-
-            catch (error) {
-
-                console.log(
-                    "storeId query:",
-                    error
-                );
-
-            }
-
-
-            try {
-
-                const q =
-                    query(
-                        collection(
-                            db,
-                            "orders"
-                        ),
-
-                        where(
-                            "ownerEmail",
-                            "==",
-                            currentOwnerEmail
-                        )
-                    );
-
-
-                snapshot =
-                    await getDocs(q);
-
-
-                return snapshot;
-
-            }
-
-            catch (error) {
-
-                console.log(
-                    "ownerEmail query:",
-                    error
-                );
-
-
-                throw error;
-
-            }
-
-        }
-
-
-        /* =====================================================
-           RENDER ALL ORDERS
-        ===================================================== */
-
-        function renderOrders(snapshot) {
-
-            const orders =
-                snapshot.docs.map(
-                    orderDoc => ({
-
-                        id:
-                            orderDoc.id,
-
-                        data:
-                            orderDoc.data()
-
-                    })
-                );
-
-
-            orders.sort(
-                (a, b) => {
-
-                    const aTime =
-                        a.data.createdAt?.seconds ||
-                        0;
-
-
-                    const bTime =
-                        b.data.createdAt?.seconds ||
-                        0;
-
-
-                    return bTime - aTime;
-
-                }
-            );
-
-
-            totalOrders.textContent =
-                orders.length;
-
-
-            let confirmed =
-                0;
-
-
-            let shipping =
-                0;
-
-
-            let delivered =
-                0;
-
-
-            orders.forEach(
-                item => {
-
-                    const status =
-                        item.data.status ||
-                        "";
-
-
-                    if (
-                        isConfirmedStatus(
-                            status
-                        )
-                    ) {
-
-                        confirmed++;
-
-                    }
-
-
-                    if (
-                        isShippingStatus(
-                            status
-                        )
-                    ) {
-
-                        shipping++;
-
-                    }
-
-
-                    if (
-                        isDeliveredStatus(
-                            status
-                        )
-                    ) {
-
-                        delivered++;
-
-                    }
-
-                }
-            );
-
-
-            confirmedOrders.textContent =
-                confirmed;
-
-
-            shippingOrders.textContent =
-                shipping;
-
-
-            deliveredOrders.textContent =
-                delivered;
-
-
-            if (!orders.length) {
 
                 ordersBody.innerHTML = `
 
@@ -3705,15 +3518,17 @@
 
                             <div class="empty">
 
-                                <div>
-                                    <i class="fa-solid fa-box-open"></i>
-                                </div>
+                                <i class="fa-solid fa-circle-exclamation"></i>
 
-                                لا توجد طلبات في متجرك لحد الآن.
+                                <br><br>
 
-                                <br>
+                                ❌ حدث خطأ أثناء تحميل معلومات المتجر.
 
-                                ستظهر طلبات زبائن متجرك هنا.
+                                <br><br>
+
+                                ${escapeHtml(
+                                    error.message
+                                )}
 
                             </div>
 
@@ -3724,28 +3539,9 @@
                 `;
 
 
-                updateBadge(0);
-
-                return;
+                return false;
 
             }
-
-
-            ordersBody.innerHTML =
-                "";
-
-
-            orders.forEach(
-                (item, index) => {
-
-                    renderOrder(
-                        item.id,
-                        item.data,
-                        index + 1
-                    );
-
-                }
-            );
 
         }
 
@@ -3779,36 +3575,286 @@
                 `;
 
 
-                const snapshot =
-                    await getOrdersSnapshot();
+                let snapshot;
 
 
-                knownOrderIds =
-                    new Set(
-                        snapshot.docs.map(
-                            item =>
-                                item.id
-                        )
+                /* =====================================================
+                   METHOD 1 - ownerUid
+                ===================================================== */
+
+                try {
+
+                    const ordersQuery =
+                        query(
+                            collection(
+                                db,
+                                "orders"
+                            ),
+                            where(
+                                "ownerUid",
+                                "==",
+                                currentOwnerUid
+                            )
+                        );
+
+
+                    snapshot =
+                        await getDocs(
+                            ordersQuery
+                        );
+
+                }
+
+                catch (error) {
+
+                    console.log(
+                        "ownerUid query failed:",
+                        error
                     );
 
 
-                firstSnapshotLoaded =
-                    true;
+                    /* =====================================================
+                       METHOD 2 - storeId
+                    ===================================================== */
+
+                    try {
+
+                        const ordersQuery2 =
+                            query(
+                                collection(
+                                    db,
+                                    "orders"
+                                ),
+                                where(
+                                    "storeId",
+                                    "==",
+                                    currentOwnerUid
+                                )
+                            );
 
 
-                renderOrders(
-                    snapshot
+                        snapshot =
+                            await getDocs(
+                                ordersQuery2
+                            );
+
+                    }
+
+                    catch (error2) {
+
+                        console.log(
+                            "storeId query failed:",
+                            error2
+                        );
+
+
+                        /* =====================================================
+                           METHOD 3 - ownerEmail
+                        ===================================================== */
+
+                        const ordersQuery3 =
+                            query(
+                                collection(
+                                    db,
+                                    "orders"
+                                ),
+                                where(
+                                    "ownerEmail",
+                                    "==",
+                                    currentOwnerEmail
+                                )
+                            );
+
+
+                        snapshot =
+                            await getDocs(
+                                ordersQuery3
+                            );
+
+                    }
+
+                }
+
+
+                /* =====================================================
+                   STATISTICS
+                ===================================================== */
+
+                totalOrders.textContent =
+                    snapshot.size;
+
+
+                let confirmed = 0;
+
+                let shipping = 0;
+
+                let delivered = 0;
+
+
+                snapshot.forEach(
+                    orderDoc => {
+
+                        const order =
+                            orderDoc.data();
+
+
+                        const status =
+                            normalizeStatus(
+                                order.status
+                            );
+
+
+                        if (
+                            status === "تم التأكيد"
+                        ) {
+
+                            confirmed++;
+
+                        }
+
+
+                        if (
+                            status === "قيد الشحن" ||
+                            status === "تم الشحن"
+                        ) {
+
+                            shipping++;
+
+                        }
+
+
+                        if (
+                            status === "تم التسليم" ||
+                            status === "تم التوصيل"
+                        ) {
+
+                            delivered++;
+
+                        }
+
+                    }
                 );
 
 
-                startRealtimeOrders();
+                confirmedOrders.textContent =
+                    confirmed;
+
+
+                shippingOrders.textContent =
+                    shipping;
+
+
+                deliveredOrders.textContent =
+                    delivered;
+
+
+                /* =====================================================
+                   EMPTY
+                ===================================================== */
+
+                if (snapshot.empty) {
+
+                    ordersBody.innerHTML = `
+
+                        <tr>
+
+                            <td colspan="12">
+
+                                <div class="empty">
+
+                                    <div class="empty-icon">
+
+                                        <i class="fa-solid fa-box-open"></i>
+
+                                    </div>
+
+                                    لا توجد طلبات في متجرك لحد الآن.
+
+                                    <br>
+
+                                    ستظهر طلبات زبائن متجرك هنا.
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+
+                    return;
+
+                }
+
+
+                /* =====================================================
+                   ORDERS ARRAY
+                ===================================================== */
+
+                const orders =
+                    snapshot.docs.map(
+                        orderDoc => ({
+
+                            id:
+                                orderDoc.id,
+
+                            data:
+                                orderDoc.data()
+
+                        })
+                    );
+
+
+                /* =====================================================
+                   SORT
+                ===================================================== */
+
+                orders.sort(
+                    (a, b) => {
+
+                        const aTime =
+                            a.data.createdAt?.seconds ||
+                            0;
+
+
+                        const bTime =
+                            b.data.createdAt?.seconds ||
+                            0;
+
+
+                        return bTime - aTime;
+
+                    }
+                );
+
+
+                ordersBody.innerHTML =
+                    "";
+
+
+                /* =====================================================
+                   RENDER
+                ===================================================== */
+
+                orders.forEach(
+                    (item, index) => {
+
+                        renderOrder(
+                            item.id,
+                            item.data,
+                            index + 1
+                        );
+
+                    }
+                );
 
             }
 
             catch (error) {
 
                 console.error(
-                    "LOAD ORDERS ERROR:",
+                    "ORDERS ERROR:",
                     error
                 );
 
@@ -3820,6 +3866,10 @@
                         <td colspan="12">
 
                             <div class="empty">
+
+                                <i class="fa-solid fa-circle-exclamation"></i>
+
+                                <br><br>
 
                                 ❌ حدث خطأ أثناء تحميل الطلبات.
 
@@ -3843,129 +3893,6 @@
 
 
         /* =====================================================
-           REALTIME ORDERS
-        ===================================================== */
-
-        function startRealtimeOrders() {
-
-            if (ordersUnsubscribe) {
-
-                ordersUnsubscribe();
-
-                ordersUnsubscribe =
-                    null;
-
-            }
-
-
-            let q;
-
-
-            q =
-                query(
-                    collection(
-                        db,
-                        "orders"
-                    ),
-
-                    where(
-                        "ownerUid",
-                        "==",
-                        currentOwnerUid
-                    )
-                );
-
-
-            ordersUnsubscribe =
-                onSnapshot(
-                    q,
-
-                    snapshot => {
-
-                        const currentIds =
-                            new Set(
-                                snapshot.docs.map(
-                                    item =>
-                                        item.id
-                                )
-                            );
-
-
-                        if (
-                            firstSnapshotLoaded
-                        ) {
-
-                            snapshot.docChanges()
-                                .forEach(
-                                    change => {
-
-                                        if (
-                                            change.type ===
-                                            "added"
-                                        ) {
-
-                                            const order =
-                                                change.doc.data();
-
-
-                                            if (
-                                                !knownOrderIds.has(
-                                                    change.doc.id
-                                                )
-                                            ) {
-
-                                                notificationCount++;
-
-                                                updateBadge(
-                                                    notificationCount
-                                                );
-
-
-                                                showLiveNotification(
-                                                    order
-                                                );
-
-                                            }
-
-                                        }
-
-                                    }
-                                );
-
-                        }
-
-
-                        knownOrderIds =
-                            currentIds;
-
-
-                        renderOrders(
-                            snapshot
-                        );
-
-                    },
-
-                    error => {
-
-                        console.error(
-                            "REALTIME ERROR:",
-                            error
-                        );
-
-                        /*
-                         * إذا كانت استعلامات Firestore
-                         * تعتمد على storeId أو ownerEmail
-                         * بدل ownerUid، سيتم الاعتماد على
-                         * إعادة التحميل عند فتح الصفحة.
-                         */
-
-                    }
-                );
-
-        }
-
-
-        /* =====================================================
            RENDER ORDER
         ===================================================== */
 
@@ -3982,8 +3909,9 @@
 
 
             const status =
-                order.status ||
-                "قيد المعالجة";
+                normalizeStatus(
+                    order.status
+                );
 
 
             const phone =
@@ -4000,8 +3928,7 @@
                     : [];
 
 
-            let productsCount =
-                0;
+            let productsCount = 0;
 
 
             products.forEach(
@@ -4009,51 +3936,45 @@
 
                     productsCount +=
                         Number(
-                            product.quantity ||
-                            1
+                            product.quantity || 1
                         );
 
                 }
             );
 
 
-            const formattedNumber =
+            const formattedOrderNumber =
                 String(
                     orderNumber
-                ).padStart(
+                )
+                .padStart(
                     4,
                     "0"
                 );
 
 
             /*
-             * مهم:
-             * يدعم أكثر من اسم لحقل نوع التوصيل
-             * حتى يظهر النوع الموجود في طلبك.
+             * إصلاح نوع التوصيل:
+             * يتم فحص أكثر من اسم محتمل للحقل
+             * حتى يظهر بشكل صحيح حسب طريقة
+             * تخزين الطلب في Firestore.
              */
 
             const deliveryType =
                 order.deliveryType ||
-
                 order.delivery ||
-
-                order.shippingType ||
-
                 order.deliveryMethod ||
-
+                order.shippingType ||
                 order.shippingMethod ||
-
+                order.typeDelivery ||
                 "غير محدد";
 
 
             const deliveryPrice =
                 Number(
                     order.deliveryPrice ||
-
                     order.shippingPrice ||
-
-                    order.deliveryCost ||
-
+                    order.shippingCost ||
                     0
                 );
 
@@ -4064,7 +3985,7 @@
 
                     <div class="order-number">
 
-                        #${formattedNumber}
+                        #${formattedOrderNumber}
 
                     </div>
 
@@ -4091,6 +4012,7 @@
                         ${escapeHtml(
                             order.name ||
                             order.customerName ||
+                            order.customer ||
                             "غير محدد"
                         )}
 
@@ -4103,6 +4025,7 @@
 
                     <button
                         class="customer-phone"
+                        data-phone="${escapeHtml(phone)}"
                     >
 
                         <i class="fa-solid fa-phone"></i>
@@ -4121,6 +4044,7 @@
 
                     ${escapeHtml(
                         order.wilaya ||
+                        order.state ||
                         "غير محدد"
                     )}
 
@@ -4134,6 +4058,7 @@
                         ${escapeHtml(
                             order.address ||
                             order.commune ||
+                            order.location ||
                             "غير محدد"
                         )}
 
@@ -4155,6 +4080,7 @@
                             )}
 
                         </div>
+
 
                         <div class="delivery-price">
 
@@ -4221,6 +4147,7 @@
                             placeholder="اكتب ملاحظة..."
                         >
 
+
                         <button
                             class="notes-save"
                             title="حفظ الملاحظة"
@@ -4242,20 +4169,20 @@
                     >
 
                         <option
-                            value="قيد المعالجة"
-                            ${status === "قيد المعالجة"
+                            value="قيد المراجعة"
+                            ${status === "قيد المراجعة"
                                 ? "selected"
                                 : ""}
                         >
 
-                            قيد المعالجة
+                            قيد المراجعة
 
                         </option>
 
 
                         <option
                             value="تم التأكيد"
-                            ${isConfirmedStatus(status)
+                            ${status === "تم التأكيد"
                                 ? "selected"
                                 : ""}
                         >
@@ -4334,6 +4261,10 @@
             `;
 
 
+            /* =====================================================
+               PHONE
+            ===================================================== */
+
             tr
                 .querySelector(
                     ".customer-phone"
@@ -4350,6 +4281,10 @@
                 );
 
 
+            /* =====================================================
+               PRODUCTS
+            ===================================================== */
+
             tr
                 .querySelector(
                     ".products-btn"
@@ -4365,6 +4300,10 @@
                     }
                 );
 
+
+            /* =====================================================
+               NOTES
+            ===================================================== */
 
             tr
                 .querySelector(
@@ -4389,15 +4328,19 @@
                 );
 
 
+            /* =====================================================
+               STATUS
+            ===================================================== */
+
             tr
                 .querySelector(
                     ".status-select"
                 )
                 .addEventListener(
                     "change",
-                    event => {
+                    async event => {
 
-                        updateStatus(
+                        await updateStatus(
                             id,
                             event.target.value
                         );
@@ -4405,6 +4348,10 @@
                     }
                 );
 
+
+            /* =====================================================
+               DELETE
+            ===================================================== */
 
             tr
                 .querySelector(
@@ -4433,7 +4380,9 @@
            PHONE MODAL
         ===================================================== */
 
-        function openPhoneModal(phone) {
+        function openPhoneModal(
+            phone
+        ) {
 
             if (!phone) {
 
@@ -4457,9 +4406,7 @@
 
                 <a
                     class="phone-option call-option"
-                    href="tel:${escapeHtml(
-                        phone
-                    )}"
+                    href="tel:${escapeHtml(phone)}"
                 >
 
                     <i class="fa-solid fa-phone"></i>
@@ -4471,9 +4418,7 @@
 
                 <a
                     class="phone-option whatsapp-option"
-                    href="https://wa.me/${escapeHtml(
-                        encoded
-                    )}"
+                    href="https://wa.me/${escapeHtml(encoded)}"
                     target="_blank"
                     rel="noopener"
                 >
@@ -4522,9 +4467,11 @@
 
                 `;
 
+
                 productsModal.classList.add(
                     "active"
                 );
+
 
                 return;
 
@@ -4536,36 +4483,30 @@
 
                     const quantity =
                         Number(
-                            product.quantity ||
-                            1
+                            product.quantity || 1
                         );
 
 
                     const price =
                         Number(
-                            product.price ||
-                            0
+                            product.price || 0
                         );
 
 
                     const total =
-                        price *
-                        quantity;
+                        price * quantity;
 
 
                     const image =
                         product.image ||
-
                         (
                             Array.isArray(
                                 product.images
                             ) &&
                             product.images.length
-
-                                ? product.images[0]
-
-                                : ""
-                        );
+                        )
+                            ? product.images[0]
+                            : "";
 
 
                     const div =
@@ -4582,13 +4523,12 @@
 
                         <img
                             class="modal-product-image"
-                            src="${escapeHtml(
-                                image
-                            )}"
+                            src="${escapeHtml(image)}"
                             alt="${escapeHtml(
                                 product.name ||
                                 "منتج"
                             )}"
+                            onerror="this.style.display='none';"
                         >
 
 
@@ -4623,9 +4563,7 @@
 
                                 ${
                                     product.color
-
                                         ? `
-
                                             <br>
 
                                             اللون:
@@ -4635,9 +4573,7 @@
                                                     product.color
                                                 )}
                                             </strong>
-
-                                        `
-
+                                          `
                                         : ""
                                 }
 
@@ -4672,7 +4608,7 @@
 
 
         /* =====================================================
-           CLOSE MODALS
+           CLOSE PRODUCTS MODAL
         ===================================================== */
 
         document
@@ -4691,6 +4627,10 @@
             );
 
 
+        /* =====================================================
+           CLOSE PHONE MODAL
+        ===================================================== */
+
         document
             .getElementById(
                 "closePhoneModal"
@@ -4706,6 +4646,10 @@
                 }
             );
 
+
+        /* =====================================================
+           CLICK OUTSIDE MODALS
+        ===================================================== */
 
         productsModal.addEventListener(
             "click",
@@ -4806,14 +4750,15 @@
                         notes:
                             String(
                                 notes || ""
-                            ).trim()
+                            )
+                            .trim()
 
                     }
                 );
 
 
                 showSuccess(
-                    "تم حفظ الملاحظة بنجاح."
+                    "تم حفظ الملاحظة بنجاح"
                 );
 
             }
@@ -4901,9 +4846,11 @@
 
 
                 showSuccess(
-                    "تم تحديث حالة الطلب بنجاح."
+                    "تم تحديث حالة الطلب بنجاح"
                 );
 
+
+                await loadOrders();
 
             }
 
@@ -4925,7 +4872,7 @@
 
 
         /* =====================================================
-           DELETE
+           DELETE ORDER
         ===================================================== */
 
         async function deleteOrder(
@@ -4934,7 +4881,8 @@
 
             const confirmed =
                 confirm(
-                    "⚠️ هل أنت متأكد من حذف هذه الطلبية؟\n\nلا يمكن التراجع عن الحذف."
+                    "⚠️ هل أنت متأكد من حذف هذه الطلبية؟\n\n" +
+                    "لا يمكن التراجع عن الحذف."
                 );
 
 
@@ -4996,8 +4944,11 @@
 
 
                 showSuccess(
-                    "تم حذف الطلبية بنجاح."
+                    "تم حذف الطلبية بنجاح"
                 );
+
+
+                await loadOrders();
 
             }
 
@@ -5010,7 +4961,8 @@
 
 
                 showError(
-                    "❌ تعذر حذف الطلبية."
+                    "❌ تعذر حذف الطلبية.\n" +
+                    error.message
                 );
 
             }
@@ -5019,7 +4971,7 @@
 
 
         /* =====================================================
-           MESSAGES
+           SUCCESS MESSAGE
         ===================================================== */
 
         function showSuccess(
@@ -5040,11 +4992,9 @@
                 "block";
 
 
-            document
-                .getElementById(
-                    "errorMessage"
-                )
-                .style.display =
+            document.getElementById(
+                "errorMessage"
+            ).style.display =
                 "none";
 
 
@@ -5060,6 +5010,10 @@
 
         }
 
+
+        /* =====================================================
+           ERROR MESSAGE
+        ===================================================== */
 
         function showError(
             text
@@ -5079,11 +5033,9 @@
                 "block";
 
 
-            document
-                .getElementById(
-                    "successMessage"
-                )
-                .style.display =
+            document.getElementById(
+                "successMessage"
+            ).style.display =
                 "none";
 
 
@@ -5098,47 +5050,6 @@
             );
 
         }
-
-
-        /* =====================================================
-           NOTIFICATION BUTTON
-        ===================================================== */
-
-        notificationButton.addEventListener(
-            "click",
-            async () => {
-
-                notificationCount =
-                    0;
-
-
-                updateBadge(
-                    0
-                );
-
-
-                const allowed =
-                    await requestBrowserNotification();
-
-
-                if (allowed) {
-
-                    showSuccess(
-                        "🔔 تم السماح بإشعارات الطلبات."
-                    );
-
-                }
-
-                else {
-
-                    showError(
-                        "⚠️ لم يتم السماح بإشعارات المتصفح. يمكنك السماح بها من إعدادات المتصفح."
-                    );
-
-                }
-
-            }
-        );
 
 
         /* =====================================================
@@ -5171,15 +5082,6 @@
 
                     try {
 
-                        if (
-                            ordersUnsubscribe
-                        ) {
-
-                            ordersUnsubscribe();
-
-                        }
-
-
                         await signOut(
                             auth
                         );
@@ -5189,20 +5091,34 @@
                             "storeId"
                         );
 
+
                         localStorage.removeItem(
                             "storeDocumentId"
                         );
+
 
                         localStorage.removeItem(
                             "ownerUid"
                         );
 
+
                         localStorage.removeItem(
                             "ownerEmail"
                         );
 
+
+                        localStorage.removeItem(
+                            "storeOwnerEmail"
+                        );
+
+
                         localStorage.removeItem(
                             "storeName"
+                        );
+
+
+                        localStorage.removeItem(
+                            "paymentStatus"
                         );
 
 
@@ -5230,7 +5146,7 @@
 
 
         /* =====================================================
-           AUTH
+           AUTH STATE
         ===================================================== */
 
         onAuthStateChanged(
@@ -5268,7 +5184,6 @@
         console.log(
             "G-Glam Orders Dashboard Started"
         );
-
 
     </script>
 
