@@ -1966,6 +1966,7 @@ title="الوضع الليلي">
 <a
 href="#"
 id="viewStoreBtn"
+target="_blank"
 class="view-store-btn">
 
 <i class="fa-solid fa-eye"></i>
@@ -2794,16 +2795,14 @@ currentStoreName;
 
 
 /* =====================================================
-   STORE URL
+   STORE URL (التعديل الخاص برابط الـ SLUG)
 ===================================================== */
 
-// استخدام slug المتجر إذا كان موجوداً، وإلا استخدام الـ UID كبديل
-const storeSlug = currentStore.slug || currentOwnerUid;
+// جلب slug المتجر أولاً، وإن لم يوجد يتم استخدام الـ UID كبديل
+const storeSlug = currentStore.slug || currentStore.storeSlug || currentOwnerUid;
 
-// توجيه الزبون إلى الرابط المباشر للمتجر (مثال: zidistore)
-viewStoreBtn.href = storeSlug; 
-
-
+// توجيه الزبون إلى الرابط المباشر القصير المعتمد على 404.html
+viewStoreBtn.href = "/" + encodeURIComponent(storeSlug); 
 
 /* =====================================================
    LOCAL STORAGE
@@ -2818,7 +2817,7 @@ localStorage.setItem(
 "storeSlug",
 currentStore.slug || ""
 );
-  
+
 localStorage.setItem(
 "storeDocumentId",
 currentStoreId
