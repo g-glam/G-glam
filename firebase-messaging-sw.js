@@ -1,25 +1,27 @@
-/* =====================================================
-   G-GLAM FIREBASE CLOUD MESSAGING SERVICE WORKER
-===================================================== */
+/* =========================================================
+   G-Glam
+   Firebase Cloud Messaging Service Worker
+   GitHub Pages
+   https://g-glam.github.io/G-glam/
+========================================================= */
 
 
-/* =====================================================
-   IMPORT FIREBASE COMPAT
-===================================================== */
+/* =========================================================
+   FIREBASE COMPAT SDK
+========================================================= */
 
 importScripts(
     "https://www.gstatic.com/firebasejs/11.10.0/firebase-app-compat.js"
 );
-
 
 importScripts(
     "https://www.gstatic.com/firebasejs/11.10.0/firebase-messaging-compat.js"
 );
 
 
-/* =====================================================
+/* =========================================================
    FIREBASE CONFIG
-===================================================== */
+========================================================= */
 
 firebase.initializeApp({
 
@@ -47,64 +49,68 @@ firebase.initializeApp({
 });
 
 
-/* =====================================================
+/* =========================================================
    FIREBASE MESSAGING
-===================================================== */
+========================================================= */
 
 const messaging =
     firebase.messaging();
 
 
-/* =====================================================
+/* =========================================================
    BACKGROUND MESSAGE
-===================================================== */
+========================================================= */
 
 messaging.onBackgroundMessage(
     function(payload) {
 
         console.log(
-            "G-Glam background message:",
+            "[firebase-messaging-sw.js] رسالة جديدة:",
             payload
         );
 
 
-        const notification =
-            payload.notification
-            ||
-            {};
+        /* -------------------------------------------------
+           الحصول على بيانات الإشعار
+        ------------------------------------------------- */
+
+        const notificationTitle =
+            payload.notification &&
+            payload.notification.title
+
+                ?
+
+            payload.notification.title
+
+                :
+
+            "G-Glam";
 
 
-        const title =
-            notification.title
-            ||
-            "🛍️ طلب جديد";
+        const notificationBody =
+            payload.notification &&
+            payload.notification.body
+
+                ?
+
+            payload.notification.body
+
+                :
+
+            "لديك طلب جديد في متجرك";
 
 
-        const body =
-            notification.body
-            ||
-            "وصل طلب جديد إلى متجرك.";
-
-
-        const icon =
-            notification.icon
-            ||
-            "/G-glam/logotrans.png";
-
-
-        const data =
-            payload.data
-            ||
-            {};
-
+        /* -------------------------------------------------
+           خيارات الإشعار
+        ------------------------------------------------- */
 
         const notificationOptions = {
 
             body:
-                body,
+                notificationBody,
 
             icon:
-                icon,
+                "/G-glam/logotrans.png",
 
             badge:
                 "/G-glam/logotrans.png",
@@ -115,57 +121,83 @@ messaging.onBackgroundMessage(
             lang:
                 "ar",
 
+            vibrate:
+                [
+                    200,
+                    100,
+                    200,
+                    100,
+                    300
+                ],
+
             tag:
-                data.orderId
-                ||
-                "g-glam-order",
+                "g-glam-new-order",
 
             renotify:
                 true,
 
             requireInteraction:
-                true,
+                false,
 
-            data: {
+            data:
+                {
 
-                url:
-                    data.url
-                    ||
-                    "https://g-glam.github.io/G-glam/orders.html"
+                    url:
+                        "https://g-glam.github.io/G-glam/orders.html"
 
-            }
+                }
 
         };
 
 
+        /* -------------------------------------------------
+           إظهار الإشعار
+        ------------------------------------------------- */
+
         return self.registration.showNotification(
-            title,
+
+            notificationTitle,
+
             notificationOptions
+
         );
 
     }
 );
 
 
-/* =====================================================
+/* =========================================================
    NOTIFICATION CLICK
-===================================================== */
+========================================================= */
 
 self.addEventListener(
     "notificationclick",
+
     function(event) {
+
+        console.log(
+            "[firebase-messaging-sw.js] تم الضغط على الإشعار"
+        );
+
+
+        /* -------------------------------------------------
+           إغلاق الإشعار
+        ------------------------------------------------- */
 
         event.notification.close();
 
 
+        /* -------------------------------------------------
+           رابط صفحة الطلبات
+        ------------------------------------------------- */
+
         const targetUrl =
-
-            event.notification?.data?.url
-
-            ||
-
             "https://g-glam.github.io/G-glam/orders.html";
 
+
+        /* -------------------------------------------------
+           فتح orders.html
+        ------------------------------------------------- */
 
         event.waitUntil(
 
@@ -182,29 +214,32 @@ self.addEventListener(
             .then(
                 function(clientList) {
 
+                    /* -------------------------------------
+                       إذا كانت orders.html مفتوحة
+                    ------------------------------------- */
+
                     for (
-                        const client
-                        of clientList
+                        const client of clientList
                     ) {
 
                         if (
                             client.url.includes(
-                                "/G-glam/"
+                                "/G-glam/orders.html"
                             )
                             &&
-                            "focus"
-                            in client
+                            "focus" in client
                         ) {
 
-                            client.navigate(
-                                targetUrl
-                            );
-
-
                             return client.focus();
+
                         }
+
                     }
 
+
+                    /* -------------------------------------
+                       إذا لم تكن الصفحة مفتوحة
+                    ------------------------------------- */
 
                     if (
                         clients.openWindow
@@ -213,6 +248,7 @@ self.addEventListener(
                         return clients.openWindow(
                             targetUrl
                         );
+
                     }
 
                 }
@@ -221,44 +257,66 @@ self.addEventListener(
         );
 
     }
+
 );
 
 
-/* =====================================================
+/* =========================================================
    SERVICE WORKER INSTALL
-===================================================== */
+========================================================= */
 
 self.addEventListener(
     "install",
+
     function(event) {
 
         console.log(
-            "G-Glam Firebase Service Worker installed."
+            "[firebase-messaging-sw.js] Service Worker installed"
         );
-
 
         self.skipWaiting();
 
     }
+
 );
 
 
-/* =====================================================
+/* =========================================================
    SERVICE WORKER ACTIVATE
-===================================================== */
+========================================================= */
 
 self.addEventListener(
     "activate",
+
     function(event) {
 
         console.log(
-            "G-Glam Firebase Service Worker activated."
+            "[firebase-messaging-sw.js] Service Worker activated"
         );
-
 
         event.waitUntil(
             self.clients.claim()
         );
 
     }
+
+);
+
+
+/* =========================================================
+   SERVICE WORKER MESSAGE
+========================================================= */
+
+self.addEventListener(
+    "message",
+
+    function(event) {
+
+        console.log(
+            "[firebase-messaging-sw.js] Message:",
+            event.data
+        );
+
+    }
+
 );
