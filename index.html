@@ -1136,7 +1136,7 @@
 
 
         /* =====================================================
-           SIDEBAR
+           SIDEBAR - RIGHT SIDE
         ===================================================== */
 
         .sidebar {
@@ -1145,7 +1145,9 @@
 
             top: 0;
 
-            left: -300px;
+            right: -300px;
+
+            left: auto;
 
             width: 280px;
 
@@ -1154,17 +1156,19 @@
             background:
                 var(--sidebar);
 
-            border-right:
+            border-left:
                 1px solid var(--border);
 
+            border-right: none;
+
             box-shadow:
-                5px 0 25px
+                -5px 0 25px
                 rgba(0, 0, 0, .25);
 
             z-index: 2000;
 
             transition:
-                left .3s ease,
+                right .3s ease,
                 background .25s ease;
 
             padding-top: 80px;
@@ -1174,7 +1178,9 @@
 
         .sidebar.active {
 
-            left: 0;
+            right: 0;
+
+            left: auto;
 
         }
 
@@ -1225,57 +1231,6 @@
             height: 22px;
 
             flex-shrink: 0;
-
-        }
-
-
-        /* =====================================================
-           DARK MODE MENU ITEM
-        ===================================================== */
-
-        .dark-mode-link {
-
-            cursor: pointer;
-
-        }
-
-
-        .dark-mode-icon {
-
-            width: 22px;
-
-            height: 22px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            flex-shrink: 0;
-
-        }
-
-
-        .dark-mode-icon svg {
-
-            width: 22px;
-
-            height: 22px;
-
-        }
-
-
-        .dark-mode-description {
-
-            display: block;
-
-            font-size: 11px;
-
-            color:
-                var(--muted);
-
-            margin-top: 2px;
 
         }
 
@@ -1490,8 +1445,7 @@
 
             .card-content {
 
-                padding:
-                    9px;
+                padding: 9px;
 
             }
 
@@ -1818,48 +1772,6 @@
 
         </symbol>
 
-
-        <symbol
-            id="icon-moon"
-            viewBox="0 0 24 24"
-        >
-
-            <path
-                d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.6 8.6 0 1 0 11 11z"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            />
-
-        </symbol>
-
-
-        <symbol
-            id="icon-sun"
-            viewBox="0 0 24 24"
-        >
-
-            <circle
-                cx="12"
-                cy="12"
-                r="4"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-            />
-
-            <path
-                d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-            />
-
-        </symbol>
-
     </svg>
 
 
@@ -1926,47 +1838,6 @@
 
             <span>
                 اتصل بنا
-            </span>
-
-        </a>
-
-
-        <!-- =================================================
-             DARK MODE
-        ================================================= -->
-
-        <a
-            href="#"
-            id="darkModeLink"
-            class="dark-mode-link"
-        >
-
-            <span class="dark-mode-icon">
-
-                <svg
-                    id="darkModeIcon"
-                >
-
-                    <use href="#icon-moon"></use>
-
-                </svg>
-
-            </span>
-
-
-            <span>
-
-                <span id="darkModeText">
-                    الوضع الليلي
-                </span>
-
-                <span
-                    class="dark-mode-description"
-                    id="darkModeDescription"
-                >
-                    المظهر الداكن
-                </span>
-
             </span>
 
         </a>
@@ -2161,7 +2032,6 @@
 
     <script type="module">
 
-
         import {
 
             initializeApp
@@ -2282,30 +2152,6 @@
             );
 
 
-        const darkModeLink =
-            document.getElementById(
-                "darkModeLink"
-            );
-
-
-        const darkModeIcon =
-            document.getElementById(
-                "darkModeIcon"
-            );
-
-
-        const darkModeText =
-            document.getElementById(
-                "darkModeText"
-            );
-
-
-        const darkModeDescription =
-            document.getElementById(
-                "darkModeDescription"
-            );
-
-
         const themeColorMeta =
             document.getElementById(
                 "themeColorMeta"
@@ -2413,69 +2259,6 @@
 
 
         /* =====================================================
-           DARK MODE
-           متزامن مع settings.html
-        ===================================================== */
-
-        function applyDashboardDarkMode() {
-
-            const enabled =
-                localStorage.getItem(
-                    "gglamDarkMode"
-                ) === "true";
-
-
-            /*
-             * الوضع الليلي الخاص بالإعدادات
-             * نستخدمه هنا كإعداد مشترك.
-             */
-
-            document.body.classList.toggle(
-                "dashboard-dark",
-                enabled
-            );
-
-
-            if (enabled) {
-
-                darkModeIcon.innerHTML = `
-
-                    <use href="#icon-sun"></use>
-
-                `;
-
-
-                darkModeText.textContent =
-                    "الوضع النهاري";
-
-
-                darkModeDescription.textContent =
-                    "اضغط للعودة للوضع الفاتح";
-
-            }
-
-            else {
-
-                darkModeIcon.innerHTML = `
-
-                    <use href="#icon-moon"></use>
-
-                `;
-
-
-                darkModeText.textContent =
-                    "الوضع الليلي";
-
-
-                darkModeDescription.textContent =
-                    "اضغط لتفعيل الوضع الداكن";
-
-            }
-
-        }
-
-
-        /* =====================================================
            APPLY STORE THEME
         ===================================================== */
 
@@ -2540,10 +2323,6 @@
             );
 
 
-            /*
-             * تحديث لون شريط المتصفح
-             */
-
             const themeColors = {
 
                 orange: "#FFFFFF",
@@ -2567,11 +2346,6 @@
                 ];
 
 
-            /*
-             * حفظ آخر ثيم تم تحميله
-             * للاستفادة منه عند إعادة فتح الصفحة.
-             */
-
             localStorage.setItem(
                 "gglamStoreTheme",
                 theme
@@ -2584,9 +2358,6 @@
            INITIAL THEME
         ===================================================== */
 
-        applyDashboardDarkMode();
-
-
         const savedStoreTheme =
             localStorage.getItem(
                 "gglamStoreTheme"
@@ -2597,59 +2368,6 @@
 
         applyStoreTheme(
             savedStoreTheme
-        );
-
-
-        /* =====================================================
-           DARK MODE BUTTON
-        ===================================================== */
-
-        darkModeLink.addEventListener(
-            "click",
-            function(event) {
-
-                event.preventDefault();
-
-
-                const current =
-                    localStorage.getItem(
-                        "gglamDarkMode"
-                    ) === "true";
-
-
-                localStorage.setItem(
-                    "gglamDarkMode",
-                    current
-                        ? "false"
-                        : "true"
-                );
-
-
-                applyDashboardDarkMode();
-
-            }
-        );
-
-
-        /*
-         * إذا كانت الإعدادات مفتوحة في تبويب آخر
-         * وتم تغيير الوضع هناك، يتغير هنا أيضًا.
-         */
-
-        window.addEventListener(
-            "storage",
-            function(event) {
-
-                if (
-                    event.key ===
-                    "gglamDarkMode"
-                ) {
-
-                    applyDashboardDarkMode();
-
-                }
-
-            }
         );
 
 
@@ -3781,28 +3499,21 @@
             .forEach(
                 function(link) {
 
-                    if (
-                        link.id !==
-                        "darkModeLink"
-                    ) {
+                    link.addEventListener(
+                        "click",
+                        function() {
 
-                        link.addEventListener(
-                            "click",
-                            function() {
-
-                                sidebar.classList.remove(
-                                    "active"
-                                );
+                            sidebar.classList.remove(
+                                "active"
+                            );
 
 
-                                overlay.classList.remove(
-                                    "active"
-                                );
+                            overlay.classList.remove(
+                                "active"
+                            );
 
-                            }
-                        );
-
-                    }
+                        }
+                    );
 
                 }
             );
