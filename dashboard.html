@@ -684,7 +684,7 @@ color:var(--dark);
 
 display:grid;
 
-grid-template-columns:repeat(3,1fr);
+grid-template-columns:repeat(2,1fr);
 
 gap:18px;
 
@@ -784,29 +784,6 @@ font-size:18px;
 color:var(--muted);
 
 font-size:14px;
-
-}
-
-
-/* =====================================================
-   DELIVERY ACTION
-===================================================== */
-
-.delivery-action::before{
-
-background:#1769AA;
-
-}
-
-.delivery-action h3{
-
-color:#1769AA;
-
-}
-
-.delivery-action h3 i{
-
-color:#1769AA;
 
 }
 
@@ -1302,21 +1279,6 @@ color:#F4F7FB;
 body.dark-mode .section-header h2 i{
 
 color:#FF8C32;
-
-}
-
-
-/* DELIVERY */
-
-body.dark-mode .delivery-action h3{
-
-color:#65B7FF;
-
-}
-
-body.dark-mode .delivery-action h3 i{
-
-color:#65B7FF;
 
 }
 
@@ -1858,23 +1820,6 @@ class="active">
 </a>
 
 
-<!-- DELIVERY COMPANIES -->
-
-<a href="delivery-companies.html">
-
-<span class="icon">
-
-<i class="fa-solid fa-truck-fast"></i>
-
-</span>
-
-<span class="text">
-شركات التوصيل
-</span>
-
-</a>
-
-
 <!-- SETTINGS -->
 
 <a href="settings.html">
@@ -2113,25 +2058,6 @@ onclick="goOrders()">
 
 <p>
 عرض وإدارة طلبات الزبائن
-</p>
-
-</button>
-
-
-<button
-class="action delivery-action"
-onclick="goDeliveryCompanies()">
-
-<h3>
-
-<i class="fa-solid fa-truck-fast"></i>
-
-شركات التوصيل
-
-</h3>
-
-<p>
-اختيار وإدارة شركات التوصيل لمتجرك
 </p>
 
 </button>
@@ -2795,13 +2721,22 @@ currentStoreName;
 
 
 /* =====================================================
-   STORE URL (تعديل التوجيه لصفحة index.html لمنع 404)
+   STORE URL
 ===================================================== */
 
-const storeSlug = currentStore.slug || currentStore.storeSlug || currentOwnerUid;
+const storeSlug =
+currentStore.slug ||
+currentStore.storeSlug ||
+currentOwnerUid;
 
-// توجيه المتصفح إلى صفحة index.html مع تحويل الـ slug إلى معامل Query Parameter
-viewStoreBtn.href = "index.html?store=" + encodeURIComponent(storeSlug);
+
+/* =====================================================
+   VIEW STORE
+===================================================== */
+
+viewStoreBtn.href =
+"index.html?store=" +
+encodeURIComponent(storeSlug);
 
 
 /* =====================================================
@@ -3416,15 +3351,6 @@ function(){
 
 window.location.href =
 "orders.html";
-
-};
-
-
-window.goDeliveryCompanies =
-function(){
-
-window.location.href =
-"delivery-companies.html";
 
 };
 
