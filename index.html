@@ -44,6 +44,30 @@
         rel="stylesheet"
     >
 
+    <!-- =====================================================
+         META PIXEL & TIKTOK PIXEL BASE CODE
+    ===================================================== -->
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    </script>
+    <!-- End Meta Pixel Code -->
+
+    <!-- TikTok Pixel Code -->
+    <script>
+    !function (w, d, t) {
+      w.TiktokPixelObject = t;var ttq = w[t] = w[t] || [];ttq.methods = ["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].slice.call(arguments))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._methods,n=0;n<e.length;n++)ttq.setAndDefer(t,e[n]);return t},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._t[e]._o=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
+    }(window, document, 'ttq');
+    </script>
+    <!-- End TikTok Pixel Code -->
+
 
     <style>
 
@@ -2646,6 +2670,64 @@
 
 
         /* =====================================================
+           INITIALIZE TRACKING PIXELS
+        ===================================================== */
+
+        function initPixels(store) {
+
+            const metaPixelId =
+                store.metaPixelId
+                ||
+                store.facebookPixelId
+                ||
+                store.metaPixel;
+
+
+            if (
+                metaPixelId
+                &&
+                typeof fbq !== "undefined"
+            ) {
+
+                fbq(
+                    "init",
+                    metaPixelId
+                );
+
+                fbq(
+                    "track",
+                    "PageView"
+                );
+
+            }
+
+
+            const tiktokPixelId =
+                store.tiktokPixelId
+                ||
+                store.tikTokPixelId
+                ||
+                store.tiktokPixel;
+
+
+            if (
+                tiktokPixelId
+                &&
+                typeof ttq !== "undefined"
+            ) {
+
+                ttq.load(
+                    tiktokPixelId
+                );
+
+                ttq.page();
+
+            }
+
+        }
+
+
+        /* =====================================================
            ESCAPE HTML
         ===================================================== */
 
@@ -3433,6 +3515,15 @@
 
 
                 /* =================================================
+                   INITIALIZE PIXELS FOR THIS STORE
+                ================================================= */
+
+                initPixels(
+                    currentStore
+                );
+
+
+                /* =================================================
                    STATUS
                 ================================================= */
 
@@ -4203,6 +4294,28 @@
 
 
             updateCartCount();
+
+
+            /* =================================================
+               TRACK ADD TO CART EVENT
+            ================================================= */
+            if (typeof fbq !== "undefined") {
+                fbq("track", "AddToCart", {
+                    content_name: product.name || "",
+                    content_ids: [product.id],
+                    value: Number(product.price || 0),
+                    currency: "DZD"
+                });
+            }
+
+            if (typeof ttq !== "undefined") {
+                ttq.track("AddToCart", {
+                    content_name: product.name || "",
+                    content_id: product.id,
+                    value: Number(product.price || 0),
+                    currency: "DZD"
+                });
+            }
 
 
             alert(
