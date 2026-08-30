@@ -935,6 +935,13 @@
             font-weight: 800;
         }
 
+        .old-price-display {
+            font-size: 12px;
+            color: var(--muted);
+            text-decoration: line-through;
+            margin-right: 6px;
+        }
+
 
         .product-stock {
 
@@ -1239,8 +1246,18 @@
 
 
         /* =====================================================
-           FORM
+           FORM & LAYOUT (GRID)
         ===================================================== */
+
+        .form-row-2 {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 12px;
+        }
+
 
         .form-group {
 
@@ -1274,6 +1291,7 @@
 
         .form-group input,
         .form-group textarea,
+        .form-group select,
         .simple-input {
 
             width: 100%;
@@ -1297,6 +1315,7 @@
 
         .form-group input:focus,
         .form-group textarea:focus,
+        .form-group select:focus,
         .simple-input:focus {
 
             border-color: var(--orange);
@@ -1843,6 +1862,7 @@
             display: flex;
 
             align-items: center;
+
             justify-content: center;
 
             gap: 7px;
@@ -1929,6 +1949,11 @@
 
 
         @media (max-width: 550px) {
+
+            .form-row-2 {
+
+                grid-template-columns: 1fr;
+            }
 
             .sidebar {
 
@@ -2361,7 +2386,7 @@
 
 
     <!-- =====================================================
-         EDIT MODAL
+         EDIT MODAL (مطابقة لبيانات صفحة إضافة منتج)
     ===================================================== -->
 
     <div
@@ -2418,25 +2443,100 @@
             </div>
 
 
+            <!-- PRICE & OLD PRICE -->
 
-            <!-- PRICE -->
+            <div class="form-row-2">
 
-            <div class="form-group">
+                <div class="form-group">
 
-                <label>
+                    <label>
 
-                    <i class="fa-solid fa-money-bill-wave"></i>
+                        <i class="fa-solid fa-money-bill-wave"></i>
 
-                    السعر DA
+                        السعر الحالي DA
 
-                </label>
+                    </label>
 
-                <input
-                    id="editPrice"
-                    type="number"
-                    min="0"
-                    placeholder="مثال: 250"
-                >
+                    <input
+                        id="editPrice"
+                        type="number"
+                        min="0"
+                        placeholder="مثال: 2500"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+
+                        <i class="fa-solid fa-tag"></i>
+
+                        السعر قبل التخفيض DA (اختياري)
+
+                    </label>
+
+                    <input
+                        id="editOldPrice"
+                        type="number"
+                        min="0"
+                        placeholder="مثال: 3200"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- CATEGORY & STATUS -->
+
+            <div class="form-row-2">
+
+                <div class="form-group">
+
+                    <label>
+
+                        <i class="fa-solid fa-layer-group"></i>
+
+                        التصنيف (القسم)
+
+                    </label>
+
+                    <input
+                        id="editCategory"
+                        type="text"
+                        placeholder="مثال: مكياج، عطور، ملابس"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+
+                        <i class="fa-solid fa-toggle-on"></i>
+
+                        حالة المنتج
+
+                    </label>
+
+                    <select id="editStatus">
+
+                        <option value="active">
+                            نشط (معروض)
+                        </option>
+
+                        <option value="draft">
+                            مسودة (مخفي)
+                        </option>
+
+                        <option value="archived">
+                            مؤرشف
+                        </option>
+
+                    </select>
+
+                </div>
 
             </div>
 
@@ -3057,6 +3157,21 @@
                 "editPrice"
             );
 
+        const editOldPrice =
+            document.getElementById(
+                "editOldPrice"
+            );
+
+        const editCategory =
+            document.getElementById(
+                "editCategory"
+            );
+
+        const editStatus =
+            document.getElementById(
+                "editStatus"
+            );
+
 
         const editStock =
             document.getElementById(
@@ -3263,7 +3378,6 @@
 
         /* =====================================================
            GET CREATED DATE
-           هذا الجزء مسؤول عن ترتيب المنتجات
         ===================================================== */
 
         function getProductTimestamp(product) {
@@ -3326,7 +3440,6 @@
 
         /* =====================================================
            SORT PRODUCTS
-           الأحدث أولاً
         ===================================================== */
 
         function sortProductsNewestFirst(
@@ -3729,11 +3842,6 @@
                 );
 
 
-                /*
-                 * IMPORTANT:
-                 * ترتيب المنتجات من الأحدث إلى الأقدم
-                 */
-
                 allProducts =
                     sortProductsNewestFirst(
                         allProducts
@@ -4006,6 +4114,9 @@
                             );
 
 
+                    const hasOldPrice = Number(product.oldPrice || 0) > Number(product.price || 0);
+
+
                     card.innerHTML = `
 
                         <div
@@ -4080,9 +4191,13 @@
                                     product.price || 0
                                 ).toLocaleString(
                                     "fr-DZ"
-                                )}
+                                )} DA
 
-                                DA
+                                ${
+                                    hasOldPrice
+                                    ? `<span class="old-price-display">${Number(product.oldPrice).toLocaleString("fr-DZ")} DA</span>`
+                                    : ""
+                                }
 
                             </div>
 
@@ -4279,11 +4394,22 @@
                                 .toLowerCase();
 
 
+                            const category =
+                                String(
+                                    product.category ||
+                                    ""
+                                )
+                                .toLowerCase();
+
+
                             return (
                                 name.includes(
                                     keyword
                                 ) ||
                                 description.includes(
+                                    keyword
+                                ) ||
+                                category.includes(
                                     keyword
                                 )
                             );
@@ -4342,12 +4468,25 @@
                 productId;
 
 
+            /* تعبئة كافة الحقول بنفس هيكل بيانات إضافة منتج */
             editName.value =
                 product.name || "";
 
 
             editPrice.value =
                 product.price ?? "";
+
+
+            editOldPrice.value =
+                product.oldPrice ?? "";
+
+
+            editCategory.value =
+                product.category || "";
+
+
+            editStatus.value =
+                product.status || "active";
 
 
             editStock.value =
@@ -4480,7 +4619,7 @@
             }
 
 
-            /* STOCK */
+            /* STOCK VISIBILITY */
 
             showStock.checked =
                 product.showStock !== false;
@@ -5293,6 +5432,20 @@
                 );
 
 
+            const oldPrice =
+                editOldPrice.value !== ""
+                ? Number(editOldPrice.value)
+                : null;
+
+
+            const category =
+                editCategory.value.trim();
+
+
+            const status =
+                editStatus.value;
+
+
             const stock =
                 Number(
                     editStock.value
@@ -5431,6 +5584,7 @@
                     );
 
 
+                /* تحديث كائن المنتج بنفس الهيكل المستخدم في الإضافة */
                 await updateDoc(
                     productRef,
                     {
@@ -5440,6 +5594,15 @@
 
                         price:
                             price,
+
+                        oldPrice:
+                            oldPrice,
+
+                        category:
+                            category,
+
+                        status:
+                            status,
 
                         description:
                             description,
