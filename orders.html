@@ -12,6 +12,7 @@
 
 <title>G-Glam | الطلبات</title>
 
+
 <link
     rel="preconnect"
     href="https://fonts.googleapis.com"
@@ -32,6 +33,7 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 >
+
 
 <style>
 
@@ -730,6 +732,14 @@
     }
 
 
+    .bulk-delete-btn:disabled {
+
+        opacity: 0.65;
+
+        cursor: not-allowed;
+    }
+
+
     /* =====================================================
        TABLE
     ===================================================== */
@@ -1171,6 +1181,62 @@
         color: var(--muted);
 
         line-height: 2;
+    }
+
+
+    /* =====================================================
+       ERROR BOX
+    ===================================================== */
+
+    .error-box {
+
+        margin-top: 15px;
+
+        padding: 15px;
+
+        border-radius: 12px;
+
+        background: var(--danger-bg);
+
+        color: var(--danger);
+
+        border: 1px solid #F3C2C7;
+
+        font-size: 13px;
+
+        line-height: 1.9;
+
+        text-align: right;
+    }
+
+
+    body.dark-mode .error-box {
+
+        background: #301923;
+
+        border-color: #63303A;
+
+        color: #FF9BA7;
+    }
+
+
+    .error-code {
+
+        display: inline-block;
+
+        margin-top: 5px;
+
+        padding: 3px 7px;
+
+        border-radius: 6px;
+
+        background: rgba(0, 0, 0, 0.06);
+
+        direction: ltr;
+
+        font-family: monospace;
+
+        font-size: 11px;
     }
 
 
@@ -1706,11 +1772,13 @@
             alt="صورة المتجر"
         >
 
+
         <div class="store-details">
 
             <div class="store-label">
                 متجرك
             </div>
+
 
             <div
                 id="topStoreName"
@@ -1777,6 +1845,7 @@
 
             </div>
 
+
             <div
                 id="totalOrders"
                 class="stat-value"
@@ -1796,6 +1865,7 @@
                 تم التأكيد
 
             </div>
+
 
             <div
                 id="confirmedOrders"
@@ -1817,6 +1887,7 @@
 
             </div>
 
+
             <div
                 id="shippedOrders"
                 class="stat-value"
@@ -1836,6 +1907,7 @@
                 تم التسليم
 
             </div>
+
 
             <div
                 id="deliveredOrders"
@@ -2059,6 +2131,11 @@
 
 <script type="module">
 
+
+    /* =================================================
+       FIREBASE IMPORTS
+    ================================================= */
+
     import {
         initializeApp
     }
@@ -2091,7 +2168,7 @@
 
 
     /* =================================================
-       FIREBASE
+       FIREBASE CONFIG
     ================================================= */
 
     const firebaseConfig = {
@@ -2120,13 +2197,21 @@
 
 
     const app =
-        initializeApp(firebaseConfig);
+        initializeApp(
+            firebaseConfig
+        );
+
 
     const db =
-        getFirestore(app);
+        getFirestore(
+            app
+        );
+
 
     const auth =
-        getAuth(app);
+        getAuth(
+            app
+        );
 
 
     /* =================================================
@@ -2134,49 +2219,93 @@
     ================================================= */
 
     const ordersBody =
-        document.getElementById("ordersBody");
+        document.getElementById(
+            "ordersBody"
+        );
+
 
     const totalOrders =
-        document.getElementById("totalOrders");
+        document.getElementById(
+            "totalOrders"
+        );
+
 
     const confirmedOrders =
-        document.getElementById("confirmedOrders");
+        document.getElementById(
+            "confirmedOrders"
+        );
+
 
     const shippedOrders =
-        document.getElementById("shippedOrders");
+        document.getElementById(
+            "shippedOrders"
+        );
+
 
     const deliveredOrders =
-        document.getElementById("deliveredOrders");
+        document.getElementById(
+            "deliveredOrders"
+        );
+
 
     const topStoreName =
-        document.getElementById("topStoreName");
+        document.getElementById(
+            "topStoreName"
+        );
+
 
     const topStoreImage =
-        document.getElementById("topStoreImage");
+        document.getElementById(
+            "topStoreImage"
+        );
+
 
     const viewStoreBtn =
-        document.getElementById("viewStoreBtn");
+        document.getElementById(
+            "viewStoreBtn"
+        );
+
 
     const selectAll =
-        document.getElementById("selectAll");
+        document.getElementById(
+            "selectAll"
+        );
+
 
     const bulkDeleteBtn =
-        document.getElementById("bulkDeleteBtn");
+        document.getElementById(
+            "bulkDeleteBtn"
+        );
+
 
     const themeToggle =
-        document.getElementById("themeToggle");
+        document.getElementById(
+            "themeToggle"
+        );
+
 
     const productsModal =
-        document.getElementById("productsModal");
+        document.getElementById(
+            "productsModal"
+        );
+
 
     const productsModalBody =
-        document.getElementById("productsModalBody");
+        document.getElementById(
+            "productsModalBody"
+        );
+
 
     const phoneModal =
-        document.getElementById("phoneModal");
+        document.getElementById(
+            "phoneModal"
+        );
+
 
     const phoneOptions =
-        document.getElementById("phoneOptions");
+        document.getElementById(
+            "phoneOptions"
+        );
 
 
     /* =================================================
@@ -2192,6 +2321,17 @@
     let currentStore = null;
 
 
+    /*
+     * هذا المتغير يحدد الطريقة التي وجدنا بها المتجر.
+     *
+     * currentOwnerUid:
+     * UID حساب التاجر.
+     *
+     * currentStoreId:
+     * Document ID للمتجر داخل stores.
+     */
+
+
     /* =================================================
        THEME
     ================================================= */
@@ -2199,8 +2339,9 @@
     function applyTheme() {
 
         const darkMode =
-            localStorage.getItem("gGlamDarkMode")
-            === "true";
+            localStorage.getItem(
+                "gGlamDarkMode"
+            ) === "true";
 
 
         document.body.classList.toggle(
@@ -2251,7 +2392,9 @@
 
     function escapeHtml(value) {
 
-        return String(value ?? "")
+        return String(
+            value ?? ""
+        )
 
             .replace(
                 /&/g,
@@ -2281,10 +2424,191 @@
 
 
     /* =================================================
+       ERROR MESSAGE
+    ================================================= */
+
+    function getFirebaseErrorMessage(
+        error,
+        action = "تنفيذ العملية"
+    ) {
+
+        const code =
+            String(
+                error?.code || ""
+            );
+
+
+        const message =
+            String(
+                error?.message || ""
+            );
+
+
+        if (
+            code.includes(
+                "permission-denied"
+            )
+        ) {
+
+            return {
+                title:
+                    "ليس لديك صلاحية " +
+                    action,
+
+                detail:
+                    "Firestore رفض العملية لأن صلاحيات الطلب لا تتطابق مع حسابك.",
+
+                code:
+                    code || "permission-denied",
+
+                raw:
+                    message
+            };
+        }
+
+
+        if (
+            code.includes(
+                "unauthenticated"
+            )
+        ) {
+
+            return {
+                title:
+                    "الحساب غير مسجل الدخول",
+
+                detail:
+                    "انتهت جلسة تسجيل الدخول أو لم يتم التعرف على الحساب الحالي.",
+
+                code:
+                    code || "unauthenticated",
+
+                raw:
+                    message
+            };
+        }
+
+
+        if (
+            code.includes(
+                "not-found"
+            )
+        ) {
+
+            return {
+                title:
+                    "الطلب غير موجود",
+
+                detail:
+                    "ربما تم حذف الطلب بالفعل أو أن رقم الطلب غير صحيح.",
+
+                code:
+                    code || "not-found",
+
+                raw:
+                    message
+            };
+        }
+
+
+        if (
+            code.includes(
+                "failed-precondition"
+            )
+        ) {
+
+            return {
+                title:
+                    "تعذر تنفيذ العملية",
+
+                detail:
+                    "يوجد شرط في Firestore يمنع تنفيذ العملية حاليًا.",
+
+                code:
+                    code || "failed-precondition",
+
+                raw:
+                    message
+            };
+        }
+
+
+        if (
+            code.includes(
+                "unavailable"
+            )
+        ) {
+
+            return {
+                title:
+                    "الخدمة غير متاحة مؤقتًا",
+
+                detail:
+                    "تحقق من اتصال الإنترنت ثم حاول مرة أخرى.",
+
+                code:
+                    code || "unavailable",
+
+                raw:
+                    message
+            };
+        }
+
+
+        return {
+            title:
+                "تعذر " + action,
+
+            detail:
+                message ||
+                "حدث خطأ غير معروف أثناء تنفيذ العملية.",
+
+            code:
+                code || "unknown",
+
+            raw:
+                message
+        };
+    }
+
+
+    function showOperationError(
+        error,
+        action
+    ) {
+
+        const info =
+            getFirebaseErrorMessage(
+                error,
+                action
+            );
+
+
+        alert(
+            info.title +
+            "\n\n" +
+            info.detail +
+            "\n\n" +
+            "رمز الخطأ: " +
+            info.code +
+            (
+                info.raw &&
+                info.raw !== info.code
+                    ? "\n\nتفاصيل Firebase:\n" +
+                      info.raw
+                    : ""
+            )
+        );
+    }
+
+
+    /* =================================================
        DATE
     ================================================= */
 
-    function formatDate(timestamp) {
+    function formatDate(
+        timestamp
+    ) {
 
         if (!timestamp) {
 
@@ -2297,24 +2621,31 @@
             let date;
 
 
-            if (timestamp.toDate) {
+            if (
+                timestamp.toDate
+            ) {
 
                 date =
                     timestamp.toDate();
 
             }
-            else if (timestamp.seconds) {
+            else if (
+                timestamp.seconds
+            ) {
 
                 date =
                     new Date(
-                        timestamp.seconds * 1000
+                        timestamp.seconds *
+                        1000
                     );
 
             }
             else {
 
                 date =
-                    new Date(timestamp);
+                    new Date(
+                        timestamp
+                    );
             }
 
 
@@ -2331,9 +2662,14 @@
             return date.toLocaleDateString(
                 "ar-DZ",
                 {
-                    year: "numeric",
-                    month: "2-digit",
-                    day: "2-digit"
+                    year:
+                        "numeric",
+
+                    month:
+                        "2-digit",
+
+                    day:
+                        "2-digit"
                 }
             );
 
@@ -2349,24 +2685,27 @@
        PHONE
     ================================================= */
 
-    function cleanPhone(phone) {
+    function cleanPhone(
+        phone
+    ) {
 
-        return String(phone || "")
-            .replace(
-                /[^\d+]/g,
-                ""
-            );
+        return String(
+            phone || ""
+        )
+        .replace(
+            /[^\d+]/g,
+            ""
+        );
     }
 
 
     /* =================================================
-       NORMALIZE STATUS
-       
-       الحالة الافتراضية الآن:
-       قيد المعالجة
+       STATUS
     ================================================= */
 
-    function normalizeStatus(order) {
+    function normalizeStatus(
+        order
+    ) {
 
         const value =
             String(
@@ -2381,21 +2720,178 @@
         }
 
 
+        return value;
+    }
+
+
+    /* =================================================
+       STORE IDENTIFIERS
+    ================================================= */
+
+    function getStoreIdentifiers() {
+
+        const identifiers = [];
+
+
         /*
-         * الطلبات القديمة التي تم حفظها
-         * بدون حالة أو بالحالة القديمة
-         * يتم التعامل معها حسب القيمة.
+         * Document ID الحقيقي للمتجر.
          */
 
         if (
-            value === "قيد المراجعة"
+            currentStoreId
         ) {
 
-            return "قيد المراجعة";
+            identifiers.push(
+                String(
+                    currentStoreId
+                )
+            );
         }
 
 
-        return value;
+        /*
+         * UID التاجر.
+         *
+         * في بعض المشاريع يكون
+         * storeId = ownerUid.
+         */
+
+        if (
+            currentOwnerUid &&
+            !identifiers.includes(
+                currentOwnerUid
+            )
+        ) {
+
+            identifiers.push(
+                currentOwnerUid
+            );
+        }
+
+
+        /*
+         * أي storeId محفوظ داخل
+         * بيانات المتجر نفسه.
+         */
+
+        const storePossibleIds = [
+
+            currentStore?.storeId,
+
+            currentStore?.id,
+
+            currentStore?.uid
+
+        ];
+
+
+        storePossibleIds.forEach(
+            value => {
+
+                if (
+                    value &&
+                    !identifiers.includes(
+                        String(value)
+                    )
+                ) {
+
+                    identifiers.push(
+                        String(value)
+                    );
+                }
+            }
+        );
+
+
+        return identifiers;
+    }
+
+
+    /* =================================================
+       CHECK ORDER OWNERSHIP
+    ================================================= */
+
+    function orderBelongsToCurrentStore(
+        order
+    ) {
+
+        /*
+         * ownerUid هو المفتاح الأساسي.
+         */
+
+        const ownerUid =
+            String(
+                order.ownerUid ||
+                ""
+            ).trim();
+
+
+        /*
+         * storeId يمكن أن يكون:
+         *
+         * 1. Document ID للمتجر
+         * 2. UID التاجر
+         * 3. قيمة storeId داخل المتجر
+         */
+
+        const orderStoreId =
+            String(
+                order.storeId ||
+                ""
+            ).trim();
+
+
+        const validStoreIds =
+            getStoreIdentifiers();
+
+
+        /*
+         * أفضل تطابق:
+         *
+         * ownerUid + storeId
+         */
+
+        if (
+            ownerUid &&
+            ownerUid ===
+                currentOwnerUid
+        ) {
+
+            /*
+             * إذا لم يكن الطلب يحتوي
+             * storeId، نسمح به لأن
+             * Rules تعتمد على ownerUid.
+             */
+
+            if (
+                !orderStoreId
+            ) {
+
+                return true;
+            }
+
+
+            if (
+                validStoreIds.includes(
+                    orderStoreId
+                )
+            ) {
+
+                return true;
+            }
+        }
+
+
+        /*
+         * توافق إضافي مع البيانات القديمة:
+         * إذا لم يكن ownerUid موجودًا،
+         * لا نعتبر الطلب تابعًا للتاجر
+         * تلقائيًا من storeId فقط.
+         *
+         * هذا مقصود لأسباب أمنية.
+         */
+
+        return false;
     }
 
 
@@ -2436,6 +2932,10 @@
             );
 
 
+        /*
+         * البحث بواسطة ownerUid
+         */
+
         if (
             !storeSnapshot.exists()
         ) {
@@ -2470,9 +2970,12 @@
         }
 
 
+        /*
+         * البحث بواسطة ownerEmail
+         */
+
         if (
-            !storeSnapshot.exists()
-            &&
+            !storeSnapshot.exists() &&
             currentOwnerEmail
         ) {
 
@@ -2514,10 +3017,15 @@
                 "لم يتم العثور على متجر مرتبط بهذا الحساب."
             );
 
-            await signOut(auth);
+
+            await signOut(
+                auth
+            );
+
 
             window.location.href =
                 "login.html";
+
 
             return;
         }
@@ -2549,10 +3057,15 @@
                 "لا يمكنك الدخول إلى لوحة المتجر حاليًا."
             );
 
-            await signOut(auth);
+
+            await signOut(
+                auth
+            );
+
 
             window.location.href =
                 "login.html";
+
 
             return;
         }
@@ -2644,6 +3157,12 @@
 
         try {
 
+            /*
+             * الاستعلام الأساسي يجب أن يكون
+             * ownerUid لأنه هو المفتاح الذي
+             * تعتمد عليه Firestore Rules.
+             */
+
             const ownerQuery =
                 query(
                     collection(
@@ -2686,11 +3205,27 @@
 
                             تعذر تحميل الطلبات.
 
-                            <br><br>
+                            <div class="error-box">
 
-                            ${escapeHtml(
-                                error.message
-                            )}
+                                ${escapeHtml(
+                                    getFirebaseErrorMessage(
+                                        error,
+                                        "تحميل الطلبات"
+                                    ).detail
+                                )}
+
+                                <br>
+
+                                <span class="error-code">
+
+                                    ${escapeHtml(
+                                        error.code ||
+                                        "unknown"
+                                    )}
+
+                                </span>
+
+                            </div>
 
                         </div>
 
@@ -2699,6 +3234,7 @@
                 </tr>
 
             `;
+
 
             return;
         }
@@ -2794,8 +3330,10 @@
         confirmedOrders.textContent =
             confirmed;
 
+
         shippedOrders.textContent =
             shipped;
+
 
         deliveredOrders.textContent =
             delivered;
@@ -2862,7 +3400,9 @@
     ) {
 
         const tr =
-            document.createElement("tr");
+            document.createElement(
+                "tr"
+            );
 
 
         const status =
@@ -3318,7 +3858,8 @@
 
         selectAll.checked =
             checks.length > 0 &&
-            checked.length === checks.length;
+            checked.length ===
+                checks.length;
     }
 
 
@@ -3344,7 +3885,9 @@
 
 
                     const row =
-                        check.closest("tr");
+                        check.closest(
+                            "tr"
+                        );
 
 
                     if (row) {
@@ -3361,6 +3904,273 @@
             updateBulkButtons();
         }
     );
+
+
+    /* =================================================
+       DELETE ONE ORDER
+    ================================================= */
+
+    async function deleteOrder(
+        id
+    ) {
+
+        const confirmed =
+            confirm(
+                "هل أنت متأكد من حذف هذه الطلبية؟\n\n" +
+                "لا يمكن التراجع عن الحذف."
+            );
+
+
+        if (!confirmed) {
+
+            return;
+        }
+
+
+        const checkbox =
+            Array.from(
+                document.querySelectorAll(
+                    ".order-check"
+                )
+            )
+            .find(
+                element =>
+                    element.dataset.id ===
+                    id
+            );
+
+
+        const row =
+            checkbox?.closest(
+                "tr"
+            );
+
+
+        const button =
+            row?.querySelector(
+                ".delete-btn"
+            );
+
+
+        if (button) {
+
+            button.disabled =
+                true;
+
+
+            button.innerHTML = `
+
+                <i class="fa-solid fa-spinner fa-spin"></i>
+
+                حذف...
+
+            `;
+        }
+
+
+        try {
+
+            /*
+             * التأكد من أن المستخدم
+             * ما زال مسجلًا.
+             */
+
+            const user =
+                auth.currentUser;
+
+
+            if (!user) {
+
+                throw {
+                    code:
+                        "auth/unauthenticated",
+
+                    message:
+                        "لا يوجد مستخدم مسجل الدخول."
+                };
+            }
+
+
+            /*
+             * جلب الطلب مباشرة.
+             */
+
+            const orderRef =
+                doc(
+                    db,
+                    "orders",
+                    id
+                );
+
+
+            const snapshot =
+                await getDoc(
+                    orderRef
+                );
+
+
+            if (
+                !snapshot.exists()
+            ) {
+
+                alert(
+                    "الطلب غير موجود.\n\n" +
+                    "ربما تم حذفه بالفعل."
+                );
+
+
+                await loadOrders();
+
+                return;
+            }
+
+
+            const data =
+                snapshot.data();
+
+
+            /*
+             * فحص ownerUid.
+             */
+
+            const orderOwnerUid =
+                String(
+                    data.ownerUid ||
+                    ""
+                ).trim();
+
+
+            /*
+             * فحص storeId.
+             */
+
+            const orderStoreId =
+                String(
+                    data.storeId ||
+                    ""
+                ).trim();
+
+
+            /*
+             * يجب أن يكون ownerUid
+             * مطابقًا للمستخدم الحالي.
+             */
+
+            if (
+                orderOwnerUid !==
+                currentOwnerUid
+            ) {
+
+                alert(
+                    "لا يمكن حذف هذه الطلبية.\n\n" +
+
+                    "الطلب مرتبط بمالك مختلف عن الحساب الحالي.\n\n" +
+
+                    "UID الطلب:\n" +
+                    orderOwnerUid +
+                    "\n\n" +
+
+                    "UID حسابك:\n" +
+                    currentOwnerUid
+                );
+
+
+                return;
+            }
+
+
+            /*
+             * إذا كان الطلب يحتوي storeId،
+             * نتحقق منه أيضًا.
+             */
+
+            if (
+                orderStoreId
+            ) {
+
+                const validStoreIds =
+                    getStoreIdentifiers();
+
+
+                if (
+                    !validStoreIds.includes(
+                        orderStoreId
+                    )
+                ) {
+
+                    alert(
+                        "لا يمكن حذف هذه الطلبية.\n\n" +
+
+                        "ownerUid صحيح، لكن storeId الخاص بالطلب لا يطابق متجر الحساب الحالي.\n\n" +
+
+                        "storeId الطلب:\n" +
+                        orderStoreId +
+                        "\n\n" +
+
+                        "معرّفات المتجر المتوقعة:\n" +
+                        validStoreIds.join(
+                            "\n"
+                        )
+                    );
+
+
+                    return;
+                }
+            }
+
+
+            /*
+             * تنفيذ الحذف.
+             *
+             * هنا Firestore Rules هي
+             * صاحبة القرار النهائي.
+             */
+
+            await deleteDoc(
+                orderRef
+            );
+
+
+            alert(
+                "تم حذف الطلبية بنجاح."
+            );
+
+
+            await loadOrders();
+
+        }
+        catch (error) {
+
+            console.error(
+                "DELETE ORDER ERROR:",
+                error
+            );
+
+
+            showOperationError(
+                error,
+                "حذف الطلبية"
+            );
+
+        }
+        finally {
+
+            if (button) {
+
+                button.disabled =
+                    false;
+
+
+                button.innerHTML = `
+
+                    <i class="fa-solid fa-trash"></i>
+
+                    حذف
+
+                `;
+            }
+        }
+    }
 
 
     /* =================================================
@@ -3419,11 +4229,28 @@
             `;
 
 
-            let deletedCount = 0;
+            let deletedCount =
+                0;
 
-            let failedCount = 0;
 
-            let lastError = "";
+            let failedCount =
+                0;
+
+
+            let permissionCount =
+                0;
+
+
+            let ownerMismatchCount =
+                0;
+
+
+            let notFoundCount =
+                0;
+
+
+            let lastError =
+                null;
 
 
             for (
@@ -3455,7 +4282,7 @@
                         !snapshot.exists()
                     ) {
 
-                        failedCount++;
+                        notFoundCount++;
 
                         continue;
                     }
@@ -3465,14 +4292,63 @@
                         snapshot.data();
 
 
+                    const ownerUid =
+                        String(
+                            data.ownerUid ||
+                            ""
+                        ).trim();
+
+
+                    const storeId =
+                        String(
+                            data.storeId ||
+                            ""
+                        ).trim();
+
+
+                    /*
+                     * ownerUid يجب أن يطابق
+                     * الحساب الحالي.
+                     */
+
                     if (
-                        data.ownerUid !==
+                        ownerUid !==
                         currentOwnerUid
                     ) {
+
+                        ownerMismatchCount++;
 
                         failedCount++;
 
                         continue;
+                    }
+
+
+                    /*
+                     * إذا كان storeId موجودًا،
+                     * يجب أن يطابق المتجر الحالي.
+                     */
+
+                    if (
+                        storeId
+                    ) {
+
+                        const validStoreIds =
+                            getStoreIdentifiers();
+
+
+                        if (
+                            !validStoreIds.includes(
+                                storeId
+                            )
+                        ) {
+
+                            ownerMismatchCount++;
+
+                            failedCount++;
+
+                            continue;
+                        }
                     }
 
 
@@ -3491,12 +4367,25 @@
                         error
                     );
 
+
                     lastError =
-                        error.message ||
-                        error.code ||
-                        "";
+                        error;
+
 
                     failedCount++;
+
+
+                    if (
+                        String(
+                            error.code ||
+                            ""
+                        ).includes(
+                            "permission-denied"
+                        )
+                    ) {
+
+                        permissionCount++;
+                    }
                 }
             }
 
@@ -3514,30 +4403,69 @@
             `;
 
 
+            let resultMessage =
+                "نتيجة الحذف:\n\n" +
+
+                "تم حذف: " +
+                deletedCount +
+                "\n" +
+
+                "فشل الحذف: " +
+                failedCount;
+
+
             if (
-                failedCount > 0
+                notFoundCount > 0
             ) {
 
-                alert(
-                    "تم حذف " +
-                    deletedCount +
-                    " طلب.\n" +
-                    "تعذر حذف " +
-                    failedCount +
-                    " طلب.\n\n" +
-                    "سبب الخطأ:\n" +
-                    lastError +
-                    "\n\n" +
-                    "إذا كان السبب Missing or insufficient permissions، يجب تعديل Firestore Rules."
-                );
-
+                resultMessage +=
+                    "\n\nالطلبات غير الموجودة: " +
+                    notFoundCount;
             }
-            else {
 
-                alert(
-                    "تم حذف الطلبات المحددة بنجاح."
-                );
+
+            if (
+                ownerMismatchCount > 0
+            ) {
+
+                resultMessage +=
+                    "\nالطلبات المرتبطة بمالك/متجر مختلف: " +
+                    ownerMismatchCount;
             }
+
+
+            if (
+                permissionCount > 0
+            ) {
+
+                resultMessage +=
+                    "\nطلبات رفضها Firestore بسبب الصلاحيات: " +
+                    permissionCount;
+            }
+
+
+            if (
+                lastError
+            ) {
+
+                const info =
+                    getFirebaseErrorMessage(
+                        lastError,
+                        "حذف الطلبات"
+                    );
+
+
+                resultMessage +=
+                    "\n\nآخر خطأ:\n" +
+                    info.detail +
+                    "\n\nرمز الخطأ:\n" +
+                    info.code;
+            }
+
+
+            alert(
+                resultMessage
+            );
 
 
             selectAll.checked =
@@ -3547,156 +4475,6 @@
             await loadOrders();
         }
     );
-
-
-    /* =================================================
-       DELETE SINGLE
-    ================================================= */
-
-    async function deleteOrder(id) {
-
-        const confirmed =
-            confirm(
-                "هل أنت متأكد من حذف هذه الطلبية؟\n\n" +
-                "لا يمكن التراجع عن الحذف."
-            );
-
-
-        if (!confirmed) {
-
-            return;
-        }
-
-
-        const button =
-            document.querySelector(
-                `.order-check[data-id="${CSS.escape(id)}"]`
-            )
-            ?.closest("tr")
-            ?.querySelector(".delete-btn");
-
-
-        if (button) {
-
-            button.disabled =
-                true;
-
-            button.innerHTML = `
-
-                <i class="fa-solid fa-spinner fa-spin"></i>
-
-                حذف...
-
-            `;
-        }
-
-
-        try {
-
-            const orderRef =
-                doc(
-                    db,
-                    "orders",
-                    id
-                );
-
-
-            const snapshot =
-                await getDoc(
-                    orderRef
-                );
-
-
-            if (
-                !snapshot.exists()
-            ) {
-
-                alert(
-                    "الطلب غير موجود."
-                );
-
-                return;
-            }
-
-
-            const data =
-                snapshot.data();
-
-
-            if (
-                data.ownerUid !==
-                currentOwnerUid
-            ) {
-
-                alert(
-                    "لا يمكنك حذف طلب لا يخص متجرك."
-                );
-
-                return;
-            }
-
-
-            await deleteDoc(
-                orderRef
-            );
-
-
-            alert(
-                "تم حذف الطلبية بنجاح."
-            );
-
-
-            await loadOrders();
-
-        }
-        catch (error) {
-
-            console.error(
-                "DELETE ERROR:",
-                error
-            );
-
-
-            let message =
-                error.message ||
-                "خطأ غير معروف";
-
-
-            if (
-                error.code ===
-                "permission-denied"
-            ) {
-
-                message =
-                    "ليس لديك صلاحية حذف هذا الطلب من Firestore.";
-            }
-
-
-            alert(
-                "تعذر حذف الطلبية.\n\n" +
-                message +
-                "\n\n" +
-                "إذا كان الخطأ متعلقًا بالصلاحيات، يجب تعديل Firestore Rules."
-            );
-
-        }
-        finally {
-
-            if (button) {
-
-                button.disabled =
-                    false;
-
-                button.innerHTML = `
-
-                    <i class="fa-solid fa-trash"></i>
-
-                    حذف
-
-                `;
-            }
-        }
-    }
 
 
     /* =================================================
@@ -3741,8 +4519,9 @@
 
 
             if (
-                data.ownerUid !==
-                currentOwnerUid
+                !orderBelongsToCurrentStore(
+                    data
+                )
             ) {
 
                 alert(
@@ -3773,9 +4552,9 @@
             );
 
 
-            alert(
-                "تعذر تحديث حالة الطلب.\n\n" +
-                error.message
+            showOperationError(
+                error,
+                "تحديث حالة الطلب"
             );
         }
     }
@@ -3823,8 +4602,9 @@
 
 
             if (
-                data.ownerUid !==
-                currentOwnerUid
+                !orderBelongsToCurrentStore(
+                    data
+                )
             ) {
 
                 alert(
@@ -3859,9 +4639,9 @@
             );
 
 
-            alert(
-                "تعذر حفظ الملاحظة.\n\n" +
-                error.message
+            showOperationError(
+                error,
+                "حفظ الملاحظة"
             );
         }
     }
@@ -3963,6 +4743,7 @@
                 "active"
             );
 
+
             return;
         }
 
@@ -3994,8 +4775,7 @@
                     (
                         Array.isArray(
                             product.images
-                        )
-                        &&
+                        ) &&
                         product.images.length
                             ? product.images[0]
                             : ""
@@ -4081,7 +4861,7 @@
 
 
     /* =================================================
-       CLOSE MODALS
+       CLOSE PRODUCTS MODAL
     ================================================= */
 
     document
@@ -4098,6 +4878,10 @@
             }
         );
 
+
+    /* =================================================
+       CLOSE PHONE MODAL
+    ================================================= */
 
     document
         .getElementById(
@@ -4203,8 +4987,9 @@
                 }
                 catch (error) {
 
-                    alert(
-                        "تعذر تسجيل الخروج."
+                    showOperationError(
+                        error,
+                        "تسجيل الخروج"
                     );
                 }
             }
@@ -4236,7 +5021,24 @@
                 user.email || "";
 
 
-            await loadStore();
+            try {
+
+                await loadStore();
+
+            }
+            catch (error) {
+
+                console.error(
+                    "LOAD STORE ERROR:",
+                    error
+                );
+
+
+                showOperationError(
+                    error,
+                    "تحميل المتجر"
+                );
+            }
         }
     );
 
