@@ -1102,7 +1102,7 @@
 
         .status-select {
 
-            min-width: 135px;
+            min-width: 145px;
 
             padding: 9px 10px;
 
@@ -2134,7 +2134,7 @@
         const firebaseConfig = {
 
             apiKey:
-                "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+                "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Qa",
 
             authDomain:
                 "g-glam.firebaseapp.com",
@@ -2344,8 +2344,6 @@
 
         /* =================================================
            DATE
-           
-           التاريخ فقط بدون الساعة
         ================================================= */
 
         function formatDate(timestamp) {
@@ -2425,6 +2423,14 @@
 
         /* =================================================
            NORMALIZE STATUS
+           
+           الحالات المعتمدة:
+           
+           قيد المعالجة
+           تم التأكيد
+           تم الشحن
+           تم التسليم
+           إلغاء
         ================================================= */
 
         function normalizeStatus(order) {
@@ -2435,31 +2441,207 @@
                 ).trim();
 
 
+            /*
+             * الطلبات الجديدة أو الطلبات التي لا
+             * تحتوي على حالة تبدأ دائمًا:
+             *
+             * قيد المعالجة
+             */
+
+            if (!value) {
+
+                return "قيد المعالجة";
+            }
+
+
+            /*
+             * دعم حالة قديمة:
+             *
+             * قيد المراجعة
+             *
+             * نحولها إلى الحالة الجديدة.
+             */
+
             if (
-                value === "" ||
-                value === "تم التأكيد"
+                value === "قيد المراجعة"
             ) {
 
-                /*
-                 * إذا كان الطلب جديدًا ولم توجد
-                 * حالة صحيحة محفوظة، نعرضه كمراجعة.
-                 *
-                 * ملاحظة:
-                 * الطلب الذي خزنه index.html
-                 * بالفعل بـ "تم التأكيد" سيحتاج
-                 * تعديل ملف إنشاء الطلب.
-                 */
+                return "قيد المعالجة";
+            }
 
-                if (
-                    value === ""
-                ) {
 
-                    return "قيد المراجعة";
+            return value;
+        }
+
+
+        /* =================================================
+           MIGRATE OLD CONFIRMED ORDERS
+           
+           بعض الطلبات القديمة تم حفظها بـ:
+           
+           status = "تم التأكيد"
+           
+           قبل تعديل نظام الطلبات.
+
+           إذا لم تكن هذه الطلبية قد تمت
+           معالجتها من قبل، نحولها مرة واحدة
+           إلى "قيد المعالجة".
+        ================================================= */
+
+        async function migrateOldOrderStatus(
+            orderId,
+            order
+        ) {
+
+            const status =
+                String(
+                    order.status || ""
+                ).trim();
+
+
+            /*
+             * لا نغير أي طلب سبق أن تمت
+             * معالجته بواسطة هذه الصفحة.
+             */
+
+            if (
+                order.statusMigrated === true
+            ) {
+
+                return order;
+            }
+
+
+            /*
+             * الطلبات التي كانت "تم التأكيد"
+             * قبل النظام الجديد تصبح
+             * "قيد المعالجة".
+             */
+
+            if (
+                status === "تم التأكيد"
+            ) {
+
+                try {
+
+                    const orderRef =
+                        doc(
+                            db,
+                            "orders",
+                            orderId
+                        );
+
+
+                    await updateDoc(
+                        orderRef,
+                        {
+                            status:
+                                "قيد المعالجة",
+
+                            statusMigrated:
+                                true
+                        }
+                    );
+
+
+                    return {
+
+                        ...order,
+
+                        status:
+                            "قيد المعالجة",
+
+                        statusMigrated:
+                            true
+                    };
+
+                }
+                catch (error) {
+
+                    console.error(
+                        "STATUS MIGRATION ERROR:",
+                        error
+                    );
+
+
+                    /*
+                     * حتى لو فشل الحفظ،
+                     * نعرضها للمستخدم كقيد المعالجة
+                     * في هذه الجلسة.
+                     */
+
+                    return {
+
+                        ...order,
+
+                        status:
+                            "قيد المعالجة"
+                    };
                 }
             }
 
 
-            return value || "قيد المراجعة";
+            /*
+             * الطلبات التي لا تحتوي على حالة
+             * نعتبرها قيد المعالجة.
+             */
+
+            if (!status) {
+
+                try {
+
+                    const orderRef =
+                        doc(
+                            db,
+                            "orders",
+                            orderId
+                        );
+
+
+                    await updateDoc(
+                        orderRef,
+                        {
+                            status:
+                                "قيد المعالجة",
+
+                            statusMigrated:
+                                true
+                        }
+                    );
+
+
+                    return {
+
+                        ...order,
+
+                        status:
+                            "قيد المعالجة",
+
+                        statusMigrated:
+                            true
+                    };
+
+                }
+                catch (error) {
+
+                    console.error(
+                        "EMPTY STATUS MIGRATION ERROR:",
+                        error
+                    );
+
+
+                    return {
+
+                        ...order,
+
+                        status:
+                            "قيد المعالجة"
+                    };
+                }
+            }
+
+
+            return order;
         }
 
 
@@ -2775,7 +2957,7 @@
             }
 
 
-            const orders =
+            let orders =
                 snapshot.docs.map(
                     orderDoc => ({
 
@@ -2787,6 +2969,24 @@
 
                     })
                 );
+
+
+            /*
+             * ترحيل الحالات القديمة.
+             */
+
+            for (
+                let i = 0;
+                i < orders.length;
+                i++
+            ) {
+
+                orders[i].data =
+                    await migrateOldOrderStatus(
+                        orders[i].id,
+                        orders[i].data
+                    );
+            }
 
 
             orders.sort(
@@ -3192,12 +3392,12 @@
                     >
 
                         <option
-                            value="قيد المراجعة"
-                            ${status === "قيد المراجعة"
+                            value="قيد المعالجة"
+                            ${status === "قيد المعالجة"
                                 ? "selected"
                                 : ""}
                         >
-                            قيد المراجعة
+                            قيد المعالجة
                         </option>
 
 
@@ -3794,7 +3994,10 @@
                     orderRef,
                     {
                         status:
-                            newStatus
+                            newStatus,
+
+                        statusMigrated:
+                            true
                     }
                 );
 
