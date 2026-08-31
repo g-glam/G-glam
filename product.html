@@ -1565,7 +1565,7 @@ input:focus {
 
     .color-btn.active {
 
-        background: #F47B20;
+        background: var(--accent);
 
         color: #fff;
 
@@ -1640,7 +1640,7 @@ input:focus {
 
     .total-box.final {
 
-        background: #F47B20;
+        background: var(--accent);
 
         color: #fff;
 
@@ -1700,7 +1700,7 @@ input:focus {
 
         background: transparent;
 
-        border-color: #F47B20;
+        border-color: var(--accent);
 
     }
 
@@ -2251,6 +2251,48 @@ function escapeHtml(value) {
 
 
 /* =====================================================
+   APPLY THEME
+===================================================== */
+
+function applyTheme(hexColor) {
+
+    if (!hexColor) return;
+
+    let color = hexColor.replace("#", "");
+
+    if (color.length === 3) {
+        
+        color = color.split("").map(c => c + c).join("");
+
+    }
+
+    const r = parseInt(color.substring(0, 2), 16);
+    
+    const g = parseInt(color.substring(2, 4), 16);
+    
+    const b = parseInt(color.substring(4, 6), 16);
+
+    const darken = c => Math.max(0, Math.floor(c * 0.85));
+
+    document.documentElement.style.setProperty(
+        "--accent",
+        "#" + color
+    );
+
+    document.documentElement.style.setProperty(
+        "--accent-dark",
+        "rgb(" + darken(r) + ", " + darken(g) + ", " + darken(b) + ")"
+    );
+
+    document.documentElement.style.setProperty(
+        "--accent-light",
+        "rgba(" + r + ", " + g + ", " + b + ", 0.1)"
+    );
+
+}
+
+
+/* =====================================================
    SET STORE COVER
 ===================================================== */
 
@@ -2496,6 +2538,25 @@ async function loadStore() {
                 String(
                     currentStoreId
                 );
+
+
+            /* =========================================
+               THEME
+            ========================================= */
+
+            const themeColor =
+                store.themeColor ||
+                store.theme ||
+                store.color;
+
+
+            if (themeColor) {
+
+                applyTheme(
+                    themeColor
+                );
+
+            }
 
 
             /* =========================================
