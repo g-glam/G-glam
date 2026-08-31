@@ -47,6 +47,7 @@ rel="stylesheet">
 --muted:#777777;
 --border:#E8E8E8;
 --danger:#D9534F;
+--success:#198754;
 --shadow:0 6px 22px rgba(0,0,0,.07);
 
 }
@@ -443,7 +444,8 @@ margin-bottom:8px;
 }
 
 select,
-input{
+input,
+textarea{
 
 width:100%;
 
@@ -463,8 +465,19 @@ color:#333;
 
 }
 
+textarea{
+
+min-height:90px;
+
+resize:vertical;
+
+line-height:1.8;
+
+}
+
 select:focus,
-input:focus{
+input:focus,
+textarea:focus{
 
 border-color:var(--accent);
 
@@ -615,10 +628,11 @@ font-weight:700;
 }
 
 /* =====================================================
-   ADD BUTTON
+   BUTTONS
 ===================================================== */
 
-.add-cart-btn{
+.add-cart-btn,
+.order-now-btn{
 
 width:100%;
 
@@ -627,8 +641,6 @@ padding:16px;
 border:none;
 
 border-radius:15px;
-
-background:var(--accent);
 
 color:#fff;
 
@@ -640,7 +652,15 @@ cursor:pointer;
 
 transition:.2s;
 
+}
+
+.add-cart-btn{
+
+background:var(--accent);
+
 box-shadow:0 7px 18px rgba(244,123,32,.25);
+
+margin-bottom:10px;
 
 }
 
@@ -652,7 +672,24 @@ transform:translateY(-1px);
 
 }
 
-.add-cart-btn:disabled{
+.order-now-btn{
+
+background:#198754;
+
+box-shadow:0 7px 18px rgba(25,135,84,.20);
+
+}
+
+.order-now-btn:hover{
+
+background:#157347;
+
+transform:translateY(-1px);
+
+}
+
+.add-cart-btn:disabled,
+.order-now-btn:disabled{
 
 background:#BDBDBD;
 
@@ -707,6 +744,262 @@ background:#FDECEC;
 color:#B42318;
 
 border:1px solid #F5D0D0;
+
+}
+
+/* =====================================================
+   ORDER FORM
+===================================================== */
+
+.order-form{
+
+margin-top:30px;
+
+background:var(--card);
+
+border:1px solid var(--border);
+
+border-radius:25px;
+
+box-shadow:var(--shadow);
+
+padding:22px;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.order-form::before{
+
+content:"";
+
+position:absolute;
+
+right:0;
+top:0;
+
+width:6px;
+height:100%;
+
+background:#198754;
+
+}
+
+.order-title{
+
+font-size:24px;
+
+font-weight:800;
+
+margin-bottom:6px;
+
+}
+
+.order-subtitle{
+
+font-size:14px;
+
+color:var(--muted);
+
+line-height:1.8;
+
+margin-bottom:22px;
+
+}
+
+.order-summary{
+
+background:var(--accent-light);
+
+border:1px solid #F7D7BE;
+
+border-radius:16px;
+
+padding:15px;
+
+margin-bottom:20px;
+
+}
+
+.order-summary-title{
+
+font-size:14px;
+
+font-weight:800;
+
+margin-bottom:10px;
+
+}
+
+.summary-row{
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+gap:15px;
+
+padding:5px 0;
+
+font-size:14px;
+
+}
+
+.summary-row span:first-child{
+
+color:var(--muted);
+
+}
+
+.summary-row strong{
+
+font-weight:800;
+
+}
+
+.form-grid{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:15px;
+
+}
+
+.form-field{
+
+margin-bottom:4px;
+
+}
+
+.form-field.full{
+
+grid-column:1 / -1;
+
+}
+
+.form-label{
+
+display:block;
+
+font-size:14px;
+
+font-weight:800;
+
+margin-bottom:8px;
+
+}
+
+.required{
+
+color:var(--danger);
+
+}
+
+.order-submit{
+
+width:100%;
+
+margin-top:18px;
+
+padding:17px;
+
+border:none;
+
+border-radius:15px;
+
+background:#198754;
+
+color:#fff;
+
+font-size:17px;
+
+font-weight:800;
+
+cursor:pointer;
+
+box-shadow:0 7px 18px rgba(25,135,84,.20);
+
+transition:.2s;
+
+}
+
+.order-submit:hover{
+
+background:#157347;
+
+transform:translateY(-1px);
+
+}
+
+.order-submit:disabled{
+
+background:#BDBDBD;
+
+cursor:not-allowed;
+
+box-shadow:none;
+
+transform:none;
+
+}
+
+.order-success{
+
+display:none;
+
+text-align:center;
+
+padding:25px 15px;
+
+background:#EFFAF3;
+
+border:1px solid #C9EAD5;
+
+border-radius:18px;
+
+margin-top:18px;
+
+}
+
+.order-success.show{
+
+display:block;
+
+}
+
+.order-success-icon{
+
+font-size:48px;
+
+margin-bottom:10px;
+
+}
+
+.order-success-title{
+
+font-size:21px;
+
+font-weight:800;
+
+color:#198754;
+
+margin-bottom:8px;
+
+}
+
+.order-success-text{
+
+font-size:14px;
+
+line-height:1.9;
+
+color:#555;
 
 }
 
@@ -879,6 +1172,36 @@ font-size:21px;
 
 }
 
+.order-form{
+
+padding:17px;
+
+border-radius:20px;
+
+margin-top:20px;
+
+}
+
+.order-title{
+
+font-size:21px;
+
+}
+
+.form-grid{
+
+grid-template-columns:1fr;
+
+gap:13px;
+
+}
+
+.form-field.full{
+
+grid-column:auto;
+
+}
+
 }
 
 /* =====================================================
@@ -947,7 +1270,8 @@ color:#E8EEF5;
 }
 
 select,
-input{
+input,
+textarea{
 
 background:#102234;
 color:#F4F7FB;
@@ -956,7 +1280,8 @@ border-color:#1D334A;
 }
 
 select:focus,
-input:focus{
+input:focus,
+textarea:focus{
 
 background:#0D1B2A;
 
@@ -1008,6 +1333,26 @@ background:#17283A;
 color:#FF8C32;
 }
 
+.order-form{
+
+background:#0D1B2A;
+border-color:#1D334A;
+
+}
+
+.order-summary{
+
+background:#17283A;
+border-color:#263E56;
+
+}
+
+.summary-row span:first-child{
+
+color:#AAB7C7;
+
+}
+
 }
 
 @media(max-width:999px){
@@ -1026,6 +1371,36 @@ background:#fff;
 border-color:#E8E8E8;
 }
 
+.order-form{
+
+background:#fff;
+
+}
+
+}
+
+/* =====================================================
+   PHONE NUMBER
+===================================================== */
+
+.phone-input{
+
+direction:ltr;
+
+text-align:right;
+
+}
+
+/* =====================================================
+   FORM ERROR
+===================================================== */
+
+.input-error{
+
+border-color:#D9534F !important;
+
+background:#FFF7F7 !important;
+
 }
 
 </style>
@@ -1034,7 +1409,10 @@ border-color:#E8E8E8;
 
 <body>
 
-<!-- SIDEBAR -->
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
 
 <div class="overlay" id="overlay"></div>
 
@@ -1066,7 +1444,9 @@ target="_blank">
 </div>
 
 
-<!-- HEADER -->
+<!-- =====================================================
+     HEADER
+===================================================== -->
 
 <header>
 
@@ -1099,7 +1479,9 @@ id="cartCount">
 </header>
 
 
-<!-- STORE -->
+<!-- =====================================================
+     STORE
+===================================================== -->
 
 <div
 class="store-info"
@@ -1109,6 +1491,10 @@ id="storeInfo">
 
 </div>
 
+
+<!-- =====================================================
+     CONTAINER
+===================================================== -->
 
 <div class="container">
 
@@ -1151,7 +1537,10 @@ from
 import {
 getFirestore,
 doc,
-getDoc
+getDoc,
+collection,
+addDoc,
+serverTimestamp
 }
 from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
@@ -1181,6 +1570,7 @@ measurementId:
 "G-WX1K1F83F6"
 
 };
+
 
 const app =
 initializeApp(firebaseConfig);
@@ -1301,9 +1691,27 @@ if(!currentStoreId){
 storeInfo.innerHTML =
 "متجر: <strong>G-Glam</strong>";
 
+homeLink.href =
+"index.html";
+
+cartLink.href =
+"cart.html";
+
+cartButton.onclick =
+function(){
+
+window.location.href =
+"cart.html";
+
+};
+
+backBtn.href =
+"index.html";
+
 return;
 
 }
+
 
 try{
 
@@ -1338,6 +1746,7 @@ error
 
 }
 
+
 storeInfo.innerHTML = `
 
 متجر:
@@ -1348,11 +1757,13 @@ ${escapeHtml(currentStoreName)}
 
 `;
 
+
 const storeQuery =
 "?store=" +
 encodeURIComponent(
 currentStoreId
 );
+
 
 homeLink.href =
 "index.html" +
@@ -1400,6 +1811,7 @@ return;
 
 }
 
+
 try{
 
 const productRef =
@@ -1428,6 +1840,7 @@ return;
 
 }
 
+
 product = {
 
 id:
@@ -1438,12 +1851,9 @@ productSnap.id,
 };
 
 
-/*
-=======================================================
- IMPORTANT:
- STORE ID / OWNER UID
-=======================================================
-*/
+/* =====================================================
+   STORE ID
+===================================================== */
 
 const productStoreId =
 
@@ -1466,17 +1876,7 @@ localStorage.setItem(
 currentStoreId
 );
 
-}
-
-if(
-currentStoreId &&
-productStoreId &&
-currentStoreId !== productStoreId
-){
-
-console.warn(
-"Product store differs from URL store."
-);
+await loadStore();
 
 }
 
@@ -1512,7 +1912,7 @@ error.message
 
 
 /* =====================================================
-   RENDER
+   RENDER PRODUCT
 ===================================================== */
 
 function renderProduct(){
@@ -1527,6 +1927,7 @@ product.stock;
 
 images = [];
 
+
 if(
 Array.isArray(product.images)
 ){
@@ -1537,6 +1938,7 @@ image => image
 );
 
 }
+
 
 if(
 product.image &&
@@ -1549,6 +1951,7 @@ product.image
 
 }
 
+
 if(
 images.length === 0
 ){
@@ -1557,10 +1960,12 @@ images = [""];
 
 }
 
+
 const colors =
 Array.isArray(product.colors)
 ? product.colors
 : [];
+
 
 const sizes =
 Array.isArray(product.sizes)
@@ -1568,11 +1973,16 @@ Array.isArray(product.sizes)
 : [];
 
 
-/* COLORS */
+/* =====================================================
+   COLORS
+===================================================== */
 
 let colorsHtml = "";
 
 if(colors.length){
+
+selectedColor =
+colors[0];
 
 colorsHtml = `
 
@@ -1609,13 +2019,12 @@ ${escapeHtml(color)}
 
 `;
 
-selectedColor =
-colors[0];
-
 }
 
 
-/* SIZES */
+/* =====================================================
+   SIZES
+===================================================== */
 
 let sizesHtml = "";
 
@@ -1661,11 +2070,16 @@ ${escapeHtml(size)}
 }
 
 
+/* =====================================================
+   STOCK
+===================================================== */
+
 let stockText =
 "الكمية متوفرة";
 
 let stockClass =
 "available";
+
 
 if(
 stock !== undefined &&
@@ -1694,10 +2108,16 @@ Number(stock);
 }
 
 
+/* =====================================================
+   PRODUCT HTML
+===================================================== */
+
 productContainer.innerHTML = `
 
 <div class="product-card">
 
+
+<!-- GALLERY -->
 
 <div class="gallery">
 
@@ -1774,6 +2194,8 @@ alt=""
 </div>
 
 
+<!-- PRODUCT INFO -->
+
 <div class="product-info">
 
 
@@ -1815,6 +2237,8 @@ ${stockText}
 </div>
 
 
+<!-- QUANTITY -->
+
 <div class="quantity-box">
 
 <button
@@ -1853,6 +2277,8 @@ class="message">
 </div>
 
 
+<!-- CART -->
+
 <button
 class="add-cart-btn"
 id="addCartBtn"
@@ -1868,7 +2294,327 @@ Number(stock) <= 0
 </button>
 
 
+<!-- DIRECT ORDER -->
+
+<button
+class="order-now-btn"
+id="scrollOrderBtn"
+${stock !== undefined &&
+stock !== null &&
+stock !== "" &&
+Number(stock) <= 0
+? "disabled"
+: ""}>
+
+📦 اطلب هذا المنتج الآن
+
+</button>
+
+
 </div>
+
+</div>
+
+
+<!-- =================================================
+     ORDER FORM
+================================================= -->
+
+<div
+class="order-form"
+id="orderForm">
+
+
+<h2 class="order-title">
+
+📦 إتمام الطلب
+
+</h2>
+
+
+<p class="order-subtitle">
+
+املأ معلوماتك التالية لإرسال طلبك مباشرة إلى المتجر.
+
+</p>
+
+
+<!-- SUMMARY -->
+
+<div class="order-summary">
+
+<div class="order-summary-title">
+
+ملخص الطلب
+
+</div>
+
+
+<div class="summary-row">
+
+<span>
+المنتج
+</span>
+
+<strong id="summaryProductName">
+${escapeHtml(product.name || "منتج")}
+</strong>
+
+</div>
+
+
+<div class="summary-row">
+
+<span>
+الكمية
+</span>
+
+<strong>
+<span id="summaryQuantity">1</span>
+</strong>
+
+</div>
+
+
+<div class="summary-row">
+
+<span>
+السعر
+</span>
+
+<strong>
+<span id="summaryPrice">${price}</span> DA
+</strong>
+
+</div>
+
+
+<div class="summary-row">
+
+<span>
+المجموع
+</span>
+
+<strong>
+<span id="summaryTotal">${price}</span> DA
+</strong>
+
+</div>
+
+</div>
+
+
+<form id="orderFormElement">
+
+
+<div class="form-grid">
+
+
+<!-- NAME -->
+
+<div class="form-field">
+
+<label
+class="form-label"
+for="customerName">
+
+الاسم واللقب
+
+<span class="required">
+*
+</span>
+
+</label>
+
+<input
+type="text"
+id="customerName"
+placeholder="أدخل الاسم واللقب"
+autocomplete="name"
+required>
+
+</div>
+
+
+<!-- PHONE -->
+
+<div class="form-field">
+
+<label
+class="form-label"
+for="customerPhone">
+
+رقم الهاتف
+
+<span class="required">
+*
+</span>
+
+</label>
+
+<input
+type="tel"
+id="customerPhone"
+class="phone-input"
+placeholder="05XXXXXXXX"
+inputmode="tel"
+autocomplete="tel"
+required>
+
+</div>
+
+
+<!-- WILAYA -->
+
+<div class="form-field">
+
+<label
+class="form-label"
+for="customerWilaya">
+
+الولاية
+
+<span class="required">
+*
+</span>
+
+</label>
+
+<input
+type="text"
+id="customerWilaya"
+placeholder="مثال: باتنة"
+autocomplete="address-level1"
+required>
+
+</div>
+
+
+<!-- COMMUNE -->
+
+<div class="form-field">
+
+<label
+class="form-label"
+for="customerCommune">
+
+البلدية
+
+<span class="required">
+*
+</span>
+
+</label>
+
+<input
+type="text"
+id="customerCommune"
+placeholder="أدخل البلدية"
+autocomplete="address-level2"
+required>
+
+</div>
+
+
+<!-- ADDRESS -->
+
+<div class="form-field full">
+
+<label
+class="form-label"
+for="customerAddress">
+
+العنوان
+
+<span class="required">
+*
+</span>
+
+</label>
+
+<input
+type="text"
+id="customerAddress"
+placeholder="أدخل العنوان بالتفصيل"
+autocomplete="street-address"
+required>
+
+</div>
+
+
+<!-- NOTES -->
+
+<div class="form-field full">
+
+<label
+class="form-label"
+for="customerNotes">
+
+ملاحظات إضافية
+
+</label>
+
+<textarea
+id="customerNotes"
+placeholder="مثال: اتصل بي قبل التوصيل، أو أي ملاحظة أخرى..."></textarea>
+
+</div>
+
+
+</div>
+
+
+<button
+type="submit"
+class="order-submit"
+id="orderSubmitBtn">
+
+📦 تأكيد وإرسال الطلب
+
+</button>
+
+
+</form>
+
+
+<div
+class="order-success"
+id="orderSuccess">
+
+
+<div class="order-success-icon">
+✅
+</div>
+
+
+<div class="order-success-title">
+
+تم إرسال طلبك بنجاح
+
+</div>
+
+
+<div class="order-success-text">
+
+شكراً لك ❤️
+
+<br>
+
+تم تسجيل طلبك، وسيتم التواصل معك لتأكيده.
+
+<br><br>
+
+رقم الطلب:
+
+<strong id="orderNumber">
+-
+</strong>
+
+</div>
+
+
+</div>
+
 
 </div>
 
@@ -1876,6 +2622,10 @@ Number(stock) <= 0
 
 
 setupProductEvents();
+
+setupOrderForm();
+
+updateOrderSummary();
 
 }
 
@@ -1906,11 +2656,22 @@ document.getElementById(
 "addCartBtn"
 );
 
+const scrollOrderBtn =
+document.getElementById(
+"scrollOrderBtn"
+);
+
+
+/* =====================================================
+   PLUS
+===================================================== */
+
 plusBtn.onclick =
 function(){
 
 const stock =
 product.stock;
+
 
 if(
 stock !== undefined &&
@@ -1934,13 +2695,20 @@ return;
 
 }
 
+
 quantity++;
 
 qtyNumber.textContent =
 quantity;
 
+updateOrderSummary();
+
 };
 
+
+/* =====================================================
+   MINUS
+===================================================== */
 
 minusBtn.onclick =
 function(){
@@ -1952,12 +2720,16 @@ quantity--;
 qtyNumber.textContent =
 quantity;
 
+updateOrderSummary();
+
 }
 
 };
 
 
-/* COLORS */
+/* =====================================================
+   COLORS
+===================================================== */
 
 document
 .querySelectorAll(".color-btn")
@@ -1986,12 +2758,15 @@ this.dataset.color;
 });
 
 
-/* SIZE */
+/* =====================================================
+   SIZE
+===================================================== */
 
 const sizeSelect =
 document.getElementById(
 "sizeSelect"
 );
+
 
 if(sizeSelect){
 
@@ -2007,7 +2782,9 @@ this.value;
 }
 
 
-/* IMAGES */
+/* =====================================================
+   IMAGES
+===================================================== */
 
 document
 .querySelectorAll(".thumbnail")
@@ -2027,10 +2804,12 @@ this.dataset.image
 selectedImage =
 index;
 
+
 const mainImage =
 document.getElementById(
 "mainProductImage"
 );
+
 
 if(
 mainImage &&
@@ -2042,12 +2821,14 @@ images[index];
 
 }
 
+
 document
 .querySelectorAll(".thumbnail")
 .forEach(
 x =>
 x.classList.remove("active")
 );
+
 
 this.classList.add("active");
 
@@ -2056,7 +2837,9 @@ this.classList.add("active");
 });
 
 
-/* ADD */
+/* =====================================================
+   ADD CART
+===================================================== */
 
 addBtn.onclick =
 function(){
@@ -2064,6 +2847,98 @@ function(){
 addToCart();
 
 };
+
+
+/* =====================================================
+   ORDER NOW
+===================================================== */
+
+scrollOrderBtn.onclick =
+function(){
+
+const form =
+document.getElementById(
+"orderForm"
+);
+
+if(form){
+
+form.scrollIntoView({
+
+behavior:"smooth",
+
+block:"start"
+
+});
+
+
+setTimeout(
+function(){
+
+const nameInput =
+document.getElementById(
+"customerName"
+);
+
+if(nameInput){
+
+nameInput.focus();
+
+}
+
+},
+500
+);
+
+}
+
+};
+
+}
+
+
+/* =====================================================
+   ORDER SUMMARY
+===================================================== */
+
+function updateOrderSummary(){
+
+if(!product)
+return;
+
+
+const price =
+Number(product.price || 0);
+
+
+const quantityElement =
+document.getElementById(
+"summaryQuantity"
+);
+
+
+const totalElement =
+document.getElementById(
+"summaryTotal"
+);
+
+
+if(quantityElement){
+
+quantityElement.textContent =
+quantity;
+
+}
+
+
+if(totalElement){
+
+totalElement.textContent =
+(price * quantity).toLocaleString(
+"fr-DZ"
+);
+
+}
 
 }
 
@@ -2106,9 +2981,7 @@ return;
 }
 
 
-/* =====================================================
-   CART
-===================================================== */
+/* CART */
 
 let cart =
 
@@ -2127,11 +3000,7 @@ localStorage.getItem("ownerUid") ||
 "";
 
 
-/*
-=======================================================
- IMPORTANT MULTI-STORE LOGIC
-=======================================================
-*/
+/* MULTI STORE */
 
 if(
 currentStoreId
@@ -2169,11 +3038,13 @@ confirm(
 
 );
 
+
 if(!confirmChange){
 
 return;
 
 }
+
 
 cart = [];
 
@@ -2182,9 +3053,7 @@ cart = [];
 }
 
 
-/* =====================================================
-   SAME PRODUCT / OPTIONS
-===================================================== */
+/* SAME PRODUCT */
 
 const existingIndex =
 cart.findIndex(
@@ -2339,17 +3208,17 @@ showMessage(
 );
 
 
-/* BUTTON */
-
 const addBtn =
 document.getElementById(
 "addCartBtn"
 );
 
+
 if(addBtn){
 
 addBtn.textContent =
 "✅ تمت الإضافة إلى السلة";
+
 
 setTimeout(
 
@@ -2363,6 +3232,539 @@ addBtn.textContent =
 1800
 
 );
+
+}
+
+}
+
+
+/* =====================================================
+   ORDER FORM
+===================================================== */
+
+function setupOrderForm(){
+
+const form =
+document.getElementById(
+"orderFormElement"
+);
+
+
+if(!form)
+return;
+
+
+form.addEventListener(
+"submit",
+submitOrder
+);
+
+}
+
+
+/* =====================================================
+   SUBMIT ORDER
+===================================================== */
+
+async function submitOrder(event){
+
+event.preventDefault();
+
+
+if(!product){
+
+return;
+
+}
+
+
+const nameInput =
+document.getElementById(
+"customerName"
+);
+
+const phoneInput =
+document.getElementById(
+"customerPhone"
+);
+
+const wilayaInput =
+document.getElementById(
+"customerWilaya"
+);
+
+const communeInput =
+document.getElementById(
+"customerCommune"
+);
+
+const addressInput =
+document.getElementById(
+"customerAddress"
+);
+
+const notesInput =
+document.getElementById(
+"customerNotes"
+);
+
+const submitBtn =
+document.getElementById(
+"orderSubmitBtn"
+);
+
+
+const customerName =
+nameInput.value.trim();
+
+const customerPhone =
+phoneInput.value.trim();
+
+const customerWilaya =
+wilayaInput.value.trim();
+
+const customerCommune =
+communeInput.value.trim();
+
+const customerAddress =
+addressInput.value.trim();
+
+const customerNotes =
+notesInput.value.trim();
+
+
+/* =====================================================
+   VALIDATION
+===================================================== */
+
+document
+.querySelectorAll(
+".input-error"
+)
+.forEach(
+input =>
+input.classList.remove(
+"input-error"
+)
+);
+
+
+if(customerName.length < 3){
+
+nameInput.classList.add(
+"input-error"
+);
+
+nameInput.focus();
+
+showMessage(
+"❌ يرجى إدخال الاسم واللقب.",
+"error"
+);
+
+return;
+
+}
+
+
+const phoneClean =
+customerPhone.replace(
+/[\s-]/g,
+""
+);
+
+
+const phoneRegex =
+/^(05|06|07)[0-9]{8}$/;
+
+
+if(!phoneRegex.test(phoneClean)){
+
+phoneInput.classList.add(
+"input-error"
+);
+
+phoneInput.focus();
+
+showMessage(
+"❌ يرجى إدخال رقم هاتف جزائري صحيح.",
+"error"
+);
+
+return;
+
+}
+
+
+if(customerWilaya.length < 2){
+
+wilayaInput.classList.add(
+"input-error"
+);
+
+wilayaInput.focus();
+
+showMessage(
+"❌ يرجى إدخال الولاية.",
+"error"
+);
+
+return;
+
+}
+
+
+if(customerCommune.length < 2){
+
+communeInput.classList.add(
+"input-error"
+);
+
+communeInput.focus();
+
+showMessage(
+"❌ يرجى إدخال البلدية.",
+"error"
+);
+
+return;
+
+}
+
+
+if(customerAddress.length < 3){
+
+addressInput.classList.add(
+"input-error"
+);
+
+addressInput.focus();
+
+showMessage(
+"❌ يرجى إدخال العنوان.",
+"error"
+);
+
+return;
+
+}
+
+
+/* =====================================================
+   STOCK CHECK
+===================================================== */
+
+if(
+product.stock !== undefined &&
+product.stock !== null &&
+product.stock !== "" &&
+!isNaN(Number(product.stock))
+){
+
+if(
+Number(product.stock) <= 0
+){
+
+showMessage(
+"❌ هذا المنتج غير متوفر حالياً.",
+"error"
+);
+
+return;
+
+}
+
+
+if(
+quantity > Number(product.stock)
+){
+
+showMessage(
+"❌ الكمية المطلوبة أكبر من الكمية المتوفرة.",
+"error"
+);
+
+return;
+
+}
+
+}
+
+
+/* =====================================================
+   STORE
+===================================================== */
+
+const productStoreId =
+
+product.storeId ||
+product.storeUid ||
+product.ownerUid ||
+currentStoreId ||
+"";
+
+
+if(!productStoreId){
+
+showMessage(
+"❌ تعذر تحديد المتجر الخاص بهذا المنتج.",
+"error"
+);
+
+return;
+
+}
+
+
+/* =====================================================
+   ORDER DATA
+===================================================== */
+
+const price =
+Number(product.price || 0);
+
+const total =
+price * quantity;
+
+
+const orderData = {
+
+customerName:
+customerName,
+
+customerPhone:
+phoneClean,
+
+customerWilaya:
+customerWilaya,
+
+customerCommune:
+customerCommune,
+
+customerAddress:
+customerAddress,
+
+customerNotes:
+customerNotes,
+
+productId:
+product.id,
+
+productName:
+product.name || "منتج",
+
+productPrice:
+price,
+
+quantity:
+quantity,
+
+total:
+total,
+
+color:
+selectedColor,
+
+size:
+selectedSize,
+
+image:
+product.image ||
+(
+Array.isArray(product.images) &&
+product.images.length
+?
+product.images[0]
+:
+""
+),
+
+storeId:
+productStoreId,
+
+storeUid:
+product.storeUid ||
+productStoreId,
+
+ownerUid:
+product.ownerUid ||
+product.storeUid ||
+productStoreId,
+
+status:
+"pending",
+
+source:
+"product-page",
+
+createdAt:
+serverTimestamp()
+
+};
+
+
+/* =====================================================
+   SEND
+===================================================== */
+
+submitBtn.disabled =
+true;
+
+submitBtn.textContent =
+"⏳ جاري إرسال الطلب...";
+
+
+try{
+
+
+const ordersRef =
+collection(
+db,
+"orders"
+);
+
+
+const orderDoc =
+await addDoc(
+ordersRef,
+orderData
+);
+
+
+console.log(
+"ORDER CREATED:",
+orderDoc.id
+);
+
+
+/* =====================================================
+   SUCCESS
+===================================================== */
+
+const orderNumber =
+document.getElementById(
+"orderNumber"
+);
+
+
+if(orderNumber){
+
+orderNumber.textContent =
+orderDoc.id;
+
+}
+
+
+const orderSuccess =
+document.getElementById(
+"orderSuccess"
+);
+
+
+if(orderSuccess){
+
+orderSuccess.classList.add(
+"show"
+);
+
+}
+
+
+formHide();
+
+
+showMessage(
+"تم إرسال طلبك بنجاح ✅",
+"success"
+);
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+nameInput.value = "";
+phoneInput.value = "";
+wilayaInput.value = "";
+communeInput.value = "";
+addressInput.value = "";
+notesInput.value = "";
+
+
+/* =====================================================
+   SAVE LAST CUSTOMER
+===================================================== */
+
+localStorage.setItem(
+
+"lastCustomer",
+
+JSON.stringify({
+
+name:
+customerName,
+
+phone:
+phoneClean,
+
+wilaya:
+customerWilaya,
+
+commune:
+customerCommune,
+
+address:
+customerAddress
+
+})
+
+);
+
+
+}catch(error){
+
+console.error(
+"ORDER ERROR:",
+error
+);
+
+
+showMessage(
+
+"❌ حدث خطأ أثناء إرسال الطلب. حاول مرة أخرى.",
+
+"error"
+
+);
+
+
+submitBtn.disabled =
+false;
+
+submitBtn.textContent =
+"📦 تأكيد وإرسال الطلب";
+
+}
+
+}
+
+
+/* =====================================================
+   FORM HIDE AFTER SUCCESS
+===================================================== */
+
+function formHide(){
+
+const form =
+document.getElementById(
+"orderFormElement"
+);
+
+
+if(form){
+
+form.style.display =
+"none";
 
 }
 
@@ -2433,15 +3835,19 @@ document.getElementById(
 "message"
 );
 
+
 if(!message)
 return;
+
 
 message.textContent =
 text;
 
+
 message.className =
 "message " +
 type;
+
 
 setTimeout(
 
@@ -2472,6 +3878,7 @@ const overlay =
 document.getElementById(
 "overlay"
 );
+
 
 document
 .getElementById("menuBtn")
@@ -2510,6 +3917,89 @@ overlay.classList.remove(
 
 
 /* =====================================================
+   LOAD LAST CUSTOMER
+===================================================== */
+
+function loadLastCustomer(){
+
+try{
+
+const saved =
+JSON.parse(
+localStorage.getItem(
+"lastCustomer"
+)
+);
+
+
+if(!saved)
+return;
+
+
+const nameInput =
+document.getElementById(
+"customerName"
+);
+
+const phoneInput =
+document.getElementById(
+"customerPhone"
+);
+
+const wilayaInput =
+document.getElementById(
+"customerWilaya"
+);
+
+const communeInput =
+document.getElementById(
+"customerCommune"
+);
+
+const addressInput =
+document.getElementById(
+"customerAddress"
+);
+
+
+if(nameInput)
+nameInput.value =
+saved.name || "";
+
+
+if(phoneInput)
+phoneInput.value =
+saved.phone || "";
+
+
+if(wilayaInput)
+wilayaInput.value =
+saved.wilaya || "";
+
+
+if(communeInput)
+communeInput.value =
+saved.commune || "";
+
+
+if(addressInput)
+addressInput.value =
+saved.address || "";
+
+
+}catch(error){
+
+console.log(
+"LAST CUSTOMER ERROR:",
+error
+);
+
+}
+
+}
+
+
+/* =====================================================
    START
 ===================================================== */
 
@@ -2519,6 +4009,8 @@ await loadProduct();
 
 updateCartCount();
 
+loadLastCustomer();
+
 
 console.log(
 "G-Glam Product Started"
@@ -2527,7 +4019,9 @@ console.log(
 </script>
 
 
-<!-- SERVICE WORKER -->
+<!-- =====================================================
+     SERVICE WORKER
+===================================================== -->
 
 <script>
 
