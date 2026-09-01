@@ -1,4 +1,9 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
 
 <meta
     name="viewport"
@@ -36,41 +41,51 @@
     rel="stylesheet"
 >
 
+
 <!-- =====================================================
      META PIXEL
 ===================================================== -->
 
 <script>
-    !function(f,b,e,v,n,t,s)
-    {
-        if(f.fbq)return;
 
-        n=f.fbq=function(){
-            n.callMethod ?
-            n.callMethod.apply(n,arguments) :
-            n.queue.push(arguments)
-        };
+!function(f,b,e,v,n,t,s)
+{
 
-        if(!f._fbq)f._fbq=n;
+    if(f.fbq)return;
 
-        n.push=n;
-        n.loaded=!0;
-        n.version='2.0';
-        n.queue=[];
+    n=f.fbq=function(){
 
-        t=b.createElement(e);
-        t.async=!0;
-        t.src=v;
+        n.callMethod ?
+        n.callMethod.apply(n,arguments) :
+        n.queue.push(arguments)
 
-        s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)
+    };
 
-    }(
-        window,
-        document,
-        'script',
-        'https://connect.facebook.net/en_US/fbevents.js'
+    if(!f._fbq)f._fbq=n;
+
+    n.push=n;
+    n.loaded=!0;
+    n.version='2.0';
+    n.queue=[];
+
+    t=b.createElement(e);
+    t.async=!0;
+    t.src=v;
+
+    s=b.getElementsByTagName(e)[0];
+
+    s.parentNode.insertBefore(
+        t,
+        s
     );
+
+}(
+    window,
+    document,
+    'script',
+    'https://connect.facebook.net/en_US/fbevents.js'
+);
+
 </script>
 
 
@@ -79,563 +94,1970 @@
 ===================================================== -->
 
 <script>
-    !function (w, d, t) {
 
-        w.TiktokPixelObject = t;
+!function (w, d, t) {
 
-        var ttq = w[t] = w[t] || [];
+    w.TiktokPixelObject = t;
 
-        ttq.methods = [
-            "page",
-            "track",
-            "identify",
-            "instances",
-            "debug",
-            "on",
-            "off",
-            "once",
-            "ready",
-            "alias",
-            "group",
-            "enableCookie",
-            "disableCookie"
-        ];
+    var ttq = w[t] = w[t] || [];
 
-        ttq.setAndDefer = function(t,e) {
-            t[e] = function() {
-                t.push(
-                    [e].slice.call(arguments)
-                )
-            }
+    ttq.methods = [
+        "page",
+        "track",
+        "identify",
+        "instances",
+        "debug",
+        "on",
+        "off",
+        "once",
+        "ready",
+        "alias",
+        "group",
+        "enableCookie",
+        "disableCookie"
+    ];
+
+    ttq.setAndDefer = function(t,e) {
+
+        t[e] = function() {
+
+            t.push(
+                [e].slice.call(arguments)
+            );
+
         };
 
+    };
+
+    for(
+        var i = 0;
+        i < ttq.methods.length;
+        i++
+    ) {
+
+        ttq.setAndDefer(
+            ttq,
+            ttq.methods[i]
+        );
+
+    }
+
+    ttq.instance = function(t) {
+
         for(
-            var i=0;
-            i<ttq.methods.length;
-            i++
+            var e = ttq._methods,
+            n = 0;
+            n < e.length;
+            n++
         ) {
 
             ttq.setAndDefer(
-                ttq,
-                ttq.methods[i]
+                t,
+                e[n]
             );
 
         }
 
-        ttq.instance = function(t) {
+        return t;
 
-            for(
-                var e=ttq._methods,
-                n=0;
-                n<e.length;
-                n++
-            ) {
+    };
 
-                ttq.setAndDefer(
-                    t,
-                    e[n]
-                );
+    ttq.load = function(e,n) {
 
-            }
+        var i =
+            "https://analytics.tiktok.com/i18n/pixel/events.js";
 
-            return t;
+        ttq._i = ttq._i || {};
+        ttq._i[e] = [];
+        ttq._i[e]._u = i;
 
-        };
+        ttq._t = ttq._t || {};
+        ttq._t[e] = +new Date;
+        ttq._t[e]._o = n || {};
 
-        ttq.load = function(e,n) {
+        var o =
+            document.createElement("script");
 
-            var i =
-                "https://analytics.tiktok.com/i18n/pixel/events.js";
+        o.type = "text/javascript";
+        o.async = !0;
 
-            ttq._i=ttq._i||{};
-            ttq._i[e]=[];
-            ttq._i[e]._u=i;
+        o.src =
+            i +
+            "?sdkid=" +
+            e +
+            "&lib=" +
+            t;
 
-            ttq._t=ttq._t||{};
-            ttq._t[e]=+new Date;
-            ttq._t[e]._o=n||{};
+        var a =
+            document.getElementsByTagName(
+                "script"
+            )[0];
 
-            var o=document.createElement("script");
+        a.parentNode.insertBefore(
+            o,
+            a
+        );
 
-            o.type="text/javascript";
-            o.async=!0;
+    };
 
-            o.src =
-                i +
-                "?sdkid=" +
-                e +
-                "&lib=" +
-                t;
+}(
+    window,
+    document,
+    'ttq'
+);
 
-            var a =
-                document.getElementsByTagName(
-                    "script"
-                )[0];
-
-            a.parentNode.insertBefore(
-                o,
-                a
-            );
-
-        };
-
-    }(
-        window,
-        document,
-        'ttq'
-    );
 </script>
 
 
 <style>
 
-    /* =====================================================
-       ROOT
-    ===================================================== */
+/* =====================================================
+   ROOT
+===================================================== */
 
-    :root {
+:root {
 
-        --bg: #F4F4F4;
+    --bg: #F4F4F4;
 
-        --header: #FFFFFF;
+    --header: #FFFFFF;
 
-        --card: #FFFFFF;
+    --card: #FFFFFF;
 
-        --card-light: #FAFAFA;
+    --card-light: #FAFAFA;
 
-        --text: #374151;
+    --text: #374151;
 
-        --muted: #6B7280;
+    --muted: #6B7280;
 
-        --border: #E5E7EB;
+    --border: #E5E7EB;
 
-        --accent: #F47B20;
+    --accent: #F47B20;
 
-        --accent-dark: #D96610;
+    --accent-dark: #D96610;
 
-        --input: #FFFFFF;
+    --input: #FFFFFF;
 
-        --input-text: #374151;
+    --input-text: #374151;
 
-        --sidebar: #FFFFFF;
+    --sidebar: #FFFFFF;
 
-        --sidebar-hover: #FFF7ED;
+    --sidebar-hover: #FFF7ED;
 
-        --danger: #EF4444;
+    --danger: #EF4444;
 
-        --shadow:
-            0 8px 25px rgba(0,0,0,.10);
+    --shadow:
+        0 8px 25px rgba(0,0,0,.10);
+
+    --theme-gradient:
+        linear-gradient(
+            135deg,
+            #F47B20,
+            #D96610
+        );
+
+}
+
+
+/* =====================================================
+   1 - ORANGE
+===================================================== */
+
+body.theme-orange {
+
+    --bg: #F4F4F4;
+    --header: #FFFFFF;
+    --card: #FFFFFF;
+    --card-light: #FAFAFA;
+    --text: #374151;
+    --muted: #6B7280;
+    --border: #E5E7EB;
+    --accent: #F47B20;
+    --accent-dark: #D96610;
+    --input: #FFFFFF;
+    --input-text: #374151;
+    --sidebar: #FFFFFF;
+    --sidebar-hover: #FFF7ED;
+
+}
+
+
+/* =====================================================
+   2 - BLUE
+===================================================== */
+
+body.theme-blue {
+
+    --bg: #EEF5FF;
+    --header: #FFFFFF;
+    --card: #FFFFFF;
+    --card-light: #F8FBFF;
+    --text: #1E3A5F;
+    --muted: #64748B;
+    --border: #D8E5F5;
+    --accent: #1769AA;
+    --accent-dark: #12558B;
+    --input: #FFFFFF;
+    --input-text: #1E3A5F;
+    --sidebar: #FFFFFF;
+    --sidebar-hover: #EFF6FF;
+
+}
+
+
+/* =====================================================
+   3 - GREEN
+===================================================== */
+
+body.theme-green {
+
+    --bg: #EFFBF4;
+    --header: #FFFFFF;
+    --card: #FFFFFF;
+    --card-light: #F8FFFA;
+    --text: #14532D;
+    --muted: #64748B;
+    --border: #D9F0E1;
+    --accent: #198754;
+    --accent-dark: #146C43;
+    --input: #FFFFFF;
+    --input-text: #14532D;
+    --sidebar: #FFFFFF;
+    --sidebar-hover: #F0FDF4;
+
+}
+
+
+/* =====================================================
+   4 - PURPLE
+===================================================== */
+
+body.theme-purple {
+
+    --bg: #F7F0FF;
+    --header: #FFFFFF;
+    --card: #FFFFFF;
+    --card-light: #FCF9FF;
+    --text: #4C1D95;
+    --muted: #6B7280;
+    --border: #E8DDF5;
+    --accent: #7B3FC6;
+    --accent-dark: #632FA4;
+    --input: #FFFFFF;
+    --input-text: #4C1D95;
+    --sidebar: #FFFFFF;
+    --sidebar-hover: #F5F3FF;
+
+}
+
+
+/* =====================================================
+   5 - PINK
+===================================================== */
+
+body.theme-pink {
+
+    --bg: #FFF1F5;
+    --header: #FFFFFF;
+    --card: #FFFFFF;
+    --card-light: #FFF8FA;
+    --text: #881337;
+    --muted: #6B7280;
+    --border: #F3D5DF;
+    --accent: #D94F87;
+    --accent-dark: #B83E70;
+    --input: #FFFFFF;
+    --input-text: #881337;
+    --sidebar: #FFFFFF;
+    --sidebar-hover: #FFF1F5;
+
+}
+
+
+/* =====================================================
+   6 - DARK
+===================================================== */
+
+body.theme-dark {
+
+    --bg: #07111F;
+    --header: #0A1726;
+    --card: #0D1B2A;
+    --card-light: #132337;
+    --text: #F3F4F6;
+    --muted: #9AA9BB;
+    --border: #223449;
+    --accent: #F47B20;
+    --accent-dark: #D96610;
+    --input: #172536;
+    --input-text: #F3F4F6;
+    --sidebar: #0D1928;
+    --sidebar-hover: #152437;
+
+}
+
+
+/* =====================================================
+   7 - RED
+===================================================== */
+
+body.theme-red {
+
+    --bg: #FFF5F5;
+    --header: #FFFFFF;
+    --card: #FFFFFF;
+    --card-light: #FFF9F9;
+    --text: #7F1D1D;
+    --muted: #6B7280;
+    --border: #F3D4D4;
+    --accent: #E63946;
+    --accent-dark: #C92F3B;
+    --input: #FFFFFF;
+    --input-text: #7F1D1D;
+    --sidebar: #FFFFFF;
+    --sidebar-hover: #FFF1F2;
+
+}
+
+
+/* =====================================================
+   8 - TEAL
+===================================================== */
+
+body.theme-teal {
+
+    --bg: #EFFCFE;
+    --header: #FFFFFF;
+    --card: #FFFFFF;
+    --card-light: #F7FEFF;
+    --text: #164E63;
+    --muted: #64748B;
+    --border: #D4F1F5;
+    --accent: #00B4D8;
+    --accent-dark: #0096B7;
+    --input: #FFFFFF;
+    --input-text: #164E63;
+    --sidebar: #FFFFFF;
+    --sidebar-hover: #ECFEFF;
+
+}
+
+
+/* =====================================================
+   9 - GOLD
+===================================================== */
+
+body.theme-gold {
+
+    --bg: #FAF8F0;
+    --header: #FFFFFF;
+    --card: #FFFFFF;
+    --card-light: #FFFDF5;
+    --text: #5F4B12;
+    --muted: #786F5A;
+    --border: #EDE3BE;
+    --accent: #D4AF37;
+    --accent-dark: #B8941F;
+    --input: #FFFFFF;
+    --input-text: #5F4B12;
+    --sidebar: #FFFFFF;
+    --sidebar-hover: #FFF9E6;
+
+}
+
+
+/* =====================================================
+   10 - LUXURY
+===================================================== */
+
+body.theme-luxury {
+
+    --bg: #111111;
+    --header: #191919;
+    --card: #1C1C1C;
+    --card-light: #242424;
+    --text: #F5F5F5;
+    --muted: #B8B8B8;
+    --border: #383838;
+    --accent: #D4AF37;
+    --accent-dark: #B8941F;
+    --input: #222222;
+    --input-text: #F5F5F5;
+    --sidebar: #181818;
+    --sidebar-hover: #292929;
+
+}
+
+
+/* =====================================================
+   11 - SUNSET
+===================================================== */
+
+body.theme-sunset {
+
+    --bg: #FFF6F1;
+    --header: #FFFFFF;
+    --card: #FFFFFF;
+    --card-light: #FFF9F6;
+    --text: #4A2530;
+    --muted: #75636A;
+    --border: #F2D8CC;
+    --accent: #FD1D1D;
+    --accent-dark: #D91313;
+    --input: #FFFFFF;
+    --input-text: #4A2530;
+    --sidebar: #FFFFFF;
+    --sidebar-hover: #FFF0E8;
+
+}
+
+
+/* =====================================================
+   12 - EMERALD
+===================================================== */
+
+body.theme-emerald {
+
+    --bg: #EFFAF5;
+    --header: #FFFFFF;
+    --card: #FFFFFF;
+    --card-light: #F6FCF9;
+    --text: #064E3B;
+    --muted: #64748B;
+    --border: #D4EDE3;
+    --accent: #0F5132;
+    --accent-dark: #0A3D26;
+    --input: #FFFFFF;
+    --input-text: #064E3B;
+    --sidebar: #FFFFFF;
+    --sidebar-hover: #ECFDF5;
+
+}
+
+
+/* =====================================================
+   CUSTOM SOLID
+===================================================== */
+
+body.theme-custom-solid {
+
+    --bg: #F7F7F7;
+    --header: #FFFFFF;
+    --card: #FFFFFF;
+    --card-light: #FAFAFA;
+    --text: #374151;
+    --muted: #6B7280;
+    --border: #E5E7EB;
+    --input: #FFFFFF;
+    --input-text: #374151;
+    --sidebar: #FFFFFF;
+
+}
+
+
+/* =====================================================
+   CUSTOM GRADIENT
+===================================================== */
+
+body.theme-custom-gradient {
+
+    --bg: #F7F7F7;
+    --header: #FFFFFF;
+    --card: #FFFFFF;
+    --card-light: #FAFAFA;
+    --text: #374151;
+    --muted: #6B7280;
+    --border: #E5E7EB;
+    --input: #FFFFFF;
+    --input-text: #374151;
+    --sidebar: #FFFFFF;
+    --sidebar-hover: #F7F7F7;
+
+}
+
+
+body.theme-custom-gradient .logo span {
+
+    background:
+        var(--theme-gradient);
+
+    -webkit-background-clip:
+        text;
+
+    background-clip:
+        text;
+
+    color:
+        transparent;
+
+}
+
+
+body.theme-custom-gradient .price {
+
+    background:
+        var(--theme-gradient);
+
+    -webkit-background-clip:
+        text;
+
+    background-clip:
+        text;
+
+    color:
+        transparent;
+
+}
+
+
+body.theme-custom-gradient .add-btn,
+body.theme-custom-gradient .floating-cart {
+
+    background:
+        var(--theme-gradient);
+
+}
+
+
+body.theme-custom-gradient .cart-count {
+
+    background:
+        var(--accent);
+
+}
+
+
+body.theme-custom-gradient .add-btn:hover,
+body.theme-custom-gradient .floating-cart:hover {
+
+    filter:
+        brightness(.92);
+
+}
+
+
+body.theme-custom-gradient .details-btn:hover {
+
+    background:
+        var(--theme-gradient);
+
+}
+
+
+body.theme-custom-gradient .menu-btn:hover,
+body.theme-custom-gradient .cart-icon:hover {
+
+    color:
+        var(--accent);
+
+}
+
+
+body.theme-custom-gradient .card:hover {
+
+    border-color:
+        var(--accent);
+
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+
+    font-family:
+        "Tajawal",
+        Arial,
+        sans-serif;
+
+}
+
+
+html {
+
+    scroll-behavior:
+        smooth;
+
+}
+
+
+body {
+
+    min-height:
+        100vh;
+
+    background:
+        var(--bg);
+
+    color:
+        var(--text);
+
+    padding-bottom:
+        95px;
+
+    transition:
+        background .25s ease,
+        color .25s ease;
+
+}
+
+
+button,
+input {
+
+    font-family:
+        "Tajawal",
+        Arial,
+        sans-serif;
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+header {
+
+    height:
+        70px;
+
+    width:
+        100%;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    padding:
+        0 24px;
+
+    background:
+        var(--header);
+
+    border-bottom:
+        1px solid var(--border);
+
+    position:
+        sticky;
+
+    top:
+        0;
+
+    z-index:
+        1000;
+
+    transition:
+        background .25s ease,
+        border-color .25s ease;
+
+}
+
+
+.logo {
+
+    position:
+        absolute;
+
+    left:
+        50%;
+
+    top:
+        50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    width:
+        max-content;
+
+    max-width:
+        55%;
+
+    text-align:
+        center;
+
+}
+
+
+.logo span {
+
+    color:
+        var(--accent);
+
+    font-size:
+        27px;
+
+    line-height:
+        1.2;
+
+    font-weight:
+        800;
+
+    white-space:
+        nowrap;
+
+    overflow:
+        hidden;
+
+    text-overflow:
+        ellipsis;
+
+    transition:
+        color .25s ease;
+
+}
+
+
+.menu-btn,
+.cart-icon {
+
+    width:
+        42px;
+
+    height:
+        42px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    cursor:
+        pointer;
+
+    position:
+        relative;
+
+    color:
+        var(--text);
+
+    border-radius:
+        10px;
+
+    transition:
+        background .2s,
+        color .2s;
+
+}
+
+
+.menu-btn:hover,
+.cart-icon:hover {
+
+    background:
+        var(--sidebar-hover);
+
+    color:
+        var(--accent);
+
+}
+
+
+.menu-btn svg,
+.cart-icon svg {
+
+    width:
+        29px;
+
+    height:
+        29px;
+
+}
+
+
+.cart-count {
+
+    position:
+        absolute;
+
+    top:
+        -2px;
+
+    right:
+        -3px;
+
+    width:
+        21px;
+
+    height:
+        21px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--accent);
+
+    color:
+        #FFFFFF;
+
+    font-size:
+        11px;
+
+    font-weight:
+        800;
+
+    border:
+        2px solid var(--header);
+
+}
+
+
+/* =====================================================
+   STORE HERO
+===================================================== */
+
+.store-section {
+
+    width:
+        100%;
+
+    position:
+        relative;
+
+}
+
+
+.store-cover {
+
+    width:
+        100%;
+
+    height:
+        285px;
+
+    overflow:
+        hidden;
+
+    background:
+        var(--card-light);
+
+    display:
+        none;
+
+}
+
+
+.store-cover img {
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+    object-fit:
+        cover;
+
+    object-position:
+        center;
+
+    display:
+        block;
+
+}
+
+
+.store-info {
+
+    text-align:
+        center;
+
+    padding:
+        0 20px 32px;
+
+    position:
+        relative;
+
+}
+
+
+.store-banner-image {
+
+    width:
+        145px;
+
+    height:
+        145px;
+
+    margin:
+        -72px auto 18px;
+
+    position:
+        relative;
+
+    z-index:
+        5;
+
+}
+
+
+.store-banner-image img {
+
+    width:
+        145px;
+
+    height:
+        145px;
+
+    border-radius:
+        50%;
+
+    object-fit:
+        cover;
+
+    display:
+        block;
+
+    background:
+        var(--card);
+
+    border:
+        5px solid var(--bg);
+
+    box-shadow:
+        0 7px 22px
+        rgba(0,0,0,.25);
+
+}
+
+
+.store-banner h1 {
+
+    font-size:
+        34px;
+
+    line-height:
+        1.3;
+
+    font-weight:
+        800;
+
+    color:
+        var(--text);
+
+    margin-bottom:
+        4px;
+
+}
+
+
+.store-banner p {
+
+    font-size:
+        16px;
+
+    color:
+        var(--muted);
+
+    line-height:
+        1.8;
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+.search-section {
+
+    width:
+        100%;
+
+    max-width:
+        1100px;
+
+    margin:
+        0 auto 20px;
+
+    padding:
+        0 25px;
+
+}
+
+
+.search-box {
+
+    position:
+        relative;
+
+    width:
+        100%;
+
+}
+
+
+.search-box input {
+
+    width:
+        100%;
+
+    height:
+        52px;
+
+    padding:
+        0 22px 0 55px;
+
+    outline:
+        none;
+
+    border-radius:
+        30px;
+
+    background:
+        var(--input);
+
+    color:
+        var(--input-text);
+
+    font-size:
+        15px;
+
+    border:
+        1px solid var(--border);
+
+    transition:
+        .2s;
+
+}
+
+
+.search-box input::placeholder {
+
+    color:
+        var(--muted);
+
+}
+
+
+.search-box input:focus {
+
+    border-color:
+        var(--accent);
+
+    box-shadow:
+        0 0 0 3px
+        color-mix(
+            in srgb,
+            var(--accent) 12%,
+            transparent
+        );
+
+}
+
+
+.search-icon {
+
+    position:
+        absolute;
+
+    left:
+        18px;
+
+    top:
+        50%;
+
+    transform:
+        translateY(-50%);
+
+    width:
+        23px;
+
+    height:
+        23px;
+
+    color:
+        var(--muted);
+
+    pointer-events:
+        none;
+
+}
+
+
+/* =====================================================
+   PRODUCTS
+===================================================== */
+
+.products {
+
+    width:
+        100%;
+
+    max-width:
+        1100px;
+
+    margin:
+        0 auto;
+
+    padding:
+        0 25px;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap:
+        14px;
+
+}
+
+
+.card {
+
+    min-width:
+        0;
+
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        10px;
+
+    overflow:
+        hidden;
+
+    box-shadow:
+        0 5px 16px
+        rgba(0,0,0,.08);
+
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        background .25s ease;
+
+}
+
+
+.card:hover {
+
+    transform:
+        translateY(-3px);
+
+    border-color:
+        var(--accent);
+
+}
+
+
+.card img {
+
+    width:
+        100%;
+
+    aspect-ratio:
+        1 / 1;
+
+    object-fit:
+        cover;
+
+    display:
+        block;
+
+    background:
+        var(--card-light);
+
+}
+
+
+.card-content {
+
+    padding:
+        11px 12px 13px;
+
+}
+
+
+.card h3 {
+
+    color:
+        var(--text);
+
+    font-size:
+        15px;
+
+    font-weight:
+        700;
+
+    line-height:
+        1.55;
+
+    height:
+        47px;
+
+    overflow:
+        hidden;
+
+    margin-bottom:
+        3px;
+
+    text-align:
+        center;
+
+}
+
+
+.price {
+
+    color:
+        var(--accent);
+
+    font-size:
+        17px;
+
+    font-weight:
+        800;
+
+    text-align:
+        center;
+
+    margin-bottom:
+        9px;
+
+}
+
+
+.details-btn {
+
+    width:
+        100%;
+
+    height:
+        35px;
+
+    border:
+        1.5px solid var(--accent);
+
+    border-radius:
+        7px;
+
+    background:
+        transparent;
+
+    color:
+        var(--text);
+
+    font-size:
+        13px;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+
+    margin-bottom:
+        8px;
+
+    transition:
+        .2s;
+
+}
+
+
+.details-btn:hover {
+
+    background:
+        var(--accent);
+
+    color:
+        #FFFFFF;
+
+}
+
+
+.add-btn {
+
+    width:
+        100%;
+
+    height:
+        35px;
+
+    border:
+        none;
+
+    border-radius:
+        7px;
+
+    background:
+        var(--accent);
+
+    color:
+        #FFFFFF;
+
+    font-size:
+        13px;
+
+    font-weight:
+        800;
+
+    cursor:
+        pointer;
+
+    transition:
+        .2s;
+
+}
+
+
+.add-btn:hover {
+
+    background:
+        var(--accent-dark);
+
+}
+
+
+.add-btn:disabled {
+
+    background:
+        #9CA3AF;
+
+    color:
+        #E5E7EB;
+
+    cursor:
+        not-allowed;
+
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.loading {
+
+    grid-column:
+        1 / -1;
+
+    min-height:
+        250px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    color:
+        var(--muted);
+
+    text-align:
+        center;
+
+}
+
+
+.loading svg {
+
+    width:
+        36px;
+
+    height:
+        36px;
+
+    margin-bottom:
+        12px;
+
+    animation:
+        spin 1s linear infinite;
+
+}
+
+
+@keyframes spin {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.empty {
+
+    grid-column:
+        1 / -1;
+
+    text-align:
+        center;
+
+    padding:
+        55px 20px;
+
+    color:
+        var(--muted);
+
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        15px;
+
+}
+
+
+.empty h2 {
+
+    color:
+        var(--text);
+
+    margin-top:
+        10px;
+
+}
+
+
+.empty-icon {
+
+    width:
+        50px;
+
+    height:
+        50px;
+
+    color:
+        var(--accent);
+
+}
+
+
+/* =====================================================
+   SOCIAL
+===================================================== */
+
+.social-section {
+
+    width:
+        100%;
+
+    max-width:
+        1100px;
+
+    margin:
+        45px auto 30px;
+
+    padding:
+        0 25px;
+
+    scroll-margin-top:
+        90px;
+
+}
+
+
+.social-box {
+
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        18px;
+
+    padding:
+        28px 20px;
+
+    text-align:
+        center;
+
+    box-shadow:
+        0 5px 18px
+        rgba(0,0,0,.06);
+
+}
+
+
+.social-title {
+
+    color:
+        var(--text);
+
+    font-size:
+        24px;
+
+    font-weight:
+        800;
+
+    margin-bottom:
+        7px;
+
+}
+
+
+.social-description {
+
+    color:
+        var(--muted);
+
+    font-size:
+        14px;
+
+    margin-bottom:
+        22px;
+
+}
+
+
+.social-links {
+
+    display:
+        flex;
+
+    flex-wrap:
+        wrap;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        12px;
+
+}
+
+
+.social-link {
+
+    min-width:
+        125px;
+
+    min-height:
+        48px;
+
+    padding:
+        10px 16px;
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        9px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        12px;
+
+    background:
+        var(--card-light);
+
+    color:
+        var(--text);
+
+    text-decoration:
+        none;
+
+    font-size:
+        14px;
+
+    font-weight:
+        700;
+
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        border-color .2s ease,
+        color .2s ease;
+
+}
+
+
+.social-link:hover {
+
+    transform:
+        translateY(-2px);
+
+    border-color:
+        var(--accent);
+
+    color:
+        var(--accent);
+
+    background:
+        var(--sidebar-hover);
+
+}
+
+
+.social-link svg {
+
+    width:
+        22px;
+
+    height:
+        22px;
+
+    flex-shrink:
+        0;
+
+}
+
+
+.social-empty {
+
+    color:
+        var(--muted);
+
+    font-size:
+        14px;
+
+    padding:
+        10px;
+
+}
+
+
+/* =====================================================
+   FLOATING CART
+===================================================== */
+
+.floating-cart {
+
+    position:
+        fixed;
+
+    bottom:
+        18px;
+
+    left:
+        50%;
+
+    transform:
+        translateX(-50%);
+
+    width:
+        calc(100% - 50px);
+
+    max-width:
+        540px;
+
+    height:
+        53px;
+
+    background:
+        var(--accent);
+
+    color:
+        #FFFFFF;
+
+    text-decoration:
+        none;
+
+    border-radius:
+        28px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        9px;
+
+    font-size:
+        16px;
+
+    font-weight:
+        800;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.18);
+
+    z-index:
+        900;
+
+    transition:
+        .2s;
+
+}
+
+
+.floating-cart:hover {
+
+    background:
+        var(--accent-dark);
+
+    transform:
+        translateX(-50%)
+        translateY(-2px);
+
+}
+
+
+.floating-cart svg {
+
+    width:
+        22px;
+
+    height:
+        22px;
+
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar {
+
+    position:
+        fixed;
+
+    top:
+        0;
+
+    right:
+        -300px;
+
+    width:
+        280px;
+
+    height:
+        100vh;
+
+    background:
+        var(--sidebar);
+
+    border-left:
+        1px solid var(--border);
+
+    box-shadow:
+        -5px 0 25px
+        rgba(0,0,0,.25);
+
+    z-index:
+        2000;
+
+    transition:
+        right .3s ease,
+        background .25s ease;
+
+    padding-top:
+        80px;
+
+}
+
+
+.sidebar.active {
+
+    right:
+        0;
+
+}
+
+
+.sidebar a {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        13px;
+
+    padding:
+        17px 25px;
+
+    color:
+        var(--text);
+
+    text-decoration:
+        none;
+
+    border-bottom:
+        1px solid var(--border);
+
+    font-size:
+        16px;
+
+    transition:
+        background .2s,
+        color .2s;
+
+}
+
+
+.sidebar a:hover {
+
+    background:
+        var(--sidebar-hover);
+
+    color:
+        var(--accent);
+
+}
+
+
+.sidebar a svg {
+
+    width:
+        22px;
+
+    height:
+        22px;
+
+    flex-shrink:
+        0;
+
+}
+
+
+/* =====================================================
+   OVERLAY
+===================================================== */
+
+.overlay {
+
+    position:
+        fixed;
+
+    inset:
+        0;
+
+    background:
+        rgba(0,0,0,.55);
+
+    display:
+        none;
+
+    z-index:
+        1900;
+
+}
+
+
+.overlay.active {
+
+    display:
+        block;
+
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .products {
+
+        grid-template-columns:
+            repeat(4, 1fr);
 
     }
 
+}
 
-    /* =====================================================
-       1 - ORANGE
-    ===================================================== */
 
-    body.theme-orange {
+/* =====================================================
+   MOBILE
+===================================================== */
 
-        --bg: #F4F4F4;
-        --header: #FFFFFF;
-        --card: #FFFFFF;
-        --card-light: #FAFAFA;
-        --text: #374151;
-        --muted: #6B7280;
-        --border: #E5E7EB;
-        --accent: #F47B20;
-        --accent-dark: #D96610;
-        --input: #FFFFFF;
-        --input-text: #374151;
-        --sidebar: #FFFFFF;
-        --sidebar-hover: #FFF7ED;
-
-    }
-
-
-    /* =====================================================
-       2 - BLUE
-    ===================================================== */
-
-    body.theme-blue {
-
-        --bg: #EEF5FF;
-        --header: #FFFFFF;
-        --card: #FFFFFF;
-        --card-light: #F8FBFF;
-        --text: #1E3A5F;
-        --muted: #64748B;
-        --border: #D8E5F5;
-        --accent: #1769AA;
-        --accent-dark: #12558B;
-        --input: #FFFFFF;
-        --input-text: #1E3A5F;
-        --sidebar: #FFFFFF;
-        --sidebar-hover: #EFF6FF;
-
-    }
-
-
-    /* =====================================================
-       3 - GREEN
-    ===================================================== */
-
-    body.theme-green {
-
-        --bg: #EFFBF4;
-        --header: #FFFFFF;
-        --card: #FFFFFF;
-        --card-light: #F8FFFA;
-        --text: #14532D;
-        --muted: #64748B;
-        --border: #D9F0E1;
-        --accent: #198754;
-        --accent-dark: #146C43;
-        --input: #FFFFFF;
-        --input-text: #14532D;
-        --sidebar: #FFFFFF;
-        --sidebar-hover: #F0FDF4;
-
-    }
-
-
-    /* =====================================================
-       4 - PURPLE
-    ===================================================== */
-
-    body.theme-purple {
-
-        --bg: #F7F0FF;
-        --header: #FFFFFF;
-        --card: #FFFFFF;
-        --card-light: #FCF9FF;
-        --text: #4C1D95;
-        --muted: #6B7280;
-        --border: #E8DDF5;
-        --accent: #7B3FC6;
-        --accent-dark: #632FA4;
-        --input: #FFFFFF;
-        --input-text: #4C1D95;
-        --sidebar: #FFFFFF;
-        --sidebar-hover: #F5F3FF;
-
-    }
-
-
-    /* =====================================================
-       5 - PINK
-    ===================================================== */
-
-    body.theme-pink {
-
-        --bg: #FFF1F5;
-        --header: #FFFFFF;
-        --card: #FFFFFF;
-        --card-light: #FFF8FA;
-        --text: #881337;
-        --muted: #6B7280;
-        --border: #F3D5DF;
-        --accent: #D94F87;
-        --accent-dark: #B83E70;
-        --input: #FFFFFF;
-        --input-text: #881337;
-        --sidebar: #FFFFFF;
-        --sidebar-hover: #FFF1F5;
-
-    }
-
-
-    /* =====================================================
-       6 - DARK
-    ===================================================== */
-
-    body.theme-dark {
-
-        --bg: #07111F;
-        --header: #0A1726;
-        --card: #0D1B2A;
-        --card-light: #132337;
-        --text: #F3F4F6;
-        --muted: #9AA9BB;
-        --border: #223449;
-        --accent: #F47B20;
-        --accent-dark: #D96610;
-        --input: #172536;
-        --input-text: #F3F4F6;
-        --sidebar: #0D1928;
-        --sidebar-hover: #152437;
-
-    }
-
-
-    /* =====================================================
-       7 - RED
-    ===================================================== */
-
-    body.theme-red {
-
-        --bg: #FFF5F5;
-        --header: #FFFFFF;
-        --card: #FFFFFF;
-        --card-light: #FFF9F9;
-        --text: #7F1D1D;
-        --muted: #6B7280;
-        --border: #F3D4D4;
-        --accent: #E63946;
-        --accent-dark: #C92F3B;
-        --input: #FFFFFF;
-        --input-text: #7F1D1D;
-        --sidebar: #FFFFFF;
-        --sidebar-hover: #FFF1F2;
-
-    }
-
-
-    /* =====================================================
-       8 - TEAL
-    ===================================================== */
-
-    body.theme-teal {
-
-        --bg: #EFFCFE;
-        --header: #FFFFFF;
-        --card: #FFFFFF;
-        --card-light: #F7FEFF;
-        --text: #164E63;
-        --muted: #64748B;
-        --border: #D4F1F5;
-        --accent: #00B4D8;
-        --accent-dark: #0096B7;
-        --input: #FFFFFF;
-        --input-text: #164E63;
-        --sidebar: #FFFFFF;
-        --sidebar-hover: #ECFEFF;
-
-    }
-
-
-    /* =====================================================
-       9 - GOLD
-    ===================================================== */
-
-    body.theme-gold {
-
-        --bg: #FAF8F0;
-        --header: #FFFFFF;
-        --card: #FFFFFF;
-        --card-light: #FFFDF5;
-        --text: #5F4B12;
-        --muted: #786F5A;
-        --border: #EDE3BE;
-        --accent: #D4AF37;
-        --accent-dark: #B8941F;
-        --input: #FFFFFF;
-        --input-text: #5F4B12;
-        --sidebar: #FFFFFF;
-        --sidebar-hover: #FFF9E6;
-
-    }
-
-
-    /* =====================================================
-       10 - LUXURY
-    ===================================================== */
-
-    body.theme-luxury {
-
-        --bg: #111111;
-        --header: #191919;
-        --card: #1C1C1C;
-        --card-light: #242424;
-        --text: #F5F5F5;
-        --muted: #B8B8B8;
-        --border: #383838;
-        --accent: #D4AF37;
-        --accent-dark: #B8941F;
-        --input: #222222;
-        --input-text: #F5F5F5;
-        --sidebar: #181818;
-        --sidebar-hover: #292929;
-
-    }
-
-
-    /* =====================================================
-       11 - SUNSET
-    ===================================================== */
-
-    body.theme-sunset {
-
-        --bg: #FFF6F1;
-        --header: #FFFFFF;
-        --card: #FFFFFF;
-        --card-light: #FFF9F6;
-        --text: #4A2530;
-        --muted: #75636A;
-        --border: #F2D8CC;
-        --accent: #FD1D1D;
-        --accent-dark: #D91313;
-        --input: #FFFFFF;
-        --input-text: #4A2530;
-        --sidebar: #FFFFFF;
-        --sidebar-hover: #FFF0E8;
-
-    }
-
-
-    /* =====================================================
-       12 - EMERALD
-    ===================================================== */
-
-    body.theme-emerald {
-
-        --bg: #EFFAF5;
-        --header: #FFFFFF;
-        --card: #FFFFFF;
-        --card-light: #F6FCF9;
-        --text: #064E3B;
-        --muted: #64748B;
-        --border: #D4EDE3;
-        --accent: #0F5132;
-        --accent-dark: #0A3D26;
-        --input: #FFFFFF;
-        --input-text: #064E3B;
-        --sidebar: #FFFFFF;
-        --sidebar-hover: #ECFDF5;
-
-    }
-
-
-    /* =====================================================
-       RESET
-    ===================================================== */
-
-    * {
-
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-
-        font-family:
-            "Tajawal",
-            Arial,
-            sans-serif;
-
-    }
-
-
-    html {
-
-        scroll-behavior: smooth;
-
-    }
-
-
-    body {
-
-        min-height: 100vh;
-
-        background:
-            var(--bg);
-
-        color:
-            var(--text);
-
-        padding-bottom: 95px;
-
-        transition:
-            background .25s ease,
-            color .25s ease;
-
-    }
-
-
-    button,
-    input {
-
-        font-family:
-            "Tajawal",
-            Arial,
-            sans-serif;
-
-    }
-
-
-    /* =====================================================
-       HEADER
-    ===================================================== */
+@media (max-width: 700px) {
 
     header {
 
-        height: 70px;
-        width: 100%;
+        height:
+            64px;
 
-        display: flex;
-
-        align-items: center;
-        justify-content: space-between;
-
-        padding: 0 24px;
-
-        background:
-            var(--header);
-
-        border-bottom:
-            1px solid var(--border);
-
-        position: sticky;
-        top: 0;
-
-        z-index: 1000;
-
-        transition:
-            background .25s ease,
-            border-color .25s ease;
+        padding:
+            0 16px;
 
     }
 
 
     .logo {
 
-        position: absolute;
-
-        left: 50%;
-        top: 50%;
-
-        transform:
-            translate(-50%, -50%);
-
-        display: flex;
-
-        align-items: center;
-        justify-content: center;
-
-        width: max-content;
-        max-width: 55%;
-
-        text-align: center;
+        max-width:
+            55%;
 
     }
 
 
     .logo span {
 
-        color:
-            var(--accent);
-
-        font-size: 27px;
-
-        line-height: 1.2;
-
-        font-weight: 800;
-
-        white-space: nowrap;
-
-        overflow: hidden;
-
-        text-overflow: ellipsis;
-
-        transition:
-            color .25s ease;
+        font-size:
+            21px;
 
     }
 
@@ -643,38 +2065,11 @@
     .menu-btn,
     .cart-icon {
 
-        width: 42px;
-        height: 42px;
+        width:
+            38px;
 
-        display: flex;
-
-        align-items: center;
-        justify-content: center;
-
-        cursor: pointer;
-
-        position: relative;
-
-        color:
-            var(--text);
-
-        border-radius: 10px;
-
-        transition:
-            background .2s,
-            color .2s;
-
-    }
-
-
-    .menu-btn:hover,
-    .cart-icon:hover {
-
-        background:
-            var(--sidebar-hover);
-
-        color:
-            var(--accent);
+        height:
+            38px;
 
     }
 
@@ -682,337 +2077,115 @@
     .menu-btn svg,
     .cart-icon svg {
 
-        width: 29px;
-        height: 29px;
+        width:
+            26px;
 
-    }
-
-
-    .cart-count {
-
-        position: absolute;
-
-        top: -2px;
-        right: -3px;
-
-        width: 21px;
-        height: 21px;
-
-        display: flex;
-
-        align-items: center;
-        justify-content: center;
-
-        border-radius: 50%;
-
-        background:
-            var(--accent);
-
-        color: #FFFFFF;
-
-        font-size: 11px;
-        font-weight: 800;
-
-        border:
-            2px solid var(--header);
-
-    }
-
-
-    /* =====================================================
-       STORE HERO
-    ===================================================== */
-
-    .store-section {
-
-        width: 100%;
-        position: relative;
+        height:
+            26px;
 
     }
 
 
     .store-cover {
 
-        width: 100%;
-        height: 285px;
-
-        overflow: hidden;
-
-        background:
-            var(--card-light);
-
-        display: none;
-
-    }
-
-
-    .store-cover img {
-
-        width: 100%;
-        height: 100%;
-
-        object-fit: cover;
-        object-position: center;
-
-        display: block;
-
-    }
-
-
-    .store-info {
-
-        text-align: center;
-
-        padding:
-            0 20px 32px;
-
-        position: relative;
+        height:
+            190px;
 
     }
 
 
     .store-banner-image {
 
-        width: 145px;
-        height: 145px;
+        width:
+            112px;
+
+        height:
+            112px;
 
         margin:
-            -72px auto 18px;
-
-        position: relative;
-
-        z-index: 5;
+            -56px auto 15px;
 
     }
 
 
     .store-banner-image img {
 
-        width: 145px;
-        height: 145px;
+        width:
+            112px;
 
-        border-radius: 50%;
+        height:
+            112px;
 
-        object-fit: cover;
+        border-width:
+            4px;
 
-        display: block;
+    }
 
-        background:
-            var(--card);
 
-        border:
-            5px solid var(--bg);
+    .store-info {
 
-        box-shadow:
-            0 7px 22px
-            rgba(0,0,0,.25);
+        padding:
+            0 15px 25px;
 
     }
 
 
     .store-banner h1 {
 
-        font-size: 34px;
-
-        line-height: 1.3;
-
-        font-weight: 800;
-
-        color:
-            var(--text);
-
-        margin-bottom: 4px;
+        font-size:
+            27px;
 
     }
 
 
     .store-banner p {
 
-        font-size: 16px;
-
-        color:
-            var(--muted);
-
-        line-height: 1.8;
+        font-size:
+            14px;
 
     }
 
-
-    /* =====================================================
-       SEARCH
-    ===================================================== */
 
     .search-section {
 
-        width: 100%;
-        max-width: 1100px;
-
-        margin:
-            0 auto 20px;
-
         padding:
-            0 25px;
+            0 15px;
 
-    }
-
-
-    .search-box {
-
-        position: relative;
-
-        width: 100%;
+        margin-bottom:
+            12px;
 
     }
 
 
     .search-box input {
 
-        width: 100%;
-        height: 52px;
+        height:
+            48px;
 
-        padding:
-            0 22px 0 55px;
-
-        border: none;
-        outline: none;
-
-        border-radius: 30px;
-
-        background:
-            var(--input);
-
-        color:
-            var(--input-text);
-
-        font-size: 15px;
-
-        border:
-            1px solid var(--border);
-
-        transition: .2s;
+        font-size:
+            14px;
 
     }
 
-
-    .search-box input::placeholder {
-
-        color:
-            var(--muted);
-
-    }
-
-
-    .search-box input:focus {
-
-        border-color:
-            var(--accent);
-
-        box-shadow:
-            0 0 0 3px
-            color-mix(
-                in srgb,
-                var(--accent) 12%,
-                transparent
-            );
-
-    }
-
-
-    .search-icon {
-
-        position: absolute;
-
-        left: 18px;
-        top: 50%;
-
-        transform:
-            translateY(-50%);
-
-        width: 23px;
-        height: 23px;
-
-        color:
-            var(--muted);
-
-        pointer-events: none;
-
-    }
-
-
-    /* =====================================================
-       PRODUCTS
-    ===================================================== */
 
     .products {
 
-        width: 100%;
-        max-width: 1100px;
+        grid-template-columns:
+            repeat(2, 1fr);
 
-        margin:
-            0 auto;
+        gap:
+            10px;
 
         padding:
-            0 25px;
-
-        display: grid;
-
-        grid-template-columns:
-            repeat(5, 1fr);
-
-        gap: 14px;
+            0 10px;
 
     }
 
 
     .card {
 
-        min-width: 0;
-
-        background:
-            var(--card);
-
-        border:
-            1px solid var(--border);
-
-        border-radius: 10px;
-
-        overflow: hidden;
-
-        box-shadow:
-            0 5px 16px
-            rgba(0,0,0,.08);
-
-        transition:
-            transform .2s ease,
-            border-color .2s ease,
-            background .25s ease;
-
-    }
-
-
-    .card:hover {
-
-        transform:
-            translateY(-3px);
-
-        border-color:
-            var(--accent);
-
-    }
-
-
-    .card img {
-
-        width: 100%;
-
-        aspect-ratio: 1 / 1;
-
-        object-fit: cover;
-
-        display: block;
-
-        background:
-            var(--card-light);
+        border-radius:
+            10px;
 
     }
 
@@ -1020,928 +2193,219 @@
     .card-content {
 
         padding:
-            11px 12px 13px;
+            9px;
 
     }
 
 
     .card h3 {
 
-        color:
-            var(--text);
+        font-size:
+            13px;
 
-        font-size: 15px;
-
-        font-weight: 700;
-
-        line-height: 1.55;
-
-        height: 47px;
-
-        overflow: hidden;
-
-        margin-bottom: 3px;
-
-        text-align: center;
+        height:
+            42px;
 
     }
 
 
     .price {
 
-        color:
-            var(--accent);
-
-        font-size: 17px;
-
-        font-weight: 800;
-
-        text-align: center;
-
-        margin-bottom: 9px;
+        font-size:
+            15px;
 
     }
 
 
-    .details-btn {
-
-        width: 100%;
-        height: 35px;
-
-        border:
-            1.5px solid var(--accent);
-
-        border-radius: 7px;
-
-        background:
-            transparent;
-
-        color:
-            var(--text);
-
-        font-size: 13px;
-        font-weight: 700;
-
-        cursor: pointer;
-
-        margin-bottom: 8px;
-
-        transition: .2s;
-
-    }
-
-
-    .details-btn:hover {
-
-        background:
-            var(--accent);
-
-        color:
-            #FFFFFF;
-
-    }
-
-
+    .details-btn,
     .add-btn {
 
-        width: 100%;
-        height: 35px;
+        height:
+            34px;
 
-        border: none;
-
-        border-radius: 7px;
-
-        background:
-            var(--accent);
-
-        color:
-            #FFFFFF;
-
-        font-size: 13px;
-        font-weight: 800;
-
-        cursor: pointer;
-
-        transition: .2s;
+        font-size:
+            12px;
 
     }
 
-
-    .add-btn:hover {
-
-        background:
-            var(--accent-dark);
-
-    }
-
-
-    .add-btn:disabled {
-
-        background: #9CA3AF;
-
-        color: #E5E7EB;
-
-        cursor: not-allowed;
-
-    }
-
-
-    /* =====================================================
-       LOADING
-    ===================================================== */
-
-    .loading {
-
-        grid-column:
-            1 / -1;
-
-        min-height: 250px;
-
-        display: flex;
-
-        flex-direction: column;
-
-        align-items: center;
-        justify-content: center;
-
-        color:
-            var(--muted);
-
-        text-align: center;
-
-    }
-
-
-    .loading svg {
-
-        width: 36px;
-        height: 36px;
-
-        margin-bottom: 12px;
-
-        animation:
-            spin 1s linear infinite;
-
-    }
-
-
-    @keyframes spin {
-
-        from {
-            transform: rotate(0deg);
-        }
-
-        to {
-            transform: rotate(360deg);
-        }
-
-    }
-
-
-    /* =====================================================
-       EMPTY
-    ===================================================== */
-
-    .empty {
-
-        grid-column:
-            1 / -1;
-
-        text-align: center;
-
-        padding:
-            55px 20px;
-
-        color:
-            var(--muted);
-
-        background:
-            var(--card);
-
-        border:
-            1px solid var(--border);
-
-        border-radius: 15px;
-
-    }
-
-
-    .empty h2 {
-
-        color:
-            var(--text);
-
-        margin-top: 10px;
-
-    }
-
-
-    .empty-icon {
-
-        width: 50px;
-        height: 50px;
-
-        color:
-            var(--accent);
-
-    }
-
-
-    /* =====================================================
-       SOCIAL
-    ===================================================== */
 
     .social-section {
 
-        width: 100%;
-        max-width: 1100px;
-
-        margin:
-            45px auto 30px;
-
         padding:
-            0 25px;
+            0 15px;
 
-        scroll-margin-top: 90px;
+        margin-top:
+            35px;
 
     }
 
 
     .social-box {
 
-        background:
-            var(--card);
-
-        border:
-            1px solid var(--border);
-
-        border-radius: 18px;
-
         padding:
-            28px 20px;
-
-        text-align: center;
-
-        box-shadow:
-            0 5px 18px
-            rgba(0,0,0,.06);
+            24px 14px;
 
     }
 
 
     .social-title {
 
-        color:
-            var(--text);
-
-        font-size: 24px;
-
-        font-weight: 800;
-
-        margin-bottom: 7px;
-
-    }
-
-
-    .social-description {
-
-        color:
-            var(--muted);
-
-        font-size: 14px;
-
-        margin-bottom: 22px;
+        font-size:
+            21px;
 
     }
 
 
     .social-links {
 
-        display: flex;
-
-        flex-wrap: wrap;
-
-        align-items: center;
-        justify-content: center;
-
-        gap: 12px;
+        gap:
+            9px;
 
     }
 
 
     .social-link {
 
-        min-width: 125px;
-        min-height: 48px;
+        min-width:
+            calc(50% - 5px);
+
+        font-size:
+            13px;
 
         padding:
-            10px 16px;
-
-        display: inline-flex;
-
-        align-items: center;
-        justify-content: center;
-
-        gap: 9px;
-
-        border:
-            1px solid var(--border);
-
-        border-radius: 12px;
-
-        background:
-            var(--card-light);
-
-        color:
-            var(--text);
-
-        text-decoration: none;
-
-        font-size: 14px;
-        font-weight: 700;
-
-        transition:
-            transform .2s ease,
-            background .2s ease,
-            border-color .2s ease,
-            color .2s ease;
+            10px 8px;
 
     }
 
-
-    .social-link:hover {
-
-        transform:
-            translateY(-2px);
-
-        border-color:
-            var(--accent);
-
-        color:
-            var(--accent);
-
-        background:
-            var(--sidebar-hover);
-
-    }
-
-
-    .social-link svg {
-
-        width: 22px;
-        height: 22px;
-
-        flex-shrink: 0;
-
-    }
-
-
-    .social-empty {
-
-        color:
-            var(--muted);
-
-        font-size: 14px;
-
-        padding:
-            10px;
-
-    }
-
-
-    /* =====================================================
-       FLOATING CART
-    ===================================================== */
 
     .floating-cart {
 
-        position: fixed;
-
-        bottom: 18px;
-
-        left: 50%;
-
-        transform:
-            translateX(-50%);
-
         width:
-            calc(100% - 50px);
+            calc(100% - 30px);
 
-        max-width: 540px;
+        bottom:
+            12px;
 
-        height: 53px;
+    }
 
-        background:
-            var(--accent);
+}
 
-        color:
-            #FFFFFF;
 
-        text-decoration: none;
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
 
-        border-radius: 28px;
+@media (max-width: 380px) {
 
-        display: flex;
+    .store-cover {
 
-        align-items: center;
-        justify-content: center;
-
-        gap: 9px;
-
-        font-size: 16px;
-        font-weight: 800;
-
-        box-shadow:
-            0 8px 25px
-            rgba(0,0,0,.18);
-
-        z-index: 900;
-
-        transition: .2s;
+        height:
+            160px;
 
     }
 
 
-    .floating-cart:hover {
+    .logo span {
 
-        background:
-            var(--accent-dark);
-
-        transform:
-            translateX(-50%)
-            translateY(-2px);
+        font-size:
+            18px;
 
     }
 
 
-    .floating-cart svg {
+    .store-banner h1 {
 
-        width: 22px;
-        height: 22px;
-
-    }
-
-
-    /* =====================================================
-       SIDEBAR
-    ===================================================== */
-
-    .sidebar {
-
-        position: fixed;
-
-        top: 0;
-        right: -300px;
-
-        width: 280px;
-        height: 100vh;
-
-        background:
-            var(--sidebar);
-
-        border-left:
-            1px solid var(--border);
-
-        box-shadow:
-            -5px 0 25px
-            rgba(0,0,0,.25);
-
-        z-index: 2000;
-
-        transition:
-            right .3s ease,
-            background .25s ease;
-
-        padding-top: 80px;
+        font-size:
+            24px;
 
     }
 
 
-    .sidebar.active {
+    .card h3 {
 
-        right: 0;
+        font-size:
+            12px;
 
     }
 
 
-    .sidebar a {
-
-        display: flex;
-
-        align-items: center;
-
-        gap: 13px;
+    .card-content {
 
         padding:
-            17px 25px;
-
-        color:
-            var(--text);
-
-        text-decoration: none;
-
-        border-bottom:
-            1px solid var(--border);
-
-        font-size: 16px;
-
-        transition:
-            background .2s,
-            color .2s;
+            8px;
 
     }
 
 
-    .sidebar a:hover {
+    .details-btn,
+    .add-btn {
 
-        background:
-            var(--sidebar-hover);
-
-        color:
-            var(--accent);
+        font-size:
+            11px;
 
     }
 
 
-    .sidebar a svg {
+    .social-link {
 
-        width: 22px;
-        height: 22px;
-
-        flex-shrink: 0;
+        min-width:
+            100%;
 
     }
 
+}
 
-    /* =====================================================
-       OVERLAY
-    ===================================================== */
 
-    .overlay {
+/* =====================================================
+   SCROLLBAR
+===================================================== */
 
-        position: fixed;
+::-webkit-scrollbar {
 
-        inset: 0;
+    width:
+        7px;
 
-        background:
-            rgba(0,0,0,.55);
+    height:
+        7px;
 
-        display: none;
+}
 
-        z-index: 1900;
 
-    }
+::-webkit-scrollbar-track {
 
+    background:
+        var(--bg);
 
-    .overlay.active {
+}
 
-        display: block;
 
-    }
+::-webkit-scrollbar-thumb {
 
+    background:
+        #9CA3AF;
 
-    /* =====================================================
-       TABLET
-    ===================================================== */
+    border-radius:
+        10px;
 
-    @media (max-width: 900px) {
+}
 
-        .products {
 
-            grid-template-columns:
-                repeat(4, 1fr);
+::-webkit-scrollbar-thumb:hover {
 
-        }
+    background:
+        var(--accent);
 
-    }
-
-
-    /* =====================================================
-       MOBILE
-    ===================================================== */
-
-    @media (max-width: 700px) {
-
-        header {
-
-            height: 64px;
-
-            padding:
-                0 16px;
-
-        }
-
-
-        .logo {
-
-            max-width: 55%;
-
-        }
-
-
-        .logo span {
-
-            font-size: 21px;
-
-        }
-
-
-        .menu-btn,
-        .cart-icon {
-
-            width: 38px;
-            height: 38px;
-
-        }
-
-
-        .menu-btn svg,
-        .cart-icon svg {
-
-            width: 26px;
-            height: 26px;
-
-        }
-
-
-        .store-cover {
-
-            height: 190px;
-
-        }
-
-
-        .store-banner-image {
-
-            width: 112px;
-            height: 112px;
-
-            margin:
-                -56px auto 15px;
-
-        }
-
-
-        .store-banner-image img {
-
-            width: 112px;
-            height: 112px;
-
-            border-width: 4px;
-
-        }
-
-
-        .store-info {
-
-            padding:
-                0 15px 25px;
-
-        }
-
-
-        .store-banner h1 {
-
-            font-size: 27px;
-
-        }
-
-
-        .store-banner p {
-
-            font-size: 14px;
-
-        }
-
-
-        .search-section {
-
-            padding:
-                0 15px;
-
-            margin-bottom: 12px;
-
-        }
-
-
-        .search-box input {
-
-            height: 48px;
-
-            font-size: 14px;
-
-        }
-
-
-        .products {
-
-            grid-template-columns:
-                repeat(2, 1fr);
-
-            gap: 10px;
-
-            padding:
-                0 10px;
-
-        }
-
-
-        .card {
-
-            border-radius: 10px;
-
-        }
-
-
-        .card-content {
-
-            padding: 9px;
-
-        }
-
-
-        .card h3 {
-
-            font-size: 13px;
-
-            height: 42px;
-
-        }
-
-
-        .price {
-
-            font-size: 15px;
-
-        }
-
-
-        .details-btn,
-        .add-btn {
-
-            height: 34px;
-
-            font-size: 12px;
-
-        }
-
-
-        .social-section {
-
-            padding:
-                0 15px;
-
-            margin-top: 35px;
-
-        }
-
-
-        .social-box {
-
-            padding:
-                24px 14px;
-
-        }
-
-
-        .social-title {
-
-            font-size: 21px;
-
-        }
-
-
-        .social-links {
-
-            gap: 9px;
-
-        }
-
-
-        .social-link {
-
-            min-width:
-                calc(50% - 5px);
-
-            font-size: 13px;
-
-            padding:
-                10px 8px;
-
-        }
-
-
-        .floating-cart {
-
-            width:
-                calc(100% - 30px);
-
-            bottom: 12px;
-
-        }
-
-    }
-
-
-    /* =====================================================
-       SMALL MOBILE
-    ===================================================== */
-
-    @media (max-width: 380px) {
-
-        .store-cover {
-
-            height: 160px;
-
-        }
-
-
-        .logo span {
-
-            font-size: 18px;
-
-        }
-
-
-        .store-banner h1 {
-
-            font-size: 24px;
-
-        }
-
-
-        .card h3 {
-
-            font-size: 12px;
-
-        }
-
-
-        .card-content {
-
-            padding: 8px;
-
-        }
-
-
-        .details-btn,
-        .add-btn {
-
-            font-size: 11px;
-
-        }
-
-
-        .social-link {
-
-            min-width:
-                100%;
-
-        }
-
-    }
-
-
-    /* =====================================================
-       SCROLLBAR
-    ===================================================== */
-
-    ::-webkit-scrollbar {
-
-        width: 7px;
-        height: 7px;
-
-    }
-
-
-    ::-webkit-scrollbar-track {
-
-        background:
-            var(--bg);
-
-    }
-
-
-    ::-webkit-scrollbar-thumb {
-
-        background:
-            #9CA3AF;
-
-        border-radius: 10px;
-
-    }
-
-
-    ::-webkit-scrollbar-thumb:hover {
-
-        background:
-            var(--accent);
-
-    }
+}
 
 </style>
 
-</head><body class="theme-orange"><!-- =====================================================
+</head>
+
+
+<body class="theme-orange">
+
+
+<!-- =====================================================
      SVG ICONS
 ===================================================== -->
 
@@ -2504,814 +2968,1020 @@
 
 <script type="module">
 
-    import {
-        initializeApp
-    }
-    from
-    "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import {
+    initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
 
-    import {
-        getFirestore,
-        collection,
-        getDocs,
-        query,
-        where,
-        doc,
-        getDoc
-    }
-    from
-    "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+import {
+    getFirestore,
+    collection,
+    getDocs,
+    query,
+    where,
+    doc,
+    getDoc
+}
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 
-    /* =====================================================
-       FIREBASE CONFIG
-    ===================================================== */
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
 
-    const firebaseConfig = {
+const firebaseConfig = {
 
-        apiKey:
-            "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+    apiKey:
+        "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
 
-        authDomain:
-            "g-glam.firebaseapp.com",
+    authDomain:
+        "g-glam.firebaseapp.com",
 
-        projectId:
-            "g-glam",
+    projectId:
+        "g-glam",
 
-        storageBucket:
-            "g-glam.firebasestorage.app",
+    storageBucket:
+        "g-glam.firebasestorage.app",
 
-        messagingSenderId:
-            "997228419719",
+    messagingSenderId:
+        "997228419719",
 
-        appId:
-            "1:997228419719:web:f9d88de7ea2c6f457e3622",
+    appId:
+        "1:997228419719:web:f9d88de7ea2c6f457e3622",
 
-        measurementId:
-            "G-WX1K1F83F6"
+    measurementId:
+        "G-WX1K1F83F6"
 
-    };
-
-
-    const app =
-        initializeApp(
-            firebaseConfig
-        );
+};
 
 
-    const db =
-        getFirestore(
-            app
-        );
+const app =
+    initializeApp(
+        firebaseConfig
+    );
 
 
-    /* =====================================================
-       ELEMENTS
-    ===================================================== */
-
-    const productsContainer =
-        document.getElementById(
-            "productsContainer"
-        );
+const db =
+    getFirestore(
+        app
+    );
 
 
-    const searchInput =
-        document.getElementById(
-            "searchInput"
-        );
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const productsContainer =
+    document.getElementById(
+        "productsContainer"
+    );
 
 
-    const cartCount =
-        document.getElementById(
-            "cartCount"
-        );
+const searchInput =
+    document.getElementById(
+        "searchInput"
+    );
 
 
-    const storeNameElement =
-        document.getElementById(
-            "storeName"
-        );
+const cartCount =
+    document.getElementById(
+        "cartCount"
+    );
 
 
-    const headerStoreName =
-        document.getElementById(
-            "headerStoreName"
-        );
+const storeNameElement =
+    document.getElementById(
+        "storeName"
+    );
 
 
-    const storeDescriptionElement =
-        document.getElementById(
-            "storeDescription"
-        );
+const headerStoreName =
+    document.getElementById(
+        "headerStoreName"
+    );
 
 
-    const storeImage =
-        document.getElementById(
-            "storeImage"
-        );
+const storeDescriptionElement =
+    document.getElementById(
+        "storeDescription"
+    );
 
 
-    const storeCover =
-        document.getElementById(
-            "storeCover"
-        );
+const storeImage =
+    document.getElementById(
+        "storeImage"
+    );
 
 
-    const storeCoverImage =
-        document.getElementById(
-            "storeCoverImage"
-        );
+const storeCover =
+    document.getElementById(
+        "storeCover"
+    );
 
 
-    const themeColorMeta =
-        document.getElementById(
-            "themeColorMeta"
-        );
+const storeCoverImage =
+    document.getElementById(
+        "storeCoverImage"
+    );
 
 
-    const socialLinks =
-        document.getElementById(
-            "socialLinks"
-        );
+const themeColorMeta =
+    document.getElementById(
+        "themeColorMeta"
+    );
 
 
-    /* =====================================================
-       STORE IDENTIFIER
-    ===================================================== */
-
-    const params =
-        new URLSearchParams(
-            window.location.search
-        );
+const socialLinks =
+    document.getElementById(
+        "socialLinks"
+    );
 
 
-    let storeIdentifier =
-        params.get("store");
+/* =====================================================
+   STORE IDENTIFIER
+===================================================== */
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
 
 
-    /*
-     * إذا لم يوجد ?store=
-     * نحاول استخراج المعرّف من المسار.
-     */
-
-    if (!storeIdentifier) {
-
-        const pathParts =
-            window.location.pathname
-                .split("/")
-                .filter(
-                    p =>
-                        p &&
-                        p !== "index.html"
-                );
+let storeIdentifier =
+    params.get("store");
 
 
-        if (
-            pathParts.length > 0
-        ) {
+if (!storeIdentifier) {
 
-            const lastPart =
-                pathParts[
-                    pathParts.length - 1
-                ];
-
-
-            /*
-             * لا نعتبر أسماء الملفات
-             * معرفًا للمتجر.
-             */
-
-            if (
-                !lastPart.includes(".")
-            ) {
-
-                storeIdentifier =
-                    lastPart;
-
-            }
-
-        }
-
-    }
-
-
-    /*
-     * آخر حل:
-     * localStorage
-     */
-
-    if (!storeIdentifier) {
-
-        storeIdentifier =
-            localStorage.getItem(
-                "storeId"
+    const pathParts =
+        window.location.pathname
+            .split("/")
+            .filter(
+                p =>
+                    p &&
+                    p !== "index.html"
             );
 
-    }
 
-
-    let storeUid =
-        storeIdentifier;
-
-
-    let allProducts = [];
-
-
-    let currentStore = null;
-
-
-    /* =====================================================
-       PIXELS
-    ===================================================== */
-
-    function initPixels(store) {
-
-        try {
-
-            const metaPixelId =
-                store.metaPixelId
-                ||
-                store.facebookPixelId
-                ||
-                store.metaPixel;
-
-
-            if (
-                metaPixelId
-                &&
-                typeof window.fbq === "function"
-            ) {
-
-                window.fbq(
-                    "init",
-                    metaPixelId
-                );
-
-                window.fbq(
-                    "track",
-                    "PageView"
-                );
-
-            }
-
-
-            const tiktokPixelId =
-                store.tiktokPixelId
-                ||
-                store.tikTokPixelId
-                ||
-                store.tiktokPixel;
-
-
-            if (
-                tiktokPixelId
-                &&
-                typeof window.ttq !== "undefined"
-                &&
-                typeof window.ttq.load === "function"
-            ) {
-
-                window.ttq.load(
-                    tiktokPixelId
-                );
-
-                if (
-                    typeof window.ttq.page === "function"
-                ) {
-
-                    window.ttq.page();
-
-                }
-
-            }
-
-        }
-
-        catch(error) {
-
-            console.warn(
-                "PIXEL ERROR:",
-                error
-            );
-
-        }
-
-    }
-
-
-    /* =====================================================
-       ESCAPE HTML
-    ===================================================== */
-
-    function escapeHtml(value) {
-
-        return String(
-            value ?? ""
-        )
-
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-    }
-
-
-    /* =====================================================
-       NORMALIZE SOCIAL URL
-    ===================================================== */
-
-    function normalizeSocialUrl(
-        value,
-        type
+    if (
+        pathParts.length > 0
     ) {
 
-        if (!value) {
+        const lastPart =
+            pathParts[
+                pathParts.length - 1
+            ];
 
-            return "";
-
-        }
-
-
-        let url =
-            String(
-                value
-            ).trim();
-
-
-        if (!url) {
-
-            return "";
-
-        }
-
-
-        /*
-         * رابط كامل.
-         */
 
         if (
-            /^https?:\/\//i.test(url)
+            !lastPart.includes(".")
         ) {
 
-            return url;
+            storeIdentifier =
+                lastPart;
+
+        }
+
+    }
+
+}
+
+
+if (!storeIdentifier) {
+
+    storeIdentifier =
+        localStorage.getItem(
+            "storeId"
+        );
+
+}
+
+
+let storeUid =
+    storeIdentifier;
+
+
+let allProducts = [];
+
+
+let currentStore = null;
+
+
+/* =====================================================
+   PIXELS
+===================================================== */
+
+function initPixels(store) {
+
+    try {
+
+        const metaPixelId =
+            store.metaPixelId
+            ||
+            store.facebookPixelId
+            ||
+            store.metaPixel;
+
+
+        if (
+            metaPixelId
+            &&
+            typeof window.fbq === "function"
+        ) {
+
+            window.fbq(
+                "init",
+                metaPixelId
+            );
+
+            window.fbq(
+                "track",
+                "PageView"
+            );
 
         }
 
 
-        /*
-         * WhatsApp
-         */
+        const tiktokPixelId =
+            store.tiktokPixelId
+            ||
+            store.tikTokPixelId
+            ||
+            store.tiktokPixel;
+
 
         if (
-            type === "whatsapp"
+            tiktokPixelId
+            &&
+            typeof window.ttq !== "undefined"
+            &&
+            typeof window.ttq.load === "function"
         ) {
 
-            let number =
-                url.replace(
-                    /[^0-9+]/g,
-                    ""
-                );
-
-
-            number =
-                number.replace(
-                    /^\+/,
-                    ""
-                );
+            window.ttq.load(
+                tiktokPixelId
+            );
 
 
             if (
-                /^0[567]/.test(number)
+                typeof window.ttq.page === "function"
             ) {
 
-                number =
-                    "213" +
-                    number.substring(1);
+                window.ttq.page();
 
             }
 
-
-            return
-                "https://wa.me/" +
-                number;
-
         }
 
+    }
 
-        /*
-         * Instagram
-         */
+    catch(error) {
 
-        if (
-            type === "instagram"
-        ) {
+        console.warn(
+            "PIXEL ERROR:",
+            error
+        );
 
-            return
-                "https://instagram.com/" +
-                url.replace(
-                    /^@/,
-                    ""
-                );
+    }
 
-        }
+}
 
 
-        /*
-         * TikTok
-         */
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
 
-        if (
-            type === "tiktok"
-        ) {
+function escapeHtml(value) {
 
-            return
-                "https://www.tiktok.com/@" +
-                url.replace(
-                    /^@/,
-                    ""
-                );
+    return String(
+        value ?? ""
+    )
 
-        }
+    .replace(
+        /&/g,
+        "&amp;"
+    )
 
+    .replace(
+        /</g,
+        "&lt;"
+    )
 
-        /*
-         * Telegram
-         */
+    .replace(
+        />/g,
+        "&gt;"
+    )
 
-        if (
-            type === "telegram"
-        ) {
+    .replace(
+        /"/g,
+        "&quot;"
+    )
 
-            return
-                "https://t.me/" +
-                url.replace(
-                    /^@/,
-                    ""
-                );
+    .replace(
+        /'/g,
+        "&#039;"
+    );
 
-        }
-
-
-        /*
-         * Facebook
-         */
-
-        if (
-            type === "facebook"
-        ) {
-
-            return
-                "https://facebook.com/" +
-                url.replace(
-                    /^@/,
-                    ""
-                );
-
-        }
+}
 
 
-        /*
-         * YouTube
-         */
+/* =====================================================
+   NORMALIZE SOCIAL URL
+===================================================== */
 
-        if (
-            type === "youtube"
-        ) {
+function normalizeSocialUrl(
+    value,
+    type
+) {
 
-            return
-                "https://youtube.com/" +
-                url.replace(
-                    /^@/,
-                    ""
-                );
+    if (!value) {
 
-        }
+        return "";
+
+    }
 
 
-        /*
-         * X
-         */
+    let url =
+        String(
+            value
+        ).trim();
 
-        if (
-            type === "twitter"
-        ) {
 
-            return
-                "https://x.com/" +
-                url.replace(
-                    /^@/,
-                    ""
-                );
+    if (!url) {
 
-        }
+        return "";
 
+    }
+
+
+    if (
+        /^https?:\/\//i.test(url)
+    ) {
 
         return url;
 
     }
 
 
-    /* =====================================================
-       ADD SOCIAL
-    ===================================================== */
+    /* WhatsApp */
 
-    function addSocialLink(
-        type,
-        label,
-        value,
-        icon
+    if (
+        type === "whatsapp"
     ) {
 
-        const url =
-            normalizeSocialUrl(
-                value,
-                type
+        let number =
+            url.replace(
+                /[^0-9+]/g,
+                ""
             );
 
 
-        if (!url) {
+        number =
+            number.replace(
+                /^\+/,
+                ""
+            );
 
-            return;
+
+        if (
+            /^0[567]/.test(number)
+        ) {
+
+            number =
+                "213" +
+                number.substring(1);
 
         }
 
 
-        const link =
+        return "https://wa.me/" + number;
+
+    }
+
+
+    /* Instagram */
+
+    if (
+        type === "instagram"
+    ) {
+
+        return "https://instagram.com/" +
+            url.replace(
+                /^@/,
+                ""
+            );
+
+    }
+
+
+    /* TikTok */
+
+    if (
+        type === "tiktok"
+    ) {
+
+        return "https://www.tiktok.com/@" +
+            url.replace(
+                /^@/,
+                ""
+            );
+
+    }
+
+
+    /* Telegram */
+
+    if (
+        type === "telegram"
+    ) {
+
+        return "https://t.me/" +
+            url.replace(
+                /^@/,
+                ""
+            );
+
+    }
+
+
+    /* Facebook */
+
+    if (
+        type === "facebook"
+    ) {
+
+        return "https://facebook.com/" +
+            url.replace(
+                /^@/,
+                ""
+            );
+
+    }
+
+
+    /* YouTube */
+
+    if (
+        type === "youtube"
+    ) {
+
+        return "https://youtube.com/" +
+            url.replace(
+                /^@/,
+                ""
+            );
+
+    }
+
+
+    /* X */
+
+    if (
+        type === "twitter"
+    ) {
+
+        return "https://x.com/" +
+            url.replace(
+                /^@/,
+                ""
+            );
+
+    }
+
+
+    return url;
+
+}
+
+
+/* =====================================================
+   ADD SOCIAL
+===================================================== */
+
+function addSocialLink(
+    type,
+    label,
+    value,
+    icon
+) {
+
+    const url =
+        normalizeSocialUrl(
+            value,
+            type
+        );
+
+
+    if (!url) {
+
+        return;
+
+    }
+
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    link.className =
+        "social-link";
+
+
+    link.href =
+        url;
+
+
+    link.target =
+        "_blank";
+
+
+    link.rel =
+        "noopener noreferrer";
+
+
+    link.innerHTML = `
+
+        <svg aria-hidden="true">
+
+            <use href="#icon-${icon}"></use>
+
+        </svg>
+
+        <span>
+            ${escapeHtml(label)}
+        </span>
+
+    `;
+
+
+    socialLinks.appendChild(
+        link
+    );
+
+}
+
+
+/* =====================================================
+   SOCIAL MEDIA
+===================================================== */
+
+function renderSocialLinks() {
+
+    socialLinks.innerHTML =
+        "";
+
+
+    if (!currentStore) {
+
+        socialLinks.innerHTML = `
+
+            <div class="social-empty">
+                لا توجد معلومات تواصل حاليًا.
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    addSocialLink(
+        "whatsapp",
+        "واتساب",
+        currentStore.whatsapp
+        ||
+        currentStore.whatsApp
+        ||
+        currentStore.whatsappNumber,
+        "whatsapp"
+    );
+
+
+    addSocialLink(
+        "facebook",
+        "Facebook",
+        currentStore.facebook
+        ||
+        currentStore.facebookUrl
+        ||
+        currentStore.facebookLink,
+        "facebook"
+    );
+
+
+    addSocialLink(
+        "instagram",
+        "Instagram",
+        currentStore.instagram
+        ||
+        currentStore.instagramUrl
+        ||
+        currentStore.instagramLink,
+        "instagram"
+    );
+
+
+    addSocialLink(
+        "tiktok",
+        "TikTok",
+        currentStore.tiktok
+        ||
+        currentStore.tikTok
+        ||
+        currentStore.tiktokUrl
+        ||
+        currentStore.tiktokLink,
+        "tiktok"
+    );
+
+
+    addSocialLink(
+        "youtube",
+        "YouTube",
+        currentStore.youtube
+        ||
+        currentStore.youtubeUrl
+        ||
+        currentStore.youtubeLink,
+        "youtube"
+    );
+
+
+    addSocialLink(
+        "telegram",
+        "Telegram",
+        currentStore.telegram
+        ||
+        currentStore.telegramUrl
+        ||
+        currentStore.telegramLink,
+        "telegram"
+    );
+
+
+    addSocialLink(
+        "twitter",
+        "X",
+        currentStore.twitter
+        ||
+        currentStore.x
+        ||
+        currentStore.twitterUrl
+        ||
+        currentStore.xUrl,
+        "x"
+    );
+
+
+    const phone =
+        currentStore.phone
+        ||
+        currentStore.phoneNumber
+        ||
+        currentStore.mobile;
+
+
+    if (phone) {
+
+        const phoneLink =
             document.createElement(
                 "a"
             );
 
 
-        link.className =
+        phoneLink.className =
             "social-link";
 
 
-        link.href =
-            url;
+        phoneLink.href =
+            "tel:" +
+            String(phone)
+                .replace(
+                    /\s/g,
+                    ""
+                );
 
 
-        link.target =
-            "_blank";
-
-
-        link.rel =
-            "noopener noreferrer";
-
-
-        link.innerHTML = `
+        phoneLink.innerHTML = `
 
             <svg aria-hidden="true">
 
-                <use href="#icon-${icon}"></use>
+                <use href="#icon-phone"></use>
 
             </svg>
 
             <span>
-                ${escapeHtml(label)}
+                اتصل بنا
             </span>
 
         `;
 
 
         socialLinks.appendChild(
-            link
+            phoneLink
         );
 
     }
 
 
-    /* =====================================================
-       SOCIAL MEDIA
-    ===================================================== */
+    if (
+        !socialLinks.children.length
+    ) {
 
-    function renderSocialLinks() {
+        socialLinks.innerHTML = `
 
-        socialLinks.innerHTML =
-            "";
+            <div class="social-empty">
 
+                لم يضف التاجر روابط التواصل بعد.
 
-        if (!currentStore) {
+            </div>
 
-            socialLinks.innerHTML = `
+        `;
 
-                <div class="social-empty">
-                    لا توجد معلومات تواصل حاليًا.
-                </div>
+    }
 
-            `;
-
-            return;
-
-        }
+}
 
 
-        addSocialLink(
-            "whatsapp",
-            "واتساب",
-            currentStore.whatsapp
-            ||
-            currentStore.whatsApp
-            ||
-            currentStore.whatsappNumber,
-            "whatsapp"
-        );
+/* =====================================================
+   COLOR HELPERS
+===================================================== */
+
+function normalizeHexColor(color) {
+
+    if (
+        typeof color !== "string"
+    ) {
+
+        return null;
+
+    }
 
 
-        addSocialLink(
-            "facebook",
-            "Facebook",
-            currentStore.facebook
-            ||
-            currentStore.facebookUrl
-            ||
-            currentStore.facebookLink,
-            "facebook"
-        );
+    let value =
+        color.trim();
 
 
-        addSocialLink(
-            "instagram",
-            "Instagram",
-            currentStore.instagram
-            ||
-            currentStore.instagramUrl
-            ||
-            currentStore.instagramLink,
-            "instagram"
-        );
+    if (
+        !value
+    ) {
+
+        return null;
+
+    }
 
 
-        addSocialLink(
-            "tiktok",
-            "TikTok",
-            currentStore.tiktok
-            ||
-            currentStore.tikTok
-            ||
-            currentStore.tiktokUrl
-            ||
-            currentStore.tiktokLink,
-            "tiktok"
-        );
+    if (
+        !value.startsWith("#")
+    ) {
+
+        value =
+            "#" + value;
+
+    }
 
 
-        addSocialLink(
-            "youtube",
-            "YouTube",
-            currentStore.youtube
-            ||
-            currentStore.youtubeUrl
-            ||
-            currentStore.youtubeLink,
-            "youtube"
-        );
+    if (
+        /^#[0-9a-fA-F]{3}$/.test(value)
+    ) {
+
+        value =
+            "#" +
+            value[1] +
+            value[1] +
+            value[2] +
+            value[2] +
+            value[3] +
+            value[3];
+
+    }
 
 
-        addSocialLink(
-            "telegram",
-            "Telegram",
-            currentStore.telegram
-            ||
-            currentStore.telegramUrl
-            ||
-            currentStore.telegramLink,
-            "telegram"
-        );
+    if (
+        !/^#[0-9a-fA-F]{6}$/.test(value)
+    ) {
+
+        return null;
+
+    }
 
 
-        addSocialLink(
-            "twitter",
-            "X",
-            currentStore.twitter
-            ||
-            currentStore.x
-            ||
-            currentStore.twitterUrl
-            ||
-            currentStore.xUrl,
-            "x"
-        );
+    return value.toUpperCase();
+
+}
 
 
-        const phone =
-            currentStore.phone
-            ||
-            currentStore.phoneNumber
-            ||
-            currentStore.mobile;
+function hexToRgb(hex) {
+
+    const value =
+        normalizeHexColor(hex);
 
 
-        if (phone) {
+    if (!value) {
 
-            const phoneLink =
-                document.createElement(
-                    "a"
-                );
+        return null;
 
-
-            phoneLink.className =
-                "social-link";
+    }
 
 
-            phoneLink.href =
-                "tel:" +
-                String(phone)
-                    .replace(
-                        /\s/g,
-                        ""
-                    );
+    return {
+
+        r:
+            parseInt(
+                value.substring(1,3),
+                16
+            ),
+
+        g:
+            parseInt(
+                value.substring(3,5),
+                16
+            ),
+
+        b:
+            parseInt(
+                value.substring(5,7),
+                16
+            )
+
+    };
+
+}
 
 
-            phoneLink.innerHTML = `
+function rgbToHex(
+    r,
+    g,
+    b
+) {
 
-                <svg aria-hidden="true">
-
-                    <use href="#icon-phone"></use>
-
-                </svg>
-
-                <span>
-                    اتصل بنا
-                </span>
-
-            `;
-
-
-            socialLinks.appendChild(
-                phoneLink
+    const clamp =
+        value =>
+            Math.max(
+                0,
+                Math.min(
+                    255,
+                    Math.round(value)
+                )
             );
 
-        }
+
+    return "#" +
+        [r,g,b]
+            .map(
+                value =>
+                    clamp(value)
+                        .toString(16)
+                        .padStart(2,"0")
+            )
+            .join("")
+            .toUpperCase();
+
+}
 
 
-        if (
-            !socialLinks.children.length
-        ) {
+function darkenColor(
+    hex,
+    amount = 0.18
+) {
 
-            socialLinks.innerHTML = `
+    const rgb =
+        hexToRgb(hex);
 
-                <div class="social-empty">
 
-                    لم يضف التاجر روابط التواصل بعد.
+    if (!rgb) {
 
-                </div>
-
-            `;
-
-        }
+        return "#333333";
 
     }
 
 
-    /* =====================================================
-       APPLY THEME
-    ===================================================== */
+    return rgbToHex(
 
-    function applyStoreTheme(theme) {
+        rgb.r *
+            (1 - amount),
 
-        const validThemes = [
+        rgb.g *
+            (1 - amount),
 
-            "orange",
-            "blue",
-            "green",
-            "purple",
-            "pink",
-            "dark",
-            "red",
-            "teal",
-            "gold",
-            "luxury",
-            "sunset",
-            "emerald"
+        rgb.b *
+            (1 - amount)
 
-        ];
+    );
+
+}
 
 
-        theme =
+function getReadableTextColor(hex) {
+
+    const rgb =
+        hexToRgb(hex);
+
+
+    if (!rgb) {
+
+        return "#FFFFFF";
+
+    }
+
+
+    const luminance =
+        (
+            0.299 * rgb.r +
+            0.587 * rgb.g +
+            0.114 * rgb.b
+        );
+
+
+    return luminance > 165
+        ? "#111827"
+        : "#FFFFFF";
+
+}
+
+
+/* =====================================================
+   APPLY THEME
+===================================================== */
+
+function applyStoreTheme(
+    themeOrStore
+) {
+
+    const validThemes = [
+
+        "orange",
+        "blue",
+        "green",
+        "purple",
+        "pink",
+        "dark",
+        "red",
+        "teal",
+        "gold",
+        "luxury",
+        "sunset",
+        "emerald"
+
+    ];
+
+
+    const oldThemeClasses = [
+
+        "theme-orange",
+        "theme-blue",
+        "theme-green",
+        "theme-purple",
+        "theme-pink",
+        "theme-dark",
+        "theme-red",
+        "theme-teal",
+        "theme-gold",
+        "theme-luxury",
+        "theme-sunset",
+        "theme-emerald",
+        "theme-custom-solid",
+        "theme-custom-gradient"
+
+    ];
+
+
+    document.body.classList.remove(
+        ...oldThemeClasses
+    );
+
+
+    document.body.style.removeProperty(
+        "--accent"
+    );
+
+    document.body.style.removeProperty(
+        "--accent-dark"
+    );
+
+    document.body.style.removeProperty(
+        "--theme-gradient"
+    );
+
+
+    /*
+     * الوضع القديم:
+     * applyStoreTheme("orange")
+     */
+
+    if (
+        typeof themeOrStore === "string"
+    ) {
+
+        let theme =
             String(
-                theme || "orange"
+                themeOrStore || "orange"
             )
             .toLowerCase()
             .trim();
@@ -3325,24 +3995,6 @@
                 "orange";
 
         }
-
-
-        document.body.classList.remove(
-
-            "theme-orange",
-            "theme-blue",
-            "theme-green",
-            "theme-purple",
-            "theme-pink",
-            "theme-dark",
-            "theme-red",
-            "theme-teal",
-            "theme-gold",
-            "theme-luxury",
-            "theme-sunset",
-            "theme-emerald"
-
-        );
 
 
         document.body.classList.add(
@@ -3383,1346 +4035,823 @@
             theme
         );
 
+
+        return;
+
     }
 
 
-    /* =====================================================
-       INITIAL THEME
-    ===================================================== */
+    /*
+     * الوضع الجديد:
+     * بيانات الثيم تأتي من Firestore.
+     */
 
-    const savedStoreTheme =
-        localStorage.getItem(
-            "gglamStoreTheme"
+    const store =
+        themeOrStore || {};
+
+
+    const themeType =
+        String(
+            store.themeType || ""
         )
-        ||
-        "orange";
+        .toLowerCase()
+        .trim();
 
 
-    applyStoreTheme(
-        savedStoreTheme
-    );
+    /* =================================================
+       CUSTOM GRADIENT
+    ================================================= */
+
+    if (
+        themeType === "gradient"
+        &&
+        Array.isArray(
+            store.themeColors
+        )
+    ) {
+
+        const colors =
+            store.themeColors
+                .map(
+                    normalizeHexColor
+                )
+                .filter(Boolean)
+                .slice(0, 4);
 
 
-    /* =====================================================
-       NAVIGATION
-    ===================================================== */
+        if (
+            colors.length >= 2
+        ) {
 
-    function updateNavigationLinks() {
+            const direction =
+                String(
+                    store.themeDirection
+                    ||
+                    "135deg"
+                )
+                .trim();
 
-        if (!storeUid) {
+
+            const safeDirection =
+                /^(\d{1,3}deg|to\s+(left|right|top|bottom)(\s+(left|right|top|bottom))?)$/i
+                    .test(direction)
+                    ?
+                    direction
+                    :
+                    "135deg";
+
+
+            const gradient =
+                "linear-gradient(" +
+                safeDirection +
+                ", " +
+                colors.join(", ") +
+                ")";
+
+
+            document.body.classList.add(
+                "theme-custom-gradient"
+            );
+
+
+            document.body.style.setProperty(
+                "--accent",
+                colors[0]
+            );
+
+
+            document.body.style.setProperty(
+                "--accent-dark",
+                darkenColor(
+                    colors[0],
+                    0.20
+                )
+            );
+
+
+            document.body.style.setProperty(
+                "--theme-gradient",
+                gradient
+            );
+
+
+            themeColorMeta.content =
+                colors[0];
+
+
+            localStorage.setItem(
+                "gglamStoreTheme",
+                "custom-gradient"
+            );
+
+
+            localStorage.setItem(
+                "gglamThemeType",
+                "gradient"
+            );
+
+
+            localStorage.setItem(
+                "gglamThemeColors",
+                JSON.stringify(colors)
+            );
+
+
+            localStorage.setItem(
+                "gglamThemeDirection",
+                safeDirection
+            );
+
 
             return;
 
         }
 
+    }
 
-        const encodedStore =
-            encodeURIComponent(
-                storeUid
+
+    /* =================================================
+       CUSTOM SOLID
+    ================================================= */
+
+    if (
+        themeType === "solid"
+    ) {
+
+        const customColor =
+            normalizeHexColor(
+                store.themeColor
             );
 
 
-        document.getElementById(
-            "homeLink"
-        ).href =
-            "index.html?store=" +
-            encodedStore;
+        if (customColor) {
+
+            document.body.classList.add(
+                "theme-custom-solid"
+            );
 
 
-        document.getElementById(
-            "cartLink"
-        ).href =
-            "cart.html?store=" +
-            encodedStore;
+            const accentDark =
+                darkenColor(
+                    customColor,
+                    0.20
+                );
 
 
-        document.getElementById(
-            "floatingCart"
-        ).href =
-            "cart.html?store=" +
-            encodedStore;
+            document.body.style.setProperty(
+                "--accent",
+                customColor
+            );
+
+
+            document.body.style.setProperty(
+                "--accent-dark",
+                accentDark
+            );
+
+
+            document.body.style.setProperty(
+                "--sidebar-hover",
+                customColor
+            );
+
+
+            themeColorMeta.content =
+                customColor;
+
+
+            localStorage.setItem(
+                "gglamStoreTheme",
+                "custom-solid"
+            );
+
+
+            localStorage.setItem(
+                "gglamThemeType",
+                "solid"
+            );
+
+
+            localStorage.setItem(
+                "gglamThemeColor",
+                customColor
+            );
+
+
+            return;
+
+        }
 
     }
 
 
-    /* =====================================================
-       LOAD STORE
-    ===================================================== */
+    /* =================================================
+       LEGACY THEME
+    ================================================= */
 
-    async function loadStore() {
-
-        try {
-
-            if (!storeIdentifier) {
-
-                showStoreError(
-                    "لم يتم تحديد المتجر."
-                );
-
-                return false;
-
-            }
-
-
-            const storeRef =
-                doc(
-                    db,
-                    "stores",
-                    storeIdentifier
-                );
+    let theme =
+        String(
+            store.theme
+            ||
+            localStorage.getItem(
+                "gglamStoreTheme"
+            )
+            ||
+            "orange"
+        )
+        .toLowerCase()
+        .trim();
 
 
-            const storeSnap =
-                await getDoc(
-                    storeRef
-                );
+    if (
+        !validThemes.includes(theme)
+    ) {
+
+        theme =
+            "orange";
+
+    }
 
 
-            if (
-                !storeSnap.exists()
-            ) {
-
-                showStoreError(
-                    "المتجر غير موجود."
-                );
-
-                return false;
-
-            }
+    document.body.classList.add(
+        "theme-" + theme
+    );
 
 
-            currentStore =
-                storeSnap.data();
+    const legacyThemeColors = {
+
+        orange: "#FFFFFF",
+        blue: "#FFFFFF",
+        green: "#FFFFFF",
+        purple: "#FFFFFF",
+        pink: "#FFFFFF",
+
+        dark: "#0A1726",
+
+        red: "#FFFFFF",
+        teal: "#FFFFFF",
+        gold: "#FFFFFF",
+
+        luxury: "#191919",
+
+        sunset: "#FFFFFF",
+        emerald: "#FFFFFF"
+
+    };
 
 
-            /*
-             * ID المستند هو المعرّف الأساسي
-             * للمتجر.
-             */
-
-            storeUid =
-                storeSnap.id;
+    themeColorMeta.content =
+        legacyThemeColors[theme]
+        ||
+        "#FFFFFF";
 
 
-            localStorage.setItem(
-                "storeId",
-                storeUid
-            );
+    localStorage.setItem(
+        "gglamStoreTheme",
+        theme
+    );
 
 
-            /* =================================================
-               STATUS
-            ================================================= */
+    localStorage.setItem(
+        "gglamThemeType",
+        "legacy"
+    );
 
-            const status =
-                String(
-                    currentStore.status
-                    ||
-                    "approved"
+}
+
+
+/* =====================================================
+   INITIAL THEME
+===================================================== */
+
+const savedThemeType =
+    localStorage.getItem(
+        "gglamThemeType"
+    );
+
+
+if (
+    savedThemeType === "solid"
+) {
+
+    const savedColor =
+        localStorage.getItem(
+            "gglamThemeColor"
+        );
+
+
+    if (savedColor) {
+
+        applyStoreTheme({
+
+            themeType:
+                "solid",
+
+            themeColor:
+                savedColor
+
+        });
+
+    }
+
+    else {
+
+        applyStoreTheme(
+            localStorage.getItem(
+                "gglamStoreTheme"
+            )
+            ||
+            "orange"
+        );
+
+    }
+
+}
+
+else if (
+    savedThemeType === "gradient"
+) {
+
+    let savedColors = [];
+
+    try {
+
+        savedColors =
+            JSON.parse(
+                localStorage.getItem(
+                    "gglamThemeColors"
                 )
-                .toLowerCase()
-                .trim();
-
-
-            if (
-
-                status !== "approved"
-
-                &&
-
-                status !== "active"
-
-            ) {
-
-                showStoreError(
-                    "هذا المتجر غير متاح حاليًا."
-                );
-
-                return false;
-
-            }
-
-
-            /* =================================================
-               PIXELS
-            ================================================= */
-
-            initPixels(
-                currentStore
+                ||
+                "[]"
             );
 
+    }
 
-            /* =================================================
-               THEME
-            ================================================= */
+    catch(error) {
 
-            const storeTheme =
-                String(
-                    currentStore.theme
-                    ||
-                    "orange"
-                )
-                .toLowerCase()
-                .trim();
+        savedColors = [];
+
+    }
 
 
-            applyStoreTheme(
-                storeTheme
-            );
+    applyStoreTheme({
+
+        themeType:
+            "gradient",
+
+        themeColors:
+            savedColors,
+
+        themeDirection:
+            localStorage.getItem(
+                "gglamThemeDirection"
+            )
+            ||
+            "135deg"
+
+    });
+
+}
+
+else {
+
+    applyStoreTheme(
+        localStorage.getItem(
+            "gglamStoreTheme"
+        )
+        ||
+        "orange"
+    );
+
+}
 
 
-            /* =================================================
-               NAME
-            ================================================= */
+/* =====================================================
+   NAVIGATION
+===================================================== */
 
-            const name =
-                currentStore.storeName
-                ||
-                currentStore.name
-                ||
-                "G-Glam";
+function updateNavigationLinks() {
 
+    if (!storeUid) {
 
-            storeNameElement.textContent =
-                name;
+        return;
+
+    }
 
 
-            headerStoreName.textContent =
-                name;
+    const encodedStore =
+        encodeURIComponent(
+            storeUid
+        );
 
 
-            document.title =
-                name +
-                " | المتجر";
+    document.getElementById(
+        "homeLink"
+    ).href =
+        "index.html?store=" +
+        encodedStore;
 
 
-            /* =================================================
-               DESCRIPTION
-            ================================================= */
-
-            storeDescriptionElement.textContent =
-
-                currentStore.description
-                ||
-                "Bienvenue dans notre boutique";
+    document.getElementById(
+        "cartLink"
+    ).href =
+        "cart.html?store=" +
+        encodedStore;
 
 
-            /* =================================================
-               STORE IMAGE
-            ================================================= */
+    document.getElementById(
+        "floatingCart"
+    ).href =
+        "cart.html?store=" +
+        encodedStore;
 
-            const image =
-
-                currentStore.storeImage
-                ||
-                currentStore.image
-                ||
-                currentStore.logo
-                ||
-                currentStore.photoURL
-                ||
-                "";
+}
 
 
-            if (image) {
+/* =====================================================
+   LOAD STORE
+===================================================== */
 
-                storeImage.src =
-                    image;
+async function loadStore() {
 
-                storeImage.style.display =
-                    "block";
+    try {
 
-            }
-
-            else {
-
-                storeImage.removeAttribute(
-                    "src"
-                );
-
-                storeImage.style.display =
-                    "none";
-
-            }
-
-
-            /* =================================================
-               COVER
-            ================================================= */
-
-            const cover =
-
-                currentStore.storeCoverImage
-                ||
-                currentStore.storeCover
-                ||
-                currentStore.coverImage
-                ||
-                currentStore.cover
-                ||
-                currentStore.banner
-                ||
-                currentStore.storeBanner
-                ||
-                "";
-
-
-            if (cover) {
-
-                storeCoverImage.src =
-                    cover;
-
-                storeCover.style.display =
-                    "block";
-
-            }
-
-            else {
-
-                storeCoverImage.removeAttribute(
-                    "src"
-                );
-
-                storeCover.style.display =
-                    "none";
-
-            }
-
-
-            /* =================================================
-               SOCIAL
-            ================================================= */
-
-            renderSocialLinks();
-
-
-            updateNavigationLinks();
-
-
-            return true;
-
-        }
-
-        catch(error) {
-
-            console.error(
-                "STORE LOAD ERROR:",
-                error
-            );
-
+        if (!storeIdentifier) {
 
             showStoreError(
-                "حدث خطأ أثناء تحميل المتجر."
+                "لم يتم تحديد المتجر."
             );
-
 
             return false;
 
         }
 
-    }
 
-
-    /* =====================================================
-       LOAD PRODUCTS
-    ===================================================== */
-
-    async function loadProducts() {
-
-        try {
-
-            productsContainer.innerHTML = `
-
-                <div class="loading">
-
-                    <svg>
-
-                        <use href="#icon-loader"></use>
-
-                    </svg>
-
-                    <div>
-                        جاري تحميل المنتجات...
-                    </div>
-
-                </div>
-
-            `;
-
-
-            let snapshot;
-
-
-            /*
-             * الطريقة الأساسية:
-             * products.ownerUid == storeUid
-             */
-
-            try {
-
-                const productsQuery =
-                    query(
-
-                        collection(
-                            db,
-                            "products"
-                        ),
-
-                        where(
-                            "ownerUid",
-                            "==",
-                            storeUid
-                        )
-
-                    );
-
-
-                snapshot =
-                    await getDocs(
-                        productsQuery
-                    );
-
-            }
-
-            catch(error) {
-
-                console.warn(
-                    "ownerUid query failed:",
-                    error
-                );
-
-
-                /*
-                 * توافق مع البيانات القديمة:
-                 * products.storeId == storeUid
-                 */
-
-                const oldQuery =
-                    query(
-
-                        collection(
-                            db,
-                            "products"
-                        ),
-
-                        where(
-                            "storeId",
-                            "==",
-                            storeUid
-                        )
-
-                    );
-
-
-                snapshot =
-                    await getDocs(
-                        oldQuery
-                    );
-
-            }
-
-
-            allProducts = [];
-
-
-            snapshot.forEach(
-                productDoc => {
-
-                    allProducts.push({
-
-                        id:
-                            productDoc.id,
-
-                        ...productDoc.data()
-
-                    });
-
-                }
+        const storeRef =
+            doc(
+                db,
+                "stores",
+                storeIdentifier
             );
 
 
-            renderProducts(
-                allProducts
-            );
-
-        }
-
-        catch(error) {
-
-            console.error(
-                "PRODUCTS ERROR:",
-                error
+        const storeSnap =
+            await getDoc(
+                storeRef
             );
 
 
-            productsContainer.innerHTML = `
-
-                <div class="empty">
-
-                    <svg class="empty-icon">
-
-                        <use href="#icon-bag"></use>
-
-                    </svg>
-
-                    <h2>
-                        حدث خطأ
-                    </h2>
-
-                    <p style="margin-top:10px;">
-                        تعذر تحميل منتجات المتجر.
-                    </p>
-
-                </div>
-
-            `;
-
-        }
-
-    }
-
-
-    /* =====================================================
-       GET PRODUCT IMAGE
-    ===================================================== */
-
-    function getProductImage(product) {
-
         if (
-            product.image
+            !storeSnap.exists()
         ) {
 
-            return product.image;
+            showStoreError(
+                "المتجر غير موجود."
+            );
+
+            return false;
 
         }
 
 
-        if (
-            Array.isArray(
-                product.images
-            )
-            &&
-            product.images.length
-        ) {
-
-            return product.images[0];
-
-        }
-
-
-        return "";
-
-    }
-
-
-    /* =====================================================
-       RENDER PRODUCTS
-    ===================================================== */
-
-    function renderProducts(products) {
-
-        productsContainer.innerHTML =
-            "";
-
-
-        if (
-            !products.length
-        ) {
-
-            productsContainer.innerHTML = `
-
-                <div class="empty">
-
-                    <svg class="empty-icon">
-
-                        <use href="#icon-bag"></use>
-
-                    </svg>
-
-                    <h2>
-                        لا توجد منتجات
-                    </h2>
-
-                    <p style="margin-top:8px;">
-
-                        لا توجد منتجات في هذا المتجر حاليًا.
-
-                    </p>
-
-                </div>
-
-            `;
-
-            return;
-
-        }
-
-
-        products.forEach(
-            product => {
-
-                const image =
-                    getProductImage(
-                        product
-                    );
-
-
-                const name =
-                    product.name
-                    ||
-                    "منتج";
-
-
-                const price =
-                    Number(
-                        product.price || 0
-                    );
-
-
-                /*
-                 * المخزون يستخدم فقط
-                 * لمعرفة توفر المنتج.
-                 */
-
-                const stock =
-                    Number(
-                        product.stock ?? 0
-                    );
-
-
-                const outOfStock =
-                    stock <= 0;
-
-
-                const card =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                card.className =
-                    "card";
-
-
-                card.innerHTML = `
-
-                    ${
-                        image
-
-                        ?
-
-                        `
-                        <img
-                            src="${escapeHtml(image)}"
-                            alt="${escapeHtml(name)}"
-                            loading="lazy"
-                            onerror="
-                                this.style.display='none';
-                            "
-                        >
-                        `
-
-                        :
-
-                        `
-                        <div
-                            style="
-                                aspect-ratio:1/1;
-                                display:flex;
-                                align-items:center;
-                                justify-content:center;
-                                background:var(--card-light);
-                                color:var(--muted);
-                            "
-                        >
-
-                            <svg
-                                style="
-                                    width:50px;
-                                    height:50px;
-                                    color:var(--accent);
-                                "
-                            >
-
-                                <use href="#icon-bag"></use>
-
-                            </svg>
-
-                        </div>
-                        `
-
-                    }
-
-
-                    <div class="card-content">
-
-                        <h3>
-                            ${escapeHtml(name)}
-                        </h3>
-
-
-                        <div class="price">
-
-                            ${price.toLocaleString("fr-DZ")}
-                            DA
-
-                        </div>
-
-
-                        <button
-                            class="details-btn"
-                            type="button"
-                        >
-
-                            عرض المنتج
-
-                        </button>
-
-
-                        <button
-                            class="add-btn"
-                            type="button"
-                            ${
-                                outOfStock
-                                ? "disabled"
-                                : ""
-                            }
-                        >
-
-                            ${
-                                outOfStock
-                                ? "غير متوفر"
-                                : "أضف إلى السلة"
-                            }
-
-                        </button>
-
-                    </div>
-
-                `;
-
-
-                /* =================================================
-                   DETAILS
-                ================================================= */
-
-                card
-                    .querySelector(
-                        ".details-btn"
-                    )
-                    .addEventListener(
-                        "click",
-                        function() {
-
-                            window.location.href =
-
-                                "product.html?id=" +
-
-                                encodeURIComponent(
-                                    product.id
-                                )
-
-                                +
-
-                                "&store=" +
-
-                                encodeURIComponent(
-                                    storeUid
-                                );
-
-                        }
-                    );
-
-
-                /* =================================================
-                   ADD TO CART
-                ================================================= */
-
-                const addButton =
-                    card.querySelector(
-                        ".add-btn"
-                    );
-
-
-                if (
-                    !outOfStock
-                ) {
-
-                    addButton.addEventListener(
-                        "click",
-                        function() {
-
-                            addToCart(
-                                product
-                            );
-
-                        }
-                    );
-
-                }
-
-
-                productsContainer.appendChild(
-                    card
-                );
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       ADD TO CART
-    ===================================================== */
-
-    function addToCart(product) {
-
-        let cart =
-
-            JSON.parse(
-                localStorage.getItem(
-                    "cart"
-                )
-            )
-            ||
-            [];
+        currentStore =
+            storeSnap.data();
 
 
         /*
-         * المنتجات التابعة لمتجر آخر.
+         * ID المستند هو المعرّف الأساسي
+         * للمتجر.
          */
 
-        const otherStoreItems =
+        storeUid =
+            storeSnap.id;
 
-            cart.filter(
-                item =>
 
-                    item.storeUid
-                    &&
-                    item.storeUid !==
-                    storeUid
+        localStorage.setItem(
+            "storeId",
+            storeUid
+        );
 
-            );
+
+        /* STATUS */
+
+        const status =
+            String(
+                currentStore.status
+                ||
+                "approved"
+            )
+            .toLowerCase()
+            .trim();
 
 
         if (
-            otherStoreItems.length
+
+            status !== "approved"
+
+            &&
+
+            status !== "active"
+
         ) {
 
-            const confirmChange =
-                confirm(
+            showStoreError(
+                "هذا المتجر غير متاح حاليًا."
+            );
 
-                    "السلة تحتوي منتجات من متجر آخر.\n\n" +
-
-                    "هل تريد إفراغ السلة والشراء من هذا المتجر؟"
-
-                );
-
-
-            if (
-                !confirmChange
-            ) {
-
-                return;
-
-            }
-
-
-            cart = [];
+            return false;
 
         }
 
 
-        const existing =
+        /* PIXELS */
 
-            cart.find(
-                item =>
-
-                    item.id ===
-                    product.id
-
-                    &&
-
-                    item.storeUid ===
-                    storeUid
-
-            );
+        initPixels(
+            currentStore
+        );
 
 
-        if (
-            existing
-        ) {
+        /* =================================================
+           THEME FROM FIRESTORE
+        ================================================= */
 
-            existing.quantity =
-                Number(
-                    existing.quantity || 0
-                ) + 1;
+        applyStoreTheme(
+            currentStore
+        );
+
+
+        /* NAME */
+
+        const name =
+            currentStore.storeName
+            ||
+            currentStore.name
+            ||
+            "G-Glam";
+
+
+        storeNameElement.textContent =
+            name;
+
+
+        headerStoreName.textContent =
+            name;
+
+
+        document.title =
+            name +
+            " | المتجر";
+
+
+        /* DESCRIPTION */
+
+        storeDescriptionElement.textContent =
+
+            currentStore.description
+            ||
+            "Bienvenue dans notre boutique";
+
+
+        /* STORE IMAGE */
+
+        const image =
+
+            currentStore.storeImage
+            ||
+            currentStore.image
+            ||
+            currentStore.logo
+            ||
+            currentStore.photoURL
+            ||
+            "";
+
+
+        if (image) {
+
+            storeImage.src =
+                image;
+
+            storeImage.style.display =
+                "block";
 
         }
 
         else {
 
-            cart.push({
-
-                id:
-                    product.id,
-
-                name:
-                    product.name ||
-                    "منتج",
-
-                price:
-                    Number(
-                        product.price || 0
-                    ),
-
-                image:
-                    getProductImage(
-                        product
-                    ),
-
-                quantity:
-                    1,
-
-                color:
-                    "بدون لون",
-
-                storeUid:
-                    storeUid,
-
-                storeName:
-
-                    currentStore?.storeName
-                    ||
-                    currentStore?.name
-                    ||
-                    "G-Glam"
-
-            });
-
-        }
-
-
-        localStorage.setItem(
-            "cart",
-            JSON.stringify(cart)
-        );
-
-
-        localStorage.setItem(
-            "cartStoreId",
-            storeUid
-        );
-
-
-        updateCartCount();
-
-
-        /* =================================================
-           META ADD TO CART
-        ================================================= */
-
-        if (
-            typeof window.fbq === "function"
-        ) {
-
-            window.fbq(
-                "track",
-                "AddToCart",
-                {
-
-                    content_name:
-                        product.name || "",
-
-                    content_ids:
-                        [product.id],
-
-                    value:
-                        Number(
-                            product.price || 0
-                        ),
-
-                    currency:
-                        "DZD"
-
-                }
+            storeImage.removeAttribute(
+                "src"
             );
 
-        }
-
-
-        /* =================================================
-           TIKTOK ADD TO CART
-        ================================================= */
-
-        if (
-            typeof window.ttq !== "undefined"
-            &&
-            typeof window.ttq.track === "function"
-        ) {
-
-            window.ttq.track(
-                "AddToCart",
-                {
-
-                    content_name:
-                        product.name || "",
-
-                    content_id:
-                        product.id,
-
-                    value:
-                        Number(
-                            product.price || 0
-                        ),
-
-                    currency:
-                        "DZD"
-
-                }
-            );
+            storeImage.style.display =
+                "none";
 
         }
 
 
-        alert(
-            "تمت إضافة المنتج إلى السلة"
-        );
+        /* COVER */
 
-    }
+        const cover =
 
-
-    /* =====================================================
-       CART COUNT
-    ===================================================== */
-
-    function updateCartCount() {
-
-        let cart =
-
-            JSON.parse(
-                localStorage.getItem(
-                    "cart"
-                )
-            )
+            currentStore.storeCoverImage
             ||
-            [];
+            currentStore.storeCover
+            ||
+            currentStore.coverImage
+            ||
+            currentStore.cover
+            ||
+            currentStore.banner
+            ||
+            currentStore.storeBanner
+            ||
+            "";
 
 
-        const storeCart =
+        if (cover) {
 
-            cart.filter(
-                item =>
-                    item.storeUid ===
-                    storeUid
+            storeCoverImage.src =
+                cover;
+
+            storeCover.style.display =
+                "block";
+
+        }
+
+        else {
+
+            storeCoverImage.removeAttribute(
+                "src"
             );
 
+            storeCover.style.display =
+                "none";
 
-        let total = 0;
-
-
-        storeCart.forEach(
-            item => {
-
-                total +=
-                    Number(
-                        item.quantity || 0
-                    );
-
-            }
-        );
+        }
 
 
-        cartCount.textContent =
-            total;
+        /* SOCIAL */
+
+        renderSocialLinks();
+
+
+        updateNavigationLinks();
+
+
+        return true;
 
     }
 
+    catch(error) {
 
-    /* =====================================================
-       SEARCH
-    ===================================================== */
-
-    searchInput.addEventListener(
-        "input",
-        function() {
-
-            const keyword =
-
-                this.value
-                    .toLowerCase()
-                    .trim();
+        console.error(
+            "STORE LOAD ERROR:",
+            error
+        );
 
 
-            if (!keyword) {
-
-                renderProducts(
-                    allProducts
-                );
-
-                return;
-
-            }
+        showStoreError(
+            "حدث خطأ أثناء تحميل المتجر."
+        );
 
 
-            const filtered =
+        return false;
 
-                allProducts.filter(
-                    product => {
+    }
 
-                        const name =
-
-                            String(
-                                product.name ||
-                                ""
-                            )
-                            .toLowerCase();
+}
 
 
-                        const description =
+/* =====================================================
+   LOAD PRODUCTS
+===================================================== */
 
-                            String(
-                                product.description ||
-                                ""
-                            )
-                            .toLowerCase();
+async function loadProducts() {
 
+    try {
 
-                        return (
+        productsContainer.innerHTML = `
 
-                            name.includes(
-                                keyword
-                            )
+            <div class="loading">
 
-                            ||
+                <svg>
 
-                            description.includes(
-                                keyword
-                            )
+                    <use href="#icon-loader"></use>
 
-                        );
+                </svg>
 
-                    }
-                );
+                <div>
+                    جاري تحميل المنتجات...
+                </div>
 
+            </div>
 
-            renderProducts(
-                filtered
-            );
-
-        }
-    );
+        `;
 
 
-    /* =====================================================
-       CART BUTTON
-    ===================================================== */
-
-    document
-        .getElementById(
-            "cartButton"
-        )
-        .addEventListener(
-            "click",
-            function() {
-
-                if (!storeUid) {
-
-                    return;
-
-                }
+        let snapshot;
 
 
-                window.location.href =
+        /*
+         * الطريقة الأساسية:
+         * products.ownerUid == storeUid
+         */
 
-                    "cart.html?store=" +
+        try {
 
-                    encodeURIComponent(
+            const productsQuery =
+                query(
+
+                    collection(
+                        db,
+                        "products"
+                    ),
+
+                    where(
+                        "ownerUid",
+                        "==",
                         storeUid
-                    );
+                    )
 
-            }
-        );
-
-
-    /* =====================================================
-       SIDEBAR
-    ===================================================== */
-
-    const sidebar =
-        document.getElementById(
-            "sidebar"
-        );
-
-
-    const overlay =
-        document.getElementById(
-            "overlay"
-        );
-
-
-    const menuBtn =
-        document.getElementById(
-            "menuBtn"
-        );
-
-
-    const contactLink =
-        document.getElementById(
-            "contactLink"
-        );
-
-
-    function openSidebar() {
-
-        sidebar.classList.add(
-            "active"
-        );
-
-        overlay.classList.add(
-            "active"
-        );
-
-    }
-
-
-    function closeSidebar() {
-
-        sidebar.classList.remove(
-            "active"
-        );
-
-        overlay.classList.remove(
-            "active"
-        );
-
-    }
-
-
-    menuBtn.addEventListener(
-        "click",
-        openSidebar
-    );
-
-
-    menuBtn.addEventListener(
-        "keydown",
-        function(event) {
-
-            if (
-                event.key === "Enter"
-                ||
-                event.key === " "
-            ) {
-
-                event.preventDefault();
-
-                openSidebar();
-
-            }
-
-        }
-    );
-
-
-    overlay.addEventListener(
-        "click",
-        closeSidebar
-    );
-
-
-    /* =====================================================
-       CONTACT
-    ===================================================== */
-
-    contactLink.addEventListener(
-        "click",
-        function(event) {
-
-            event.preventDefault();
-
-            closeSidebar();
-
-
-            const socialSection =
-                document.getElementById(
-                    "socialSection"
                 );
 
 
-            if (
-                socialSection
-            ) {
+            snapshot =
+                await getDocs(
+                    productsQuery
+                );
 
-                socialSection.scrollIntoView({
+        }
 
-                    behavior:
-                        "smooth",
+        catch(error) {
 
-                    block:
-                        "start"
+            console.warn(
+                "ownerUid query failed:",
+                error
+            );
+
+
+            /*
+             * توافق مع البيانات القديمة:
+             * products.storeId == storeUid
+             */
+
+            const oldQuery =
+                query(
+
+                    collection(
+                        db,
+                        "products"
+                    ),
+
+                    where(
+                        "storeId",
+                        "==",
+                        storeUid
+                    )
+
+                );
+
+
+            snapshot =
+                await getDocs(
+                    oldQuery
+                );
+
+        }
+
+
+        allProducts = [];
+
+
+        snapshot.forEach(
+            productDoc => {
+
+                allProducts.push({
+
+                    id:
+                        productDoc.id,
+
+                    ...productDoc.data()
 
                 });
 
             }
-
-        }
-    );
-
-
-    /* =====================================================
-       SIDEBAR LINKS
-    ===================================================== */
-
-    document
-        .querySelectorAll(
-            ".sidebar a:not(#contactLink)"
-        )
-        .forEach(
-            function(link) {
-
-                link.addEventListener(
-                    "click",
-                    closeSidebar
-                );
-
-            }
         );
 
 
-    /* =====================================================
-       ESCAPE KEY
-    ===================================================== */
+        renderProducts(
+            allProducts
+        );
 
-    document.addEventListener(
-        "keydown",
-        function(event) {
+    }
 
-            if (
-                event.key === "Escape"
-            ) {
+    catch(error) {
 
-                closeSidebar();
-
-            }
-
-        }
-    );
-
-
-    /* =====================================================
-       STORE ERROR
-    ===================================================== */
-
-    function showStoreError(message) {
-
-        headerStoreName.textContent =
-            "G-Glam";
-
-
-        storeNameElement.textContent =
-            "G-Glam";
+        console.error(
+            "PRODUCTS ERROR:",
+            error
+        );
 
 
         productsContainer.innerHTML = `
@@ -4731,21 +4860,91 @@
 
                 <svg class="empty-icon">
 
-                    <use href="#icon-store"></use>
+                    <use href="#icon-bag"></use>
 
                 </svg>
 
-
                 <h2>
-
-                    ${escapeHtml(message)}
-
+                    حدث خطأ
                 </h2>
 
-
                 <p style="margin-top:10px;">
+                    تعذر تحميل منتجات المتجر.
+                </p>
 
-                    تحقق من رابط المتجر.
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   GET PRODUCT IMAGE
+===================================================== */
+
+function getProductImage(product) {
+
+    if (
+        product.image
+    ) {
+
+        return product.image;
+
+    }
+
+
+    if (
+        Array.isArray(
+            product.images
+        )
+        &&
+        product.images.length
+    ) {
+
+        return product.images[0];
+
+    }
+
+
+    return "";
+
+}
+
+
+/* =====================================================
+   RENDER PRODUCTS
+===================================================== */
+
+function renderProducts(products) {
+
+    productsContainer.innerHTML =
+        "";
+
+
+    if (
+        !products.length
+    ) {
+
+        productsContainer.innerHTML = `
+
+            <div class="empty">
+
+                <svg class="empty-icon">
+
+                    <use href="#icon-bag"></use>
+
+                </svg>
+
+                <h2>
+                    لا توجد منتجات
+                </h2>
+
+                <p style="margin-top:8px;">
+
+                    لا توجد منتجات في هذا المتجر حاليًا.
 
                 </p>
 
@@ -4753,40 +4952,818 @@
 
         `;
 
-
-        socialLinks.innerHTML = `
-
-            <div class="social-empty">
-
-                لا توجد معلومات تواصل.
-
-            </div>
-
-        `;
+        return;
 
     }
 
 
-    /* =====================================================
-       START
-    ===================================================== */
+    products.forEach(
+        product => {
+
+            const image =
+                getProductImage(
+                    product
+                );
+
+
+            const name =
+                product.name
+                ||
+                "منتج";
+
+
+            const price =
+                Number(
+                    product.price || 0
+                );
+
+
+            const stock =
+                Number(
+                    product.stock ?? 0
+                );
+
+
+            const outOfStock =
+                stock <= 0;
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "card";
+
+
+            card.innerHTML = `
+
+                ${
+                    image
+                    ?
+                    `
+                    <img
+                        src="${escapeHtml(image)}"
+                        alt="${escapeHtml(name)}"
+                        loading="lazy"
+                        onerror="
+                            this.style.display='none';
+                        "
+                    >
+                    `
+                    :
+                    `
+                    <div
+                        style="
+                            aspect-ratio:1/1;
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            background:var(--card-light);
+                            color:var(--muted);
+                        "
+                    >
+
+                        <svg
+                            style="
+                                width:50px;
+                                height:50px;
+                                color:var(--accent);
+                            "
+                        >
+
+                            <use href="#icon-bag"></use>
+
+                        </svg>
+
+                    </div>
+                    `
+                }
+
+
+                <div class="card-content">
+
+                    <h3>
+                        ${escapeHtml(name)}
+                    </h3>
+
+
+                    <div class="price">
+
+                        ${price.toLocaleString("fr-DZ")}
+                        DA
+
+                    </div>
+
+
+                    <button
+                        class="details-btn"
+                        type="button"
+                    >
+
+                        عرض المنتج
+
+                    </button>
+
+
+                    <button
+                        class="add-btn"
+                        type="button"
+                        ${
+                            outOfStock
+                            ? "disabled"
+                            : ""
+                        }
+                    >
+
+                        ${
+                            outOfStock
+                            ? "غير متوفر"
+                            : "أضف إلى السلة"
+                        }
+
+                    </button>
+
+                </div>
+
+            `;
+
+
+            /* DETAILS */
+
+            card
+                .querySelector(
+                    ".details-btn"
+                )
+                .addEventListener(
+                    "click",
+                    function() {
+
+                        window.location.href =
+
+                            "product.html?id=" +
+
+                            encodeURIComponent(
+                                product.id
+                            )
+
+                            +
+
+                            "&store=" +
+
+                            encodeURIComponent(
+                                storeUid
+                            );
+
+                    }
+                );
+
+
+            /* ADD TO CART */
+
+            const addButton =
+                card.querySelector(
+                    ".add-btn"
+                );
+
+
+            if (
+                !outOfStock
+            ) {
+
+                addButton.addEventListener(
+                    "click",
+                    function() {
+
+                        addToCart(
+                            product
+                        );
+
+                    }
+                );
+
+            }
+
+
+            productsContainer.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   ADD TO CART
+===================================================== */
+
+function addToCart(product) {
+
+    let cart =
+
+        JSON.parse(
+            localStorage.getItem(
+                "cart"
+            )
+        )
+        ||
+        [];
+
+
+    const otherStoreItems =
+
+        cart.filter(
+            item =>
+
+                item.storeUid
+                &&
+                item.storeUid !==
+                storeUid
+
+        );
+
+
+    if (
+        otherStoreItems.length
+    ) {
+
+        const confirmChange =
+            confirm(
+
+                "السلة تحتوي منتجات من متجر آخر.\n\n" +
+
+                "هل تريد إفراغ السلة والشراء من هذا المتجر؟"
+
+            );
+
+
+        if (
+            !confirmChange
+        ) {
+
+            return;
+
+        }
+
+
+        cart = [];
+
+    }
+
+
+    const existing =
+
+        cart.find(
+            item =>
+
+                item.id ===
+                product.id
+
+                &&
+
+                item.storeUid ===
+                storeUid
+
+        );
+
+
+    if (
+        existing
+    ) {
+
+        existing.quantity =
+            Number(
+                existing.quantity || 0
+            ) + 1;
+
+    }
+
+    else {
+
+        cart.push({
+
+            id:
+                product.id,
+
+            name:
+                product.name ||
+                "منتج",
+
+            price:
+                Number(
+                    product.price || 0
+                ),
+
+            image:
+                getProductImage(
+                    product
+                ),
+
+            quantity:
+                1,
+
+            color:
+                "بدون لون",
+
+            storeUid:
+                storeUid,
+
+            storeName:
+
+                currentStore?.storeName
+                ||
+                currentStore?.name
+                ||
+                "G-Glam"
+
+        });
+
+    }
+
+
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
+
+
+    localStorage.setItem(
+        "cartStoreId",
+        storeUid
+    );
+
 
     updateCartCount();
 
 
-    const storeLoaded =
-        await loadStore();
-
+    /* META ADD TO CART */
 
     if (
-        storeLoaded
+        typeof window.fbq === "function"
     ) {
 
-        updateCartCount();
+        window.fbq(
+            "track",
+            "AddToCart",
+            {
 
-        await loadProducts();
+                content_name:
+                    product.name || "",
+
+                content_ids:
+                    [product.id],
+
+                value:
+                    Number(
+                        product.price || 0
+                    ),
+
+                currency:
+                    "DZD"
+
+            }
+        );
 
     }
+
+
+    /* TIKTOK ADD TO CART */
+
+    if (
+        typeof window.ttq !== "undefined"
+        &&
+        typeof window.ttq.track === "function"
+    ) {
+
+        window.ttq.track(
+            "AddToCart",
+            {
+
+                content_name:
+                    product.name || "",
+
+                content_id:
+                    product.id,
+
+                value:
+                    Number(
+                        product.price || 0
+                    ),
+
+                currency:
+                    "DZD"
+
+            }
+        );
+
+    }
+
+
+    alert(
+        "تمت إضافة المنتج إلى السلة"
+    );
+
+}
+
+
+/* =====================================================
+   CART COUNT
+===================================================== */
+
+function updateCartCount() {
+
+    let cart =
+
+        JSON.parse(
+            localStorage.getItem(
+                "cart"
+            )
+        )
+        ||
+        [];
+
+
+    const storeCart =
+
+        cart.filter(
+            item =>
+                item.storeUid ===
+                storeUid
+        );
+
+
+    let total = 0;
+
+
+    storeCart.forEach(
+        item => {
+
+            total +=
+                Number(
+                    item.quantity || 0
+                );
+
+        }
+    );
+
+
+    cartCount.textContent =
+        total;
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+searchInput.addEventListener(
+    "input",
+    function() {
+
+        const keyword =
+
+            this.value
+                .toLowerCase()
+                .trim();
+
+
+        if (!keyword) {
+
+            renderProducts(
+                allProducts
+            );
+
+            return;
+
+        }
+
+
+        const filtered =
+
+            allProducts.filter(
+                product => {
+
+                    const name =
+
+                        String(
+                            product.name ||
+                            ""
+                        )
+                        .toLowerCase();
+
+
+                    const description =
+
+                        String(
+                            product.description ||
+                            ""
+                        )
+                        .toLowerCase();
+
+
+                    return (
+
+                        name.includes(
+                            keyword
+                        )
+
+                        ||
+
+                        description.includes(
+                            keyword
+                        )
+
+                    );
+
+                }
+            );
+
+
+        renderProducts(
+            filtered
+        );
+
+    }
+);
+
+
+/* =====================================================
+   CART BUTTON
+===================================================== */
+
+document
+    .getElementById(
+        "cartButton"
+    )
+    .addEventListener(
+        "click",
+        function() {
+
+            if (!storeUid) {
+
+                return;
+
+            }
+
+
+            window.location.href =
+
+                "cart.html?store=" +
+
+                encodeURIComponent(
+                    storeUid
+                );
+
+        }
+    );
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+const sidebar =
+    document.getElementById(
+        "sidebar"
+    );
+
+
+const overlay =
+    document.getElementById(
+        "overlay"
+    );
+
+
+const menuBtn =
+    document.getElementById(
+        "menuBtn"
+    );
+
+
+const contactLink =
+    document.getElementById(
+        "contactLink"
+    );
+
+
+function openSidebar() {
+
+    sidebar.classList.add(
+        "active"
+    );
+
+    overlay.classList.add(
+        "active"
+    );
+
+}
+
+
+function closeSidebar() {
+
+    sidebar.classList.remove(
+        "active"
+    );
+
+    overlay.classList.remove(
+        "active"
+    );
+
+}
+
+
+menuBtn.addEventListener(
+    "click",
+    openSidebar
+);
+
+
+menuBtn.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Enter"
+            ||
+            event.key === " "
+        ) {
+
+            event.preventDefault();
+
+            openSidebar();
+
+        }
+
+    }
+);
+
+
+overlay.addEventListener(
+    "click",
+    closeSidebar
+);
+
+
+/* =====================================================
+   CONTACT
+===================================================== */
+
+contactLink.addEventListener(
+    "click",
+    function(event) {
+
+        event.preventDefault();
+
+        closeSidebar();
+
+
+        const socialSection =
+            document.getElementById(
+                "socialSection"
+            );
+
+
+        if (
+            socialSection
+        ) {
+
+            socialSection.scrollIntoView({
+
+                behavior:
+                    "smooth",
+
+                block:
+                    "start"
+
+            });
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   SIDEBAR LINKS
+===================================================== */
+
+document
+    .querySelectorAll(
+        ".sidebar a:not(#contactLink)"
+    )
+    .forEach(
+        function(link) {
+
+            link.addEventListener(
+                "click",
+                closeSidebar
+            );
+
+        }
+    );
+
+
+/* =====================================================
+   ESCAPE KEY
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            closeSidebar();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   STORE ERROR
+===================================================== */
+
+function showStoreError(message) {
+
+    headerStoreName.textContent =
+        "G-Glam";
+
+
+    storeNameElement.textContent =
+        "G-Glam";
+
+
+    productsContainer.innerHTML = `
+
+        <div class="empty">
+
+            <svg class="empty-icon">
+
+                <use href="#icon-store"></use>
+
+            </svg>
+
+
+            <h2>
+
+                ${escapeHtml(message)}
+
+            </h2>
+
+
+            <p style="margin-top:10px;">
+
+                تحقق من رابط المتجر.
+
+            </p>
+
+        </div>
+
+    `;
+
+
+    socialLinks.innerHTML = `
+
+        <div class="social-empty">
+
+            لا توجد معلومات تواصل.
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+updateCartCount();
+
+
+const storeLoaded =
+    await loadStore();
+
+
+if (
+    storeLoaded
+) {
+
+    updateCartCount();
+
+    await loadProducts();
+
+}
 
 </script>
 
@@ -4797,43 +5774,45 @@
 
 <script>
 
-    if (
-        "serviceWorker" in navigator
-    ) {
+if (
+    "serviceWorker" in navigator
+) {
 
-        window.addEventListener(
-            "load",
-            function() {
+    window.addEventListener(
+        "load",
+        function() {
 
-                navigator.serviceWorker
-                    .register(
-                        "service-worker.js"
-                    )
-                    .then(
-                        function() {
+            navigator.serviceWorker
+                .register(
+                    "service-worker.js"
+                )
+                .then(
+                    function() {
 
-                            console.log(
-                                "G-Glam PWA جاهز"
-                            );
+                        console.log(
+                            "G-Glam PWA جاهز"
+                        );
 
-                        }
-                    )
-                    .catch(
-                        function(error) {
+                    }
+                )
+                .catch(
+                    function(error) {
 
-                            console.log(
-                                "خطأ في PWA:",
-                                error
-                            );
+                        console.log(
+                            "خطأ في PWA:",
+                            error
+                        );
 
-                        }
-                    );
+                    }
+                );
 
-            }
-        );
+        }
+    );
 
-    }
+}
 
 </script>
 
-</body></html>
+
+</body>
+</html>
