@@ -13,6 +13,7 @@
     <meta
         name="theme-color"
         content="#F47B20"
+        id="themeColorMeta"
     >
 
     <title>G-Glam | إعدادات المتجر</title>
@@ -1254,48 +1255,44 @@
 
 
         /* =====================================================
-           THEME OPTIONS
+           THEME MAIN MENU
         ===================================================== */
 
-        .theme-options {
+        .theme-main-menu {
 
             display: grid;
 
             grid-template-columns:
-                repeat(3, 1fr);
+                repeat(2, minmax(0, 1fr));
 
-            gap: 12px;
+            gap: 16px;
 
             margin-top: 18px;
 
         }
 
 
-        .theme-option {
-
-            position: relative;
-
-            min-height: 110px;
+        .theme-category {
 
             border:
-                2px solid #E5E5E5;
+                2px solid #E7E7E7;
 
-            border-radius: 14px;
-
-            padding: 13px;
-
-            cursor: pointer;
+            border-radius: 17px;
 
             background: #FAFAFA;
 
-            transition: .2s;
+            padding: 18px;
 
-            overflow: hidden;
+            cursor: pointer;
+
+            transition: .25s;
+
+            text-align: right;
 
         }
 
 
-        .theme-option:hover {
+        .theme-category:hover {
 
             transform:
                 translateY(-2px);
@@ -1303,245 +1300,368 @@
             border-color:
                 #FFC89E;
 
+            box-shadow:
+                0 8px 22px
+                rgba(0,0,0,.06);
+
         }
 
 
-        .theme-option.selected {
+        .theme-category.active {
 
             border-color:
                 var(--orange);
 
             box-shadow:
-                0 5px 18px
-                rgba(244, 123, 32, .12);
+                0 8px 25px
+                rgba(244,123,32,.12);
 
         }
 
 
-        .theme-option input {
-
-            position: absolute;
-
-            opacity: 0;
-
-            pointer-events: none;
-
-        }
-
-
-        .theme-preview {
-
-            height: 45px;
-
-            border-radius: 9px;
-
-            margin-bottom: 10px;
+        .theme-category-top {
 
             display: flex;
 
             align-items: center;
 
-            padding: 0 10px;
+            justify-content: space-between;
 
-            gap: 6px;
+            gap: 12px;
 
-        }
-
-
-        .theme-preview span {
-
-            display: block;
-
-            height: 7px;
-
-            border-radius: 20px;
-
-            background: rgba(255,255,255,.8);
+            margin-bottom: 12px;
 
         }
 
 
-        .theme-preview span:first-child {
+        .theme-category-icon {
 
-            width: 45%;
+            width: 48px;
+            height: 48px;
+
+            border-radius: 14px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 20px;
+
+            color: white;
+
+            flex-shrink: 0;
 
         }
 
 
-        .theme-preview span:last-child {
-
-            width: 25%;
-
-        }
-
-
-        .theme-orange {
+        .solid-category-icon {
 
             background:
                 linear-gradient(
                     135deg,
                     #F47B20,
-                    #FF9B52
+                    #FFB37D
                 );
 
         }
 
 
-        .theme-blue {
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #1769AA,
-                    #4C9FE2
-                );
-
-        }
-
-
-        .theme-green {
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #198754,
-                    #45B77B
-                );
-
-        }
-
-
-        .theme-purple {
+        .gradient-category-icon {
 
             background:
                 linear-gradient(
                     135deg,
                     #7B3FC6,
-                    #A86DE0
+                    #F083AF,
+                    #F47B20
                 );
 
         }
 
 
-        .theme-pink {
+        .theme-category-arrow {
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #D94F87,
-                    #F083AF
-                );
+            color: #999;
+
+            transition: .25s;
 
         }
 
 
-        .theme-dark {
+        .theme-category.active
+        .theme-category-arrow {
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #111827,
-                    #374151
-                );
+            color:
+                var(--orange);
 
-        }
-
-
-        /* الثيمات الجديدة */
-        .theme-red {
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #E63946,
-                    #FF6B6B
-                );
+            transform:
+                rotate(180deg);
 
         }
 
 
-        .theme-teal {
+        .theme-category strong {
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #00B4D8,
-                    #90E0EF
-                );
+            display: block;
 
-        }
+            font-size: 16px;
 
+            font-weight: 800;
 
-        .theme-gold {
+            color: var(--dark);
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #D4AF37,
-                    #F3E5AB
-                );
+            margin-bottom: 4px;
 
         }
 
 
-        .theme-luxury {
+        .theme-category p {
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #1A1A1A,
-                    #D4AF37
-                );
+            color: var(--muted);
 
-        }
+            font-size: 12px;
 
-
-        .theme-sunset {
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #833AB4,
-                    #FD1D1D,
-                    #FCB045
-                );
+            line-height: 1.7;
 
         }
 
 
-        .theme-emerald {
+        /* =====================================================
+           THEME PANELS
+        ===================================================== */
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #0F5132,
-                    #198754
-                );
+        .theme-panel {
+
+            display: none;
+
+            margin-top: 18px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 16px;
+
+            background: #FFFFFF;
+
+            overflow: hidden;
 
         }
 
 
-        .theme-name {
+        .theme-panel.open {
 
-            font-size: 13px;
+            display: block;
 
-            font-weight: 700;
+        }
+
+
+        .theme-panel-header {
+
+            padding: 17px 18px;
+
+            border-bottom:
+                1px solid var(--border);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+        }
+
+
+        .theme-panel-title {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+        }
+
+
+        .theme-panel-title i {
+
+            color:
+                var(--orange);
+
+        }
+
+
+        .theme-panel-title strong {
+
+            font-size: 15px;
+
+            font-weight: 800;
 
             color: var(--dark);
 
         }
 
 
-        .theme-check {
+        .theme-panel-title span {
+
+            display: block;
+
+            color: var(--muted);
+
+            font-size: 11px;
+
+            margin-top: 2px;
+
+        }
+
+
+        .theme-close-btn {
+
+            width: 34px;
+            height: 34px;
+
+            border-radius: 10px;
+
+            background: #F3F3F3;
+
+            color: #777;
+
+            cursor: pointer;
+
+            transition: .2s;
+
+        }
+
+
+        .theme-close-btn:hover {
+
+            background: #FFE9DA;
+
+            color: var(--orange);
+
+        }
+
+
+        /* =====================================================
+           SOLID COLORS
+        ===================================================== */
+
+        .solid-color-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(6, 1fr);
+
+            gap: 14px;
+
+            padding: 20px;
+
+        }
+
+
+        .solid-color-option {
+
+            position: relative;
+
+            min-height: 112px;
+
+            border:
+                2px solid #E5E5E5;
+
+            border-radius: 15px;
+
+            padding: 10px;
+
+            background: #FAFAFA;
+
+            cursor: pointer;
+
+            transition: .2s;
+
+            text-align: center;
+
+        }
+
+
+        .solid-color-option:hover {
+
+            transform:
+                translateY(-3px);
+
+            border-color:
+                #FFC89E;
+
+        }
+
+
+        .solid-color-option.selected {
+
+            border-color:
+                var(--orange);
+
+            box-shadow:
+                0 6px 18px
+                rgba(244,123,32,.14);
+
+        }
+
+
+        .solid-color-circle {
+
+            width: 58px;
+            height: 58px;
+
+            border-radius: 50%;
+
+            margin:
+                4px auto 9px;
+
+            border:
+                3px solid white;
+
+            box-shadow:
+                0 3px 10px rgba(0,0,0,.14);
+
+        }
+
+
+        .solid-color-name {
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            color: var(--dark);
+
+        }
+
+
+        .solid-color-code {
+
+            font-size: 10px;
+
+            color: var(--muted);
+
+            direction: ltr;
+
+            margin-top: 2px;
+
+        }
+
+
+        .solid-color-check {
 
             position: absolute;
 
-            left: 10px;
+            left: 7px;
+            top: 7px;
 
-            bottom: 10px;
-
-            width: 24px;
-            height: 24px;
+            width: 23px;
+            height: 23px;
 
             border-radius: 50%;
 
@@ -1555,18 +1675,424 @@
 
             color: transparent;
 
-            font-size: 12px;
+            font-size: 11px;
 
         }
 
 
-        .theme-option.selected
-        .theme-check {
+        .solid-color-option.selected
+        .solid-color-check {
 
             background:
                 var(--orange);
 
             color: white;
+
+        }
+
+
+        /* =====================================================
+           GRADIENT BUILDER
+        ===================================================== */
+
+        .gradient-builder {
+
+            padding: 20px;
+
+        }
+
+
+        .gradient-preview {
+
+            width: 100%;
+
+            height: 150px;
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #F47B20,
+                    #D94F87
+                );
+
+            box-shadow:
+                inset 0 0 0 1px
+                rgba(0,0,0,.06),
+                0 8px 22px
+                rgba(0,0,0,.08);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: white;
+
+            font-size: 17px;
+
+            font-weight: 800;
+
+            text-shadow:
+                0 2px 5px rgba(0,0,0,.25);
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .gradient-controls {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+
+        }
+
+
+        .gradient-color-box {
+
+            border:
+                1px solid #E3E3E3;
+
+            border-radius: 14px;
+
+            padding: 13px;
+
+            background: #FAFAFA;
+
+        }
+
+
+        .gradient-color-box label {
+
+            display: block;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            color: var(--dark);
+
+            margin-bottom: 9px;
+
+        }
+
+
+        .color-picker-wrapper {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+        }
+
+
+        .gradient-color-input {
+
+            width: 50px;
+            height: 43px;
+
+            padding: 3px;
+
+            border:
+                1px solid #DDD;
+
+            border-radius: 10px;
+
+            background: white;
+
+            cursor: pointer;
+
+        }
+
+
+        .hex-input {
+
+            flex: 1;
+
+            min-width: 0;
+
+            height: 43px;
+
+            border:
+                1px solid #DDD;
+
+            border-radius: 10px;
+
+            padding: 0 10px;
+
+            outline: none;
+
+            direction: ltr;
+
+            text-align: left;
+
+            font-size: 12px;
+
+            color: #333;
+
+            background: white;
+
+        }
+
+
+        .hex-input:focus {
+
+            border-color:
+                var(--orange);
+
+        }
+
+
+        .gradient-direction-box {
+
+            margin-top: 15px;
+
+            border:
+                1px solid #E3E3E3;
+
+            border-radius: 14px;
+
+            padding: 15px;
+
+            background: #FAFAFA;
+
+        }
+
+
+        .gradient-direction-box > label {
+
+            display: block;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            color: var(--dark);
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .direction-options {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 9px;
+
+        }
+
+
+        .direction-option {
+
+            position: relative;
+
+            border:
+                1px solid #DDDDDD;
+
+            border-radius: 10px;
+
+            padding: 9px 5px;
+
+            background: white;
+
+            cursor: pointer;
+
+            text-align: center;
+
+            transition: .2s;
+
+            font-size: 11px;
+
+            color: #666;
+
+        }
+
+
+        .direction-option:hover {
+
+            border-color:
+                #FFC89E;
+
+        }
+
+
+        .direction-option.selected {
+
+            border-color:
+                var(--orange);
+
+            background:
+                #FFF4EC;
+
+            color:
+                var(--orange-dark);
+
+            font-weight: 800;
+
+        }
+
+
+        .direction-option i {
+
+            display: block;
+
+            font-size: 17px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .direction-option input {
+
+            position: absolute;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+        }
+
+
+        .gradient-actions {
+
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 18px;
+
+        }
+
+
+        .gradient-save-btn {
+
+            flex: 1;
+
+            min-height: 46px;
+
+            border-radius: 11px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7B3FC6,
+                    #D94F87
+                );
+
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            box-shadow:
+                0 5px 15px
+                rgba(123,63,198,.16);
+
+        }
+
+
+        .gradient-save-btn:hover {
+
+            transform:
+                translateY(-1px);
+
+        }
+
+
+        /* =====================================================
+           THEME CURRENT STATUS
+        ===================================================== */
+
+        .current-theme-box {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 13px 15px;
+
+            margin-top: 16px;
+
+            border-radius: 12px;
+
+            background: #F7F7F7;
+
+            border:
+                1px solid #E7E7E7;
+
+        }
+
+
+        .current-theme-swatch {
+
+            width: 45px;
+            height: 45px;
+
+            border-radius: 11px;
+
+            flex-shrink: 0;
+
+            box-shadow:
+                0 3px 10px
+                rgba(0,0,0,.12);
+
+        }
+
+
+        .current-theme-info {
+
+            min-width: 0;
+
+        }
+
+
+        .current-theme-info strong {
+
+            display: block;
+
+            color: var(--dark);
+
+            font-size: 13px;
+
+        }
+
+
+        .current-theme-info span {
+
+            display: block;
+
+            color: var(--muted);
+
+            font-size: 11px;
+
+            margin-top: 3px;
 
         }
 
@@ -1683,26 +2209,6 @@
             cursor: not-allowed;
 
             transform: none;
-
-        }
-
-
-        .save-theme {
-
-            background:
-                #1769AA;
-
-            box-shadow:
-                0 4px 12px
-                rgba(23, 105, 170, .16);
-
-        }
-
-
-        .save-theme:hover {
-
-            background:
-                #12588E;
 
         }
 
@@ -1902,7 +2408,13 @@
 
             body.dark-mode .page-header h1,
             body.dark-mode .settings-trigger-title strong,
-            body.dark-mode .form-group label {
+            body.dark-mode .form-group label,
+            body.dark-mode .theme-category strong,
+            body.dark-mode .theme-panel-title strong,
+            body.dark-mode .solid-color-name,
+            body.dark-mode .gradient-color-box label,
+            body.dark-mode .gradient-direction-box > label,
+            body.dark-mode .current-theme-info strong {
 
                 color: #F4F7FB;
 
@@ -1910,7 +2422,9 @@
 
 
             body.dark-mode .page-header p,
-            body.dark-mode .settings-trigger-title span {
+            body.dark-mode .settings-trigger-title span,
+            body.dark-mode .theme-category p,
+            body.dark-mode .theme-panel-title span {
 
                 color: #AAB7C7;
 
@@ -1994,7 +2508,12 @@
             }
 
 
-            body.dark-mode .theme-option {
+            body.dark-mode .theme-category,
+            body.dark-mode .theme-panel,
+            body.dark-mode .solid-color-option,
+            body.dark-mode .gradient-color-box,
+            body.dark-mode .gradient-direction-box,
+            body.dark-mode .current-theme-box {
 
                 background: #102234;
 
@@ -2003,24 +2522,71 @@
             }
 
 
-            body.dark-mode .theme-option:hover {
+            body.dark-mode .theme-category:hover {
 
                 border-color: #5A3A22;
 
             }
 
 
-            body.dark-mode .theme-name {
+            body.dark-mode .theme-panel-header {
 
-                color: #F4F7FB;
+                border-bottom-color:
+                    #29425B;
 
             }
 
 
-            body.dark-mode .social-grid
-            .form-group label {
+            body.dark-mode .theme-close-btn {
 
-                color: #F4F7FB;
+                background: #17283A;
+
+                color: #AAB7C7;
+
+            }
+
+
+            body.dark-mode .solid-color-option:hover {
+
+                border-color: #5A3A22;
+
+            }
+
+
+            body.dark-mode .gradient-color-input,
+            body.dark-mode .hex-input,
+            body.dark-mode .direction-option {
+
+                background: #0D1B2A;
+
+                color: #E8EEF5;
+
+                border-color: #29425B;
+
+            }
+
+
+            body.dark-mode .direction-option.selected {
+
+                background: #263142;
+
+                border-color: #F47B20;
+
+                color: #FF9A50;
+
+            }
+
+
+            body.dark-mode .current-theme-box {
+
+                background: #102234;
+
+            }
+
+
+            body.dark-mode .solid-color-code {
+
+                color: #AAB7C7;
 
             }
 
@@ -2086,6 +2652,18 @@
            TABLET
         ===================================================== */
 
+        @media (max-width: 1100px) {
+
+            .solid-color-grid {
+
+                grid-template-columns:
+                    repeat(4, 1fr);
+
+            }
+
+        }
+
+
         @media (max-width: 900px) {
 
             .settings-grid {
@@ -2102,10 +2680,18 @@
             }
 
 
-            .theme-options {
+            .solid-color-grid {
 
                 grid-template-columns:
-                    repeat(3, 1fr);
+                    repeat(4, 1fr);
+
+            }
+
+
+            .gradient-controls {
+
+                grid-template-columns:
+                    1fr 1fr;
 
             }
 
@@ -2158,6 +2744,21 @@
             .social-grid {
 
                 grid-template-columns: 1fr;
+
+            }
+
+
+            .theme-main-menu {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .solid-color-grid {
+
+                grid-template-columns:
+                    repeat(3, 1fr);
 
             }
 
@@ -2307,10 +2908,85 @@
             }
 
 
-            .theme-options {
+            .solid-color-grid {
+
+                grid-template-columns:
+                    repeat(3, 1fr);
+
+                padding: 14px;
+
+                gap: 9px;
+
+            }
+
+
+            .solid-color-option {
+
+                min-height: 98px;
+
+                padding: 7px;
+
+            }
+
+
+            .solid-color-circle {
+
+                width: 48px;
+                height: 48px;
+
+            }
+
+
+            .solid-color-name {
+
+                font-size: 10px;
+
+            }
+
+
+            .solid-color-code {
+
+                font-size: 8px;
+
+            }
+
+
+            .gradient-builder {
+
+                padding: 14px;
+
+            }
+
+
+            .gradient-preview {
+
+                height: 125px;
+
+                font-size: 14px;
+
+            }
+
+
+            .gradient-controls {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .direction-options {
 
                 grid-template-columns:
                     repeat(2, 1fr);
+
+            }
+
+
+            .theme-panel-header {
+
+                padding:
+                    13px 14px;
 
             }
 
@@ -2344,9 +3020,10 @@
             }
 
 
-            .theme-options {
+            .solid-color-grid {
 
-                grid-template-columns: 1fr;
+                grid-template-columns:
+                    repeat(2, 1fr);
 
             }
 
@@ -2412,15 +3089,10 @@
 
         <div class="menu">
 
-
-            <a
-                href="dashboard.html"
-            >
+            <a href="dashboard.html">
 
                 <span class="icon">
-
                     <i class="fa-solid fa-house"></i>
-
                 </span>
 
                 <span class="text">
@@ -2430,14 +3102,10 @@
             </a>
 
 
-            <a
-                href="orders.html"
-            >
+            <a href="orders.html">
 
                 <span class="icon">
-
                     <i class="fa-solid fa-clipboard-list"></i>
-
                 </span>
 
                 <span class="text">
@@ -2447,14 +3115,10 @@
             </a>
 
 
-            <a
-                href="products.html"
-            >
+            <a href="products.html">
 
                 <span class="icon">
-
                     <i class="fa-solid fa-bag-shopping"></i>
-
                 </span>
 
                 <span class="text">
@@ -2464,14 +3128,10 @@
             </a>
 
 
-            <a
-                href="add-product.html"
-            >
+            <a href="add-product.html">
 
                 <span class="icon">
-
                     <i class="fa-solid fa-circle-plus"></i>
-
                 </span>
 
                 <span class="text">
@@ -2481,14 +3141,10 @@
             </a>
 
 
-            <a
-                href="delivery.html"
-            >
+            <a href="delivery.html">
 
                 <span class="icon">
-
                     <i class="fa-solid fa-location-dot"></i>
-
                 </span>
 
                 <span class="text">
@@ -2504,9 +3160,7 @@
             >
 
                 <span class="icon">
-
                     <i class="fa-solid fa-gear"></i>
-
                 </span>
 
                 <span class="text">
@@ -2522,9 +3176,7 @@
             >
 
                 <span class="icon">
-
                     <i class="fa-solid fa-right-from-bracket"></i>
-
                 </span>
 
                 <span class="text">
@@ -2532,7 +3184,6 @@
                 </span>
 
             </a>
-
 
         </div>
 
@@ -2544,7 +3195,6 @@
     ===================================================== -->
 
     <div class="topbar">
-
 
         <div class="store-top">
 
@@ -2575,7 +3225,6 @@
 
         <div class="topbar-actions">
 
-
             <button
                 type="button"
                 class="theme-btn"
@@ -2601,7 +3250,6 @@
 
             </a>
 
-
         </div>
 
     </div>
@@ -2626,13 +3274,9 @@
         ></div>
 
 
-        <div
-            id="loadingMessage"
-        >
+        <div id="loadingMessage">
 
-            <i
-                class="fa-solid fa-spinner fa-spin"
-            ></i>
+            <i class="fa-solid fa-spinner fa-spin"></i>
 
             جاري تحميل إعدادات المتجر...
 
@@ -2677,32 +3321,22 @@
                  STORE INFORMATION
             ============================================== -->
 
-            <section
-                class="settings-section open"
-            >
+            <section class="settings-section open">
 
                 <button
                     type="button"
                     class="settings-trigger"
                 >
 
-                    <span
-                        class="settings-trigger-left"
-                    >
+                    <span class="settings-trigger-left">
 
-                        <span
-                            class="settings-trigger-icon"
-                        >
+                        <span class="settings-trigger-icon">
 
-                            <i
-                                class="fa-solid fa-store"
-                            ></i>
+                            <i class="fa-solid fa-store"></i>
 
                         </span>
 
-                        <span
-                            class="settings-trigger-title"
-                        >
+                        <span class="settings-trigger-title">
 
                             <strong>
                                 معلومات المتجر
@@ -2717,23 +3351,17 @@
                     </span>
 
 
-                    <i
-                        class="fa-solid fa-chevron-down settings-arrow"
-                    ></i>
+                    <i class="fa-solid fa-chevron-down settings-arrow"></i>
 
                 </button>
 
 
-                <div
-                    class="settings-content"
-                >
+                <div class="settings-content">
 
 
                     <div class="form-group">
 
-                        <label
-                            for="storeName"
-                        >
+                        <label for="storeName">
                             اسم المتجر
                         </label>
 
@@ -2749,9 +3377,7 @@
 
                     <div class="form-group">
 
-                        <label
-                            for="storeDescription"
-                        >
+                        <label for="storeDescription">
                             وصف المتجر
                         </label>
 
@@ -2766,18 +3392,13 @@
 
                     <div class="form-group">
 
-                        <label
-                            for="ownerEmail"
-                        >
+                        <label for="ownerEmail">
                             البريد الإلكتروني
                         </label>
 
-
                         <div class="email-wrapper">
 
-                            <i
-                                class="fa-solid fa-envelope"
-                            ></i>
+                            <i class="fa-solid fa-envelope"></i>
 
                             <input
                                 type="email"
@@ -2797,9 +3418,7 @@
                         id="saveBtn"
                     >
 
-                        <i
-                            class="fa-solid fa-floppy-disk"
-                        ></i>
+                        <i class="fa-solid fa-floppy-disk"></i>
 
                         حفظ معلومات المتجر
 
@@ -2814,32 +3433,22 @@
                  STORE IMAGE
             ============================================== -->
 
-            <section
-                class="settings-section"
-            >
+            <section class="settings-section">
 
                 <button
                     type="button"
                     class="settings-trigger"
                 >
 
-                    <span
-                        class="settings-trigger-left"
-                    >
+                    <span class="settings-trigger-left">
 
-                        <span
-                            class="settings-trigger-icon"
-                        >
+                        <span class="settings-trigger-icon">
 
-                            <i
-                                class="fa-solid fa-image"
-                            ></i>
+                            <i class="fa-solid fa-image"></i>
 
                         </span>
 
-                        <span
-                            class="settings-trigger-title"
-                        >
+                        <span class="settings-trigger-title">
 
                             <strong>
                                 صورة المتجر
@@ -2854,16 +3463,12 @@
                     </span>
 
 
-                    <i
-                        class="fa-solid fa-chevron-down settings-arrow"
-                    ></i>
+                    <i class="fa-solid fa-chevron-down settings-arrow"></i>
 
                 </button>
 
 
-                <div
-                    class="settings-content"
-                >
+                <div class="settings-content">
 
 
                     <div class="image-area">
@@ -2881,9 +3486,7 @@
 
                             <h3>
 
-                                <i
-                                    class="fa-solid fa-camera"
-                                ></i>
+                                <i class="fa-solid fa-camera"></i>
 
                                 رفع صورة جديدة
 
@@ -2922,9 +3525,7 @@
                         onclick="document.getElementById('saveBtn').click()"
                     >
 
-                        <i
-                            class="fa-solid fa-cloud-arrow-up"
-                        ></i>
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
 
                         حفظ صورة المتجر
 
@@ -2939,32 +3540,22 @@
                  COVER
             ============================================== -->
 
-            <section
-                class="settings-section full"
-            >
+            <section class="settings-section full">
 
                 <button
                     type="button"
                     class="settings-trigger"
                 >
 
-                    <span
-                        class="settings-trigger-left"
-                    >
+                    <span class="settings-trigger-left">
 
-                        <span
-                            class="settings-trigger-icon"
-                        >
+                        <span class="settings-trigger-icon">
 
-                            <i
-                                class="fa-solid fa-panorama"
-                            ></i>
+                            <i class="fa-solid fa-panorama"></i>
 
                         </span>
 
-                        <span
-                            class="settings-trigger-title"
-                        >
+                        <span class="settings-trigger-title">
 
                             <strong>
                                 غلاف المتجر
@@ -2979,16 +3570,12 @@
                     </span>
 
 
-                    <i
-                        class="fa-solid fa-chevron-down settings-arrow"
-                    ></i>
+                    <i class="fa-solid fa-chevron-down settings-arrow"></i>
 
                 </button>
 
 
-                <div
-                    class="settings-content"
-                >
+                <div class="settings-content">
 
 
                     <div class="cover-area">
@@ -3002,15 +3589,11 @@
                         >
 
 
-                        <div
-                            class="upload-box cover-upload"
-                        >
+                        <div class="upload-box cover-upload">
 
                             <h3>
 
-                                <i
-                                    class="fa-solid fa-panorama"
-                                ></i>
+                                <i class="fa-solid fa-panorama"></i>
 
                                 رفع غلاف جديد
 
@@ -3049,9 +3632,7 @@
                         onclick="document.getElementById('saveBtn').click()"
                     >
 
-                        <i
-                            class="fa-solid fa-cloud-arrow-up"
-                        ></i>
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
 
                         حفظ غلاف المتجر
 
@@ -3066,39 +3647,29 @@
                  THEME
             ============================================== -->
 
-            <section
-                class="settings-section full"
-            >
+            <section class="settings-section full">
 
                 <button
                     type="button"
                     class="settings-trigger"
                 >
 
-                    <span
-                        class="settings-trigger-left"
-                    >
+                    <span class="settings-trigger-left">
 
-                        <span
-                            class="settings-trigger-icon"
-                        >
+                        <span class="settings-trigger-icon">
 
-                            <i
-                                class="fa-solid fa-palette"
-                            ></i>
+                            <i class="fa-solid fa-palette"></i>
 
                         </span>
 
-                        <span
-                            class="settings-trigger-title"
-                        >
+                        <span class="settings-trigger-title">
 
                             <strong>
                                 مظهر المتجر
                             </strong>
 
                             <span>
-                                اختيار لون وتصميم المتجر
+                                اختيار لون موحد أو إنشاء دمج ألوان خاص
                             </span>
 
                         </span>
@@ -3106,436 +3677,879 @@
                     </span>
 
 
-                    <i
-                        class="fa-solid fa-chevron-down settings-arrow"
-                    ></i>
+                    <i class="fa-solid fa-chevron-down settings-arrow"></i>
 
                 </button>
 
 
-                <div
-                    class="settings-content"
-                >
+                <div class="settings-content">
 
+
+                    <!-- =====================================
+                         CURRENT THEME
+                    ====================================== -->
 
                     <div
-                        class="theme-options"
+                        class="current-theme-box"
+                        id="currentThemeBox"
                     >
 
+                        <div
+                            class="current-theme-swatch"
+                            id="currentThemeSwatch"
+                        ></div>
 
-                        <label
-                            class="theme-option"
-                            data-theme="orange"
-                        >
+                        <div class="current-theme-info">
 
-                            <input
-                                type="radio"
-                                name="storeTheme"
-                                value="orange"
-                            >
+                            <strong id="currentThemeName">
+                                الثيم الحالي: برتقالي
+                            </strong>
 
-                            <div
-                                class="theme-preview theme-orange"
-                            >
-
-                                <span></span>
-                                <span></span>
-
-                            </div>
-
-                            <div class="theme-name">
-                                برتقالي
-                            </div>
-
-                            <span class="theme-check">
-                                <i
-                                    class="fa-solid fa-check"
-                                ></i>
+                            <span id="currentThemeDescription">
+                                لون موحد
                             </span>
 
-                        </label>
-
-
-                        <label
-                            class="theme-option"
-                            data-theme="blue"
-                        >
-
-                            <input
-                                type="radio"
-                                name="storeTheme"
-                                value="blue"
-                            >
-
-                            <div
-                                class="theme-preview theme-blue"
-                            >
-
-                                <span></span>
-                                <span></span>
-
-                            </div>
-
-                            <div class="theme-name">
-                                أزرق
-                            </div>
-
-                            <span class="theme-check">
-                                <i
-                                    class="fa-solid fa-check"
-                                ></i>
-                            </span>
-
-                        </label>
-
-
-                        <label
-                            class="theme-option"
-                            data-theme="green"
-                        >
-
-                            <input
-                                type="radio"
-                                name="storeTheme"
-                                value="green"
-                            >
-
-                            <div
-                                class="theme-preview theme-green"
-                            >
-
-                                <span></span>
-                                <span></span>
-
-                            </div>
-
-                            <div class="theme-name">
-                                أخضر
-                            </div>
-
-                            <span class="theme-check">
-                                <i
-                                    class="fa-solid fa-check"
-                                ></i>
-                            </span>
-
-                        </label>
-
-
-                        <label
-                            class="theme-option"
-                            data-theme="purple"
-                        >
-
-                            <input
-                                type="radio"
-                                name="storeTheme"
-                                value="purple"
-                            >
-
-                            <div
-                                class="theme-preview theme-purple"
-                            >
-
-                                <span></span>
-                                <span></span>
-
-                            </div>
-
-                            <div class="theme-name">
-                                بنفسجي
-                            </div>
-
-                            <span class="theme-check">
-                                <i
-                                    class="fa-solid fa-check"
-                                ></i>
-                            </span>
-
-                        </label>
-
-
-                        <label
-                            class="theme-option"
-                            data-theme="pink"
-                        >
-
-                            <input
-                                type="radio"
-                                name="storeTheme"
-                                value="pink"
-                            >
-
-                            <div
-                                class="theme-preview theme-pink"
-                            >
-
-                                <span></span>
-                                <span></span>
-
-                            </div>
-
-                            <div class="theme-name">
-                                وردي
-                            </div>
-
-                            <span class="theme-check">
-                                <i
-                                    class="fa-solid fa-check"
-                                ></i>
-                            </span>
-
-                        </label>
-
-
-                        <label
-                            class="theme-option"
-                            data-theme="dark"
-                        >
-
-                            <input
-                                type="radio"
-                                name="storeTheme"
-                                value="dark"
-                            >
-
-                            <div
-                                class="theme-preview theme-dark"
-                            >
-
-                                <span></span>
-                                <span></span>
-
-                            </div>
-
-                            <div class="theme-name">
-                                داكن
-                            </div>
-
-                            <span class="theme-check">
-                                <i
-                                    class="fa-solid fa-check"
-                                ></i>
-                            </span>
-
-                        </label>
-
-
-                        <!-- الثيمات الجديدة المضافة -->
-                        <label
-                            class="theme-option"
-                            data-theme="red"
-                        >
-
-                            <input
-                                type="radio"
-                                name="storeTheme"
-                                value="red"
-                            >
-
-                            <div
-                                class="theme-preview theme-red"
-                            >
-
-                                <span></span>
-                                <span></span>
-
-                            </div>
-
-                            <div class="theme-name">
-                                أحمر
-                            </div>
-
-                            <span class="theme-check">
-                                <i
-                                    class="fa-solid fa-check"
-                                ></i>
-                            </span>
-
-                        </label>
-
-
-                        <label
-                            class="theme-option"
-                            data-theme="teal"
-                        >
-
-                            <input
-                                type="radio"
-                                name="storeTheme"
-                                value="teal"
-                            >
-
-                            <div
-                                class="theme-preview theme-teal"
-                            >
-
-                                <span></span>
-                                <span></span>
-
-                            </div>
-
-                            <div class="theme-name">
-                                فيروزي
-                            </div>
-
-                            <span class="theme-check">
-                                <i
-                                    class="fa-solid fa-check"
-                                ></i>
-                            </span>
-
-                        </label>
-
-
-                        <label
-                            class="theme-option"
-                            data-theme="gold"
-                        >
-
-                            <input
-                                type="radio"
-                                name="storeTheme"
-                                value="gold"
-                            >
-
-                            <div
-                                class="theme-preview theme-gold"
-                            >
-
-                                <span></span>
-                                <span></span>
-
-                            </div>
-
-                            <div class="theme-name">
-                                ذهبي
-                            </div>
-
-                            <span class="theme-check">
-                                <i
-                                    class="fa-solid fa-check"
-                                ></i>
-                            </span>
-
-                        </label>
-
-
-                        <label
-                            class="theme-option"
-                            data-theme="luxury"
-                        >
-
-                            <input
-                                type="radio"
-                                name="storeTheme"
-                                value="luxury"
-                            >
-
-                            <div
-                                class="theme-preview theme-luxury"
-                            >
-
-                                <span></span>
-                                <span></span>
-
-                            </div>
-
-                            <div class="theme-name">
-                                فاخر (Luxury)
-                            </div>
-
-                            <span class="theme-check">
-                                <i
-                                    class="fa-solid fa-check"
-                                ></i>
-                            </span>
-
-                        </label>
-
-
-                        <label
-                            class="theme-option"
-                            data-theme="sunset"
-                        >
-
-                            <input
-                                type="radio"
-                                name="storeTheme"
-                                value="sunset"
-                            >
-
-                            <div
-                                class="theme-preview theme-sunset"
-                            >
-
-                                <span></span>
-                                <span></span>
-
-                            </div>
-
-                            <div class="theme-name">
-                                تدرج الغروب
-                            </div>
-
-                            <span class="theme-check">
-                                <i
-                                    class="fa-solid fa-check"
-                                ></i>
-                            </span>
-
-                        </label>
-
-
-                        <label
-                            class="theme-option"
-                            data-theme="emerald"
-                        >
-
-                            <input
-                                type="radio"
-                                name="storeTheme"
-                                value="emerald"
-                            >
-
-                            <div
-                                class="theme-preview theme-emerald"
-                            >
-
-                                <span></span>
-                                <span></span>
-
-                            </div>
-
-                            <div class="theme-name">
-                                زمردي
-                            </div>
-
-                            <span class="theme-check">
-                                <i
-                                    class="fa-solid fa-check"
-                                ></i>
-                            </span>
-
-                        </label>
-
+                        </div>
 
                     </div>
 
 
-                    <button
-                        type="button"
-                        class="save-btn save-theme"
-                        id="saveThemeBtn"
+                    <!-- =====================================
+                         TWO THEME CATEGORIES
+                    ====================================== -->
+
+                    <div class="theme-main-menu">
+
+
+                        <!-- SOLID -->
+
+                        <button
+                            type="button"
+                            class="theme-category"
+                            id="solidThemeCategory"
+                        >
+
+                            <div class="theme-category-top">
+
+                                <span
+                                    class="theme-category-icon solid-category-icon"
+                                >
+
+                                    <i class="fa-solid fa-circle"></i>
+
+                                </span>
+
+                                <i
+                                    class="fa-solid fa-chevron-down theme-category-arrow"
+                                ></i>
+
+                            </div>
+
+
+                            <strong>
+                                الألوان الموحدة
+                            </strong>
+
+                            <p>
+                                اختر لونًا واحدًا ليكون اللون الأساسي لمتجرك.
+                            </p>
+
+                        </button>
+
+
+                        <!-- GRADIENT -->
+
+                        <button
+                            type="button"
+                            class="theme-category"
+                            id="gradientThemeCategory"
+                        >
+
+                            <div class="theme-category-top">
+
+                                <span
+                                    class="theme-category-icon gradient-category-icon"
+                                >
+
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                                </span>
+
+                                <i
+                                    class="fa-solid fa-chevron-down theme-category-arrow"
+                                ></i>
+
+                            </div>
+
+
+                            <strong>
+                                الألوان المدمجة
+                            </strong>
+
+                            <p>
+                                امزج لونين أو ثلاثة ألوان وأنشئ تدرجًا خاصًا لمتجرك.
+                            </p>
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- =====================================
+                         SOLID PANEL
+                    ====================================== -->
+
+                    <div
+                        class="theme-panel"
+                        id="solidThemePanel"
                     >
 
-                        <i
-                            class="fa-solid fa-palette"
-                        ></i>
+                        <div class="theme-panel-header">
 
-                        حفظ ثيم المتجر
+                            <div class="theme-panel-title">
 
-                    </button>
+                                <i class="fa-solid fa-circle"></i>
+
+                                <div>
+
+                                    <strong>
+                                        اختر لونًا موحدًا
+                                    </strong>
+
+                                    <span>
+                                        اضغط على اللون الذي تريده ثم احفظ الثيم.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="theme-close-btn"
+                                id="closeSolidPanel"
+                                title="إغلاق"
+                            >
+
+                                <i class="fa-solid fa-xmark"></i>
+
+                            </button>
+
+                        </div>
+
+
+                        <div
+                            class="solid-color-grid"
+                            id="solidColorGrid"
+                        >
+
+
+                            <!-- ORANGE -->
+
+                            <button
+                                type="button"
+                                class="solid-color-option"
+                                data-theme="orange"
+                                data-color="#F47B20"
+                                data-name="برتقالي"
+                            >
+
+                                <span
+                                    class="solid-color-check"
+                                >
+                                    <i class="fa-solid fa-check"></i>
+                                </span>
+
+                                <div
+                                    class="solid-color-circle"
+                                    style="background:#F47B20"
+                                ></div>
+
+                                <div class="solid-color-name">
+                                    برتقالي
+                                </div>
+
+                                <div class="solid-color-code">
+                                    #F47B20
+                                </div>
+
+                            </button>
+
+
+                            <!-- BLUE -->
+
+                            <button
+                                type="button"
+                                class="solid-color-option"
+                                data-theme="blue"
+                                data-color="#1769AA"
+                                data-name="أزرق"
+                            >
+
+                                <span class="solid-color-check">
+                                    <i class="fa-solid fa-check"></i>
+                                </span>
+
+                                <div
+                                    class="solid-color-circle"
+                                    style="background:#1769AA"
+                                ></div>
+
+                                <div class="solid-color-name">
+                                    أزرق
+                                </div>
+
+                                <div class="solid-color-code">
+                                    #1769AA
+                                </div>
+
+                            </button>
+
+
+                            <!-- GREEN -->
+
+                            <button
+                                type="button"
+                                class="solid-color-option"
+                                data-theme="green"
+                                data-color="#198754"
+                                data-name="أخضر"
+                            >
+
+                                <span class="solid-color-check">
+                                    <i class="fa-solid fa-check"></i>
+                                </span>
+
+                                <div
+                                    class="solid-color-circle"
+                                    style="background:#198754"
+                                ></div>
+
+                                <div class="solid-color-name">
+                                    أخضر
+                                </div>
+
+                                <div class="solid-color-code">
+                                    #198754
+                                </div>
+
+                            </button>
+
+
+                            <!-- PURPLE -->
+
+                            <button
+                                type="button"
+                                class="solid-color-option"
+                                data-theme="purple"
+                                data-color="#7B3FC6"
+                                data-name="بنفسجي"
+                            >
+
+                                <span class="solid-color-check">
+                                    <i class="fa-solid fa-check"></i>
+                                </span>
+
+                                <div
+                                    class="solid-color-circle"
+                                    style="background:#7B3FC6"
+                                ></div>
+
+                                <div class="solid-color-name">
+                                    بنفسجي
+                                </div>
+
+                                <div class="solid-color-code">
+                                    #7B3FC6
+                                </div>
+
+                            </button>
+
+
+                            <!-- PINK -->
+
+                            <button
+                                type="button"
+                                class="solid-color-option"
+                                data-theme="pink"
+                                data-color="#D94F87"
+                                data-name="وردي"
+                            >
+
+                                <span class="solid-color-check">
+                                    <i class="fa-solid fa-check"></i>
+                                </span>
+
+                                <div
+                                    class="solid-color-circle"
+                                    style="background:#D94F87"
+                                ></div>
+
+                                <div class="solid-color-name">
+                                    وردي
+                                </div>
+
+                                <div class="solid-color-code">
+                                    #D94F87
+                                </div>
+
+                            </button>
+
+
+                            <!-- DARK -->
+
+                            <button
+                                type="button"
+                                class="solid-color-option"
+                                data-theme="dark"
+                                data-color="#111827"
+                                data-name="داكن"
+                            >
+
+                                <span class="solid-color-check">
+                                    <i class="fa-solid fa-check"></i>
+                                </span>
+
+                                <div
+                                    class="solid-color-circle"
+                                    style="background:#111827"
+                                ></div>
+
+                                <div class="solid-color-name">
+                                    داكن
+                                </div>
+
+                                <div class="solid-color-code">
+                                    #111827
+                                </div>
+
+                            </button>
+
+
+                            <!-- RED -->
+
+                            <button
+                                type="button"
+                                class="solid-color-option"
+                                data-theme="red"
+                                data-color="#E63946"
+                                data-name="أحمر"
+                            >
+
+                                <span class="solid-color-check">
+                                    <i class="fa-solid fa-check"></i>
+                                </span>
+
+                                <div
+                                    class="solid-color-circle"
+                                    style="background:#E63946"
+                                ></div>
+
+                                <div class="solid-color-name">
+                                    أحمر
+                                </div>
+
+                                <div class="solid-color-code">
+                                    #E63946
+                                </div>
+
+                            </button>
+
+
+                            <!-- TEAL -->
+
+                            <button
+                                type="button"
+                                class="solid-color-option"
+                                data-theme="teal"
+                                data-color="#00B4D8"
+                                data-name="فيروزي"
+                            >
+
+                                <span class="solid-color-check">
+                                    <i class="fa-solid fa-check"></i>
+                                </span>
+
+                                <div
+                                    class="solid-color-circle"
+                                    style="background:#00B4D8"
+                                ></div>
+
+                                <div class="solid-color-name">
+                                    فيروزي
+                                </div>
+
+                                <div class="solid-color-code">
+                                    #00B4D8
+                                </div>
+
+                            </button>
+
+
+                            <!-- GOLD -->
+
+                            <button
+                                type="button"
+                                class="solid-color-option"
+                                data-theme="gold"
+                                data-color="#D4AF37"
+                                data-name="ذهبي"
+                            >
+
+                                <span class="solid-color-check">
+                                    <i class="fa-solid fa-check"></i>
+                                </span>
+
+                                <div
+                                    class="solid-color-circle"
+                                    style="background:#D4AF37"
+                                ></div>
+
+                                <div class="solid-color-name">
+                                    ذهبي
+                                </div>
+
+                                <div class="solid-color-code">
+                                    #D4AF37
+                                </div>
+
+                            </button>
+
+
+                            <!-- EMERALD -->
+
+                            <button
+                                type="button"
+                                class="solid-color-option"
+                                data-theme="emerald"
+                                data-color="#0F5132"
+                                data-name="زمردي"
+                            >
+
+                                <span class="solid-color-check">
+                                    <i class="fa-solid fa-check"></i>
+                                </span>
+
+                                <div
+                                    class="solid-color-circle"
+                                    style="background:#0F5132"
+                                ></div>
+
+                                <div class="solid-color-name">
+                                    زمردي
+                                </div>
+
+                                <div class="solid-color-code">
+                                    #0F5132
+                                </div>
+
+                            </button>
+
+
+                            <!-- NAVY -->
+
+                            <button
+                                type="button"
+                                class="solid-color-option"
+                                data-theme="navy"
+                                data-color="#0B1F3A"
+                                data-name="كحلي"
+                            >
+
+                                <span class="solid-color-check">
+                                    <i class="fa-solid fa-check"></i>
+                                </span>
+
+                                <div
+                                    class="solid-color-circle"
+                                    style="background:#0B1F3A"
+                                ></div>
+
+                                <div class="solid-color-name">
+                                    كحلي
+                                </div>
+
+                                <div class="solid-color-code">
+                                    #0B1F3A
+                                </div>
+
+                            </button>
+
+
+                            <!-- BROWN -->
+
+                            <button
+                                type="button"
+                                class="solid-color-option"
+                                data-theme="brown"
+                                data-color="#795548"
+                                data-name="بني"
+                            >
+
+                                <span class="solid-color-check">
+                                    <i class="fa-solid fa-check"></i>
+                                </span>
+
+                                <div
+                                    class="solid-color-circle"
+                                    style="background:#795548"
+                                ></div>
+
+                                <div class="solid-color-name">
+                                    بني
+                                </div>
+
+                                <div class="solid-color-code">
+                                    #795548
+                                </div>
+
+                            </button>
+
+
+                            <!-- ROSE -->
+
+                            <button
+                                type="button"
+                                class="solid-color-option"
+                                data-theme="rose"
+                                data-color="#BE185D"
+                                data-name="وردي داكن"
+                            >
+
+                                <span class="solid-color-check">
+                                    <i class="fa-solid fa-check"></i>
+                                </span>
+
+                                <div
+                                    class="solid-color-circle"
+                                    style="background:#BE185D"
+                                ></div>
+
+                                <div class="solid-color-name">
+                                    وردي داكن
+                                </div>
+
+                                <div class="solid-color-code">
+                                    #BE185D
+                                </div>
+
+                            </button>
+
+
+                            <!-- INDIGO -->
+
+                            <button
+                                type="button"
+                                class="solid-color-option"
+                                data-theme="indigo"
+                                data-color="#4338CA"
+                                data-name="نيلي"
+                            >
+
+                                <span class="solid-color-check">
+                                    <i class="fa-solid fa-check"></i>
+                                </span>
+
+                                <div
+                                    class="solid-color-circle"
+                                    style="background:#4338CA"
+                                ></div>
+
+                                <div class="solid-color-name">
+                                    نيلي
+                                </div>
+
+                                <div class="solid-color-code">
+                                    #4338CA
+                                </div>
+
+                            </button>
+
+
+                        </div>
+
+
+                        <div style="padding:0 20px 20px">
+
+                            <button
+                                type="button"
+                                class="save-btn"
+                                id="saveSolidThemeBtn"
+                            >
+
+                                <i class="fa-solid fa-floppy-disk"></i>
+
+                                حفظ اللون الموحد
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =====================================
+                         GRADIENT PANEL
+                    ====================================== -->
+
+                    <div
+                        class="theme-panel"
+                        id="gradientThemePanel"
+                    >
+
+                        <div class="theme-panel-header">
+
+                            <div class="theme-panel-title">
+
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                                <div>
+
+                                    <strong>
+                                        إنشاء ثيم مدمج
+                                    </strong>
+
+                                    <span>
+                                        اختر لونين أو ثلاثة ألوان وشاهد النتيجة مباشرة.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="theme-close-btn"
+                                id="closeGradientPanel"
+                                title="إغلاق"
+                            >
+
+                                <i class="fa-solid fa-xmark"></i>
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="gradient-builder">
+
+
+                            <!-- PREVIEW -->
+
+                            <div
+                                class="gradient-preview"
+                                id="gradientPreview"
+                            >
+                                معاينة الثيم
+                            </div>
+
+
+                            <!-- COLORS -->
+
+                            <div class="gradient-controls">
+
+
+                                <div class="gradient-color-box">
+
+                                    <label>
+                                        اللون الأول
+                                    </label>
+
+                                    <div class="color-picker-wrapper">
+
+                                        <input
+                                            type="color"
+                                            class="gradient-color-input"
+                                            id="gradientColor1"
+                                            value="#F47B20"
+                                        >
+
+                                        <input
+                                            type="text"
+                                            class="hex-input"
+                                            id="gradientHex1"
+                                            value="#F47B20"
+                                            maxlength="7"
+                                        >
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="gradient-color-box">
+
+                                    <label>
+                                        اللون الثاني
+                                    </label>
+
+                                    <div class="color-picker-wrapper">
+
+                                        <input
+                                            type="color"
+                                            class="gradient-color-input"
+                                            id="gradientColor2"
+                                            value="#D94F87"
+                                        >
+
+                                        <input
+                                            type="text"
+                                            class="hex-input"
+                                            id="gradientHex2"
+                                            value="#D94F87"
+                                            maxlength="7"
+                                        >
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="gradient-color-box">
+
+                                    <label>
+                                        اللون الثالث — اختياري
+                                    </label>
+
+                                    <div class="color-picker-wrapper">
+
+                                        <input
+                                            type="color"
+                                            class="gradient-color-input"
+                                            id="gradientColor3"
+                                            value="#7B3FC6"
+                                        >
+
+                                        <input
+                                            type="text"
+                                            class="hex-input"
+                                            id="gradientHex3"
+                                            value="#7B3FC6"
+                                            maxlength="7"
+                                        >
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <!-- DIRECTION -->
+
+                            <div class="gradient-direction-box">
+
+                                <label>
+                                    اتجاه دمج الألوان
+                                </label>
+
+
+                                <div class="direction-options">
+
+
+                                    <label
+                                        class="direction-option selected"
+                                        data-direction="90deg"
+                                    >
+
+                                        <input
+                                            type="radio"
+                                            name="gradientDirection"
+                                            value="90deg"
+                                            checked
+                                        >
+
+                                        <i class="fa-solid fa-arrow-right"></i>
+
+                                        أفقي
+
+                                    </label>
+
+
+                                    <label
+                                        class="direction-option"
+                                        data-direction="180deg"
+                                    >
+
+                                        <input
+                                            type="radio"
+                                            name="gradientDirection"
+                                            value="180deg"
+                                        >
+
+                                        <i class="fa-solid fa-arrow-down"></i>
+
+                                        عمودي
+
+                                    </label>
+
+
+                                    <label
+                                        class="direction-option"
+                                        data-direction="135deg"
+                                    >
+
+                                        <input
+                                            type="radio"
+                                            name="gradientDirection"
+                                            value="135deg"
+                                        >
+
+                                        <i class="fa-solid fa-arrow-down-right"></i>
+
+                                        قطري
+
+                                    </label>
+
+
+                                    <label
+                                        class="direction-option"
+                                        data-direction="45deg"
+                                    >
+
+                                        <input
+                                            type="radio"
+                                            name="gradientDirection"
+                                            value="45deg"
+                                        >
+
+                                        <i class="fa-solid fa-arrow-up-right"></i>
+
+                                        قطري عكسي
+
+                                    </label>
+
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- ACTION -->
+
+                            <div class="gradient-actions">
+
+                                <button
+                                    type="button"
+                                    class="gradient-save-btn"
+                                    id="saveGradientThemeBtn"
+                                >
+
+                                    <i class="fa-solid fa-floppy-disk"></i>
+
+                                    حفظ الثيم المدمج
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
 
                 </div>
 
@@ -3546,32 +4560,22 @@
                  SOCIAL
             ============================================== -->
 
-            <section
-                class="settings-section full"
-            >
+            <section class="settings-section full">
 
                 <button
                     type="button"
                     class="settings-trigger"
                 >
 
-                    <span
-                        class="settings-trigger-left"
-                    >
+                    <span class="settings-trigger-left">
 
-                        <span
-                            class="settings-trigger-icon"
-                        >
+                        <span class="settings-trigger-icon">
 
-                            <i
-                                class="fa-solid fa-share-nodes"
-                            ></i>
+                            <i class="fa-solid fa-share-nodes"></i>
 
                         </span>
 
-                        <span
-                            class="settings-trigger-title"
-                        >
+                        <span class="settings-trigger-title">
 
                             <strong>
                                 مواقع التواصل الاجتماعي
@@ -3586,16 +4590,12 @@
                     </span>
 
 
-                    <i
-                        class="fa-solid fa-chevron-down settings-arrow"
-                    ></i>
+                    <i class="fa-solid fa-chevron-down settings-arrow"></i>
 
                 </button>
 
 
-                <div
-                    class="settings-content"
-                >
+                <div class="settings-content">
 
 
                     <div class="social-grid">
@@ -3609,9 +4609,7 @@
 
                             <div class="input-icon">
 
-                                <i
-                                    class="fa-brands fa-instagram"
-                                ></i>
+                                <i class="fa-brands fa-instagram"></i>
 
                                 <input
                                     type="text"
@@ -3633,9 +4631,7 @@
 
                             <div class="input-icon">
 
-                                <i
-                                    class="fa-brands fa-facebook"
-                                ></i>
+                                <i class="fa-brands fa-facebook"></i>
 
                                 <input
                                     type="text"
@@ -3657,9 +4653,7 @@
 
                             <div class="input-icon">
 
-                                <i
-                                    class="fa-brands fa-tiktok"
-                                ></i>
+                                <i class="fa-brands fa-tiktok"></i>
 
                                 <input
                                     type="text"
@@ -3681,9 +4675,7 @@
 
                             <div class="input-icon">
 
-                                <i
-                                    class="fa-brands fa-x-twitter"
-                                ></i>
+                                <i class="fa-brands fa-x-twitter"></i>
 
                                 <input
                                     type="text"
@@ -3705,9 +4697,7 @@
 
                             <div class="input-icon">
 
-                                <i
-                                    class="fa-brands fa-whatsapp"
-                                ></i>
+                                <i class="fa-brands fa-whatsapp"></i>
 
                                 <input
                                     type="text"
@@ -3729,9 +4719,7 @@
 
                             <div class="input-icon">
 
-                                <i
-                                    class="fa-solid fa-link"
-                                ></i>
+                                <i class="fa-solid fa-link"></i>
 
                                 <input
                                     type="text"
@@ -3754,9 +4742,7 @@
                         id="saveSocialBtn"
                     >
 
-                        <i
-                            class="fa-solid fa-floppy-disk"
-                        ></i>
+                        <i class="fa-solid fa-floppy-disk"></i>
 
                         حفظ مواقع التواصل
 
@@ -3771,32 +4757,22 @@
                  CONTACT
             ============================================== -->
 
-            <section
-                class="settings-section full"
-            >
+            <section class="settings-section full">
 
                 <button
                     type="button"
                     class="settings-trigger"
                 >
 
-                    <span
-                        class="settings-trigger-left"
-                    >
+                    <span class="settings-trigger-left">
 
-                        <span
-                            class="settings-trigger-icon"
-                        >
+                        <span class="settings-trigger-icon">
 
-                            <i
-                                class="fa-solid fa-address-book"
-                            ></i>
+                            <i class="fa-solid fa-address-book"></i>
 
                         </span>
 
-                        <span
-                            class="settings-trigger-title"
-                        >
+                        <span class="settings-trigger-title">
 
                             <strong>
                                 معلومات التواصل
@@ -3811,16 +4787,12 @@
                     </span>
 
 
-                    <i
-                        class="fa-solid fa-chevron-down settings-arrow"
-                    ></i>
+                    <i class="fa-solid fa-chevron-down settings-arrow"></i>
 
                 </button>
 
 
-                <div
-                    class="settings-content"
-                >
+                <div class="settings-content">
 
 
                     <div class="social-grid">
@@ -3834,9 +4806,7 @@
 
                             <div class="input-icon">
 
-                                <i
-                                    class="fa-solid fa-phone"
-                                ></i>
+                                <i class="fa-solid fa-phone"></i>
 
                                 <input
                                     type="tel"
@@ -3858,9 +4828,7 @@
 
                             <div class="input-icon">
 
-                                <i
-                                    class="fa-brands fa-whatsapp"
-                                ></i>
+                                <i class="fa-brands fa-whatsapp"></i>
 
                                 <input
                                     type="tel"
@@ -3885,9 +4853,7 @@
 
                         <div class="input-icon">
 
-                            <i
-                                class="fa-solid fa-location-dot"
-                            ></i>
+                            <i class="fa-solid fa-location-dot"></i>
 
                             <input
                                 type="text"
@@ -3907,9 +4873,7 @@
                         id="saveContactBtn"
                     >
 
-                        <i
-                            class="fa-solid fa-floppy-disk"
-                        ></i>
+                        <i class="fa-solid fa-floppy-disk"></i>
 
                         حفظ معلومات التواصل
 
@@ -4009,130 +4973,204 @@
         ===================================================== */
 
         const themeBtn =
-            document.getElementById(
-                "themeBtn"
-            );
+            document.getElementById("themeBtn");
 
 
         const viewStoreBtn =
-            document.getElementById(
-                "viewStoreBtn"
-            );
+            document.getElementById("viewStoreBtn");
 
 
         const topStoreImage =
-            document.getElementById(
-                "topStoreImage"
-            );
+            document.getElementById("topStoreImage");
 
 
         const topStoreName =
-            document.getElementById(
-                "topStoreName"
-            );
+            document.getElementById("topStoreName");
 
 
         const storeImage =
-            document.getElementById(
-                "storeImage"
-            );
+            document.getElementById("storeImage");
 
 
         const coverImage =
-            document.getElementById(
-                "coverImage"
-            );
+            document.getElementById("coverImage");
 
 
         const imageInput =
-            document.getElementById(
-                "imageInput"
-            );
+            document.getElementById("imageInput");
 
 
         const coverInput =
-            document.getElementById(
-                "coverInput"
-            );
+            document.getElementById("coverInput");
 
 
         const uploadStatus =
-            document.getElementById(
-                "uploadStatus"
-            );
+            document.getElementById("uploadStatus");
 
 
         const coverUploadStatus =
-            document.getElementById(
-                "coverUploadStatus"
-            );
+            document.getElementById("coverUploadStatus");
 
 
         const storeName =
-            document.getElementById(
-                "storeName"
-            );
+            document.getElementById("storeName");
 
 
         const storeDescription =
-            document.getElementById(
-                "storeDescription"
-            );
+            document.getElementById("storeDescription");
 
 
         const ownerEmail =
-            document.getElementById(
-                "ownerEmail"
-            );
+            document.getElementById("ownerEmail");
 
 
         const saveBtn =
-            document.getElementById(
-                "saveBtn"
-            );
-
-
-        const saveThemeBtn =
-            document.getElementById(
-                "saveThemeBtn"
-            );
+            document.getElementById("saveBtn");
 
 
         const saveSocialBtn =
-            document.getElementById(
-                "saveSocialBtn"
-            );
+            document.getElementById("saveSocialBtn");
 
 
         const saveContactBtn =
-            document.getElementById(
-                "saveContactBtn"
-            );
+            document.getElementById("saveContactBtn");
 
 
         const loadingMessage =
-            document.getElementById(
-                "loadingMessage"
-            );
+            document.getElementById("loadingMessage");
 
 
         const statusBox =
+            document.getElementById("statusBox");
+
+
+        /* =====================================================
+           THEME ELEMENTS
+        ===================================================== */
+
+        const solidThemeCategory =
             document.getElementById(
-                "statusBox"
+                "solidThemeCategory"
             );
 
 
-        const themeOptions =
+        const gradientThemeCategory =
+            document.getElementById(
+                "gradientThemeCategory"
+            );
+
+
+        const solidThemePanel =
+            document.getElementById(
+                "solidThemePanel"
+            );
+
+
+        const gradientThemePanel =
+            document.getElementById(
+                "gradientThemePanel"
+            );
+
+
+        const closeSolidPanel =
+            document.getElementById(
+                "closeSolidPanel"
+            );
+
+
+        const closeGradientPanel =
+            document.getElementById(
+                "closeGradientPanel"
+            );
+
+
+        const solidColorOptions =
             document.querySelectorAll(
-                ".theme-option"
+                ".solid-color-option"
             );
 
 
-        const settingsSections =
+        const saveSolidThemeBtn =
+            document.getElementById(
+                "saveSolidThemeBtn"
+            );
+
+
+        const saveGradientThemeBtn =
+            document.getElementById(
+                "saveGradientThemeBtn"
+            );
+
+
+        const gradientPreview =
+            document.getElementById(
+                "gradientPreview"
+            );
+
+
+        const gradientColor1 =
+            document.getElementById(
+                "gradientColor1"
+            );
+
+
+        const gradientColor2 =
+            document.getElementById(
+                "gradientColor2"
+            );
+
+
+        const gradientColor3 =
+            document.getElementById(
+                "gradientColor3"
+            );
+
+
+        const gradientHex1 =
+            document.getElementById(
+                "gradientHex1"
+            );
+
+
+        const gradientHex2 =
+            document.getElementById(
+                "gradientHex2"
+            );
+
+
+        const gradientHex3 =
+            document.getElementById(
+                "gradientHex3"
+            );
+
+
+        const directionOptions =
             document.querySelectorAll(
-                ".settings-section"
+                ".direction-option"
             );
 
+
+        const currentThemeSwatch =
+            document.getElementById(
+                "currentThemeSwatch"
+            );
+
+
+        const currentThemeName =
+            document.getElementById(
+                "currentThemeName"
+            );
+
+
+        const currentThemeDescription =
+            document.getElementById(
+                "currentThemeDescription"
+            );
+
+
+        /* =====================================================
+           VARIABLES
+        ===================================================== */
 
         let currentUser = null;
 
@@ -4144,14 +5182,108 @@
 
         let currentStoreTheme = "orange";
 
+        let currentThemeType = "solid";
+
+        let currentThemeColors = [];
+
+        let currentThemeDirection = "135deg";
+
+        let selectedSolidTheme =
+            "orange";
+
+        let selectedSolidColor =
+            "#F47B20";
+
+        let selectedSolidName =
+            "برتقالي";
+
+        let selectedGradientDirection =
+            "90deg";
+
         let selectedImageFile = null;
 
         let selectedCoverFile = null;
 
 
         /* =====================================================
+           THEME COLORS MAP
+        ===================================================== */
+
+        const themeColors = {
+
+            orange: "#F47B20",
+
+            blue: "#1769AA",
+
+            green: "#198754",
+
+            purple: "#7B3FC6",
+
+            pink: "#D94F87",
+
+            dark: "#111827",
+
+            red: "#E63946",
+
+            teal: "#00B4D8",
+
+            gold: "#D4AF37",
+
+            emerald: "#0F5132",
+
+            navy: "#0B1F3A",
+
+            brown: "#795548",
+
+            rose: "#BE185D",
+
+            indigo: "#4338CA"
+
+        };
+
+
+        const themeNames = {
+
+            orange: "برتقالي",
+
+            blue: "أزرق",
+
+            green: "أخضر",
+
+            purple: "بنفسجي",
+
+            pink: "وردي",
+
+            dark: "داكن",
+
+            red: "أحمر",
+
+            teal: "فيروزي",
+
+            gold: "ذهبي",
+
+            emerald: "زمردي",
+
+            navy: "كحلي",
+
+            brown: "بني",
+
+            rose: "وردي داكن",
+
+            indigo: "نيلي"
+
+        };
+
+
+        /* =====================================================
            ACCORDION
         ===================================================== */
+
+        const settingsSections =
+            document.querySelectorAll(
+                ".settings-section"
+            );
+
 
         settingsSections.forEach(
             function(section) {
@@ -4317,31 +5449,327 @@
 
 
         /* =====================================================
-           THEME SELECTION
+           OPEN SOLID THEME
         ===================================================== */
 
-        themeOptions.forEach(
+        solidThemeCategory.addEventListener(
+            "click",
+            function() {
+
+                const opening =
+                    !solidThemePanel.classList.contains(
+                        "open"
+                    );
+
+
+                solidThemePanel.classList.toggle(
+                    "open",
+                    opening
+                );
+
+
+                gradientThemePanel.classList.remove(
+                    "open"
+                );
+
+
+                solidThemeCategory.classList.toggle(
+                    "active",
+                    opening
+                );
+
+
+                gradientThemeCategory.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+        /* =====================================================
+           OPEN GRADIENT THEME
+        ===================================================== */
+
+        gradientThemeCategory.addEventListener(
+            "click",
+            function() {
+
+                const opening =
+                    !gradientThemePanel.classList.contains(
+                        "open"
+                    );
+
+
+                gradientThemePanel.classList.toggle(
+                    "open",
+                    opening
+                );
+
+
+                solidThemePanel.classList.remove(
+                    "open"
+                );
+
+
+                gradientThemeCategory.classList.toggle(
+                    "active",
+                    opening
+                );
+
+
+                solidThemeCategory.classList.remove(
+                    "active"
+                );
+
+
+                if (opening) {
+
+                    updateGradientPreview();
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           CLOSE SOLID
+        ===================================================== */
+
+        closeSolidPanel.addEventListener(
+            "click",
+            function() {
+
+                solidThemePanel.classList.remove(
+                    "open"
+                );
+
+                solidThemeCategory.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+        /* =====================================================
+           CLOSE GRADIENT
+        ===================================================== */
+
+        closeGradientPanel.addEventListener(
+            "click",
+            function() {
+
+                gradientThemePanel.classList.remove(
+                    "open"
+                );
+
+                gradientThemeCategory.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+        /* =====================================================
+           SOLID COLOR SELECTION
+        ===================================================== */
+
+        solidColorOptions.forEach(
             function(option) {
 
                 option.addEventListener(
                     "click",
                     function() {
 
-                        if (
-                            this.style.pointerEvents ===
-                            "none"
-                        ) {
+                        solidColorOptions.forEach(
+                            function(item) {
 
-                            return;
+                                item.classList.remove(
+                                    "selected"
+                                );
 
-                        }
+                            }
+                        );
 
 
-                        const theme =
+                        this.classList.add(
+                            "selected"
+                        );
+
+
+                        selectedSolidTheme =
                             this.dataset.theme;
 
 
-                        themeOptions.forEach(
+                        selectedSolidColor =
+                            this.dataset.color;
+
+
+                        selectedSolidName =
+                            this.dataset.name;
+
+
+                        currentStoreTheme =
+                            selectedSolidTheme;
+
+
+                        currentThemeType =
+                            "solid";
+
+
+                        currentThemeColors =
+                            [selectedSolidColor];
+
+
+                        updateCurrentThemePreview();
+
+                    }
+                );
+
+            }
+        );
+
+
+        /* =====================================================
+           COLOR VALIDATION
+        ===================================================== */
+
+        function normalizeHex(value) {
+
+            let hex =
+                String(value || "")
+                .trim()
+                .toUpperCase();
+
+
+            if (
+                !hex.startsWith("#")
+            ) {
+
+                hex =
+                    "#" + hex;
+
+            }
+
+
+            if (
+                /^#[0-9A-F]{6}$/.test(hex)
+            ) {
+
+                return hex;
+
+            }
+
+
+            return null;
+
+        }
+
+
+        /* =====================================================
+           SYNC COLOR INPUTS
+        ===================================================== */
+
+        function connectColorInputs(
+            colorInput,
+            hexInput
+        ) {
+
+            colorInput.addEventListener(
+                "input",
+                function() {
+
+                    hexInput.value =
+                        this.value.toUpperCase();
+
+                    updateGradientPreview();
+
+                }
+            );
+
+
+            hexInput.addEventListener(
+                "input",
+                function() {
+
+                    const value =
+                        normalizeHex(
+                            this.value
+                        );
+
+
+                    if (value) {
+
+                        colorInput.value =
+                            value;
+
+                        this.value =
+                            value;
+
+                        updateGradientPreview();
+
+                    }
+
+                }
+            );
+
+
+            hexInput.addEventListener(
+                "blur",
+                function() {
+
+                    const value =
+                        normalizeHex(
+                            this.value
+                        );
+
+
+                    if (!value) {
+
+                        this.value =
+                            colorInput.value.toUpperCase();
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        connectColorInputs(
+            gradientColor1,
+            gradientHex1
+        );
+
+
+        connectColorInputs(
+            gradientColor2,
+            gradientHex2
+        );
+
+
+        connectColorInputs(
+            gradientColor3,
+            gradientHex3
+        );
+
+
+        /* =====================================================
+           DIRECTION
+        ===================================================== */
+
+        directionOptions.forEach(
+            function(option) {
+
+                option.addEventListener(
+                    "click",
+                    function() {
+
+                        directionOptions.forEach(
                             function(item) {
 
                                 item.classList.remove(
@@ -4359,7 +5787,7 @@
 
                         const radio =
                             this.querySelector(
-                                'input[type="radio"]'
+                                "input"
                             );
 
 
@@ -4371,8 +5799,11 @@
                         }
 
 
-                        currentStoreTheme =
-                            theme;
+                        selectedGradientDirection =
+                            this.dataset.direction;
+
+
+                        updateGradientPreview();
 
                     }
                 );
@@ -4382,103 +5813,443 @@
 
 
         /* =====================================================
-           SELECT THEME
+           GET GRADIENT COLORS
         ===================================================== */
 
-        function selectTheme(theme) {
+        function getGradientColors() {
 
-            const validThemes = [
+            const color1 =
+                normalizeHex(
+                    gradientHex1.value
+                ) ||
+                gradientColor1.value;
 
-                "orange",
 
-                "blue",
+            const color2 =
+                normalizeHex(
+                    gradientHex2.value
+                ) ||
+                gradientColor2.value;
 
-                "green",
 
-                "purple",
+            const color3 =
+                normalizeHex(
+                    gradientHex3.value
+                ) ||
+                gradientColor3.value;
 
-                "pink",
 
-                "dark",
-
-                "red",
-
-                "teal",
-
-                "gold",
-
-                "luxury",
-
-                "sunset",
-
-                "emerald"
-
+            return [
+                color1,
+                color2,
+                color3
             ];
 
+        }
+
+
+        /* =====================================================
+           GRADIENT PREVIEW
+        ===================================================== */
+
+        function updateGradientPreview() {
+
+            const colors =
+                getGradientColors();
+
+
+            const direction =
+                selectedGradientDirection;
+
+
+            gradientPreview.style.background =
+                `linear-gradient(${direction}, ${colors[0]}, ${colors[1]}, ${colors[2]})`;
+
+        }
+
+
+        updateGradientPreview();
+
+
+        /* =====================================================
+           UPDATE CURRENT THEME PREVIEW
+        ===================================================== */
+
+        function updateCurrentThemePreview() {
 
             if (
-                !validThemes.includes(theme)
+                currentThemeType ===
+                "gradient"
             ) {
 
-                theme =
-                    "orange";
+                const colors =
+                    currentThemeColors.length >= 2
+                        ? currentThemeColors
+                        : [
+                            "#F47B20",
+                            "#D94F87"
+                        ];
+
+
+                currentThemeSwatch.style.background =
+                    `linear-gradient(${currentThemeDirection}, ${colors.join(", ")})`;
+
+
+                currentThemeName.textContent =
+                    "الثيم الحالي: ألوان مدمجة";
+
+
+                currentThemeDescription.textContent =
+                    colors.join(" + ");
+
+                return;
 
             }
 
 
-            currentStoreTheme =
-                theme;
+            const color =
+                themeColors[
+                    currentStoreTheme
+                ] ||
+                "#F47B20";
 
 
-            themeOptions.forEach(
-                function(option) {
-
-                    const optionTheme =
-                        option.dataset.theme;
+            currentThemeSwatch.style.background =
+                color;
 
 
-                    const radio =
-                        option.querySelector(
-                            'input[type="radio"]'
+            currentThemeName.textContent =
+                "الثيم الحالي: " +
+                (
+                    themeNames[
+                        currentStoreTheme
+                    ] ||
+                    "لون موحد"
+                );
+
+
+            currentThemeDescription.textContent =
+                color;
+
+        }
+
+
+        /* =====================================================
+           SAVE SOLID THEME
+        ===================================================== */
+
+        saveSolidThemeBtn.addEventListener(
+            "click",
+            async function() {
+
+                if (!currentUser) {
+
+                    showError(
+                        "يجب تسجيل الدخول أولًا."
+                    );
+
+                    return;
+
+                }
+
+
+                if (!currentStoreId) {
+
+                    showError(
+                        "لم يتم العثور على المتجر."
+                    );
+
+                    return;
+
+                }
+
+
+                try {
+
+                    saveSolidThemeBtn.disabled =
+                        true;
+
+
+                    saveSolidThemeBtn.innerHTML =
+                        '<i class="fa-solid fa-spinner fa-spin"></i> جاري الحفظ...';
+
+
+                    const storeRef =
+                        doc(
+                            db,
+                            "stores",
+                            currentStoreId
                         );
 
 
-                    if (
-                        optionTheme === theme
-                    ) {
+                    await updateDoc(
+                        storeRef,
+                        {
 
-                        option.classList.add(
-                            "selected"
-                        );
+                            themeType:
+                                "solid",
 
+                            theme:
+                                selectedSolidTheme,
 
-                        if (radio) {
+                            themeColors:
+                                [
+                                    selectedSolidColor
+                                ],
 
-                            radio.checked =
-                                true;
+                            themeDirection:
+                                "solid"
 
                         }
+                    );
 
-                    }
 
-                    else {
+                    currentStoreTheme =
+                        selectedSolidTheme;
 
-                        option.classList.remove(
-                            "selected"
+
+                    currentThemeType =
+                        "solid";
+
+
+                    currentThemeColors =
+                        [
+                            selectedSolidColor
+                        ];
+
+
+                    currentThemeDirection =
+                        "solid";
+
+
+                    updateCurrentThemePreview();
+
+
+                    showSuccess(
+                        "تم حفظ اللون الموحد بنجاح."
+                    );
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Solid theme save error:",
+                        error
+                    );
+
+
+                    showError(
+                        error.message ||
+                        "حدث خطأ أثناء حفظ اللون."
+                    );
+
+                }
+
+                finally {
+
+                    saveSolidThemeBtn.disabled =
+                        false;
+
+
+                    saveSolidThemeBtn.innerHTML =
+                        '<i class="fa-solid fa-floppy-disk"></i> حفظ اللون الموحد';
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           SAVE GRADIENT THEME
+        ===================================================== */
+
+        saveGradientThemeBtn.addEventListener(
+            "click",
+            async function() {
+
+                if (!currentUser) {
+
+                    showError(
+                        "يجب تسجيل الدخول أولًا."
+                    );
+
+                    return;
+
+                }
+
+
+                if (!currentStoreId) {
+
+                    showError(
+                        "لم يتم العثور على المتجر."
+                    );
+
+                    return;
+
+                }
+
+
+                const colors =
+                    getGradientColors();
+
+
+                if (
+                    !colors[0] ||
+                    !colors[1] ||
+                    !colors[2]
+                ) {
+
+                    showError(
+                        "يرجى التأكد من صحة جميع الألوان."
+                    );
+
+                    return;
+
+                }
+
+
+                try {
+
+                    saveGradientThemeBtn.disabled =
+                        true;
+
+
+                    saveGradientThemeBtn.innerHTML =
+                        '<i class="fa-solid fa-spinner fa-spin"></i> جاري حفظ الثيم...';
+
+
+                    const storeRef =
+                        doc(
+                            db,
+                            "stores",
+                            currentStoreId
                         );
 
 
-                        if (radio) {
+                    await updateDoc(
+                        storeRef,
+                        {
 
-                            radio.checked =
-                                false;
+                            themeType:
+                                "gradient",
+
+                            theme:
+                                "custom",
+
+                            themeColors:
+                                colors,
+
+                            themeDirection:
+                                selectedGradientDirection
 
                         }
+                    );
 
-                    }
+
+                    currentThemeType =
+                        "gradient";
+
+
+                    currentStoreTheme =
+                        "custom";
+
+
+                    currentThemeColors =
+                        colors;
+
+
+                    currentThemeDirection =
+                        selectedGradientDirection;
+
+
+                    updateCurrentThemePreview();
+
+
+                    showSuccess(
+                        "تم حفظ الثيم المدمج بنجاح."
+                    );
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Gradient theme save error:",
+                        error
+                    );
+
+
+                    showError(
+                        error.message ||
+                        "حدث خطأ أثناء حفظ الثيم المدمج."
+                    );
+
+                }
+
+                finally {
+
+                    saveGradientThemeBtn.disabled =
+                        false;
+
+
+                    saveGradientThemeBtn.innerHTML =
+                        '<i class="fa-solid fa-floppy-disk"></i> حفظ الثيم المدمج';
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           SELECT SOLID THEME
+        ===================================================== */
+
+        function selectSolidTheme(
+            theme
+        ) {
+
+            const option =
+                document.querySelector(
+                    `.solid-color-option[data-theme="${theme}"]`
+                );
+
+
+            if (!option) {
+
+                return;
+
+            }
+
+
+            solidColorOptions.forEach(
+                function(item) {
+
+                    item.classList.remove(
+                        "selected"
+                    );
 
                 }
             );
+
+
+            option.classList.add(
+                "selected"
+            );
+
+
+            selectedSolidTheme =
+                theme;
+
+
+            selectedSolidColor =
+                option.dataset.color;
+
+
+            selectedSolidName =
+                option.dataset.name;
 
         }
 
@@ -4563,6 +6334,24 @@
                 currentStoreTheme =
                     store.theme ||
                     "orange";
+
+
+                currentThemeType =
+                    store.themeType ||
+                    "solid";
+
+
+                currentThemeColors =
+                    Array.isArray(
+                        store.themeColors
+                    )
+                        ? store.themeColors
+                        : [];
+
+
+                currentThemeDirection =
+                    store.themeDirection ||
+                    "135deg";
 
 
                 storeName.value =
@@ -4704,9 +6493,103 @@
                     "";
 
 
-                selectTheme(
-                    currentStoreTheme
-                );
+                /* =================================================
+                   LOAD THEME
+                ================================================= */
+
+                if (
+                    currentThemeType ===
+                    "gradient" &&
+                    currentThemeColors.length >= 2
+                ) {
+
+                    gradientColor1.value =
+                        currentThemeColors[0];
+
+                    gradientHex1.value =
+                        currentThemeColors[0];
+
+                    gradientColor2.value =
+                        currentThemeColors[1];
+
+                    gradientHex2.value =
+                        currentThemeColors[1];
+
+
+                    gradientColor3.value =
+                        currentThemeColors[2] ||
+                        currentThemeColors[1];
+
+                    gradientHex3.value =
+                        currentThemeColors[2] ||
+                        currentThemeColors[1];
+
+
+                    selectedGradientDirection =
+                        currentThemeDirection ||
+                        "135deg";
+
+
+                    directionOptions.forEach(
+                        function(option) {
+
+                            const isSelected =
+                                option.dataset.direction ===
+                                selectedGradientDirection;
+
+
+                            option.classList.toggle(
+                                "selected",
+                                isSelected
+                            );
+
+
+                            const radio =
+                                option.querySelector(
+                                    "input"
+                                );
+
+
+                            if (radio) {
+
+                                radio.checked =
+                                    isSelected;
+
+                            }
+
+                        }
+                    );
+
+
+                    updateGradientPreview();
+
+                    updateCurrentThemePreview();
+
+                }
+
+                else {
+
+                    currentThemeType =
+                        "solid";
+
+
+                    selectSolidTheme(
+                        currentStoreTheme
+                    );
+
+
+                    currentThemeColors =
+                        [
+                            themeColors[
+                                currentStoreTheme
+                            ] ||
+                            "#F47B20"
+                        ];
+
+
+                    updateCurrentThemePreview();
+
+                }
 
 
                 /* =================================================
@@ -4820,15 +6703,19 @@
                 true;
 
 
-            saveThemeBtn.disabled =
-                true;
-
-
             saveSocialBtn.disabled =
                 true;
 
 
             saveContactBtn.disabled =
+                true;
+
+
+            saveSolidThemeBtn.disabled =
+                true;
+
+
+            saveGradientThemeBtn.disabled =
                 true;
 
 
@@ -4852,13 +6739,15 @@
             );
 
 
-            themeOptions.forEach(
-                function(option) {
+            document.querySelectorAll(
+                ".theme-category, .theme-close-btn, .solid-color-option, .direction-option"
+            ).forEach(
+                function(element) {
 
-                    option.style.pointerEvents =
+                    element.style.pointerEvents =
                         "none";
 
-                    option.style.opacity =
+                    element.style.opacity =
                         ".6";
 
                 }
@@ -4885,15 +6774,19 @@
                 false;
 
 
-            saveThemeBtn.disabled =
-                false;
-
-
             saveSocialBtn.disabled =
                 false;
 
 
             saveContactBtn.disabled =
+                false;
+
+
+            saveSolidThemeBtn.disabled =
+                false;
+
+
+            saveGradientThemeBtn.disabled =
                 false;
 
 
@@ -4924,13 +6817,15 @@
             );
 
 
-            themeOptions.forEach(
-                function(option) {
+            document.querySelectorAll(
+                ".theme-category, .theme-close-btn, .solid-color-option, .direction-option"
+            ).forEach(
+                function(element) {
 
-                    option.style.pointerEvents =
+                    element.style.pointerEvents =
                         "auto";
 
-                    option.style.opacity =
+                    element.style.opacity =
                         "1";
 
                 }
@@ -5300,10 +7195,7 @@
                                 imageUrl,
 
                             storeCoverImage:
-                                coverUrl,
-
-                            theme:
-                                currentStoreTheme
+                                coverUrl
 
                         }
                     );
@@ -5386,101 +7278,6 @@
 
                     saveBtn.innerHTML =
                         '<i class="fa-solid fa-floppy-disk"></i> حفظ معلومات المتجر';
-
-                }
-
-            }
-        );
-
-
-        /* =====================================================
-           SAVE THEME
-        ===================================================== */
-
-        saveThemeBtn.addEventListener(
-            "click",
-            async function() {
-
-                if (!currentUser) {
-
-                    showError(
-                        "يجب تسجيل الدخول أولًا."
-                    );
-
-                    return;
-
-                }
-
-
-                if (!currentStoreId) {
-
-                    showError(
-                        "لم يتم العثور على المتجر."
-                    );
-
-                    return;
-
-                }
-
-
-                try {
-
-                    saveThemeBtn.disabled =
-                        true;
-
-
-                    saveThemeBtn.innerHTML =
-                        '<i class="fa-solid fa-spinner fa-spin"></i> جاري حفظ الثيم...';
-
-
-                    const storeRef =
-                        doc(
-                            db,
-                            "stores",
-                            currentStoreId
-                        );
-
-
-                    await updateDoc(
-                        storeRef,
-                        {
-
-                            theme:
-                                currentStoreTheme
-
-                        }
-                    );
-
-
-                    showSuccess(
-                        "تم حفظ ثيم المتجر بنجاح."
-                    );
-
-                }
-
-                catch (error) {
-
-                    console.error(
-                        "Theme save error:",
-                        error
-                    );
-
-
-                    showError(
-                        error.message ||
-                        "حدث خطأ أثناء حفظ الثيم."
-                    );
-
-                }
-
-                finally {
-
-                    saveThemeBtn.disabled =
-                        false;
-
-
-                    saveThemeBtn.innerHTML =
-                        '<i class="fa-solid fa-palette"></i> حفظ ثيم المتجر';
 
                 }
 
