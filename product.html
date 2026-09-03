@@ -74,7 +74,6 @@
 !function (w, d, t) {
     w.TiktokPixelObject = t;
     var ttq = w[t] = w[t] || [];
-
     ttq.methods = [
         "page",
         "track",
@@ -102,10 +101,7 @@
         i < ttq.methods.length;
         i++
     ) {
-        ttq.setAndDefer(
-            ttq,
-            ttq.methods[i]
-        );
+        ttq.setAndDefer(ttq,ttq.methods[i]);
     }
 
     ttq.instance = function(t) {
@@ -117,12 +113,10 @@
         ) {
             ttq.setAndDefer(t,e[n]);
         }
-
         return t;
     };
 
     ttq.load = function(e,n) {
-
         var i =
             "https://analytics.tiktok.com/i18n/pixel/events.js";
 
@@ -135,22 +129,13 @@
         ttq._t[e]._o = n || {};
 
         var o = document.createElement("script");
-
         o.type = "text/javascript";
         o.async = !0;
-        o.src =
-            i +
-            "?sdkid=" +
-            e +
-            "&lib=" +
-            t;
+        o.src = i + "?sdkid=" + e + "&lib=" + t;
 
-        var a =
-            document.getElementsByTagName("script")[0];
-
+        var a = document.getElementsByTagName("script")[0];
         a.parentNode.insertBefore(o,a);
     };
-
 }(
     window,
     document,
@@ -161,37 +146,22 @@
 <style>
 
 :root {
-
-    --bg:#F4F4F4;
-    --header:#FFFFFF;
-    --card:#FFFFFF;
-    --card-light:#FAFAFA;
-
-    --text:#374151;
-    --muted:#6B7280;
-
-    --border:#E5E7EB;
-
-    --accent:#F47B20;
-    --accent-dark:#D96610;
-
-    --input:#FFFFFF;
-    --input-text:#374151;
-
-    --sidebar:#FFFFFF;
-    --sidebar-hover:#FFF7ED;
-
-    --danger:#EF4444;
-
-    --shadow:
-        0 8px 25px rgba(0,0,0,.10);
-
-    --theme-gradient:
-        linear-gradient(
-            135deg,
-            #F47B20,
-            #D96610
-        );
+    --bg: #F4F4F4;
+    --header: #FFFFFF;
+    --card: #FFFFFF;
+    --card-light: #FAFAFA;
+    --text: #374151;
+    --muted: #6B7280;
+    --border: #E5E7EB;
+    --accent: #F47B20;
+    --accent-dark: #D96610;
+    --input: #FFFFFF;
+    --input-text: #374151;
+    --sidebar: #FFFFFF;
+    --sidebar-hover: #FFF7ED;
+    --danger: #EF4444;
+    --shadow: 0 8px 25px rgba(0,0,0,.10);
+    --theme-gradient: linear-gradient(135deg,#F47B20,#D96610);
 }
 
 body.theme-orange {
@@ -485,6 +455,29 @@ body.theme-custom-gradient .product-price {
     color:transparent;
 }
 
+body.theme-custom-gradient .buy-button,
+body.theme-custom-gradient .floating-cart,
+body.theme-custom-gradient .add-cart-button {
+    background:var(--theme-gradient);
+}
+
+body.theme-custom-gradient .buy-button:hover,
+body.theme-custom-gradient .floating-cart:hover,
+body.theme-custom-gradient .add-cart-button:hover {
+    filter:brightness(.92);
+}
+
+body.theme-custom-gradient .social-link:hover {
+    background:var(--theme-gradient);
+    border-color:transparent;
+    color:#FFFFFF;
+}
+
+body.theme-custom-solid .logo span,
+body.theme-custom-solid .product-price {
+    color:var(--accent);
+}
+
 * {
     margin:0;
     padding:0;
@@ -501,9 +494,7 @@ body {
     background:var(--bg);
     color:var(--text);
     padding-bottom:95px;
-    transition:
-        background .25s ease,
-        color .25s ease;
+    transition:background .25s ease,color .25s ease;
 }
 
 button,
@@ -527,6 +518,7 @@ header {
     position:sticky;
     top:0;
     z-index:1000;
+    transition:background .25s ease,border-color .25s ease;
 }
 
 .logo {
@@ -552,15 +544,6 @@ header {
     text-overflow:ellipsis;
 }
 
-.store-logo {
-    width:43px;
-    height:43px;
-    border-radius:50%;
-    object-fit:cover;
-    border:2px solid var(--accent);
-    display:none;
-}
-
 .menu-btn,
 .cart-icon {
     width:42px;
@@ -572,6 +555,7 @@ header {
     position:relative;
     color:var(--text);
     border-radius:10px;
+    transition:background .2s,color .2s;
 }
 
 .menu-btn:hover,
@@ -603,7 +587,7 @@ header {
     border:2px solid var(--header);
 }
 
-/* STORE INFO */
+/* STORE INFO BAR */
 
 .store-info-bar {
     width:100%;
@@ -628,7 +612,7 @@ header {
     padding:25px;
 }
 
-/* BACK */
+/* BACK BUTTON */
 
 .back-button {
     display:inline-flex;
@@ -644,6 +628,7 @@ header {
     text-decoration:none;
     font-size:14px;
     font-weight:700;
+    transition:.2s;
 }
 
 .back-button:hover {
@@ -661,9 +646,7 @@ header {
 
 .product-layout {
     display:grid;
-    grid-template-columns:
-        minmax(0,1.15fr)
-        minmax(330px,.85fr);
+    grid-template-columns:minmax(0,1.15fr) minmax(330px,.85fr);
     gap:24px;
     align-items:start;
 }
@@ -730,6 +713,11 @@ header {
     cursor:pointer;
     background:var(--card-light);
     padding:0;
+    transition:border-color .2s,transform .2s;
+}
+
+.thumbnail:hover {
+    transform:translateY(-2px);
 }
 
 .thumbnail.active {
@@ -837,6 +825,54 @@ header {
     border:1px solid var(--border);
 }
 
+/* NEW PRODUCT ACTION BUTTONS */
+
+.product-actions {
+    margin-top:20px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.product-action-button {
+    width:100%;
+    min-height:51px;
+    border-radius:11px;
+    font-size:16px;
+    font-weight:800;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.product-action-button:hover {
+    transform:translateY(-1px);
+}
+
+.order-product-button {
+    border:none;
+    background:var(--accent);
+    color:#FFFFFF;
+}
+
+.order-product-button:hover {
+    background:var(--accent-dark);
+}
+
+.add-cart-button {
+    border:2px solid var(--accent);
+    background:transparent;
+    color:var(--accent);
+}
+
+.add-cart-button:hover {
+    background:var(--sidebar-hover);
+}
+
+.add-cart-button.added {
+    background:var(--accent);
+    color:#FFFFFF;
+}
+
 /* OPTIONS */
 
 .option-group {
@@ -868,6 +904,11 @@ header {
     cursor:pointer;
     font-size:13px;
     font-weight:700;
+    transition:.2s;
+}
+
+.color-button:hover {
+    border-color:var(--accent);
 }
 
 .color-button.active {
@@ -920,6 +961,11 @@ header {
     cursor:pointer;
 }
 
+.quantity-button:hover {
+    background:var(--sidebar-hover);
+    color:var(--accent);
+}
+
 .quantity-value {
     width:45px;
     text-align:center;
@@ -927,26 +973,15 @@ header {
     font-weight:800;
 }
 
-/* =====================================================
-   PRODUCT ACTION BUTTONS
-===================================================== */
+/* OLD BUY BUTTON */
 
-.product-action-buttons {
-    display:flex;
-    flex-direction:column;
-    gap:10px;
+.buy-button {
+    width:100%;
+    height:52px;
     margin-top:20px;
-}
-
-/* اطلب المنتج - أحمر */
-
-.product-action-buttons .buy-button {
-    width:100%;
-    height:52px;
-    margin-top:0;
-    border:1px solid #E63946;
+    border:none;
     border-radius:11px;
-    background:#E63946;
+    background:var(--accent);
     color:#FFFFFF;
     font-size:16px;
     font-weight:800;
@@ -954,65 +989,18 @@ header {
     transition:.2s;
 }
 
-.product-action-buttons .buy-button:hover {
-    background:#C92F3B;
-    border-color:#C92F3B;
+.buy-button:hover {
+    background:var(--accent-dark);
     transform:translateY(-1px);
 }
 
-.product-action-buttons .buy-button:disabled {
+.buy-button:disabled {
     background:#9CA3AF;
-    border-color:#9CA3AF;
-    color:#FFFFFF;
     cursor:not-allowed;
     transform:none;
 }
 
-/* أضف إلى السلة - أبيض بإطار أسود */
-
-.add-cart-button {
-    width:100%;
-    height:52px;
-    border:1.5px solid #111111;
-    border-radius:11px;
-    background:#FFFFFF;
-    color:#111111;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:9px;
-    font-size:16px;
-    font-weight:800;
-    cursor:pointer;
-    transition:.2s;
-}
-
-.add-cart-button svg {
-    width:22px;
-    height:22px;
-}
-
-.add-cart-button:hover {
-    background:#F5F5F5;
-    border-color:#000000;
-    transform:translateY(-1px);
-}
-
-.add-cart-button.added {
-    background:#FFFFFF;
-    color:#111111;
-    border-color:#111111;
-}
-
-.add-cart-button:disabled {
-    background:#F3F4F6;
-    color:#9CA3AF;
-    border-color:#9CA3AF;
-    cursor:not-allowed;
-    transform:none;
-}
-
-/* ORDER */
+/* ORDER SECTION */
 
 .order-section {
     margin-top:25px;
@@ -1036,12 +1024,11 @@ header {
     margin-bottom:20px;
 }
 
-/* FORM */
+/* FORM GRID */
 
 .form-grid {
     display:grid;
-    grid-template-columns:
-        repeat(2,minmax(0,1fr));
+    grid-template-columns:repeat(2,minmax(0,1fr));
     gap:14px;
 }
 
@@ -1071,6 +1058,7 @@ header {
     background:var(--input);
     color:var(--input-text);
     font-size:14px;
+    transition:border-color .2s,box-shadow .2s;
 }
 
 textarea.form-control {
@@ -1081,12 +1069,12 @@ textarea.form-control {
 
 .form-control:focus {
     border-color:var(--accent);
+    box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 10%,transparent);
 }
 
 .delivery-types {
     display:grid;
-    grid-template-columns:
-        repeat(2,minmax(0,1fr));
+    grid-template-columns:repeat(2,minmax(0,1fr));
     gap:9px;
 }
 
@@ -1113,6 +1101,7 @@ textarea.form-control {
     font-size:13px;
     font-weight:700;
     cursor:pointer;
+    transition:.2s;
 }
 
 .delivery-option input:checked + .delivery-label {
@@ -1172,6 +1161,7 @@ textarea.form-control {
     font-size:16px;
     font-weight:800;
     cursor:pointer;
+    transition:.2s;
 }
 
 .submit-order:hover {
@@ -1238,9 +1228,11 @@ textarea.form-control {
     text-decoration:none;
     font-size:14px;
     font-weight:700;
+    transition:transform .2s ease,background .2s ease,border-color .2s ease,color .2s ease;
 }
 
 .social-link:hover {
+    transform:translateY(-2px);
     border-color:var(--accent);
     color:var(--accent);
     background:var(--sidebar-hover);
@@ -1249,6 +1241,7 @@ textarea.form-control {
 .social-link svg {
     width:22px;
     height:22px;
+    flex-shrink:0;
 }
 
 .social-empty {
@@ -1279,10 +1272,12 @@ textarea.form-control {
     font-weight:800;
     box-shadow:0 8px 25px rgba(0,0,0,.18);
     z-index:900;
+    transition:.2s;
 }
 
 .floating-cart:hover {
     background:var(--accent-dark);
+    transform:translateX(-50%) translateY(-2px);
 }
 
 .floating-cart svg {
@@ -1302,7 +1297,7 @@ textarea.form-control {
     border-left:1px solid var(--border);
     box-shadow:-5px 0 25px rgba(0,0,0,.25);
     z-index:2000;
-    transition:right .3s ease;
+    transition:right .3s ease,background .25s ease;
     padding-top:80px;
 }
 
@@ -1319,6 +1314,7 @@ textarea.form-control {
     text-decoration:none;
     border-bottom:1px solid var(--border);
     font-size:16px;
+    transition:background .2s,color .2s;
 }
 
 .sidebar a:hover {
@@ -1329,6 +1325,7 @@ textarea.form-control {
 .sidebar a svg {
     width:22px;
     height:22px;
+    flex-shrink:0;
 }
 
 /* OVERLAY */
@@ -1365,7 +1362,6 @@ textarea.form-control {
 }
 
 @keyframes spin {
-
     from {
         transform:rotate(0deg);
     }
@@ -1373,7 +1369,6 @@ textarea.form-control {
     to {
         transform:rotate(360deg);
     }
-
 }
 
 /* ERROR */
@@ -1418,6 +1413,10 @@ textarea.form-control {
 ::-webkit-scrollbar-thumb {
     background:#9CA3AF;
     border-radius:10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background:var(--accent);
 }
 
 /* TABLET */
@@ -1532,6 +1531,10 @@ textarea.form-control {
         font-size:21px;
     }
 
+    .social-links {
+        gap:9px;
+    }
+
     .social-link {
         min-width:calc(50% - 5px);
         font-size:13px;
@@ -1574,6 +1577,7 @@ textarea.form-control {
 }
 
 </style>
+
 </head>
 
 <body class="theme-orange">
@@ -1601,14 +1605,12 @@ textarea.form-control {
             stroke-linecap="round"
             stroke-linejoin="round"
         />
-
         <circle
             cx="10"
             cy="20"
             r="1.4"
             fill="currentColor"
         />
-
         <circle
             cx="18"
             cy="20"
@@ -1625,7 +1627,6 @@ textarea.form-control {
             stroke-width="2"
             stroke-linejoin="round"
         />
-
         <path
             d="M9 21v-6h6v6"
             fill="none"
@@ -1652,7 +1653,6 @@ textarea.form-control {
             stroke="currentColor"
             stroke-width="2"
         />
-
         <path
             d="M3 10 5 4h14l2 6"
             fill="none"
@@ -1660,7 +1660,6 @@ textarea.form-control {
             stroke-width="2"
             stroke-linejoin="round"
         />
-
         <path
             d="M3 10c0 1.7 1.3 3 3 3s3-1.3 3-3c0 1.7 1.3 3 3 3s3-1.3 3-3c0 1.7 1.3 3 3 3s3-1.3 3-3"
             fill="none"
@@ -1678,7 +1677,6 @@ textarea.form-control {
             stroke-width="2"
             stroke-linejoin="round"
         />
-
         <path
             d="M9 8V6a3 3 0 0 1 6 0v2"
             fill="none"
@@ -1719,7 +1717,6 @@ textarea.form-control {
             stroke="currentColor"
             stroke-width="2"
         />
-
         <circle
             cx="12"
             cy="12"
@@ -1728,7 +1725,6 @@ textarea.form-control {
             stroke="currentColor"
             stroke-width="2"
         />
-
         <circle
             cx="17.5"
             cy="6.5"
@@ -1749,7 +1745,6 @@ textarea.form-control {
             d="M21.6 7.2a2.7 2.7 0 0 0-1.9-1.9C18 5 12 5 12 5s-6 0-7.7.3a2.7 2.7 0 0 0-1.9 1.9C2 8.9 2 12 2 12s0 3.1.4 4.8a2.7 2.7 0 0 0 1.9 1.9C6 19 12 19 12 19s6 0 7.7-.3a2.7 2.7 0 0 0 1.9-1.9C22 15.1 22 12 22 12s0-3.1-.4-4.8z"
             fill="currentColor"
         />
-
         <path
             d="m10 9 5 3-5 3z"
             fill="var(--card)"
@@ -1770,7 +1765,6 @@ textarea.form-control {
             stroke="currentColor"
             stroke-width="2"
         />
-
         <path
             d="M8.5 8.5c.3-.5.6-.5.9-.5l.7 1.7c.1.3 0 .5-.2.7l-.5.5c.6 1.1 1.5 2 2.6 2.6l.5-.5c.2-.2.4-.3.7-.2l1.7.7c.3.1.4.4.3.7-.2.8-.7 1.3-1.4 1.4-2.3.2-6.3-3.4-6.5-6.5 0-.3.1-.6.2-.9z"
             fill="currentColor"
@@ -1795,6 +1789,26 @@ textarea.form-control {
         />
     </symbol>
 
+    <symbol id="icon-plus" viewBox="0 0 24 24">
+        <path
+            d="M12 5v14M5 12h14"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+        />
+    </symbol>
+
+    <symbol id="icon-minus" viewBox="0 0 24 24">
+        <path
+            d="M5 12h14"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+        />
+    </symbol>
+
 </svg>
 
 <!-- OVERLAY -->
@@ -1815,6 +1829,7 @@ textarea.form-control {
         href="#"
         id="homeLink"
     >
+
         <svg>
             <use href="#icon-home"></use>
         </svg>
@@ -1822,12 +1837,14 @@ textarea.form-control {
         <span>
             الرئيسية
         </span>
+
     </a>
 
     <a
         href="#"
         id="cartLink"
     >
+
         <svg>
             <use href="#icon-cart"></use>
         </svg>
@@ -1835,12 +1852,14 @@ textarea.form-control {
         <span>
             السلة
         </span>
+
     </a>
 
     <a
         href="#socialSection"
         id="contactLink"
     >
+
         <svg>
             <use href="#icon-phone"></use>
         </svg>
@@ -1848,6 +1867,7 @@ textarea.form-control {
         <span>
             اتصل بنا
         </span>
+
     </a>
 
 </div>
@@ -1931,7 +1951,7 @@ textarea.form-control {
 
 </main>
 
-<!-- SOCIAL -->
+<!-- SOCIAL MEDIA -->
 
 <section
     class="social-section"
@@ -2003,6 +2023,7 @@ import {
 from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
+
 /* FIREBASE CONFIG */
 
 const firebaseConfig = {
@@ -2030,11 +2051,18 @@ const firebaseConfig = {
 
 };
 
+
 const app =
-    initializeApp(firebaseConfig);
+    initializeApp(
+        firebaseConfig
+    );
+
 
 const db =
-    getFirestore(app);
+    getFirestore(
+        app
+    );
+
 
 /* URL PARAMETERS */
 
@@ -2043,11 +2071,14 @@ const params =
         window.location.search
     );
 
+
 const productId =
     params.get("id");
 
+
 const urlStoreId =
     params.get("store");
+
 
 /* ELEMENTS */
 
@@ -2056,30 +2087,36 @@ const productContainer =
         "productContainer"
     );
 
+
 const storeInfo =
     document.getElementById(
         "storeInfo"
     );
+
 
 const headerStoreName =
     document.getElementById(
         "headerStoreName"
     );
 
+
 const cartCount =
     document.getElementById(
         "cartCount"
     );
+
 
 const themeColorMeta =
     document.getElementById(
         "themeColorMeta"
     );
 
+
 const socialLinks =
     document.getElementById(
         "socialLinks"
     );
+
 
 /* VARIABLES */
 
@@ -2087,7 +2124,9 @@ let product = null;
 
 let currentStoreId =
     urlStoreId ||
-    localStorage.getItem("storeId") ||
+    localStorage.getItem(
+        "storeId"
+    ) ||
     null;
 
 let currentOwnerUid = null;
@@ -2112,7 +2151,8 @@ let deliveryItems =
 let deliveryCost =
     0;
 
-/* THEMES */
+
+/* THEME LIST */
 
 const validThemes = [
 
@@ -2135,6 +2175,7 @@ const validThemes = [
 
 ];
 
+
 const themeColors = {
 
     orange:"#F47B20",
@@ -2156,54 +2197,108 @@ const themeColors = {
 
 };
 
-/* ESCAPE */
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
 
 function escapeHtml(value) {
 
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+    return String(
+        value ?? ""
+    )
+
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
 
 }
 
-/* SAFE URL */
+
+/* =====================================================
+   SAFE URL
+===================================================== */
 
 function safeUrl(value) {
 
-    if (!value) return "";
+    if (!value) {
+
+        return "";
+
+    }
 
     const url =
-        String(value).trim();
+        String(
+            value
+        ).trim();
 
     if (
-        /^https?:\/\//i.test(url) ||
+        /^https?:\/\//i.test(url)
+        ||
         /^data:image\//i.test(url)
     ) {
+
         return url;
+
     }
 
     return "";
 
 }
 
-/* COLOR HELPERS */
+
+/* =====================================================
+   COLOR HELPERS
+===================================================== */
 
 function normalizeHexColor(color) {
 
-    if (typeof color !== "string")
+    if (
+        typeof color !== "string"
+    ) {
+
         return null;
+
+    }
 
     let value =
         color.trim();
 
-    if (!value)
+    if (!value) {
+
         return null;
 
-    if (!value.startsWith("#"))
-        value = "#" + value;
+    }
+
+    if (
+        !value.startsWith("#")
+    ) {
+
+        value =
+            "#" + value;
+
+    }
 
     if (
         /^#[0-9a-fA-F]{3}$/.test(value)
@@ -2211,29 +2306,40 @@ function normalizeHexColor(color) {
 
         value =
             "#" +
-            value[1] + value[1] +
-            value[2] + value[2] +
-            value[3] + value[3];
+            value[1] +
+            value[1] +
+            value[2] +
+            value[2] +
+            value[3] +
+            value[3];
 
     }
 
     if (
         !/^#[0-9a-fA-F]{6}$/.test(value)
     ) {
+
         return null;
+
     }
 
     return value.toUpperCase();
 
 }
 
+
 function hexToRgb(hex) {
 
     const value =
-        normalizeHexColor(hex);
+        normalizeHexColor(
+            hex
+        );
 
-    if (!value)
+    if (!value) {
+
         return null;
+
+    }
 
     return {
 
@@ -2259,7 +2365,12 @@ function hexToRgb(hex) {
 
 }
 
-function rgbToHex(r,g,b) {
+
+function rgbToHex(
+    r,
+    g,
+    b
+) {
 
     const clamp =
         value =>
@@ -2272,74 +2383,82 @@ function rgbToHex(r,g,b) {
             );
 
     return "#" +
-
-        [
-            r,
-            g,
-            b
-        ]
-
-        .map(
-            value =>
-                clamp(value)
-                .toString(16)
-                .padStart(2,"0")
-        )
-
-        .join("")
-
-        .toUpperCase();
+        [r,g,b]
+            .map(
+                value =>
+                    clamp(value)
+                        .toString(16)
+                        .padStart(
+                            2,
+                            "0"
+                        )
+            )
+            .join("")
+            .toUpperCase();
 
 }
 
+
 function darkenColor(
     hex,
-    amount=0.20
+    amount = 0.20
 ) {
 
     const rgb =
-        hexToRgb(hex);
+        hexToRgb(
+            hex
+        );
 
-    if (!rgb)
+    if (!rgb) {
+
         return "#333333";
+
+    }
 
     return rgbToHex(
 
-        rgb.r * (1 - amount),
+        rgb.r *
+            (1 - amount),
 
-        rgb.g * (1 - amount),
+        rgb.g *
+            (1 - amount),
 
-        rgb.b * (1 - amount)
+        rgb.b *
+            (1 - amount)
 
     );
 
 }
 
+
 function rgbaFromHex(
     hex,
-    alpha=0.08
+    alpha = 0.08
 ) {
 
     const rgb =
-        hexToRgb(hex);
+        hexToRgb(
+            hex
+        );
 
-    if (!rgb)
+    if (!rgb) {
+
         return `rgba(0,0,0,${alpha})`;
 
-    return `
-        rgba(
-            ${rgb.r},
-            ${rgb.g},
-            ${rgb.b},
-            ${alpha}
-        )
-    `;
+    }
+
+    return `rgba(${rgb.r},${rgb.g},${rgb.b},${alpha})`;
 
 }
 
-/* APPLY THEME */
 
-function applyStoreTheme(themeOrStore) {
+/* =====================================================
+   APPLY STORE THEME
+===================================================== */
+
+function applyStoreTheme(
+    themeOrStore
+) {
 
     const oldThemeClasses = [
 
@@ -2384,6 +2503,7 @@ function applyStoreTheme(themeOrStore) {
         "--sidebar-hover"
     );
 
+
     if (
         typeof themeOrStore === "string"
     ) {
@@ -2397,9 +2517,14 @@ function applyStoreTheme(themeOrStore) {
             .trim();
 
         if (
-            !validThemes.includes(theme)
+            !validThemes.includes(
+                theme
+            )
         ) {
-            theme = "orange";
+
+            theme =
+                "orange";
+
         }
 
         document.body.classList.add(
@@ -2407,26 +2532,41 @@ function applyStoreTheme(themeOrStore) {
         );
 
         themeColorMeta.content =
-            themeColors[theme] ||
+            themeColors[theme]
+            ||
             "#FFFFFF";
+
+        localStorage.setItem(
+            "gglamStoreTheme",
+            theme
+        );
+
+        localStorage.setItem(
+            "gglamThemeType",
+            "legacy"
+        );
 
         return;
 
     }
+
 
     const store =
         themeOrStore || {};
 
     const themeType =
         String(
-            store.themeType ||
-            ""
+            store.themeType || ""
         )
         .toLowerCase()
         .trim();
 
+
+    /* GRADIENT */
+
     if (
-        themeType === "gradient" &&
+        themeType === "gradient"
+        &&
         Array.isArray(
             store.themeColors
         )
@@ -2434,21 +2574,32 @@ function applyStoreTheme(themeOrStore) {
 
         const colors =
             store.themeColors
-                .map(normalizeHexColor)
+                .map(
+                    normalizeHexColor
+                )
                 .filter(Boolean)
-                .slice(0,4);
+                .slice(
+                    0,
+                    4
+                );
 
-        if (colors.length >= 2) {
+        if (
+            colors.length >= 2
+        ) {
 
             const direction =
                 String(
-                    store.themeDirection ||
+                    store.themeDirection
+                    ||
                     "135deg"
-                ).trim();
+                )
+                .trim();
 
             const safeDirection =
                 /^(\d{1,3}deg|to\s+(left|right|top|bottom)(\s+(left|right|top|bottom))?)$/i
-                    .test(direction)
+                    .test(
+                        direction
+                    )
                     ?
                     direction
                     :
@@ -2475,7 +2626,10 @@ function applyStoreTheme(themeOrStore) {
 
             document.body.style.setProperty(
                 "--accent-dark",
-                darkenColor(firstColor)
+                darkenColor(
+                    firstColor,
+                    0.20
+                )
             );
 
             document.body.style.setProperty(
@@ -2485,11 +2639,36 @@ function applyStoreTheme(themeOrStore) {
 
             document.body.style.setProperty(
                 "--sidebar-hover",
-                rgbaFromHex(firstColor)
+                rgbaFromHex(
+                    firstColor,
+                    0.08
+                )
             );
 
             themeColorMeta.content =
                 firstColor;
+
+            localStorage.setItem(
+                "gglamStoreTheme",
+                "custom-gradient"
+            );
+
+            localStorage.setItem(
+                "gglamThemeType",
+                "gradient"
+            );
+
+            localStorage.setItem(
+                "gglamThemeColors",
+                JSON.stringify(
+                    colors
+                )
+            );
+
+            localStorage.setItem(
+                "gglamThemeDirection",
+                safeDirection
+            );
 
             return;
 
@@ -2497,10 +2676,16 @@ function applyStoreTheme(themeOrStore) {
 
     }
 
-    if (themeType === "solid") {
+
+    /* SOLID */
+
+    if (
+        themeType === "solid"
+    ) {
 
         const solidColor =
             normalizeHexColor(
+
                 Array.isArray(
                     store.themeColors
                 )
@@ -2508,15 +2693,16 @@ function applyStoreTheme(themeOrStore) {
                 store.themeColors[0]
                 :
                 null
-            ) ||
+
+            )
+            ||
             normalizeHexColor(
                 store.themeColor
             );
 
         const savedTheme =
             String(
-                store.theme ||
-                ""
+                store.theme || ""
             )
             .toLowerCase()
             .trim();
@@ -2528,16 +2714,34 @@ function applyStoreTheme(themeOrStore) {
         ) {
 
             document.body.classList.add(
-                "theme-" +
-                savedTheme
+                "theme-" + savedTheme
             );
 
             themeColorMeta.content =
-                solidColor ||
-                themeColors[
-                    savedTheme
-                ] ||
+                solidColor
+                ||
+                themeColors[savedTheme]
+                ||
                 "#FFFFFF";
+
+            localStorage.setItem(
+                "gglamStoreTheme",
+                savedTheme
+            );
+
+            localStorage.setItem(
+                "gglamThemeType",
+                "solid"
+            );
+
+            if (solidColor) {
+
+                localStorage.setItem(
+                    "gglamThemeColor",
+                    solidColor
+                );
+
+            }
 
             return;
 
@@ -2556,16 +2760,36 @@ function applyStoreTheme(themeOrStore) {
 
             document.body.style.setProperty(
                 "--accent-dark",
-                darkenColor(solidColor)
+                darkenColor(
+                    solidColor
+                )
             );
 
             document.body.style.setProperty(
                 "--sidebar-hover",
-                rgbaFromHex(solidColor)
+                rgbaFromHex(
+                    solidColor,
+                    0.08
+                )
             );
 
             themeColorMeta.content =
                 solidColor;
+
+            localStorage.setItem(
+                "gglamStoreTheme",
+                "custom-solid"
+            );
+
+            localStorage.setItem(
+                "gglamThemeType",
+                "solid"
+            );
+
+            localStorage.setItem(
+                "gglamThemeColor",
+                solidColor
+            );
 
             return;
 
@@ -2573,18 +2797,31 @@ function applyStoreTheme(themeOrStore) {
 
     }
 
+
+    /* LEGACY */
+
     let theme =
         String(
-            store.theme ||
+            store.theme
+            ||
+            localStorage.getItem(
+                "gglamStoreTheme"
+            )
+            ||
             "orange"
         )
         .toLowerCase()
         .trim();
 
     if (
-        !validThemes.includes(theme)
+        !validThemes.includes(
+            theme
+        )
     ) {
-        theme = "orange";
+
+        theme =
+            "orange";
+
     }
 
     document.body.classList.add(
@@ -2592,42 +2829,197 @@ function applyStoreTheme(themeOrStore) {
     );
 
     themeColorMeta.content =
-        themeColors[theme] ||
+        themeColors[theme]
+        ||
         "#FFFFFF";
+
+    localStorage.setItem(
+        "gglamStoreTheme",
+        theme
+    );
+
+    localStorage.setItem(
+        "gglamThemeType",
+        "legacy"
+    );
 
 }
 
-/* INITIAL THEME */
 
-applyStoreTheme(
+/* =====================================================
+   INITIAL THEME
+===================================================== */
+
+const savedThemeType =
     localStorage.getItem(
-        "gglamStoreTheme"
-    ) || "orange"
-);
+        "gglamThemeType"
+    );
 
-/* SOCIAL URL */
+
+if (
+    savedThemeType === "solid"
+) {
+
+    const savedColor =
+        localStorage.getItem(
+            "gglamThemeColor"
+        );
+
+    const savedTheme =
+        localStorage.getItem(
+            "gglamStoreTheme"
+        );
+
+    if (
+        savedTheme
+        &&
+        validThemes.includes(
+            savedTheme
+        )
+    ) {
+
+        applyStoreTheme({
+
+            themeType:
+                "solid",
+
+            theme:
+                savedTheme,
+
+            themeColors:
+                savedColor
+                ?
+                [savedColor]
+                :
+                []
+
+        });
+
+    }
+
+    else if (
+        savedColor
+    ) {
+
+        applyStoreTheme({
+
+            themeType:
+                "solid",
+
+            themeColor:
+                savedColor,
+
+            themeColors:
+                [savedColor]
+
+        });
+
+    }
+
+    else {
+
+        applyStoreTheme(
+            "orange"
+        );
+
+    }
+
+}
+
+else if (
+    savedThemeType === "gradient"
+) {
+
+    let savedColors = [];
+
+    try {
+
+        savedColors =
+            JSON.parse(
+                localStorage.getItem(
+                    "gglamThemeColors"
+                )
+                ||
+                "[]"
+            );
+
+    }
+
+    catch(error) {
+
+        savedColors = [];
+
+    }
+
+    applyStoreTheme({
+
+        themeType:
+            "gradient",
+
+        themeColors:
+            savedColors,
+
+        themeDirection:
+            localStorage.getItem(
+                "gglamThemeDirection"
+            )
+            ||
+            "135deg"
+
+    });
+
+}
+
+else {
+
+    applyStoreTheme(
+        localStorage.getItem(
+            "gglamStoreTheme"
+        )
+        ||
+        "orange"
+    );
+
+}
+
+
+/* =====================================================
+   NORMALIZE SOCIAL URL
+===================================================== */
 
 function normalizeSocialUrl(
     value,
     type
 ) {
 
-    if (!value)
+    if (!value) {
+
         return "";
+
+    }
 
     let url =
-        String(value).trim();
+        String(
+            value
+        ).trim();
 
-    if (!url)
+    if (!url) {
+
         return "";
+
+    }
 
     if (
         /^https?:\/\//i.test(url)
     ) {
+
         return url;
+
     }
 
-    if (type === "whatsapp") {
+    if (
+        type === "whatsapp"
+    ) {
 
         let number =
             url.replace(
@@ -2641,7 +3033,11 @@ function normalizeSocialUrl(
                 ""
             );
 
-        if (/^0[567]/.test(number)) {
+        if (
+            /^0[567]/.test(
+                number
+            )
+        ) {
 
             number =
                 "213" +
@@ -2649,64 +3045,80 @@ function normalizeSocialUrl(
 
         }
 
-        return (
-            "https://wa.me/" +
-            number
-        );
+        return "https://wa.me/" +
+            number;
 
     }
 
-    if (type === "instagram") {
+    if (
+        type === "instagram"
+    ) {
 
-        return (
-            "https://instagram.com/" +
-            url.replace(/^@/,"")
-        );
-
-    }
-
-    if (type === "tiktok") {
-
-        return (
-            "https://www.tiktok.com/@" +
-            url.replace(/^@/,"")
-        );
+        return "https://instagram.com/" +
+            url.replace(
+                /^@/,
+                ""
+            );
 
     }
 
-    if (type === "telegram") {
+    if (
+        type === "tiktok"
+    ) {
 
-        return (
-            "https://t.me/" +
-            url.replace(/^@/,"")
-        );
-
-    }
-
-    if (type === "facebook") {
-
-        return (
-            "https://facebook.com/" +
-            url.replace(/^@/,"")
-        );
+        return "https://www.tiktok.com/@" +
+            url.replace(
+                /^@/,
+                ""
+            );
 
     }
 
-    if (type === "youtube") {
+    if (
+        type === "telegram"
+    ) {
 
-        return (
-            "https://youtube.com/" +
-            url.replace(/^@/,"")
-        );
+        return "https://t.me/" +
+            url.replace(
+                /^@/,
+                ""
+            );
 
     }
 
-    if (type === "twitter") {
+    if (
+        type === "facebook"
+    ) {
 
-        return (
-            "https://x.com/" +
-            url.replace(/^@/,"")
-        );
+        return "https://facebook.com/" +
+            url.replace(
+                /^@/,
+                ""
+            );
+
+    }
+
+    if (
+        type === "youtube"
+    ) {
+
+        return "https://youtube.com/" +
+            url.replace(
+                /^@/,
+                ""
+            );
+
+    }
+
+    if (
+        type === "twitter"
+    ) {
+
+        return "https://x.com/" +
+            url.replace(
+                /^@/,
+                ""
+            );
 
     }
 
@@ -2714,7 +3126,10 @@ function normalizeSocialUrl(
 
 }
 
-/* ADD SOCIAL */
+
+/* =====================================================
+   ADD SOCIAL LINK
+===================================================== */
 
 function addSocialLink(
     type,
@@ -2729,11 +3144,16 @@ function addSocialLink(
             type
         );
 
-    if (!url)
+    if (!url) {
+
         return;
 
+    }
+
     const link =
-        document.createElement("a");
+        document.createElement(
+            "a"
+        );
 
     link.className =
         "social-link";
@@ -2751,9 +3171,7 @@ function addSocialLink(
 
         <svg aria-hidden="true">
 
-            <use
-                href="#icon-${icon}"
-            ></use>
+            <use href="#icon-${icon}"></use>
 
         </svg>
 
@@ -2769,11 +3187,15 @@ function addSocialLink(
 
 }
 
-/* SOCIAL LINKS */
+
+/* =====================================================
+   RENDER SOCIAL LINKS
+===================================================== */
 
 function renderSocialLinks() {
 
-    socialLinks.innerHTML = "";
+    socialLinks.innerHTML =
+        "";
 
     if (!currentStore) {
 
@@ -2792,8 +3214,10 @@ function renderSocialLinks() {
     addSocialLink(
         "whatsapp",
         "واتساب",
-        currentStore.whatsapp ||
-        currentStore.whatsApp ||
+        currentStore.whatsapp
+        ||
+        currentStore.whatsApp
+        ||
         currentStore.whatsappNumber,
         "whatsapp"
     );
@@ -2801,8 +3225,10 @@ function renderSocialLinks() {
     addSocialLink(
         "facebook",
         "Facebook",
-        currentStore.facebook ||
-        currentStore.facebookUrl ||
+        currentStore.facebook
+        ||
+        currentStore.facebookUrl
+        ||
         currentStore.facebookLink,
         "facebook"
     );
@@ -2810,8 +3236,10 @@ function renderSocialLinks() {
     addSocialLink(
         "instagram",
         "Instagram",
-        currentStore.instagram ||
-        currentStore.instagramUrl ||
+        currentStore.instagram
+        ||
+        currentStore.instagramUrl
+        ||
         currentStore.instagramLink,
         "instagram"
     );
@@ -2819,9 +3247,12 @@ function renderSocialLinks() {
     addSocialLink(
         "tiktok",
         "TikTok",
-        currentStore.tiktok ||
-        currentStore.tikTok ||
-        currentStore.tiktokUrl ||
+        currentStore.tiktok
+        ||
+        currentStore.tikTok
+        ||
+        currentStore.tiktokUrl
+        ||
         currentStore.tiktokLink,
         "tiktok"
     );
@@ -2829,8 +3260,10 @@ function renderSocialLinks() {
     addSocialLink(
         "youtube",
         "YouTube",
-        currentStore.youtube ||
-        currentStore.youtubeUrl ||
+        currentStore.youtube
+        ||
+        currentStore.youtubeUrl
+        ||
         currentStore.youtubeLink,
         "youtube"
     );
@@ -2838,8 +3271,10 @@ function renderSocialLinks() {
     addSocialLink(
         "telegram",
         "Telegram",
-        currentStore.telegram ||
-        currentStore.telegramUrl ||
+        currentStore.telegram
+        ||
+        currentStore.telegramUrl
+        ||
         currentStore.telegramLink,
         "telegram"
     );
@@ -2847,22 +3282,29 @@ function renderSocialLinks() {
     addSocialLink(
         "twitter",
         "X",
-        currentStore.twitter ||
-        currentStore.x ||
-        currentStore.twitterUrl ||
+        currentStore.twitter
+        ||
+        currentStore.x
+        ||
+        currentStore.twitterUrl
+        ||
         currentStore.xUrl,
         "x"
     );
 
     const phone =
-        currentStore.phone ||
-        currentStore.phoneNumber ||
+        currentStore.phone
+        ||
+        currentStore.phoneNumber
+        ||
         currentStore.mobile;
 
     if (phone) {
 
         const phoneLink =
-            document.createElement("a");
+            document.createElement(
+                "a"
+            );
 
         phoneLink.className =
             "social-link";
@@ -2870,15 +3312,16 @@ function renderSocialLinks() {
         phoneLink.href =
             "tel:" +
             String(phone)
-                .replace(/\s/g,"");
+                .replace(
+                    /\s/g,
+                    ""
+                );
 
         phoneLink.innerHTML = `
 
             <svg aria-hidden="true">
 
-                <use
-                    href="#icon-phone"
-                ></use>
+                <use href="#icon-phone"></use>
 
             </svg>
 
@@ -2894,12 +3337,16 @@ function renderSocialLinks() {
 
     }
 
-    if (!socialLinks.children.length) {
+    if (
+        !socialLinks.children.length
+    ) {
 
         socialLinks.innerHTML = `
 
             <div class="social-empty">
+
                 لم يضف التاجر روابط التواصل بعد.
+
             </div>
 
         `;
@@ -2908,7 +3355,10 @@ function renderSocialLinks() {
 
 }
 
-/* LOAD STORE */
+
+/* =====================================================
+   LOAD STORE
+===================================================== */
 
 async function loadStoreForProduct() {
 
@@ -2916,7 +3366,9 @@ async function loadStoreForProduct() {
 
         let storeSnap = null;
 
-        if (currentOwnerUid) {
+        if (
+            currentOwnerUid
+        ) {
 
             const ownerStoreRef =
                 doc(
@@ -2942,7 +3394,8 @@ async function loadStoreForProduct() {
         }
 
         if (
-            !storeSnap &&
+            !storeSnap
+            &&
             currentStoreId
         ) {
 
@@ -2969,12 +3422,16 @@ async function loadStoreForProduct() {
 
         }
 
-        if (!storeSnap) {
+        if (
+            !storeSnap
+        ) {
 
-            currentStore = null;
+            currentStore =
+                null;
 
             currentStoreName =
-                product?.storeName ||
+                product?.storeName
+                ||
                 "G-Glam";
 
             headerStoreName.textContent =
@@ -3021,14 +3478,16 @@ async function loadStoreForProduct() {
 
         const status =
             String(
-                currentStore.status ||
+                currentStore.status
+                ||
                 "approved"
             )
             .toLowerCase()
             .trim();
 
         if (
-            status !== "approved" &&
+            status !== "approved"
+            &&
             status !== "active"
         ) {
 
@@ -3041,9 +3500,12 @@ async function loadStoreForProduct() {
         }
 
         const storeName =
-            currentStore.storeName ||
-            currentStore.name ||
-            product?.storeName ||
+            currentStore.storeName
+            ||
+            currentStore.name
+            ||
+            product?.storeName
+            ||
             "G-Glam";
 
         currentStoreName =
@@ -3064,7 +3526,9 @@ async function loadStoreForProduct() {
 
         storeInfo.innerHTML =
             "متجر: <strong>" +
-            escapeHtml(storeName) +
+            escapeHtml(
+                storeName
+            ) +
             "</strong>";
 
         applyStoreTheme(
@@ -3075,7 +3539,9 @@ async function loadStoreForProduct() {
 
         updateNavigationLinks();
 
-    } catch(error) {
+    }
+
+    catch(error) {
 
         console.error(
             "STORE ERROR:",
@@ -3086,7 +3552,10 @@ async function loadStoreForProduct() {
 
 }
 
-/* LOAD PRODUCT */
+
+/* =====================================================
+   LOAD PRODUCT
+===================================================== */
 
 async function loadProduct() {
 
@@ -3136,21 +3605,28 @@ async function loadProduct() {
         };
 
         currentOwnerUid =
-            product.ownerUid ||
-            product.ownerId ||
-            product.uid ||
+            product.ownerUid
+            ||
+            product.ownerId
+            ||
+            product.uid
+            ||
             null;
 
         currentStoreId =
-            currentStoreId ||
-            product.storeId ||
+            currentStoreId
+            ||
+            product.storeId
+            ||
             currentOwnerUid;
 
         await loadStoreForProduct();
 
         applyStoreTheme(
-            currentStore ||
-            product.theme ||
+            currentStore
+            ||
+            product.theme
+            ||
             "orange"
         );
 
@@ -3164,7 +3640,9 @@ async function loadProduct() {
 
         setupProductEvents();
 
-    } catch(error) {
+    }
+
+    catch(error) {
 
         console.error(
             "PRODUCT LOAD ERROR:",
@@ -3179,7 +3657,10 @@ async function loadProduct() {
 
 }
 
-/* PRODUCT IMAGES */
+
+/* =====================================================
+   GET PRODUCT IMAGES
+===================================================== */
 
 function getProductImages() {
 
@@ -3194,13 +3675,16 @@ function getProductImages() {
         images =
             product.images
                 .filter(Boolean)
-                .map(safeUrl)
+                .map(
+                    safeUrl
+                )
                 .filter(Boolean);
 
     }
 
     if (
-        !images.length &&
+        !images.length
+        &&
         product.image
     ) {
 
@@ -3209,8 +3693,13 @@ function getProductImages() {
                 product.image
             );
 
-        if (image)
-            images.push(image);
+        if (image) {
+
+            images.push(
+                image
+            );
+
+        }
 
     }
 
@@ -3218,7 +3707,10 @@ function getProductImages() {
 
 }
 
-/* DESCRIPTIVE IMAGES */
+
+/* =====================================================
+   GET DESCRIPTIVE IMAGES
+===================================================== */
 
 function getDescriptiveImages() {
 
@@ -3227,30 +3719,43 @@ function getDescriptiveImages() {
             product.descriptiveImages
         )
     ) {
+
         return [];
+
     }
 
     const visible =
-        product.descriptiveImagesVisible ??
-        product.showDescriptiveImages ??
+        product.descriptiveImagesVisible
+        ??
+        product.showDescriptiveImages
+        ??
         true;
 
-    if (!visible)
+    if (!visible) {
+
         return [];
+
+    }
 
     return product.descriptiveImages
         .filter(Boolean)
-        .map(safeUrl)
+        .map(
+            safeUrl
+        )
         .filter(Boolean);
 
 }
 
-/* RENDER PRODUCT */
+
+/* =====================================================
+   RENDER PRODUCT
+===================================================== */
 
 function renderProduct() {
 
     const name =
-        product.name ||
+        product.name
+        ||
         "منتج";
 
     const price =
@@ -3264,12 +3769,15 @@ function renderProduct() {
         );
 
     const shortDescription =
-        product.shortDescription ||
-        product.shortDesc ||
+        product.shortDescription
+        ||
+        product.shortDesc
+        ||
         "";
 
     const description =
-        product.description ||
+        product.description
+        ||
         "لا يوجد وصف لهذا المنتج.";
 
     const images =
@@ -3279,14 +3787,18 @@ function renderProduct() {
         getDescriptiveImages();
 
     const colors =
-        Array.isArray(product.colors)
+        Array.isArray(
+            product.colors
+        )
         ?
         product.colors.filter(Boolean)
         :
         [];
 
     const sizes =
-        Array.isArray(product.sizes)
+        Array.isArray(
+            product.sizes
+        )
         ?
         product.sizes.filter(Boolean)
         :
@@ -3300,20 +3812,35 @@ function renderProduct() {
     const outOfStock =
         stock <= 0;
 
-    if (colors.length)
+    if (
+        colors.length
+    ) {
+
         selectedColor =
             colors[0];
 
-    if (sizes.length)
+    }
+
+    if (
+        sizes.length
+    ) {
+
         selectedSize =
             sizes[0];
 
+    }
+
     const firstImage =
-        images[0] || "";
+        images[0]
+        ||
+        "";
 
     const galleryHtml =
+
         firstImage
+
         ?
+
         `
 
         <div class="main-image-wrapper">
@@ -3328,7 +3855,9 @@ function renderProduct() {
         </div>
 
         `
+
         :
+
         `
 
         <div class="main-image-wrapper">
@@ -3336,7 +3865,9 @@ function renderProduct() {
             <div class="no-image">
 
                 <svg>
+
                     <use href="#icon-bag"></use>
+
                 </svg>
 
                 <span>
@@ -3365,16 +3896,17 @@ function renderProduct() {
 
                 ${
                     images.map(
-                        (image,index) => `
+                        (
+                            image,
+                            index
+                        ) => `
 
                         <button
                             type="button"
                             class="thumbnail ${
                                 index === 0
-                                ?
-                                "active"
-                                :
-                                ""
+                                ? "active"
+                                : ""
                             }"
                             data-image="${escapeHtml(image)}"
                         >
@@ -3416,20 +3948,23 @@ function renderProduct() {
 
                     ${
                         colors.map(
-                            (color,index) => `
+                            (
+                                color,
+                                index
+                            ) => `
 
                             <button
                                 type="button"
                                 class="color-button ${
                                     index === 0
-                                    ?
-                                    "active"
-                                    :
-                                    ""
+                                    ? "active"
+                                    : ""
                                 }"
                                 data-color="${escapeHtml(color)}"
                             >
+
                                 ${escapeHtml(color)}
+
                             </button>
 
                         `
@@ -3459,7 +3994,9 @@ function renderProduct() {
                     class="option-label"
                     for="sizeSelect"
                 >
+
                     المقاس
+
                 </label>
 
                 <select
@@ -3474,7 +4011,9 @@ function renderProduct() {
                             <option
                                 value="${escapeHtml(size)}"
                             >
+
                                 ${escapeHtml(size)}
+
                             </option>
 
                         `
@@ -3490,8 +4029,11 @@ function renderProduct() {
     }
 
     const descriptiveHtml =
+
         descriptiveImages.length
+
         ?
+
         `
 
         <div class="descriptive-images">
@@ -3513,8 +4055,11 @@ function renderProduct() {
         </div>
 
         `
+
         :
+
         "";
+
 
     productContainer.innerHTML = `
 
@@ -3525,7 +4070,9 @@ function renderProduct() {
         >
 
             <svg>
+
                 <use href="#icon-arrow-right"></use>
+
             </svg>
 
             <span>
@@ -3534,7 +4081,11 @@ function renderProduct() {
 
         </a>
 
+
         <div class="product-layout">
+
+
+            <!-- GALLERY -->
 
             <section class="gallery-card">
 
@@ -3544,6 +4095,9 @@ function renderProduct() {
 
             </section>
 
+
+            <!-- PRODUCT INFO -->
+
             <section class="product-info-card">
 
                 <h1 class="product-name">
@@ -3552,11 +4106,11 @@ function renderProduct() {
 
                 </h1>
 
+
                 ${
                     shortDescription
                     ?
                     `
-
                     <div class="product-short-description">
 
                         ${escapeHtml(
@@ -3564,41 +4118,32 @@ function renderProduct() {
                         )}
 
                     </div>
-
                     `
                     :
                     ""
                 }
 
+
                 <div class="price-area">
 
                     <span class="product-price">
 
-                        ${
-                            price.toLocaleString(
-                                "fr-DZ"
-                            )
-                        }
+                        ${price.toLocaleString("fr-DZ")}
                         DA
 
                     </span>
+
 
                     ${
                         oldPrice > price
                         ?
                         `
-
                         <span class="old-price">
 
-                            ${
-                                oldPrice.toLocaleString(
-                                    "fr-DZ"
-                                )
-                            }
+                            ${oldPrice.toLocaleString("fr-DZ")}
                             DA
 
                         </span>
-
                         `
                         :
                         ""
@@ -3606,9 +4151,12 @@ function renderProduct() {
 
                 </div>
 
+
                 ${colorsHtml}
 
+
                 ${sizesHtml}
+
 
                 <div class="quantity-row">
 
@@ -3616,15 +4164,18 @@ function renderProduct() {
                         الكمية
                     </span>
 
+
                     <div class="quantity-box">
 
                         <button
                             type="button"
                             class="quantity-button"
                             id="decreaseQuantity"
+                            aria-label="إنقاص الكمية"
                         >
                             −
                         </button>
+
 
                         <span
                             class="quantity-value"
@@ -3633,10 +4184,12 @@ function renderProduct() {
                             1
                         </span>
 
+
                         <button
                             type="button"
                             class="quantity-button"
                             id="increaseQuantity"
+                            aria-label="زيادة الكمية"
                         >
                             +
                         </button>
@@ -3645,11 +4198,37 @@ function renderProduct() {
 
                 </div>
 
+
+                <button
+                    type="button"
+                    class="buy-button"
+                    id="buyButton"
+                    ${
+                        outOfStock
+                        ?
+                        "disabled"
+                        :
+                        ""
+                    }
+                >
+
+                    ${
+                        outOfStock
+                        ?
+                        "المنتج غير متوفر"
+                        :
+                        "اطلب الآن"
+                    }
+
+                </button>
+
+
                 <div class="description-section">
 
                     <h2 class="section-title">
                         وصف المنتج
                     </h2>
+
 
                     <div class="description">
 
@@ -3657,18 +4236,20 @@ function renderProduct() {
 
                     </div>
 
+
                     ${descriptiveHtml}
 
-                    <!-- أزرار الطلب والسلة -->
 
-                    <div class="product-action-buttons">
+                    <!-- =================================
+                         NEW TWO BUTTONS
+                    ================================== -->
 
-                        <!-- زر طلب المنتج -->
+                    <div class="product-actions">
 
                         <button
                             type="button"
-                            class="buy-button"
-                            id="buyButton"
+                            class="product-action-button order-product-button"
+                            id="orderProductButton"
                             ${
                                 outOfStock
                                 ?
@@ -3678,22 +4259,15 @@ function renderProduct() {
                             }
                         >
 
-                            ${
-                                outOfStock
-                                ?
-                                "المنتج غير متوفر"
-                                :
-                                "اطلب المنتج"
-                            }
+                            اطلب المنتج
 
                         </button>
 
-                        <!-- زر إضافة إلى السلة -->
 
                         <button
                             type="button"
-                            class="add-cart-button"
-                            id="addCartButton"
+                            class="product-action-button add-cart-button"
+                            id="addToCartButton"
                             ${
                                 outOfStock
                                 ?
@@ -3703,17 +4277,7 @@ function renderProduct() {
                             }
                         >
 
-                            <svg aria-hidden="true">
-
-                                <use
-                                    href="#icon-cart"
-                                ></use>
-
-                            </svg>
-
-                            <span>
-                                أضف إلى السلة
-                            </span>
+                            أضف إلى السلة
 
                         </button>
 
@@ -3725,7 +4289,8 @@ function renderProduct() {
 
         </div>
 
-        <!-- ORDER SECTION -->
+
+        <!-- ORDER FORM -->
 
         <section
             class="order-section"
@@ -3733,12 +4298,18 @@ function renderProduct() {
         >
 
             <h2 class="order-title">
+
                 معلومات الطلب
+
             </h2>
 
+
             <p class="order-subtitle">
+
                 أدخل معلوماتك لإتمام طلب المنتج
+
             </p>
+
 
             <form
                 id="orderForm"
@@ -3747,14 +4318,18 @@ function renderProduct() {
 
                 <div class="form-grid">
 
+
                     <div class="form-group">
 
                         <label
                             class="form-label"
                             for="customerName"
                         >
+
                             الاسم واللقب
+
                         </label>
+
 
                         <input
                             type="text"
@@ -3766,14 +4341,18 @@ function renderProduct() {
 
                     </div>
 
+
                     <div class="form-group">
 
                         <label
                             class="form-label"
                             for="customerPhone"
                         >
+
                             رقم الهاتف
+
                         </label>
+
 
                         <input
                             type="tel"
@@ -3786,14 +4365,18 @@ function renderProduct() {
 
                     </div>
 
+
                     <div class="form-group">
 
                         <label
                             class="form-label"
                             for="wilaya"
                         >
+
                             الولاية
+
                         </label>
+
 
                         <select
                             id="wilaya"
@@ -3808,14 +4391,18 @@ function renderProduct() {
 
                     </div>
 
+
                     <div class="form-group">
 
                         <label
                             class="form-label"
                             for="commune"
                         >
+
                             البلدية
+
                         </label>
+
 
                         <input
                             type="text"
@@ -3827,14 +4414,18 @@ function renderProduct() {
 
                     </div>
 
+
                     <div class="form-group full">
 
                         <label
                             class="form-label"
                             for="address"
                         >
+
                             العنوان
+
                         </label>
+
 
                         <textarea
                             id="address"
@@ -3845,11 +4436,15 @@ function renderProduct() {
 
                     </div>
 
+
                     <div class="form-group full">
 
                         <span class="form-label">
+
                             طريقة التوصيل
+
                         </span>
+
 
                         <div
                             class="delivery-types"
@@ -3869,10 +4464,13 @@ function renderProduct() {
                                     for="deliveryHome"
                                     class="delivery-label"
                                 >
+
                                     التوصيل إلى المنزل
+
                                 </label>
 
                             </div>
+
 
                             <div class="delivery-option">
 
@@ -3887,7 +4485,9 @@ function renderProduct() {
                                     for="deliveryOffice"
                                     class="delivery-label"
                                 >
+
                                     مكتب التوصيل
+
                                 </label>
 
                             </div>
@@ -3897,6 +4497,7 @@ function renderProduct() {
                     </div>
 
                 </div>
+
 
                 <div class="order-summary">
 
@@ -3912,6 +4513,7 @@ function renderProduct() {
 
                     </div>
 
+
                     <div class="summary-row">
 
                         <span>
@@ -3923,6 +4525,7 @@ function renderProduct() {
                         </strong>
 
                     </div>
+
 
                     <div class="summary-total">
 
@@ -3941,13 +4544,16 @@ function renderProduct() {
 
                 </div>
 
+
                 <button
                     type="submit"
                     class="submit-order"
                     id="submitOrder"
                     disabled
                 >
+
                     تأكيد الطلب
+
                 </button>
 
             </form>
@@ -3958,11 +4564,291 @@ function renderProduct() {
 
     updateQuantityDisplay();
 
+    updateOrderTotals();
+
     updateOrderButton();
 
 }
 
-/* EVENTS */
+
+/* =====================================================
+   ADD PRODUCT TO CART
+===================================================== */
+
+function addProductToCart() {
+
+    if (!product) {
+
+        alert(
+            "المنتج غير متاح."
+        );
+
+        return false;
+
+    }
+
+
+    if (!currentOwnerUid) {
+
+        alert(
+            "تعذر تحديد المتجر."
+        );
+
+        return false;
+
+    }
+
+
+    const stock =
+        Number(
+            product.stock ?? 0
+        );
+
+
+    if (
+        stock <= 0
+    ) {
+
+        alert(
+            "هذا المنتج غير متوفر حاليًا."
+        );
+
+        return false;
+
+    }
+
+
+    if (
+        !optionsAreValid()
+    ) {
+
+        alert(
+            "يرجى اختيار خيارات المنتج."
+        );
+
+        return false;
+
+    }
+
+
+    let cart = [];
+
+
+    try {
+
+        cart =
+            JSON.parse(
+                localStorage.getItem(
+                    "cart"
+                )
+            )
+            ||
+            [];
+
+        if (
+            !Array.isArray(cart)
+        ) {
+
+            cart = [];
+
+        }
+
+    }
+
+    catch(error) {
+
+        cart = [];
+
+    }
+
+
+    const storeUid =
+        currentOwnerUid;
+
+
+    const image =
+        getProductImages()[0]
+        ||
+        "";
+
+
+    /*
+     * نبحث عن نفس المنتج
+     * بنفس المتجر واللون والمقاس.
+     */
+
+    const existingIndex =
+        cart.findIndex(
+            item =>
+
+                String(
+                    item.id
+                ) ===
+                String(
+                    product.id
+                )
+
+                &&
+
+                String(
+                    item.storeUid
+                    ||
+                    item.ownerUid
+                    ||
+                    item.storeId
+                    ||
+                    ""
+                ) ===
+                String(
+                    storeUid
+                )
+
+                &&
+
+                String(
+                    item.color
+                    ||
+                    "بدون لون"
+                ) ===
+                String(
+                    selectedColor
+                    ||
+                    "بدون لون"
+                )
+
+                &&
+
+                String(
+                    item.size
+                    ||
+                    ""
+                ) ===
+                String(
+                    selectedSize
+                    ||
+                    ""
+                )
+        );
+
+
+    if (
+        existingIndex !== -1
+    ) {
+
+        const newQuantity =
+            Number(
+                cart[existingIndex].quantity || 0
+            ) +
+            quantity;
+
+
+        cart[existingIndex].quantity =
+            Math.min(
+                newQuantity,
+                stock
+            );
+
+
+        /*
+         * تحديث البيانات في حالة
+         * تغير اسم أو سعر المنتج.
+         */
+
+        cart[existingIndex].name =
+            product.name ||
+            "منتج";
+
+        cart[existingIndex].price =
+            Number(
+                product.price || 0
+            );
+
+        cart[existingIndex].image =
+            image;
+
+        cart[existingIndex].storeName =
+            currentStoreName;
+
+        cart[existingIndex].storeUid =
+            storeUid;
+
+        cart[existingIndex].ownerUid =
+            storeUid;
+
+        cart[existingIndex].storeId =
+            storeUid;
+
+    }
+
+    else {
+
+        cart.push({
+
+            id:
+                product.id,
+
+            name:
+                product.name ||
+                "منتج",
+
+            price:
+                Number(
+                    product.price || 0
+                ),
+
+            quantity:
+                Math.min(
+                    quantity,
+                    stock
+                ),
+
+            image:
+                image,
+
+            color:
+                selectedColor ||
+                "بدون لون",
+
+            size:
+                selectedSize ||
+                "",
+
+            storeUid:
+                storeUid,
+
+            ownerUid:
+                storeUid,
+
+            storeId:
+                storeUid,
+
+            storeName:
+                currentStoreName
+
+        });
+
+    }
+
+
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(
+            cart
+        )
+    );
+
+
+    updateCartCount();
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   SETUP PRODUCT EVENTS
+===================================================== */
 
 function setupProductEvents() {
 
@@ -3970,6 +4856,7 @@ function setupProductEvents() {
         document.getElementById(
             "backButton"
         );
+
 
     if (backButton) {
 
@@ -3986,6 +4873,9 @@ function setupProductEvents() {
 
     }
 
+
+    /* THUMBNAILS */
+
     document
         .querySelectorAll(
             ".thumbnail"
@@ -4000,13 +4890,16 @@ function setupProductEvents() {
                         const image =
                             this.dataset.image;
 
+
                         const mainImage =
                             document.getElementById(
                                 "mainProductImage"
                             );
 
+
                         if (
-                            mainImage &&
+                            mainImage
+                            &&
                             image
                         ) {
 
@@ -4014,6 +4907,7 @@ function setupProductEvents() {
                                 image;
 
                         }
+
 
                         document
                             .querySelectorAll(
@@ -4026,6 +4920,7 @@ function setupProductEvents() {
                                     )
                             );
 
+
                         this.classList.add(
                             "active"
                         );
@@ -4035,6 +4930,9 @@ function setupProductEvents() {
 
             }
         );
+
+
+    /* COLORS */
 
     document
         .querySelectorAll(
@@ -4048,8 +4946,10 @@ function setupProductEvents() {
                     function() {
 
                         selectedColor =
-                            this.dataset.color ||
+                            this.dataset.color
+                            ||
                             "بدون لون";
+
 
                         document
                             .querySelectorAll(
@@ -4062,9 +4962,11 @@ function setupProductEvents() {
                                     )
                             );
 
+
                         this.classList.add(
                             "active"
                         );
+
 
                         updateOrderButton();
 
@@ -4074,10 +4976,14 @@ function setupProductEvents() {
             }
         );
 
+
+    /* SIZE */
+
     const sizeSelect =
         document.getElementById(
             "sizeSelect"
         );
+
 
     if (sizeSelect) {
 
@@ -4086,7 +4992,9 @@ function setupProductEvents() {
             function() {
 
                 selectedSize =
-                    this.value || "";
+                    this.value
+                    ||
+                    "";
 
                 updateOrderButton();
 
@@ -4095,15 +5003,20 @@ function setupProductEvents() {
 
     }
 
+
+    /* QUANTITY */
+
     const decrease =
         document.getElementById(
             "decreaseQuantity"
         );
 
+
     const increase =
         document.getElementById(
             "increaseQuantity"
         );
+
 
     if (decrease) {
 
@@ -4128,6 +5041,7 @@ function setupProductEvents() {
 
     }
 
+
     if (increase) {
 
         increase.addEventListener(
@@ -4139,8 +5053,10 @@ function setupProductEvents() {
                         product?.stock ?? 0
                     );
 
+
                 if (
-                    stock > 0 &&
+                    stock > 0
+                    &&
                     quantity < stock
                 ) {
 
@@ -4157,12 +5073,14 @@ function setupProductEvents() {
 
     }
 
-    /* اطلب المنتج */
+
+    /* ORIGINAL BUY BUTTON */
 
     const buyButton =
         document.getElementById(
             "buyButton"
         );
+
 
     if (buyButton) {
 
@@ -4170,44 +5088,91 @@ function setupProductEvents() {
             "click",
             function() {
 
-                const orderSection =
-                    document.getElementById(
-                        "orderSection"
-                    );
-
-                if (orderSection) {
-
-                    orderSection.scrollIntoView({
-                        behavior:"smooth",
-                        block:"start"
-                    });
-
-                }
+                scrollToOrder();
 
             }
         );
 
     }
 
-    /* أضف إلى السلة */
 
-    const addCartButton =
+    /* NEW ORDER PRODUCT BUTTON */
+
+    const orderProductButton =
         document.getElementById(
-            "addCartButton"
+            "orderProductButton"
         );
 
-    if (addCartButton) {
 
-        addCartButton.addEventListener(
+    if (orderProductButton) {
+
+        orderProductButton.addEventListener(
             "click",
             function() {
 
-                addCurrentProductToCart();
+                scrollToOrder();
 
             }
         );
 
     }
+
+
+    /* NEW ADD TO CART BUTTON */
+
+    const addToCartButton =
+        document.getElementById(
+            "addToCartButton"
+        );
+
+
+    if (addToCartButton) {
+
+        addToCartButton.addEventListener(
+            "click",
+            function() {
+
+                const added =
+                    addProductToCart();
+
+
+                if (!added) {
+
+                    return;
+
+                }
+
+
+                this.classList.add(
+                    "added"
+                );
+
+
+                this.textContent =
+                    "✓ تمت الإضافة إلى السلة";
+
+
+                setTimeout(
+                    () => {
+
+                        this.classList.remove(
+                            "added"
+                        );
+
+                        this.textContent =
+                            "أضف إلى السلة";
+
+                    },
+                    1800
+                );
+
+            }
+        );
+
+    }
+
+
+    /* FORM INPUTS */
 
     const inputs = [
 
@@ -4219,6 +5184,7 @@ function setupProductEvents() {
 
     ];
 
+
     inputs.forEach(
         id => {
 
@@ -4227,12 +5193,14 @@ function setupProductEvents() {
                     id
                 );
 
+
             if (element) {
 
                 element.addEventListener(
                     "input",
                     updateOrderButton
                 );
+
 
                 element.addEventListener(
                     "change",
@@ -4243,6 +5211,9 @@ function setupProductEvents() {
 
         }
     );
+
+
+    /* DELIVERY */
 
     document
         .querySelectorAll(
@@ -4265,10 +5236,38 @@ function setupProductEvents() {
             }
         );
 
+
+    /* WILAYA */
+
+    const wilaya =
+        document.getElementById(
+            "wilaya"
+        );
+
+
+    if (wilaya) {
+
+        wilaya.addEventListener(
+            "change",
+            function() {
+
+                updateDelivery();
+
+                updateOrderButton();
+
+            }
+        );
+
+    }
+
+
+    /* FORM */
+
     const orderForm =
         document.getElementById(
             "orderForm"
         );
+
 
     if (orderForm) {
 
@@ -4287,312 +5286,41 @@ function setupProductEvents() {
 
 }
 
+
 /* =====================================================
-   ADD PRODUCT TO CART
+   SCROLL TO ORDER
 ===================================================== */
 
-function addCurrentProductToCart() {
+function scrollToOrder() {
 
-    if (!product) {
-
-        alert(
-            "المنتج غير متاح."
+    const orderSection =
+        document.getElementById(
+            "orderSection"
         );
 
-        return;
-
-    }
-
-    const stock =
-        Number(
-            product.stock ?? 0
-        );
-
-    if (stock <= 0) {
-
-        alert(
-            "هذا المنتج غير متوفر حاليًا."
-        );
-
-        return;
-
-    }
-
-    if (!currentOwnerUid) {
-
-        alert(
-            "تعذر تحديد المتجر."
-        );
-
-        return;
-
-    }
-
-    if (!optionsAreValid()) {
-
-        alert(
-            "يرجى اختيار خيارات المنتج."
-        );
-
-        return;
-
-    }
-
-    let cart = [];
-
-    try {
-
-        cart =
-            JSON.parse(
-                localStorage.getItem(
-                    "cart"
-                ) || "[]"
-            );
-
-        if (!Array.isArray(cart)) {
-
-            cart = [];
-
-        }
-
-    } catch(error) {
-
-        cart = [];
-
-    }
-
-    const productImage =
-        getProductImages()[0] ||
-        "";
-
-    const newItem = {
-
-        id:
-            product.id,
-
-        productId:
-            product.id,
-
-        name:
-            product.name ||
-            "منتج",
-
-        price:
-            Number(
-                product.price || 0
-            ),
-
-        quantity:
-            quantity,
-
-        image:
-            productImage,
-
-        color:
-            selectedColor ||
-            "بدون لون",
-
-        size:
-            selectedSize ||
-            "",
-
-        storeUid:
-            currentOwnerUid,
-
-        storeId:
-            currentOwnerUid,
-
-        ownerUid:
-            currentOwnerUid,
-
-        storeName:
-            currentStoreName
-
-    };
-
-    const existingIndex =
-        cart.findIndex(
-            item => {
-
-                const itemStore =
-                    item.storeUid ||
-                    item.storeId ||
-                    item.ownerUid;
-
-                return (
-
-                    itemStore ===
-                    currentOwnerUid
-
-                    &&
-
-                    (
-                        item.productId ===
-                        product.id
-
-                        ||
-
-                        item.id ===
-                        product.id
-                    )
-
-                    &&
-
-                    (
-                        item.color ||
-                        "بدون لون"
-                    ) ===
-                    newItem.color
-
-                    &&
-
-                    (
-                        item.size ||
-                        ""
-                    ) ===
-                    newItem.size
-
-                );
-
-            }
-        );
 
     if (
-        existingIndex >= 0
+        orderSection
     ) {
 
-        const existing =
-            cart[
-                existingIndex
-            ];
+        orderSection.scrollIntoView({
 
-        const existingQuantity =
-            Number(
-                existing.quantity ||
-                0
-            );
+            behavior:
+                "smooth",
 
-        const newQuantity =
-            existingQuantity +
-            quantity;
+            block:
+                "start"
 
-        if (
-            newQuantity > stock
-        ) {
-
-            alert(
-                "لا يمكن إضافة كمية أكبر من المخزون المتوفر."
-            );
-
-            return;
-
-        }
-
-        existing.quantity =
-            newQuantity;
-
-        existing.price =
-            newItem.price;
-
-        existing.image =
-            newItem.image;
-
-        existing.name =
-            newItem.name;
-
-        existing.storeUid =
-            currentOwnerUid;
-
-        existing.storeId =
-            currentOwnerUid;
-
-        existing.ownerUid =
-            currentOwnerUid;
-
-        existing.storeName =
-            currentStoreName;
-
-    } else {
-
-        cart.push(
-            newItem
-        );
-
-    }
-
-    try {
-
-        localStorage.setItem(
-            "cart",
-            JSON.stringify(cart)
-        );
-
-    } catch(error) {
-
-        console.error(
-            "CART SAVE ERROR:",
-            error
-        );
-
-        alert(
-            "تعذر حفظ المنتج في السلة."
-        );
-
-        return;
-
-    }
-
-    updateCartCount();
-
-    const addButton =
-        document.getElementById(
-            "addCartButton"
-        );
-
-    if (addButton) {
-
-        const original =
-            addButton.innerHTML;
-
-        addButton.innerHTML = `
-
-            <svg aria-hidden="true">
-
-                <use
-                    href="#icon-cart"
-                ></use>
-
-            </svg>
-
-            <span>
-                تمت الإضافة إلى السلة ✓
-            </span>
-
-        `;
-
-        addButton.classList.add(
-            "added"
-        );
-
-        setTimeout(
-            () => {
-
-                addButton.innerHTML =
-                    original;
-
-                addButton.classList.remove(
-                    "added"
-                );
-
-            },
-            1800
-        );
+        });
 
     }
 
 }
 
-/* QUANTITY */
+
+/* =====================================================
+   QUANTITY DISPLAY
+===================================================== */
 
 function updateQuantityDisplay() {
 
@@ -4600,6 +5328,7 @@ function updateQuantityDisplay() {
         document.getElementById(
             "quantityValue"
         );
+
 
     if (value) {
 
@@ -4610,14 +5339,23 @@ function updateQuantityDisplay() {
 
 }
 
-/* DELIVERY */
+
+/* =====================================================
+   LOAD DELIVERY
+===================================================== */
 
 async function loadDelivery() {
 
     try {
 
-        if (!currentOwnerUid)
+        if (
+            !currentOwnerUid
+        ) {
+
             return;
+
+        }
+
 
         const deliveryRef =
             collection(
@@ -4627,12 +5365,15 @@ async function loadDelivery() {
                 "delivery"
             );
 
+
         const snapshot =
             await getDocs(
                 deliveryRef
             );
 
+
         deliveryItems = [];
+
 
         snapshot.forEach(
             deliveryDoc => {
@@ -4640,11 +5381,16 @@ async function loadDelivery() {
                 const data =
                     deliveryDoc.data();
 
+
                 const name =
-                    data.name ||
-                    data.wilaya ||
-                    data.title ||
+                    data.name
+                    ||
+                    data.wilaya
+                    ||
+                    data.title
+                    ||
                     "";
+
 
                 deliveryItems.push({
 
@@ -4659,19 +5405,27 @@ async function loadDelivery() {
 
                     office:
                         Number(
-                            data.office ??
-                            data.officePrice ??
-                            data.bureau ??
-                            data.bureauPrice ??
+                            data.office
+                            ??
+                            data.officePrice
+                            ??
+                            data.bureau
+                            ??
+                            data.bureauPrice
+                            ??
                             0
                         ),
 
                     home:
                         Number(
-                            data.home ??
-                            data.homePrice ??
-                            data.domicile ??
-                            data.homeDelivery ??
+                            data.home
+                            ??
+                            data.homePrice
+                            ??
+                            data.domicile
+                            ??
+                            data.homeDelivery
+                            ??
                             0
                         )
 
@@ -4679,6 +5433,7 @@ async function loadDelivery() {
 
             }
         );
+
 
         deliveryItems.sort(
             function(a,b) {
@@ -4691,13 +5446,21 @@ async function loadDelivery() {
             }
         );
 
+
         const wilayaSelect =
             document.getElementById(
                 "wilaya"
             );
 
-        if (!wilayaSelect)
+
+        if (
+            !wilayaSelect
+        ) {
+
             return;
+
+        }
+
 
         wilayaSelect.innerHTML = `
 
@@ -4707,6 +5470,7 @@ async function loadDelivery() {
 
         `;
 
+
         deliveryItems.forEach(
             item => {
 
@@ -4715,11 +5479,14 @@ async function loadDelivery() {
                         "option"
                     );
 
+
                 option.value =
                     item.name;
 
+
                 option.textContent =
                     item.name;
+
 
                 wilayaSelect.appendChild(
                     option
@@ -4728,9 +5495,12 @@ async function loadDelivery() {
             }
         );
 
+
         updateDelivery();
 
-    } catch(error) {
+    }
+
+    catch(error) {
 
         console.error(
             "DELIVERY ERROR:",
@@ -4741,39 +5511,57 @@ async function loadDelivery() {
 
 }
 
-/* DELIVERY ITEM */
+
+/* =====================================================
+   GET DELIVERY ITEM
+===================================================== */
 
 function getDeliveryItem() {
 
     const wilaya =
         document.getElementById(
             "wilaya"
-        )?.value || "";
+        )?.value
+        ||
+        "";
 
-    if (!wilaya)
+
+    if (!wilaya) {
+
         return null;
+
+    }
+
 
     return deliveryItems.find(
         item =>
             item.name === wilaya
-    ) || null;
+    )
+    ||
+    null;
 
 }
 
-/* UPDATE DELIVERY */
+
+/* =====================================================
+   UPDATE DELIVERY
+===================================================== */
 
 function updateDelivery() {
 
     const item =
         getDeliveryItem();
 
+
     const selectedDelivery =
         document.querySelector(
             'input[name="deliveryType"]:checked'
         );
 
+
     if (
-        !item ||
+        !item
+        ||
         !selectedDelivery
     ) {
 
@@ -4786,9 +5574,9 @@ function updateDelivery() {
 
     }
 
+
     if (
-        selectedDelivery.value ===
-        "home"
+        selectedDelivery.value === "home"
     ) {
 
         deliveryCost =
@@ -4796,7 +5584,9 @@ function updateDelivery() {
                 item.home || 0
             );
 
-    } else {
+    }
+
+    else {
 
         deliveryCost =
             Number(
@@ -4805,11 +5595,15 @@ function updateDelivery() {
 
     }
 
+
     updateOrderTotals();
 
 }
 
-/* TOTALS */
+
+/* =====================================================
+   UPDATE TOTALS
+===================================================== */
 
 function updateOrderTotals() {
 
@@ -4818,8 +5612,11 @@ function updateOrderTotals() {
             product?.price || 0
         );
 
+
     const productsTotal =
-        price * quantity;
+        price *
+        quantity;
+
 
     const total =
         productsTotal +
@@ -4827,20 +5624,24 @@ function updateOrderTotals() {
             deliveryCost || 0
         );
 
+
     const productsElement =
         document.getElementById(
             "productsTotal"
         );
+
 
     const deliveryElement =
         document.getElementById(
             "deliveryTotal"
         );
 
+
     const grandElement =
         document.getElementById(
             "grandTotal"
         );
+
 
     if (productsElement) {
 
@@ -4852,18 +5653,19 @@ function updateOrderTotals() {
 
     }
 
+
     if (deliveryElement) {
 
         deliveryElement.textContent =
             Number(
                 deliveryCost || 0
-            )
-            .toLocaleString(
+            ).toLocaleString(
                 "fr-DZ"
             ) +
             " DA";
 
     }
+
 
     if (grandElement) {
 
@@ -4877,16 +5679,22 @@ function updateOrderTotals() {
 
 }
 
-/* PHONE */
+
+/* =====================================================
+   VALIDATE PHONE
+===================================================== */
 
 function validatePhone(phone) {
 
     const normalized =
-        String(phone || "")
-            .replace(
-                /[\s\-().]/g,
-                ""
-            );
+        String(
+            phone || ""
+        )
+        .replace(
+            /[\s\-().]/g,
+            ""
+        );
+
 
     return /^0[567]\d{8}$/.test(
         normalized
@@ -4894,7 +5702,10 @@ function validatePhone(phone) {
 
 }
 
-/* OPTIONS */
+
+/* =====================================================
+   OPTIONS VALID
+===================================================== */
 
 function optionsAreValid() {
 
@@ -4907,6 +5718,7 @@ function optionsAreValid() {
         :
         [];
 
+
     const sizes =
         Array.isArray(
             product?.sizes
@@ -4916,8 +5728,10 @@ function optionsAreValid() {
         :
         [];
 
+
     if (
-        colors.length &&
+        colors.length
+        &&
         !selectedColor
     ) {
 
@@ -4925,8 +5739,10 @@ function optionsAreValid() {
 
     }
 
+
     if (
-        sizes.length &&
+        sizes.length
+        &&
         !selectedSize
     ) {
 
@@ -4934,11 +5750,15 @@ function optionsAreValid() {
 
     }
 
+
     return true;
 
 }
 
-/* ORDER BUTTON */
+
+/* =====================================================
+   UPDATE ORDER BUTTON
+===================================================== */
 
 function updateOrderButton() {
 
@@ -4947,61 +5767,82 @@ function updateOrderButton() {
             "submitOrder"
         );
 
-    if (!button)
+
+    if (!button) {
+
         return;
+
+    }
+
 
     const name =
         document.getElementById(
             "customerName"
-        )
-        ?.value.trim() ||
+        )?.value.trim()
+        ||
         "";
+
 
     const phone =
         document.getElementById(
             "customerPhone"
-        )
-        ?.value.trim() ||
+        )?.value.trim()
+        ||
         "";
+
 
     const wilaya =
         document.getElementById(
             "wilaya"
-        )
-        ?.value ||
+        )?.value
+        ||
         "";
+
 
     const delivery =
         document.querySelector(
             'input[name="deliveryType"]:checked'
         );
 
+
     const valid =
 
-        Boolean(name)
+        Boolean(
+            name
+        )
 
         &&
 
-        validatePhone(phone)
+        validatePhone(
+            phone
+        )
 
         &&
 
-        Boolean(wilaya)
+        Boolean(
+            wilaya
+        )
 
         &&
 
-        Boolean(delivery)
+        Boolean(
+            delivery
+        )
 
         &&
 
         optionsAreValid();
+
 
     button.disabled =
         !valid;
 
 }
 
-/* SEND ORDER */
+
+/* =====================================================
+   SEND ORDER
+===================================================== */
 
 async function sendOrder() {
 
@@ -5010,7 +5851,10 @@ async function sendOrder() {
             "submitOrder"
         );
 
-    if (!product) {
+
+    if (
+        !product
+    ) {
 
         alert(
             "المنتج غير متاح."
@@ -5020,45 +5864,52 @@ async function sendOrder() {
 
     }
 
+
     const name =
         document.getElementById(
             "customerName"
-        )
-        ?.value.trim() ||
+        )?.value.trim()
+        ||
         "";
+
 
     const phone =
         document.getElementById(
             "customerPhone"
-        )
-        ?.value.trim() ||
+        )?.value.trim()
+        ||
         "";
+
 
     const wilaya =
         document.getElementById(
             "wilaya"
-        )
-        ?.value ||
+        )?.value
+        ||
         "";
+
 
     const commune =
         document.getElementById(
             "commune"
-        )
-        ?.value.trim() ||
+        )?.value.trim()
+        ||
         "";
+
 
     const address =
         document.getElementById(
             "address"
-        )
-        ?.value.trim() ||
+        )?.value.trim()
+        ||
         "";
+
 
     const delivery =
         document.querySelector(
             'input[name="deliveryType"]:checked'
         );
+
 
     if (!name) {
 
@@ -5070,8 +5921,11 @@ async function sendOrder() {
 
     }
 
+
     if (
-        !validatePhone(phone)
+        !validatePhone(
+            phone
+        )
     ) {
 
         alert(
@@ -5081,6 +5935,7 @@ async function sendOrder() {
         return;
 
     }
+
 
     if (!wilaya) {
 
@@ -5092,6 +5947,7 @@ async function sendOrder() {
 
     }
 
+
     if (!delivery) {
 
         alert(
@@ -5102,7 +5958,10 @@ async function sendOrder() {
 
     }
 
-    if (!optionsAreValid()) {
+
+    if (
+        !optionsAreValid()
+    ) {
 
         alert(
             "يرجى اختيار خيارات المنتج."
@@ -5112,7 +5971,10 @@ async function sendOrder() {
 
     }
 
-    if (!currentOwnerUid) {
+
+    if (
+        !currentOwnerUid
+    ) {
 
         alert(
             "تعذر تحديد المتجر."
@@ -5122,26 +5984,32 @@ async function sendOrder() {
 
     }
 
+
     const deliveryItem =
         getDeliveryItem();
+
 
     const deliveryPrice =
         Number(
             deliveryCost || 0
         );
 
+
     const productPrice =
         Number(
             product.price || 0
         );
 
+
     const productsTotal =
         productPrice *
         quantity;
 
+
     const total =
         productsTotal +
         deliveryPrice;
+
 
     const orderProduct = {
 
@@ -5159,18 +6027,22 @@ async function sendOrder() {
             quantity,
 
         image:
-            getProductImages()[0] ||
+            getProductImages()[0]
+            ||
             "",
 
         color:
-            selectedColor ||
+            selectedColor
+            ||
             "بدون لون",
 
         size:
-            selectedSize ||
+            selectedSize
+            ||
             ""
 
     };
+
 
     const orderData = {
 
@@ -5205,11 +6077,15 @@ async function sendOrder() {
             deliveryPrice,
 
         deliveryWilaya:
-            deliveryItem?.name ||
+            deliveryItem?.name
+            ||
             wilaya,
 
-        products:
-            [orderProduct],
+        products: [
+
+            orderProduct
+
+        ],
 
         productsTotal:
             productsTotal,
@@ -5234,6 +6110,7 @@ async function sendOrder() {
 
     };
 
+
     try {
 
         if (button) {
@@ -5246,6 +6123,7 @@ async function sendOrder() {
 
         }
 
+
         await addDoc(
             collection(
                 db,
@@ -5254,9 +6132,11 @@ async function sendOrder() {
             orderData
         );
 
+
+        /* META PURCHASE */
+
         if (
-            typeof window.fbq ===
-            "function"
+            typeof window.fbq === "function"
         ) {
 
             window.fbq(
@@ -5265,8 +6145,7 @@ async function sendOrder() {
                 {
 
                     content_name:
-                        product.name ||
-                        "",
+                        product.name || "",
 
                     content_ids:
                         [product.id],
@@ -5282,12 +6161,13 @@ async function sendOrder() {
 
         }
 
-        if (
-            typeof window.ttq !==
-            "undefined" &&
 
-            typeof window.ttq.track ===
-            "function"
+        /* TIKTOK PURCHASE */
+
+        if (
+            typeof window.ttq !== "undefined"
+            &&
+            typeof window.ttq.track === "function"
         ) {
 
             window.ttq.track(
@@ -5295,8 +6175,7 @@ async function sendOrder() {
                 {
 
                     content_name:
-                        product.name ||
-                        "",
+                        product.name || "",
 
                     content_id:
                         product.id,
@@ -5312,22 +6191,28 @@ async function sendOrder() {
 
         }
 
+
         alert(
             "تم إرسال طلبك بنجاح ❤️"
         );
 
+
         goToStore();
 
-    } catch(error) {
+    }
+
+    catch(error) {
 
         console.error(
             "ORDER ERROR:",
             error
         );
 
+
         alert(
             "تعذر إرسال الطلب. حاول مرة أخرى."
         );
+
 
         if (button) {
 
@@ -5343,11 +6228,15 @@ async function sendOrder() {
 
 }
 
-/* CART COUNT */
+
+/* =====================================================
+   UPDATE CART COUNT
+===================================================== */
 
 function updateCartCount() {
 
     let cart = [];
+
 
     try {
 
@@ -5356,26 +6245,36 @@ function updateCartCount() {
                 localStorage.getItem(
                     "cart"
                 )
-            ) || [];
+            )
+            ||
+            [];
 
-    } catch(error) {
+    }
+
+    catch(error) {
 
         cart = [];
 
     }
 
+
     const storeKey =
-        currentOwnerUid ||
+        currentOwnerUid
+        ||
         currentStoreId;
+
 
     const storeCart =
         cart.filter(
             item => {
 
                 const itemStore =
-                    item.storeUid ||
-                    item.storeId ||
+                    item.storeUid
+                    ||
+                    item.storeId
+                    ||
                     item.ownerUid;
+
 
                 return (
                     itemStore ===
@@ -5385,56 +6284,71 @@ function updateCartCount() {
             }
         );
 
+
     let total =
         0;
+
 
     storeCart.forEach(
         item => {
 
             total +=
                 Number(
-                    item.quantity ||
-                    0
+                    item.quantity || 0
                 );
 
         }
     );
+
 
     cartCount.textContent =
         total;
 
 }
 
-/* NAVIGATION */
+
+/* =====================================================
+   UPDATE NAVIGATION
+===================================================== */
 
 function updateNavigationLinks() {
 
     const storeUid =
-        currentOwnerUid ||
+        currentOwnerUid
+        ||
         currentStoreId;
 
-    if (!storeUid)
+
+    if (!storeUid) {
+
         return;
+
+    }
+
 
     const encodedStore =
         encodeURIComponent(
             storeUid
         );
 
+
     const homeLink =
         document.getElementById(
             "homeLink"
         );
+
 
     const cartLink =
         document.getElementById(
             "cartLink"
         );
 
+
     const floatingCart =
         document.getElementById(
             "floatingCart"
         );
+
 
     if (homeLink) {
 
@@ -5444,6 +6358,7 @@ function updateNavigationLinks() {
 
     }
 
+
     if (cartLink) {
 
         cartLink.href =
@@ -5451,6 +6366,7 @@ function updateNavigationLinks() {
             encodedStore;
 
     }
+
 
     if (floatingCart) {
 
@@ -5462,14 +6378,20 @@ function updateNavigationLinks() {
 
 }
 
-/* GO STORE */
+
+/* =====================================================
+   GO TO STORE
+===================================================== */
 
 function goToStore() {
 
     const storeUid =
-        currentOwnerUid ||
-        currentStoreId ||
+        currentOwnerUid
+        ||
+        currentStoreId
+        ||
         urlStoreId;
+
 
     if (!storeUid) {
 
@@ -5480,15 +6402,21 @@ function goToStore() {
 
     }
 
+
     window.location.href =
+
         "index.html?store=" +
+
         encodeURIComponent(
             storeUid
         );
 
 }
 
-/* CART BUTTON */
+
+/* =====================================================
+   CART BUTTON
+===================================================== */
 
 document
     .getElementById(
@@ -5499,14 +6427,22 @@ document
         function() {
 
             const storeUid =
-                currentOwnerUid ||
+                currentOwnerUid
+                ||
                 currentStoreId;
 
-            if (!storeUid)
+
+            if (!storeUid) {
+
                 return;
 
+            }
+
+
             window.location.href =
+
                 "cart.html?store=" +
+
                 encodeURIComponent(
                     storeUid
                 );
@@ -5514,27 +6450,34 @@ document
         }
     );
 
-/* SIDEBAR */
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
 
 const sidebar =
     document.getElementById(
         "sidebar"
     );
 
+
 const overlay =
     document.getElementById(
         "overlay"
     );
+
 
 const menuBtn =
     document.getElementById(
         "menuBtn"
     );
 
+
 const contactLink =
     document.getElementById(
         "contactLink"
     );
+
 
 function openSidebar() {
 
@@ -5548,6 +6491,7 @@ function openSidebar() {
 
 }
 
+
 function closeSidebar() {
 
     sidebar.classList.remove(
@@ -5560,17 +6504,20 @@ function closeSidebar() {
 
 }
 
+
 menuBtn.addEventListener(
     "click",
     openSidebar
 );
+
 
 menuBtn.addEventListener(
     "keydown",
     function(event) {
 
         if (
-            event.key === "Enter" ||
+            event.key === "Enter"
+            ||
             event.key === " "
         ) {
 
@@ -5583,12 +6530,16 @@ menuBtn.addEventListener(
     }
 );
 
+
 overlay.addEventListener(
     "click",
     closeSidebar
 );
 
-/* CONTACT */
+
+/* =====================================================
+   CONTACT
+===================================================== */
 
 contactLink.addEventListener(
     "click",
@@ -5598,16 +6549,25 @@ contactLink.addEventListener(
 
         closeSidebar();
 
+
         const socialSection =
             document.getElementById(
                 "socialSection"
             );
 
-        if (socialSection) {
+
+        if (
+            socialSection
+        ) {
 
             socialSection.scrollIntoView({
-                behavior:"smooth",
-                block:"start"
+
+                behavior:
+                    "smooth",
+
+                block:
+                    "start"
+
             });
 
         }
@@ -5615,7 +6575,10 @@ contactLink.addEventListener(
     }
 );
 
-/* SIDEBAR LINKS */
+
+/* =====================================================
+   SIDEBAR LINKS
+===================================================== */
 
 document
     .querySelectorAll(
@@ -5632,7 +6595,10 @@ document
         }
     );
 
-/* ESCAPE */
+
+/* =====================================================
+   ESCAPE KEY
+===================================================== */
 
 document.addEventListener(
     "keydown",
@@ -5649,7 +6615,10 @@ document.addEventListener(
     }
 );
 
-/* ERROR */
+
+/* =====================================================
+   ERROR
+===================================================== */
 
 function showError(message) {
 
@@ -5659,45 +6628,53 @@ function showError(message) {
 
             <svg>
 
-                <use
-                    href="#icon-store"
-                ></use>
+                <use href="#icon-store"></use>
 
             </svg>
 
+
             <h2>
 
-                ${escapeHtml(
-                    message
-                )}
+                ${escapeHtml(message)}
 
             </h2>
 
+
             <p>
+
                 تحقق من رابط المنتج والمتجر.
+
             </p>
 
         </div>
 
     `;
 
+
     storeInfo.innerHTML =
         "G-Glam";
+
 
     headerStoreName.textContent =
         "G-Glam";
 
+
     socialLinks.innerHTML = `
 
         <div class="social-empty">
+
             لا توجد معلومات تواصل.
+
         </div>
 
     `;
 
 }
 
-/* START */
+
+/* =====================================================
+   START
+===================================================== */
 
 updateCartCount();
 
@@ -5707,13 +6684,13 @@ await loadProduct();
 
 </script>
 
-<!-- PWA -->
+
+<!-- SERVICE WORKER / PWA -->
 
 <script>
 
 if (
-    "serviceWorker" in
-    navigator
+    "serviceWorker" in navigator
 ) {
 
     window.addEventListener(
@@ -5752,4 +6729,5 @@ if (
 </script>
 
 </body>
+
 </html>
