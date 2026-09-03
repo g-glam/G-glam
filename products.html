@@ -33,7 +33,6 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     >
 
-
     <style>
 
         :root {
@@ -1673,6 +1672,50 @@
 
 
         /* =====================================================
+           VISIBILITY
+        ===================================================== */
+
+        .visibility-row {
+
+            display: flex !important;
+
+            align-items: center;
+
+            gap: 8px !important;
+
+            margin-top: 10px;
+
+            padding: 9px 11px;
+
+            background: var(--input);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 9px;
+
+            cursor: pointer;
+
+            font-size: 11px !important;
+
+            font-weight: 600 !important;
+
+            color: var(--text) !important;
+        }
+
+
+        .visibility-row input {
+
+            width: 17px !important;
+            height: 17px !important;
+
+            accent-color: var(--orange);
+
+            cursor: pointer;
+        }
+
+
+        /* =====================================================
            MODAL ACTIONS
         ===================================================== */
 
@@ -2346,14 +2389,14 @@
                 <select id="editCategory">
 
                     <option value="">
-                        اختر التصنيف
+                        جاري تحميل التصنيفات...
                     </option>
 
                 </select>
 
 
                 <div class="category-help">
-                    التصنيفات الظاهرة هنا هي التصنيفات التي تم حفظها مسبقًا.
+                    التصنيفات المحفوظة لهذا المتجر تظهر هنا تلقائيًا.
                 </div>
 
             </div>
@@ -2727,7 +2770,7 @@
 
 
 
-            <!-- DESCRIPTION IMAGES -->
+            <!-- DESCRIPTIVE IMAGES -->
 
             <div class="form-group">
 
@@ -2785,6 +2828,21 @@
                         multiple
                         hidden
                     >
+
+
+                    <label class="visibility-row">
+
+                        <input
+                            type="checkbox"
+                            id="descriptiveImagesVisible"
+                            checked
+                        >
+
+                        <span>
+                            عرض الصور الوصفية للزبون
+                        </span>
+
+                    </label>
 
                 </div>
 
@@ -2920,6 +2978,10 @@
 
         let currentStore = null;
 
+        let currentStoreId = "";
+
+        let currentStoreName = "G-Glam";
+
         let allProducts = [];
 
         let editingProductId = null;
@@ -2928,15 +2990,15 @@
 
         let selectedImages = [];
 
-        let existingDescriptionImages = [];
+        let existingDescriptiveImages = [];
 
-        let selectedDescriptionImages = [];
+        let selectedDescriptiveImages = [];
 
         let editingColors = [];
 
         let editingSizes = [];
 
-        let availableCategories = [];
+        let currentCategories = [];
 
 
 
@@ -3034,6 +3096,12 @@
             );
 
 
+        const descriptiveImagesVisible =
+            document.getElementById(
+                "descriptiveImagesVisible"
+            );
+
+
         const saveEdit =
             document.getElementById(
                 "saveEdit"
@@ -3079,6 +3147,54 @@
         const themeToggle =
             document.getElementById(
                 "themeToggle"
+            );
+
+
+        const successMessage =
+            document.getElementById(
+                "successMessage"
+            );
+
+
+        const errorMessage =
+            document.getElementById(
+                "errorMessage"
+            );
+
+
+        const addProductBtn =
+            document.getElementById(
+                "addProductBtn"
+            );
+
+
+        const closeModal =
+            document.getElementById(
+                "closeModal"
+            );
+
+
+        const cancelEdit =
+            document.getElementById(
+                "cancelEdit"
+            );
+
+
+        const addColorBtn =
+            document.getElementById(
+                "addColorBtn"
+            );
+
+
+        const addSizeBtn =
+            document.getElementById(
+                "addSizeBtn"
+            );
+
+
+        const logoutBtn =
+            document.getElementById(
+                "logoutBtn"
             );
 
 
@@ -3154,698 +3270,352 @@
 
 
         /* =====================================================
-           ESCAPE
+           MESSAGES
+        ===================================================== */
+
+        function showSuccess(message) {
+
+            successMessage.textContent =
+                message;
+
+            successMessage.style.display =
+                "block";
+
+            errorMessage.style.display =
+                "none";
+
+
+            setTimeout(
+                () => {
+
+                    successMessage.style.display =
+                        "none";
+
+                },
+                3500
+            );
+        }
+
+
+        function showError(message) {
+
+            errorMessage.textContent =
+                message;
+
+            errorMessage.style.display =
+                "block";
+
+            successMessage.style.display =
+                "none";
+        }
+
+
+
+        /* =====================================================
+           ESCAPE HTML
         ===================================================== */
 
         function escapeHtml(value) {
 
-            return String(
-                value ?? ""
-            )
-
-            .replace(
-                /&/g,
-                "&amp;"
-            )
-
-            .replace(
-                /</g,
-                "&lt;"
-            )
-
-            .replace(
-                />/g,
-                "&gt;"
-            )
-
-            .replace(
-                /"/g,
-                "&quot;"
-            )
-
-            .replace(
-                /'/g,
-                "&#039;"
-            );
-        }
-
-
-
-        /* =====================================================
-           DATE
-        ===================================================== */
-
-        function getProductTimestamp(product) {
-
-            if (
-                product.createdAt &&
-                typeof product.createdAt.toMillis === "function"
-            ) {
-
-                return product.createdAt.toMillis();
-            }
-
-
-            if (
-                product.createdAt &&
-                typeof product.createdAt.seconds === "number"
-            ) {
-
-                return (
-                    product.createdAt.seconds *
-                    1000
+            return String(value ?? "")
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+                .replace(
+                    /'/g,
+                    "&#039;"
                 );
-            }
-
-
-            if (
-                product.createdAt instanceof Date
-            ) {
-
-                return product.createdAt.getTime();
-            }
-
-
-            if (
-                typeof product.createdAt === "string"
-            ) {
-
-                const date =
-                    new Date(
-                        product.createdAt
-                    );
-
-
-                if (
-                    !Number.isNaN(
-                        date.getTime()
-                    )
-                ) {
-
-                    return date.getTime();
-                }
-            }
-
-
-            if (
-                typeof product.createdAt === "number"
-            ) {
-
-                return product.createdAt;
-            }
-
-
-            return 0;
-        }
-
-
-
-        function sortProductsNewestFirst(
-            products
-        ) {
-
-            return [
-                ...products
-            ].sort(
-                (a,b) =>
-                    getProductTimestamp(b) -
-                    getProductTimestamp(a)
-            );
         }
 
 
 
         /* =====================================================
-           STORE HEADER
+           CATEGORY NORMALIZATION
         ===================================================== */
 
-        function loadStoreHeader() {
+        function normalizeCategoryName(value) {
 
-            if (!currentStore) {
+            return String(value || "")
+                .trim()
+                .toLocaleLowerCase("ar")
+                .replace(/\s+/g, " ");
+        }
+
+
+
+        /* =====================================================
+           LOAD CATEGORIES
+        ===================================================== */
+
+        async function loadCategories() {
+
+            currentCategories = [];
+
+
+            if (
+                !currentOwnerUid ||
+                !currentStoreId
+            ) {
+
+                renderCategoryOptions();
 
                 return;
             }
 
 
-            const storeName =
-                currentStore.storeName ||
-                currentStore.name ||
-                currentStore.title ||
-                "G-Glam";
-
-
-            topStoreName.textContent =
-                storeName;
-
-
-            const storeImage =
-                currentStore.storeImage ||
-                currentStore.image ||
-                currentStore.logo ||
-                currentStore.photoURL ||
-                currentStore.storeLogo ||
-                currentStore.logoUrl ||
-                currentStore.imageUrl ||
-                "";
-
-
-            topStoreImage.src =
-                storeImage ||
-                "logotrans.png";
-        }
-
-
-
-        /* =====================================================
-           VIEW STORE
-        ===================================================== */
-
-        viewStoreBtn.addEventListener(
-            "click",
-            event => {
-
-                event.preventDefault();
-
-
-                if (!currentStore) {
-
-                    return;
-                }
-
-
-                const directUrl =
-                    currentStore.storeUrl ||
-                    currentStore.publicUrl ||
-                    currentStore.shopUrl ||
-                    currentStore.url;
-
-
-                if (directUrl) {
-
-                    window.open(
-                        directUrl,
-                        "_blank"
-                    );
-
-                    return;
-                }
-
-
-                const slug =
-                    currentStore.slug ||
-                    currentStore.storeSlug;
-
-
-                if (slug) {
-
-                    window.open(
-                        "index.html?store=" +
-                        encodeURIComponent(
-                            slug
-                        ),
-                        "_blank"
-                    );
-
-                    return;
-                }
-
-
-                window.open(
-                    "index.html?store=" +
-                    encodeURIComponent(
-                        currentOwnerUid
-                    ),
-                    "_blank"
-                );
-
-            }
-        );
-
-
-
-        /* =====================================================
-           CATEGORIES
-        ===================================================== */
-
-        function normalizeCategories(value) {
-
-            let result = [];
-
-
-            if (
-                Array.isArray(value)
-            ) {
-
-                value.forEach(
-                    item => {
-
-                        if (
-                            typeof item === "string"
-                        ) {
-
-                            const name =
-                                item.trim();
-
-
-                            if (name) {
-
-                                result.push(
-                                    name
-                                );
-                            }
-
-                        }
-                        else if (
-                            item &&
-                            typeof item === "object"
-                        ) {
-
-                            const name =
-                                item.name ||
-                                item.title ||
-                                item.label ||
-                                item.value ||
-                                "";
-
-
-                            if (
-                                String(name).trim()
-                            ) {
-
-                                result.push(
-                                    String(name).trim()
-                                );
-                            }
-
-                        }
-
-                    }
-                );
-
-            }
-            else if (
-                typeof value === "string"
-            ) {
-
-                value
-                    .split(",")
-                    .forEach(
-                        item => {
-
-                            const name =
-                                item.trim();
-
-
-                            if (name) {
-
-                                result.push(
-                                    name
-                                );
-                            }
-
-                        }
-                    );
-
-            }
-
-
-            return result;
-        }
-
-
-
-        function addCategoriesFromSource(
-            source
-        ) {
-
-            const possibleFields = [
-
-                source?.categories,
-
-                source?.productCategories,
-
-                source?.productCategory,
-
-                source?.categoryList,
-
-                source?.categoriesList
-
-            ];
-
-
-            possibleFields.forEach(
-                value => {
-
-                    normalizeCategories(
-                        value
-                    )
-                    .forEach(
-                        category => {
-
-                            if (
-                                !availableCategories.includes(
-                                    category
-                                )
-                            ) {
-
-                                availableCategories.push(
-                                    category
-                                );
-                            }
-
-                        }
-                    );
-
-                }
-            );
-
-        }
-
-
-
-        async function loadCategories() {
-
-            availableCategories = [];
-
-
-            /*
-             * 1 ــ من بيانات المتجر
-             */
-
-            addCategoriesFromSource(
-                currentStore || {}
-            );
-
-
-            /*
-             * 2 ــ من localStorage
-             * ندعم أكثر من اسم حتى لا تضيع
-             * التصنيفات المحفوظة سابقًا.
-             */
-
-            const localStorageKeys = [
-
-                "gGlamCategories",
-
-                "gGlamProductCategories",
-
-                "productCategories",
-
-                "categories"
-
-            ];
-
-
-            localStorageKeys.forEach(
-                key => {
-
-                    try {
-
-                        const raw =
-                            localStorage.getItem(
-                                key
-                            );
-
-
-                        if (!raw) {
-
-                            return;
-                        }
-
-
-                        let parsed;
-
-
-                        try {
-
-                            parsed =
-                                JSON.parse(
-                                    raw
-                                );
-
-                        }
-                        catch {
-
-                            parsed =
-                                raw;
-
-                        }
-
-
-                        normalizeCategories(
-                            parsed
-                        )
-                        .forEach(
-                            category => {
-
-                                if (
-                                    !availableCategories.includes(
-                                        category
-                                    )
-                                ) {
-
-                                    availableCategories.push(
-                                        category
-                                    );
-                                }
-
-                            }
-                        );
-
-                    }
-                    catch(error) {
-
-                        console.warn(
-                            "CATEGORY STORAGE ERROR:",
-                            error
-                        );
-
-                    }
-
-                }
-            );
-
-
-            /*
-             * 3 ــ محاولة قراءة storeSettings
-             * إذا كانت التصنيفات محفوظة هناك.
-             */
-
             try {
 
-                const settingsRef =
-                    doc(
-                        db,
-                        "storeSettings",
-                        currentOwnerUid
-                    );
-
-
-                const settingsSnapshot =
-                    await getDoc(
-                        settingsRef
-                    );
-
-
-                if (
-                    settingsSnapshot.exists()
-                ) {
-
-                    addCategoriesFromSource(
-                        settingsSnapshot.data()
-                    );
-
-                }
-
-            }
-            catch(error) {
-
-                console.warn(
-                    "STORE SETTINGS CATEGORY ERROR:",
-                    error
-                );
-
-            }
-
-
-            /*
-             * 4 ــ محاولة البحث في storeSettings
-             * إذا كان المستند ليس UID.
-             */
-
-            try {
-
-                const settingsQuery =
+                const categoriesQuery =
                     query(
                         collection(
                             db,
-                            "storeSettings"
+                            "categories"
                         ),
                         where(
                             "ownerUid",
                             "==",
                             currentOwnerUid
+                        ),
+                        where(
+                            "storeId",
+                            "==",
+                            currentStoreId
                         )
                     );
 
 
-                const settingsSnapshot =
+                const snapshot =
                     await getDocs(
-                        settingsQuery
+                        categoriesQuery
                     );
 
 
-                settingsSnapshot.forEach(
-                    settingsDoc => {
+                const uniqueCategories =
+                    new Map();
 
-                        addCategoriesFromSource(
-                            settingsDoc.data()
-                        );
+
+                snapshot.forEach(
+                    categoryDoc => {
+
+                        const data =
+                            categoryDoc.data() || {};
+
+
+                        const name =
+                            String(
+                                data.name || ""
+                            ).trim();
+
+
+                        if (!name) {
+                            return;
+                        }
+
+
+                        const category = {
+
+                            id:
+                                categoryDoc.id,
+
+                            name,
+
+                            storeId:
+                                String(
+                                    data.storeId || ""
+                                ),
+
+                            ownerUid:
+                                String(
+                                    data.ownerUid || ""
+                                ),
+
+                            ownerEmail:
+                                String(
+                                    data.ownerEmail || ""
+                                ),
+
+                            storeName:
+                                String(
+                                    data.storeName || ""
+                                )
+                        };
+
+
+                        if (
+                            category.ownerUid !==
+                            currentOwnerUid
+                        ) {
+
+                            return;
+                        }
+
+
+                        if (
+                            category.storeId !==
+                            currentStoreId
+                        ) {
+
+                            return;
+                        }
+
+
+                        const normalized =
+                            normalizeCategoryName(
+                                name
+                            );
+
+
+                        if (
+                            !uniqueCategories.has(
+                                normalized
+                            )
+                        ) {
+
+                            uniqueCategories.set(
+                                normalized,
+                                category
+                            );
+                        }
 
                     }
                 );
+
+
+                currentCategories =
+                    Array.from(
+                        uniqueCategories.values()
+                    );
+
+
+                currentCategories.sort(
+                    (a,b) =>
+                        a.name.localeCompare(
+                            b.name,
+                            "ar"
+                        )
+                );
+
+
+                renderCategoryOptions();
 
             }
             catch(error) {
 
-                console.warn(
-                    "STORE SETTINGS QUERY ERROR:",
+                console.error(
+                    "loadCategories error:",
                     error
                 );
 
+
+                currentCategories = [];
+
+
+                renderCategoryOptions();
+
+
+                console.warn(
+                    "تعذر تحميل التصنيفات:",
+                    error.message
+                );
             }
-
-
-            renderCategoryOptions();
-
-        }
-
-
-
-        function renderCategoryOptions(
-            selectedCategory = ""
-        ) {
-
-            editCategory.innerHTML = "";
-
-
-            const firstOption =
-                document.createElement(
-                    "option"
-                );
-
-
-            firstOption.value = "";
-
-            firstOption.textContent =
-                "اختر التصنيف";
-
-
-            editCategory.appendChild(
-                firstOption
-            );
-
-
-            availableCategories
-                .forEach(
-                    category => {
-
-                        const option =
-                            document.createElement(
-                                "option"
-                            );
-
-
-                        option.value =
-                            category;
-
-
-                        option.textContent =
-                            category;
-
-
-                        editCategory.appendChild(
-                            option
-                        );
-
-                    }
-                );
-
-
-            /*
-             * إذا كان المنتج يحتوي على تصنيف
-             * لم يعد موجودًا في القائمة،
-             * نضيفه مؤقتًا حتى لا نفقد بياناته.
-             */
-
-            if (
-                selectedCategory &&
-                !availableCategories.includes(
-                    selectedCategory
-                )
-            ) {
-
-                const option =
-                    document.createElement(
-                        "option"
-                    );
-
-
-                option.value =
-                    selectedCategory;
-
-
-                option.textContent =
-                    selectedCategory;
-
-
-                editCategory.appendChild(
-                    option
-                );
-
-            }
-
-
-            editCategory.value =
-                selectedCategory || "";
 
         }
 
 
 
         /* =====================================================
-           AUTH
+           RENDER CATEGORY OPTIONS
         ===================================================== */
 
-        onAuthStateChanged(
-            auth,
-            async user => {
+        function renderCategoryOptions(
+            selectedCategoryId = "",
+            selectedCategoryName = ""
+        ) {
 
-                if (!user) {
+            editCategory.innerHTML = "";
 
-                    window.location.href =
-                        "login.html";
 
-                    return;
+            const defaultOption =
+                document.createElement(
+                    "option"
+                );
+
+
+            defaultOption.value = "";
+
+            defaultOption.textContent =
+                "اختر التصنيف";
+
+
+            editCategory.appendChild(
+                defaultOption
+            );
+
+
+            currentCategories.forEach(
+                category => {
+
+                    const option =
+                        document.createElement(
+                            "option"
+                        );
+
+
+                    option.value =
+                        category.id;
+
+
+                    option.textContent =
+                        category.name;
+
+
+                    if (
+                        category.id ===
+                        selectedCategoryId
+                    ) {
+
+                        option.selected =
+                            true;
+                    }
+                    else if (
+                        !selectedCategoryId &&
+                        normalizeCategoryName(
+                            category.name
+                        ) ===
+                        normalizeCategoryName(
+                            selectedCategoryName
+                        )
+                    ) {
+
+                        option.selected =
+                            true;
+                    }
+
+
+                    editCategory.appendChild(
+                        option
+                    );
+
                 }
+            );
 
 
-                currentUser =
-                    user;
-
-
-                currentOwnerUid =
-                    user.uid;
-
-
-                currentOwnerEmail =
-                    user.email || "";
-
-
-                await loadStore();
-
-            }
-        );
+            editCategory.disabled =
+                false;
+        }
 
 
 
@@ -3857,7 +3627,16 @@
 
             try {
 
-                const storeRef =
+                let storeSnapshot =
+                    null;
+
+
+                /*
+                 * أولًا:
+                 * stores/{uid}
+                 */
+
+                const directStoreRef =
                     doc(
                         db,
                         "stores",
@@ -3865,87 +3644,164 @@
                     );
 
 
-                const storeSnapshot =
+                const directSnapshot =
                     await getDoc(
-                        storeRef
+                        directStoreRef
                     );
 
 
                 if (
+                    directSnapshot.exists()
+                ) {
+
+                    storeSnapshot =
+                        directSnapshot;
+
+                }
+                else {
+
+                    /*
+                     * ثانيًا:
+                     * البحث بواسطة ownerUid
+                     */
+
+                    const ownerQuery =
+                        query(
+                            collection(
+                                db,
+                                "stores"
+                            ),
+                            where(
+                                "ownerUid",
+                                "==",
+                                currentOwnerUid
+                            )
+                        );
+
+
+                    const ownerSnapshot =
+                        await getDocs(
+                            ownerQuery
+                        );
+
+
+                    if (
+                        !ownerSnapshot.empty
+                    ) {
+
+                        storeSnapshot =
+                            ownerSnapshot.docs[0];
+
+                    }
+                    else if (
+                        currentOwnerEmail
+                    ) {
+
+                        /*
+                         * ثالثًا:
+                         * البحث بواسطة البريد
+                         */
+
+                        const emailQuery =
+                            query(
+                                collection(
+                                    db,
+                                    "stores"
+                                ),
+                                where(
+                                    "ownerEmail",
+                                    "==",
+                                    currentOwnerEmail
+                                )
+                            );
+
+
+                        const emailSnapshot =
+                            await getDocs(
+                                emailQuery
+                            );
+
+
+                        if (
+                            !emailSnapshot.empty
+                        ) {
+
+                            storeSnapshot =
+                                emailSnapshot.docs[0];
+                        }
+
+                    }
+
+                }
+
+
+                if (
+                    !storeSnapshot ||
                     !storeSnapshot.exists()
                 ) {
 
-                    topStoreName.textContent =
-                        "لم يتم العثور على المتجر";
-
-
-                    loading.style.display =
-                        "none";
-
-
-                    showError(
-                        "❌ لم يتم العثور على متجر مرتبط بحسابك."
+                    throw new Error(
+                        "لم يتم العثور على المتجر المرتبط بهذا الحساب."
                     );
-
-                    return;
                 }
+
+
+                currentStoreId =
+                    storeSnapshot.id;
 
 
                 currentStore =
-                    storeSnapshot.data();
+                    storeSnapshot.data() || {};
 
 
-                loadStoreHeader();
-
-
-                currentOwnerEmail =
-                    currentStore.ownerEmail ||
-                    currentStore.email ||
-                    currentOwnerEmail;
-
-
-                const status =
+                currentStoreName =
                     String(
-                        currentStore.status ||
-                        "active"
-                    )
-                    .toLowerCase()
-                    .trim();
-
-
-                if (
-                    status === "pending" ||
-                    status === "waiting" ||
-                    status === "review"
-                ) {
-
-                    loading.style.display =
-                        "none";
-
-
-                    showError(
-                        "⏳ متجرك مازال قيد المراجعة."
+                        currentStore.storeName ||
+                        currentStore.name ||
+                        currentStore.title ||
+                        "G-Glam"
                     );
 
-                    return;
-                }
+
+                topStoreName.textContent =
+                    currentStoreName;
 
 
-                if (
-                    status === "rejected" ||
-                    status === "refused"
-                ) {
+                /*
+                 * صورة المتجر
+                 */
 
-                    loading.style.display =
-                        "none";
+                const storeImage =
+                    currentStore.logo ||
+                    currentStore.logoUrl ||
+                    currentStore.image ||
+                    currentStore.imageUrl ||
+                    currentStore.storeImage ||
+                    currentStore.photoURL ||
+                    "logotrans.png";
 
 
-                    showError(
-                        "❌ تم رفض إنشاء المتجر."
+                topStoreImage.src =
+                    storeImage;
+
+
+                topStoreImage.onerror =
+                    () => {
+
+                        topStoreImage.src =
+                            "logotrans.png";
+                    };
+
+
+                /*
+                 * رابط المتجر
+                 */
+
+                viewStoreBtn.href =
+                    "index.html?storeId=" +
+                    encodeURIComponent(
+                        currentStoreId
                     );
-
-                    return;
-                }
 
 
                 await loadCategories();
@@ -3956,7 +3812,7 @@
             catch(error) {
 
                 console.error(
-                    "STORE ERROR:",
+                    "loadStore error:",
                     error
                 );
 
@@ -3965,12 +3821,72 @@
                     "none";
 
 
-                showError(
-                    "❌ تعذر تحميل معلومات المتجر.\n" +
-                    error.message
-                );
+                productsContainer.innerHTML = `
+
+                    <div class="error-box">
+
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+
+                        <br>
+
+                        ${escapeHtml(
+                            error.message ||
+                            "حدث خطأ أثناء تحميل المتجر."
+                        )}
+
+                    </div>
+
+                `;
+
             }
 
+        }
+
+
+
+        /* =====================================================
+           PRODUCT TIMESTAMP
+        ===================================================== */
+
+        function getProductTimestamp(
+            product
+        ) {
+
+            const value =
+                product.updatedAt ||
+                product.createdAt;
+
+
+            if (
+                value &&
+                typeof value.toMillis ===
+                "function"
+            ) {
+
+                return value.toMillis();
+            }
+
+
+            if (
+                value &&
+                typeof value.seconds ===
+                "number"
+            ) {
+
+                return value.seconds * 1000;
+            }
+
+
+            if (
+                typeof value ===
+                "number"
+            ) {
+
+                return value;
+            }
+
+
+            return 0;
         }
 
 
@@ -3985,15 +3901,6 @@
                 "block";
 
 
-            productsContainer.innerHTML =
-                "";
-
-
-            productsContainer.appendChild(
-                loading
-            );
-
-
             try {
 
                 const productsQuery =
@@ -4006,6 +3913,11 @@
                             "ownerUid",
                             "==",
                             currentOwnerUid
+                        ),
+                        where(
+                            "storeId",
+                            "==",
+                            currentStoreId
                         )
                     );
 
@@ -4016,168 +3928,136 @@
                     );
 
 
-                allProducts = [];
-
-
-                snapshot.forEach(
-                    productDoc => {
-
-                        const data =
-                            productDoc.data();
-
-
-                        if (
-                            data.ownerUid ===
-                            currentOwnerUid
-                        ) {
-
-                            allProducts.push({
-
-                                id:
-                                    productDoc.id,
-
-                                ...data
-
-                            });
-
-                        }
-
-                    }
-                );
-
-
                 allProducts =
-                    sortProductsNewestFirst(
-                        allProducts
+                    snapshot.docs.map(
+                        productDoc => ({
+
+                            id:
+                                productDoc.id,
+
+                            ...productDoc.data()
+
+                        })
                     );
 
 
-                loading.style.display =
-                    "none";
-
-
-                if (!allProducts.length) {
-
-                    productsContainer.innerHTML = `
-
-                        <div class="empty">
-
-                            <div
-                                style="
-                                    font-size:40px;
-                                    margin-bottom:8px;
-                                "
-                            >
-
-                                <i
-                                    class="fa-solid fa-bag-shopping"
-                                ></i>
-
-                            </div>
-
-                            لا توجد منتجات في متجرك حتى الآن.
-
-                            <br><br>
-
-                            <button
-                                class="add-product-btn"
-                                id="emptyAddProductBtn"
-                                type="button"
-                            >
-
-                                <i
-                                    class="fa-solid fa-plus"
-                                ></i>
-
-                                إضافة منتج
-
-                            </button>
-
-                        </div>
-
-                    `;
-
-
-                    document
-                        .getElementById(
-                            "emptyAddProductBtn"
-                        )
-                        .addEventListener(
-                            "click",
-                            () => {
-
-                                window.location.href =
-                                    "add-product.html";
-
-                            }
-                        );
-
-
-                    return;
-                }
+                allProducts.sort(
+                    (a,b) =>
+                        getProductTimestamp(b) -
+                        getProductTimestamp(a)
+                );
 
 
                 renderProducts(
                     allProducts
                 );
 
+
             }
             catch(error) {
 
                 console.error(
-                    "PRODUCTS ERROR:",
+                    "loadProducts error:",
                     error
                 );
-
-
-                loading.style.display =
-                    "none";
 
 
                 productsContainer.innerHTML = `
 
                     <div class="error-box">
 
-                        ❌ حدث خطأ أثناء تحميل المنتجات.
+                        <i class="fa-solid fa-triangle-exclamation"></i>
 
-                        <br><br>
+                        <br>
+
+                        تعذر تحميل المنتجات.
+
+                        <br>
 
                         ${escapeHtml(
                             error.message
                         )}
 
-                        <br><br>
-
-                        <button
-                            class="add-product-btn"
-                            id="retryProducts"
-                            type="button"
-                        >
-
-                            <i
-                                class="fa-solid fa-rotate-right"
-                            ></i>
-
-                            إعادة المحاولة
-
-                        </button>
-
                     </div>
 
                 `;
+            }
+            finally {
+
+                loading.style.display =
+                    "none";
+            }
+
+        }
 
 
-                document
-                    .getElementById(
-                        "retryProducts"
-                    )
-                    .addEventListener(
-                        "click",
-                        loadProducts
-                    );
+
+        /* =====================================================
+           NORMALIZE IMAGE ARRAYS
+        ===================================================== */
+
+        function getProductImages(
+            product
+        ) {
+
+            let images = [];
+
+
+            if (
+                Array.isArray(
+                    product.images
+                )
+            ) {
+
+                images =
+                    product.images
+                        .filter(Boolean)
+                        .map(
+                            value =>
+                                String(value)
+                        );
 
             }
 
+
+            if (
+                !images.length &&
+                product.image
+            ) {
+
+                images = [
+                    String(
+                        product.image
+                    )
+                ];
+
+            }
+
+
+            return [
+                ...new Set(
+                    images
+                )
+            ];
+        }
+
+
+
+        /* =====================================================
+           FORMAT PRICE
+        ===================================================== */
+
+        function formatPrice(
+            value
+        ) {
+
+            const number =
+                Number(value || 0);
+
+
+            return number.toLocaleString(
+                "ar-DZ"
+            ) + " DA";
         }
 
 
@@ -4186,17 +4066,9 @@
            RENDER PRODUCTS
         ===================================================== */
 
-        function renderProducts(products) {
-
-            products =
-                sortProductsNewestFirst(
-                    products
-                );
-
-
-            productsContainer.innerHTML =
-                "";
-
+        function renderProducts(
+            products
+        ) {
 
             if (!products.length) {
 
@@ -4207,13 +4079,19 @@
                         <i
                             class="fa-solid fa-box-open"
                             style="
-                                font-size:35px;
-                                margin-bottom:10px;
-                                display:block;
+                                font-size:38px;
+                                margin-bottom:12px;
+                                color:var(--orange);
                             "
                         ></i>
 
-                        لا توجد منتجات مطابقة للبحث.
+                        <br>
+
+                        لا توجد منتجات حاليًا.
+
+                        <br>
+
+                        أضف أول منتج إلى متجرك.
 
                     </div>
 
@@ -4223,340 +4101,289 @@
             }
 
 
-            products.forEach(
-                product => {
+            productsContainer.innerHTML =
+                products.map(
+                    product => {
 
-                    const card =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    card.className =
-                        "product-card";
-
-
-                    let images = [];
-
-
-                    if (
-                        Array.isArray(
-                            product.images
-                        )
-                    ) {
-
-                        images =
-                            product.images.filter(
-                                Boolean
+                        const images =
+                            getProductImages(
+                                product
                             );
 
-                    }
-                    else if (
-                        product.image
-                    ) {
 
-                        images = [
-                            product.image
-                        ];
-                    }
+                        const firstImage =
+                            images[0] || "";
 
 
-                    const image =
-                        images[0] || "";
-
-
-                    const colors =
-                        Array.isArray(
+                        const colors =
+                            Array.isArray(
+                                product.colors
+                            )
+                            ?
                             product.colors
-                        )
-                        ?
-                        product.colors
-                        :
-                        [];
+                            :
+                            [];
 
 
-                    const sizes =
-                        Array.isArray(
+                        const sizes =
+                            Array.isArray(
+                                product.sizes
+                            )
+                            ?
                             product.sizes
-                        )
-                        ?
-                        product.sizes
-                        :
-                        [];
+                            :
+                            [];
 
 
-                    const colorNames =
-                        colors
-                            .map(
-                                color => {
+                        const categoryName =
+                            product.categoryName ||
+                            product.category ||
+                            "";
 
-                                    if (
-                                        typeof color ===
-                                        "object"
-                                    ) {
 
-                                        return (
-                                            color.name ||
-                                            ""
-                                        );
+                        return `
+
+                            <div
+                                class="product-card"
+                                data-id="${escapeHtml(product.id)}"
+                            >
+
+                                <div class="product-image-box">
+
+                                    ${
+                                        firstImage
+
+                                        ?
+
+                                        `
+                                        <img
+                                            class="product-image"
+                                            src="${escapeHtml(firstImage)}"
+                                            alt="${escapeHtml(product.name || "منتج")}"
+                                            loading="lazy"
+                                            onerror="
+                                                this.style.display='none';
+                                                this.nextElementSibling.style.display='flex';
+                                            "
+                                        >
+
+                                        <div
+                                            class="no-image"
+                                            style="display:none"
+                                        >
+                                            <i class="fa-solid fa-image"></i>
+                                        </div>
+                                        `
+
+                                        :
+
+                                        `
+                                        <div class="no-image">
+                                            <i class="fa-solid fa-image"></i>
+                                        </div>
+                                        `
                                     }
 
 
-                                    return String(
-                                        color
-                                    );
+                                    ${
+                                        images.length > 1
 
-                                }
-                            )
-                            .filter(
-                                Boolean
-                            );
+                                        ?
+
+                                        `
+                                        <div class="image-count">
+
+                                            <i class="fa-solid fa-images"></i>
+
+                                            ${images.length}
+
+                                        </div>
+                                        `
+
+                                        :
+
+                                        ""
+                                    }
+
+                                </div>
 
 
-                    const hasOldPrice =
-                        Number(
-                            product.oldPrice || 0
-                        ) >
-                        Number(
-                            product.price || 0
-                        );
+                                <div class="product-info">
 
-
-                    card.innerHTML = `
-
-                        <div
-                            class="product-image-box"
-                        >
-
-                            ${
-                                image
-                                ?
-                                `
-                                    <img
-                                        class="product-image"
-                                        src="${escapeHtml(image)}"
-                                        alt="${escapeHtml(
-                                            product.name ||
-                                            "منتج"
-                                        )}"
-                                        onerror="
-                                            this.style.display='none';
-                                        "
+                                    <h3
+                                        title="${escapeHtml(product.name || "")}"
                                     >
-                                `
-                                :
-                                `
-                                    <div class="no-image">
-
-                                        <i
-                                            class="fa-solid fa-box-archive"
-                                        ></i>
-
-                                    </div>
-                                `
-                            }
-
-
-                            ${
-                                images.length > 1
-                                ?
-                                `
-                                    <span class="image-count">
-
-                                        <i
-                                            class="fa-solid fa-camera"
-                                        ></i>
-
-                                        ${images.length}
-
-                                    </span>
-                                `
-                                :
-                                ""
-                            }
-
-                        </div>
-
-
-                        <div class="product-info">
-
-                            <h3>
-
-                                ${escapeHtml(
-                                    product.name ||
-                                    "منتج بدون اسم"
-                                )}
-
-                            </h3>
-
-
-                            <div class="product-price">
-
-                                ${Number(
-                                    product.price || 0
-                                ).toLocaleString(
-                                    "fr-DZ"
-                                )} DA
-
-                                ${
-                                    hasOldPrice
-                                    ?
-                                    `
-                                        <span
-                                            class="old-price-display"
-                                        >
-                                            ${Number(
-                                                product.oldPrice
-                                            ).toLocaleString(
-                                                "fr-DZ"
-                                            )} DA
-                                        </span>
-                                    `
-                                    :
-                                    ""
-                                }
-
-                            </div>
-
-
-                            ${
-                                product.category
-                                ?
-                                `
-                                    <div class="product-category">
-
-                                        <i
-                                            class="fa-solid fa-layer-group"
-                                        ></i>
-
                                         ${escapeHtml(
-                                            product.category
+                                            product.name ||
+                                            "بدون اسم"
+                                        )}
+                                    </h3>
+
+
+                                    <div class="product-price">
+
+                                        ${formatPrice(
+                                            product.price
                                         )}
 
+                                        ${
+                                            Number(
+                                                product.oldPrice
+                                            ) > 0
+
+                                            ?
+
+                                            `
+                                            <span class="old-price-display">
+
+                                                ${formatPrice(
+                                                    product.oldPrice
+                                                )}
+
+                                            </span>
+                                            `
+
+                                            :
+
+                                            ""
+                                        }
+
                                     </div>
-                                `
-                                :
-                                ""
-                            }
 
 
-                            <div class="product-colors">
+                                    ${
+                                        categoryName
 
-                                <i
-                                    class="fa-solid fa-palette"
-                                ></i>
+                                        ?
 
-                                ${
-                                    colorNames.length
-                                    ?
-                                    escapeHtml(
-                                        colorNames.join(
-                                            "، "
-                                        )
-                                    )
-                                    :
-                                    "بدون ألوان"
-                                }
+                                        `
+                                        <div class="product-category">
+
+                                            <i class="fa-solid fa-layer-group"></i>
+
+                                            <span>
+                                                ${escapeHtml(
+                                                    categoryName
+                                                )}
+                                            </span>
+
+                                        </div>
+                                        `
+
+                                        :
+
+                                        ""
+                                    }
+
+
+                                    ${
+                                        colors.length
+
+                                        ?
+
+                                        `
+                                        <div class="product-colors">
+
+                                            <i class="fa-solid fa-palette"></i>
+
+                                            <span>
+                                                ${escapeHtml(
+                                                    colors
+                                                        .map(
+                                                            color =>
+                                                                typeof color === "object"
+                                                                ?
+                                                                color.name || ""
+                                                                :
+                                                                color
+                                                        )
+                                                        .filter(Boolean)
+                                                        .join("، ")
+                                                )}
+                                            </span>
+
+                                        </div>
+                                        `
+
+                                        :
+
+                                        ""
+                                    }
+
+
+                                    ${
+                                        sizes.length
+
+                                        ?
+
+                                        `
+                                        <div class="product-sizes">
+
+                                            <i class="fa-solid fa-ruler-combined"></i>
+
+                                            <span>
+                                                ${escapeHtml(
+                                                    sizes
+                                                        .map(
+                                                            size =>
+                                                                typeof size === "object"
+                                                                ?
+                                                                size.name || ""
+                                                                :
+                                                                size
+                                                        )
+                                                        .filter(Boolean)
+                                                        .join("، ")
+                                                )}
+                                            </span>
+
+                                        </div>
+                                        `
+
+                                        :
+
+                                        ""
+                                    }
+
+
+                                    <div class="product-actions">
+
+                                        <button
+                                            type="button"
+                                            class="edit-btn"
+                                            data-action="edit"
+                                            data-id="${escapeHtml(product.id)}"
+                                        >
+
+                                            <i class="fa-solid fa-pen"></i>
+
+                                            تعديل
+
+                                        </button>
+
+
+                                        <button
+                                            type="button"
+                                            class="delete-btn"
+                                            data-action="delete"
+                                            data-id="${escapeHtml(product.id)}"
+                                        >
+
+                                            <i class="fa-solid fa-trash"></i>
+
+                                            حذف
+
+                                        </button>
+
+                                    </div>
+
+                                </div>
 
                             </div>
 
-
-                            <div class="product-sizes">
-
-                                <i
-                                    class="fa-solid fa-ruler-combined"
-                                ></i>
-
-                                ${
-                                    sizes.length
-                                    ?
-                                    escapeHtml(
-                                        sizes.join(
-                                            "، "
-                                        )
-                                    )
-                                    :
-                                    "بدون قياسات"
-                                }
-
-                            </div>
-
-
-                            <div class="product-actions">
-
-                                <button
-                                    class="edit-btn"
-                                    type="button"
-                                >
-
-                                    <i
-                                        class="fa-solid fa-pen-to-square"
-                                    ></i>
-
-                                    تعديل
-
-                                </button>
-
-
-                                <button
-                                    class="delete-btn"
-                                    type="button"
-                                >
-
-                                    <i
-                                        class="fa-solid fa-trash-can"
-                                    ></i>
-
-                                    حذف
-
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    `;
-
-
-                    card
-                        .querySelector(
-                            ".edit-btn"
-                        )
-                        .addEventListener(
-                            "click",
-                            () => {
-
-                                openEditModal(
-                                    product.id
-                                );
-
-                            }
-                        );
-
-
-                    card
-                        .querySelector(
-                            ".delete-btn"
-                        )
-                        .addEventListener(
-                            "click",
-                            () => {
-
-                                deleteProduct(
-                                    product.id
-                                );
-
-                            }
-                        );
-
-
-                    productsContainer.appendChild(
-                        card
-                    );
-
-                }
-            );
-
+                        `;
+                    }
+                ).join("");
         }
 
 
@@ -4567,15 +4394,17 @@
 
         searchInput.addEventListener(
             "input",
-            function() {
+            () => {
 
-                const keyword =
-                    this.value
+                const search =
+                    searchInput.value
                         .trim()
-                        .toLowerCase();
+                        .toLocaleLowerCase(
+                            "ar"
+                        );
 
 
-                if (!keyword) {
+                if (!search) {
 
                     renderProducts(
                         allProducts
@@ -4593,43 +4422,53 @@
                                 String(
                                     product.name ||
                                     ""
-                                ).toLowerCase();
+                                )
+                                .toLocaleLowerCase(
+                                    "ar"
+                                );
+
+
+                            const shortDescription =
+                                String(
+                                    product.shortDescription ||
+                                    ""
+                                )
+                                .toLocaleLowerCase(
+                                    "ar"
+                                );
 
 
                             const description =
                                 String(
                                     product.description ||
                                     ""
-                                ).toLowerCase();
+                                )
+                                .replace(
+                                    /<[^>]*>/g,
+                                    " "
+                                )
+                                .toLocaleLowerCase(
+                                    "ar"
+                                );
 
 
                             const category =
                                 String(
+                                    product.categoryName ||
                                     product.category ||
                                     ""
-                                ).toLowerCase();
+                                )
+                                .toLocaleLowerCase(
+                                    "ar"
+                                );
 
 
                             return (
-
-                                name.includes(
-                                    keyword
-                                )
-
-                                ||
-
-                                description.includes(
-                                    keyword
-                                )
-
-                                ||
-
-                                category.includes(
-                                    keyword
-                                )
-
+                                name.includes(search) ||
+                                shortDescription.includes(search) ||
+                                description.includes(search) ||
+                                category.includes(search)
                             );
-
                         }
                     );
 
@@ -4644,728 +4483,84 @@
 
 
         /* =====================================================
-           OPEN EDIT MODAL
+           UPLOAD TO CLOUDINARY
         ===================================================== */
 
-        function openEditModal(
-            productId
+        async function uploadImage(
+            file
         ) {
 
-            const product =
-                allProducts.find(
-                    p =>
-                        p.id ===
-                        productId
+            if (!file) {
+
+                throw new Error(
+                    "لم يتم اختيار صورة."
                 );
-
-
-            if (!product) {
-
-                alert(
-                    "المنتج غير موجود."
-                );
-
-                return;
             }
 
 
-            if (
-                product.ownerUid !==
-                currentOwnerUid
-            ) {
-
-                alert(
-                    "❌ هذا المنتج لا يخص متجرك."
-                );
-
-                return;
-            }
+            const cloudName =
+                "g82dvrkr";
 
 
-            editingProductId =
-                productId;
+            const uploadPreset =
+                "gglam_products";
 
 
-            editName.value =
-                product.name || "";
+            const formData =
+                new FormData();
 
 
-            editPrice.value =
-                product.price ?? "";
-
-
-            editOldPrice.value =
-                product.oldPrice ?? "";
-
-
-            renderCategoryOptions(
-                product.category || ""
+            formData.append(
+                "file",
+                file
             );
 
 
-            descriptionEditor.innerHTML =
-                product.description || "";
-
-
-            /* COLORS */
-
-            editingColors = [];
-
-
-            if (
-                Array.isArray(
-                    product.colors
-                )
-            ) {
-
-                product.colors.forEach(
-                    color => {
-
-                        if (
-                            typeof color ===
-                            "object"
-                        ) {
-
-                            editingColors.push({
-
-                                name:
-                                    color.name || "",
-
-                                value:
-                                    color.value ||
-                                    "#F47B20"
-
-                            });
-
-                        }
-                        else {
-
-                            editingColors.push({
-
-                                name:
-                                    String(
-                                        color
-                                    ),
-
-                                value:
-                                    "#F47B20"
-
-                            });
-
-                        }
-
-                    }
-                );
-
-            }
-            else if (
-                product.colors
-            ) {
-
-                String(
-                    product.colors
-                )
-                .split(",")
-                .forEach(
-                    color => {
-
-                        const name =
-                            color.trim();
-
-
-                        if (name) {
-
-                            editingColors.push({
-
-                                name:
-                                    name,
-
-                                value:
-                                    "#F47B20"
-
-                            });
-
-                        }
-
-                    }
-                );
-
-            }
-
-
-            /* SIZES */
-
-            editingSizes = [];
-
-
-            if (
-                Array.isArray(
-                    product.sizes
-                )
-            ) {
-
-                editingSizes =
-                    [
-                        ...product.sizes
-                    ];
-
-            }
-            else if (
-                product.sizes
-            ) {
-
-                editingSizes =
-                    String(
-                        product.sizes
-                    )
-                    .split(",")
-                    .map(
-                        s =>
-                            s.trim()
-                    )
-                    .filter(
-                        Boolean
-                    );
-
-            }
-
-
-            /* MAIN IMAGES */
-
-            existingImages = [];
-
-
-            if (
-                Array.isArray(
-                    product.images
-                )
-            ) {
-
-                existingImages =
-                    [
-                        ...product.images
-                    ];
-
-            }
-            else if (
-                product.image
-            ) {
-
-                existingImages = [
-                    product.image
-                ];
-            }
-
-
-            selectedImages = [];
-
-
-            editImageFile.value =
-                "";
-
-
-            /* DESCRIPTION IMAGES */
-
-            existingDescriptionImages =
-                [];
-
-
-            if (
-                Array.isArray(
-                    product.descriptionImages
-                )
-            ) {
-
-                existingDescriptionImages =
-                    [
-                        ...product.descriptionImages
-                    ];
-
-            }
-            else if (
-                Array.isArray(
-                    product.descriptionImagesUrls
-                )
-            ) {
-
-                existingDescriptionImages =
-                    [
-                        ...product.descriptionImagesUrls
-                    ];
-
-            }
-
-
-            selectedDescriptionImages =
-                [];
-
-
-            descriptionImageFile.value =
-                "";
-
-
-            renderColors();
-
-            renderSizes();
-
-            renderEditImages();
-
-            renderDescriptionImages();
-
-
-            editModal.classList.add(
-                "active"
+            formData.append(
+                "upload_preset",
+                uploadPreset
             );
 
+
+            const response =
+                await fetch(
+                    `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+                    {
+                        method:
+                            "POST",
+
+                        body:
+                            formData
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !response.ok ||
+                !data.secure_url
+            ) {
+
+                throw new Error(
+                    data.error?.message ||
+                    "فشل رفع الصورة."
+                );
+            }
+
+
+            return data.secure_url;
         }
 
 
 
         /* =====================================================
-           COLORS
+           MAIN IMAGE PREVIEW
         ===================================================== */
 
-        function renderColors() {
-
-            colorsList.innerHTML =
-                "";
-
-
-            editingColors.forEach(
-                (color,index) => {
-
-                    const tag =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    tag.className =
-                        "tag";
-
-
-                    tag.innerHTML = `
-
-                        <span
-                            class="color-dot"
-                            style="
-                                background:
-                                ${escapeHtml(
-                                    color.value ||
-                                    "#F47B20"
-                                )};
-                            "
-                        ></span>
-
-
-                        <span>
-                            ${escapeHtml(
-                                color.name
-                            )}
-                        </span>
-
-
-                        <button
-                            class="tag-remove"
-                            type="button"
-                        >
-
-                            <i
-                                class="fa-solid fa-xmark"
-                            ></i>
-
-                        </button>
-
-                    `;
-
-
-                    tag
-                        .querySelector(
-                            ".tag-remove"
-                        )
-                        .addEventListener(
-                            "click",
-                            () => {
-
-                                editingColors.splice(
-                                    index,
-                                    1
-                                );
-
-
-                                renderColors();
-
-                            }
-                        );
-
-
-                    colorsList.appendChild(
-                        tag
-                    );
-
-                }
-            );
-
-        }
-
-
-        document
-            .getElementById(
-                "addColorBtn"
-            )
-            .addEventListener(
-                "click",
-                addColor
-            );
-
-
-        newColorName.addEventListener(
-            "keydown",
-            event => {
-
-                if (
-                    event.key ===
-                    "Enter"
-                ) {
-
-                    event.preventDefault();
-
-                    addColor();
-                }
-
-            }
-        );
-
-
-        function addColor() {
-
-            const name =
-                newColorName.value.trim();
-
-
-            const value =
-                newColorValue.value ||
-                "#F47B20";
-
-
-            if (!name) {
-
-                alert(
-                    "اكتب اسم اللون أولاً."
-                );
-
-                return;
-            }
-
-
-            const exists =
-                editingColors.some(
-                    color =>
-                        color.name
-                            .toLowerCase() ===
-                        name.toLowerCase()
-                );
-
-
-            if (exists) {
-
-                alert(
-                    "هذا اللون موجود بالفعل."
-                );
-
-                return;
-            }
-
-
-            editingColors.push({
-
-                name:
-                    name,
-
-                value:
-                    value
-
-            });
-
-
-            newColorName.value =
-                "";
-
-
-            renderColors();
-
-        }
-
-
-
-        /* =====================================================
-           SIZES
-        ===================================================== */
-
-        function renderSizes() {
-
-            sizesList.innerHTML =
-                "";
-
-
-            editingSizes.forEach(
-                (size,index) => {
-
-                    const tag =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    tag.className =
-                        "tag";
-
-
-                    tag.innerHTML = `
-
-                        <span>
-
-                            <i
-                                class="fa-solid fa-ruler"
-                            ></i>
-
-                            ${escapeHtml(
-                                size
-                            )}
-
-                        </span>
-
-
-                        <button
-                            class="tag-remove"
-                            type="button"
-                        >
-
-                            <i
-                                class="fa-solid fa-xmark"
-                            ></i>
-
-                        </button>
-
-                    `;
-
-
-                    tag
-                        .querySelector(
-                            ".tag-remove"
-                        )
-                        .addEventListener(
-                            "click",
-                            () => {
-
-                                editingSizes.splice(
-                                    index,
-                                    1
-                                );
-
-
-                                renderSizes();
-
-                            }
-                        );
-
-
-                    sizesList.appendChild(
-                        tag
-                    );
-
-                }
-            );
-
-        }
-
-
-        document
-            .getElementById(
-                "addSizeBtn"
-            )
-            .addEventListener(
-                "click",
-                addSize
-            );
-
-
-        newSize.addEventListener(
-            "keydown",
-            event => {
-
-                if (
-                    event.key ===
-                    "Enter"
-                ) {
-
-                    event.preventDefault();
-
-                    addSize();
-                }
-
-            }
-        );
-
-
-        function addSize() {
-
-            const size =
-                newSize.value.trim();
-
-
-            if (!size) {
-
-                alert(
-                    "اكتب القياس أولاً."
-                );
-
-                return;
-            }
-
-
-            const exists =
-                editingSizes.some(
-                    item =>
-                        String(item)
-                            .toLowerCase() ===
-                        size.toLowerCase()
-                );
-
-
-            if (exists) {
-
-                alert(
-                    "هذا القياس موجود بالفعل."
-                );
-
-                return;
-            }
-
-
-            editingSizes.push(
-                size
-            );
-
-
-            newSize.value =
-                "";
-
-
-            renderSizes();
-
-        }
-
-
-
-        /* =====================================================
-           DESCRIPTION EDITOR
-        ===================================================== */
-
-        document
-            .querySelectorAll(
-                ".editor-toolbar button"
-            )
-            .forEach(
-                button => {
-
-                    button.addEventListener(
-                        "click",
-                        function() {
-
-                            descriptionEditor.focus();
-
-
-                            document.execCommand(
-                                this.dataset.command,
-                                false,
-                                null
-                            );
-
-                        }
-                    );
-
-                }
-            );
-
-
-        document
-            .getElementById(
-                "fontName"
-            )
-            .addEventListener(
-                "change",
-                function() {
-
-                    if (this.value) {
-
-                        descriptionEditor.focus();
-
-
-                        document.execCommand(
-                            "fontName",
-                            false,
-                            this.value
-                        );
-
-                    }
-
-                }
-            );
-
-
-        document
-            .getElementById(
-                "fontSize"
-            )
-            .addEventListener(
-                "change",
-                function() {
-
-                    if (this.value) {
-
-                        descriptionEditor.focus();
-
-
-                        document.execCommand(
-                            "fontSize",
-                            false,
-                            this.value
-                        );
-
-                    }
-
-                }
-            );
-
-
-        document
-            .getElementById(
-                "fontColor"
-            )
-            .addEventListener(
-                "input",
-                function() {
-
-                    descriptionEditor.focus();
-
-
-                    document.execCommand(
-                        "foreColor",
-                        false,
-                        this.value
-                    );
-
-                }
-            );
-
-
-
-        /* =====================================================
-           MAIN IMAGES
-        ===================================================== */
-
-        function renderEditImages() {
+        function renderImages() {
 
             editPreview.innerHTML =
                 "";
@@ -5392,15 +4587,13 @@
                             alt="صورة المنتج"
                         >
 
-
                         <button
-                            class="remove-image-btn"
                             type="button"
+                            class="remove-image-btn"
+                            data-index="${index}"
                         >
 
-                            <i
-                                class="fa-solid fa-xmark"
-                            ></i>
+                            <i class="fa-solid fa-xmark"></i>
 
                         </button>
 
@@ -5420,8 +4613,7 @@
                                     1
                                 );
 
-
-                                renderEditImages();
+                                renderImages();
 
                             }
                         );
@@ -5448,56 +4640,35 @@
                         "edit-image-item new-image-item";
 
 
+                    const imageUrl =
+                        URL.createObjectURL(
+                            file
+                        );
+
+
                     item.innerHTML = `
 
                         <img
                             class="edit-preview-image"
+                            src="${imageUrl}"
+                            alt="صورة جديدة"
                         >
-
-
-                        <span
-                            class="new-image-label"
-                        >
-                            صورة جديدة
-                        </span>
-
 
                         <button
-                            class="remove-image-btn"
                             type="button"
+                            class="remove-image-btn"
+                            data-index="${index}"
                         >
 
-                            <i
-                                class="fa-solid fa-xmark"
-                            ></i>
+                            <i class="fa-solid fa-xmark"></i>
 
                         </button>
 
+                        <div class="new-image-label">
+                            جديدة
+                        </div>
+
                     `;
-
-
-                    const img =
-                        item.querySelector(
-                            ".edit-preview-image"
-                        );
-
-
-                    const reader =
-                        new FileReader();
-
-
-                    reader.onload =
-                        event => {
-
-                            img.src =
-                                event.target.result;
-
-                        };
-
-
-                    reader.readAsDataURL(
-                        file
-                    );
 
 
                     item
@@ -5513,10 +4684,7 @@
                                     1
                                 );
 
-
-                                syncSelectedFiles();
-
-                                renderEditImages();
+                                renderImages();
 
                             }
                         );
@@ -5533,78 +4701,17 @@
 
 
 
-        function syncSelectedFiles() {
-
-            const dataTransfer =
-                new DataTransfer();
-
-
-            selectedImages.forEach(
-                file => {
-
-                    dataTransfer.items.add(
-                        file
-                    );
-
-                }
-            );
-
-
-            editImageFile.files =
-                dataTransfer.files;
-        }
-
-
-
-        editImageFile.addEventListener(
-            "change",
-            function() {
-
-                const files =
-                    Array.from(
-                        this.files || []
-                    );
-
-
-                files.forEach(
-                    file => {
-
-                        if (
-                            file.type.startsWith(
-                                "image/"
-                            )
-                        ) {
-
-                            selectedImages.push(
-                                file
-                            );
-
-                        }
-
-                    }
-                );
-
-
-                syncSelectedFiles();
-
-                renderEditImages();
-
-            }
-        );
-
-
-
         /* =====================================================
-           DESCRIPTION IMAGES
+           DESCRIPTIVE IMAGE PREVIEW
         ===================================================== */
 
-        function renderDescriptionImages() {
+        function renderDescriptiveImages() {
 
             descriptionImagesPreview.innerHTML =
                 "";
 
 
-            existingDescriptionImages.forEach(
+            existingDescriptiveImages.forEach(
                 (url,index) => {
 
                     const item =
@@ -5625,15 +4732,13 @@
                             alt="صورة وصفية"
                         >
 
-
                         <button
-                            class="remove-image-btn"
                             type="button"
+                            class="remove-image-btn"
+                            data-index="${index}"
                         >
 
-                            <i
-                                class="fa-solid fa-xmark"
-                            ></i>
+                            <i class="fa-solid fa-xmark"></i>
 
                         </button>
 
@@ -5648,13 +4753,12 @@
                             "click",
                             () => {
 
-                                existingDescriptionImages.splice(
+                                existingDescriptiveImages.splice(
                                     index,
                                     1
                                 );
 
-
-                                renderDescriptionImages();
+                                renderDescriptiveImages();
 
                             }
                         );
@@ -5668,7 +4772,7 @@
             );
 
 
-            selectedDescriptionImages.forEach(
+            selectedDescriptiveImages.forEach(
                 (file,index) => {
 
                     const item =
@@ -5681,56 +4785,35 @@
                         "edit-image-item new-image-item";
 
 
+                    const imageUrl =
+                        URL.createObjectURL(
+                            file
+                        );
+
+
                     item.innerHTML = `
 
                         <img
                             class="edit-preview-image"
+                            src="${imageUrl}"
+                            alt="صورة وصفية جديدة"
                         >
-
-
-                        <span
-                            class="new-image-label"
-                        >
-                            صورة وصفية جديدة
-                        </span>
-
 
                         <button
-                            class="remove-image-btn"
                             type="button"
+                            class="remove-image-btn"
+                            data-index="${index}"
                         >
 
-                            <i
-                                class="fa-solid fa-xmark"
-                            ></i>
+                            <i class="fa-solid fa-xmark"></i>
 
                         </button>
 
+                        <div class="new-image-label">
+                            جديدة
+                        </div>
+
                     `;
-
-
-                    const img =
-                        item.querySelector(
-                            ".edit-preview-image"
-                        );
-
-
-                    const reader =
-                        new FileReader();
-
-
-                    reader.onload =
-                        event => {
-
-                            img.src =
-                                event.target.result;
-
-                        };
-
-
-                    reader.readAsDataURL(
-                        file
-                    );
 
 
                     item
@@ -5741,15 +4824,12 @@
                             "click",
                             () => {
 
-                                selectedDescriptionImages.splice(
+                                selectedDescriptiveImages.splice(
                                     index,
                                     1
                                 );
 
-
-                                syncSelectedDescriptionFiles();
-
-                                renderDescriptionImages();
+                                renderDescriptiveImages();
 
                             }
                         );
@@ -5766,61 +4846,510 @@
 
 
 
-        function syncSelectedDescriptionFiles() {
+        /* =====================================================
+           COLORS
+        ===================================================== */
 
-            const dataTransfer =
-                new DataTransfer();
+        function renderColors() {
+
+            colorsList.innerHTML =
+                "";
 
 
-            selectedDescriptionImages.forEach(
-                file => {
+            editingColors.forEach(
+                (color,index) => {
 
-                    dataTransfer.items.add(
-                        file
+                    let name = "";
+                    let value = "#F47B20";
+
+
+                    if (
+                        typeof color ===
+                        "object"
+                    ) {
+
+                        name =
+                            String(
+                                color.name ||
+                                ""
+                            );
+
+
+                        value =
+                            color.value ||
+                            color.color ||
+                            "#F47B20";
+
+                    }
+                    else {
+
+                        name =
+                            String(
+                                color ||
+                                ""
+                            );
+                    }
+
+
+                    if (!name) {
+                        return;
+                    }
+
+
+                    const tag =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    tag.className =
+                        "tag";
+
+
+                    tag.innerHTML = `
+
+                        <span
+                            class="color-dot"
+                            style="
+                                background:${escapeHtml(value)};
+                            "
+                        ></span>
+
+                        <span>
+                            ${escapeHtml(name)}
+                        </span>
+
+                        <button
+                            type="button"
+                            class="tag-remove"
+                        >
+
+                            <i class="fa-solid fa-xmark"></i>
+
+                        </button>
+
+                    `;
+
+
+                    tag
+                        .querySelector(
+                            ".tag-remove"
+                        )
+                        .addEventListener(
+                            "click",
+                            () => {
+
+                                editingColors.splice(
+                                    index,
+                                    1
+                                );
+
+                                renderColors();
+
+                            }
+                        );
+
+
+                    colorsList.appendChild(
+                        tag
                     );
 
                 }
             );
 
-
-            descriptionImageFile.files =
-                dataTransfer.files;
         }
 
 
 
-        descriptionImageFile.addEventListener(
+        /* =====================================================
+           SIZES
+        ===================================================== */
+
+        function renderSizes() {
+
+            sizesList.innerHTML =
+                "";
+
+
+            editingSizes.forEach(
+                (size,index) => {
+
+                    const value =
+                        typeof size === "object"
+                        ?
+                        size.name || ""
+                        :
+                        String(size || "");
+
+
+                    if (!value) {
+                        return;
+                    }
+
+
+                    const tag =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    tag.className =
+                        "tag";
+
+
+                    tag.innerHTML = `
+
+                        <span>
+                            ${escapeHtml(value)}
+                        </span>
+
+                        <button
+                            type="button"
+                            class="tag-remove"
+                        >
+
+                            <i class="fa-solid fa-xmark"></i>
+
+                        </button>
+
+                    `;
+
+
+                    tag
+                        .querySelector(
+                            ".tag-remove"
+                        )
+                        .addEventListener(
+                            "click",
+                            () => {
+
+                                editingSizes.splice(
+                                    index,
+                                    1
+                                );
+
+                                renderSizes();
+
+                            }
+                        );
+
+
+                    sizesList.appendChild(
+                        tag
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /* =====================================================
+           OPEN EDIT MODAL
+        ===================================================== */
+
+        async function openEditModal(
+            productId
+        ) {
+
+            const product =
+                allProducts.find(
+                    item =>
+                        item.id ===
+                        productId
+                );
+
+
+            if (!product) {
+
+                showError(
+                    "لم يتم العثور على المنتج."
+                );
+
+                return;
+            }
+
+
+            editingProductId =
+                productId;
+
+
+            editName.value =
+                product.name || "";
+
+
+            editPrice.value =
+                product.price ?? "";
+
+
+            editOldPrice.value =
+                product.oldPrice ?? "";
+
+
+            /*
+             * التصنيف:
+             * نعتمد أولًا على categoryId
+             * ثم categoryName
+             * ثم category للمنتجات القديمة
+             */
+
+            const selectedCategoryId =
+                String(
+                    product.categoryId ||
+                    ""
+                ).trim();
+
+
+            const selectedCategoryName =
+                String(
+                    product.categoryName ||
+                    product.category ||
+                    ""
+                ).trim();
+
+
+            renderCategoryOptions(
+                selectedCategoryId,
+                selectedCategoryName
+            );
+
+
+            /*
+             * الوصف
+             */
+
+            descriptionEditor.innerHTML =
+                product.description ||
+                "";
+
+
+            /*
+             * الألوان
+             */
+
+            editingColors =
+                Array.isArray(
+                    product.colors
+                )
+                ?
+                JSON.parse(
+                    JSON.stringify(
+                        product.colors
+                    )
+                )
+                :
+                [];
+
+
+            /*
+             * القياسات
+             */
+
+            editingSizes =
+                Array.isArray(
+                    product.sizes
+                )
+                ?
+                JSON.parse(
+                    JSON.stringify(
+                        product.sizes
+                    )
+                )
+                :
+                [];
+
+
+            renderColors();
+
+            renderSizes();
+
+
+            /*
+             * الصور الرئيسية
+             */
+
+            existingImages =
+                getProductImages(
+                    product
+                );
+
+
+            selectedImages = [];
+
+
+            editImageFile.value =
+                "";
+
+
+            renderImages();
+
+
+            /*
+             * الصور الوصفية
+             *
+             * الحقل الصحيح:
+             * descriptiveImages
+             */
+
+            existingDescriptiveImages =
+                [];
+
+
+            if (
+                Array.isArray(
+                    product.descriptiveImages
+                )
+            ) {
+
+                existingDescriptiveImages =
+                    [
+                        ...product.descriptiveImages
+                    ]
+                    .filter(Boolean);
+
+            }
+
+
+            /*
+             * توافق مع البيانات القديمة
+             * إن وجدت
+             */
+
+            else if (
+                Array.isArray(
+                    product.descriptionImages
+                )
+            ) {
+
+                existingDescriptiveImages =
+                    [
+                        ...product.descriptionImages
+                    ]
+                    .filter(Boolean);
+
+            }
+
+
+            selectedDescriptiveImages =
+                [];
+
+
+            descriptionImageFile.value =
+                "";
+
+
+            /*
+             * الظهور للزبون:
+             * إذا لم توجد القيمة القديمة
+             * يكون الافتراضي true
+             */
+
+            descriptiveImagesVisible.checked =
+                product.descriptiveImagesVisible !==
+                false;
+
+
+            renderDescriptiveImages();
+
+
+            editModal.classList.add(
+                "active"
+            );
+
+
+            document.body.style.overflow =
+                "hidden";
+
+        }
+
+
+
+        /* =====================================================
+           CLOSE EDIT MODAL
+        ===================================================== */
+
+        function closeEditModal() {
+
+            editModal.classList.remove(
+                "active"
+            );
+
+
+            document.body.style.overflow =
+                "";
+
+
+            editingProductId =
+                null;
+
+
+            existingImages = [];
+
+            selectedImages = [];
+
+
+            existingDescriptiveImages = [];
+
+            selectedDescriptiveImages = [];
+
+
+            editingColors = [];
+
+            editingSizes = [];
+
+
+            editImageFile.value =
+                "";
+
+
+            descriptionImageFile.value =
+                "";
+
+
+            renderImages();
+
+            renderDescriptiveImages();
+
+        }
+
+
+
+        /* =====================================================
+           MAIN IMAGE FILES
+        ===================================================== */
+
+        editImageFile.addEventListener(
             "change",
-            function() {
+            event => {
 
                 const files =
                     Array.from(
-                        this.files || []
+                        event.target.files ||
+                        []
                     );
 
 
-                files.forEach(
-                    file => {
+                if (!files.length) {
+                    return;
+                }
 
-                        if (
-                            file.type.startsWith(
-                                "image/"
-                            )
-                        ) {
 
-                            selectedDescriptionImages.push(
-                                file
-                            );
-
-                        }
-
-                    }
+                selectedImages.push(
+                    ...files
                 );
 
 
-                syncSelectedDescriptionFiles();
+                renderImages();
 
-                renderDescriptionImages();
+
+                /*
+                 * حتى يستطيع المستخدم اختيار
+                 * نفس الملف مرة أخرى
+                 */
+
+                editImageFile.value =
+                    "";
 
             }
         );
@@ -5828,85 +5357,281 @@
 
 
         /* =====================================================
-           CLOUDINARY
+           DESCRIPTIVE IMAGE FILES
         ===================================================== */
 
-        async function uploadToCloudinary(
-            file
-        ) {
+        descriptionImageFile.addEventListener(
+            "change",
+            event => {
 
-            const formData =
-                new FormData();
-
-
-            formData.append(
-                "file",
-                file
-            );
+                const files =
+                    Array.from(
+                        event.target.files ||
+                        []
+                    );
 
 
-            formData.append(
-                "upload_preset",
-                "gglam_products"
-            );
+                if (!files.length) {
+                    return;
+                }
 
 
-            const response =
-                await fetch(
-
-                    "https://api.cloudinary.com/v1_1/g82dvrkr/image/upload",
-
-                    {
-
-                        method:
-                            "POST",
-
-                        body:
-                            formData
-
-                    }
+                selectedDescriptiveImages.push(
+                    ...files
                 );
 
 
-            if (!response.ok) {
+                renderDescriptiveImages();
 
-                throw new Error(
-                    "فشل رفع الصورة إلى Cloudinary."
-                );
+
+                descriptionImageFile.value =
+                    "";
+
             }
-
-
-            const data =
-                await response.json();
-
-
-            if (!data.secure_url) {
-
-                throw new Error(
-                    "لم يتم الحصول على رابط الصورة من Cloudinary."
-                );
-            }
-
-
-            return data.secure_url;
-        }
+        );
 
 
 
         /* =====================================================
-           SAVE EDIT
+           ADD COLOR
         ===================================================== */
 
-        saveEdit.addEventListener(
+        addColorBtn.addEventListener(
             "click",
-            saveEditedProduct
+            () => {
+
+                const name =
+                    newColorName.value
+                        .trim();
+
+
+                const value =
+                    newColorValue.value ||
+                    "#F47B20";
+
+
+                if (!name) {
+
+                    alert(
+                        "اكتب اسم اللون أولًا."
+                    );
+
+                    newColorName.focus();
+
+                    return;
+                }
+
+
+                const exists =
+                    editingColors.some(
+                        color => {
+
+                            const colorName =
+                                typeof color ===
+                                "object"
+                                ?
+                                color.name ||
+                                ""
+                                :
+                                color;
+
+
+                            return (
+                                normalizeCategoryName(
+                                    colorName
+                                ) ===
+                                normalizeCategoryName(
+                                    name
+                                )
+                            );
+                        }
+                    );
+
+
+                if (exists) {
+
+                    alert(
+                        "هذا اللون مضاف بالفعل."
+                    );
+
+                    return;
+                }
+
+
+                editingColors.push({
+
+                    name,
+
+                    value
+
+                });
+
+
+                newColorName.value =
+                    "";
+
+
+                renderColors();
+
+
+                newColorName.focus();
+
+            }
         );
 
 
+
+        /* =====================================================
+           ENTER COLOR
+        ===================================================== */
+
+        newColorName.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key ===
+                    "Enter"
+                ) {
+
+                    event.preventDefault();
+
+                    addColorBtn.click();
+                }
+
+            }
+        );
+
+
+
+        /* =====================================================
+           ADD SIZE
+        ===================================================== */
+
+        addSizeBtn.addEventListener(
+            "click",
+            () => {
+
+                const value =
+                    newSize.value
+                        .trim();
+
+
+                if (!value) {
+
+                    alert(
+                        "اكتب القياس أولًا."
+                    );
+
+                    newSize.focus();
+
+                    return;
+                }
+
+
+                const exists =
+                    editingSizes.some(
+                        size => {
+
+                            const sizeName =
+                                typeof size ===
+                                "object"
+                                ?
+                                size.name ||
+                                ""
+                                :
+                                size;
+
+
+                            return (
+                                normalizeCategoryName(
+                                    sizeName
+                                ) ===
+                                normalizeCategoryName(
+                                    value
+                                )
+                            );
+                        }
+                    );
+
+
+                if (exists) {
+
+                    alert(
+                        "هذا القياس مضاف بالفعل."
+                    );
+
+                    return;
+                }
+
+
+                editingSizes.push(
+                    value
+                );
+
+
+                newSize.value =
+                    "";
+
+
+                renderSizes();
+
+
+                newSize.focus();
+
+            }
+        );
+
+
+
+        /* =====================================================
+           ENTER SIZE
+        ===================================================== */
+
+        newSize.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key ===
+                    "Enter"
+                ) {
+
+                    event.preventDefault();
+
+                    addSizeBtn.click();
+                }
+
+            }
+        );
+
+
+
+        /* =====================================================
+           SAVE EDITED PRODUCT
+        ===================================================== */
 
         async function saveEditedProduct() {
 
             if (!editingProductId) {
+
+                return;
+            }
+
+
+            const product =
+                allProducts.find(
+                    item =>
+                        item.id ===
+                        editingProductId
+                );
+
+
+            if (!product) {
+
+                showError(
+                    "المنتج غير موجود."
+                );
 
                 return;
             }
@@ -5923,174 +5648,225 @@
 
 
             const oldPrice =
-                editOldPrice.value !== ""
+                editOldPrice.value === ""
                 ?
+                0
+                :
                 Number(
                     editOldPrice.value
-                )
-                :
-                null;
+                );
 
 
-            const category =
+            /*
+             * التصنيف الصحيح
+             */
+
+            const selectedCategoryId =
                 editCategory.value.trim();
+
+
+            const selectedCategory =
+                currentCategories.find(
+                    category =>
+                        category.id ===
+                        selectedCategoryId
+                );
+
+
+            let categoryName =
+                selectedCategory
+                ?
+                selectedCategory.name
+                :
+                "";
+
+
+            /*
+             * حماية إضافية في حالة وجود
+             * التصنيف في select ولكن لم يعد
+             * موجودًا في currentCategories
+             */
+
+            if (
+                !categoryName &&
+                selectedCategoryId
+            ) {
+
+                const selectedOption =
+                    editCategory.options[
+                        editCategory.selectedIndex
+                    ];
+
+
+                categoryName =
+                    selectedOption
+                    ?
+                    selectedOption.textContent.trim()
+                    :
+                    "";
+            }
 
 
             if (!name) {
 
                 alert(
-                    "يرجى إدخال اسم المنتج."
+                    "اكتب اسم المنتج."
                 );
+
+                editName.focus();
 
                 return;
             }
 
 
             if (
-                Number.isNaN(price) ||
+                !Number.isFinite(price) ||
                 price < 0
             ) {
 
                 alert(
-                    "يرجى إدخال سعر صحيح."
+                    "أدخل سعرًا صحيحًا."
                 );
 
-                return;
-            }
-
-
-            if (!category) {
-
-                alert(
-                    "يرجى اختيار تصنيف المنتج."
-                );
-
-                return;
-            }
-
-
-            const product =
-                allProducts.find(
-                    p =>
-                        p.id ===
-                        editingProductId
-                );
-
-
-            if (!product) {
-
-                alert(
-                    "المنتج غير موجود."
-                );
+                editPrice.focus();
 
                 return;
             }
 
 
             if (
-                product.ownerUid !==
-                currentOwnerUid
+                oldPrice < 0 ||
+                !Number.isFinite(oldPrice)
             ) {
 
                 alert(
-                    "❌ لا يمكنك تعديل منتج لا يخص متجرك."
+                    "السعر القديم غير صحيح."
                 );
+
+                editOldPrice.focus();
 
                 return;
             }
 
+
+            if (
+                !selectedCategoryId ||
+                !categoryName
+            ) {
+
+                alert(
+                    "اختر تصنيف المنتج."
+                );
+
+                editCategory.focus();
+
+                return;
+            }
+
+
+            /*
+             * الصور الرئيسية
+             */
 
             saveEdit.disabled =
                 true;
 
 
-            saveEdit.innerHTML =
-                `
+            saveEdit.innerHTML = `
 
-                    <i
-                        class="fa-solid fa-spinner fa-spin"
-                    ></i>
+                <i class="fa-solid fa-spinner fa-spin"></i>
 
-                    جاري الحفظ...
+                جاري الحفظ...
 
-                `;
+            `;
 
 
             try {
 
-                /* =================================================
-                   MAIN IMAGES
-                ================================================= */
+                /*
+                 * رفع الصور الرئيسية الجديدة
+                 */
 
-                let finalImages =
-                    [
-                        ...existingImages
-                    ];
+                const uploadedImages =
+                    [];
 
 
                 for (
-                    const file
-                    of selectedImages
+                    const file of
+                    selectedImages
                 ) {
 
                     const url =
-                        await uploadToCloudinary(
+                        await uploadImage(
                             file
                         );
 
 
-                    finalImages.push(
+                    uploadedImages.push(
                         url
                     );
-
                 }
 
 
-                /* =================================================
-                   DESCRIPTION IMAGES
-                ================================================= */
-
-                let finalDescriptionImages =
+                const finalImages =
                     [
-                        ...existingDescriptionImages
-                    ];
+                        ...existingImages,
+                        ...uploadedImages
+                    ]
+                    .filter(Boolean);
+
+
+                /*
+                 * رفع الصور الوصفية الجديدة
+                 */
+
+                const uploadedDescriptiveImages =
+                    [];
 
 
                 for (
-                    const file
-                    of selectedDescriptionImages
+                    const file of
+                    selectedDescriptiveImages
                 ) {
 
                     const url =
-                        await uploadToCloudinary(
+                        await uploadImage(
                             file
                         );
 
 
-                    finalDescriptionImages.push(
+                    uploadedDescriptiveImages.push(
                         url
                     );
-
                 }
 
 
-                const description =
-                    descriptionEditor.innerHTML;
+                const finalDescriptiveImages =
+                    [
+                        ...existingDescriptiveImages,
+                        ...uploadedDescriptiveImages
+                    ]
+                    .filter(Boolean);
 
 
-                const finalColors =
-                    editingColors.map(
-                        color => ({
+                /*
+                 * أول صورة تكون الصورة الرئيسية
+                 */
 
-                            name:
-                                color.name,
+                const mainImage =
+                    finalImages[0] ||
+                    "";
 
-                            value:
-                                color.value
 
-                        })
-                    );
-
+                /*
+                 * حفظ المنتج
+                 *
+                 * مهم:
+                 * categoryId
+                 * categoryName
+                 *
+                 * و storeId الحقيقي
+                 */
 
                 const productRef =
                     doc(
@@ -6100,64 +5876,64 @@
                     );
 
 
-                /*
-                 * مهم:
-                 *
-                 * لا نقوم هنا بإرسال:
-                 *
-                 * stock
-                 * status
-                 * showStock
-                 *
-                 * حتى لا يتم تعديلها.
-                 */
-
-
                 await updateDoc(
                     productRef,
                     {
 
-                        name:
-                            name,
+                        name,
 
-                        price:
-                            price,
+                        price,
 
-                        oldPrice:
-                            oldPrice,
+                        oldPrice,
+
+                        categoryId:
+                            selectedCategoryId,
+
+                        categoryName:
+                            categoryName,
+
+                        /*
+                         * إبقاء category للتوافق
+                         * مع المنتجات القديمة
+                         */
 
                         category:
-                            category,
+                            categoryName,
 
                         description:
-                            description,
+                            descriptionEditor.innerHTML
+                                .trim(),
 
                         colors:
-                            finalColors,
+                            editingColors,
 
                         sizes:
-                            [
-                                ...editingSizes
-                            ],
+                            editingSizes,
 
                         images:
                             finalImages,
 
                         image:
-                            finalImages.length
-                            ?
-                            finalImages[0]
-                            :
-                            "",
+                            mainImage,
 
-                        descriptionImages:
-                            finalDescriptionImages,
+                        descriptiveImages:
+                            finalDescriptiveImages,
+
+                        descriptiveImagesVisible:
+                            descriptiveImagesVisible
+                                ?
+                                descriptiveImagesVisible.checked
+                                :
+                                (
+                                    product.descriptiveImagesVisible !==
+                                    false
+                                ),
 
                         ownerUid:
                             currentOwnerUid,
 
                         storeId:
-                            currentOwnerUid,
+                            currentStoreId,
 
                         updatedAt:
                             serverTimestamp()
@@ -6166,28 +5942,103 @@
                 );
 
 
-                showSuccess(
-                    "✅ تم تعديل المنتج وحفظ جميع التغييرات بنجاح."
+                /*
+                 * تحديث المنتج محليًا
+                 */
+
+                const productIndex =
+                    allProducts.findIndex(
+                        item =>
+                            item.id ===
+                            editingProductId
+                    );
+
+
+                if (
+                    productIndex !== -1
+                ) {
+
+                    allProducts[
+                        productIndex
+                    ] = {
+
+                        ...allProducts[
+                            productIndex
+                        ],
+
+                        name,
+
+                        price,
+
+                        oldPrice,
+
+                        categoryId:
+                            selectedCategoryId,
+
+                        categoryName:
+                            categoryName,
+
+                        category:
+                            categoryName,
+
+                        description:
+                            descriptionEditor.innerHTML
+                                .trim(),
+
+                        colors:
+                            editingColors,
+
+                        sizes:
+                            editingSizes,
+
+                        images:
+                            finalImages,
+
+                        image:
+                            mainImage,
+
+                        descriptiveImages:
+                            finalDescriptiveImages,
+
+                        descriptiveImagesVisible:
+                            descriptiveImagesVisible
+                                ?
+                                descriptiveImagesVisible.checked
+                                :
+                                true
+
+                    };
+
+                }
+
+
+                renderProducts(
+                    allProducts
                 );
 
 
                 closeEditModal();
 
 
-                await loadProducts();
+                showSuccess(
+                    "تم تعديل المنتج بنجاح."
+                );
 
             }
             catch(error) {
 
                 console.error(
-                    "UPDATE ERROR:",
+                    "saveEditedProduct error:",
                     error
                 );
 
 
                 showError(
-                    "❌ حدث خطأ أثناء حفظ المنتج:\n" +
-                    error.message
+                    "تعذر حفظ التعديلات:\n" +
+                    (
+                        error.message ||
+                        "حدث خطأ غير معروف."
+                    )
                 );
 
             }
@@ -6197,16 +6048,13 @@
                     false;
 
 
-                saveEdit.innerHTML =
-                    `
+                saveEdit.innerHTML = `
 
-                        <i
-                            class="fa-solid fa-floppy-disk"
-                        ></i>
+                    <i class="fa-solid fa-floppy-disk"></i>
 
-                        حفظ التعديلات
+                    حفظ التعديلات
 
-                    `;
+                `;
 
             }
 
@@ -6215,102 +6063,7 @@
 
 
         /* =====================================================
-           CLOSE MODAL
-        ===================================================== */
-
-        function closeEditModal() {
-
-            editModal.classList.remove(
-                "active"
-            );
-
-
-            editingProductId =
-                null;
-
-
-            existingImages =
-                [];
-
-
-            selectedImages =
-                [];
-
-
-            existingDescriptionImages =
-                [];
-
-
-            selectedDescriptionImages =
-                [];
-
-
-            editingColors =
-                [];
-
-
-            editingSizes =
-                [];
-
-
-            editImageFile.value =
-                "";
-
-
-            descriptionImageFile.value =
-                "";
-
-
-            editPreview.innerHTML =
-                "";
-
-
-            descriptionImagesPreview.innerHTML =
-                "";
-
-        }
-
-
-        document
-            .getElementById(
-                "closeModal"
-            )
-            .addEventListener(
-                "click",
-                closeEditModal
-            );
-
-
-        document
-            .getElementById(
-                "cancelEdit"
-            )
-            .addEventListener(
-                "click",
-                closeEditModal
-            );
-
-
-        editModal.addEventListener(
-            "click",
-            event => {
-
-                if (
-                    event.target ===
-                    editModal
-                ) {
-
-                    closeEditModal();
-
-                }
-
-            }
-        );
-
-
-
-        /* =====================================================
-           DELETE
+           DELETE PRODUCT
         ===================================================== */
 
         async function deleteProduct(
@@ -6319,8 +6072,8 @@
 
             const product =
                 allProducts.find(
-                    p =>
-                        p.id ===
+                    item =>
+                        item.id ===
                         productId
                 );
 
@@ -6331,26 +6084,9 @@
             }
 
 
-            if (
-                product.ownerUid !==
-                currentOwnerUid
-            ) {
-
-                alert(
-                    "❌ لا يمكنك حذف منتج لا يخص متجرك."
-                );
-
-                return;
-            }
-
-
             const confirmed =
                 confirm(
-                    "هل أنت متأكد من حذف المنتج؟\n\n" +
-                    (
-                        product.name ||
-                        "هذا المنتج"
-                    )
+                    `هل أنت متأكد من حذف المنتج "${product.name || ""}"؟\n\nلا يمكن التراجع عن هذه العملية.`
                 );
 
 
@@ -6370,62 +6106,43 @@
                     );
 
 
-                const snapshot =
-                    await getDoc(
-                        productRef
-                    );
-
-
-                if (
-                    !snapshot.exists()
-                ) {
-
-                    showError(
-                        "المنتج غير موجود."
-                    );
-
-                    return;
-                }
-
-
-                if (
-                    snapshot.data()
-                        .ownerUid !==
-                    currentOwnerUid
-                ) {
-
-                    alert(
-                        "❌ لا يمكنك حذف هذا المنتج."
-                    );
-
-                    return;
-                }
-
-
                 await deleteDoc(
                     productRef
                 );
 
 
-                showSuccess(
-                    "✅ تم حذف المنتج بنجاح."
+                allProducts =
+                    allProducts.filter(
+                        item =>
+                            item.id !==
+                            productId
+                    );
+
+
+                renderProducts(
+                    allProducts
                 );
 
 
-                await loadProducts();
+                showSuccess(
+                    "تم حذف المنتج بنجاح."
+                );
 
             }
             catch(error) {
 
                 console.error(
-                    "DELETE ERROR:",
+                    "deleteProduct error:",
                     error
                 );
 
 
                 showError(
-                    "❌ حدث خطأ أثناء حذف المنتج:\n" +
-                    error.message
+                    "تعذر حذف المنتج:\n" +
+                    (
+                        error.message ||
+                        "حدث خطأ غير معروف."
+                    )
                 );
 
             }
@@ -6435,19 +6152,268 @@
 
 
         /* =====================================================
-           ADD PRODUCT
+           PRODUCT ACTIONS
+        ===================================================== */
+
+        productsContainer.addEventListener(
+            "click",
+            event => {
+
+                const button =
+                    event.target.closest(
+                        "button[data-action]"
+                    );
+
+
+                if (!button) {
+                    return;
+                }
+
+
+                const action =
+                    button.dataset.action;
+
+
+                const productId =
+                    button.dataset.id;
+
+
+                if (
+                    action ===
+                    "edit"
+                ) {
+
+                    openEditModal(
+                        productId
+                    );
+
+                }
+
+
+                if (
+                    action ===
+                    "delete"
+                ) {
+
+                    deleteProduct(
+                        productId
+                    );
+
+                }
+
+            }
+        );
+
+
+
+        /* =====================================================
+           ADD PRODUCT BUTTON
+        ===================================================== */
+
+        addProductBtn.addEventListener(
+            "click",
+            () => {
+
+                window.location.href =
+                    "add-product.html";
+
+            }
+        );
+
+
+
+        /* =====================================================
+           MODAL BUTTONS
+        ===================================================== */
+
+        closeModal.addEventListener(
+            "click",
+            closeEditModal
+        );
+
+
+        cancelEdit.addEventListener(
+            "click",
+            closeEditModal
+        );
+
+
+        saveEdit.addEventListener(
+            "click",
+            saveEditedProduct
+        );
+
+
+
+        /* =====================================================
+           CLICK OUTSIDE MODAL
+        ===================================================== */
+
+        editModal.addEventListener(
+            "click",
+            event => {
+
+                if (
+                    event.target ===
+                    editModal
+                ) {
+
+                    closeEditModal();
+                }
+
+            }
+        );
+
+
+
+        /* =====================================================
+           ESCAPE KEY
+        ===================================================== */
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key ===
+                    "Escape" &&
+                    editModal.classList.contains(
+                        "active"
+                    )
+                ) {
+
+                    closeEditModal();
+                }
+
+            }
+        );
+
+
+
+        /* =====================================================
+           EDITOR
+        ===================================================== */
+
+        document
+            .querySelectorAll(
+                ".editor-toolbar button[data-command]"
+            )
+            .forEach(
+                button => {
+
+                    button.addEventListener(
+                        "click",
+                        () => {
+
+                            const command =
+                                button.dataset.command;
+
+
+                            descriptionEditor.focus();
+
+
+                            document.execCommand(
+                                command,
+                                false,
+                                null
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+
+        /* =====================================================
+           FONT NAME
         ===================================================== */
 
         document
             .getElementById(
-                "addProductBtn"
+                "fontName"
             )
             .addEventListener(
-                "click",
-                () => {
+                "change",
+                event => {
 
-                    window.location.href =
-                        "add-product.html";
+                    if (
+                        !event.target.value
+                    ) {
+
+                        return;
+                    }
+
+
+                    descriptionEditor.focus();
+
+
+                    document.execCommand(
+                        "fontName",
+                        false,
+                        event.target.value
+                    );
+
+                }
+            );
+
+
+
+        /* =====================================================
+           FONT SIZE
+        ===================================================== */
+
+        document
+            .getElementById(
+                "fontSize"
+            )
+            .addEventListener(
+                "change",
+                event => {
+
+                    if (
+                        !event.target.value
+                    ) {
+
+                        return;
+                    }
+
+
+                    descriptionEditor.focus();
+
+
+                    document.execCommand(
+                        "fontSize",
+                        false,
+                        event.target.value
+                    );
+
+                }
+            );
+
+
+
+        /* =====================================================
+           FONT COLOR
+        ===================================================== */
+
+        document
+            .getElementById(
+                "fontColor"
+            )
+            .addEventListener(
+                "input",
+                event => {
+
+                    descriptionEditor.focus();
+
+
+                    document.execCommand(
+                        "foreColor",
+                        false,
+                        event.target.value
+                    );
 
                 }
             );
@@ -6458,145 +6424,86 @@
            LOGOUT
         ===================================================== */
 
-        document
-            .getElementById(
-                "logoutBtn"
-            )
-            .addEventListener(
-                "click",
-                async event => {
+        logoutBtn.addEventListener(
+            "click",
+            async event => {
 
-                    event.preventDefault();
+                event.preventDefault();
 
 
-                    const confirmed =
-                        confirm(
-                            "هل تريد تسجيل الخروج؟"
-                        );
+                const confirmed =
+                    confirm(
+                        "هل تريد تسجيل الخروج؟"
+                    );
 
 
-                    if (!confirmed) {
-
-                        return;
-                    }
-
-
-                    try {
-
-                        await signOut(
-                            auth
-                        );
+                if (!confirmed) {
+                    return;
+                }
 
 
-                        window.location.href =
-                            "login.html";
+                try {
 
-                    }
-                    catch(error) {
-
-                        console.error(
-                            error
-                        );
+                    await signOut(
+                        auth
+                    );
 
 
-                        showError(
-                            "❌ تعذر تسجيل الخروج."
-                        );
-
-                    }
+                    window.location.href =
+                        "store-login.html";
 
                 }
-            );
+                catch(error) {
+
+                    console.error(
+                        error
+                    );
+
+
+                    showError(
+                        "تعذر تسجيل الخروج."
+                    );
+                }
+
+            }
+        );
 
 
 
         /* =====================================================
-           SUCCESS
+           AUTH
         ===================================================== */
 
-        function showSuccess(
-            message
-        ) {
+        onAuthStateChanged(
+            auth,
+            async user => {
 
-            const success =
-                document.getElementById(
-                    "successMessage"
-                );
+                if (!user) {
 
+                    window.location.href =
+                        "store-login.html";
 
-            const error =
-                document.getElementById(
-                    "errorMessage"
-                );
+                    return;
+                }
 
 
-            success.textContent =
-                message;
+                currentUser =
+                    user;
 
 
-            success.style.display =
-                "block";
+                currentOwnerUid =
+                    user.uid;
 
 
-            error.style.display =
-                "none";
+                currentOwnerEmail =
+                    user.email ||
+                    "";
 
 
-            setTimeout(
-                () => {
+                await loadStore();
 
-                    success.style.display =
-                        "none";
-
-                },
-                3500
-            );
-
-        }
-
-
-
-        /* =====================================================
-           ERROR
-        ===================================================== */
-
-        function showError(
-            message
-        ) {
-
-            const error =
-                document.getElementById(
-                    "errorMessage"
-                );
-
-
-            const success =
-                document.getElementById(
-                    "successMessage"
-                );
-
-
-            error.textContent =
-                message;
-
-
-            error.style.display =
-                "block";
-
-
-            success.style.display =
-                "none";
-
-        }
-
-
-
-        /* =====================================================
-           INITIAL
-        ===================================================== */
-
-        topStoreName.textContent =
-            "جاري تحميل المتجر...";
+            }
+        );
 
     </script>
 
