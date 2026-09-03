@@ -1917,7 +1917,7 @@ header {
 
 
 <!-- =====================================================
-     FIREBASE & SCRIPT LOGIC
+     FIREBASE
 ===================================================== -->
 
 <script type="module">
@@ -2046,21 +2046,6 @@ const categoriesContainer =
         "categoriesContainer"
     );
 
-const menuBtn =
-    document.getElementById(
-        "menuBtn"
-    );
-
-const sidebar =
-    document.getElementById(
-        "sidebar"
-    );
-
-const overlay =
-    document.getElementById(
-        "overlay"
-    );
-
 
 /* =====================================================
    STORE IDENTIFIER
@@ -2123,39 +2108,6 @@ let currentCategoryId =
     "all";
 
 let currentStore = null;
-
-
-/* =====================================================
-   SIDEBAR UI TOGGLES
-===================================================== */
-
-function openSidebar() {
-
-    if (sidebar) sidebar.classList.add("active");
-
-    if (overlay) overlay.classList.add("active");
-
-}
-
-function closeSidebar() {
-
-    if (sidebar) sidebar.classList.remove("active");
-
-    if (overlay) overlay.classList.remove("active");
-
-}
-
-if (menuBtn) {
-
-    menuBtn.addEventListener("click", openSidebar);
-
-}
-
-if (overlay) {
-
-    overlay.addEventListener("click", closeSidebar);
-
-}
 
 
 /* =====================================================
@@ -3231,37 +3183,6 @@ function updateNavigationLinks() {
 
 
 /* =====================================================
-   SHOW ERROR
-===================================================== */
-
-function showStoreError(msg) {
-
-    if (productsContainer) {
-
-        productsContainer.innerHTML = `
-
-            <div class="empty">
-
-                <svg class="empty-icon" viewBox="0 0 24 24">
-
-                    <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
-
-                    <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-
-                </svg>
-
-                <h2>${escapeHtml(msg)}</h2>
-
-            </div>
-
-        `;
-
-    }
-
-}
-
-
-/* =====================================================
    LOAD STORE
 ===================================================== */
 
@@ -3303,6 +3224,11 @@ async function loadStore() {
 
         currentStore =
             storeSnap.data();
+
+        /*
+         * مهم:
+         * storeSnap.id هو storeId الحقيقي.
+         */
 
         storeUid =
             storeSnap.id;
@@ -3457,11 +3383,22 @@ async function loadStore() {
 
 
 /* =====================================================
-   LOAD CATEGORIES & PRODUCTS INTEGRATION
-   (عرض التصنيفات المضافة والموجودة بالمنتجات ديناميكيًا)
+   LOAD CATEGORIES
 ===================================================== */
 
 async function loadCategories() {
+
+    categoriesContainer.innerHTML = `
+
+        <button
+            type="button"
+            class="category-btn active"
+            data-category-id="all"
+        >
+            الكل
+        </button>
+
+    `;
 
     try {
 
@@ -3469,7 +3406,10 @@ async function loadCategories() {
             return;
         }
 
-        // 1. جلب التصنيفات المضافة بشكل مباشر في مجموعة categories
+        /*
+         * storeId هو المعرّف الأساسي للمتجر.
+         */
+
         const categoriesQuery =
             query(
                 collection(
@@ -3488,7 +3428,7 @@ async function loadCategories() {
                 categoriesQuery
             );
 
-        const categoryMap = new Map();
+        allCategories = [];
 
         snapshot.forEach(
             categoryDoc => {
@@ -3505,54 +3445,29 @@ async function loadCategories() {
                         ""
                     ).trim();
 
-                if (name) {
-
-                    const id = categoryDoc.id || name;
-
-                    categoryMap.set(name, {
-                        id: id,
-                        name: name
-                    });
-
+                if (!name) {
+                    return;
                 }
+
+                allCategories.push({
+
+                    id:
+                        categoryDoc.id,
+
+                    name:
+                        name,
+
+                    storeId:
+                        data.storeId ||
+                        storeUid,
+
+                    ownerUid:
+                        data.ownerUid || ""
+
+                });
 
             }
         );
-
-        // 2. استخراج التصنيفات من المنتجات كدعم للتصنيفات المضافة عند إدخال كل منتج
-        if (Array.isArray(allProducts)) {
-
-            allProducts.forEach(prod => {
-
-                const categoryValue =
-                    prod.category
-                    ||
-                    prod.categoryName
-                    ||
-                    prod.categoryId
-                    ||
-                    "";
-
-                if (categoryValue && typeof categoryValue === "string") {
-
-                    const name = categoryValue.trim();
-
-                    if (name && !categoryMap.has(name)) {
-
-                        categoryMap.set(name, {
-                            id: name,
-                            name: name
-                        });
-
-                    }
-
-                }
-
-            });
-
-        }
-
-        allCategories = Array.from(categoryMap.values());
 
         allCategories.sort(
             (a,b) =>
@@ -3613,21 +3528,9 @@ function renderCategories() {
     allButton.textContent =
         "الكل";
 
-    allButton.addEventListener("click", () => {
-
-        selectCategory("all");
-
-    });
-
     categoriesContainer.appendChild(
         allButton
     );
-
-    if (allCategories.length === 0) {
-
-        return;
-
-    }
 
     allCategories.forEach(
         category => {
@@ -3654,12 +3557,6 @@ function renderCategories() {
             button.textContent =
                 category.name;
 
-            button.addEventListener("click", () => {
-
-                selectCategory(category.id);
-
-            });
-
             categoriesContainer.appendChild(
                 button
             );
@@ -3671,31 +3568,305 @@ function renderCategories() {
 
 
 /* =====================================================
-   SELECT CATEGORY
+   PRODUCT CATEGORY MATCH
 ===================================================== */
 
-function selectCategory(categoryId) {
+function productMatchesCategory(
+    product,
+    categoryId
+) {
 
-    currentCategoryId = categoryId;
+    if (categoryId === "all") {
+        return true;
+    }
 
-    const buttons =
-        categoriesContainer.querySelectorAll(".category-btn");
+    /*
+     * الربط الأساسي:
+     * product.categoryId == category.id
+     */
 
-    buttons.forEach(btn => {
+    if (
+        String(
+            product.categoryId || ""
+        )
+        ===
+        String(
+            categoryId
+        )
+    ) {
 
-        if (btn.dataset.categoryId === String(categoryId)) {
+        return true;
 
-            btn.classList.add("active");
+    }
 
-        } else {
+    /*
+     * توافق مع المنتجات القديمة
+     * التي لا تحتوي categoryId.
+     */
 
-            btn.classList.remove("active");
+    const category =
+        allCategories.find(
+            item =>
+                String(item.id)
+                ===
+                String(categoryId)
+        );
+
+    if (
+        category
+        &&
+        String(
+            product.categoryName
+            ||
+            product.category
+            ||
+            ""
+        ).trim()
+        ===
+        String(
+            category.name
+        ).trim()
+    ) {
+
+        return true;
+
+    }
+
+    return false;
+
+}
+
+
+/* =====================================================
+   FILTER PRODUCTS
+===================================================== */
+
+function getFilteredProducts() {
+
+    const keyword =
+        String(
+            searchInput.value || ""
+        )
+        .toLowerCase()
+        .trim();
+
+    return allProducts.filter(
+        product => {
+
+            if (
+                !productMatchesCategory(
+                    product,
+                    currentCategoryId
+                )
+            ) {
+
+                return false;
+
+            }
+
+            if (!keyword) {
+                return true;
+            }
+
+            const name =
+                String(
+                    product.name || ""
+                )
+                .toLowerCase();
+
+            const description =
+                String(
+                    product.description || ""
+                )
+                .toLowerCase();
+
+            const categoryName =
+                String(
+                    product.categoryName
+                    ||
+                    product.category
+                    ||
+                    ""
+                )
+                .toLowerCase();
+
+            return (
+                name.includes(keyword)
+                ||
+                description.includes(keyword)
+                ||
+                categoryName.includes(keyword)
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   CATEGORY CLICK
+===================================================== */
+
+categoriesContainer.addEventListener(
+    "click",
+    function(event) {
+
+        const button =
+            event.target.closest(
+                ".category-btn"
+            );
+
+        if (!button) {
+            return;
+        }
+
+        currentCategoryId =
+            button.dataset.categoryId ||
+            "all";
+
+        categoriesContainer
+            .querySelectorAll(
+                ".category-btn"
+            )
+            .forEach(
+                item => {
+
+                    item.classList.toggle(
+                        "active",
+                        item === button
+                    );
+
+                }
+            );
+
+        renderProducts(
+            getFilteredProducts()
+        );
+
+        const productsTop =
+            productsContainer.getBoundingClientRect().top
+            +
+            window.scrollY
+            -
+            100;
+
+        window.scrollTo({
+            top:Math.max(
+                0,
+                productsTop
+            ),
+            behavior:"smooth"
+        });
+
+    }
+);
+
+
+/* =====================================================
+   PRODUCT DATE
+===================================================== */
+
+function getProductCreatedTime(product) {
+
+    const value =
+        product.createdAt;
+
+    if (!value) {
+        return 0;
+    }
+
+    /*
+     * Firestore Timestamp
+     */
+
+    if (
+        typeof value.toMillis === "function"
+    ) {
+
+        return value.toMillis();
+
+    }
+
+    /*
+     * JS Date
+     */
+
+    if (
+        value instanceof Date
+    ) {
+
+        return value.getTime();
+
+    }
+
+    /*
+     * Firebase Timestamp-like object
+     * { seconds, nanoseconds }
+     */
+
+    if (
+        typeof value === "object"
+        &&
+        typeof value.seconds === "number"
+    ) {
+
+        return (
+            value.seconds * 1000
+            +
+            Math.floor(
+                Number(
+                    value.nanoseconds || 0
+                ) / 1000000
+            )
+        );
+
+    }
+
+    /*
+     * رقم أو تاريخ نصي
+     */
+
+    if (
+        typeof value === "number"
+    ) {
+
+        /*
+         * إذا كان بالثواني نحوله
+         * إلى milliseconds.
+         */
+
+        return value < 100000000000
+            ? value * 1000
+            : value;
+
+    }
+
+    if (
+        typeof value === "string"
+    ) {
+
+        const parsed =
+            Date.parse(value);
+
+        if (!Number.isNaN(parsed)) {
+            return parsed;
+        }
+
+        const numeric =
+            Number(value);
+
+        if (!Number.isNaN(numeric)) {
+
+            return numeric < 100000000000
+                ? numeric * 1000
+                : numeric;
 
         }
 
-    });
+    }
 
-    renderProducts();
+    return 0;
 
 }
 
@@ -3708,31 +3879,90 @@ async function loadProducts() {
 
     try {
 
-        if (!storeUid) {
+        productsContainer.innerHTML = `
 
-            return;
+            <div class="loading">
+
+                <svg>
+                    <use href="#icon-loader"></use>
+                </svg>
+
+                <div>
+                    جاري تحميل المنتجات...
+                </div>
+
+            </div>
+
+        `;
+
+
+        let snapshot;
+
+
+        /*
+         * الاستعلام الأساسي:
+         *
+         * products.storeId == storeUid
+         *
+         * لأن storeId هو المعرّف الأساسي.
+         */
+
+        try {
+
+            const productsQuery =
+                query(
+                    collection(
+                        db,
+                        "products"
+                    ),
+                    where(
+                        "storeId",
+                        "==",
+                        storeUid
+                    )
+                );
+
+            snapshot =
+                await getDocs(
+                    productsQuery
+                );
 
         }
 
-        const productsQuery =
-            query(
-                collection(
-                    db,
-                    "products"
-                ),
-                where(
-                    "storeId",
-                    "==",
-                    storeUid
-                )
+        catch(error) {
+
+            console.warn(
+                "storeId query failed, trying ownerUid:",
+                error
             );
 
-        const snapshot =
-            await getDocs(
-                productsQuery
-            );
+            /*
+             * توافق مع البيانات القديمة فقط.
+             */
+
+            const legacyQuery =
+                query(
+                    collection(
+                        db,
+                        "products"
+                    ),
+                    where(
+                        "ownerUid",
+                        "==",
+                        storeUid
+                    )
+                );
+
+            snapshot =
+                await getDocs(
+                    legacyQuery
+                );
+
+        }
+
 
         allProducts = [];
+
 
         snapshot.forEach(
             productDoc => {
@@ -3752,23 +3982,83 @@ async function loadProducts() {
             }
         );
 
-        // جلب التصنيفات وتحديثها بناءً على المجموعات والمنتجات
-        await loadCategories();
 
-        renderProducts();
+        /*
+         * =================================================
+         * ترتيب المنتجات من الأحدث إلى الأقدم
+         * حسب createdAt
+         * =================================================
+         */
+
+        allProducts.sort(
+            (a,b) =>
+
+                getProductCreatedTime(b)
+                -
+                getProductCreatedTime(a)
+
+        );
+
+
+        renderProducts(
+            getFilteredProducts()
+        );
 
     }
 
     catch(error) {
 
         console.error(
-            "PRODUCTS LOAD ERROR:",
+            "PRODUCTS ERROR:",
             error
         );
 
-        showStoreError("حدث خطأ أثناء تحميل المنتجات.");
+        productsContainer.innerHTML = `
+
+            <div class="empty">
+
+                <svg class="empty-icon">
+                    <use href="#icon-bag"></use>
+                </svg>
+
+                <h2>
+                    حدث خطأ
+                </h2>
+
+                <p style="margin-top:10px;">
+                    تعذر تحميل منتجات المتجر.
+                </p>
+
+            </div>
+
+        `;
 
     }
+
+}
+
+
+/* =====================================================
+   GET PRODUCT IMAGE
+===================================================== */
+
+function getProductImage(product) {
+
+    if (product.image) {
+        return product.image;
+    }
+
+    if (
+        Array.isArray(product.images)
+        &&
+        product.images.length
+    ) {
+
+        return product.images[0];
+
+    }
+
+    return "";
 
 }
 
@@ -3777,60 +4067,36 @@ async function loadProducts() {
    RENDER PRODUCTS
 ===================================================== */
 
-function renderProducts() {
+function renderProducts(products) {
 
-    if (!productsContainer) return;
+    productsContainer.innerHTML =
+        "";
 
-    let filtered = [...allProducts];
-
-    const searchQuery =
-        (searchInput ? searchInput.value : "")
-        .trim()
-        .toLowerCase();
-
-    if (searchQuery) {
-
-        filtered = filtered.filter(p => {
-
-            const title = String(p.title || p.name || "").toLowerCase();
-
-            const desc = String(p.description || "").toLowerCase();
-
-            return title.includes(searchQuery) || desc.includes(searchQuery);
-
-        });
-
-    }
-
-    if (currentCategoryId !== "all") {
-
-        const selectedCatObj = allCategories.find(c => c.id === currentCategoryId);
-
-        const targetCatName = selectedCatObj ? selectedCatObj.name : currentCategoryId;
-
-        filtered = filtered.filter(p => {
-
-            const pCat = String(p.category || p.categoryName || p.categoryId || "").trim();
-
-            return pCat === targetCatName || pCat === currentCategoryId;
-
-        });
-
-    }
-
-    if (filtered.length === 0) {
+    if (!products.length) {
 
         productsContainer.innerHTML = `
 
             <div class="empty">
 
-                <svg class="empty-icon" viewBox="0 0 24 24">
-
-                    <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-
+                <svg class="empty-icon">
+                    <use href="#icon-bag"></use>
                 </svg>
 
-                <h2>لا توجد منتجات مطابقة.</h2>
+                <h2>
+                    لا توجد منتجات
+                </h2>
+
+                <p style="margin-top:8px;">
+
+                    ${
+                        currentCategoryId !== "all"
+                        ?
+                        "لا توجد منتجات في هذا التصنيف حاليًا."
+                        :
+                        "لا توجد منتجات في هذا المتجر حاليًا."
+                    }
+
+                </p>
 
             </div>
 
@@ -3840,131 +4106,706 @@ function renderProducts() {
 
     }
 
-    productsContainer.innerHTML = "";
 
-    filtered.forEach(product => {
+    products.forEach(
+        product => {
 
-        const card = document.createElement("div");
+            const image =
+                getProductImage(
+                    product
+                );
 
-        card.className = "card";
+            const name =
+                product.name ||
+                "منتج";
 
-        const title = escapeHtml(product.title || product.name || "منتج بدون عنوان");
+            const price =
+                Number(
+                    product.price || 0
+                );
 
-        const price = escapeHtml(product.price || product.productPrice || "0");
+            const stock =
+                Number(
+                    product.stock ?? 0
+                );
 
-        const currency = escapeHtml(product.currency || "د.ج");
+            const outOfStock =
+                stock <= 0;
 
-        const image = product.image || product.productImage || (Array.isArray(product.images) ? product.images[0] : "") || "";
+            const card =
+                document.createElement(
+                    "div"
+                );
 
-        const storeParam = encodeURIComponent(storeUid);
+            card.className =
+                "card";
 
-        card.innerHTML = `
+            card.innerHTML = `
 
-            <img src="${escapeHtml(image)}" alt="${title}" loading="lazy" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' fill=\'%23ccc\'><rect width=\'100%\' height=\'100%\'/></svg>'">
+                ${
+                    image
+                    ?
+                    `
+                    <img
+                        src="${escapeHtml(image)}"
+                        alt="${escapeHtml(name)}"
+                        loading="lazy"
+                        onerror="
+                            this.style.display='none';
+                        "
+                    >
+                    `
+                    :
+                    `
+                    <div
+                        style="
+                            aspect-ratio:1/1;
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            background:var(--card-light);
+                            color:var(--muted);
+                        "
+                    >
 
-            <div class="card-content">
+                        <svg
+                            style="
+                                width:50px;
+                                height:50px;
+                                color:var(--accent);
+                            "
+                        >
 
-                <h3>${title}</h3>
+                            <use href="#icon-bag"></use>
 
-                <div class="price">${price} ${currency}</div>
+                        </svg>
 
-                <button type="button" class="details-btn" onclick="window.location.href='product.html?id=${product.id}&store=${storeParam}'">
+                    </div>
+                    `
+                }
 
-                    التفاصيل
+                <div class="card-content">
 
-                </button>
+                    <h3>
+                        ${escapeHtml(name)}
+                    </h3>
 
-                <button type="button" class="add-btn" onclick="window.location.href='product.html?id=${product.id}&store=${storeParam}'">
+                    <div class="price">
 
-                    طلب المنتج
+                        ${price.toLocaleString("fr-DZ")}
+                        DA
 
-                </button>
+                    </div>
 
-            </div>
+                    <button
+                        class="details-btn"
+                        type="button"
+                    >
+                        عرض المنتج
+                    </button>
 
-        `;
+                    <button
+                        class="add-btn"
+                        type="button"
+                        ${
+                            outOfStock
+                            ? "disabled"
+                            : ""
+                        }
+                    >
+                        ${
+                            outOfStock
+                            ? "غير متوفر"
+                            : "أضف إلى السلة"
+                        }
+                    </button>
 
-        productsContainer.appendChild(card);
+                </div>
 
-    });
+            `;
+
+
+            card
+                .querySelector(
+                    ".details-btn"
+                )
+                .addEventListener(
+                    "click",
+                    function() {
+
+                        window.location.href =
+                            "product.html?id=" +
+                            encodeURIComponent(
+                                product.id
+                            ) +
+                            "&store=" +
+                            encodeURIComponent(
+                                storeUid
+                            );
+
+                    }
+                );
+
+
+            const addButton =
+                card.querySelector(
+                    ".add-btn"
+                );
+
+
+            if (!outOfStock) {
+
+                addButton.addEventListener(
+                    "click",
+                    function() {
+
+                        addToCart(
+                            product
+                        );
+
+                    }
+                );
+
+            }
+
+
+            productsContainer.appendChild(
+                card
+            );
+
+        }
+    );
 
 }
 
 
 /* =====================================================
-   SEARCH INPUT LISTENER
+   ADD TO CART
 ===================================================== */
 
-if (searchInput) {
+function addToCart(product) {
 
-    searchInput.addEventListener("input", () => {
+    let cart =
+        JSON.parse(
+            localStorage.getItem(
+                "cart"
+            )
+        )
+        ||
+        [];
 
-        renderProducts();
+    const otherStoreItems =
+        cart.filter(
+            item =>
+                item.storeUid &&
+                item.storeUid !== storeUid
+        );
 
-    });
+    if (otherStoreItems.length) {
+
+        const confirmChange =
+            confirm(
+                "السلة تحتوي منتجات من متجر آخر.\n\n" +
+                "هل تريد إفراغ السلة والشراء من هذا المتجر؟"
+            );
+
+        if (!confirmChange) {
+            return;
+        }
+
+        cart = [];
+
+    }
+
+    const existing =
+        cart.find(
+            item =>
+                item.id === product.id
+                &&
+                item.storeUid === storeUid
+        );
+
+    if (existing) {
+
+        existing.quantity =
+            Number(
+                existing.quantity || 0
+            ) + 1;
+
+    }
+
+    else {
+
+        cart.push({
+
+            id:
+                product.id,
+
+            name:
+                product.name ||
+                "منتج",
+
+            price:
+                Number(
+                    product.price || 0
+                ),
+
+            image:
+                getProductImage(
+                    product
+                ),
+
+            quantity:
+                1,
+
+            color:
+                "بدون لون",
+
+            storeUid:
+                storeUid,
+
+            storeName:
+                currentStore?.storeName
+                ||
+                currentStore?.name
+                ||
+                "G-Glam"
+
+        });
+
+    }
+
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
+
+    localStorage.setItem(
+        "cartStoreId",
+        storeUid
+    );
+
+    updateCartCount();
+
+
+    if (
+        typeof window.fbq === "function"
+    ) {
+
+        window.fbq(
+            "track",
+            "AddToCart",
+            {
+                content_name:
+                    product.name || "",
+
+                content_ids:
+                    [product.id],
+
+                value:
+                    Number(
+                        product.price || 0
+                    ),
+
+                currency:
+                    "DZD"
+            }
+        );
+
+    }
+
+
+    if (
+        typeof window.ttq !== "undefined"
+        &&
+        typeof window.ttq.track === "function"
+    ) {
+
+        window.ttq.track(
+            "AddToCart",
+            {
+
+                content_name:
+                    product.name || "",
+
+                content_id:
+                    product.id,
+
+                value:
+                    Number(
+                        product.price || 0
+                    ),
+
+                currency:
+                    "DZD"
+
+            }
+        );
+
+    }
+
+    alert(
+        "تمت إضافة المنتج إلى السلة"
+    );
 
 }
 
 
 /* =====================================================
-   UPDATE CART COUNT
+   CART COUNT
 ===================================================== */
 
 function updateCartCount() {
 
-    try {
+    let cart =
+        JSON.parse(
+            localStorage.getItem(
+                "cart"
+            )
+        )
+        ||
+        [];
 
-        const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const storeCart =
+        cart.filter(
+            item =>
+                item.storeUid === storeUid
+        );
 
-        let total = 0;
+    let total = 0;
 
-        if (Array.isArray(cart)) {
+    storeCart.forEach(
+        item => {
 
-            cart.forEach(item => {
-
-                total += (Number(item.quantity) || 1);
-
-            });
+            total +=
+                Number(
+                    item.quantity || 0
+                );
 
         }
+    );
 
-        if (cartCount) {
-
-            cartCount.textContent = total;
-
-        }
-
-    } catch (e) {
-
-        if (cartCount) cartCount.textContent = "0";
-
-    }
+    cartCount.textContent =
+        total;
 
 }
 
 
 /* =====================================================
-   INIT APP
+   SEARCH
 ===================================================== */
 
-async function init() {
+searchInput.addEventListener(
+    "input",
+    function() {
 
-    updateCartCount();
-
-    const loaded = await loadStore();
-
-    if (loaded) {
-
-        await loadProducts();
+        renderProducts(
+            getFilteredProducts()
+        );
 
     }
+);
+
+
+/* =====================================================
+   CART BUTTON
+===================================================== */
+
+document
+    .getElementById(
+        "cartButton"
+    )
+    .addEventListener(
+        "click",
+        function() {
+
+            if (!storeUid) {
+                return;
+            }
+
+            window.location.href =
+                "cart.html?store=" +
+                encodeURIComponent(
+                    storeUid
+                );
+
+        }
+    );
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+const sidebar =
+    document.getElementById(
+        "sidebar"
+    );
+
+const overlay =
+    document.getElementById(
+        "overlay"
+    );
+
+const menuBtn =
+    document.getElementById(
+        "menuBtn"
+    );
+
+const contactLink =
+    document.getElementById(
+        "contactLink"
+    );
+
+
+function openSidebar() {
+
+    sidebar.classList.add(
+        "active"
+    );
+
+    overlay.classList.add(
+        "active"
+    );
 
 }
 
-init();
+
+function closeSidebar() {
+
+    sidebar.classList.remove(
+        "active"
+    );
+
+    overlay.classList.remove(
+        "active"
+    );
+
+}
+
+
+menuBtn.addEventListener(
+    "click",
+    openSidebar
+);
+
+
+menuBtn.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Enter"
+            ||
+            event.key === " "
+        ) {
+
+            event.preventDefault();
+
+            openSidebar();
+
+        }
+
+    }
+);
+
+
+overlay.addEventListener(
+    "click",
+    closeSidebar
+);
+
+
+/* =====================================================
+   CONTACT
+===================================================== */
+
+contactLink.addEventListener(
+    "click",
+    function(event) {
+
+        event.preventDefault();
+
+        closeSidebar();
+
+        const socialSection =
+            document.getElementById(
+                "socialSection"
+            );
+
+        if (socialSection) {
+
+            socialSection.scrollIntoView({
+                behavior:"smooth",
+                block:"start"
+            });
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   SIDEBAR LINKS
+===================================================== */
+
+document
+    .querySelectorAll(
+        ".sidebar a:not(#contactLink)"
+    )
+    .forEach(
+        function(link) {
+
+            link.addEventListener(
+                "click",
+                closeSidebar
+            );
+
+        }
+    );
+
+
+/* =====================================================
+   ESCAPE KEY
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            closeSidebar();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   STORE ERROR
+===================================================== */
+
+function showStoreError(message) {
+
+    headerStoreName.textContent =
+        "G-Glam";
+
+    storeNameElement.textContent =
+        "G-Glam";
+
+    categoriesContainer.innerHTML = `
+
+        <div class="category-empty">
+            لا توجد تصنيفات.
+        </div>
+
+    `;
+
+    productsContainer.innerHTML = `
+
+        <div class="empty">
+
+            <svg class="empty-icon">
+                <use href="#icon-store"></use>
+            </svg>
+
+            <h2>
+                ${escapeHtml(message)}
+            </h2>
+
+            <p style="margin-top:10px;">
+                تحقق من رابط المتجر.
+            </p>
+
+        </div>
+
+    `;
+
+    socialLinks.innerHTML = `
+
+        <div class="social-empty">
+            لا توجد معلومات تواصل.
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+updateCartCount();
+
+const storeLoaded =
+    await loadStore();
+
+if (storeLoaded) {
+
+    updateCartCount();
+
+    /*
+     * التصنيفات أولًا.
+     * بعدها المنتجات.
+     */
+
+    await loadCategories();
+
+    await loadProducts();
+
+}
+
+</script>
+
+
+<!-- =====================================================
+     SERVICE WORKER / PWA
+===================================================== -->
+
+<script>
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener(
+        "load",
+        function() {
+
+            navigator.serviceWorker
+                .register(
+                    "service-worker.js"
+                )
+                .then(
+                    function() {
+
+                        console.log(
+                            "G-Glam PWA جاهز"
+                        );
+
+                    }
+                )
+                .catch(
+                    function(error) {
+
+                        console.log(
+                            "خطأ في PWA:",
+                            error
+                        );
+
+                    }
+                );
+
+        }
+    );
+
+}
 
 </script>
 
 </body>
-
 </html>
