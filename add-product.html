@@ -1,4 +1,9 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
 
 <meta
     name="viewport"
@@ -11,6 +16,11 @@
 >
 
 <title>G-Glam | إضافة منتج</title>
+
+<link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+>
 
 <link
     rel="preconnect"
@@ -563,6 +573,32 @@
         margin-bottom: 14px;
     }
 
+    /* =========================
+       PREVIEW CATEGORY
+    ========================= */
+
+    .preview-category {
+        display: inline-flex;
+        align-items: center;
+
+        gap: 6px;
+
+        margin-bottom: 13px;
+
+        padding: 6px 11px;
+
+        border-radius: 20px;
+
+        background: var(--orange-light);
+
+        color: var(--orange-dark);
+
+        border: 1px solid #FFD9BE;
+
+        font-size: 11px;
+        font-weight: 700;
+    }
+
     .preview-price-old {
         display: none;
 
@@ -823,6 +859,303 @@
 
     textarea {
         resize: vertical;
+    }
+
+    /* =========================
+       CATEGORY
+    ========================= */
+
+    .category-row {
+        display: grid;
+
+        grid-template-columns:
+            minmax(0, 1fr)
+            auto;
+
+        gap: 9px;
+
+        align-items: center;
+    }
+
+    .category-row select {
+        min-width: 0;
+    }
+
+    .add-category-btn {
+        height: 48px;
+
+        padding: 0 14px;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        gap: 7px;
+
+        border: 1px solid #FFD9BE;
+
+        border-radius: 11px;
+
+        background: var(--orange-light);
+
+        color: var(--orange-dark);
+
+        font-size: 12px;
+        font-weight: 800;
+
+        cursor: pointer;
+
+        white-space: nowrap;
+
+        transition: .2s;
+    }
+
+    .add-category-btn:hover {
+        background: var(--orange);
+
+        border-color: var(--orange);
+
+        color: white;
+
+        transform: translateY(-1px);
+    }
+
+    .add-category-btn:disabled {
+        opacity: .6;
+
+        cursor: not-allowed;
+
+        transform: none;
+    }
+
+    .category-help {
+        margin-top: 7px;
+
+        color: #999;
+
+        font-size: 11px;
+
+        line-height: 1.7;
+    }
+
+    .category-status {
+        display: none;
+
+        margin-top: 9px;
+
+        padding: 9px 11px;
+
+        border-radius: 9px;
+
+        font-size: 11px;
+    }
+
+    .category-status.warning {
+        display: block;
+
+        background: #FFF7E8;
+
+        color: #9A6700;
+
+        border: 1px solid #F1D89A;
+    }
+
+    /* =========================
+       CATEGORY MODAL
+    ========================= */
+
+    .modal-overlay {
+        position: fixed;
+
+        inset: 0;
+
+        display: none;
+        align-items: center;
+        justify-content: center;
+
+        padding: 20px;
+
+        background: rgba(0, 0, 0, .48);
+
+        z-index: 5000;
+
+        backdrop-filter: blur(3px);
+    }
+
+    .modal-overlay.show {
+        display: flex;
+    }
+
+    .category-modal {
+        width: 100%;
+        max-width: 450px;
+
+        background: white;
+
+        border-radius: 20px;
+
+        border: 1px solid #E5E7EB;
+
+        box-shadow:
+            0 20px 70px rgba(0, 0, 0, .18);
+
+        overflow: hidden;
+
+        animation: modalIn .2s ease;
+    }
+
+    @keyframes modalIn {
+
+        from {
+            opacity: 0;
+            transform: translateY(10px) scale(.98);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+    }
+
+    .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 10px;
+
+        padding: 18px 20px;
+
+        border-bottom: 1px solid var(--border);
+
+        background: #FFFBF8;
+    }
+
+    .modal-title {
+        display: flex;
+        align-items: center;
+
+        gap: 9px;
+
+        font-size: 16px;
+        font-weight: 800;
+    }
+
+    .modal-title i {
+        color: var(--orange);
+    }
+
+    .modal-close {
+        width: 34px;
+        height: 34px;
+
+        border: none;
+
+        border-radius: 50%;
+
+        background: #F3F3F3;
+
+        color: #666;
+
+        cursor: pointer;
+
+        font-size: 14px;
+    }
+
+    .modal-close:hover {
+        background: #FDECEC;
+
+        color: var(--red);
+    }
+
+    .modal-body {
+        padding: 20px;
+    }
+
+    .modal-body label {
+        margin-bottom: 8px;
+    }
+
+    .modal-body input {
+        background: #FAFAFA;
+    }
+
+    .modal-error {
+        display: none;
+
+        margin-top: 10px;
+
+        padding: 9px 11px;
+
+        border-radius: 9px;
+
+        background: #FDECEC;
+
+        border: 1px solid #F0CACA;
+
+        color: var(--red);
+
+        font-size: 12px;
+    }
+
+    .modal-error.show {
+        display: block;
+    }
+
+    .modal-footer {
+        display: flex;
+
+        gap: 9px;
+
+        padding: 0 20px 20px;
+    }
+
+    .modal-cancel,
+    .modal-save {
+        flex: 1;
+
+        height: 45px;
+
+        border-radius: 11px;
+
+        cursor: pointer;
+
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+    .modal-cancel {
+        border: 1px solid var(--border);
+
+        background: white;
+
+        color: #555;
+    }
+
+    .modal-cancel:hover {
+        background: #F5F5F5;
+    }
+
+    .modal-save {
+        border: none;
+
+        background: var(--orange);
+
+        color: white;
+
+        box-shadow:
+            0 6px 15px rgba(244, 123, 32, .18);
+    }
+
+    .modal-save:hover {
+        background: var(--orange-dark);
+    }
+
+    .modal-save:disabled {
+        opacity: .6;
+
+        cursor: not-allowed;
     }
 
     /* =========================
@@ -1325,6 +1658,7 @@
         .form-panel {
             order: 1;
         }
+
     }
 
     @media (max-width: 800px) {
@@ -1349,6 +1683,7 @@
                 15px
                 25px;
         }
+
     }
 
     @media (max-width: 600px) {
@@ -1423,6 +1758,19 @@
         .preview-main-image {
             height: 240px;
         }
+
+        .category-row {
+            grid-template-columns: 1fr;
+        }
+
+        .add-category-btn {
+            width: 100%;
+        }
+
+        .modal-footer {
+            flex-direction: column;
+        }
+
     }
 
     @media (max-width: 400px) {
@@ -1448,11 +1796,17 @@
 
             width: auto;
         }
+
     }
 
 </style>
 
-</head><body><!-- =========================
+</head>
+
+<body>
+
+
+<!-- =========================
      SIDEBAR
 ========================= -->
 
@@ -1711,6 +2065,20 @@
                         الوصف المختصر للمنتج سيظهر هنا.
                     </div>
 
+                    <!-- CATEGORY PREVIEW -->
+
+                    <div
+                        id="previewCategory"
+                        class="preview-category"
+                        style="display:none;"
+                    >
+
+                        <i class="fa-solid fa-layer-group"></i>
+
+                        <span id="previewCategoryText"></span>
+
+                    </div>
+
                     <div
                         id="previewOldPrice"
                         class="preview-price-old"
@@ -1802,7 +2170,9 @@
                 </div>
 
 
-                <!-- PRODUCT BASIC -->
+                <!-- =========================
+                     PRODUCT BASIC
+                ========================= -->
 
                 <div class="form-section">
 
@@ -1850,6 +2220,67 @@
                     </div>
 
 
+                    <!-- =========================
+                         CATEGORY
+                    ========================= -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            تصنيف المنتج
+
+                            <span class="required">
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <div class="category-row">
+
+                            <select
+                                id="categorySelect"
+                            >
+
+                                <option value="">
+                                    جاري تحميل التصنيفات...
+                                </option>
+
+                            </select>
+
+
+                            <button
+                                type="button"
+                                id="addCategoryBtn"
+                                class="add-category-btn"
+                            >
+
+                                <i class="fa-solid fa-plus"></i>
+
+                                إضافة تصنيف
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="category-help">
+
+                            اختر التصنيف الذي ينتمي إليه المنتج.
+                            التصنيفات خاصة بمتجرك فقط.
+
+                        </div>
+
+
+                        <div
+                            id="categoryStatus"
+                            class="category-status"
+                        ></div>
+
+                    </div>
+
+
                     <button
                         type="button"
                         id="aiButton"
@@ -1878,7 +2309,9 @@
                 </div>
 
 
-                <!-- PRICES -->
+                <!-- =========================
+                     PRICES
+                ========================= -->
 
                 <div class="form-section">
 
@@ -1934,7 +2367,9 @@
                 </div>
 
 
-                <!-- DESCRIPTION -->
+                <!-- =========================
+                     DESCRIPTION
+                ========================= -->
 
                 <div class="form-section">
 
@@ -2093,7 +2528,9 @@
                 </div>
 
 
-                <!-- ORIGINAL IMAGES -->
+                <!-- =========================
+                     ORIGINAL IMAGES
+                ========================= -->
 
                 <div class="form-section">
 
@@ -2139,7 +2576,9 @@
                 </div>
 
 
-                <!-- DESCRIPTIVE IMAGES -->
+                <!-- =========================
+                     DESCRIPTIVE IMAGES
+                ========================= -->
 
                 <div class="form-section">
 
@@ -2200,7 +2639,9 @@
                 </div>
 
 
-                <!-- COLORS -->
+                <!-- =========================
+                     COLORS
+                ========================= -->
 
                 <div class="form-section">
 
@@ -2242,7 +2683,9 @@
                 </div>
 
 
-                <!-- SIZES -->
+                <!-- =========================
+                     SIZES
+                ========================= -->
 
                 <div class="form-section">
 
@@ -2284,7 +2727,9 @@
                 </div>
 
 
-                <!-- SUBMIT -->
+                <!-- =========================
+                     SUBMIT
+                ========================= -->
 
                 <button
                     type="button"
@@ -2305,6 +2750,112 @@
     </div>
 
 </main>
+
+
+<!-- =========================
+     CATEGORY MODAL
+========================= -->
+
+<div
+    id="categoryModal"
+    class="modal-overlay"
+>
+
+    <div
+        class="category-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="categoryModalTitle"
+    >
+
+        <div class="modal-header">
+
+            <div
+                id="categoryModalTitle"
+                class="modal-title"
+            >
+
+                <i class="fa-solid fa-layer-group"></i>
+
+                إضافة تصنيف جديد
+
+            </div>
+
+
+            <button
+                type="button"
+                id="closeCategoryModal"
+                class="modal-close"
+                title="إغلاق"
+            >
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <label for="newCategoryName">
+
+                اسم التصنيف
+
+                <span class="required">
+                    *
+                </span>
+
+            </label>
+
+
+            <input
+                id="newCategoryName"
+                type="text"
+                maxlength="60"
+                placeholder="مثال: مستحضرات التجميل"
+                autocomplete="off"
+            >
+
+
+            <div
+                id="categoryModalError"
+                class="modal-error"
+            ></div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                type="button"
+                id="cancelCategoryBtn"
+                class="modal-cancel"
+            >
+
+                إلغاء
+
+            </button>
+
+
+            <button
+                type="button"
+                id="saveCategoryBtn"
+                class="modal-save"
+            >
+
+                <i class="fa-solid fa-plus"></i>
+
+                إضافة التصنيف
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 
 
 <script type="module">
@@ -2459,6 +3010,66 @@
 
 
     /* =====================================================
+       CATEGORY ELEMENTS
+    ===================================================== */
+
+    const categorySelect =
+        document.getElementById(
+            "categorySelect"
+        );
+
+    const addCategoryBtn =
+        document.getElementById(
+            "addCategoryBtn"
+        );
+
+    const categoryStatus =
+        document.getElementById(
+            "categoryStatus"
+        );
+
+    const categoryModal =
+        document.getElementById(
+            "categoryModal"
+        );
+
+    const closeCategoryModal =
+        document.getElementById(
+            "closeCategoryModal"
+        );
+
+    const cancelCategoryBtn =
+        document.getElementById(
+            "cancelCategoryBtn"
+        );
+
+    const saveCategoryBtn =
+        document.getElementById(
+            "saveCategoryBtn"
+        );
+
+    const newCategoryName =
+        document.getElementById(
+            "newCategoryName"
+        );
+
+    const categoryModalError =
+        document.getElementById(
+            "categoryModalError"
+        );
+
+    const previewCategory =
+        document.getElementById(
+            "previewCategory"
+        );
+
+    const previewCategoryText =
+        document.getElementById(
+            "previewCategoryText"
+        );
+
+
+    /* =====================================================
        STORE VARIABLES
     ===================================================== */
 
@@ -2475,6 +3086,13 @@
     let selectedImages = [];
 
     let selectedDescriptiveImages = [];
+
+
+    /* =====================================================
+       CATEGORY VARIABLES
+    ===================================================== */
+
+    let currentCategories = [];
 
 
     /* =====================================================
@@ -2583,12 +3201,6 @@
         .addEventListener(
             "click",
             function () {
-
-                /*
-                 * محاولة فتح تطبيق Gemini
-                 * وإذا لم يكن التطبيق مثبتًا،
-                 * يتم فتح Gemini عبر المتصفح.
-                 */
 
                 const geminiApp =
                     "intent://gemini.google.com/#Intent;" +
@@ -2765,6 +3377,12 @@
             "input",
             updatePreview
         );
+
+
+    categorySelect.addEventListener(
+        "change",
+        updatePreview
+    );
 
 
     descriptionEditor.addEventListener(
@@ -3173,6 +3791,680 @@
 
 
     /* =====================================================
+       CATEGORY - LOAD
+    ===================================================== */
+
+    async function loadCategories() {
+
+        categorySelect.disabled =
+            true;
+
+        addCategoryBtn.disabled =
+            true;
+
+        categorySelect.innerHTML =
+            `
+            <option value="">
+                جاري تحميل التصنيفات...
+            </option>
+            `;
+
+
+        try {
+
+            if (!currentStoreId) {
+
+                throw new Error(
+                    "لم يتم تحديد المتجر."
+                );
+
+            }
+
+
+            const categoriesQuery =
+                query(
+                    collection(
+                        db,
+                        "categories"
+                    ),
+                    where(
+                        "storeId",
+                        "==",
+                        currentStoreId
+                    )
+                );
+
+
+            const snapshot =
+                await getDocs(
+                    categoriesQuery
+                );
+
+
+            currentCategories =
+                snapshot.docs.map(
+                    categoryDoc => {
+
+                        const data =
+                            categoryDoc.data();
+
+                        return {
+
+                            id:
+                                categoryDoc.id,
+
+                            name:
+                                String(
+                                    data.name ||
+                                    ""
+                                ).trim(),
+
+                            storeId:
+                                data.storeId ||
+                                "",
+
+                            ownerUid:
+                                data.ownerUid ||
+                                ""
+
+                        };
+
+                    }
+                )
+                .filter(
+                    category =>
+                        category.name
+                );
+
+
+            currentCategories.sort(
+                function (a, b) {
+
+                    return a.name.localeCompare(
+                        b.name,
+                        "ar"
+                    );
+
+                }
+            );
+
+
+            renderCategorySelect();
+
+
+        } catch (error) {
+
+            console.error(
+                "LOAD CATEGORIES ERROR:",
+                error
+            );
+
+
+            currentCategories =
+                [];
+
+
+            categorySelect.innerHTML =
+                `
+                <option value="">
+                    تعذر تحميل التصنيفات
+                </option>
+                `;
+
+
+            categorySelect.disabled =
+                true;
+
+
+            addCategoryBtn.disabled =
+                false;
+
+
+            showCategoryStatus(
+                "تعذر تحميل التصنيفات. يمكنك محاولة إضافة تصنيف جديد.",
+                "warning"
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       CATEGORY - RENDER
+    ===================================================== */
+
+    function renderCategorySelect(
+        selectedId = ""
+    ) {
+
+        categorySelect.innerHTML =
+            "";
+
+
+        const defaultOption =
+            document.createElement(
+                "option"
+            );
+
+        defaultOption.value =
+            "";
+
+        defaultOption.textContent =
+            "اختر تصنيف المنتج";
+
+
+        categorySelect.appendChild(
+            defaultOption
+        );
+
+
+        currentCategories.forEach(
+            category => {
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+                option.value =
+                    category.id;
+
+                option.textContent =
+                    category.name;
+
+
+                if (
+                    category.id === selectedId
+                ) {
+
+                    option.selected =
+                        true;
+
+                }
+
+
+                categorySelect.appendChild(
+                    option
+                );
+
+            }
+        );
+
+
+        categorySelect.disabled =
+            false;
+
+        addCategoryBtn.disabled =
+            false;
+
+
+        if (!currentCategories.length) {
+
+            categorySelect.innerHTML =
+                `
+                <option value="">
+                    لا توجد تصنيفات بعد
+                </option>
+                `;
+
+
+            categorySelect.disabled =
+                true;
+
+
+            showCategoryStatus(
+                "لا توجد تصنيفات لهذا المتجر. اضغط «إضافة تصنيف» لإنشاء أول تصنيف.",
+                "warning"
+            );
+
+        } else {
+
+            hideCategoryStatus();
+
+        }
+
+
+        updatePreview();
+
+    }
+
+
+    /* =====================================================
+       CATEGORY - STATUS
+    ===================================================== */
+
+    function showCategoryStatus(
+        message,
+        type = "warning"
+    ) {
+
+        categoryStatus.textContent =
+            message;
+
+        categoryStatus.className =
+            "category-status " +
+            type;
+
+    }
+
+
+    function hideCategoryStatus() {
+
+        categoryStatus.textContent =
+            "";
+
+        categoryStatus.className =
+            "category-status";
+
+    }
+
+
+    /* =====================================================
+       CATEGORY - MODAL
+    ===================================================== */
+
+    addCategoryBtn.addEventListener(
+        "click",
+        function () {
+
+            openCategoryModal();
+
+        }
+    );
+
+
+    function openCategoryModal() {
+
+        categoryModal.classList.add(
+            "show"
+        );
+
+
+        categoryModalError.classList.remove(
+            "show"
+        );
+
+
+        categoryModalError.textContent =
+            "";
+
+
+        newCategoryName.value =
+            "";
+
+
+        setTimeout(
+            function () {
+
+                newCategoryName.focus();
+
+            },
+            100
+        );
+
+    }
+
+
+    function closeCategoryModalWindow() {
+
+        categoryModal.classList.remove(
+            "show"
+        );
+
+
+        categoryModalError.classList.remove(
+            "show"
+        );
+
+
+        categoryModalError.textContent =
+            "";
+
+    }
+
+
+    closeCategoryModal.addEventListener(
+        "click",
+        closeCategoryModalWindow
+    );
+
+
+    cancelCategoryBtn.addEventListener(
+        "click",
+        closeCategoryModalWindow
+    );
+
+
+    categoryModal.addEventListener(
+        "click",
+        function (event) {
+
+            if (
+                event.target ===
+                categoryModal
+            ) {
+
+                closeCategoryModalWindow();
+
+            }
+
+        }
+    );
+
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key === "Escape" &&
+                categoryModal.classList.contains(
+                    "show"
+                )
+            ) {
+
+                closeCategoryModalWindow();
+
+            }
+
+        }
+    );
+
+
+    newCategoryName.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                event.preventDefault();
+
+                saveNewCategory();
+
+            }
+
+        }
+    );
+
+
+    saveCategoryBtn.addEventListener(
+        "click",
+        saveNewCategory
+    );
+
+
+    /* =====================================================
+       CATEGORY - CREATE
+    ===================================================== */
+
+    async function saveNewCategory() {
+
+        const user =
+            auth.currentUser;
+
+
+        if (!user) {
+
+            showCategoryModalError(
+                "انتهت جلسة تسجيل الدخول. يرجى تسجيل الدخول من جديد."
+            );
+
+            return;
+
+        }
+
+
+        if (!currentStoreId) {
+
+            showCategoryModalError(
+                "لم يتم تحديد المتجر بعد."
+            );
+
+            return;
+
+        }
+
+
+        const name =
+            newCategoryName.value
+                .trim();
+
+
+        if (!name) {
+
+            showCategoryModalError(
+                "يرجى إدخال اسم التصنيف."
+            );
+
+            newCategoryName.focus();
+
+            return;
+
+        }
+
+
+        if (name.length < 2) {
+
+            showCategoryModalError(
+                "اسم التصنيف قصير جدًا."
+            );
+
+            newCategoryName.focus();
+
+            return;
+
+        }
+
+
+        if (name.length > 60) {
+
+            showCategoryModalError(
+                "اسم التصنيف طويل جدًا."
+            );
+
+            newCategoryName.focus();
+
+            return;
+
+        }
+
+
+        const normalizedName =
+            normalizeCategoryName(
+                name
+            );
+
+
+        const duplicate =
+            currentCategories.find(
+                category =>
+                    normalizeCategoryName(
+                        category.name
+                    ) ===
+                    normalizedName
+            );
+
+
+        if (duplicate) {
+
+            showCategoryModalError(
+                "هذا التصنيف موجود بالفعل."
+            );
+
+            return;
+
+        }
+
+
+        saveCategoryBtn.disabled =
+            true;
+
+
+        saveCategoryBtn.innerHTML =
+            `
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            جاري الحفظ...
+            `;
+
+
+        try {
+
+            const categoryRef =
+                await addDoc(
+                    collection(
+                        db,
+                        "categories"
+                    ),
+                    {
+
+                        name:
+                            name,
+
+                        storeId:
+                            currentStoreId,
+
+                        ownerUid:
+                            user.uid,
+
+                        ownerEmail:
+                            user.email ||
+                            currentUserEmail,
+
+                        storeName:
+                            currentStoreName,
+
+                        createdAt:
+                            serverTimestamp(),
+
+                        updatedAt:
+                            serverTimestamp()
+
+                    }
+                );
+
+
+            const newCategory = {
+
+                id:
+                    categoryRef.id,
+
+                name:
+                    name,
+
+                storeId:
+                    currentStoreId,
+
+                ownerUid:
+                    user.uid
+
+            };
+
+
+            currentCategories.push(
+                newCategory
+            );
+
+
+            currentCategories.sort(
+                function (a, b) {
+
+                    return a.name.localeCompare(
+                        b.name,
+                        "ar"
+                    );
+
+                }
+            );
+
+
+            renderCategorySelect(
+                newCategory.id
+            );
+
+
+            closeCategoryModalWindow();
+
+
+            showSuccess(
+                "تمت إضافة التصنيف بنجاح. تم اختياره للمنتج."
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "CREATE CATEGORY ERROR:",
+                error
+            );
+
+
+            showCategoryModalError(
+                "تعذر إضافة التصنيف: " +
+                error.message
+            );
+
+        } finally {
+
+            saveCategoryBtn.disabled =
+                false;
+
+
+            saveCategoryBtn.innerHTML =
+                `
+                <i class="fa-solid fa-plus"></i>
+                إضافة التصنيف
+                `;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       CATEGORY - NORMALIZE
+    ===================================================== */
+
+    function normalizeCategoryName(
+        value
+    ) {
+
+        return String(
+            value || ""
+        )
+        .trim()
+        .toLocaleLowerCase(
+            "ar"
+        )
+        .replace(
+            /\s+/g,
+            " "
+        );
+
+    }
+
+
+    /* =====================================================
+       CATEGORY - MODAL ERROR
+    ===================================================== */
+
+    function showCategoryModalError(
+        message
+    ) {
+
+        categoryModalError.textContent =
+            message;
+
+        categoryModalError.classList.add(
+            "show"
+        );
+
+    }
+
+
+    /* =====================================================
        PREVIEW
     ===================================================== */
 
@@ -3230,6 +4522,42 @@
             .textContent =
             shortDescription ||
             "الوصف المختصر للمنتج سيظهر هنا.";
+
+
+        /* CATEGORY PREVIEW */
+
+        const selectedCategoryId =
+            categorySelect.value;
+
+
+        const selectedCategory =
+            currentCategories.find(
+                category =>
+                    category.id ===
+                    selectedCategoryId
+            );
+
+
+        if (
+            selectedCategory &&
+            selectedCategory.name
+        ) {
+
+            previewCategory.style.display =
+                "inline-flex";
+
+            previewCategoryText.textContent =
+                selectedCategory.name;
+
+        } else {
+
+            previewCategory.style.display =
+                "none";
+
+            previewCategoryText.textContent =
+                "";
+
+        }
 
 
         const oldPriceElement =
@@ -3792,8 +5120,7 @@
 
 
             /*
-             * عرض المتجر يجب أن يعتمد على storeId
-             * وليس ownerUid.
+             * عرض المتجر يعتمد على storeId.
              */
 
             viewStoreBtn.href =
@@ -3843,6 +5170,14 @@
 
             formContainer.style.display =
                 "block";
+
+
+            /*
+             * تحميل تصنيفات المتجر بعد
+             * التأكد من storeId.
+             */
+
+            await loadCategories();
 
 
         } catch (error) {
@@ -3971,6 +5306,26 @@
                 .trim();
 
 
+        /* CATEGORY */
+
+        const categoryId =
+            categorySelect.value.trim();
+
+
+        const selectedCategory =
+            currentCategories.find(
+                category =>
+                    category.id ===
+                    categoryId
+            );
+
+
+        const categoryName =
+            selectedCategory
+                ? selectedCategory.name
+                : "";
+
+
         const oldPriceInput =
             document
                 .getElementById(
@@ -4035,6 +5390,22 @@
 
 
         if (
+            !categoryId ||
+            !categoryName
+        ) {
+
+            showError(
+                "يرجى اختيار تصنيف للمنتج."
+            );
+
+            categorySelect.focus();
+
+            return;
+
+        }
+
+
+        if (
             !Number.isFinite(price) ||
             price < 0
         ) {
@@ -4083,6 +5454,17 @@
 
             showError(
                 "يرجى اختيار صورة واحدة على الأقل للمنتج."
+            );
+
+            return;
+
+        }
+
+
+        if (!currentStoreId) {
+
+            showError(
+                "لم يتم تحديد المتجر. يرجى إعادة تحميل الصفحة."
             );
 
             return;
@@ -4173,6 +5555,16 @@
 
                     shortDescription:
                         shortDescription,
+
+                    /*
+                     * التصنيف.
+                     */
+
+                    categoryId:
+                        categoryId,
+
+                    categoryName:
+                        categoryName,
 
                     oldPrice:
                         oldPrice,
@@ -4334,6 +5726,15 @@
             true;
 
 
+        /*
+         * إعادة التصنيف إلى الوضع الافتراضي
+         * مع إبقاء التصنيفات موجودة.
+         */
+
+        categorySelect.value =
+            "";
+
+
         updatePreview();
 
     }
@@ -4418,6 +5819,12 @@
             )
             .style.display =
             "none";
+
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
 
     }
 
@@ -4569,10 +5976,11 @@
     ===================================================== */
 
     console.log(
-        "G-Glam Add Product Started"
+        "G-Glam Add Product With Categories Started"
     );
 
 </script>
 
 </body>
+
 </html>
