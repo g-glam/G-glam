@@ -1586,20 +1586,6 @@ header {
 }
 
 
-.add-btn:disabled {
-
-    background:
-        #9CA3AF;
-
-    color:
-        #E5E7EB;
-
-    cursor:
-        not-allowed;
-
-}
-
-
 /* =====================================================
    LOADING
 ===================================================== */
@@ -4036,34 +4022,6 @@ function rgbaFromHex(
 }
 
 
-function getReadableTextColor(hex) {
-
-    const rgb =
-        hexToRgb(hex);
-
-
-    if (!rgb) {
-
-        return "#FFFFFF";
-
-    }
-
-
-    const luminance =
-        (
-            0.299 * rgb.r +
-            0.587 * rgb.g +
-            0.114 * rgb.b
-        );
-
-
-    return luminance > 165
-        ? "#111827"
-        : "#FFFFFF";
-
-}
-
-
 /* =====================================================
    APPLY THEME
 ===================================================== */
@@ -4140,10 +4098,6 @@ function applyStoreTheme(
     );
 
 
-    /* =================================================
-       LEGACY STRING MODE
-    ================================================= */
-
     if (
         typeof themeOrStore === "string"
     ) {
@@ -4178,18 +4132,13 @@ function applyStoreTheme(
             green: "#198754",
             purple: "#7B3FC6",
             pink: "#D94F87",
-
             dark: "#0A1726",
-
             red: "#E63946",
             teal: "#00B4D8",
             gold: "#D4AF37",
-
             luxury: "#D4AF37",
-
             sunset: "#FD1D1D",
             emerald: "#0F5132",
-
             navy: "#0B1F3A",
             brown: "#795548",
             rose: "#BE185D",
@@ -4221,10 +4170,6 @@ function applyStoreTheme(
     }
 
 
-    /* =================================================
-       FIRESTORE STORE
-    ================================================= */
-
     const store =
         themeOrStore || {};
 
@@ -4236,10 +4181,6 @@ function applyStoreTheme(
         .toLowerCase()
         .trim();
 
-
-    /* =================================================
-       CUSTOM GRADIENT
-    ================================================= */
 
     if (
         themeType === "gradient"
@@ -4362,18 +4303,6 @@ function applyStoreTheme(
     }
 
 
-    /* =================================================
-       SOLID THEME
-       
-       settings.html saves:
-       
-       themeType: "solid"
-       theme: "orange"
-       themeColors: ["#F47B20"]
-       
-       لذلك نقرأ themeColors أولًا.
-    ================================================= */
-
     if (
         themeType === "solid"
     ) {
@@ -4404,12 +4333,6 @@ function applyStoreTheme(
             .trim();
 
 
-        /*
-         * إذا كان الاسم من الثيمات
-         * الجاهزة، نستخدم التصميم الكامل
-         * الخاص به.
-         */
-
         if (
             validThemes.includes(
                 savedTheme
@@ -4428,18 +4351,13 @@ function applyStoreTheme(
                 green: "#198754",
                 purple: "#7B3FC6",
                 pink: "#D94F87",
-
                 dark: "#0A1726",
-
                 red: "#E63946",
                 teal: "#00B4D8",
                 gold: "#D4AF37",
-
                 luxury: "#D4AF37",
-
                 sunset: "#FD1D1D",
                 emerald: "#0F5132",
-
                 navy: "#0B1F3A",
                 brown: "#795548",
                 rose: "#BE185D",
@@ -4482,11 +4400,6 @@ function applyStoreTheme(
 
         }
 
-
-        /*
-         * إذا كان لونًا مخصصًا بالفعل،
-         * نستخدم CUSTOM SOLID.
-         */
 
         if (solidColor) {
 
@@ -4552,10 +4465,6 @@ function applyStoreTheme(
     }
 
 
-    /* =================================================
-       LEGACY THEME
-    ================================================= */
-
     let theme =
         String(
             store.theme
@@ -4592,18 +4501,13 @@ function applyStoreTheme(
         green: "#198754",
         purple: "#7B3FC6",
         pink: "#D94F87",
-
         dark: "#0A1726",
-
         red: "#E63946",
         teal: "#00B4D8",
         gold: "#D4AF37",
-
         luxury: "#D4AF37",
-
         sunset: "#FD1D1D",
         emerald: "#0F5132",
-
         navy: "#0B1F3A",
         brown: "#795548",
         rose: "#BE185D",
@@ -4684,6 +4588,7 @@ if (
     ) {
 
         applyStoreTheme({
+
             themeType:
                 "solid",
 
@@ -4851,10 +4756,6 @@ async function loadStore() {
         }
 
 
-        /*
-         * UID هو المعرّف الأساسي للمتجر.
-         */
-
         const storeRef =
             doc(
                 db,
@@ -4886,11 +4787,6 @@ async function loadStore() {
             storeSnap.data();
 
 
-        /*
-         * ID المستند هو UID الأساسي
-         * للمتجر.
-         */
-
         storeUid =
             storeSnap.id;
 
@@ -4900,8 +4796,6 @@ async function loadStore() {
             storeUid
         );
 
-
-        /* STATUS */
 
         const status =
             String(
@@ -4932,23 +4826,15 @@ async function loadStore() {
         }
 
 
-        /* PIXELS */
-
         initPixels(
             currentStore
         );
 
 
-        /* =================================================
-           THEME FROM FIRESTORE
-        ================================================= */
-
         applyStoreTheme(
             currentStore
         );
 
-
-        /* NAME */
 
         const name =
             currentStore.storeName
@@ -4971,16 +4857,12 @@ async function loadStore() {
             " | المتجر";
 
 
-        /* DESCRIPTION */
-
         storeDescriptionElement.textContent =
 
             currentStore.description
             ||
             "Bienvenue dans notre boutique";
 
-
-        /* STORE IMAGE */
 
         const image =
 
@@ -5016,8 +4898,6 @@ async function loadStore() {
 
         }
 
-
-        /* COVER */
 
         const cover =
 
@@ -5057,8 +4937,6 @@ async function loadStore() {
 
         }
 
-
-        /* SOCIAL */
 
         renderSocialLinks();
 
@@ -5120,11 +4998,6 @@ async function loadProducts() {
         let snapshot;
 
 
-        /*
-         * الطريقة الأساسية:
-         * products.ownerUid == storeUid
-         */
-
         try {
 
             const productsQuery =
@@ -5158,11 +5031,6 @@ async function loadProducts() {
                 error
             );
 
-
-            /*
-             * توافق مع البيانات القديمة:
-             * products.storeId == storeUid
-             */
 
             const oldQuery =
                 query(
@@ -5284,6 +5152,7 @@ function getProductImage(product) {
 
 /* =====================================================
    RENDER PRODUCTS
+   لا يوجد أي منطق خاص بالمخزون هنا
 ===================================================== */
 
 function renderProducts(products) {
@@ -5344,16 +5213,6 @@ function renderProducts(products) {
                 Number(
                     product.price || 0
                 );
-
-
-            const stock =
-                Number(
-                    product.stock ?? 0
-                );
-
-
-            const outOfStock =
-                stock <= 0;
 
 
             const card =
@@ -5439,18 +5298,9 @@ function renderProducts(products) {
                     <button
                         class="add-btn"
                         type="button"
-                        ${
-                            outOfStock
-                            ? "disabled"
-                            : ""
-                        }
                     >
 
-                        ${
-                            outOfStock
-                            ? "غير متوفر"
-                            : "أضف إلى السلة"
-                        }
+                        أضف إلى السلة
 
                     </button>
 
@@ -5497,22 +5347,16 @@ function renderProducts(products) {
                 );
 
 
-            if (
-                !outOfStock
-            ) {
+            addButton.addEventListener(
+                "click",
+                function() {
 
-                addButton.addEventListener(
-                    "click",
-                    function() {
+                    addToCart(
+                        product
+                    );
 
-                        addToCart(
-                            product
-                        );
-
-                    }
-                );
-
-            }
+                }
+            );
 
 
             productsContainer.appendChild(
