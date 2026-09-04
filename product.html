@@ -3307,6 +3307,7 @@ function getStoreOwnerUid(){
 }
 
 
+
 /* =========================
    DELIVERY DATA
    SAME SYSTEM AS CART.HTML
@@ -3317,37 +3318,40 @@ async function loadDeliveryData(){
     deliveryData=[];
     deliveryLoaded=false;
 
-
-    const ownerUid=
-        getStoreOwnerUid();
-
-
-    if(!ownerUid){
-
-        console.warn(
-            "Delivery ownerUid missing"
+    const select=
+        document.getElementById(
+            "customerWilaya"
         );
 
+    if(select){
 
-        populateWilayaSelect();
+        select.innerHTML="";
 
-
-        return;
+        select.disabled=true;
 
     }
 
-
-    currentOwnerUid=
-        String(ownerUid);
-
-
-    localStorage.setItem(
-        "ownerUid",
-        currentOwnerUid
-    );
-
-
     try{
+
+        const ownerUid=
+            getStoreOwnerUid();
+
+        if(!ownerUid){
+
+            throw new Error(
+                "Owner UID غير متوفر"
+            );
+
+        }
+
+        currentOwnerUid=
+            String(ownerUid);
+
+        localStorage.setItem(
+            "ownerUid",
+            currentOwnerUid
+        );
+
 
         /*
          * EXACT FIRESTORE PATH
@@ -3371,17 +3375,18 @@ async function loadDeliveryData(){
 
 
         snapshot.forEach(
-            docSnap=>{
+            (docSnap)=>{
 
                 const data=
-                    docSnap.data()||{};
+                    docSnap.data() || {};
 
 
                 /*
-                 * WILAYA NAME
+                 * SAME WILAYA NAME LOGIC
+                 * AS CART.HTML
                  */
 
-                const wilayaName=
+                const name=
                     data.name ||
                     data.wilaya ||
                     data.title ||
@@ -3392,24 +3397,28 @@ async function loadDeliveryData(){
                  * OFFICE PRICE
                  */
 
-                const officeValue=
-                    data.office ??
-                    data.officePrice ??
-                    data.bureau ??
-                    data.bureauPrice ??
-                    0;
+                const office=
+                    Number(
+                        data.office ??
+                        data.officePrice ??
+                        data.bureau ??
+                        data.bureauPrice ??
+                        0
+                    );
 
 
                 /*
                  * HOME PRICE
                  */
 
-                const homeValue=
-                    data.home ??
-                    data.homePrice ??
-                    data.domicile ??
-                    data.homeDelivery ??
-                    0;
+                const home=
+                    Number(
+                        data.home ??
+                        data.homePrice ??
+                        data.domicile ??
+                        data.homeDelivery ??
+                        0
+                    );
 
 
                 deliveryData.push({
@@ -3418,19 +3427,21 @@ async function loadDeliveryData(){
                         docSnap.id,
 
                     name:
-                        String(
-                            wilayaName
-                        ),
+                        String(name),
 
                     office:
-                        Number(
-                            officeValue
-                        ) || 0,
+                        Number.isFinite(office)
+                        ?
+                        office
+                        :
+                        0,
 
                     home:
-                        Number(
-                            homeValue
-                        ) || 0
+                        Number.isFinite(home)
+                        ?
+                        home
+                        :
+                        0
 
                 });
 
@@ -3447,18 +3458,22 @@ async function loadDeliveryData(){
 
                 const na=
                     parseInt(
-                        String(a.id)
-                            .match(/\d+/)?.[0] ||
-                        "999"
-                    );
+                        String(a.id).replace(
+                            /\D/g,
+                            ""
+                        ),
+                        10
+                    ) || 999;
 
 
                 const nb=
                     parseInt(
-                        String(b.id)
-                            .match(/\d+/)?.[0] ||
-                        "999"
-                    );
+                        String(b.id).replace(
+                            /\D/g,
+                            ""
+                        ),
+                        10
+                    ) || 999;
 
 
                 if(na!==nb){
@@ -3500,7 +3515,6 @@ async function loadDeliveryData(){
 
 
         deliveryData=[];
-
         deliveryLoaded=false;
 
 
@@ -3532,6 +3546,10 @@ function populateWilayaSelect(){
     select.innerHTML="";
 
 
+    /*
+     * FIRST OPTION
+     */
+
     const firstOption=
         document.createElement(
             "option"
@@ -3542,10 +3560,11 @@ function populateWilayaSelect(){
 
 
     firstOption.textContent=
-        "اختر الولاية";
-
-
-    firstOption.disabled=true;
+        deliveryLoaded
+        ?
+        "اختر الولاية"
+        :
+        "تعذر تحميل الولايات";
 
 
     firstOption.selected=true;
@@ -3556,30 +3575,13 @@ function populateWilayaSelect(){
     );
 
 
+    /*
+     * DELIVERY LOADING FAILED
+     */
+
     if(!deliveryLoaded){
 
         select.disabled=true;
-
-
-        const errorOption=
-            document.createElement(
-                "option"
-            );
-
-
-        errorOption.value="";
-
-
-        errorOption.textContent=
-            "تعذر تحميل الولايات";
-
-
-        errorOption.disabled=true;
-
-
-        select.appendChild(
-            errorOption
-        );
 
 
         return;
@@ -3587,10 +3589,11 @@ function populateWilayaSelect(){
     }
 
 
+    /*
+     * NO WILAYAS
+     */
+
     if(!deliveryData.length){
-
-        select.disabled=true;
-
 
         const emptyOption=
             document.createElement(
@@ -3613,20 +3616,30 @@ function populateWilayaSelect(){
         );
 
 
+        select.disabled=true;
+
+
         return;
 
     }
 
 
+    /*
+     * ENABLE SELECT
+     */
+
     select.disabled=false;
 
 
     /*
-     * SHOW REAL WILAYA NAME
+     * SHOW ALL WILAYAS
+     *
+     * VALUE = FIRESTORE DOCUMENT ID
+     * TEXT  = REAL WILAYA NAME
      */
 
     deliveryData.forEach(
-        item=>{
+        (item)=>{
 
             const option=
                 document.createElement(
@@ -3634,17 +3647,9 @@ function populateWilayaSelect(){
                 );
 
 
-            /*
-             * DOCUMENT ID AS VALUE
-             */
-
             option.value=
                 String(item.id);
 
-
-            /*
-             * WILAYA NAME AS TEXT
-             */
 
             option.textContent=
                 String(item.name);
@@ -3657,6 +3662,10 @@ function populateWilayaSelect(){
         }
     );
 
+
+    /*
+     * UPDATE DELIVERY PRICE
+     */
 
     updateDelivery();
 
