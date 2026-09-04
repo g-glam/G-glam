@@ -1988,16 +1988,6 @@ header {
         id="categoriesContainer"
     >
 
-        <!--
-            يتم هنا إضافة:
-            الكل
-            تصنيف 1
-            تصنيف 2
-            تصنيف 3
-            ...
-            تلقائيًا من Firestore
-        -->
-
         <button
             type="button"
             class="category-btn active"
@@ -3736,6 +3726,24 @@ async function loadStore() {
         );
 
 
+        /*
+         * حفظ UID المالك من وثيقة المتجر.
+         *
+         * هذا مهم جدًا لنظام التصنيفات.
+         */
+
+        currentStore.ownerUid =
+            currentStore.ownerUid
+            ||
+            currentStore.uid
+            ||
+            currentStore.ownerId
+            ||
+            currentStore.userId
+            ||
+            "";
+
+
         const status =
             String(
                 currentStore.status ||
@@ -3900,6 +3908,27 @@ async function loadStore() {
 
 
 /* =====================================================
+   NORMALIZE CATEGORY NAME
+===================================================== */
+
+function normalizeCategoryName(
+    value
+) {
+
+    return String(
+        value ?? ""
+    )
+    .trim()
+    .toLowerCase()
+    .replace(
+        /\s+/g,
+        " "
+    );
+
+}
+
+
+/* =====================================================
    LOAD CATEGORIES
 ===================================================== */
 
@@ -3922,48 +3951,125 @@ async function loadCategories() {
     `;
 
 
+    allCategories = [];
+
+
+    currentCategoryId =
+        currentCategoryId ||
+        "all";
+
+
     try {
 
         if (!storeUid) {
+
+            renderCategories();
 
             return;
 
         }
 
 
+        let snapshot = null;
+
+
         /*
          * =================================================
-         * جلب التصنيفات الخاصة بهذا المتجر فقط
+         * الاستعلام الأساسي:
+         *
+         * ownerUid + storeId
+         *
+         * وهذا يطابق نظام حفظ التصنيفات
+         * في add-product.html.
          * =================================================
-         *
-         * categories.storeId
-         * =
-         * stores document ID
-         *
-         * وهو نفس storeUid.
          */
 
-        const categoriesQuery =
-            query(
-                collection(
-                    db,
-                    "categories"
-                ),
-                where(
-                    "storeId",
-                    "==",
-                    storeUid
-                )
-            );
+        const ownerUid =
+            String(
+                currentStore?.ownerUid
+                ||
+                ""
+            ).trim();
 
 
-        const snapshot =
-            await getDocs(
-                categoriesQuery
-            );
+        if (ownerUid) {
+
+            try {
+
+                const categoriesQuery =
+                    query(
+                        collection(
+                            db,
+                            "categories"
+                        ),
+
+                        where(
+                            "ownerUid",
+                            "==",
+                            ownerUid
+                        ),
+
+                        where(
+                            "storeId",
+                            "==",
+                            storeUid
+                        )
+                    );
 
 
-        allCategories = [];
+                snapshot =
+                    await getDocs(
+                        categoriesQuery
+                    );
+
+            }
+
+            catch(error) {
+
+                console.warn(
+                    "OWNER UID + STORE ID CATEGORY QUERY FAILED:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /*
+         * =================================================
+         * fallback
+         *
+         * نستعمل storeId فقط إذا تعذر الاستعلام
+         * المركب أو كانت بعض التصنيفات القديمة
+         * لا تحتوي ownerUid.
+         *
+         * هذا لا يغير storeId كمعرف المتجر.
+         * =================================================
+         */
+
+        if (!snapshot) {
+
+            const categoriesQuery =
+                query(
+                    collection(
+                        db,
+                        "categories"
+                    ),
+                    where(
+                        "storeId",
+                        "==",
+                        storeUid
+                    )
+                );
+
+
+            snapshot =
+                await getDocs(
+                    categoriesQuery
+                );
+
+        }
 
 
         /*
@@ -4017,8 +4123,9 @@ async function loadCategories() {
 
 
                 /*
-                 * التأكد مرة أخرى أن التصنيف
-                 * تابع لهذا المتجر.
+                 * =================================================
+                 * التأكد أن التصنيف تابع للمتجر الحالي.
+                 * =================================================
                  */
 
                 const categoryStoreId =
@@ -4041,17 +4148,35 @@ async function loadCategories() {
 
 
                 /*
-                 * منع تكرار نفس التصنيف.
+                 * إذا كان التصنيف يحتوي ownerUid
+                 * والمتجر الحالي لديه ownerUid،
+                 * نتأكد من التطابق.
                  */
 
-                const normalizedName =
-                    name
-                        .toLowerCase()
-                        .replace(
-                            /\s+/g,
-                            " "
-                        );
+                const categoryOwnerUid =
+                    String(
+                        data.ownerUid ||
+                        ""
+                    ).trim();
 
+
+                if (
+                    ownerUid
+                    &&
+                    categoryOwnerUid
+                    &&
+                    categoryOwnerUid !==
+                    ownerUid
+                ) {
+
+                    return;
+
+                }
+
+
+                /*
+                 * منع تكرار نفس ID.
+                 */
 
                 if (
                     usedCategoryIds.has(
@@ -4062,6 +4187,16 @@ async function loadCategories() {
                     return;
 
                 }
+
+
+                /*
+                 * منع تكرار نفس الاسم.
+                 */
+
+                const normalizedName =
+                    normalizeCategoryName(
+                        name
+                    );
 
 
                 if (
@@ -4098,8 +4233,12 @@ async function loadCategories() {
                         storeUid,
 
                     ownerUid:
-                        data.ownerUid ||
-                        ""
+                        categoryOwnerUid ||
+                        ownerUid,
+
+                    createdAt:
+                        data.createdAt ||
+                        null
 
                 });
 
@@ -4108,7 +4247,11 @@ async function loadCategories() {
 
 
         /*
-         * ترتيب التصنيفات أبجديًا.
+         * =================================================
+         * ترتيب التصنيفات
+         *
+         * التصنيفات الجديدة يتم عرضها أبجديًا.
+         * =================================================
          */
 
         allCategories.sort(
@@ -4121,8 +4264,8 @@ async function loadCategories() {
 
 
         /*
-         * إذا كان التصنيف الذي كان محددًا
-         * لم يعد موجودًا، نعود إلى الكل.
+         * إذا كان التصنيف المحدد لم يعد موجودًا،
+         * نعود إلى "الكل".
          */
 
         if (
@@ -4148,7 +4291,6 @@ async function loadCategories() {
 
         renderCategories();
 
-
     }
 
     catch(error) {
@@ -4158,12 +4300,6 @@ async function loadCategories() {
             error
         );
 
-
-        /*
-         * في حالة عدم السماح بقراءة
-         * categories من Firestore،
-         * يبقى "الكل" ظاهرًا.
-         */
 
         allCategories = [];
 
@@ -4231,7 +4367,7 @@ function renderCategories() {
 
     /*
      * =================================================
-     * التصنيفات القادمة من Firestore
+     * التصنيفات المحفوظة في Firestore
      * =================================================
      */
 
@@ -4297,7 +4433,11 @@ function productMatchesCategory(
 ) {
 
     /*
-     * الكل يعرض جميع المنتجات.
+     * =================================================
+     * "الكل"
+     *
+     * يعرض جميع المنتجات.
+     * =================================================
      */
 
     if (
@@ -4311,19 +4451,30 @@ function productMatchesCategory(
 
     /*
      * =================================================
-     * الربط الأساسي
-     * product.categoryId == category.id
+     * الربط الأساسي:
+     *
+     * product.categoryId
+     * ==
+     * category.id
+     *
      * =================================================
      */
 
-    if (
+    const productCategoryId =
         String(
-            product.categoryId || ""
-        )
-        ===
+            product.categoryId
+            ||
+            ""
+        ).trim();
+
+
+    if (
+        productCategoryId
+        &&
+        productCategoryId ===
         String(
             categoryId
-        )
+        ).trim()
     ) {
 
         return true;
@@ -4334,33 +4485,54 @@ function productMatchesCategory(
     /*
      * =================================================
      * توافق مع المنتجات القديمة
-     * التي لا تحتوي categoryId
+     *
+     * بعض المنتجات القديمة قد تحتوي
+     * categoryName فقط.
+     *
      * =================================================
      */
 
     const category =
         allCategories.find(
             item =>
-                String(item.id)
+                String(
+                    item.id
+                ).trim()
                 ===
-                String(categoryId)
+                String(
+                    categoryId
+                ).trim()
         );
 
 
-    if (
-        category
-        &&
-        String(
+    if (!category) {
+
+        return false;
+
+    }
+
+
+    const productCategoryName =
+        normalizeCategoryName(
             product.categoryName
             ||
             product.category
             ||
             ""
-        ).trim()
-        ===
-        String(
+        );
+
+
+    const savedCategoryName =
+        normalizeCategoryName(
             category.name
-        ).trim()
+        );
+
+
+    if (
+        productCategoryName
+        &&
+        productCategoryName ===
+        savedCategoryName
     ) {
 
         return true;
@@ -4432,6 +4604,13 @@ function getFilteredProducts() {
                 .toLowerCase();
 
 
+            const shortDescription =
+                String(
+                    product.shortDescription || ""
+                )
+                .toLowerCase();
+
+
             const categoryName =
                 String(
                     product.categoryName
@@ -4452,6 +4631,12 @@ function getFilteredProducts() {
                 ||
 
                 description.includes(
+                    keyword
+                )
+
+                ||
+
+                shortDescription.includes(
                     keyword
                 )
 
@@ -4521,8 +4706,7 @@ categoriesContainer.addEventListener(
 
 
         /*
-         * عرض المنتجات الخاصة
-         * بالتصنيف المختار.
+         * عرض المنتجات الخاصة بالتصنيف.
          */
 
         renderProducts(
@@ -4580,10 +4764,6 @@ function getProductCreatedTime(
     }
 
 
-    /*
-     * Firestore Timestamp
-     */
-
     if (
         typeof value.toMillis ===
         "function"
@@ -4594,10 +4774,6 @@ function getProductCreatedTime(
     }
 
 
-    /*
-     * JS Date
-     */
-
     if (
         value instanceof Date
     ) {
@@ -4606,10 +4782,6 @@ function getProductCreatedTime(
 
     }
 
-
-    /*
-     * Firebase Timestamp-like object
-     */
 
     if (
         typeof value === "object"
@@ -4634,10 +4806,6 @@ function getProductCreatedTime(
     }
 
 
-    /*
-     * رقم
-     */
-
     if (
         typeof value === "number"
     ) {
@@ -4655,10 +4823,6 @@ function getProductCreatedTime(
 
     }
 
-
-    /*
-     * تاريخ نصي
-     */
 
     if (
         typeof value === "string"
@@ -4742,7 +4906,7 @@ async function loadProducts() {
 
         /*
          * =================================================
-         * الاستعلام الأساسي
+         * الاستعلام الأساسي:
          *
          * products.storeId == storeUid
          * =================================================
@@ -4780,8 +4944,23 @@ async function loadProducts() {
 
 
             /*
-             * توافق مع المنتجات القديمة فقط.
+             * توافق مع المنتجات القديمة.
              */
+
+            const ownerUid =
+                String(
+                    currentStore?.ownerUid
+                    ||
+                    ""
+                ).trim();
+
+
+            if (!ownerUid) {
+
+                throw error;
+
+            }
+
 
             const legacyQuery =
                 query(
@@ -4792,7 +4971,7 @@ async function loadProducts() {
                     where(
                         "ownerUid",
                         "==",
-                        storeUid
+                        ownerUid
                     )
                 );
 
@@ -4831,7 +5010,7 @@ async function loadProducts() {
                 /*
                  * المنتجات القديمة التي لا تحتوي
                  * storeId يسمح بها إذا كان
-                 * ownerUid مطابقًا.
+                 * ownerUid مطابقًا للمتجر.
                  */
 
                 if (
@@ -4839,6 +5018,41 @@ async function loadProducts() {
                     &&
                     productStoreId !==
                     String(storeUid)
+                ) {
+
+                    return;
+
+                }
+
+
+                /*
+                 * إذا كان المنتج يحتوي ownerUid
+                 * والمتجر الحالي لديه ownerUid،
+                 * نتأكد من التطابق.
+                 */
+
+                const productOwnerUid =
+                    String(
+                        data.ownerUid ||
+                        ""
+                    ).trim();
+
+
+                const storeOwnerUid =
+                    String(
+                        currentStore?.ownerUid
+                        ||
+                        ""
+                    ).trim();
+
+
+                if (
+                    storeOwnerUid
+                    &&
+                    productOwnerUid
+                    &&
+                    productOwnerUid !==
+                    storeOwnerUid
                 ) {
 
                     return;
@@ -4874,8 +5088,15 @@ async function loadProducts() {
 
 
         /*
+         * =================================================
          * عرض جميع المنتجات افتراضيًا.
+         * =================================================
          */
+
+        currentCategoryId =
+            currentCategoryId ||
+            "all";
+
 
         renderProducts(
             getFilteredProducts()
@@ -5794,13 +6015,14 @@ if (storeLoaded) {
 
     /*
      * =================================================
-     * مهم:
+     * الترتيب مهم:
      *
-     * 1. تحميل التصنيفات
-     * 2. ثم تحميل المنتجات
+     * 1. تحميل بيانات المتجر
+     * 2. تحميل التصنيفات
+     * 3. تحميل المنتجات
      *
-     * حتى تكون categoryId متوفرة عند
-     * فلترة المنتجات.
+     * حتى يتم استخدام categoryId الصحيح
+     * عند فلترة المنتجات.
      * =================================================
      */
 
