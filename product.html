@@ -822,19 +822,41 @@ header{
     min-width:48px;
     min-height:39px;
     padding:6px 12px;
-    border:1px solid var(--border);
+
+    border:1px solid var(--accent);
     border-radius:9px;
-    background:var(--card-light);
-    color:var(--text);
+
+    background:var(--accent);
+    color:#FFFFFF;
+
     cursor:pointer;
     font-size:13px;
     font-weight:700;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        color .2s ease,
+        opacity .2s ease,
+        transform .2s ease;
+}
+
+.color-button:hover{
+    background:var(--accent-dark);
+    border-color:var(--accent-dark);
+    color:#FFFFFF;
 }
 
 .color-button.active{
-    border-color:var(--accent);
+    border-color:var(--accent-dark);
     background:var(--accent);
     color:#FFFFFF;
+
+    box-shadow:
+        0 0 0 2px
+        var(--card),
+        0 0 0 4px
+        var(--accent);
 }
 
 .size-select{
@@ -2893,10 +2915,6 @@ function getStoreName(store){
     }
 
 
-    /*
-        نفس طريقة index.html تمامًا
-    */
-
     const name =
         store.storeName ||
         store.name ||
@@ -3239,10 +3257,6 @@ async function loadProduct(){
                 await loadStore();
 
             if(currentStore){
-
-                /*
-                    جلب الاسم بنفس طريقة index.html
-                */
 
                 const name =
                     currentStore.storeName ||
@@ -3882,32 +3896,6 @@ function renderProduct(){
                     <div class="summary-row">
 
                         <span>
-                            المنتج
-                        </span>
-
-                        <strong id="summaryProduct">
-                            -
-                        </strong>
-
-                    </div>
-
-
-                    <div class="summary-row">
-
-                        <span>
-                            الكمية
-                        </span>
-
-                        <strong id="summaryQuantity">
-                            1
-                        </strong>
-
-                    </div>
-
-
-                    <div class="summary-row">
-
-                        <span>
                             سعر المنتج
                         </span>
 
@@ -4513,16 +4501,6 @@ function updateSummary(){
         );
 
 
-    const productName=
-        document.getElementById(
-            "summaryProduct"
-        );
-
-    const quantityElement=
-        document.getElementById(
-            "summaryQuantity"
-        );
-
     const productPrice=
         document.getElementById(
             "summaryProductPrice"
@@ -4537,23 +4515,6 @@ function updateSummary(){
         document.getElementById(
             "summaryTotal"
         );
-
-
-    if(productName){
-
-        productName.textContent=
-            product.name||
-            "منتج";
-
-    }
-
-
-    if(quantityElement){
-
-        quantityElement.textContent=
-            quantity;
-
-    }
 
 
     if(productPrice){
@@ -5333,10 +5294,6 @@ async function initializePage(){
 
 
     if(currentStore){
-
-        /*
-            نفس طريقة index.html بالضبط
-        */
 
         const name =
             currentStore.storeName ||
