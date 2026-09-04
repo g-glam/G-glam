@@ -5,7 +5,10 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <meta
     name="theme-color"
@@ -987,22 +990,48 @@ header{
     margin-bottom:20px;
 }
 
+
+/*
+    الاستمارة أصبحت داخل صندوق واحد
+    بدل وضع كل حقل داخل صندوق منفصل.
+*/
+
 .form-grid{
     display:grid;
     grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:14px;
+
+    border:1px solid #D1D5DB;
+    border-radius:14px;
+
+    overflow:hidden;
+
+    background:var(--card);
 }
 
 .form-group{
     min-width:0;
+
     background:var(--card);
-    border:1px solid #D1D5DB;
-    border-radius:14px;
-    padding:12px;
+
+    border:0;
+    border-radius:0;
+
+    padding:14px;
+
+    border-bottom:1px solid #D1D5DB;
+}
+
+.form-group:nth-child(odd){
+    border-left:1px solid #D1D5DB;
 }
 
 .form-group.full{
     grid-column:1/-1;
+    border-left:0;
+}
+
+.form-group:last-child{
+    border-bottom:0;
 }
 
 .form-label{
@@ -1048,49 +1077,38 @@ select.form-control{
 
 
 /* =========================
-   DELIVERY
+   DELIVERY SELECT
 ========================= */
 
-.delivery-types{
-    display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:9px;
+.delivery-select-wrapper{
+    width:100%;
 }
 
-.delivery-option{
-    position:relative;
-}
+.delivery-select{
+    width:100%;
+    height:47px;
 
-.delivery-option input{
-    position:absolute;
-    opacity:0;
-    pointer-events:none;
-}
-
-.delivery-label{
-    min-height:52px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    text-align:center;
+    padding:0 13px;
 
     border:1px solid #D1D5DB;
     border-radius:10px;
 
-    background:var(--card-light);
-    color:var(--text);
+    outline:none;
 
-    font-size:13px;
-    font-weight:700;
+    background:var(--input);
+    color:var(--input-text);
+
+    font-size:14px;
 
     cursor:pointer;
+
+    appearance:auto;
+    -webkit-appearance:auto;
 }
 
-.delivery-option input:checked + .delivery-label{
+.delivery-select:focus{
     border-color:var(--accent);
-    background:var(--sidebar-hover);
-    color:var(--accent);
+    box-shadow:0 0 0 2px rgba(0,0,0,.03);
 }
 
 
@@ -1100,9 +1118,12 @@ select.form-control{
 
 .order-summary{
     margin-top:20px;
+
     border:1px solid #D1D5DB;
     border-radius:14px;
+
     padding:15px;
+
     background:var(--card);
 }
 
@@ -1115,18 +1136,19 @@ select.form-control{
     color:var(--muted);
     font-size:14px;
 
-    margin-bottom:10px;
+    margin:0;
+    padding:10px 2px;
 
-    padding:10px 12px;
+    border:0;
+    border-bottom:1px solid #E5E7EB;
 
-    border:1px solid #D1D5DB;
-    border-radius:10px;
+    border-radius:0;
 
-    background:var(--card-light);
+    background:transparent;
 }
 
 .summary-row:last-of-type{
-    margin-bottom:0;
+    border-bottom:0;
 }
 
 .summary-row strong{
@@ -1139,13 +1161,14 @@ select.form-control{
     align-items:center;
     justify-content:space-between;
 
-    margin-top:13px;
-    padding:13px 12px;
+    margin-top:4px;
+    padding:13px 2px 0;
 
-    border:1px solid #D1D5DB;
-    border-radius:10px;
+    border:0;
+    border-top:1px solid #D1D5DB;
+    border-radius:0;
 
-    background:var(--card-light);
+    background:transparent;
 
     color:var(--text);
     font-size:18px;
@@ -1483,8 +1506,16 @@ select.form-control{
         grid-column:auto;
     }
 
-    .delivery-types{
-        grid-template-columns:1fr;
+    .form-group:nth-child(odd){
+        border-left:0;
+    }
+
+    .form-group{
+        border-bottom:1px solid #D1D5DB;
+    }
+
+    .form-group:last-child{
+        border-bottom:0;
     }
 
     .social-section{
@@ -2793,11 +2824,6 @@ async function loadStore(){
         }
 
 
-        /*
-            إذا كان store document يحتوي على ownerUid
-            نستخدمه للربط مع delivery.
-        */
-
         if(storeData.ownerUid){
 
             currentOwnerUid=
@@ -2807,11 +2833,6 @@ async function loadStore(){
 
         }
 
-
-        /*
-            في البنية الحالية لـ delivery.html
-            store document موجود على UID المالك.
-        */
 
         if(!currentOwnerUid){
 
@@ -2889,17 +2910,6 @@ function getStoreName(store){
 /* =========================
    LOAD DELIVERY DATA
 ========================= */
-
-/*
-    نفس بنية delivery.html بالضبط:
-
-    stores/{ownerUid}/delivery/{wilayaId}
-
-    والحقول:
-
-    office
-    home
-*/
 
 async function loadDeliveryData(){
 
@@ -2992,9 +3002,7 @@ async function loadDeliveryData(){
 
         deliveryLoaded=true;
 
-
         populateWilayaSelect();
-
 
     }catch(error){
 
@@ -3036,6 +3044,7 @@ function populateWilayaSelect(){
         document.createElement("option");
 
     firstOption.value="";
+
     firstOption.textContent=
         deliveryLoaded
         ?
@@ -3071,6 +3080,7 @@ function populateWilayaSelect(){
             document.createElement("option");
 
         emptyOption.value="";
+
         emptyOption.textContent=
             "لا توجد أسعار توصيل متاحة";
 
@@ -3218,10 +3228,6 @@ async function loadProduct(){
             null;
 
 
-        /*
-            إعادة تحميل المتجر الصحيح
-        */
-
         if(
             currentStoreId &&
             (!currentStore ||
@@ -3257,11 +3263,6 @@ async function loadProduct(){
 
         }
 
-
-        /*
-            تحميل أسعار التوصيل
-            بعد معرفة ownerUid من المنتج.
-        */
 
         await loadDeliveryData();
 
@@ -3312,8 +3313,6 @@ function renderProduct(){
         );
 
 
-    /* الصور */
-
     let images=[];
 
     if(Array.isArray(product.images)){
@@ -3340,8 +3339,6 @@ function renderProduct(){
     }
 
 
-    /* الألوان */
-
     let colors=[];
 
     if(Array.isArray(product.colors)){
@@ -3356,8 +3353,6 @@ function renderProduct(){
 
     }
 
-
-    /* القياسات */
 
     let sizes=[];
 
@@ -3418,8 +3413,6 @@ function renderProduct(){
 
         <div class="product-layout">
 
-
-            <!-- الصور -->
 
             <div class="gallery-card">
 
@@ -3504,8 +3497,6 @@ function renderProduct(){
 
             </div>
 
-
-            <!-- معلومات المنتج -->
 
             <div class="product-info-card">
 
@@ -3711,21 +3702,17 @@ function renderProduct(){
         </div>
 
 
-        <!-- ====================
-             ORDER FORM
-        ===================== -->
-
         <section
             class="order-section"
             id="orderSection"
         >
 
             <h2 class="order-title">
-                إتمام الطلب
+                ملء استمارة الطلب
             </h2>
 
             <p class="order-subtitle">
-                أدخل معلوماتك لإرسال طلب المنتج
+                أدخل معلوماتك لإتمام طلبك
             </p>
 
 
@@ -3733,8 +3720,6 @@ function renderProduct(){
 
                 <div class="form-grid">
 
-
-                    <!-- الاسم واللقب -->
 
                     <div class="form-group">
 
@@ -3757,8 +3742,6 @@ function renderProduct(){
                     </div>
 
 
-                    <!-- الهاتف -->
-
                     <div class="form-group">
 
                         <label
@@ -3780,8 +3763,6 @@ function renderProduct(){
 
                     </div>
 
-
-                    <!-- الولاية -->
 
                     <div class="form-group">
 
@@ -3808,8 +3789,6 @@ function renderProduct(){
                     </div>
 
 
-                    <!-- البلدية -->
-
                     <div class="form-group">
 
                         <label
@@ -3829,8 +3808,6 @@ function renderProduct(){
 
                     </div>
 
-
-                    <!-- العنوان -->
 
                     <div class="form-group full">
 
@@ -3855,52 +3832,35 @@ function renderProduct(){
 
                     <div class="form-group full">
 
-                        <label class="form-label">
+                        <label
+                            class="form-label"
+                            for="deliveryType"
+                        >
                             طريقة التوصيل
                         </label>
 
-                        <div
-                            class="delivery-types"
-                            id="deliveryTypes"
-                        >
+                        <div class="delivery-select-wrapper">
 
-                            <div class="delivery-option">
+                            <select
+                                class="delivery-select"
+                                id="deliveryType"
+                                required
+                            >
 
-                                <input
-                                    type="radio"
-                                    name="deliveryType"
-                                    id="homeDelivery"
+                                <option
                                     value="التوصيل إلى المنزل"
-                                    checked
-                                >
-
-                                <label
-                                    class="delivery-label"
-                                    for="homeDelivery"
+                                    selected
                                 >
                                     التوصيل إلى المنزل
-                                </label>
+                                </option>
 
-                            </div>
-
-
-                            <div class="delivery-option">
-
-                                <input
-                                    type="radio"
-                                    name="deliveryType"
-                                    id="officeDelivery"
+                                <option
                                     value="التوصيل إلى المكتب"
                                 >
-
-                                <label
-                                    class="delivery-label"
-                                    for="officeDelivery"
-                                >
                                     التوصيل إلى المكتب
-                                </label>
+                                </option>
 
-                            </div>
+                            </select>
 
                         </div>
 
@@ -4081,8 +4041,6 @@ function bindProductEvents(){
     }
 
 
-    /* الصور */
-
     document
         .querySelectorAll(".thumbnail")
         .forEach(
@@ -4124,8 +4082,6 @@ function bindProductEvents(){
         );
 
 
-    /* اللون */
-
     document
         .querySelectorAll(".color-button")
         .forEach(
@@ -4158,8 +4114,6 @@ function bindProductEvents(){
         );
 
 
-    /* القياس */
-
     const sizeSelect=
         document.getElementById(
             "sizeSelect"
@@ -4179,8 +4133,6 @@ function bindProductEvents(){
 
     }
 
-
-    /* إنقاص الكمية */
 
     const decrease=
         document.getElementById(
@@ -4209,8 +4161,6 @@ function bindProductEvents(){
     }
 
 
-    /* زيادة الكمية */
-
     const increase=
         document.getElementById(
             "increaseQuantity"
@@ -4235,8 +4185,6 @@ function bindProductEvents(){
     }
 
 
-    /* إضافة للسلة */
-
     const addCartButton=
         document.getElementById(
             "addCartButton"
@@ -4251,8 +4199,6 @@ function bindProductEvents(){
 
     }
 
-
-    /* اطلب الآن */
 
     const buyButton=
         document.getElementById(
@@ -4285,8 +4231,6 @@ function bindProductEvents(){
     }
 
 
-    /* الطلب */
-
     const orderForm=
         document.getElementById(
             "orderForm"
@@ -4302,25 +4246,22 @@ function bindProductEvents(){
     }
 
 
-    /* التوصيل */
+    /* طريقة التوصيل الجديدة */
 
-    document
-        .querySelectorAll(
-            'input[name="deliveryType"]'
-        )
-        .forEach(
-            radio=>{
-
-                radio.addEventListener(
-                    "change",
-                    updateDelivery
-                );
-
-            }
+    const deliveryTypeSelect=
+        document.getElementById(
+            "deliveryType"
         );
 
+    if(deliveryTypeSelect){
 
-    /* الولاية */
+        deliveryTypeSelect.addEventListener(
+            "change",
+            updateDelivery
+        );
+
+    }
+
 
     const wilayaSelect=
         document.getElementById(
@@ -4668,9 +4609,9 @@ function updateDelivery(){
             "customerWilaya"
         );
 
-    const selected=
-        document.querySelector(
-            'input[name="deliveryType"]:checked'
+    const deliveryTypeSelect=
+        document.getElementById(
+            "deliveryType"
         );
 
 
@@ -4685,9 +4626,12 @@ function updateDelivery(){
 
 
     const type=
-        selected
+        deliveryTypeSelect
         ?
-        selected.value
+        String(
+            deliveryTypeSelect.value||
+            "التوصيل إلى المنزل"
+        )
         :
         "التوصيل إلى المنزل";
 
@@ -4829,10 +4773,20 @@ async function submitOrder(event){
         ).value.trim();
 
 
+    const deliveryTypeSelect=
+        document.getElementById(
+            "deliveryType"
+        );
+
+
     const deliveryType=
-        document.querySelector(
-            'input[name="deliveryType"]:checked'
-        )?.value||
+        deliveryTypeSelect
+        ?
+        String(
+            deliveryTypeSelect.value||
+            "التوصيل إلى المنزل"
+        )
+        :
         "التوصيل إلى المنزل";
 
 
@@ -4878,10 +4832,6 @@ async function submitOrder(event){
     }
 
 
-    /*
-        التأكد من وجود سعر التوصيل
-    */
-
     const selectedDelivery=
         getSelectedDelivery();
 
@@ -4898,8 +4848,8 @@ async function submitOrder(event){
 
 
     /*
-        إعادة حساب سعر التوصيل قبل الحفظ
-        حتى لا يتم الاعتماد على قيمة قديمة.
+        إعادة حساب سعر التوصيل
+        قبل حفظ الطلب.
     */
 
     if(
@@ -4960,10 +4910,6 @@ async function submitOrder(event){
                 deliveryCost||0
             );
 
-
-        /*
-            التأكد من ownerUid و storeId
-        */
 
         const finalOwnerUid=
             product.ownerUid||
@@ -5118,18 +5064,21 @@ async function submitOrder(event){
             إعادة طريقة التوصيل إلى المنزل
         */
 
-        const homeRadio=
+        const deliveryTypeSelectAfterOrder=
             document.getElementById(
-                "homeDelivery"
+                "deliveryType"
             );
 
-        if(homeRadio){
-            homeRadio.checked=true;
+        if(deliveryTypeSelectAfterOrder){
+
+            deliveryTypeSelectAfterOrder.value=
+                "التوصيل إلى المنزل";
+
         }
 
 
         /*
-            إعادة الولاية إلى أول خيار
+            إعادة الولاية
         */
 
         const wilayaSelect=
@@ -5168,7 +5117,7 @@ async function submitOrder(event){
 
 
         /*
-            إعادة اللون المحدد بصريًا
+            إعادة اللون
         */
 
         document
@@ -5403,10 +5352,6 @@ async function initializePage(){
     updateCartCount();
 
 
-    /*
-        تحميل المتجر أولًا
-    */
-
     currentStore=
         await loadStore();
 
@@ -5449,15 +5394,6 @@ async function initializePage(){
 
     }
 
-
-    /*
-        تحميل المنتج
-
-        ومن داخله يتم تحديد:
-        storeId
-        ownerUid
-        delivery
-    */
 
     await loadProduct();
 
