@@ -478,14 +478,12 @@ body.theme-custom-gradient .product-price {
 }
 
 body.theme-custom-gradient .buy-button,
-body.theme-custom-gradient .floating-cart,
 body.theme-custom-gradient .add-cart-button,
 body.theme-custom-gradient .submit-order {
     background:var(--theme-gradient);
 }
 
 body.theme-custom-gradient .buy-button:hover,
-body.theme-custom-gradient .floating-cart:hover,
 body.theme-custom-gradient .add-cart-button:hover,
 body.theme-custom-gradient .submit-order:hover {
     filter:brightness(.92);
@@ -517,7 +515,7 @@ body {
     min-height:100vh;
     background:var(--bg);
     color:var(--text);
-    padding-bottom:95px;
+    padding-bottom:30px;
     transition:background .25s ease,color .25s ease;
 }
 
@@ -827,33 +825,25 @@ header {
     margin-top:20px;
     display:flex;
     flex-direction:column;
+    align-items:flex-start;
     gap:10px;
 }
 
-.product-action-button {
-    width:100%;
-    min-height:51px;
-    border-radius:11px;
-    font-size:16px;
+/* زر أضف إلى السلة - صغير */
+
+.add-cart-button {
+    width:auto !important;
+    min-width:145px;
+    min-height:40px;
+    padding:8px 16px;
+    border:2px solid var(--accent);
+    border-radius:9px;
+    background:transparent;
+    color:var(--accent);
+    font-size:13px;
     font-weight:800;
     cursor:pointer;
     transition:.2s;
-}
-
-.order-product-button {
-    border:none;
-    background:var(--accent);
-    color:#FFFFFF;
-}
-
-.order-product-button:hover {
-    background:var(--accent-dark);
-}
-
-.add-cart-button {
-    border:2px solid var(--accent);
-    background:transparent;
-    color:var(--accent);
 }
 
 .add-cart-button:hover {
@@ -863,6 +853,25 @@ header {
 .add-cart-button.added {
     background:var(--accent);
     color:#FFFFFF;
+}
+
+/* زر اطلب الآن */
+
+.buy-button {
+    width:100%;
+    height:52px;
+    margin-top:20px;
+    border:none;
+    border-radius:11px;
+    background:var(--accent);
+    color:#FFFFFF;
+    font-size:16px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.buy-button:hover {
+    background:var(--accent-dark);
 }
 
 .option-group {
@@ -945,30 +954,6 @@ header {
     text-align:center;
     font-size:15px;
     font-weight:800;
-}
-
-/*
-   لا يوجد هنا أي كود للمخزون.
-   لا يوجد stock.
-   لا يوجد inventory.
-   لا يوجد زر المنتج غير متوفر.
-*/
-
-.buy-button {
-    width:100%;
-    height:52px;
-    margin-top:20px;
-    border:none;
-    border-radius:11px;
-    background:var(--accent);
-    color:#FFFFFF;
-    font-size:16px;
-    font-weight:800;
-    cursor:pointer;
-}
-
-.buy-button:hover {
-    background:var(--accent-dark);
 }
 
 .order-section {
@@ -1200,33 +1185,6 @@ textarea.form-control {
     padding:10px;
 }
 
-.floating-cart {
-    position:fixed;
-    bottom:18px;
-    left:50%;
-    transform:translateX(-50%);
-    width:calc(100% - 50px);
-    max-width:540px;
-    height:53px;
-    background:var(--accent);
-    color:#FFFFFF;
-    text-decoration:none;
-    border-radius:28px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:9px;
-    font-size:16px;
-    font-weight:800;
-    box-shadow:0 8px 25px rgba(0,0,0,.18);
-    z-index:900;
-}
-
-.floating-cart svg {
-    width:22px;
-    height:22px;
-}
-
 .sidebar {
     position:fixed;
     top:0;
@@ -1342,7 +1300,7 @@ textarea.form-control {
 @media (max-width:700px) {
 
     body {
-        padding-bottom:85px;
+        padding-bottom:25px;
     }
 
     header {
@@ -1422,9 +1380,11 @@ textarea.form-control {
         font-size:13px;
     }
 
-    .floating-cart {
-        width:calc(100% - 30px);
-        bottom:12px;
+    .add-cart-button {
+        min-width:135px;
+        min-height:38px;
+        padding:7px 14px;
+        font-size:12px;
     }
 
 }
@@ -1624,26 +1584,6 @@ textarea.form-control {
 />
 </symbol>
 
-<symbol id="icon-plus" viewBox="0 0 24 24">
-<path
-    d="M12 5v14M5 12h14"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-/>
-</symbol>
-
-<symbol id="icon-minus" viewBox="0 0 24 24">
-<path
-    d="M5 12h14"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-/>
-</symbol>
-
 </svg>
 
 <!-- OVERLAY -->
@@ -1770,22 +1710,6 @@ textarea.form-control {
 
 </section>
 
-<!-- FLOATING CART -->
-
-<a
-    href="#"
-    id="floatingCart"
-    class="floating-cart"
->
-
-<svg>
-<use href="#icon-cart"></use>
-</svg>
-
-<span>عرض السلة</span>
-
-</a>
-
 <script type="module">
 
 import {
@@ -1911,11 +1835,6 @@ const menuBtn =
 const cartButton =
     document.getElementById(
         "cartButton"
-    );
-
-const floatingCart =
-    document.getElementById(
-        "floatingCart"
     );
 
 
@@ -3182,20 +3101,13 @@ function renderProduct() {
                 }
 
 
+                <!-- زر أضف إلى السلة فقط -->
+
                 <div class="product-actions">
 
                     <button
                         type="button"
-                        class="product-action-button order-product-button"
-                        id="orderProductButton"
-                    >
-                        اطلب المنتج
-                    </button>
-
-
-                    <button
-                        type="button"
-                        class="product-action-button add-cart-button"
+                        class="add-cart-button"
                         id="addCartButton"
                     >
                         أضف إلى السلة
@@ -3655,6 +3567,31 @@ function formatPrice(
 }
 
 
+/* ERROR */
+
+function showError(
+    message
+) {
+
+    productContainer.innerHTML = `
+
+        <div class="error-box">
+
+            <h2>
+                تعذر تحميل الصفحة
+            </h2>
+
+            <p>
+                ${escapeHtml(message)}
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
 /* EVENTS */
 
 function bindProductEvents() {
@@ -3826,6 +3763,7 @@ function bindProductEvents() {
                 updateSummary();
 
             }
+
         );
 
     }
@@ -3841,32 +3779,6 @@ function bindProductEvents() {
         addCartButton.addEventListener(
             "click",
             addCurrentProductToCart
-        );
-
-    }
-
-
-    const orderProductButton =
-        document.getElementById(
-            "orderProductButton"
-        );
-
-    if (orderProductButton) {
-
-        orderProductButton.addEventListener(
-            "click",
-            function() {
-
-                document
-                    .getElementById(
-                        "orderSection"
-                    )
-                    ?.scrollIntoView({
-                        behavior:"smooth",
-                        block:"start"
-                    });
-
-            }
         );
 
     }
@@ -3893,6 +3805,7 @@ function bindProductEvents() {
                     });
 
             }
+
         );
 
     }
@@ -4092,7 +4005,7 @@ function addCurrentProductToCart() {
         );
 
         button.textContent =
-            "✓ تمت الإضافة إلى السلة";
+            "✓ تمت الإضافة";
 
         setTimeout(
             function() {
@@ -4818,18 +4731,6 @@ function goToCart() {
 cartButton.addEventListener(
     "click",
     goToCart
-);
-
-
-floatingCart.addEventListener(
-    "click",
-    function(event) {
-
-        event.preventDefault();
-
-        goToCart();
-
-    }
 );
 
 
