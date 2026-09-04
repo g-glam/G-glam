@@ -145,7 +145,7 @@
     ttq.instance = function(t) {
 
         for(
-            var e = ttq._methods || [],
+            var e = ttq._methods,
             n = 0;
             n < e.length;
             n++
@@ -1240,7 +1240,7 @@ header {
         1100px;
 
     margin:
-        0 auto 14px;
+        0 auto 20px;
 
     padding:
         0 25px;
@@ -1343,207 +1343,6 @@ header {
 
     pointer-events:
         none;
-
-}
-
-
-/* =====================================================
-   CATEGORIES
-===================================================== */
-
-.categories-section {
-
-    width:
-        100%;
-
-    max-width:
-        1100px;
-
-    margin:
-        0 auto 20px;
-
-    padding:
-        0 25px;
-
-}
-
-
-.categories-title {
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        space-between;
-
-    margin-bottom:
-        11px;
-
-}
-
-
-.categories-title h2 {
-
-    font-size:
-        19px;
-
-    font-weight:
-        800;
-
-    color:
-        var(--text);
-
-}
-
-
-.categories-scroll {
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    gap:
-        9px;
-
-    overflow-x:
-        auto;
-
-    overflow-y:
-        hidden;
-
-    padding:
-        3px 2px 8px;
-
-    scrollbar-width:
-        thin;
-
-}
-
-
-.categories-scroll::-webkit-scrollbar {
-
-    height:
-        5px;
-
-}
-
-
-.categories-scroll::-webkit-scrollbar-track {
-
-    background:
-        transparent;
-
-}
-
-
-.categories-scroll::-webkit-scrollbar-thumb {
-
-    background:
-        var(--border);
-
-    border-radius:
-        10px;
-
-}
-
-
-.category-btn {
-
-    flex:
-        0 0 auto;
-
-    min-width:
-        82px;
-
-    height:
-        40px;
-
-    padding:
-        0 17px;
-
-    border:
-        1px solid var(--border);
-
-    border-radius:
-        22px;
-
-    background:
-        var(--card);
-
-    color:
-        var(--text);
-
-    font-size:
-        13px;
-
-    font-weight:
-        700;
-
-    cursor:
-        pointer;
-
-    white-space:
-        nowrap;
-
-    transition:
-        .2s ease;
-
-}
-
-
-.category-btn:hover {
-
-    border-color:
-        var(--accent);
-
-    color:
-        var(--accent);
-
-    background:
-        var(--sidebar-hover);
-
-}
-
-
-.category-btn.active {
-
-    background:
-        var(--accent);
-
-    border-color:
-        var(--accent);
-
-    color:
-        #FFFFFF;
-
-    box-shadow:
-        0 4px 12px
-        rgba(0,0,0,.10);
-
-}
-
-
-.category-empty {
-
-    width:
-        100%;
-
-    text-align:
-        center;
-
-    color:
-        var(--muted);
-
-    font-size:
-        13px;
-
-    padding:
-        10px 0;
 
 }
 
@@ -2490,7 +2289,7 @@ header {
             0 15px;
 
         margin-bottom:
-            10px;
+            12px;
 
     }
 
@@ -2502,42 +2301,6 @@ header {
 
         font-size:
             14px;
-
-    }
-
-
-    .categories-section {
-
-        padding:
-            0 15px;
-
-        margin-bottom:
-            15px;
-
-    }
-
-
-    .categories-title h2 {
-
-        font-size:
-            17px;
-
-    }
-
-
-    .category-btn {
-
-        height:
-            38px;
-
-        min-width:
-            76px;
-
-        padding:
-            0 14px;
-
-        font-size:
-            12px;
 
     }
 
@@ -2724,17 +2487,6 @@ header {
 
         min-width:
             100%;
-
-    }
-
-
-    .category-btn {
-
-        font-size:
-            11px;
-
-        padding:
-            0 12px;
 
     }
 
@@ -3268,42 +3020,6 @@ header {
 
 
 <!-- =====================================================
-     CATEGORIES
-===================================================== -->
-
-<section
-    class="categories-section"
-    id="categoriesSection"
->
-
-    <div class="categories-title">
-
-        <h2>
-            التصنيفات
-        </h2>
-
-    </div>
-
-
-    <div
-        class="categories-scroll"
-        id="categoriesContainer"
-    >
-
-        <button
-            type="button"
-            class="category-btn active"
-            data-category-id="all"
-        >
-            الكل
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
      PRODUCTS
 ===================================================== -->
 
@@ -3521,12 +3237,6 @@ const socialLinks =
     );
 
 
-const categoriesContainer =
-    document.getElementById(
-        "categoriesContainer"
-    );
-
-
 /* =====================================================
    STORE IDENTIFIER
 ===================================================== */
@@ -3592,13 +3302,6 @@ let storeUid =
 
 
 let allProducts = [];
-
-
-let allCategories = [];
-
-
-let currentCategoryId =
-    "all";
 
 
 let currentStore = null;
@@ -4333,6 +4036,34 @@ function rgbaFromHex(
 }
 
 
+function getReadableTextColor(hex) {
+
+    const rgb =
+        hexToRgb(hex);
+
+
+    if (!rgb) {
+
+        return "#FFFFFF";
+
+    }
+
+
+    const luminance =
+        (
+            0.299 * rgb.r +
+            0.587 * rgb.g +
+            0.114 * rgb.b
+        );
+
+
+    return luminance > 165
+        ? "#111827"
+        : "#FFFFFF";
+
+}
+
+
 /* =====================================================
    APPLY THEME
 ===================================================== */
@@ -4409,6 +4140,10 @@ function applyStoreTheme(
     );
 
 
+    /* =================================================
+       LEGACY STRING MODE
+    ================================================= */
+
     if (
         typeof themeOrStore === "string"
     ) {
@@ -4443,13 +4178,18 @@ function applyStoreTheme(
             green: "#198754",
             purple: "#7B3FC6",
             pink: "#D94F87",
+
             dark: "#0A1726",
+
             red: "#E63946",
             teal: "#00B4D8",
             gold: "#D4AF37",
+
             luxury: "#D4AF37",
+
             sunset: "#FD1D1D",
             emerald: "#0F5132",
+
             navy: "#0B1F3A",
             brown: "#795548",
             rose: "#BE185D",
@@ -4481,6 +4221,10 @@ function applyStoreTheme(
     }
 
 
+    /* =================================================
+       FIRESTORE STORE
+    ================================================= */
+
     const store =
         themeOrStore || {};
 
@@ -4492,6 +4236,10 @@ function applyStoreTheme(
         .toLowerCase()
         .trim();
 
+
+    /* =================================================
+       CUSTOM GRADIENT
+    ================================================= */
 
     if (
         themeType === "gradient"
@@ -4614,6 +4362,18 @@ function applyStoreTheme(
     }
 
 
+    /* =================================================
+       SOLID THEME
+       
+       settings.html saves:
+       
+       themeType: "solid"
+       theme: "orange"
+       themeColors: ["#F47B20"]
+       
+       لذلك نقرأ themeColors أولًا.
+    ================================================= */
+
     if (
         themeType === "solid"
     ) {
@@ -4644,6 +4404,12 @@ function applyStoreTheme(
             .trim();
 
 
+        /*
+         * إذا كان الاسم من الثيمات
+         * الجاهزة، نستخدم التصميم الكامل
+         * الخاص به.
+         */
+
         if (
             validThemes.includes(
                 savedTheme
@@ -4662,13 +4428,18 @@ function applyStoreTheme(
                 green: "#198754",
                 purple: "#7B3FC6",
                 pink: "#D94F87",
+
                 dark: "#0A1726",
+
                 red: "#E63946",
                 teal: "#00B4D8",
                 gold: "#D4AF37",
+
                 luxury: "#D4AF37",
+
                 sunset: "#FD1D1D",
                 emerald: "#0F5132",
+
                 navy: "#0B1F3A",
                 brown: "#795548",
                 rose: "#BE185D",
@@ -4711,6 +4482,11 @@ function applyStoreTheme(
 
         }
 
+
+        /*
+         * إذا كان لونًا مخصصًا بالفعل،
+         * نستخدم CUSTOM SOLID.
+         */
 
         if (solidColor) {
 
@@ -4776,6 +4552,10 @@ function applyStoreTheme(
     }
 
 
+    /* =================================================
+       LEGACY THEME
+    ================================================= */
+
     let theme =
         String(
             store.theme
@@ -4812,13 +4592,18 @@ function applyStoreTheme(
         green: "#198754",
         purple: "#7B3FC6",
         pink: "#D94F87",
+
         dark: "#0A1726",
+
         red: "#E63946",
         teal: "#00B4D8",
         gold: "#D4AF37",
+
         luxury: "#D4AF37",
+
         sunset: "#FD1D1D",
         emerald: "#0F5132",
+
         navy: "#0B1F3A",
         brown: "#795548",
         rose: "#BE185D",
@@ -4899,7 +4684,6 @@ if (
     ) {
 
         applyStoreTheme({
-
             themeType:
                 "solid",
 
@@ -5067,6 +4851,10 @@ async function loadStore() {
         }
 
 
+        /*
+         * UID هو المعرّف الأساسي للمتجر.
+         */
+
         const storeRef =
             doc(
                 db,
@@ -5098,6 +4886,11 @@ async function loadStore() {
             storeSnap.data();
 
 
+        /*
+         * ID المستند هو UID الأساسي
+         * للمتجر.
+         */
+
         storeUid =
             storeSnap.id;
 
@@ -5107,6 +4900,8 @@ async function loadStore() {
             storeUid
         );
 
+
+        /* STATUS */
 
         const status =
             String(
@@ -5137,15 +4932,23 @@ async function loadStore() {
         }
 
 
+        /* PIXELS */
+
         initPixels(
             currentStore
         );
 
 
+        /* =================================================
+           THEME FROM FIRESTORE
+        ================================================= */
+
         applyStoreTheme(
             currentStore
         );
 
+
+        /* NAME */
 
         const name =
             currentStore.storeName
@@ -5168,12 +4971,16 @@ async function loadStore() {
             " | المتجر";
 
 
+        /* DESCRIPTION */
+
         storeDescriptionElement.textContent =
 
             currentStore.description
             ||
             "Bienvenue dans notre boutique";
 
+
+        /* STORE IMAGE */
 
         const image =
 
@@ -5209,6 +5016,8 @@ async function loadStore() {
 
         }
 
+
+        /* COVER */
 
         const cover =
 
@@ -5249,6 +5058,8 @@ async function loadStore() {
         }
 
 
+        /* SOCIAL */
+
         renderSocialLinks();
 
 
@@ -5277,500 +5088,6 @@ async function loadStore() {
     }
 
 }
-
-
-/* =====================================================
-   LOAD CATEGORIES
-===================================================== */
-
-async function loadCategories() {
-
-    categoriesContainer.innerHTML = `
-
-        <button
-            type="button"
-            class="category-btn active"
-            data-category-id="all"
-        >
-            الكل
-        </button>
-
-    `;
-
-
-    try {
-
-        if (!storeUid) {
-
-            return;
-
-        }
-
-
-        /*
-         * نبحث بالـ storeId لأنه المعرّف
-         * الأساسي للمتجر.
-         */
-
-        const categoriesQuery =
-            query(
-
-                collection(
-                    db,
-                    "categories"
-                ),
-
-                where(
-                    "storeId",
-                    "==",
-                    storeUid
-                )
-
-            );
-
-
-        const snapshot =
-            await getDocs(
-                categoriesQuery
-            );
-
-
-        allCategories = [];
-
-
-        snapshot.forEach(
-            categoryDoc => {
-
-                const data =
-                    categoryDoc.data();
-
-
-                const name =
-                    String(
-                        data.name
-                        ||
-                        data.categoryName
-                        ||
-                        ""
-                    ).trim();
-
-
-                if (!name) {
-
-                    return;
-
-                }
-
-
-                allCategories.push({
-
-                    id:
-                        categoryDoc.id,
-
-                    name:
-                        name,
-
-                    storeId:
-                        data.storeId
-                        ||
-                        storeUid,
-
-                    ownerUid:
-                        data.ownerUid
-                        ||
-                        ""
-
-                });
-
-            }
-        );
-
-
-        /*
-         * ترتيب التصنيفات حسب الاسم
-         */
-
-        allCategories.sort(
-            (a,b) =>
-                a.name.localeCompare(
-                    b.name,
-                    "ar"
-                )
-        );
-
-
-        renderCategories();
-
-    }
-
-    catch(error) {
-
-        console.error(
-            "CATEGORIES ERROR:",
-            error
-        );
-
-
-        /*
-         * إذا لم توجد صلاحية أو لم توجد
-         * مجموعة categories، نبقي زر الكل.
-         */
-
-        allCategories = [];
-
-
-        renderCategories();
-
-    }
-
-}
-
-
-/* =====================================================
-   RENDER CATEGORIES
-===================================================== */
-
-function renderCategories() {
-
-    categoriesContainer.innerHTML = "";
-
-
-    const allButton =
-        document.createElement(
-            "button"
-        );
-
-
-    allButton.type =
-        "button";
-
-
-    allButton.className =
-        "category-btn" +
-        (
-            currentCategoryId === "all"
-            ?
-            " active"
-            :
-            ""
-        );
-
-
-    allButton.dataset.categoryId =
-        "all";
-
-
-    allButton.textContent =
-        "الكل";
-
-
-    categoriesContainer.appendChild(
-        allButton
-    );
-
-
-    allCategories.forEach(
-        category => {
-
-            const button =
-                document.createElement(
-                    "button"
-                );
-
-
-            button.type =
-                "button";
-
-
-            button.className =
-                "category-btn" +
-                (
-                    currentCategoryId ===
-                    category.id
-                    ?
-                    " active"
-                    :
-                    ""
-                );
-
-
-            button.dataset.categoryId =
-                category.id;
-
-
-            button.textContent =
-                category.name;
-
-
-            categoriesContainer.appendChild(
-                button
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   PRODUCT CATEGORY MATCH
-===================================================== */
-
-function productMatchesCategory(
-    product,
-    categoryId
-) {
-
-    if (
-        categoryId === "all"
-    ) {
-
-        return true;
-
-    }
-
-
-    /*
-     * الطريقة الأساسية:
-     * categoryId
-     */
-
-    if (
-        String(
-            product.categoryId
-            ||
-            ""
-        )
-        ===
-        String(
-            categoryId
-        )
-    ) {
-
-        return true;
-
-    }
-
-
-    /*
-     * توافق مع البيانات القديمة
-     * إذا كان categoryId غير موجود
-     * ولكن categoryName موجود.
-     */
-
-    const category =
-        allCategories.find(
-            item =>
-                String(item.id)
-                ===
-                String(categoryId)
-        );
-
-
-    if (
-        category
-        &&
-        String(
-            product.categoryName
-            ||
-            product.category
-            ||
-            ""
-        )
-        .trim()
-        ===
-        String(
-            category.name
-        ).trim()
-    ) {
-
-        return true;
-
-    }
-
-
-    return false;
-
-}
-
-
-/* =====================================================
-   FILTER PRODUCTS
-===================================================== */
-
-function getFilteredProducts() {
-
-    const keyword =
-        String(
-            searchInput.value
-            ||
-            ""
-        )
-        .toLowerCase()
-        .trim();
-
-
-    return allProducts.filter(
-        product => {
-
-            /*
-             * أولًا: التصنيف
-             */
-
-            if (
-                !productMatchesCategory(
-                    product,
-                    currentCategoryId
-                )
-            ) {
-
-                return false;
-
-            }
-
-
-            /*
-             * ثانيًا: البحث
-             */
-
-            if (!keyword) {
-
-                return true;
-
-            }
-
-
-            const name =
-                String(
-                    product.name
-                    ||
-                    ""
-                )
-                .toLowerCase();
-
-
-            const description =
-                String(
-                    product.description
-                    ||
-                    ""
-                )
-                .toLowerCase();
-
-
-            const categoryName =
-                String(
-                    product.categoryName
-                    ||
-                    product.category
-                    ||
-                    ""
-                )
-                .toLowerCase();
-
-
-            return (
-
-                name.includes(
-                    keyword
-                )
-
-                ||
-
-                description.includes(
-                    keyword
-                )
-
-                ||
-
-                categoryName.includes(
-                    keyword
-                )
-
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   CATEGORY CLICK
-===================================================== */
-
-categoriesContainer.addEventListener(
-    "click",
-    function(event) {
-
-        const button =
-            event.target.closest(
-                ".category-btn"
-            );
-
-
-        if (!button) {
-
-            return;
-
-        }
-
-
-        currentCategoryId =
-            button.dataset.categoryId
-            ||
-            "all";
-
-
-        categoriesContainer
-            .querySelectorAll(
-                ".category-btn"
-            )
-            .forEach(
-                item => {
-
-                    item.classList.toggle(
-                        "active",
-                        item === button
-                    );
-
-                }
-            );
-
-
-        renderProducts(
-            getFilteredProducts()
-        );
-
-
-        /*
-         * العودة لبداية المنتجات
-         * بدون إزعاج المستخدم.
-         */
-
-        const productsTop =
-            productsContainer.getBoundingClientRect().top
-            +
-            window.scrollY
-            -
-            100;
-
-
-        window.scrollTo({
-
-            top:
-                Math.max(
-                    0,
-                    productsTop
-                ),
-
-            behavior:
-                "smooth"
-
-        });
-
-    }
-);
 
 
 /* =====================================================
@@ -5892,7 +5209,7 @@ async function loadProducts() {
 
 
         renderProducts(
-            getFilteredProducts()
+            allProducts
         );
 
     }
@@ -5995,13 +5312,7 @@ function renderProducts(products) {
 
                 <p style="margin-top:8px;">
 
-                    ${
-                        currentCategoryId !== "all"
-                        ?
-                        "لا توجد منتجات في هذا التصنيف حاليًا."
-                        :
-                        "لا توجد منتجات في هذا المتجر حاليًا."
-                    }
+                    لا توجد منتجات في هذا المتجر حاليًا.
 
                 </p>
 
@@ -6357,6 +5668,8 @@ function addToCart(product) {
     updateCartCount();
 
 
+    /* META ADD TO CART */
+
     if (
         typeof window.fbq === "function"
     ) {
@@ -6385,6 +5698,8 @@ function addToCart(product) {
 
     }
 
+
+    /* TIKTOK ADD TO CART */
 
     if (
         typeof window.ttq !== "undefined"
@@ -6478,8 +5793,67 @@ searchInput.addEventListener(
     "input",
     function() {
 
+        const keyword =
+
+            this.value
+                .toLowerCase()
+                .trim();
+
+
+        if (!keyword) {
+
+            renderProducts(
+                allProducts
+            );
+
+            return;
+
+        }
+
+
+        const filtered =
+
+            allProducts.filter(
+                product => {
+
+                    const name =
+
+                        String(
+                            product.name ||
+                            ""
+                        )
+                        .toLowerCase();
+
+
+                    const description =
+
+                        String(
+                            product.description ||
+                            ""
+                        )
+                        .toLowerCase();
+
+
+                    return (
+
+                        name.includes(
+                            keyword
+                        )
+
+                        ||
+
+                        description.includes(
+                            keyword
+                        )
+
+                    );
+
+                }
+            );
+
+
         renderProducts(
-            getFilteredProducts()
+            filtered
         );
 
     }
@@ -6696,17 +6070,6 @@ function showStoreError(message) {
         "G-Glam";
 
 
-    categoriesContainer.innerHTML = `
-
-        <div class="category-empty">
-
-            لا توجد تصنيفات.
-
-        </div>
-
-    `;
-
-
     productsContainer.innerHTML = `
 
         <div class="empty">
@@ -6765,13 +6128,6 @@ if (
 ) {
 
     updateCartCount();
-
-    /*
-     * تحميل التصنيفات أولًا،
-     * ثم المنتجات.
-     */
-
-    await loadCategories();
 
     await loadProducts();
 
