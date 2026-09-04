@@ -990,12 +990,6 @@ header{
     margin-bottom:20px;
 }
 
-
-/*
-    الاستمارة أصبحت داخل صندوق واحد
-    بدل وضع كل حقل داخل صندوق منفصل.
-*/
-
 .form-grid{
     display:grid;
     grid-template-columns:repeat(2,minmax(0,1fr));
@@ -2892,17 +2886,24 @@ async function loadStore(){
 
 function getStoreName(store){
 
-    if(!store) return "G-Glam";
+    if(!store){
 
-    return String(
-        store.name ||
+        return "G-Glam";
+
+    }
+
+
+    /*
+        نفس طريقة index.html تمامًا
+    */
+
+    const name =
         store.storeName ||
-        store.storeTitle ||
-        store.title ||
-        store.businessName ||
-        store.shopName ||
-        "G-Glam"
-    ).trim() || "G-Glam";
+        store.name ||
+        "G-Glam";
+
+
+    return String(name).trim() || "G-Glam";
 
 }
 
@@ -3239,10 +3240,19 @@ async function loadProduct(){
 
             if(currentStore){
 
+                /*
+                    جلب الاسم بنفس طريقة index.html
+                */
+
+                const name =
+                    currentStore.storeName ||
+                    currentStore.name ||
+                    "G-Glam";
+
                 currentStoreName=
-                    getStoreName(
-                        currentStore
-                    );
+                    String(name).trim() ||
+                    "G-Glam";
+
 
                 headerStoreName.textContent=
                     currentStoreName;
@@ -3828,8 +3838,6 @@ function renderProduct(){
                     </div>
 
 
-                    <!-- طريقة التوصيل -->
-
                     <div class="form-group full">
 
                         <label
@@ -3868,8 +3876,6 @@ function renderProduct(){
 
                 </div>
 
-
-                <!-- SUMMARY -->
 
                 <div class="order-summary">
 
@@ -4226,6 +4232,7 @@ function bindProductEvents(){
                 }
 
             }
+
         );
 
     }
@@ -4245,8 +4252,6 @@ function bindProductEvents(){
 
     }
 
-
-    /* طريقة التوصيل الجديدة */
 
     const deliveryTypeSelect=
         document.getElementById(
@@ -4790,10 +4795,6 @@ async function submitOrder(event){
         "التوصيل إلى المنزل";
 
 
-    /* =========================
-       VALIDATION
-    ========================= */
-
     if(
         !customerName||
         !customerPhone||
@@ -4846,11 +4847,6 @@ async function submitOrder(event){
 
     }
 
-
-    /*
-        إعادة حساب سعر التوصيل
-        قبل حفظ الطلب.
-    */
 
     if(
         deliveryType.includes("المكتب")
@@ -5004,8 +5000,6 @@ async function submitOrder(event){
         );
 
 
-        /* META PIXEL */
-
         if(
             typeof fbq==="function"
         ){
@@ -5024,8 +5018,6 @@ async function submitOrder(event){
 
         }
 
-
-        /* TIKTOK PIXEL */
 
         if(
             window.ttq &&
@@ -5060,10 +5052,6 @@ async function submitOrder(event){
             .reset();
 
 
-        /*
-            إعادة طريقة التوصيل إلى المنزل
-        */
-
         const deliveryTypeSelectAfterOrder=
             document.getElementById(
                 "deliveryType"
@@ -5076,10 +5064,6 @@ async function submitOrder(event){
 
         }
 
-
-        /*
-            إعادة الولاية
-        */
 
         const wilayaSelect=
             document.getElementById(
@@ -5116,10 +5100,6 @@ async function submitOrder(event){
         deliveryCost=0;
 
 
-        /*
-            إعادة اللون
-        */
-
         document
             .querySelectorAll(".color-button")
             .forEach(
@@ -5133,10 +5113,6 @@ async function submitOrder(event){
                 }
             );
 
-
-        /*
-            إعادة القياس
-        */
 
         const sizeSelect=
             document.getElementById(
@@ -5358,10 +5334,18 @@ async function initializePage(){
 
     if(currentStore){
 
+        /*
+            نفس طريقة index.html بالضبط
+        */
+
+        const name =
+            currentStore.storeName ||
+            currentStore.name ||
+            "G-Glam";
+
         currentStoreName=
-            getStoreName(
-                currentStore
-            );
+            String(name).trim() ||
+            "G-Glam";
 
 
         headerStoreName.textContent=
