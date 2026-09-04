@@ -3152,6 +3152,10 @@ async function loadStore(){
         }
 
 
+        /*
+         * OWNER UID IS THE PRIMARY OWNER IDENTIFIER
+         */
+
         if(storeData.ownerUid){
 
             currentOwnerUid=
@@ -3159,22 +3163,19 @@ async function loadStore(){
                     storeData.ownerUid
                 );
 
-        }
+        }else if(storeData.ownerId){
 
+            currentOwnerUid=
+                String(
+                    storeData.ownerId
+                );
 
-        if(!currentOwnerUid){
+        }else if(storeData.uid){
 
-            if(
-                storeData.id &&
-                /^[A-Za-z0-9_-]{20,}$/.test(
-                    String(storeData.id)
-                )
-            ){
-
-                currentOwnerUid=
-                    String(storeData.id);
-
-            }
+            currentOwnerUid=
+                String(
+                    storeData.uid
+                );
 
         }
 
@@ -3193,6 +3194,11 @@ async function loadStore(){
 
             localStorage.setItem(
                 "storeId",
+                String(currentStoreId)
+            );
+
+            localStorage.setItem(
+                "storeDocumentId",
                 String(currentStoreId)
             );
 
@@ -3241,10 +3247,13 @@ function getStoreName(store){
 
 /* =========================
    GET STORE OWNER UID
-   SAME LOGIC AS CART.HTML
 ========================= */
 
 function getStoreOwnerUid(){
+
+    /*
+     * 1. CURRENT OWNER UID
+     */
 
     if(currentOwnerUid){
 
@@ -3255,6 +3264,10 @@ function getStoreOwnerUid(){
     }
 
 
+    /*
+     * 2. PRODUCT OWNER UID
+     */
+
     if(product?.ownerUid){
 
         return String(
@@ -3263,6 +3276,41 @@ function getStoreOwnerUid(){
 
     }
 
+
+    /*
+     * 3. STORE OWNER UID
+     */
+
+    if(currentStore?.ownerUid){
+
+        return String(
+            currentStore.ownerUid
+        );
+
+    }
+
+
+    if(currentStore?.ownerId){
+
+        return String(
+            currentStore.ownerId
+        );
+
+    }
+
+
+    if(currentStore?.uid){
+
+        return String(
+            currentStore.uid
+        );
+
+    }
+
+
+    /*
+     * 4. SAVED OWNER UID
+     */
 
     const savedOwnerUid=
         localStorage.getItem(
@@ -3279,18 +3327,9 @@ function getStoreOwnerUid(){
     }
 
 
-    if(currentStore?.ownerUid){
-
-        return String(
-            currentStore.ownerUid
-        );
-
-    }
-
-
     /*
-     * FINAL FALLBACK
-     * Same principle used by cart.html
+     * 5. FINAL FALLBACK
+     * Store document ID
      */
 
     if(currentStoreId){
@@ -3307,10 +3346,9 @@ function getStoreOwnerUid(){
 }
 
 
-
 /* =========================
    DELIVERY DATA
-   SAME SYSTEM AS CART.HTML
+   EXACT SAME SOURCE AS CART
 ========================= */
 
 async function loadDeliveryData(){
@@ -3331,10 +3369,12 @@ async function loadDeliveryData(){
 
     }
 
+
     try{
 
         const ownerUid=
             getStoreOwnerUid();
+
 
         if(!ownerUid){
 
@@ -3344,8 +3384,10 @@ async function loadDeliveryData(){
 
         }
 
+
         currentOwnerUid=
             String(ownerUid);
+
 
         localStorage.setItem(
             "ownerUid",
@@ -3354,7 +3396,7 @@ async function loadDeliveryData(){
 
 
         /*
-         * EXACT FIRESTORE PATH
+         * EXACT PATH:
          *
          * stores/{ownerUid}/delivery
          */
@@ -3378,47 +3420,30 @@ async function loadDeliveryData(){
             (docSnap)=>{
 
                 const data=
-                    docSnap.data() || {};
+                    docSnap.data();
 
 
-                /*
-                 * SAME WILAYA NAME LOGIC
-                 * AS CART.HTML
-                 */
-
-                const name=
+                const wilayaName=
                     data.name ||
                     data.wilaya ||
                     data.title ||
                     docSnap.id;
 
 
-                /*
-                 * OFFICE PRICE
-                 */
-
-                const office=
-                    Number(
-                        data.office ??
-                        data.officePrice ??
-                        data.bureau ??
-                        data.bureauPrice ??
-                        0
-                    );
+                const officeValue=
+                    data.office ??
+                    data.officePrice ??
+                    data.bureau ??
+                    data.bureauPrice ??
+                    0;
 
 
-                /*
-                 * HOME PRICE
-                 */
-
-                const home=
-                    Number(
-                        data.home ??
-                        data.homePrice ??
-                        data.domicile ??
-                        data.homeDelivery ??
-                        0
-                    );
+                const homeValue=
+                    data.home ??
+                    data.homePrice ??
+                    data.domicile ??
+                    data.homeDelivery ??
+                    0;
 
 
                 deliveryData.push({
@@ -3427,21 +3452,19 @@ async function loadDeliveryData(){
                         docSnap.id,
 
                     name:
-                        String(name),
+                        String(
+                            wilayaName
+                        ),
 
                     office:
-                        Number.isFinite(office)
-                        ?
-                        office
-                        :
-                        0,
+                        Number(
+                            officeValue
+                        ) || 0,
 
                     home:
-                        Number.isFinite(home)
-                        ?
-                        home
-                        :
-                        0
+                        Number(
+                            homeValue
+                        ) || 0
 
                 });
 
@@ -3450,35 +3473,48 @@ async function loadDeliveryData(){
 
 
         /*
-         * SAME SORTING AS CART.HTML
+         * EXACT SAME SORTING AS CART
          */
 
         deliveryData.sort(
             (a,b)=>{
 
-                const na=
+                const aMatch=
+                    String(a.id)
+                    .match(/\d+/);
+
+
+                const bMatch=
+                    String(b.id)
+                    .match(/\d+/);
+
+
+                const aNum=
+                    aMatch
+                    ?
                     parseInt(
-                        String(a.id).replace(
-                            /\D/g,
-                            ""
-                        ),
-                        10
-                    ) || 999;
+                        aMatch[0]
+                    )
+                    :
+                    NaN;
 
 
-                const nb=
+                const bNum=
+                    bMatch
+                    ?
                     parseInt(
-                        String(b.id).replace(
-                            /\D/g,
-                            ""
-                        ),
-                        10
-                    ) || 999;
+                        bMatch[0]
+                    )
+                    :
+                    NaN;
 
 
-                if(na!==nb){
+                if(
+                    !Number.isNaN(aNum) &&
+                    !Number.isNaN(bNum)
+                ){
 
-                    return na-nb;
+                    return aNum-bNum;
 
                 }
 
@@ -3527,7 +3563,7 @@ async function loadDeliveryData(){
 
 /* =========================
    POPULATE WILAYA
-   SAME DISPLAY AS CART.HTML
+   EXACT SAME BEHAVIOR AS CART
 ========================= */
 
 function populateWilayaSelect(){
@@ -3543,103 +3579,54 @@ function populateWilayaSelect(){
     }
 
 
-    select.innerHTML="";
+    select.innerHTML=`
 
+        <option value="">
+            ${
+                deliveryLoaded
+                ?
+                "اختر الولاية"
+                :
+                "تعذر تحميل الولايات"
+            }
+        </option>
 
-    /*
-     * FIRST OPTION
-     */
+    `;
 
-    const firstOption=
-        document.createElement(
-            "option"
-        );
-
-
-    firstOption.value="";
-
-
-    firstOption.textContent=
-        deliveryLoaded
-        ?
-        "اختر الولاية"
-        :
-        "تعذر تحميل الولايات";
-
-
-    firstOption.selected=true;
-
-
-    select.appendChild(
-        firstOption
-    );
-
-
-    /*
-     * DELIVERY LOADING FAILED
-     */
 
     if(!deliveryLoaded){
 
         select.disabled=true;
 
+        updateDelivery();
 
         return;
 
     }
 
 
-    /*
-     * NO WILAYAS
-     */
-
     if(!deliveryData.length){
 
-        const emptyOption=
-            document.createElement(
-                "option"
-            );
+        select.innerHTML=`
 
+            <option value="">
+                لا توجد ولايات متاحة
+            </option>
 
-        emptyOption.value="";
-
-
-        emptyOption.textContent=
-            "لا توجد ولايات متاحة";
-
-
-        emptyOption.disabled=true;
-
-
-        select.appendChild(
-            emptyOption
-        );
+        `;
 
 
         select.disabled=true;
 
+        updateDelivery();
 
         return;
 
     }
 
 
-    /*
-     * ENABLE SELECT
-     */
-
-    select.disabled=false;
-
-
-    /*
-     * SHOW ALL WILAYAS
-     *
-     * VALUE = FIRESTORE DOCUMENT ID
-     * TEXT  = REAL WILAYA NAME
-     */
-
     deliveryData.forEach(
-        (item)=>{
+        item=>{
 
             const option=
                 document.createElement(
@@ -3647,9 +3634,17 @@ function populateWilayaSelect(){
                 );
 
 
+            /*
+             * VALUE = FIRESTORE DOCUMENT ID
+             */
+
             option.value=
                 String(item.id);
 
+
+            /*
+             * TEXT = WILAYA NAME
+             */
 
             option.textContent=
                 String(item.name);
@@ -3663,9 +3658,8 @@ function populateWilayaSelect(){
     );
 
 
-    /*
-     * UPDATE DELIVERY PRICE
-     */
+    select.disabled=false;
+
 
     updateDelivery();
 
@@ -3673,7 +3667,8 @@ function populateWilayaSelect(){
 
 
 /* =========================
-   FIND DELIVERY
+   GET SELECTED DELIVERY
+   SAME AS CART
 ========================= */
 
 function getSelectedDelivery(){
@@ -3702,8 +3697,8 @@ function getSelectedDelivery(){
 
     return deliveryData.find(
         item=>
-            String(item.id).trim()===
-            wilaya
+            String(item.id) ===
+            String(wilaya)
     ) || null;
 
 }
@@ -3763,6 +3758,11 @@ async function loadProduct(){
         };
 
 
+        /*
+         * PRODUCT STORE ID
+         * IS THE REAL STORE DOCUMENT ID
+         */
+
         if(
             currentStoreId &&
             product.storeId &&
@@ -3780,7 +3780,7 @@ async function loadProduct(){
 
 
         /*
-         * STORE ID
+         * PRODUCT STORE ID TAKES PRIORITY
          */
 
         currentStoreId=
@@ -3789,7 +3789,7 @@ async function loadProduct(){
 
 
         /*
-         * OWNER UID
+         * PRODUCT OWNER UID
          */
 
         currentOwnerUid=
@@ -3802,7 +3802,7 @@ async function loadProduct(){
 
 
         /*
-         * SAVE IDs
+         * SAVE STORE IDS
          */
 
         if(currentStoreId){
@@ -3831,8 +3831,8 @@ async function loadProduct(){
 
 
         /*
-         * LOAD STORE AGAIN
-         * after resolving product store
+         * LOAD STORE AFTER
+         * PRODUCT STORE ID IS RESOLVED
          */
 
         currentStore=
@@ -3871,8 +3871,8 @@ async function loadProduct(){
 
 
         /*
-         * LOAD DELIVERY
-         * AFTER OWNER UID IS READY
+         * DELIVERY MUST LOAD
+         * AFTER OWNER UID IS RESOLVED
          */
 
         await loadDeliveryData();
@@ -4479,18 +4479,16 @@ function renderProduct(){
                                 required
                             >
 
-                                <option
-                                    value="التوصيل إلى المنزل"
-                                    selected
-                                >
-                                    التوصيل إلى المنزل
+                                <option value="">
+                                    اختر نوع التوصيل
                                 </option>
 
+                                <option value="إلى المكتب">
+                                    إلى المكتب
+                                </option>
 
-                                <option
-                                    value="التوصيل إلى المكتب"
-                                >
-                                    التوصيل إلى المكتب
+                                <option value="إلى باب المنزل">
+                                    إلى باب المنزل
                                 </option>
 
                             </select>
@@ -4580,7 +4578,6 @@ function renderProduct(){
 
 
     bindProductEvents();
-
 
     updateSummary();
 
@@ -4806,6 +4803,7 @@ function bindProductEvents(){
                 updateSummary();
 
             }
+
         );
 
     }
@@ -5334,17 +5332,13 @@ function updateSummary(){
 
 /* =========================
    DELIVERY
+   EXACT SAME LOGIC AS CART
 ========================= */
 
 function updateDelivery(){
 
-    deliveryCost=0;
-
-
-    const wilayaSelect=
-        document.getElementById(
-            "customerWilaya"
-        );
+    const selected=
+        getSelectedDelivery();
 
 
     const deliveryTypeSelect=
@@ -5353,41 +5347,15 @@ function updateDelivery(){
         );
 
 
-    const wilaya=
-        wilayaSelect
+    const type=
+        deliveryTypeSelect
         ?
-        String(
-            wilayaSelect.value||""
-        ).trim()
+        deliveryTypeSelect.value
         :
         "";
 
 
-    const type=
-        deliveryTypeSelect
-        ?
-        String(
-            deliveryTypeSelect.value||
-            "التوصيل إلى المنزل"
-        )
-        :
-        "التوصيل إلى المنزل";
-
-
-    if(!wilaya){
-
-        updateSummary();
-
-        return;
-
-    }
-
-
-    const found=
-        getSelectedDelivery();
-
-
-    if(!found){
+    if(!selected || !type){
 
         deliveryCost=0;
 
@@ -5398,20 +5366,18 @@ function updateDelivery(){
     }
 
 
-    if(
-        type.includes("المكتب")
-    ){
+    if(type==="إلى المكتب"){
 
         deliveryCost=
             Number(
-                found.office
+                selected.office
             )||0;
 
     }else{
 
         deliveryCost=
             Number(
-                found.home
+                selected.home
             )||0;
 
     }
@@ -5424,29 +5390,20 @@ function updateDelivery(){
 
 /* =========================
    PHONE
+   EXACT SAME VALIDATOR AS CART
 ========================= */
 
-function normalizePhone(phone){
-
-    return String(
-        phone||""
-    )
-    .trim()
-    .replace(
-        /[\s()-]/g,
-        ""
-    );
-
-}
-
-
-function isValidAlgerianPhone(phone){
+function validatePhone(phone){
 
     const normalized=
-        normalizePhone(phone);
+        String(phone)
+        .replace(
+            /[\s\-().]/g,
+            ""
+        );
 
 
-    return /^(0[5-7][0-9]{8}|\+213[5-7][0-9]{8})$/
+    return /^0(5|6|7)[0-9]{8}$/
         .test(
             normalized
         );
@@ -5481,6 +5438,7 @@ function getStoreOwnerName(){
 
 /* =========================
    SUBMIT ORDER
+   SAME CORE SCHEMA AS CART
 ========================= */
 
 async function submitOrder(event){
@@ -5511,16 +5469,10 @@ async function submitOrder(event){
         ).value.trim();
 
 
-    const customerPhoneRaw=
+    const customerPhone=
         document.getElementById(
             "customerPhone"
         ).value.trim();
-
-
-    const customerPhone=
-        normalizePhone(
-            customerPhoneRaw
-        );
 
 
     const wilayaSelect=
@@ -5529,10 +5481,17 @@ async function submitOrder(event){
         );
 
 
-    const customerWilaya=
+    /*
+     * IMPORTANT:
+     * wilaya = FIRESTORE DOCUMENT ID
+     */
+
+    const wilaya=
         wilayaSelect
         ?
-        wilayaSelect.value.trim()
+        String(
+            wilayaSelect.value||""
+        ).trim()
         :
         "";
 
@@ -5555,23 +5514,25 @@ async function submitOrder(event){
         );
 
 
-    const deliveryType=
+    const delivery=
         deliveryTypeSelect
         ?
         String(
-            deliveryTypeSelect.value||
-            "التوصيل إلى المنزل"
-        )
+            deliveryTypeSelect.value||""
+        ).trim()
         :
-        "التوصيل إلى المنزل";
+        "";
 
+
+    /*
+     * SAME REQUIRED FIELDS AS CART
+     */
 
     if(
         !customerName||
         !customerPhone||
-        !customerWilaya||
-        !customerCommune||
-        !customerAddress
+        !wilaya||
+        !delivery
     ){
 
         alert(
@@ -5583,14 +5544,18 @@ async function submitOrder(event){
     }
 
 
+    /*
+     * EXACT CART PHONE VALIDATION
+     */
+
     if(
-        !isValidAlgerianPhone(
+        !validatePhone(
             customerPhone
         )
     ){
 
         alert(
-            "يرجى إدخال رقم هاتف جزائري صحيح مثل 0555555555 أو +213555555555."
+            "يرجى إدخال رقم هاتف جزائري صحيح مثل 0555555555."
         );
 
 
@@ -5606,11 +5571,15 @@ async function submitOrder(event){
     }
 
 
-    const selectedDelivery=
+    /*
+     * SELECTED DELIVERY DOCUMENT
+     */
+
+    const deliveryItem=
         getSelectedDelivery();
 
 
-    if(!selectedDelivery){
+    if(!deliveryItem){
 
         alert(
             "يرجى اختيار الولاية بشكل صحيح."
@@ -5621,20 +5590,22 @@ async function submitOrder(event){
     }
 
 
-    if(
-        deliveryType.includes("المكتب")
-    ){
+    /*
+     * SAME DELIVERY PRICE LOGIC AS CART
+     */
+
+    if(delivery==="إلى المكتب"){
 
         deliveryCost=
             Number(
-                selectedDelivery.office
+                deliveryItem.office
             )||0;
 
     }else{
 
         deliveryCost=
             Number(
-                selectedDelivery.home
+                deliveryItem.home
             )||0;
 
     }
@@ -5668,66 +5639,78 @@ async function submitOrder(event){
 
     try{
 
+        /*
+         * PRODUCT PRICE
+         */
+
         const price=
-            Number(
-                product.price||0
-            );
-
-
-        const productTotal=
-            price*
-            Number(
-                quantity||1
-            );
-
-
-        const total=
-            productTotal+
-            Number(
-                deliveryCost||0
+            Math.max(
+                0,
+                Number(
+                    product.price||0
+                )
             );
 
 
         /*
-         * UID FIRST
+         * QUANTITY
          */
 
-        const finalOwnerUid=
-            String(
-                product.ownerUid||
-                currentOwnerUid||
-                localStorage.getItem(
-                    "ownerUid"
-                )||
-                ""
+        const orderQuantity=
+            Math.max(
+                1,
+                Number(
+                    quantity||1
+                )
             );
+
+
+        /*
+         * PRODUCTS TOTAL
+         */
+
+        const productsTotal=
+            price*
+            orderQuantity;
+
+
+        /*
+         * TOTAL
+         */
+
+        const total=
+            productsTotal+
+            Number(
+                deliveryCost
+            );
+
+
+        /*
+         * OWNER UID
+         *
+         * PRIMARY IDENTIFIER
+         */
+
+        const ownerUid=
+            String(
+                getStoreOwnerUid()||
+                ""
+            ).trim();
 
 
         /*
          * REAL STORE DOCUMENT ID
          */
 
-        const finalStoreId=
+        const storeId=
             String(
-                product.storeId||
                 currentStoreId||
-                localStorage.getItem(
-                    "storeId"
-                )||
+                product.storeId||
                 ""
-            );
+            ).trim();
 
 
-        if(!finalStoreId){
-
-            throw new Error(
-                "Missing storeId"
-            );
-
-        }
-
-
-        if(!finalOwnerUid){
+        if(!ownerUid){
 
             throw new Error(
                 "Missing ownerUid"
@@ -5736,14 +5719,25 @@ async function submitOrder(event){
         }
 
 
+        if(!storeId){
+
+            throw new Error(
+                "Missing storeId"
+            );
+
+        }
+
+
         /*
-         * REAL WILAYA NAME
+         * DELIVERY WILAYA NAME
+         *
+         * HUMAN READABLE NAME
          */
 
-        const deliveryWilayaName=
+        const deliveryWilaya=
             String(
-                selectedDelivery.name||
-                customerWilaya
+                deliveryItem.name||
+                wilaya
             );
 
 
@@ -5752,21 +5746,23 @@ async function submitOrder(event){
          */
 
         const productImage=
-            product.image||
-            (
-                Array.isArray(
-                    product.images
-                )
-                ?
-                product.images[0]
-                :
+            String(
+                product.image||
+                (
+                    Array.isArray(
+                        product.images
+                    )
+                    ?
+                    product.images[0]
+                    :
+                    ""
+                )||
                 ""
-            )||
-            "";
+            );
 
 
         /*
-         * CART STRUCTURE
+         * SAME PRODUCT STRUCTURE AS CART
          */
 
         const orderProducts=[
@@ -5774,60 +5770,76 @@ async function submitOrder(event){
             {
 
                 id:
-                    product.id,
+                    String(
+                        product.id||""
+                    ),
 
                 name:
-                    product.name||
-                    "منتج",
+                    String(
+                        product.name||
+                        "منتج"
+                    ),
 
                 price:
                     price,
 
                 quantity:
-                    Number(quantity)||1,
+                    orderQuantity,
 
                 total:
-                    productTotal,
+                    price*
+                    orderQuantity,
 
                 image:
                     productImage,
 
                 color:
-                    selectedColor,
+                    String(
+                        selectedColor||
+                        "بدون لون"
+                    ),
 
                 size:
-                    selectedSize,
+                    String(
+                        selectedSize||
+                        "بدون قياس"
+                    ),
 
                 ownerUid:
-                    finalOwnerUid,
+                    ownerUid,
 
                 storeId:
-                    finalStoreId
+                    storeId
 
             }
 
         ];
 
 
+        /*
+         * STORE OWNER NAME
+         */
+
         const ownerName=
-            getStoreOwnerName();
+            String(
+                getStoreOwnerName()
+            );
 
 
         /*
-         * ORDER
+         * EXACT CORE ORDER SCHEMA AS CART.HTML
          */
 
         const orderData={
 
             ownerUid:
-                finalOwnerUid,
+                ownerUid,
 
             storeId:
-                finalStoreId,
+                storeId,
 
             storeName:
                 currentStoreName||
-                product.storeName||
                 "G-Glam",
 
             ownerName:
@@ -5839,8 +5851,13 @@ async function submitOrder(event){
             phone:
                 customerPhone,
 
+            /*
+             * IMPORTANT:
+             * THIS IS THE FIRESTORE DELIVERY DOC ID
+             */
+
             wilaya:
-                deliveryWilayaName,
+                wilaya,
 
             commune:
                 customerCommune,
@@ -5849,22 +5866,26 @@ async function submitOrder(event){
                 customerAddress,
 
             delivery:
-                deliveryType,
+                delivery,
 
             deliveryPrice:
                 Number(
                     deliveryCost
                 ),
 
+            /*
+             * HUMAN READABLE WILAYA NAME
+             */
+
             deliveryWilaya:
-                deliveryWilayaName,
+                deliveryWilaya,
 
             products:
                 orderProducts,
 
             productsTotal:
                 Number(
-                    productTotal
+                    productsTotal
                 ),
 
             total:
@@ -5884,60 +5905,15 @@ async function submitOrder(event){
                 ),
 
             createdAt:
-                serverTimestamp(),
-
-
-            /*
-             * LEGACY FIELDS
-             */
-
-            productId:
-                product.id,
-
-            productName:
-                product.name||
-                "منتج",
-
-            productPrice:
-                price,
-
-            quantity:
-                Number(quantity)||1,
-
-            color:
-                selectedColor,
-
-            size:
-                selectedSize,
-
-            productTotal:
-                productTotal,
-
-            deliveryCost:
-                Number(
-                    deliveryCost
-                ),
-
-            customerName:
-                customerName,
-
-            customerPhone:
-                customerPhone,
-
-            customerWilaya:
-                deliveryWilayaName,
-
-            customerCommune:
-                customerCommune,
-
-            customerAddress:
-                customerAddress,
-
-            deliveryType:
-                deliveryType
+                serverTimestamp()
 
         };
 
+
+        /*
+         * SAVE TO SAME TOP-LEVEL ORDERS
+         * COLLECTION AS CART
+         */
 
         await addDoc(
             collection(
@@ -5949,7 +5925,7 @@ async function submitOrder(event){
 
 
         /*
-         * META
+         * META PIXEL
          */
 
         if(
@@ -5978,7 +5954,7 @@ async function submitOrder(event){
 
 
         /*
-         * TIKTOK
+         * TIKTOK PIXEL
          */
 
         if(
@@ -6019,7 +5995,7 @@ async function submitOrder(event){
 
 
         /*
-         * RESET
+         * RESET FORM
          */
 
         document
@@ -6029,37 +6005,39 @@ async function submitOrder(event){
             .reset();
 
 
-        const deliveryTypeSelectAfterOrder=
+        /*
+         * RESET SELECTS
+         */
+
+        const deliveryTypeAfterOrder=
             document.getElementById(
                 "deliveryType"
             );
 
 
-        if(
-            deliveryTypeSelectAfterOrder
-        ){
+        if(deliveryTypeAfterOrder){
 
-            deliveryTypeSelectAfterOrder.value=
-                "التوصيل إلى المنزل";
+            deliveryTypeAfterOrder.value="";
 
         }
 
 
-        const wilayaSelectAfterOrder=
+        const wilayaAfterOrder=
             document.getElementById(
                 "customerWilaya"
             );
 
 
-        if(
-            wilayaSelectAfterOrder
-        ){
+        if(wilayaAfterOrder){
 
-            wilayaSelectAfterOrder.value=
-                "";
+            wilayaAfterOrder.value="";
 
         }
 
+
+        /*
+         * RESET PRODUCT OPTIONS
+         */
 
         selectedColor=
             Array.isArray(
@@ -6067,7 +6045,9 @@ async function submitOrder(event){
             ) &&
             product.colors.length
             ?
-            product.colors[0]
+            String(
+                product.colors[0]
+            )
             :
             "بدون لون";
 
@@ -6078,15 +6058,22 @@ async function submitOrder(event){
             ) &&
             product.sizes.length
             ?
-            product.sizes[0]
+            String(
+                product.sizes[0]
+            )
             :
             "";
 
 
         quantity=1;
 
+
         deliveryCost=0;
 
+
+        /*
+         * RESET COLOR UI
+         */
 
         document
             .querySelectorAll(
@@ -6103,6 +6090,10 @@ async function submitOrder(event){
                 }
             );
 
+
+        /*
+         * RESET SIZE
+         */
 
         const sizeSelect=
             document.getElementById(
@@ -6122,6 +6113,10 @@ async function submitOrder(event){
 
         updateSummary();
 
+
+        /*
+         * SCROLL TO SUCCESS
+         */
 
         window.scrollTo({
 
@@ -6325,60 +6320,10 @@ async function initializePage(){
 
 
     /*
-     * LOAD STORE FIRST
-     */
-
-    currentStore=
-        await loadStore();
-
-
-    if(currentStore){
-
-        currentStoreName=
-            getStoreName(
-                currentStore
-            );
-
-
-        headerStoreName.textContent=
-            currentStoreName;
-
-
-        storeInfo.innerHTML=`
-
-            <strong>
-                ${escapeHtml(
-                    currentStoreName
-                )}
-            </strong>
-
-        `;
-
-
-        applyStoreTheme(
-            currentStore
-        );
-
-
-        renderSocialLinks();
-
-    }else{
-
-        headerStoreName.textContent=
-            "G-Glam";
-
-
-        storeInfo.innerHTML=
-            "G-Glam";
-
-
-        renderSocialLinks();
-
-    }
-
-
-    /*
-     * LOAD PRODUCT
+     * LOAD PRODUCT FIRST
+     *
+     * PRODUCT CONTAINS THE REAL
+     * storeId AND ownerUid.
      */
 
     await loadProduct();
