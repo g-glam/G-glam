@@ -1854,8 +1854,6 @@ header{
         <div class="form-grid">
 
 
-            <!-- NAME -->
-
             <div class="form-group">
 
                 <label>
@@ -1877,8 +1875,6 @@ header{
 
             </div>
 
-
-            <!-- PHONE -->
 
             <div class="form-group">
 
@@ -1903,8 +1899,6 @@ header{
             </div>
 
 
-            <!-- WILAYA -->
-
             <div class="form-group">
 
                 <label>
@@ -1928,8 +1922,6 @@ header{
 
             </div>
 
-
-            <!-- DELIVERY TYPE -->
 
             <div class="form-group">
 
@@ -1980,8 +1972,6 @@ header{
             </div>
 
 
-            <!-- COMMUNE -->
-
             <div class="form-group">
 
                 <label>
@@ -1997,8 +1987,6 @@ header{
 
             </div>
 
-
-            <!-- ADDRESS -->
 
             <div class="form-group">
 
@@ -2018,8 +2006,6 @@ header{
 
         </div>
 
-
-        <!-- DELIVERY PRICE -->
 
         <div class="order-totals">
 
@@ -2054,8 +2040,6 @@ header{
 
         </div>
 
-
-        <!-- SEND -->
 
         <button
             type="button"
@@ -2120,7 +2104,8 @@ import {
     serverTimestamp,
     getDocs,
     doc,
-    getDoc
+    getDoc,
+    onSnapshot
 }
 from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
@@ -2519,6 +2504,10 @@ let currentStoreName =
 "G-Glam";
 
 
+let currentStoreOwnerName =
+"";
+
+
 let currentStore =
 null;
 
@@ -2538,6 +2527,21 @@ let quantity =
 let deliveryItems = [];
 
 let deliveryCost = 0;
+
+
+/*
+ * مراقبة وثيقة المتجر في Firestore
+ *
+ * تبقى فعالة حتى يتم تحديث اسم المتجر
+ * أو الثيم أو روابط التواصل من الإعدادات.
+ */
+
+let unsubscribeStore =
+null;
+
+
+let listeningStoreId =
+null;
 
 
 /* =====================================================
@@ -3478,7 +3482,7 @@ function updateCartCount(){
 
 
 /* =====================================================
-   STORE OWNER
+   STORE OWNER NAME
 ===================================================== */
 
 async function loadStoreOwnerName(){
@@ -3532,17 +3536,12 @@ async function loadStoreOwnerName(){
     }
 
 
-    if(
-        ownerName
-    ){
+    if(ownerName){
 
-        storeOwnerNameElement.textContent =
-        ownerName;
-
-
-        sidebarOwnerName.textContent =
-        ownerName;
-
+        currentStoreOwnerName =
+        String(
+            ownerName
+        );
 
         return;
 
@@ -3622,12 +3621,10 @@ async function loadStoreOwnerName(){
 
             if(ownerName){
 
-                storeOwnerNameElement.textContent =
-                ownerName;
-
-
-                sidebarOwnerName.textContent =
-                ownerName;
+                currentStoreOwnerName =
+                String(
+                    ownerName
+                );
 
             }
 
@@ -3646,27 +3643,87 @@ async function loadStoreOwnerName(){
 
 
 /* =====================================================
+   UPDATE STORE NAME UI
+===================================================== */
+
+function updateStoreNameUI(){
+
+    const name =
+    String(
+        currentStoreName ||
+        "G-Glam"
+    ).trim() ||
+    "G-Glam";
+
+
+    /*
+     * اسم المتجر يظهر في رأس الصفحة
+     */
+
+    storeOwnerNameElement.textContent =
+    name;
+
+
+    /*
+     * اسم المتجر يظهر في القائمة الجانبية
+     */
+
+    sidebarOwnerName.textContent =
+    name;
+
+
+    /*
+     * اسم المتجر يظهر في بطاقة معلومات المتجر
+     */
+
+    storeInfo.innerHTML = `
+
+        متجر:
+        <strong>
+            ${escapeHtml(
+                name
+            )}
+        </strong>
+
+    `;
+
+
+    /*
+     * تحديث عنوان الصفحة أيضاً
+     */
+
+    document.title =
+    `${name} | المنتج`;
+
+}
+
+
+/* =====================================================
    LOAD STORE
+   REAL-TIME FIRESTORE
 ===================================================== */
 
 async function loadStore(){
 
     if(!currentStoreId){
 
+        currentStore =
+        null;
+
+
         currentStoreName =
         "G-Glam";
+
 
         currentOwnerUid =
         null;
 
-        storeInfo.innerHTML = `
 
-            متجر:
-            <strong>
-                G-Glam
-            </strong>
+        currentStoreOwnerName =
+        "";
 
-        `;
+
+        updateStoreNameUI();
 
 
         applyStoreTheme(
@@ -3681,158 +3738,303 @@ async function loadStore(){
     }
 
 
-    try{
-
-        const storeSnap =
-        await getDoc(
-            doc(
-                db,
-                "stores",
-                String(
-                    currentStoreId
-                )
-            )
-        );
-
-
-        if(
-            storeSnap.exists()
-        ){
-
-            currentStore =
-            storeSnap.data();
-
-
-            currentStoreName =
-
-                currentStore.storeName ||
-
-                currentStore.name ||
-
-                "G-Glam";
-
-
-            currentOwnerUid =
-
-                currentStore.ownerUid ||
-
-                currentStore.ownerId ||
-
-                currentStore.uid ||
-
-                String(
-                    currentStoreId
-                );
-
-
-            applyStoreTheme(
-                currentStore
-            );
-
-        }else{
-
-            currentStore =
-            null;
-
-
-            currentStoreName =
-            "G-Glam";
-
-
-            currentOwnerUid =
-            String(
-                currentStoreId
-            );
-
-
-            applyStoreTheme(
-                "orange"
-            );
-
-        }
-
-
-        localStorage.setItem(
-            "storeId",
-            String(
-                currentStoreId
-            )
-        );
-
-
-        localStorage.setItem(
-            "storeDocumentId",
-            String(
-                currentStoreId
-            )
-        );
-
-
-        if(currentOwnerUid){
-
-            localStorage.setItem(
-                "ownerUid",
-                String(
-                    currentOwnerUid
-                )
-            );
-
-        }
-
-
-        storeInfo.innerHTML = `
-
-            متجر:
-            <strong>
-                ${escapeHtml(
-                    currentStoreName
-                )}
-            </strong>
-
-        `;
-
-
-        await loadStoreOwnerName();
-
-        updateNavigation();
-
-
-    }catch(error){
-
-        console.error(
-            "STORE LOAD ERROR:",
-            error
-        );
-
-
-        currentOwnerUid =
+    const storeId =
+    String(
         currentStoreId
-        ?
-        String(
-            currentStoreId
-        )
-        :
-        null;
+    );
 
 
-        storeInfo.innerHTML = `
+    /*
+     * إذا كانت الصفحة تستمع بالفعل إلى نفس المتجر
+     * فلا ننشئ Listener جديد.
+     */
 
-            متجر:
-            <strong>
-                G-Glam
-            </strong>
+    if(
+        unsubscribeStore &&
+        listeningStoreId === storeId
+    ){
 
-        `;
+        if(currentStore){
 
+            updateStoreNameUI();
 
-        applyStoreTheme(
-            "orange"
-        );
+            updateNavigation();
 
+        }
 
-        updateNavigation();
+        return;
 
     }
+
+
+    /*
+     * إيقاف Listener قديم إن وجد.
+     */
+
+    if(unsubscribeStore){
+
+        try{
+
+            unsubscribeStore();
+
+        }catch(error){
+
+            console.warn(
+                "OLD STORE LISTENER ERROR:",
+                error
+            );
+
+        }
+
+        unsubscribeStore =
+        null;
+
+    }
+
+
+    listeningStoreId =
+    storeId;
+
+
+    /*
+     * Promise لضمان تحميل أول بيانات المتجر
+     * قبل متابعة تحميل المنتج والتوصيل.
+     */
+
+    await new Promise(
+        resolve => {
+
+            let firstSnapshot =
+            true;
+
+
+            unsubscribeStore =
+            onSnapshot(
+
+                doc(
+                    db,
+                    "stores",
+                    storeId
+                ),
+
+                async storeSnap => {
+
+                    try{
+
+                        if(
+                            storeSnap.exists()
+                        ){
+
+                            currentStore =
+                            storeSnap.data();
+
+
+                            /*
+                             * اسم المتجر يؤخذ من:
+                             *
+                             * storeName
+                             * ثم name
+                             *
+                             * مع الحفاظ على G-Glam كاحتياط.
+                             */
+
+                            currentStoreName =
+
+                                String(
+                                    currentStore.storeName ||
+                                    currentStore.name ||
+                                    "G-Glam"
+                                ).trim() ||
+                                "G-Glam";
+
+
+                            /*
+                             * UID المالك مستقل عن Store ID.
+                             */
+
+                            currentOwnerUid =
+
+                                currentStore.ownerUid ||
+
+                                currentStore.ownerId ||
+
+                                currentStore.uid ||
+
+                                currentOwnerUid ||
+
+                                storeId;
+
+
+                            applyStoreTheme(
+                                currentStore
+                            );
+
+
+                            await loadStoreOwnerName();
+
+                        }else{
+
+                            currentStore =
+                            null;
+
+
+                            currentStoreName =
+                            "G-Glam";
+
+
+                            currentStoreOwnerName =
+                            "";
+
+
+                            /*
+                             * لا نخلط بين Store ID
+                             * و Owner UID إلا كـ fallback
+                             * للتوافق مع البنية القديمة.
+                             */
+
+                            currentOwnerUid =
+                            currentOwnerUid ||
+                            storeId;
+
+
+                            applyStoreTheme(
+                                "orange"
+                            );
+
+                        }
+
+
+                        /*
+                         * حفظ المعرفات الحالية.
+                         */
+
+                        localStorage.setItem(
+                            "storeId",
+                            storeId
+                        );
+
+
+                        localStorage.setItem(
+                            "storeDocumentId",
+                            storeId
+                        );
+
+
+                        if(currentOwnerUid){
+
+                            localStorage.setItem(
+                                "ownerUid",
+                                String(
+                                    currentOwnerUid
+                                )
+                            );
+
+                        }
+
+
+                        /*
+                         * تحديث اسم المتجر فوراً.
+                         */
+
+                        updateStoreNameUI();
+
+
+                        /*
+                         * روابط التنقل تبقى مرتبطة
+                         * بنفس Store ID الحقيقي.
+                         */
+
+                        updateNavigation();
+
+
+                        /*
+                         * تحديث روابط التواصل
+                         * إذا تم تغييرها من الإعدادات.
+                         */
+
+                        loadSocialLinks();
+
+
+                        /*
+                         * تحديث السلة.
+                         */
+
+                        updateCartCount();
+
+
+                        /*
+                         * إذا كان هذا أول Snapshot
+                         * نسمح باستكمال loadStore().
+                         */
+
+                        if(firstSnapshot){
+
+                            firstSnapshot =
+                            false;
+
+                            resolve();
+
+                        }
+
+                    }catch(error){
+
+                        console.error(
+                            "STORE SNAPSHOT PROCESS ERROR:",
+                            error
+                        );
+
+
+                        if(firstSnapshot){
+
+                            firstSnapshot =
+                            false;
+
+                            resolve();
+
+                        }
+
+                    }
+
+                },
+
+                error => {
+
+                    console.error(
+                        "STORE SNAPSHOT ERROR:",
+                        error
+                    );
+
+
+                    if(firstSnapshot){
+
+                        firstSnapshot =
+                        false;
+
+                        currentStore =
+                        null;
+
+                        currentStoreName =
+                        "G-Glam";
+
+
+                        updateStoreNameUI();
+
+
+                        applyStoreTheme(
+                            "orange"
+                        );
+
+
+                        resolve();
+
+                    }
+
+                }
+
+            );
+
+        }
+    );
 
 }
 
@@ -4007,6 +4209,10 @@ async function loadProduct(){
 
         }
 
+
+        /*
+         * تحميل Listener الخاص بالمتجر.
+         */
 
         await loadStore();
 
@@ -5077,12 +5283,6 @@ async function loadDelivery(){
         }
 
 
-        /*
-         * نفس مسار cart.html:
-         *
-         * stores/{ownerUid}/delivery
-         */
-
         const deliveryRef =
         collection(
             db,
@@ -5567,7 +5767,6 @@ function updateOrderButton(){
 
 /* =====================================================
    SEND ORDER
-   نفس بنية cart.html
 ===================================================== */
 
 async function sendOrder(){
@@ -5751,10 +5950,6 @@ async function sendOrder(){
 
     try{
 
-        /* =============================================
-           ORDER PRODUCT
-        ============================================== */
-
         const orderProducts = [
 
             {
@@ -5827,10 +6022,6 @@ async function sendOrder(){
         ];
 
 
-        /* =============================================
-           ORDER DATA
-        ============================================== */
-
         const orderData = {
 
             ownerUid:
@@ -5844,12 +6035,24 @@ async function sendOrder(){
                 ownerUid
             ),
 
+            /*
+             * هنا يتم حفظ اسم المتجر الحالي
+             * القادم مباشرة من stores/{storeId}.
+             */
+
             storeName:
-            currentStoreName,
+            String(
+                currentStoreName ||
+                "G-Glam"
+            ),
+
+            /*
+             * اسم صاحب المتجر منفصل عن اسم المتجر.
+             */
 
             ownerName:
             String(
-                storeOwnerNameElement?.textContent ||
+                currentStoreOwnerName ||
                 ""
             ),
 
@@ -5910,11 +6113,6 @@ async function sendOrder(){
 
         };
 
-
-        /* =============================================
-           SAVE ORDER
-           نفس orders في cart.html
-        ============================================== */
 
         await addDoc(
             collection(
@@ -6003,10 +6201,6 @@ async function sendOrder(){
         }
 
 
-        /* =============================================
-           SUCCESS
-        ============================================== */
-
         alert(
             "تم إرسال الطلب بنجاح ✅"
         );
@@ -6085,12 +6279,6 @@ function normalizeSocialUrl(
         return raw;
 
     }
-
-
-    const encoded =
-    encodeURIComponent(
-        raw
-    );
 
 
     switch(type){
@@ -6547,6 +6735,11 @@ document.addEventListener(
    START
 ===================================================== */
 
+/*
+ * أولاً نحاول تحديد المتجر من الرابط.
+ * ثم نستمع إلى وثيقة stores/{storeId}.
+ */
+
 await loadStore();
 
 updateNavigation();
@@ -6576,6 +6769,12 @@ console.log(
 console.log(
     "Current Store ID:",
     currentStoreId
+);
+
+
+console.log(
+    "Current Store Name:",
+    currentStoreName
 );
 
 
