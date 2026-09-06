@@ -3,1839 +3,1819 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="theme-color"
-        content="#F47B20"
-    >
+<meta name="theme-color"
+content="#F47B20">
 
-    <title>G-Glam | الطلبات</title>
+<title>G-Glam | الطلبات</title>
 
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
 
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
+<link rel="preconnect"
+href="https://fonts.gstatic.com">
 
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-    >
+<link rel="stylesheet"
+href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800&display=swap">
 
-    <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800&display=swap"
-    >
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    >
 
+<style>
 
-    <style>
+:root{
 
-        :root {
+    --orange:#F47B20;
+    --orange-dark:#D9650E;
 
-            --orange: #F47B20;
-            --orange-dark: #DF6810;
+    --bg:#F3F5F8;
+    --sidebar:#E9EBEE;
 
-            --bg: #F4F5F7;
-            --sidebar: #EEEEEE;
+    --card:#FFFFFF;
 
-            --card: #FFFFFF;
+    --text:#30343B;
+    --dark:#1F2329;
+    --muted:#737B86;
 
-            --text: #333333;
-            --dark: #222222;
-            --muted: #777777;
+    --border:#C9CED6;
+    --border-dark:#AEB5BF;
 
-            --border: #DCDCDC;
+    --row-even:#FFFFFF;
+    --row-odd:#F3F5F8;
 
-            --success: #198754;
-            --success-bg: #E8F7EE;
+    --success:#198754;
+    --danger:#DC3545;
 
-            --danger: #DC3545;
-            --danger-bg: #FDEBEC;
+    --shadow:
+        0 8px 25px rgba(25,35,45,.08);
 
-            --blue: #2563EB;
-            --blue-bg: #EAF1FF;
+    --dark-bg:#07111F;
+    --dark-sidebar:#0A1726;
+    --dark-card:#0D1B2A;
+    --dark-row-even:#0D1B2A;
+    --dark-row-odd:#101F30;
+    --dark-text:#F4F7FB;
+    --dark-muted:#AAB7C7;
+    --dark-border:#294158;
+}
 
-            --shadow:
-                0 5px 20px rgba(0, 0, 0, 0.06);
 
-            --dark-bg: #07111F;
-            --dark-sidebar: #0A1726;
-            --dark-card: #0D1B2A;
-            --dark-text: #F4F7FB;
-            --dark-muted: #AAB7C7;
-            --dark-border: #1D334A;
-        }
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:"Tajawal",sans-serif;
+}
 
 
-        * {
+body{
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    transition:.25s;
+}
 
-            box-sizing: border-box;
 
-            margin: 0;
+body.dark-mode{
+    background:var(--dark-bg);
+    color:var(--dark-text);
+}
 
-            padding: 0;
 
-            font-family: "Tajawal", sans-serif;
-        }
+/* =========================
+   SIDEBAR
+========================= */
 
+.sidebar{
+    position:fixed;
+    top:0;
+    right:0;
 
-        body {
+    width:75px;
+    height:100vh;
 
-            background: var(--bg);
+    background:var(--sidebar);
 
-            color: var(--text);
+    border-left:2px solid var(--border);
 
-            min-height: 100vh;
+    overflow:hidden;
 
-            transition: 0.25s;
-        }
+    z-index:1200;
 
+    transition:.3s;
 
-        body.dark-mode {
+    box-shadow:-5px 0 18px rgba(0,0,0,.06);
+}
 
-            background: var(--dark-bg);
 
-            color: var(--dark-text);
-        }
+.sidebar:hover{
+    width:240px;
+}
 
 
-        /* =========================
-           SIDEBAR
-        ========================= */
+body.dark-mode .sidebar{
+    background:var(--dark-sidebar);
+    border-left-color:var(--dark-border);
+}
 
-        .sidebar {
 
-            position: fixed;
+.logo{
+    height:78px;
 
-            top: 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-            right: 0;
+    border-bottom:2px solid var(--border);
 
-            width: 75px;
+    padding:10px;
+}
 
-            height: 100vh;
 
-            background: var(--sidebar);
+.logo img{
+    width:48px;
+    height:48px;
+    object-fit:contain;
+}
 
-            border-left: 1px solid var(--border);
 
-            overflow: hidden;
+.sidebar:hover .logo img{
+    width:130px;
+    height:55px;
+}
 
-            z-index: 1200;
 
-            transition: 0.3s;
+.menu{
+    margin-top:18px;
+    padding:0 10px;
+}
 
-            box-shadow:
-                -3px 0 15px rgba(0, 0, 0, 0.04);
-        }
 
+.menu a{
+    position:relative;
 
-        .sidebar:hover {
+    display:flex;
+    align-items:center;
 
-            width: 240px;
-        }
+    gap:15px;
 
+    height:52px;
 
-        body.dark-mode .sidebar {
+    padding:0 10px;
 
-            background: var(--dark-sidebar);
+    margin-bottom:7px;
 
-            border-left-color: var(--dark-border);
-        }
+    border-radius:12px;
 
+    color:#555;
 
-        .logo {
+    text-decoration:none;
 
-            height: 78px;
+    white-space:nowrap;
 
-            display: flex;
+    transition:.2s;
+}
 
-            align-items: center;
 
-            justify-content: center;
+.menu a:hover{
+    background:#DDE0E4;
+    color:#222;
+}
 
-            border-bottom: 1px solid var(--border);
 
-            padding: 10px;
-        }
+body.dark-mode .menu a{
+    color:#C9D4DF;
+}
 
 
-        .logo img {
+body.dark-mode .menu a:hover{
+    background:#17283A;
+    color:white;
+}
 
-            width: 48px;
 
-            height: 48px;
+.menu a.active{
+    background:var(--orange);
+    color:white;
 
-            object-fit: contain;
-        }
+    box-shadow:
+        0 6px 18px rgba(244,123,32,.25);
+}
 
 
-        .sidebar:hover .logo img {
+.icon{
+    width:35px;
+    min-width:35px;
 
-            width: 130px;
+    height:35px;
 
-            height: 55px;
-        }
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
+    font-size:18px;
+}
 
-        .menu {
 
-            margin-top: 18px;
+.text{
+    opacity:0;
 
-            padding: 0 10px;
-        }
+    font-size:14px;
+    font-weight:700;
 
+    transition:.25s;
+}
 
-        .menu a {
 
-            position: relative;
+.sidebar:hover .text{
+    opacity:1;
+}
 
-            display: flex;
 
-            align-items: center;
+/* =========================
+   TOPBAR
+========================= */
 
-            gap: 15px;
+.topbar{
+    position:fixed;
 
-            height: 52px;
+    top:0;
+    right:75px;
+    left:0;
 
-            padding: 0 10px;
+    height:78px;
 
-            margin-bottom: 7px;
+    background:white;
 
-            border-radius: 12px;
+    border-bottom:2px solid var(--border);
 
-            color: #555;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 
-            text-decoration: none;
+    gap:15px;
 
-            white-space: nowrap;
+    padding:0 25px;
 
-            transition: 0.2s;
-        }
+    z-index:1100;
 
+    box-shadow:
+        0 3px 14px rgba(0,0,0,.05);
+}
 
-        .menu a:hover {
 
-            background: #E2E2E2;
+body.dark-mode .topbar{
+    background:var(--dark-card);
+    border-bottom-color:var(--dark-border);
+}
 
-            color: #222;
-        }
 
+.store-top{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    min-width:0;
+}
 
-        body.dark-mode .menu a {
 
-            color: #C9D4DF;
-        }
+.store-image{
+    width:48px;
+    height:48px;
 
+    border-radius:50%;
 
-        body.dark-mode .menu a:hover {
+    object-fit:cover;
 
-            background: #17283A;
+    background:#F1F1F1;
 
-            color: #FFFFFF;
-        }
+    border:2px solid #FFD4B3;
 
+    flex-shrink:0;
+}
 
-        .menu a.active {
 
-            background: var(--orange);
+.store-details{
+    display:flex;
+    flex-direction:column;
 
-            color: white;
+    min-width:0;
+}
 
-            box-shadow:
-                0 5px 15px rgba(244, 123, 32, 0.20);
-        }
 
+.store-label{
+    color:#999;
+    font-size:11px;
+    margin-bottom:2px;
+}
 
-        .icon {
 
-            width: 35px;
+.store-top-name{
+    color:#222;
 
-            min-width: 35px;
+    font-size:16px;
+    font-weight:800;
 
-            height: 35px;
+    white-space:nowrap;
 
-            display: flex;
+    overflow:hidden;
+    text-overflow:ellipsis;
 
-            align-items: center;
+    max-width:250px;
+}
 
-            justify-content: center;
 
-            font-size: 18px;
-        }
+body.dark-mode .store-top-name{
+    color:white;
+}
 
 
-        .text {
+.top-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
 
-            opacity: 0;
 
-            font-size: 14px;
+.theme-toggle{
+    width:42px;
+    height:42px;
 
-            font-weight: 700;
+    border:1px solid var(--border);
 
-            transition: 0.25s;
-        }
+    border-radius:12px;
 
+    background:#F5F6F7;
 
-        .sidebar:hover .text {
+    color:#333;
 
-            opacity: 1;
-        }
+    cursor:pointer;
 
+    font-size:18px;
+}
 
-        /* =========================
-           TOPBAR
-        ========================= */
 
-        .topbar {
+.view-store-btn{
+    display:flex;
+    align-items:center;
+    gap:7px;
 
-            position: fixed;
+    padding:10px 15px;
 
-            top: 0;
+    border-radius:11px;
 
-            right: 75px;
+    background:#FFF1E6;
 
-            left: 0;
+    border:1px solid #FFD4B3;
 
-            height: 78px;
+    color:var(--orange-dark);
 
-            background: white;
+    text-decoration:none;
 
-            border-bottom: 1px solid var(--border);
+    font-size:13px;
+    font-weight:700;
+}
 
-            display: flex;
 
-            align-items: center;
+/* =========================
+   CONTENT
+========================= */
 
-            justify-content: space-between;
+.content{
+    margin-right:75px;
 
-            gap: 15px;
+    padding:
+        103px 25px 30px;
+}
 
-            padding: 0 25px;
 
-            z-index: 1100;
+/* =========================
+   STATS
+========================= */
 
-            box-shadow:
-                0 2px 12px rgba(0, 0, 0, 0.04);
-        }
+.stats{
+    display:grid;
 
+    grid-template-columns:
+        repeat(4,1fr);
 
-        body.dark-mode .topbar {
+    gap:18px;
 
-            background: var(--dark-card);
+    margin-bottom:22px;
+}
 
-            border-bottom-color: var(--dark-border);
-        }
 
+.stat{
+    position:relative;
 
-        .store-top {
+    background:white;
 
-            display: flex;
+    border:2px solid var(--border);
 
-            align-items: center;
+    border-radius:16px;
 
-            gap: 12px;
+    padding:22px;
 
-            min-width: 0;
-        }
+    box-shadow:var(--shadow);
 
+    overflow:hidden;
+}
 
-        .store-image {
 
-            width: 48px;
+body.dark-mode .stat{
+    background:var(--dark-card);
+    border-color:var(--dark-border);
+}
 
-            height: 48px;
 
-            border-radius: 50%;
+.stat::after{
+    content:"";
 
-            object-fit: cover;
+    position:absolute;
 
-            background: #F1F1F1;
+    right:0;
+    bottom:0;
 
-            border: 2px solid #FFE0C8;
+    width:100%;
+    height:3px;
 
-            flex-shrink: 0;
-        }
+    background:var(--orange);
+}
 
 
-        .store-details {
+.stat-title{
+    display:flex;
+    align-items:center;
 
-            display: flex;
+    gap:8px;
 
-            flex-direction: column;
+    color:var(--muted);
 
-            min-width: 0;
-        }
+    font-size:13px;
+    font-weight:700;
 
+    margin-bottom:10px;
+}
 
-        .store-label {
 
-            color: #999;
+.stat-title i{
+    color:var(--orange);
+    font-size:17px;
+}
 
-            font-size: 11px;
 
-            margin-bottom: 2px;
-        }
+.stat-value{
+    color:var(--dark);
 
+    font-size:28px;
+    font-weight:800;
+}
 
-        .store-top-name {
 
-            color: #222;
+body.dark-mode .stat-value{
+    color:white;
+}
 
-            font-size: 16px;
 
-            font-weight: 800;
+/* =========================
+   SECTION
+========================= */
 
-            white-space: nowrap;
+.section{
+    background:white;
 
-            overflow: hidden;
+    border:2px solid var(--border);
 
-            text-overflow: ellipsis;
+    border-radius:18px;
 
-            max-width: 250px;
-        }
+    padding:22px;
 
+    box-shadow:var(--shadow);
+}
 
-        body.dark-mode .store-top-name {
 
-            color: white;
-        }
+body.dark-mode .section{
+    background:var(--dark-card);
+    border-color:var(--dark-border);
+}
 
 
-        .top-actions {
+.section-header{
+    display:flex;
 
-            display: flex;
+    align-items:center;
+    justify-content:space-between;
 
-            align-items: center;
+    gap:15px;
 
-            gap: 10px;
-        }
+    margin-bottom:20px;
+}
 
 
-        .theme-toggle {
+.section-title{
+    display:flex;
+    align-items:center;
 
-            width: 42px;
+    gap:9px;
 
-            height: 42px;
+    color:var(--dark);
 
-            border: 1px solid var(--border);
+    font-size:21px;
+    font-weight:800;
+}
 
-            border-radius: 12px;
 
-            background: #F5F5F5;
+body.dark-mode .section-title{
+    color:white;
+}
 
-            color: #333;
 
-            cursor: pointer;
+.section-title i{
+    color:var(--orange);
+}
 
-            font-size: 18px;
-        }
 
+.bulk-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
 
-        body.dark-mode .theme-toggle {
 
-            background: #17283A;
+.select-all-box{
+    display:flex;
+    align-items:center;
 
-            color: white;
+    gap:7px;
 
-            border-color: var(--dark-border);
-        }
+    color:#666;
 
+    font-size:13px;
+    font-weight:700;
 
-        .view-store-btn {
+    cursor:pointer;
+}
 
-            display: flex;
 
-            align-items: center;
+body.dark-mode .select-all-box{
+    color:#C8D3DF;
+}
 
-            gap: 7px;
 
-            padding: 10px 15px;
+.select-all-box input{
+    width:18px;
+    height:18px;
 
-            border-radius: 11px;
+    accent-color:var(--orange);
 
-            background: #FFF1E6;
+    cursor:pointer;
+}
 
-            border: 1px solid #FFE0CA;
 
-            color: var(--orange-dark);
+.bulk-delete-btn{
+    display:none;
+    align-items:center;
+    gap:7px;
 
-            text-decoration: none;
+    border:none;
+    border-radius:10px;
 
-            font-size: 13px;
+    padding:10px 14px;
 
-            font-weight: 700;
-        }
+    background:var(--danger);
+    color:white;
 
+    font-size:12px;
+    font-weight:800;
 
-        /* =========================
-           CONTENT
-        ========================= */
+    cursor:pointer;
+}
 
-        .content {
 
-            margin-right: 75px;
+.bulk-delete-btn.show{
+    display:flex;
+}
 
-            padding: 103px 25px 30px;
-        }
 
+/* =========================
+   PROFESSIONAL TABLE
+========================= */
 
-        /* =========================
-           STATS
-        ========================= */
+.table-wrapper{
 
-        .stats {
+    width:100%;
 
-            display: grid;
+    overflow-x:auto;
 
-            grid-template-columns:
-                repeat(4, 1fr);
+    border:2px solid #AEB5BE;
 
-            gap: 18px;
+    border-radius:16px;
 
-            margin-bottom: 22px;
-        }
+    background:#EEF0F3;
 
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.7),
+        0 5px 18px rgba(0,0,0,.06);
+}
 
-        .stat {
 
-            position: relative;
+body.dark-mode .table-wrapper{
+    border-color:#36506A;
+    background:#091521;
+}
 
-            background: white;
 
-            border: 1px solid var(--border);
+.orders-table{
 
-            border-radius: 16px;
+    width:100%;
 
-            padding: 22px;
+    min-width:1450px;
 
-            box-shadow: var(--shadow);
+    border-collapse:separate;
 
-            overflow: hidden;
-        }
+    border-spacing:0;
 
+    table-layout:auto;
 
-        body.dark-mode .stat {
+    font-size:12.5px;
+}
 
-            background: var(--dark-card);
 
-            border-color: var(--dark-border);
-        }
+/* HEADER */
 
+.orders-table thead th{
 
-        .stat::after {
+    position:sticky;
+    top:0;
 
-            content: "";
+    z-index:5;
 
-            position: absolute;
+    padding:15px 12px;
 
-            right: 0;
+    background:#DDE1E6;
 
-            bottom: 0;
+    color:#252A31;
 
-            width: 100%;
+    border-left:1px solid #B8BEC6;
+    border-bottom:2px solid #A7AEB7;
 
-            height: 3px;
+    font-size:12.5px;
+    font-weight:800;
 
-            background: var(--orange);
-        }
+    text-align:center;
 
+    white-space:nowrap;
 
-        .stat-title {
+    box-shadow:
+        inset 0 -1px 0 rgba(255,255,255,.6);
+}
 
-            display: flex;
 
-            align-items: center;
+.orders-table thead th:first-child{
+    border-top-right-radius:12px;
+}
 
-            gap: 8px;
 
-            color: var(--muted);
+.orders-table thead th:last-child{
+    border-top-left-radius:12px;
+    border-left:none;
+}
 
-            font-size: 14px;
 
-            font-weight: 600;
+body.dark-mode .orders-table thead th{
 
-            margin-bottom: 10px;
-        }
+    background:#17283A;
 
+    color:#F5F8FB;
 
-        .stat-title i {
+    border-color:#36506A;
+}
 
-            color: var(--orange);
 
-            font-size: 17px;
-        }
+/* CELLS */
 
+.orders-table tbody td{
 
-        .stat-value {
+    padding:12px 10px;
 
-            color: var(--dark);
+    color:#30353C;
 
-            font-size: 28px;
+    border-left:1px solid #D0D4DA;
 
-            font-weight: 800;
-        }
+    border-bottom:1px solid #C7CCD3;
 
+    text-align:center;
 
-        body.dark-mode .stat-value {
+    vertical-align:middle;
 
-            color: white;
-        }
+    line-height:1.6;
 
+    font-size:12.5px;
 
-        /* =========================
-           SECTION
-        ========================= */
+    background:var(--row-even);
+}
 
-        .section {
 
-            background: white;
+.orders-table tbody tr:nth-child(odd) td{
+    background:var(--row-odd);
+}
 
-            border: 1px solid var(--border);
 
-            border-radius: 18px;
+.orders-table tbody tr:nth-child(even) td{
+    background:var(--row-even);
+}
 
-            padding: 22px;
 
-            box-shadow: var(--shadow);
-        }
+body.dark-mode .orders-table tbody tr:nth-child(odd) td{
+    background:var(--dark-row-odd);
 
+    color:#E8EEF5;
 
-        body.dark-mode .section {
+    border-color:#294158;
+}
 
-            background: var(--dark-card);
 
-            border-color: var(--dark-border);
-        }
+body.dark-mode .orders-table tbody tr:nth-child(even) td{
+    background:var(--dark-row-even);
 
+    color:#E8EEF5;
 
-        .section-header {
+    border-color:#294158;
+}
 
-            display: flex;
 
-            align-items: center;
+/* HOVER */
 
-            justify-content: space-between;
+.orders-table tbody tr:hover td{
 
-            gap: 15px;
+    background:#FFF4E9 !important;
 
-            margin-bottom: 20px;
-        }
+    box-shadow:
+        inset 0 1px 0 rgba(244,123,32,.15),
+        inset 0 -1px 0 rgba(244,123,32,.15);
+}
 
 
-        .section-title {
+body.dark-mode .orders-table tbody tr:hover td{
 
-            display: flex;
+    background:#2A211B !important;
+}
 
-            align-items: center;
 
-            gap: 9px;
+/* SELECTED */
 
-            color: var(--dark);
+.orders-table tbody tr.selected td{
 
-            font-size: 21px;
+    background:#FFE8D4 !important;
 
-            font-weight: 800;
-        }
+    border-top:1px solid #F4B27C;
+    border-bottom:1px solid #F4B27C;
+}
 
 
-        body.dark-mode .section-title {
+body.dark-mode .orders-table tbody tr.selected td{
+    background:#3A2A20 !important;
 
-            color: white;
-        }
+    border-color:#765337;
+}
 
 
-        .section-title i {
+.orders-table th:last-child,
+.orders-table td:last-child{
+    border-left:none;
+}
 
-            color: var(--orange);
-        }
 
+/* CHECKBOX */
 
-        /* =========================
-           BULK
-        ========================= */
+.check-cell input{
+    width:18px;
+    height:18px;
 
-        .bulk-actions {
+    accent-color:var(--orange);
 
-            display: flex;
+    cursor:pointer;
+}
 
-            align-items: center;
 
-            gap: 10px;
-        }
+/* ORDER */
 
+.order-number{
 
-        .select-all-box {
+    color:var(--orange);
 
-            display: flex;
+    font-size:14px;
 
-            align-items: center;
+    font-weight:800;
 
-            gap: 7px;
+    direction:ltr;
 
-            color: #666;
+    white-space:nowrap;
+}
 
-            font-size: 13px;
 
-            font-weight: 700;
+/* DATE */
 
-            cursor: pointer;
-        }
+.date-cell{
 
+    white-space:nowrap;
 
-        body.dark-mode .select-all-box {
+    color:#59616B;
 
-            color: #C8D3DF;
-        }
+    font-size:11.5px;
 
+    font-weight:600;
+}
 
-        .select-all-box input {
 
-            width: 18px;
+body.dark-mode .date-cell{
+    color:#B7C3D0;
+}
 
-            height: 18px;
 
-            accent-color: var(--orange);
+/* CUSTOMER */
 
-            cursor: pointer;
-        }
+.customer-name{
 
+    color:var(--dark);
 
-        .bulk-delete-btn {
+    font-weight:800;
 
-            display: none;
+    white-space:nowrap;
+}
 
-            align-items: center;
 
-            gap: 7px;
+body.dark-mode .customer-name{
+    color:white;
+}
 
-            border: none;
 
-            border-radius: 10px;
+/* PHONE */
 
-            padding: 10px 14px;
+.customer-phone{
 
-            background: var(--danger);
+    display:inline-flex;
 
-            color: white;
+    align-items:center;
+    justify-content:center;
 
-            font-family: "Tajawal", sans-serif;
+    gap:5px;
 
-            font-size: 12px;
+    border:1px solid #D0D4D9;
 
-            font-weight: 800;
+    border-radius:8px;
 
-            cursor: pointer;
-        }
+    padding:7px 9px;
 
+    background:#ECEEF1;
 
-        .bulk-delete-btn.show {
+    color:#333;
 
-            display: flex;
-        }
+    font-size:11.5px;
 
+    font-weight:700;
 
-        /* =========================
-           TABLE
-        ========================= */
+    cursor:pointer;
 
-        .table-wrapper {
+    white-space:nowrap;
+}
 
-            width: 100%;
 
-            overflow-x: auto;
+.customer-phone:hover{
 
-            border: 2px solid #C8C8C8;
+    background:#FFE5D2;
 
-            border-radius: 14px;
+    border-color:#F4B27C;
 
-            box-shadow:
-                0 4px 15px rgba(0,0,0,0.04);
-        }
+    color:var(--orange-dark);
+}
 
 
-        body.dark-mode .table-wrapper {
+body.dark-mode .customer-phone{
 
-            border-color: var(--dark-border);
-        }
+    background:#17283A;
 
+    border-color:#29425B;
 
-        .orders-table {
+    color:white;
+}
 
-            width: 100%;
 
-            min-width: 1450px;
+/* ADDRESS */
 
-            border-collapse: separate;
+.address-cell{
 
-            border-spacing: 0;
+    max-width:200px;
 
-            background: white;
-        }
+    min-width:150px;
 
+    line-height:1.7;
 
-        body.dark-mode .orders-table {
+    white-space:normal;
 
-            background: var(--dark-card);
-        }
+    font-size:11.5px;
+}
 
 
-        .orders-table th {
+/* DELIVERY */
 
-            position: sticky;
+.delivery-cell{
 
-            top: 0;
+    min-width:135px;
 
-            z-index: 5;
+    line-height:1.7;
+}
 
-            padding: 15px 12px;
 
-            background:
-                linear-gradient(
-                    180deg,
-                    #F4F5F7,
-                    #ECEDEF
-                );
+.delivery-type{
 
-            color: #333;
+    color:var(--dark);
 
-            border-left: 1px solid #D2D2D2;
+    font-weight:800;
 
-            border-bottom: 2px solid #BEBEBE;
+    font-size:12px;
+}
 
-            font-size: 13px;
 
-            font-weight: 800;
+body.dark-mode .delivery-type{
+    color:white;
+}
 
-            text-align: center;
 
-            white-space: nowrap;
-        }
+.delivery-price{
 
+    color:var(--muted);
 
-        body.dark-mode .orders-table th {
+    font-size:10.5px;
 
-            background: #17283A;
+    font-weight:600;
+}
 
-            color: white;
 
-            border-color: var(--dark-border);
-        }
+/* PRODUCTS BUTTON */
 
+.products-btn{
 
-        .orders-table td {
+    border:1px solid #F2C19C;
 
-            padding: 13px 10px;
+    border-radius:9px;
 
-            color: #333;
+    padding:8px 12px;
 
-            border-left: 1px solid #DEDEDE;
+    background:#FFF0E2;
 
-            border-bottom: 1px solid #D6D6D6;
+    color:var(--orange-dark);
 
-            font-size: 13px;
+    font-size:11.5px;
 
-            text-align: center;
+    font-weight:800;
 
-            vertical-align: middle;
-        }
+    cursor:pointer;
 
+    min-width:115px;
+}
 
-        body.dark-mode .orders-table td {
 
-            color: #E8EEF5;
+.products-btn:hover{
 
-            border-color: var(--dark-border);
-        }
+    background:var(--orange);
 
+    color:white;
 
-        .orders-table th:last-child,
-        .orders-table td:last-child {
+    border-color:var(--orange);
 
-            border-left: none;
-        }
+    transform:translateY(-1px);
+}
 
 
-        .orders-table tbody tr:nth-child(odd) {
+body.dark-mode .products-btn{
 
-            background: #FFFFFF;
-        }
+    background:#17283A;
 
+    border-color:#38536D;
 
-        .orders-table tbody tr:nth-child(even) {
+    color:#FF9A4D;
+}
 
-            background: #F6F7F8;
-        }
 
+/* TOTAL */
 
-        body.dark-mode .orders-table tbody tr:nth-child(odd) {
+.total-cell{
 
-            background: #0D1B2A;
-        }
+    color:var(--orange);
 
+    font-size:14px;
 
-        body.dark-mode .orders-table tbody tr:nth-child(even) {
+    font-weight:800;
 
-            background: #102331;
-        }
+    white-space:nowrap;
+}
 
 
-        .orders-table tbody tr:hover {
+/* NOTES */
 
-            background: #FFF2E7 !important;
-        }
+.notes-box{
 
+    display:flex;
 
-        body.dark-mode .orders-table tbody tr:hover {
+    align-items:center;
 
-            background: #2A211B !important;
-        }
+    gap:5px;
 
+    min-width:190px;
+}
 
-        .orders-table tbody tr.selected {
 
-            background: #FFE8D6 !important;
-        }
+.notes-input{
 
+    width:135px;
 
-        body.dark-mode .orders-table tbody tr.selected {
+    padding:8px 9px;
 
-            background: #35271F !important;
-        }
+    border:1px solid #C8CDD3;
 
+    border-radius:8px;
 
-        .check-cell input {
+    outline:none;
 
-            width: 18px;
+    background:#FFFFFF;
 
-            height: 18px;
+    color:#333;
 
-            accent-color: var(--orange);
+    font-size:11px;
+}
 
-            cursor: pointer;
-        }
 
+.notes-input:focus{
 
-        .order-number {
+    border-color:var(--orange);
 
-            color: var(--orange);
+    box-shadow:
+        0 0 0 2px rgba(244,123,32,.12);
+}
 
-            font-size: 15px;
 
-            font-weight: 800;
+body.dark-mode .notes-input{
 
-            direction: ltr;
+    background:#17283A;
 
-            white-space: nowrap;
-        }
+    color:white;
 
+    border-color:#29425B;
+}
 
-        .date-cell {
 
-            white-space: nowrap;
+.notes-save{
 
-            color: #555;
+    width:34px;
+    height:34px;
 
-            font-size: 12px;
-        }
+    border:none;
 
+    border-radius:8px;
 
-        body.dark-mode .date-cell {
+    background:var(--orange);
 
-            color: #B7C3D0;
-        }
+    color:white;
 
+    cursor:pointer;
+}
 
-        .customer-name {
 
-            color: var(--dark);
+/* STATUS */
 
-            font-weight: 700;
+.status-select{
 
-            white-space: nowrap;
-        }
+    min-width:130px;
 
+    padding:8px 9px;
 
-        body.dark-mode .customer-name {
+    border:1px solid #C5CBD2;
 
-            color: white;
-        }
+    border-radius:8px;
 
+    background:white;
 
-        .customer-phone {
+    color:#333;
 
-            display: inline-flex;
+    font-size:11.5px;
 
-            align-items: center;
+    font-weight:800;
 
-            justify-content: center;
+    outline:none;
 
-            gap: 5px;
+    cursor:pointer;
+}
 
-            border: none;
 
-            border-radius: 9px;
+.status-select:focus{
 
-            padding: 8px 10px;
+    border-color:var(--orange);
 
-            background: #F1F1F1;
+    box-shadow:
+        0 0 0 2px rgba(244,123,32,.12);
+}
 
-            color: #333;
 
-            font-family: "Tajawal", sans-serif;
+body.dark-mode .status-select{
 
-            font-size: 12px;
+    background:#17283A;
 
-            font-weight: 700;
+    color:white;
 
-            cursor: pointer;
-        }
+    border-color:#29425B;
+}
 
 
-        body.dark-mode .customer-phone {
+/* DELETE */
 
-            background: #17283A;
+.delete-btn{
 
-            color: white;
-        }
+    border:1px solid #F2B9C0;
 
+    border-radius:8px;
 
-        .address-cell {
+    padding:8px 11px;
 
-            max-width: 190px;
+    background:#FDEBEC;
 
-            line-height: 1.7;
+    color:var(--danger);
 
-            white-space: normal;
-        }
+    font-size:11.5px;
 
+    font-weight:800;
 
-        .delivery-cell {
+    cursor:pointer;
 
-            line-height: 1.7;
+    white-space:nowrap;
+}
 
-            min-width: 130px;
-        }
 
+.delete-btn:hover{
 
-        .delivery-type {
+    background:var(--danger);
 
-            color: var(--dark);
+    color:white;
+}
 
-            font-weight: 800;
-        }
 
+.delete-btn:disabled{
 
-        body.dark-mode .delivery-type {
+    opacity:.6;
 
-            color: white;
-        }
+    cursor:not-allowed;
+}
 
 
-        .delivery-price {
+/* =========================
+   EMPTY / LOADING
+========================= */
 
-            color: var(--muted);
+.empty,
+.loading{
 
-            font-size: 11px;
-        }
+    padding:55px 20px;
 
+    text-align:center;
 
-        .products-btn {
+    color:var(--muted);
 
-            border: none;
+    line-height:2;
 
-            border-radius: 9px;
+    font-size:13px;
+}
 
-            padding: 9px 13px;
 
-            background: #FFF4E8;
+/* =========================
+   MODALS
+========================= */
 
-            color: var(--orange-dark);
+.modal-overlay{
 
-            font-family: "Tajawal", sans-serif;
+    position:fixed;
 
-            font-size: 12px;
+    inset:0;
 
-            font-weight: 700;
+    display:none;
 
-            cursor: pointer;
-        }
+    align-items:center;
 
+    justify-content:center;
 
-        .products-btn:hover {
+    padding:20px;
 
-            background: #FFE5CE;
-        }
+    background:rgba(0,0,0,.52);
 
+    backdrop-filter:blur(3px);
 
-        body.dark-mode .products-btn {
+    z-index:3000;
+}
 
-            background: #17283A;
 
-            color: #FF9A4D;
-        }
+.modal-overlay.active{
+    display:flex;
+}
 
 
-        .total-cell {
+.modal{
 
-            color: var(--orange);
+    width:100%;
 
-            font-size: 15px;
+    max-width:760px;
 
-            font-weight: 800;
+    max-height:90vh;
 
-            white-space: nowrap;
-        }
+    overflow-y:auto;
 
+    background:white;
 
-        .notes-box {
+    border:2px solid #C8CDD4;
 
-            display: flex;
+    border-radius:20px;
 
-            align-items: center;
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.25);
+}
 
-            gap: 6px;
 
-            min-width: 190px;
-        }
+body.dark-mode .modal{
 
+    background:var(--dark-card);
 
-        .notes-input {
+    border-color:var(--dark-border);
 
-            width: 140px;
+    color:white;
+}
 
-            padding: 9px 10px;
 
-            border: 1px solid var(--border);
+.modal-header{
 
-            border-radius: 9px;
+    position:sticky;
 
-            outline: none;
+    top:0;
 
-            background: #FAFAFA;
+    z-index:3;
 
-            font-family: "Tajawal", sans-serif;
+    display:flex;
 
-            font-size: 12px;
-        }
+    align-items:center;
 
+    justify-content:space-between;
 
-        body.dark-mode .notes-input {
+    padding:17px 20px;
 
-            background: #17283A;
+    background:white;
 
-            color: white;
+    border-bottom:2px solid #D4D8DE;
+}
 
-            border-color: #29425B;
-        }
 
+body.dark-mode .modal-header{
 
-        .notes-save {
+    background:var(--dark-card);
 
-            border: none;
+    border-color:var(--dark-border);
+}
 
-            border-radius: 9px;
 
-            padding: 9px 10px;
+.modal-header h3{
 
-            background: var(--orange);
+    display:flex;
 
-            color: white;
+    align-items:center;
 
-            cursor: pointer;
-        }
+    gap:9px;
 
+    color:#222;
 
-        .notes-save:hover {
+    font-size:18px;
 
-            background: var(--orange-dark);
-        }
+    font-weight:800;
+}
 
 
-        .status-select {
+body.dark-mode .modal-header h3{
+    color:white;
+}
 
-            min-width: 135px;
 
-            padding: 9px 10px;
+.modal-header h3 i{
+    color:var(--orange);
+}
 
-            border: 1px solid var(--border);
 
-            border-radius: 9px;
+.close-modal{
 
-            background: white;
+    width:36px;
+    height:36px;
 
-            color: #333;
+    border:1px solid #D0D4D9;
 
-            font-family: "Tajawal", sans-serif;
+    border-radius:50%;
 
-            font-size: 12px;
+    background:#F1F2F4;
 
-            font-weight: 700;
+    color:#333;
 
-            outline: none;
+    cursor:pointer;
 
-            cursor: pointer;
-        }
+    font-size:15px;
+}
 
 
-        body.dark-mode .status-select {
+.close-modal:hover{
 
-            background: #17283A;
+    background:var(--danger);
 
-            color: white;
+    color:white;
 
-            border-color: #29425B;
-        }
+    border-color:var(--danger);
+}
 
 
-        .delete-btn {
+.modal-body{
+    padding:20px;
+}
 
-            border: none;
 
-            border-radius: 9px;
+/* =========================
+   PRODUCT DETAILS
+========================= */
 
-            padding: 9px 12px;
+.product-summary{
 
-            background: var(--danger-bg);
+    display:grid;
 
-            color: var(--danger);
+    grid-template-columns:
+        repeat(3,1fr);
 
-            font-family: "Tajawal", sans-serif;
+    gap:10px;
 
-            font-size: 12px;
+    margin-bottom:18px;
+}
 
-            font-weight: 700;
 
-            cursor: pointer;
-        }
+.summary-box{
 
+    padding:12px;
 
-        .delete-btn:hover {
+    border:1px solid #D5D9DF;
 
-            background: #F8D7DA;
-        }
+    border-radius:12px;
 
+    background:#F5F6F8;
 
-        .delete-btn:disabled {
+    text-align:center;
+}
 
-            opacity: 0.6;
 
-            cursor: not-allowed;
-        }
+body.dark-mode .summary-box{
 
+    background:#17283A;
 
-        .empty,
-        .loading {
+    border-color:#29425B;
+}
 
-            padding: 55px 20px;
 
-            text-align: center;
+.summary-label{
 
-            color: var(--muted);
+    color:var(--muted);
 
-            line-height: 2;
-        }
+    font-size:10.5px;
 
+    margin-bottom:4px;
+}
 
-        .empty i,
-        .loading i {
 
-            font-size: 30px;
+.summary-value{
 
-            color: var(--orange);
+    color:var(--dark);
 
-            margin-bottom: 8px;
-        }
+    font-size:16px;
 
+    font-weight:800;
+}
 
-        /* =========================
-           MODALS
-        ========================= */
 
-        .modal-overlay {
+body.dark-mode .summary-value{
+    color:white;
+}
 
-            position: fixed;
 
-            inset: 0;
+/* PRODUCT CARD */
 
-            display: none;
+.modal-product{
 
-            align-items: center;
+    display:grid;
 
-            justify-content: center;
+    grid-template-columns:90px 1fr auto;
 
-            padding: 20px;
+    align-items:center;
 
-            background: rgba(0, 0, 0, 0.50);
+    gap:15px;
 
-            z-index: 3000;
-        }
+    padding:15px;
 
+    margin-bottom:10px;
 
-        .modal-overlay.active {
+    border:1px solid #D2D6DC;
 
-            display: flex;
-        }
+    border-radius:14px;
 
+    background:#F7F8FA;
 
-        .modal {
+    transition:.2s;
+}
 
-            width: 100%;
 
-            max-width: 850px;
+.modal-product:nth-child(even){
+    background:#FFFFFF;
+}
 
-            max-height: 90vh;
 
-            overflow-y: auto;
+.modal-product:hover{
 
-            background: white;
+    border-color:#F2B27B;
 
-            border-radius: 18px;
+    box-shadow:
+        0 4px 14px rgba(0,0,0,.06);
+}
 
-            box-shadow:
-                0 15px 50px rgba(0, 0, 0, 0.25);
 
-            animation:
-                modalIn 0.2s ease;
-        }
+body.dark-mode .modal-product,
+body.dark-mode .modal-product:nth-child(even){
 
+    background:#101F30;
 
-        @keyframes modalIn {
+    border-color:#294158;
+}
 
-            from {
 
-                opacity: 0;
+.modal-product-image{
 
-                transform:
-                    translateY(15px)
-                    scale(0.98);
-            }
+    width:90px;
+    height:90px;
 
-            to {
+    border-radius:12px;
 
-                opacity: 1;
+    object-fit:cover;
 
-                transform:
-                    translateY(0)
-                    scale(1);
-            }
+    background:#ECEEF1;
 
-        }
+    border:1px solid #D0D4DA;
+}
 
 
-        body.dark-mode .modal {
+.modal-product-info{
+    min-width:0;
+}
 
-            background: var(--dark-card);
 
-            color: white;
-        }
+.modal-product-name{
 
+    margin-bottom:7px;
 
-        .modal-header {
+    color:#222;
 
-            position: sticky;
+    font-size:15px;
 
-            top: 0;
+    font-weight:800;
+}
 
-            z-index: 10;
 
-            display: flex;
+body.dark-mode .modal-product-name{
+    color:white;
+}
 
-            align-items: center;
 
-            justify-content: space-between;
+.modal-product-detail{
 
-            padding: 18px 20px;
+    color:#68717C;
 
-            border-bottom: 1px solid var(--border);
+    font-size:11.5px;
 
-            background: white;
-        }
+    line-height:2;
+}
 
 
-        body.dark-mode .modal-header {
+body.dark-mode .modal-product-detail{
+    color:#B8C5D2;
+}
 
-            background: var(--dark-card);
 
-            border-color: var(--dark-border);
-        }
+.product-info-grid{
 
+    display:grid;
 
-        .modal-header h3 {
+    grid-template-columns:
+        repeat(2,1fr);
 
-            display: flex;
+    gap:4px 12px;
 
-            align-items: center;
+    margin-top:5px;
+}
 
-            gap: 9px;
 
-            color: #222;
+.product-info-item{
 
-            font-size: 19px;
+    overflow:hidden;
 
-            font-weight: 800;
-        }
+    text-overflow:ellipsis;
 
+    white-space:nowrap;
+}
 
-        body.dark-mode .modal-header h3 {
 
-            color: white;
-        }
+.modal-product-total{
 
+    min-width:100px;
 
-        .modal-header h3 i {
+    padding:10px;
 
-            color: var(--orange);
-        }
+    border-radius:10px;
 
+    background:#FFF0E2;
 
-        .close-modal {
+    color:var(--orange-dark);
 
-            width: 35px;
+    text-align:center;
 
-            height: 35px;
+    font-size:13px;
 
-            border: none;
+    font-weight:800;
+}
 
-            border-radius: 50%;
 
-            background: #F1F1F1;
+body.dark-mode .modal-product-total{
 
-            color: #333;
+    background:#17283A;
 
-            cursor: pointer;
-        }
+    color:#FF9A4D;
+}
 
 
-        body.dark-mode .close-modal {
+/* PHONE */
 
-            background: #17283A;
+.phone-options{
 
-            color: white;
-        }
+    display:grid;
 
+    grid-template-columns:1fr 1fr;
 
-        .modal-body {
+    gap:12px;
+}
 
-            padding: 20px;
-        }
 
+.phone-option{
 
-        /* PRODUCT DETAILS */
+    display:flex;
 
-        .modal-product {
+    align-items:center;
 
-            display: grid;
+    justify-content:center;
 
-            grid-template-columns:
-                90px 1fr auto;
+    gap:8px;
 
-            align-items: center;
+    padding:15px;
 
-            gap: 16px;
+    border-radius:12px;
 
-            padding: 15px;
+    text-decoration:none;
 
-            margin-bottom: 12px;
+    font-weight:800;
 
-            border: 1px solid #E1E1E1;
+    border:1px solid transparent;
+}
 
-            border-radius: 14px;
 
-            background: #FAFAFA;
+.call-option{
 
-            box-shadow:
-                0 3px 10px rgba(0,0,0,0.03);
-        }
+    background:#E8F5E9;
 
+    color:#2E7D32;
+}
 
-        body.dark-mode .modal-product {
 
-            background: #102331;
+.whatsapp-option{
 
-            border-color: var(--dark-border);
-        }
+    background:#E8F7EE;
 
+    color:#16833A;
+}
 
-        .modal-product-image {
 
-            width: 82px;
+/* =========================
+   SCROLLBAR
+========================= */
 
-            height: 82px;
+.table-wrapper::-webkit-scrollbar{
+    height:11px;
+}
 
-            border-radius: 12px;
 
-            object-fit: cover;
+.table-wrapper::-webkit-scrollbar-track{
+    background:#DDE1E6;
 
-            background: #F1F1F1;
+    border-radius:20px;
+}
 
-            border: 1px solid #DDD;
-        }
 
+.table-wrapper::-webkit-scrollbar-thumb{
 
-        .modal-product-info {
+    background:#A8AFB8;
 
-            min-width: 0;
-        }
+    border-radius:20px;
 
+    border:2px solid #DDE1E6;
+}
 
-        .modal-product-name {
 
-            margin-bottom: 7px;
+.table-wrapper::-webkit-scrollbar-thumb:hover{
+    background:var(--orange);
+}
 
-            color: #222;
 
-            font-size: 15px;
+/* =========================
+   RESPONSIVE
+========================= */
 
-            font-weight: 800;
-        }
+@media(max-width:1000px){
 
+    .stats{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
 
-        body.dark-mode .modal-product-name {
+}
 
-            color: white;
-        }
 
+@media(max-width:700px){
 
-        .modal-product-detail {
+    .sidebar{
+        width:60px;
+    }
 
-            color: var(--muted);
 
-            font-size: 12px;
+    .sidebar:hover{
+        width:200px;
+    }
 
-            line-height: 1.9;
-        }
 
+    .topbar{
 
-        .modal-product-detail strong {
+        right:60px;
 
-            color: #444;
-        }
+        height:68px;
 
+        padding:0 12px;
+    }
 
-        body.dark-mode
-        .modal-product-detail strong {
 
-            color: #F2F6FA;
-        }
+    .content{
 
+        margin-right:60px;
 
-        .modal-product-total {
+        padding:
+            83px 12px 20px;
+    }
 
-            color: var(--orange);
 
-            font-size: 16px;
+    .store-image{
 
-            font-weight: 800;
+        width:42px;
+        height:42px;
+    }
 
-            white-space: nowrap;
-        }
 
+    .store-top-name{
 
-        .products-summary {
+        font-size:14px;
 
-            display: grid;
+        max-width:140px;
+    }
 
-            grid-template-columns:
-                repeat(3, 1fr);
 
-            gap: 10px;
+    .view-store-btn{
 
-            margin-top: 18px;
-        }
+        width:40px;
+        height:40px;
 
+        padding:0;
 
-        .summary-item {
+        justify-content:center;
 
-            padding: 14px;
+        font-size:0;
+    }
 
-            border-radius: 12px;
 
-            background: #FFF4E8;
+    .view-store-btn i{
+        font-size:17px;
+    }
 
-            text-align: center;
-        }
 
+    .theme-toggle{
 
-        body.dark-mode .summary-item {
+        width:40px;
+        height:40px;
+    }
 
-            background: #17283A;
-        }
 
+    .section{
+        padding:14px;
+    }
 
-        .summary-label {
 
-            color: var(--muted);
+    .section-header{
 
-            font-size: 11px;
+        align-items:flex-start;
 
-            margin-bottom: 4px;
-        }
+        flex-direction:column;
+    }
 
 
-        .summary-value {
+    .bulk-actions{
 
-            color: var(--orange);
+        width:100%;
 
-            font-size: 17px;
+        justify-content:space-between;
+    }
 
-            font-weight: 800;
-        }
 
+    .modal{
+        max-width:100%;
+    }
 
-        /* PHONE */
 
-        .phone-options {
+    .modal-product{
 
-            display: grid;
+        grid-template-columns:
+            70px 1fr;
+    }
 
-            grid-template-columns:
-                1fr 1fr;
 
-            gap: 12px;
-        }
+    .modal-product-image{
 
+        width:70px;
+        height:70px;
+    }
 
-        .phone-option {
 
-            display: flex;
+    .modal-product-total{
 
-            align-items: center;
+        grid-column:2;
 
-            justify-content: center;
+        width:100%;
+    }
 
-            gap: 8px;
 
-            padding: 15px;
+    .product-summary{
 
-            border-radius: 12px;
+        grid-template-columns:
+            repeat(3,1fr);
+    }
 
-            text-decoration: none;
 
-            font-weight: 800;
-        }
+    .phone-options{
 
+        grid-template-columns:1fr;
+    }
 
-        .call-option {
+}
 
-            background: #E8F5E9;
 
-            color: #2E7D32;
-        }
+@media(max-width:450px){
 
+    .stats{
 
-        .whatsapp-option {
+        grid-template-columns:
+            repeat(2,1fr);
 
-            background: #E8F7EE;
+        gap:10px;
+    }
 
-            color: #16833A;
-        }
 
+    .stat{
+        padding:15px;
+    }
 
-        /* =========================
-           RESPONSIVE
-        ========================= */
 
-        @media (max-width: 1000px) {
+    .stat-value{
+        font-size:23px;
+    }
 
-            .stats {
 
-                grid-template-columns:
-                    repeat(2, 1fr);
-            }
+    .product-summary{
 
-        }
+        grid-template-columns:1fr;
+    }
 
+}
 
-        @media (max-width: 700px) {
-
-            .sidebar {
-
-                width: 60px;
-            }
-
-
-            .sidebar:hover {
-
-                width: 200px;
-            }
-
-
-            .topbar {
-
-                right: 60px;
-
-                height: 68px;
-
-                padding: 0 12px;
-            }
-
-
-            .content {
-
-                margin-right: 60px;
-
-                padding:
-                    83px 12px 20px;
-            }
-
-
-            .store-image {
-
-                width: 42px;
-
-                height: 42px;
-            }
-
-
-            .store-top-name {
-
-                font-size: 14px;
-
-                max-width: 140px;
-            }
-
-
-            .view-store-btn {
-
-                width: 40px;
-
-                height: 40px;
-
-                padding: 0;
-
-                justify-content: center;
-
-                font-size: 0;
-            }
-
-
-            .view-store-btn i {
-
-                font-size: 17px;
-            }
-
-
-            .theme-toggle {
-
-                width: 40px;
-
-                height: 40px;
-            }
-
-
-            .section {
-
-                padding: 14px;
-            }
-
-
-            .section-header {
-
-                align-items: flex-start;
-
-                flex-direction: column;
-            }
-
-
-            .bulk-actions {
-
-                width: 100%;
-
-                justify-content: space-between;
-            }
-
-
-            .phone-options {
-
-                grid-template-columns: 1fr;
-            }
-
-
-            .modal-product {
-
-                grid-template-columns:
-                    70px 1fr;
-
-                align-items: start;
-            }
-
-
-            .modal-product-image {
-
-                width: 65px;
-
-                height: 65px;
-            }
-
-
-            .modal-product-total {
-
-                grid-column: 2;
-
-                text-align: right;
-            }
-
-
-            .products-summary {
-
-                grid-template-columns:
-                    1fr;
-            }
-
-        }
-
-
-        @media (max-width: 450px) {
-
-            .stats {
-
-                grid-template-columns:
-                    repeat(2, 1fr);
-
-                gap: 10px;
-            }
-
-
-            .stat {
-
-                padding: 15px;
-            }
-
-
-            .stat-value {
-
-                font-size: 23px;
-            }
-
-
-            .store-label {
-
-                display: none;
-            }
-
-
-            .store-top-name {
-
-                max-width: 105px;
-
-                font-size: 13px;
-            }
-
-        }
-
-    </style>
+</style>
 
 </head>
 
@@ -1843,492 +1823,145 @@
 <body>
 
 
-    <!-- =========================
-         SIDEBAR
-    ========================== -->
+<aside class="sidebar">
 
-    <aside class="sidebar">
+    <div class="logo">
 
-        <div class="logo">
+        <img
+            src="logotrans.png"
+            alt="G-Glam"
+        >
 
-            <img
-                src="logotrans.png"
-                alt="G-Glam"
-            >
+    </div>
 
-        </div>
 
+    <nav class="menu">
 
-        <nav class="menu">
+        <a href="dashboard.html">
 
-            <a href="dashboard.html">
+            <span class="icon">
+                <i class="fa-solid fa-house"></i>
+            </span>
 
-                <span class="icon">
-                    <i class="fa-solid fa-house"></i>
-                </span>
+            <span class="text">
+                الرئيسية
+            </span>
 
-                <span class="text">
-                    الرئيسية
-                </span>
+        </a>
 
-            </a>
 
+        <a
+            href="orders.html"
+            class="active"
+        >
 
-            <a
-                href="orders.html"
-                class="active"
-            >
+            <span class="icon">
+                <i class="fa-solid fa-clipboard-list"></i>
+            </span>
 
-                <span class="icon">
-                    <i class="fa-solid fa-clipboard-list"></i>
-                </span>
+            <span class="text">
+                الطلبات
+            </span>
 
-                <span class="text">
-                    الطلبات
-                </span>
+        </a>
 
-            </a>
 
+        <a href="products.html">
 
-            <a href="products.html">
+            <span class="icon">
+                <i class="fa-solid fa-bag-shopping"></i>
+            </span>
 
-                <span class="icon">
-                    <i class="fa-solid fa-bag-shopping"></i>
-                </span>
+            <span class="text">
+                المنتجات
+            </span>
 
-                <span class="text">
-                    المنتجات
-                </span>
+        </a>
 
-            </a>
 
+        <a href="add-product.html">
 
-            <a href="add-product.html">
+            <span class="icon">
+                <i class="fa-solid fa-circle-plus"></i>
+            </span>
 
-                <span class="icon">
-                    <i class="fa-solid fa-circle-plus"></i>
-                </span>
+            <span class="text">
+                إضافة منتج
+            </span>
 
-                <span class="text">
-                    إضافة منتج
-                </span>
+        </a>
 
-            </a>
 
+        <a href="delivery.html">
 
-            <a href="delivery.html">
+            <span class="icon">
+                <i class="fa-solid fa-location-dot"></i>
+            </span>
 
-                <span class="icon">
-                    <i class="fa-solid fa-location-dot"></i>
-                </span>
+            <span class="text">
+                أسعار التوصيل
+            </span>
 
-                <span class="text">
-                    أسعار التوصيل
-                </span>
+        </a>
 
-            </a>
 
+        <a href="settings.html">
 
-            <a href="settings.html">
+            <span class="icon">
+                <i class="fa-solid fa-gear"></i>
+            </span>
 
-                <span class="icon">
-                    <i class="fa-solid fa-gear"></i>
-                </span>
+            <span class="text">
+                الإعدادات
+            </span>
 
-                <span class="text">
-                    الإعدادات
-                </span>
+        </a>
 
-            </a>
 
+        <a
+            href="#"
+            id="logoutBtn"
+        >
 
-            <a
-                href="#"
-                id="logoutBtn"
-            >
+            <span class="icon">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </span>
 
-                <span class="icon">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                </span>
+            <span class="text">
+                تسجيل الخروج
+            </span>
 
-                <span class="text">
-                    تسجيل الخروج
-                </span>
+        </a>
 
-            </a>
+    </nav>
 
-        </nav>
+</aside>
 
-    </aside>
 
+<header class="topbar">
 
-    <!-- =========================
-         TOPBAR
-    ========================== -->
+    <div class="store-top">
 
-    <header class="topbar">
+        <img
+            id="topStoreImage"
+            class="store-image"
+            src="logotrans.png"
+            alt="صورة المتجر"
+        >
 
-        <div class="store-top">
 
-            <img
-                id="topStoreImage"
-                class="store-image"
-                src="logotrans.png"
-                alt="صورة المتجر"
-            >
+        <div class="store-details">
 
-
-            <div class="store-details">
-
-                <div class="store-label">
-                    متجرك
-                </div>
-
-
-                <div
-                    id="topStoreName"
-                    class="store-top-name"
-                >
-                    جاري التحميل...
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="top-actions">
-
-            <button
-                id="themeToggle"
-                class="theme-toggle"
-                type="button"
-                title="الوضع الليلي"
-            >
-
-                <i class="fa-solid fa-moon"></i>
-
-            </button>
-
-
-            <a
-                href="#"
-                id="viewStoreBtn"
-                class="view-store-btn"
-            >
-
-                <i class="fa-solid fa-eye"></i>
-
-                <span>
-                    عرض المتجر
-                </span>
-
-            </a>
-
-        </div>
-
-    </header>
-
-
-    <!-- =========================
-         CONTENT
-    ========================== -->
-
-    <main class="content">
-
-
-        <!-- STATS -->
-
-        <div class="stats">
-
-
-            <div class="stat">
-
-                <div class="stat-title">
-
-                    <i class="fa-solid fa-box"></i>
-
-                    إجمالي الطلبات
-
-                </div>
-
-
-                <div
-                    id="totalOrders"
-                    class="stat-value"
-                >
-                    0
-                </div>
-
-            </div>
-
-
-            <div class="stat">
-
-                <div class="stat-title">
-
-                    <i class="fa-solid fa-circle-check"></i>
-
-                    تم التأكيد
-
-                </div>
-
-
-                <div
-                    id="confirmedOrders"
-                    class="stat-value"
-                >
-                    0
-                </div>
-
-            </div>
-
-
-            <div class="stat">
-
-                <div class="stat-title">
-
-                    <i class="fa-solid fa-truck-fast"></i>
-
-                    تم الشحن
-
-                </div>
-
-
-                <div
-                    id="shippedOrders"
-                    class="stat-value"
-                >
-                    0
-                </div>
-
-            </div>
-
-
-            <div class="stat">
-
-                <div class="stat-title">
-
-                    <i class="fa-solid fa-box-open"></i>
-
-                    تم التسليم
-
-                </div>
-
-
-                <div
-                    id="deliveredOrders"
-                    class="stat-value"
-                >
-                    0
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- ORDERS -->
-
-        <section class="section">
-
-            <div class="section-header">
-
-                <h2 class="section-title">
-
-                    <i class="fa-solid fa-clipboard-list"></i>
-
-                    طلبات متجري
-
-                </h2>
-
-
-                <div class="bulk-actions">
-
-                    <label class="select-all-box">
-
-                        <input
-                            type="checkbox"
-                            id="selectAll"
-                        >
-
-                        تحديد الكل
-
-                    </label>
-
-
-                    <button
-                        type="button"
-                        id="bulkDeleteBtn"
-                        class="bulk-delete-btn"
-                    >
-
-                        <i class="fa-solid fa-trash"></i>
-
-                        حذف المحدد
-
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <div class="table-wrapper">
-
-                <table class="orders-table">
-
-                    <thead>
-
-                        <tr>
-
-                            <th>تحديد</th>
-
-                            <th>رقم الطلب</th>
-
-                            <th>التاريخ</th>
-
-                            <th>الزبون</th>
-
-                            <th>الهاتف</th>
-
-                            <th>الولاية</th>
-
-                            <th>العنوان</th>
-
-                            <th>التوصيل</th>
-
-                            <th>المنتجات</th>
-
-                            <th>المجموع</th>
-
-                            <th>الملاحظات</th>
-
-                            <th>الحالة</th>
-
-                            <th>إجراء</th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody id="ordersBody">
-
-                        <tr>
-
-                            <td colspan="13">
-
-                                <div class="loading">
-
-                                    <i class="fa-solid fa-spinner fa-spin"></i>
-
-                                    جاري تحميل الطلبات...
-
-                                </div>
-
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- =========================
-         PRODUCTS MODAL
-    ========================== -->
-
-    <div
-        id="productsModal"
-        class="modal-overlay"
-    >
-
-        <div class="modal">
-
-            <div class="modal-header">
-
-                <h3>
-
-                    <i class="fa-solid fa-bag-shopping"></i>
-
-                    تفاصيل المنتجات
-
-                </h3>
-
-
-                <button
-                    id="closeProductsModal"
-                    class="close-modal"
-                    type="button"
-                >
-
-                    <i class="fa-solid fa-xmark"></i>
-
-                </button>
-
+            <div class="store-label">
+                متجرك
             </div>
 
 
             <div
-                id="productsModalBody"
-                class="modal-body"
-            ></div>
-
-        </div>
-
-    </div>
-
-
-    <!-- =========================
-         PHONE MODAL
-    ========================== -->
-
-    <div
-        id="phoneModal"
-        class="modal-overlay"
-    >
-
-        <div class="modal">
-
-            <div class="modal-header">
-
-                <h3>
-
-                    <i class="fa-solid fa-phone"></i>
-
-                    التواصل مع الزبون
-
-                </h3>
-
-
-                <button
-                    id="closePhoneModal"
-                    class="close-modal"
-                    type="button"
-                >
-
-                    <i class="fa-solid fa-xmark"></i>
-
-                </button>
-
-            </div>
-
-
-            <div class="modal-body">
-
-                <div
-                    id="phoneOptions"
-                    class="phone-options"
-                ></div>
-
+                id="topStoreName"
+                class="store-top-name"
+            >
+                جاري التحميل...
             </div>
 
         </div>
@@ -2336,998 +1969,1084 @@
     </div>
 
 
-    <!-- =========================
-         FIREBASE
-    ========================== -->
+    <div class="top-actions">
 
-    <script type="module">
+        <button
+            id="themeToggle"
+            class="theme-toggle"
+            type="button"
+            title="الوضع الليلي"
+        >
 
-        import {
-            initializeApp
-        }
-        from
-        "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+            <i class="fa-solid fa-moon"></i>
 
+        </button>
 
-        import {
-            getFirestore,
-            collection,
-            getDocs,
-            query,
-            where,
-            doc,
-            getDoc,
-            updateDoc,
-            deleteDoc
-        }
-        from
-        "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
+        <a
+            href="#"
+            id="viewStoreBtn"
+            class="view-store-btn"
+        >
 
-        import {
-            getAuth,
-            onAuthStateChanged,
-            signOut
-        }
-        from
-        "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+            <i class="fa-solid fa-eye"></i>
 
+            <span>
+                عرض المتجر
+            </span>
 
-        /* =====================================================
-           FIREBASE CONFIG
-           نفس مشروع G-Glam
-        ===================================================== */
+        </a>
 
-        const firebaseConfig = {
+    </div>
 
-            apiKey:
-                "AIzaSyBqt5JH9AR1n4vdzImLKB_jZi1jTe63Jo",
+</header>
 
-            authDomain:
-                "g-glam.firebaseapp.com",
 
-            projectId:
-                "g-glam",
+<main class="content">
 
-            storageBucket:
-                "g-glam.firebasestorage.app",
 
-            messagingSenderId:
-                "997228419719",
+<div class="stats">
 
-            appId:
-                "1:997228419719:web:f9d88de7ea2c6f457e3622",
+    <div class="stat">
 
-            measurementId:
-                "G-WX1K1F83F6"
+        <div class="stat-title">
 
-        };
+            <i class="fa-solid fa-box"></i>
 
+            إجمالي الطلبات
 
-        const app =
-            initializeApp(firebaseConfig);
+        </div>
 
 
-        const db =
-            getFirestore(app);
+        <div
+            id="totalOrders"
+            class="stat-value"
+        >
+            0
+        </div>
 
+    </div>
 
-        const auth =
-            getAuth(app);
 
+    <div class="stat">
 
-        /* =====================================================
-           ELEMENTS
-        ===================================================== */
+        <div class="stat-title">
 
-        const ordersBody =
-            document.getElementById(
-                "ordersBody"
-            );
+            <i class="fa-solid fa-circle-check"></i>
 
+            تم التأكيد
 
-        const totalOrders =
-            document.getElementById(
-                "totalOrders"
-            );
+        </div>
 
 
-        const confirmedOrders =
-            document.getElementById(
-                "confirmedOrders"
-            );
+        <div
+            id="confirmedOrders"
+            class="stat-value"
+        >
+            0
+        </div>
 
+    </div>
 
-        const shippedOrders =
-            document.getElementById(
-                "shippedOrders"
-            );
 
+    <div class="stat">
 
-        const deliveredOrders =
-            document.getElementById(
-                "deliveredOrders"
-            );
+        <div class="stat-title">
 
+            <i class="fa-solid fa-truck-fast"></i>
 
-        const topStoreName =
-            document.getElementById(
-                "topStoreName"
-            );
+            تم الشحن
 
+        </div>
 
-        const topStoreImage =
-            document.getElementById(
-                "topStoreImage"
-            );
 
+        <div
+            id="shippedOrders"
+            class="stat-value"
+        >
+            0
+        </div>
 
-        const viewStoreBtn =
-            document.getElementById(
-                "viewStoreBtn"
-            );
+    </div>
 
 
-        const selectAll =
-            document.getElementById(
-                "selectAll"
-            );
+    <div class="stat">
 
+        <div class="stat-title">
 
-        const bulkDeleteBtn =
-            document.getElementById(
-                "bulkDeleteBtn"
-            );
+            <i class="fa-solid fa-box-open"></i>
 
+            تم التسليم
 
-        const themeToggle =
-            document.getElementById(
-                "themeToggle"
-            );
+        </div>
 
 
-        const productsModal =
-            document.getElementById(
-                "productsModal"
-            );
+        <div
+            id="deliveredOrders"
+            class="stat-value"
+        >
+            0
+        </div>
 
+    </div>
 
-        const productsModalBody =
-            document.getElementById(
-                "productsModalBody"
-            );
+</div>
 
 
-        const phoneModal =
-            document.getElementById(
-                "phoneModal"
-            );
+<section class="section">
 
+<div class="section-header">
 
-        const phoneOptions =
-            document.getElementById(
-                "phoneOptions"
-            );
+    <h2 class="section-title">
 
+        <i class="fa-solid fa-clipboard-list"></i>
 
-        let currentOwnerUid = "";
+        طلبات متجري
 
-        let currentOwnerEmail = "";
+    </h2>
 
-        let currentStoreId = "";
 
-        let currentStore = null;
+    <div class="bulk-actions">
 
+        <label class="select-all-box">
 
-        /* =====================================================
-           THEME
-        ===================================================== */
+            <input
+                type="checkbox"
+                id="selectAll"
+            >
 
-        function applyTheme() {
+            تحديد الكل
 
-            const darkMode =
-                localStorage.getItem(
-                    "gGlamDarkMode"
-                ) === "true";
+        </label>
 
 
+        <button
+            type="button"
+            id="bulkDeleteBtn"
+            class="bulk-delete-btn"
+        >
+
+            <i class="fa-solid fa-trash"></i>
+
+            حذف المحدد
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<div class="table-wrapper">
+
+<table class="orders-table">
+
+<thead>
+
+<tr>
+
+    <th>تحديد</th>
+    <th>رقم الطلب</th>
+    <th>التاريخ</th>
+    <th>الزبون</th>
+    <th>الهاتف</th>
+    <th>الولاية</th>
+    <th>العنوان</th>
+    <th>التوصيل</th>
+    <th>المنتجات</th>
+    <th>المجموع</th>
+    <th>الملاحظات</th>
+    <th>الحالة</th>
+    <th>إجراء</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="ordersBody">
+
+<tr>
+
+<td colspan="13">
+
+<div class="loading">
+
+<i class="fa-solid fa-spinner fa-spin"></i>
+
+<br>
+
+جاري تحميل الطلبات...
+
+</div>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+</main>
+
+
+<!-- PRODUCTS MODAL -->
+
+<div
+    id="productsModal"
+    class="modal-overlay"
+>
+
+<div class="modal">
+
+<div class="modal-header">
+
+<h3>
+
+<i class="fa-solid fa-bag-shopping"></i>
+
+تفاصيل المنتجات
+
+</h3>
+
+
+<button
+    id="closeProductsModal"
+    class="close-modal"
+    type="button"
+>
+
+<i class="fa-solid fa-xmark"></i>
+
+</button>
+
+</div>
+
+
+<div
+    id="productsModalBody"
+    class="modal-body"
+></div>
+
+</div>
+
+</div>
+
+
+<!-- PHONE MODAL -->
+
+<div
+    id="phoneModal"
+    class="modal-overlay"
+>
+
+<div class="modal">
+
+<div class="modal-header">
+
+<h3>
+
+<i class="fa-solid fa-phone"></i>
+
+التواصل مع الزبون
+
+</h3>
+
+
+<button
+    id="closePhoneModal"
+    class="close-modal"
+    type="button"
+>
+
+<i class="fa-solid fa-xmark"></i>
+
+</button>
+
+</div>
+
+
+<div class="modal-body">
+
+<div
+    id="phoneOptions"
+    class="phone-options"
+></div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script type="module">
+
+import {
+    initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+
+import {
+    getFirestore,
+    collection,
+    getDocs,
+    query,
+    where,
+    doc,
+    getDoc,
+    updateDoc,
+    deleteDoc
+}
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+
+import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
+}
+from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+
+    authDomain:
+        "g-glam.firebaseapp.com",
+
+    projectId:
+        "g-glam",
+
+    storageBucket:
+        "g-glam.firebasestorage.app",
+
+    messagingSenderId:
+        "997228419719",
+
+    appId:
+        "1:997228419719:web:f9d88de7ea2c6f457e3622",
+
+    measurementId:
+        "G-WX1K1F83F6"
+
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+
+const db =
+    getFirestore(app);
+
+
+const auth =
+    getAuth(app);
+
+
+const ordersBody =
+    document.getElementById("ordersBody");
+
+
+const totalOrders =
+    document.getElementById("totalOrders");
+
+
+const confirmedOrders =
+    document.getElementById("confirmedOrders");
+
+
+const shippedOrders =
+    document.getElementById("shippedOrders");
+
+
+const deliveredOrders =
+    document.getElementById("deliveredOrders");
+
+
+const topStoreName =
+    document.getElementById("topStoreName");
+
+
+const topStoreImage =
+    document.getElementById("topStoreImage");
+
+
+const viewStoreBtn =
+    document.getElementById("viewStoreBtn");
+
+
+const selectAll =
+    document.getElementById("selectAll");
+
+
+const bulkDeleteBtn =
+    document.getElementById("bulkDeleteBtn");
+
+
+const themeToggle =
+    document.getElementById("themeToggle");
+
+
+const productsModal =
+    document.getElementById("productsModal");
+
+
+const productsModalBody =
+    document.getElementById("productsModalBody");
+
+
+const phoneModal =
+    document.getElementById("phoneModal");
+
+
+const phoneOptions =
+    document.getElementById("phoneOptions");
+
+
+let currentOwnerUid = "";
+
+let currentOwnerEmail = "";
+
+let currentStoreId = "";
+
+let currentStore = null;
+
+
+/* =========================
+   THEME
+========================= */
+
+function applyTheme(){
+
+    const darkMode =
+        localStorage.getItem("gGlamDarkMode")
+        === "true";
+
+
+    document.body.classList.toggle(
+        "dark-mode",
+        darkMode
+    );
+
+
+    themeToggle.innerHTML =
+        darkMode
+            ? '<i class="fa-solid fa-sun"></i>'
+            : '<i class="fa-solid fa-moon"></i>';
+
+}
+
+
+themeToggle.addEventListener(
+    "click",
+    () => {
+
+        const darkMode =
             document.body.classList.toggle(
-                "dark-mode",
-                darkMode
+                "dark-mode"
             );
 
 
-            themeToggle.innerHTML =
-                darkMode
-                    ? '<i class="fa-solid fa-sun"></i>'
-                    : '<i class="fa-solid fa-moon"></i>';
+        localStorage.setItem(
+            "gGlamDarkMode",
+            darkMode
+                ? "true"
+                : "false"
+        );
+
+
+        themeToggle.innerHTML =
+            darkMode
+                ? '<i class="fa-solid fa-sun"></i>'
+                : '<i class="fa-solid fa-moon"></i>';
+
+    }
+);
+
+
+applyTheme();
+
+
+/* =========================
+   HELPERS
+========================= */
+
+function escapeHtml(value){
+
+    return String(value ?? "")
+
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+function formatDate(timestamp){
+
+    if(!timestamp){
+
+        return "غير محدد";
+    }
+
+
+    try{
+
+        let date;
+
+
+        if(timestamp.toDate){
+
+            date =
+                timestamp.toDate();
 
         }
 
+        else if(timestamp.seconds){
 
-        themeToggle.addEventListener(
-            "click",
-            () => {
+            date =
+                new Date(
+                    timestamp.seconds * 1000
+                );
 
-                const darkMode =
-                    document.body.classList.toggle(
-                        "dark-mode"
-                    );
+        }
+
+        else{
+
+            date =
+                new Date(timestamp);
+        }
 
 
-                localStorage.setItem(
-                    "gGlamDarkMode",
-                    darkMode
-                        ? "true"
-                        : "false"
+        if(isNaN(date.getTime())){
+
+            return "غير محدد";
+        }
+
+
+        return date.toLocaleDateString(
+            "ar-DZ",
+            {
+                year:"numeric",
+                month:"2-digit",
+                day:"2-digit"
+            }
+        );
+
+    }
+
+    catch{
+
+        return "غير محدد";
+    }
+
+}
+
+
+function cleanPhone(phone){
+
+    return String(phone || "")
+        .replace(/[^\d+]/g,"");
+
+}
+
+
+function normalizeStatus(order){
+
+    const value =
+        String(order.status || "")
+        .trim();
+
+
+    if(!value){
+
+        return "قيد المعالجة";
+    }
+
+
+    return value;
+
+}
+
+
+/* =========================
+   LOAD STORE
+========================= */
+
+async function loadStore(){
+
+    const user =
+        auth.currentUser;
+
+
+    if(!user){
+
+        window.location.href =
+            "login.html";
+
+        return;
+    }
+
+
+    currentOwnerUid =
+        user.uid;
+
+
+    currentOwnerEmail =
+        user.email || "";
+
+
+    let storeSnapshot = null;
+
+
+    const savedStoreDocumentId =
+        localStorage.getItem(
+            "storeDocumentId"
+        );
+
+
+    if(savedStoreDocumentId){
+
+        try{
+
+            const savedRef =
+                doc(
+                    db,
+                    "stores",
+                    savedStoreDocumentId
                 );
 
 
-                themeToggle.innerHTML =
-                    darkMode
-                        ? '<i class="fa-solid fa-sun"></i>'
-                        : '<i class="fa-solid fa-moon"></i>';
+            const savedSnapshot =
+                await getDoc(savedRef);
+
+
+            if(savedSnapshot.exists()){
+
+                const savedData =
+                    savedSnapshot.data();
+
+
+                if(
+                    savedData.ownerUid ===
+                    currentOwnerUid
+                    ||
+                    savedData.ownerEmail ===
+                    currentOwnerEmail
+                ){
+
+                    storeSnapshot =
+                        savedSnapshot;
+                }
+
+            }
+
+        }
+
+        catch(error){
+
+            console.warn(
+                "Saved store lookup failed:",
+                error
+            );
+
+        }
+
+    }
+
+
+    if(!storeSnapshot){
+
+        try{
+
+            const directRef =
+                doc(
+                    db,
+                    "stores",
+                    currentOwnerUid
+                );
+
+
+            const directSnapshot =
+                await getDoc(directRef);
+
+
+            if(directSnapshot.exists()){
+
+                storeSnapshot =
+                    directSnapshot;
+            }
+
+        }
+
+        catch(error){
+
+            console.warn(
+                "Direct store lookup failed:",
+                error
+            );
+
+        }
+
+    }
+
+
+    if(!storeSnapshot){
+
+        try{
+
+            const ownerQuery =
+                query(
+                    collection(
+                        db,
+                        "stores"
+                    ),
+                    where(
+                        "ownerUid",
+                        "==",
+                        currentOwnerUid
+                    )
+                );
+
+
+            const ownerSnapshot =
+                await getDocs(ownerQuery);
+
+
+            if(!ownerSnapshot.empty){
+
+                storeSnapshot =
+                    ownerSnapshot.docs[0];
+            }
+
+        }
+
+        catch(error){
+
+            console.error(
+                "Owner store query error:",
+                error
+            );
+
+        }
+
+    }
+
+
+    if(
+        !storeSnapshot &&
+        currentOwnerEmail
+    ){
+
+        try{
+
+            const emailQuery =
+                query(
+                    collection(
+                        db,
+                        "stores"
+                    ),
+                    where(
+                        "ownerEmail",
+                        "==",
+                        currentOwnerEmail
+                    )
+                );
+
+
+            const emailSnapshot =
+                await getDocs(emailQuery);
+
+
+            if(!emailSnapshot.empty){
+
+                storeSnapshot =
+                    emailSnapshot.docs[0];
+            }
+
+        }
+
+        catch(error){
+
+            console.error(
+                "Email store query error:",
+                error
+            );
+
+        }
+
+    }
+
+
+    if(!storeSnapshot){
+
+        alert(
+            "لم يتم العثور على متجر مرتبط بهذا الحساب."
+        );
+
+        return;
+    }
+
+
+    currentStoreId =
+        storeSnapshot.id;
+
+
+    currentStore =
+        storeSnapshot.data();
+
+
+    const storeOwnerUid =
+        String(
+            currentStore.ownerUid || ""
+        );
+
+
+    if(
+        storeOwnerUid &&
+        storeOwnerUid !==
+            currentOwnerUid
+    ){
+
+        alert(
+            "المتجر غير مرتبط بهذا الحساب."
+        );
+
+        return;
+    }
+
+
+    const storeStatus =
+        String(
+            currentStore.status || ""
+        )
+        .toLowerCase()
+        .trim();
+
+
+    if(
+        storeStatus &&
+        storeStatus !== "approved" &&
+        storeStatus !== "active"
+    ){
+
+        alert(
+            "المتجر غير نشط حاليًا."
+        );
+
+        return;
+    }
+
+
+    const storeName =
+        currentStore.storeName ||
+        currentStore.name ||
+        "G-Glam";
+
+
+    const storeImage =
+        currentStore.storeImage ||
+        currentStore.image ||
+        currentStore.logo ||
+        currentStore.photoURL ||
+        "";
+
+
+    topStoreName.textContent =
+        storeName;
+
+
+    topStoreImage.src =
+        storeImage ||
+        "logotrans.png";
+
+
+    viewStoreBtn.href =
+        "index.html?store=" +
+        encodeURIComponent(
+            currentStoreId
+        );
+
+
+    localStorage.setItem(
+        "storeId",
+        currentStoreId
+    );
+
+
+    localStorage.setItem(
+        "storeDocumentId",
+        currentStoreId
+    );
+
+
+    localStorage.setItem(
+        "storeOwnerUid",
+        currentOwnerUid
+    );
+
+
+    localStorage.setItem(
+        "storeName",
+        storeName
+    );
+
+
+    await loadOrders();
+
+}
+
+
+/* =========================
+   LOAD ORDERS
+========================= */
+
+async function loadOrders(){
+
+    ordersBody.innerHTML = `
+
+        <tr>
+
+            <td colspan="13">
+
+                <div class="loading">
+
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+
+                    <br>
+
+                    جاري تحميل طلبات متجرك...
+
+                </div>
+
+            </td>
+
+        </tr>
+
+    `;
+
+
+    try{
+
+        const ownerQuery =
+            query(
+                collection(
+                    db,
+                    "orders"
+                ),
+                where(
+                    "ownerUid",
+                    "==",
+                    currentOwnerUid
+                )
+            );
+
+
+        const snapshot =
+            await getDocs(ownerQuery);
+
+
+        const orders =
+            snapshot.docs.map(
+                orderDoc => ({
+
+                    id:
+                        orderDoc.id,
+
+                    data:
+                        orderDoc.data()
+
+                })
+            );
+
+
+        orders.sort(
+            (a,b) => {
+
+                const aTime =
+                    a.data.createdAt?.seconds ||
+                    0;
+
+
+                const bTime =
+                    b.data.createdAt?.seconds ||
+                    0;
+
+
+                return bTime-aTime;
 
             }
         );
 
 
-        applyTheme();
+        totalOrders.textContent =
+            orders.length;
 
 
-        /* =====================================================
-           HELPERS
-        ===================================================== */
+        let confirmed=0;
 
-        function escapeHtml(value) {
+        let shipped=0;
 
-            return String(value ?? "")
+        let delivered=0;
 
-                .replace(
-                    /&/g,
-                    "&amp;"
-                )
 
-                .replace(
-                    /</g,
-                    "&lt;"
-                )
+        orders.forEach(
+            item => {
 
-                .replace(
-                    />/g,
-                    "&gt;"
-                )
-
-                .replace(
-                    /"/g,
-                    "&quot;"
-                )
-
-                .replace(
-                    /'/g,
-                    "&#039;"
-                );
-
-        }
-
-
-        function formatDate(timestamp) {
-
-            if (!timestamp) {
-
-                return "غير محدد";
-            }
-
-
-            try {
-
-                let date;
-
-
-                if (
-                    timestamp &&
-                    typeof timestamp.toDate ===
-                    "function"
-                ) {
-
-                    date =
-                        timestamp.toDate();
-
-                }
-                else if (
-                    timestamp &&
-                    typeof timestamp.seconds ===
-                    "number"
-                ) {
-
-                    date =
-                        new Date(
-                            timestamp.seconds *
-                            1000
-                        );
-
-                }
-                else {
-
-                    date =
-                        new Date(timestamp);
-                }
-
-
-                if (
-                    isNaN(
-                        date.getTime()
-                    )
-                ) {
-
-                    return "غير محدد";
-                }
-
-
-                return date.toLocaleDateString(
-                    "ar-DZ",
-                    {
-                        year: "numeric",
-                        month: "2-digit",
-                        day: "2-digit"
-                    }
-                );
-
-            }
-            catch {
-
-                return "غير محدد";
-            }
-
-        }
-
-
-        function getTimestampValue(timestamp) {
-
-            if (!timestamp) {
-
-                return 0;
-            }
-
-
-            if (
-                typeof timestamp.seconds ===
-                "number"
-            ) {
-
-                return timestamp.seconds;
-            }
-
-
-            if (
-                typeof timestamp.toDate ===
-                "function"
-            ) {
-
-                const date =
-                    timestamp.toDate();
-
-
-                return Math.floor(
-                    date.getTime() / 1000
-                );
-
-            }
-
-
-            const date =
-                new Date(timestamp);
-
-
-            if (
-                isNaN(
-                    date.getTime()
-                )
-            ) {
-
-                return 0;
-            }
-
-
-            return Math.floor(
-                date.getTime() / 1000
-            );
-
-        }
-
-
-        function cleanPhone(phone) {
-
-            return String(phone || "")
-                .replace(
-                    /[^\d+]/g,
-                    ""
-                );
-
-        }
-
-
-        function normalizeStatus(order) {
-
-            const value =
-                String(
-                    order.status || ""
-                )
-                .trim();
-
-
-            if (!value) {
-
-                return "قيد المعالجة";
-            }
-
-
-            return value;
-
-        }
-
-
-        /* =====================================================
-           LOAD STORE
-           
-           مهم جدًا:
-           
-           ownerUid = UID حساب Firebase
-           
-           currentStoreId =
-           ID وثيقة stores الحقيقي
-           
-           لا يتم استخدام البريد كمعرف أساسي.
-        ===================================================== */
-
-        async function loadStore() {
-
-            const user =
-                auth.currentUser;
-
-
-            /*
-             * لا نقوم هنا بعمل redirect.
-             *
-             * السبب:
-             * Firebase قد يكون ما زال يعيد استرجاع الجلسة.
-             *
-             * redirect هنا كان أحد أسباب ظهور
-             * صفحة تسجيل الدخول عند الضغط على الطلبات.
-             */
-
-            if (!user) {
-
-                console.warn(
-                    "لا توجد جلسة Firebase متاحة حاليًا."
-                );
-
-                return;
-            }
-
-
-            currentOwnerUid =
-                user.uid;
-
-
-            currentOwnerEmail =
-                user.email || "";
-
-
-            let storeSnapshot = null;
-
-
-            /* =================================================
-               1 — saved storeDocumentId
-            ================================================= */
-
-            const savedStoreDocumentId =
-                localStorage.getItem(
-                    "storeDocumentId"
-                );
-
-
-            if (
-                savedStoreDocumentId
-            ) {
-
-                try {
-
-                    const savedRef =
-                        doc(
-                            db,
-                            "stores",
-                            savedStoreDocumentId
-                        );
-
-
-                    const savedSnapshot =
-                        await getDoc(
-                            savedRef
-                        );
-
-
-                    if (
-                        savedSnapshot.exists()
-                    ) {
-
-                        const savedData =
-                            savedSnapshot.data();
-
-
-                        /*
-                         * التحقق بالـ UID أولًا.
-                         *
-                         * البريد فقط fallback
-                         * للحالات القديمة.
-                         */
-
-                        if (
-                            savedData.ownerUid ===
-                            currentOwnerUid
-                            ||
-                            (
-                                !savedData.ownerUid &&
-                                savedData.ownerEmail ===
-                                currentOwnerEmail
-                            )
-                        ) {
-
-                            storeSnapshot =
-                                savedSnapshot;
-                        }
-
-                    }
-
-                }
-                catch (error) {
-
-                    console.warn(
-                        "Saved store lookup failed:",
-                        error
+                const status =
+                    normalizeStatus(
+                        item.data
                     );
 
-                }
 
-            }
+                if(status==="تم التأكيد")
+                    confirmed++;
 
 
-            /* =================================================
-               2 — UID كـ document ID
-            ================================================= */
-
-            if (!storeSnapshot) {
-
-                try {
-
-                    const directRef =
-                        doc(
-                            db,
-                            "stores",
-                            currentOwnerUid
-                        );
-
-
-                    const directSnapshot =
-                        await getDoc(
-                            directRef
-                        );
-
-
-                    if (
-                        directSnapshot.exists()
-                    ) {
-
-                        const directData =
-                            directSnapshot.data();
-
-
-                        /*
-                         * إذا كان ownerUid موجودًا
-                         * يجب أن يطابق المستخدم.
-                         */
-
-                        if (
-                            !directData.ownerUid ||
-                            directData.ownerUid ===
-                            currentOwnerUid
-                        ) {
-
-                            storeSnapshot =
-                                directSnapshot;
-                        }
-
-                    }
-
-                }
-                catch (error) {
-
-                    console.warn(
-                        "Direct store lookup failed:",
-                        error
-                    );
-
-                }
-
-            }
-
-
-            /* =================================================
-               3 — البحث بواسطة ownerUid
-            ================================================= */
-
-            if (!storeSnapshot) {
-
-                try {
-
-                    const ownerQuery =
-                        query(
-                            collection(
-                                db,
-                                "stores"
-                            ),
-                            where(
-                                "ownerUid",
-                                "==",
-                                currentOwnerUid
-                            )
-                        );
-
-
-                    const ownerSnapshot =
-                        await getDocs(
-                            ownerQuery
-                        );
-
-
-                    if (
-                        !ownerSnapshot.empty
-                    ) {
-
-                        storeSnapshot =
-                            ownerSnapshot.docs[0];
-                    }
-
-                }
-                catch (error) {
-
-                    console.error(
-                        "Owner store query error:",
-                        error
-                    );
-
-                }
-
-            }
-
-
-            /* =================================================
-               4 — البريد فقط كـ fallback قديم
-            ================================================= */
-
-            if (
-                !storeSnapshot &&
-                currentOwnerEmail
-            ) {
-
-                try {
-
-                    const emailQuery =
-                        query(
-                            collection(
-                                db,
-                                "stores"
-                            ),
-                            where(
-                                "ownerEmail",
-                                "==",
-                                currentOwnerEmail
-                            )
-                        );
-
-
-                    const emailSnapshot =
-                        await getDocs(
-                            emailQuery
-                        );
-
-
-                    if (
-                        !emailSnapshot.empty
-                    ) {
-
-                        const candidate =
-                            emailSnapshot.docs[0];
-
-
-                        const candidateData =
-                            candidate.data();
-
-
-                        /*
-                         * إذا كان ownerUid موجودًا
-                         * فلا نقبل متجرًا يخص UID آخر.
-                         */
-
-                        if (
-                            !candidateData.ownerUid ||
-                            candidateData.ownerUid ===
-                            currentOwnerUid
-                        ) {
-
-                            storeSnapshot =
-                                candidate;
-                        }
-
-                    }
-
-                }
-                catch (error) {
-
-                    console.error(
-                        "Email store query error:",
-                        error
-                    );
-
-                }
-
-            }
-
-
-            /* =================================================
-               STORE NOT FOUND
-            ================================================= */
-
-            if (!storeSnapshot) {
-
-                console.error(
-                    "STORE NOT FOUND",
-                    {
-                        ownerUid:
-                            currentOwnerUid,
-
-                        email:
-                            currentOwnerEmail
-                    }
-                );
-
-
-                topStoreName.textContent =
-                    "لم يتم العثور على المتجر";
-
-
-                ordersBody.innerHTML = `
-
-                    <tr>
-
-                        <td colspan="13">
-
-                            <div class="empty">
-
-                                <i class="fa-solid fa-store-slash"></i>
-
-                                <br>
-
-                                لم يتم العثور على متجر مرتبط بهذا الحساب.
-
-                                <br><br>
-
-                                UID:
-                                ${escapeHtml(
-                                    currentOwnerUid
-                                )}
-
-                            </div>
-
-                        </td>
-
-                    </tr>
-
-                `;
-
-
-                return;
-            }
-
-
-            /* =================================================
-               REAL STORE DOCUMENT ID
-            ================================================= */
-
-            currentStoreId =
-                storeSnapshot.id;
-
-
-            currentStore =
-                storeSnapshot.data();
-
-
-            /* =================================================
-               OWNERSHIP CHECK
-            ================================================= */
-
-            const storeOwnerUid =
-                String(
-                    currentStore.ownerUid ||
-                    ""
-                );
-
-
-            if (
-                storeOwnerUid &&
-                storeOwnerUid !==
-                    currentOwnerUid
-            ) {
-
-                console.error(
-                    "STORE OWNER MISMATCH",
-                    {
-                        storeId:
-                            currentStoreId,
-
-                        storeOwnerUid:
-                            storeOwnerUid,
-
-                        currentOwnerUid:
-                            currentOwnerUid
-                    }
-                );
-
-
-                alert(
-                    "تم العثور على المتجر، ولكن المتجر غير مرتبط بهذا الحساب."
-                );
-
-
-                return;
-            }
-
-
-            /* =================================================
-               STORE STATUS
-            ================================================= */
-
-            const storeStatus =
-                String(
-                    currentStore.status ||
-                    ""
+                if(
+                    status==="تم الشحن" ||
+                    status==="قيد الشحن"
                 )
-                .toLowerCase()
-                .trim();
+                    shipped++;
 
 
-            if (
-                storeStatus &&
-                storeStatus !== "approved" &&
-                storeStatus !== "active"
-            ) {
+                if(
+                    status==="تم التسليم" ||
+                    status==="تم التوصيل"
+                )
+                    delivered++;
 
-                topStoreName.textContent =
-                    currentStore.storeName ||
-                    currentStore.name ||
-                    "المتجر";
-
-
-                ordersBody.innerHTML = `
-
-                    <tr>
-
-                        <td colspan="13">
-
-                            <div class="empty">
-
-                                <i class="fa-solid fa-store-slash"></i>
-
-                                <br>
-
-                                المتجر غير نشط حاليًا.
-
-                            </div>
-
-                        </td>
-
-                    </tr>
-
-                `;
-
-
-                return;
             }
+        );
 
 
-            /* =================================================
-               STORE INFO
-            ================================================= */
-
-            const storeName =
-                currentStore.storeName ||
-                currentStore.name ||
-                "G-Glam";
+        confirmedOrders.textContent =
+            confirmed;
 
 
-            const storeImage =
-                currentStore.storeImage ||
-                currentStore.image ||
-                currentStore.logo ||
-                currentStore.photoURL ||
-                "";
+        shippedOrders.textContent =
+            shipped;
 
 
-            topStoreName.textContent =
-                storeName;
+        deliveredOrders.textContent =
+            delivered;
 
 
-            topStoreImage.src =
-                storeImage ||
-                "logotrans.png";
-
-
-            topStoreImage.onerror =
-                () => {
-
-                    topStoreImage.src =
-                        "logotrans.png";
-
-                };
-
-
-            /* =================================================
-               STORE LINK
-               
-               store = REAL DOCUMENT ID
-            ================================================= */
-
-            viewStoreBtn.href =
-                "index.html?store=" +
-                encodeURIComponent(
-                    currentStoreId
-                );
-
-
-            /* =================================================
-               SAVE STORE DATA
-            ================================================= */
-
-            localStorage.setItem(
-                "storeId",
-                currentStoreId
-            );
-
-
-            localStorage.setItem(
-                "storeDocumentId",
-                currentStoreId
-            );
-
-
-            localStorage.setItem(
-                "storeOwnerUid",
-                currentOwnerUid
-            );
-
-
-            localStorage.setItem(
-                "storeName",
-                storeName
-            );
-
-
-            /* =================================================
-               LOAD ORDERS
-            ================================================= */
-
-            await loadOrders();
-
-        }
-
-
-        /* =====================================================
-           LOAD ORDERS
-           
-           الطلبات مرتبطة بالـ ownerUid
-        ===================================================== */
-
-        async function loadOrders() {
+        if(!orders.length){
 
             ordersBody.innerHTML = `
 
@@ -3335,11 +3054,13 @@
 
                     <td colspan="13">
 
-                        <div class="loading">
+                        <div class="empty">
 
-                            <i class="fa-solid fa-spinner fa-spin"></i>
+                            <i class="fa-solid fa-box-open"></i>
 
-                            جاري تحميل طلبات متجرك...
+                            <br>
+
+                            لا توجد طلبات في متجرك حاليًا.
 
                         </div>
 
@@ -3349,965 +3070,613 @@
 
             `;
 
-
-            try {
-
-                if (!currentOwnerUid) {
-
-                    throw new Error(
-                        "UID المستخدم غير متوفر."
-                    );
-
-                }
-
-
-                const ownerQuery =
-                    query(
-                        collection(
-                            db,
-                            "orders"
-                        ),
-                        where(
-                            "ownerUid",
-                            "==",
-                            currentOwnerUid
-                        )
-                    );
-
-
-                const snapshot =
-                    await getDocs(
-                        ownerQuery
-                    );
-
-
-                const orders =
-                    snapshot.docs.map(
-                        orderDoc => ({
-
-                            id:
-                                orderDoc.id,
-
-                            data:
-                                orderDoc.data()
-
-                        })
-                    );
-
-
-                /* SORT */
-
-                orders.sort(
-                    (a, b) => {
-
-                        const aTime =
-                            getTimestampValue(
-                                a.data.createdAt
-                            );
-
-
-                        const bTime =
-                            getTimestampValue(
-                                b.data.createdAt
-                            );
-
-
-                        return bTime - aTime;
-
-                    }
-                );
-
-
-                /* TOTAL */
-
-                totalOrders.textContent =
-                    orders.length;
-
-
-                let confirmed = 0;
-
-                let shipped = 0;
-
-                let delivered = 0;
-
-
-                orders.forEach(
-                    item => {
-
-                        const status =
-                            normalizeStatus(
-                                item.data
-                            );
-
-
-                        if (
-                            status ===
-                            "تم التأكيد"
-                        ) {
-
-                            confirmed++;
-                        }
-
-
-                        if (
-                            status ===
-                            "تم الشحن" ||
-                            status ===
-                            "قيد الشحن"
-                        ) {
-
-                            shipped++;
-                        }
-
-
-                        if (
-                            status ===
-                            "تم التسليم" ||
-                            status ===
-                            "تم التوصيل"
-                        ) {
-
-                            delivered++;
-                        }
-
-                    }
-                );
-
-
-                confirmedOrders.textContent =
-                    confirmed;
-
-
-                shippedOrders.textContent =
-                    shipped;
-
-
-                deliveredOrders.textContent =
-                    delivered;
-
-
-                /* EMPTY */
-
-                if (
-                    orders.length === 0
-                ) {
-
-                    ordersBody.innerHTML = `
-
-                        <tr>
-
-                            <td colspan="13">
-
-                                <div class="empty">
-
-                                    <i class="fa-solid fa-box-open"></i>
-
-                                    <br>
-
-                                    لا توجد طلبات في متجرك حاليًا.
-
-                                </div>
-
-                            </td>
-
-                        </tr>
-
-                    `;
-
-                    return;
-                }
-
-
-                ordersBody.innerHTML =
-                    "";
-
-
-                orders.forEach(
-                    (item, index) => {
-
-                        renderOrder(
-                            item.id,
-                            item.data,
-                            index + 1
-                        );
-
-                    }
-                );
-
-
-                updateBulkButtons();
-
-            }
-            catch (error) {
-
-                console.error(
-                    "ORDERS ERROR:",
-                    error
-                );
-
-
-                ordersBody.innerHTML = `
-
-                    <tr>
-
-                        <td colspan="13">
-
-                            <div class="empty">
-
-                                <i class="fa-solid fa-circle-exclamation"></i>
-
-                                <br>
-
-                                تعذر تحميل الطلبات.
-
-                                <br><br>
-
-                                ${escapeHtml(
-                                    error.message ||
-                                    error.code ||
-                                    "خطأ غير معروف"
-                                )}
-
-                            </div>
-
-                        </td>
-
-                    </tr>
-
-                `;
-
-            }
-
+            return;
         }
 
 
-        /* =====================================================
-           RENDER ORDER
-        ===================================================== */
+        ordersBody.innerHTML="";
 
-        function renderOrder(
-            id,
-            order,
-            orderNumber
-        ) {
 
-            const tr =
-                document.createElement(
-                    "tr"
+        orders.forEach(
+            (item,index)=>{
+
+                renderOrder(
+                    item.id,
+                    item.data,
+                    index+1
                 );
 
+            }
+        );
 
-            const status =
-                normalizeStatus(
-                    order
-                );
 
+        updateBulkButtons();
 
-            const phone =
-                cleanPhone(
-                    order.phone ||
-                    order.customerPhone
-                );
+    }
 
+    catch(error){
 
-            const products =
-                Array.isArray(
-                    order.products
-                )
-                    ? order.products
-                    : [];
+        console.error(
+            "ORDERS ERROR:",
+            error
+        );
 
 
-            let productsCount = 0;
+        ordersBody.innerHTML = `
 
+            <tr>
 
-            products.forEach(
-                product => {
+                <td colspan="13">
 
-                    productsCount +=
-                        Number(
-                            product.quantity || 1
-                        );
+                    <div class="empty">
 
-                }
-            );
-
-
-            const formattedNumber =
-                String(orderNumber)
-                    .padStart(
-                        4,
-                        "0"
-                    );
-
-
-            const deliveryPrice =
-                Number(
-                    order.deliveryPrice ??
-                    order.shippingPrice ??
-                    0
-                );
-
-
-            const total =
-                Number(
-                    order.total ??
-                    0
-                );
-
-
-            tr.innerHTML = `
-
-                <td class="check-cell">
-
-                    <input
-                        type="checkbox"
-                        class="order-check"
-                        data-id="${escapeHtml(id)}"
-                    >
-
-                </td>
-
-
-                <td>
-
-                    <div class="order-number">
-
-                        #${formattedNumber}
-
-                    </div>
-
-                </td>
-
-
-                <td>
-
-                    <div class="date-cell">
-
-                        ${formatDate(
-                            order.createdAt
-                        )}
-
-                    </div>
-
-                </td>
-
-
-                <td>
-
-                    <div class="customer-name">
-
-                        ${escapeHtml(
-                            order.name ||
-                            order.customerName ||
-                            "غير محدد"
-                        )}
-
-                    </div>
-
-                </td>
-
-
-                <td>
-
-                    <button
-                        type="button"
-                        class="customer-phone"
-                    >
-
-                        <i class="fa-solid fa-phone"></i>
-
-                        ${escapeHtml(
-                            order.phone ||
-                            order.customerPhone ||
-                            "غير محدد"
-                        )}
-
-                    </button>
-
-                </td>
-
-
-                <td>
-
-                    ${escapeHtml(
-                        order.wilaya ||
-                        "غير محدد"
-                    )}
-
-                </td>
-
-
-                <td>
-
-                    <div class="address-cell">
-
-                        ${escapeHtml(
-                            order.address ||
-                            order.commune ||
-                            "غير محدد"
-                        )}
-
-                    </div>
-
-                </td>
-
-
-                <td>
-
-                    <div class="delivery-cell">
-
-                        <div class="delivery-type">
-
-                            ${escapeHtml(
-                                order.deliveryType ||
-                                order.deliveryMethod ||
-                                order.shippingType ||
-                                order.shippingMethod ||
-                                "غير محدد"
-                            )}
-
-                        </div>
-
-
-                        <div class="delivery-price">
-
-                            ${deliveryPrice} DA
-
-                        </div>
-
-                    </div>
-
-                </td>
-
-
-                <td>
-
-                    <button
-                        type="button"
-                        class="products-btn"
-                    >
-
-                        <i class="fa-solid fa-bag-shopping"></i>
-
-                        عرض المنتجات
+                        <i class="fa-solid fa-circle-exclamation"></i>
 
                         <br>
 
-                        <small>
+                        تعذر تحميل الطلبات.
 
-                            ${productsCount} قطعة
+                        <br><br>
 
-                        </small>
-
-                    </button>
-
-                </td>
-
-
-                <td>
-
-                    <div class="total-cell">
-
-                        ${total} DA
+                        ${escapeHtml(
+                            error.message ||
+                            error.code ||
+                            "خطأ غير معروف"
+                        )}
 
                     </div>
 
                 </td>
 
+            </tr>
 
-                <td>
+        `;
 
-                    <div class="notes-box">
+    }
 
-                        <input
-                            type="text"
-                            class="notes-input"
-                            value="${escapeHtml(
-                                order.notes || ""
-                            )}"
-                            placeholder="اكتب ملاحظة..."
-                        >
+}
 
 
-                        <button
-                            type="button"
-                            class="notes-save"
-                            title="حفظ الملاحظة"
-                        >
+/* =========================
+   RENDER ORDER
+========================= */
 
-                            <i class="fa-solid fa-floppy-disk"></i>
+function renderOrder(
+    id,
+    order,
+    orderNumber
+){
 
-                        </button>
-
-                    </div>
-
-                </td>
-
-
-                <td>
-
-                    <select
-                        class="status-select"
-                    >
-
-                        <option
-                            value="قيد المعالجة"
-                            ${status === "قيد المعالجة"
-                                ? "selected"
-                                : ""}
-                        >
-                            قيد المعالجة
-                        </option>
+    const tr =
+        document.createElement("tr");
 
 
-                        <option
-                            value="قيد المراجعة"
-                            ${status === "قيد المراجعة"
-                                ? "selected"
-                                : ""}
-                        >
-                            قيد المراجعة
-                        </option>
+    const status =
+        normalizeStatus(order);
 
 
-                        <option
-                            value="تم التأكيد"
-                            ${status === "تم التأكيد"
-                                ? "selected"
-                                : ""}
-                        >
-                            تم التأكيد
-                        </option>
+    const phone =
+        cleanPhone(order.phone);
 
 
-                        <option
-                            value="تم الشحن"
-                            ${status === "تم الشحن"
-                                ? "selected"
-                                : ""}
-                        >
-                            تم الشحن
-                        </option>
+    const products =
+        Array.isArray(order.products)
+            ? order.products
+            : [];
 
 
-                        <option
-                            value="تم التسليم"
-                            ${status === "تم التسليم"
-                                ? "selected"
-                                : ""}
-                        >
-                            تم التسليم
-                        </option>
+    let productsCount=0;
 
 
-                        <option
-                            value="إلغاء"
-                            ${status === "إلغاء"
-                                ? "selected"
-                                : ""}
-                        >
-                            إلغاء
-                        </option>
-
-                    </select>
-
-                </td>
+    let productsTotal=0;
 
 
-                <td>
+    products.forEach(
+        product=>{
 
-                    <button
-                        type="button"
-                        class="delete-btn"
-                    >
-
-                        <i class="fa-solid fa-trash"></i>
-
-                        حذف
-
-                    </button>
-
-                </td>
-
-            `;
-
-
-            /* CHECKBOX */
-
-            const check =
-                tr.querySelector(
-                    ".order-check"
+            const quantity =
+                Number(
+                    product.quantity || 1
                 );
 
 
-            check.addEventListener(
-                "change",
-                () => {
+            const price =
+                Number(
+                    product.price || 0
+                );
 
-                    tr.classList.toggle(
+
+            productsCount +=
+                quantity;
+
+
+            productsTotal +=
+                price*quantity;
+
+        }
+    );
+
+
+    const formattedNumber =
+        String(orderNumber)
+        .padStart(4,"0");
+
+
+    tr.innerHTML = `
+
+        <td class="check-cell">
+
+            <input
+                type="checkbox"
+                class="order-check"
+                data-id="${escapeHtml(id)}"
+            >
+
+        </td>
+
+
+        <td>
+
+            <div class="order-number">
+
+                #${formattedNumber}
+
+            </div>
+
+        </td>
+
+
+        <td>
+
+            <div class="date-cell">
+
+                ${formatDate(
+                    order.createdAt
+                )}
+
+            </div>
+
+        </td>
+
+
+        <td>
+
+            <div class="customer-name">
+
+                ${escapeHtml(
+                    order.name ||
+                    order.customerName ||
+                    "غير محدد"
+                )}
+
+            </div>
+
+        </td>
+
+
+        <td>
+
+            <button
+                type="button"
+                class="customer-phone"
+            >
+
+                <i class="fa-solid fa-phone"></i>
+
+                ${escapeHtml(
+                    order.phone ||
+                    "غير محدد"
+                )}
+
+            </button>
+
+        </td>
+
+
+        <td>
+
+            ${escapeHtml(
+                order.wilaya ||
+                "غير محدد"
+            )}
+
+        </td>
+
+
+        <td>
+
+            <div class="address-cell">
+
+                ${escapeHtml(
+                    order.address ||
+                    order.commune ||
+                    "غير محدد"
+                )}
+
+            </div>
+
+        </td>
+
+
+        <td>
+
+            <div class="delivery-cell">
+
+                <div class="delivery-type">
+
+                    ${escapeHtml(
+                        order.deliveryType ||
+                        order.deliveryMethod ||
+                        order.shippingType ||
+                        order.shippingMethod ||
+                        "غير محدد"
+                    )}
+
+                </div>
+
+
+                <div class="delivery-price">
+
+                    ${Number(
+                        order.deliveryPrice ||
+                        order.shippingPrice ||
+                        0
+                    )} DA
+
+                </div>
+
+            </div>
+
+        </td>
+
+
+        <td>
+
+            <button
+                type="button"
+                class="products-btn"
+            >
+
+                <i class="fa-solid fa-bag-shopping"></i>
+
+                عرض المنتجات
+
+                <br>
+
+                <small>
+
+                    ${productsCount} قطعة
+
+                </small>
+
+            </button>
+
+        </td>
+
+
+        <td>
+
+            <div class="total-cell">
+
+                ${Number(
+                    order.total || 0
+                )} DA
+
+            </div>
+
+        </td>
+
+
+        <td>
+
+            <div class="notes-box">
+
+                <input
+                    type="text"
+                    class="notes-input"
+                    value="${escapeHtml(
+                        order.notes || ""
+                    )}"
+                    placeholder="اكتب ملاحظة..."
+                >
+
+
+                <button
+                    type="button"
+                    class="notes-save"
+                >
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                </button>
+
+            </div>
+
+        </td>
+
+
+        <td>
+
+            <select
+                class="status-select"
+            >
+
+                <option value="قيد المعالجة"
+                    ${status==="قيد المعالجة"?"selected":""}>
+                    قيد المعالجة
+                </option>
+
+                <option value="قيد المراجعة"
+                    ${status==="قيد المراجعة"?"selected":""}>
+                    قيد المراجعة
+                </option>
+
+                <option value="تم التأكيد"
+                    ${status==="تم التأكيد"?"selected":""}>
+                    تم التأكيد
+                </option>
+
+                <option value="تم الشحن"
+                    ${status==="تم الشحن"?"selected":""}>
+                    تم الشحن
+                </option>
+
+                <option value="تم التسليم"
+                    ${status==="تم التسليم"?"selected":""}>
+                    تم التسليم
+                </option>
+
+                <option value="إلغاء"
+                    ${status==="إلغاء"?"selected":""}>
+                    إلغاء
+                </option>
+
+            </select>
+
+        </td>
+
+
+        <td>
+
+            <button
+                type="button"
+                class="delete-btn"
+            >
+
+                <i class="fa-solid fa-trash"></i>
+
+                حذف
+
+            </button>
+
+        </td>
+
+    `;
+
+
+    const check =
+        tr.querySelector(
+            ".order-check"
+        );
+
+
+    check.addEventListener(
+        "change",
+        ()=>{
+
+            tr.classList.toggle(
+                "selected",
+                check.checked
+            );
+
+
+            updateBulkButtons();
+
+        }
+    );
+
+
+    tr.querySelector(
+        ".customer-phone"
+    ).addEventListener(
+        "click",
+        ()=>{
+
+            openPhoneModal(phone);
+
+        }
+    );
+
+
+    tr.querySelector(
+        ".products-btn"
+    ).addEventListener(
+        "click",
+        ()=>{
+
+            openProductsModal(
+                products
+            );
+
+        }
+    );
+
+
+    tr.querySelector(
+        ".notes-save"
+    ).addEventListener(
+        "click",
+        ()=>{
+
+            const input =
+                tr.querySelector(
+                    ".notes-input"
+                );
+
+
+            saveNotes(
+                id,
+                input.value
+            );
+
+        }
+    );
+
+
+    tr.querySelector(
+        ".status-select"
+    ).addEventListener(
+        "change",
+        event=>{
+
+            updateStatus(
+                id,
+                event.target.value
+            );
+
+        }
+    );
+
+
+    tr.querySelector(
+        ".delete-btn"
+    ).addEventListener(
+        "click",
+        ()=>{
+
+            deleteOrder(id);
+
+        }
+    );
+
+
+    ordersBody.appendChild(tr);
+
+}
+
+
+/* =========================
+   BULK
+========================= */
+
+function updateBulkButtons(){
+
+    const checks =
+        document.querySelectorAll(
+            ".order-check"
+        );
+
+
+    const checked =
+        document.querySelectorAll(
+            ".order-check:checked"
+        );
+
+
+    bulkDeleteBtn.classList.toggle(
+        "show",
+        checked.length>0
+    );
+
+
+    selectAll.checked =
+        checks.length>0 &&
+        checked.length===checks.length;
+
+}
+
+
+selectAll.addEventListener(
+    "change",
+    ()=>{
+
+        const checks =
+            document.querySelectorAll(
+                ".order-check"
+            );
+
+
+        checks.forEach(
+            check=>{
+
+                check.checked =
+                    selectAll.checked;
+
+
+                check.closest("tr")
+                    ?.classList.toggle(
                         "selected",
                         check.checked
                     );
 
-
-                    updateBulkButtons();
-
-                }
-            );
+            }
+        );
 
 
-            /* PHONE */
+        updateBulkButtons();
 
-            tr.querySelector(
-                ".customer-phone"
-            ).addEventListener(
-                "click",
-                () => {
-
-                    openPhoneModal(
-                        phone
-                    );
-
-                }
-            );
+    }
+);
 
 
-            /* PRODUCTS */
+/* =========================
+   BULK DELETE
+========================= */
 
-            tr.querySelector(
-                ".products-btn"
-            ).addEventListener(
-                "click",
-                () => {
+bulkDeleteBtn.addEventListener(
+    "click",
+    async ()=>{
 
-                    openProductsModal(
-                        products,
-                        order
-                    );
-
-                }
-            );
-
-
-            /* NOTES */
-
-            tr.querySelector(
-                ".notes-save"
-            ).addEventListener(
-                "click",
-                () => {
-
-                    const input =
-                        tr.querySelector(
-                            ".notes-input"
-                        );
-
-
-                    saveNotes(
-                        id,
-                        input.value
-                    );
-
-                }
-            );
-
-
-            /* STATUS */
-
-            tr.querySelector(
-                ".status-select"
-            ).addEventListener(
-                "change",
-                event => {
-
-                    updateStatus(
-                        id,
-                        event.target.value
-                    );
-
-                }
-            );
-
-
-            /* DELETE */
-
-            tr.querySelector(
-                ".delete-btn"
-            ).addEventListener(
-                "click",
-                () => {
-
-                    deleteOrder(id);
-
-                }
-            );
-
-
-            ordersBody.appendChild(
-                tr
-            );
-
-        }
-
-
-        /* =====================================================
-           BULK SELECT
-        ===================================================== */
-
-        function updateBulkButtons() {
-
-            const checks =
-                document.querySelectorAll(
-                    ".order-check"
-                );
-
-
-            const checked =
+        const selected =
+            Array.from(
                 document.querySelectorAll(
                     ".order-check:checked"
-                );
-
-
-            bulkDeleteBtn.classList.toggle(
-                "show",
-                checked.length > 0
+                )
             );
 
 
-            selectAll.checked =
-                checks.length > 0 &&
-                checked.length ===
-                    checks.length;
+        if(!selected.length){
 
+            alert(
+                "حدد الطلبات التي تريد حذفها أولًا."
+            );
+
+            return;
         }
 
 
-        selectAll.addEventListener(
-            "change",
-            () => {
+        if(
+            !confirm(
+                "هل أنت متأكد من حذف " +
+                selected.length +
+                " طلبات؟\n\n" +
+                "لا يمكن التراجع عن الحذف."
+            )
+        ){
 
-                const checks =
-                    document.querySelectorAll(
-                        ".order-check"
-                    );
+            return;
+        }
 
 
-                checks.forEach(
-                    check => {
+        bulkDeleteBtn.disabled=true;
 
-                        check.checked =
-                            selectAll.checked;
 
+        let deletedCount=0;
 
-                        check.closest("tr")
-                            ?.classList.toggle(
-                                "selected",
-                                check.checked
-                            );
+        let failedCount=0;
 
-                    }
-                );
+        let lastError="";
 
 
-                updateBulkButtons();
+        for(
+            const checkbox of selected
+        ){
 
-            }
-        );
+            const id =
+                checkbox.dataset.id;
 
 
-        /* =====================================================
-           BULK DELETE
-        ===================================================== */
-
-        bulkDeleteBtn.addEventListener(
-            "click",
-            async () => {
-
-                const selected =
-                    Array.from(
-                        document.querySelectorAll(
-                            ".order-check:checked"
-                        )
-                    );
-
-
-                if (
-                    !selected.length
-                ) {
-
-                    alert(
-                        "حدد الطلبات التي تريد حذفها أولًا."
-                    );
-
-                    return;
-                }
-
-
-                if (
-                    !confirm(
-                        "هل أنت متأكد من حذف " +
-                        selected.length +
-                        " طلبات؟\n\n" +
-                        "لا يمكن التراجع عن الحذف."
-                    )
-                ) {
-
-                    return;
-                }
-
-
-                bulkDeleteBtn.disabled =
-                    true;
-
-
-                let deletedCount = 0;
-
-                let failedCount = 0;
-
-                let lastError = "";
-
-
-                for (
-                    const checkbox of selected
-                ) {
-
-                    const id =
-                        checkbox.dataset.id;
-
-
-                    try {
-
-                        const orderRef =
-                            doc(
-                                db,
-                                "orders",
-                                id
-                            );
-
-
-                        const snapshot =
-                            await getDoc(
-                                orderRef
-                            );
-
-
-                        if (
-                            !snapshot.exists()
-                        ) {
-
-                            failedCount++;
-
-                            lastError =
-                                "الطلب غير موجود.";
-
-                            continue;
-                        }
-
-
-                        const data =
-                            snapshot.data();
-
-
-                        if (
-                            data.ownerUid !==
-                            currentOwnerUid
-                        ) {
-
-                            failedCount++;
-
-                            lastError =
-                                "الطلب لا يخص هذا المتجر.";
-
-                            continue;
-                        }
-
-
-                        await deleteDoc(
-                            orderRef
-                        );
-
-
-                        deletedCount++;
-
-                    }
-                    catch (error) {
-
-                        failedCount++;
-
-                        lastError =
-                            error.message ||
-                            error.code ||
-                            "خطأ غير معروف";
-
-
-                        console.error(
-                            "BULK DELETE ERROR:",
-                            error
-                        );
-
-                    }
-
-                }
-
-
-                bulkDeleteBtn.disabled =
-                    false;
-
-
-                if (
-                    failedCount > 0
-                ) {
-
-                    alert(
-                        "تم حذف " +
-                        deletedCount +
-                        " طلب.\n\n" +
-                        "تعذر حذف " +
-                        failedCount +
-                        " طلب.\n\n" +
-                        "سبب آخر خطأ:\n" +
-                        lastError
-                    );
-
-                }
-                else {
-
-                    alert(
-                        "تم حذف الطلبات المحددة بنجاح."
-                    );
-
-                }
-
-
-                selectAll.checked =
-                    false;
-
-
-                await loadOrders();
-
-            }
-        );
-
-
-        /* =====================================================
-           DELETE ONE ORDER
-        ===================================================== */
-
-        async function deleteOrder(id) {
-
-            if (
-                !confirm(
-                    "هل أنت متأكد من حذف هذه الطلبية؟\n\n" +
-                    "لا يمكن التراجع عن الحذف."
-                )
-            ) {
-
-                return;
-            }
-
-
-            try {
+            try{
 
                 const orderRef =
                     doc(
@@ -4323,18 +3692,14 @@
                     );
 
 
-                if (
-                    !snapshot.exists()
-                ) {
+                if(!snapshot.exists()){
 
-                    alert(
-                        "الطلب غير موجود في قاعدة البيانات."
-                    );
+                    failedCount++;
 
+                    lastError =
+                        "الطلب غير موجود.";
 
-                    await loadOrders();
-
-                    return;
+                    continue;
                 }
 
 
@@ -4342,16 +3707,17 @@
                     snapshot.data();
 
 
-                if (
+                if(
                     data.ownerUid !==
                     currentOwnerUid
-                ) {
+                ){
 
-                    alert(
-                        "لا يمكنك حذف هذه الطلبية لأنها لا تخص متجرك."
-                    );
+                    failedCount++;
 
-                    return;
+                    lastError =
+                        "الطلب لا يخص هذا المتجر.";
+
+                    continue;
                 }
 
 
@@ -4360,757 +3726,680 @@
                 );
 
 
-                alert(
-                    "تم حذف الطلبية بنجاح."
-                );
-
-
-                await loadOrders();
+                deletedCount++;
 
             }
-            catch (error) {
 
-                console.error(
-                    "DELETE ERROR:",
-                    error
-                );
+            catch(error){
 
+                failedCount++;
 
-                let message =
+                lastError =
                     error.message ||
                     error.code ||
                     "خطأ غير معروف";
 
-
-                if (
-                    error.code ===
-                    "permission-denied"
-                ) {
-
-                    message =
-                        "تم رفض العملية من Firestore Rules. تأكد من أن ownerUid داخل الطلب يساوي UID للحساب الحالي.";
-
-                }
-
-
-                alert(
-                    "تعذر حذف الطلبية.\n\n" +
-                    message
-                );
-
-            }
-
-        }
-
-
-        /* =====================================================
-           UPDATE STATUS
-        ===================================================== */
-
-        async function updateStatus(
-            id,
-            newStatus
-        ) {
-
-            try {
-
-                const orderRef =
-                    doc(
-                        db,
-                        "orders",
-                        id
-                    );
-
-
-                const snapshot =
-                    await getDoc(
-                        orderRef
-                    );
-
-
-                if (
-                    !snapshot.exists()
-                ) {
-
-                    alert(
-                        "الطلب غير موجود."
-                    );
-
-                    return;
-                }
-
-
-                const data =
-                    snapshot.data();
-
-
-                if (
-                    data.ownerUid !==
-                    currentOwnerUid
-                ) {
-
-                    alert(
-                        "لا يمكنك تعديل طلب لا يخص متجرك."
-                    );
-
-                    return;
-                }
-
-
-                await updateDoc(
-                    orderRef,
-                    {
-                        status:
-                            newStatus
-                    }
-                );
-
-
-                await loadOrders();
-
-            }
-            catch (error) {
-
                 console.error(
-                    "STATUS ERROR:",
+                    "BULK DELETE ERROR:",
                     error
                 );
 
-
-                let message =
-                    error.message ||
-                    error.code ||
-                    "خطأ غير معروف";
-
-
-                if (
-                    error.code ===
-                    "permission-denied"
-                ) {
-
-                    message =
-                        "تم رفض التعديل من Firestore Rules.";
-                }
-
-
-                alert(
-                    "تعذر تحديث حالة الطلب.\n\n" +
-                    message
-                );
-
             }
 
         }
 
 
-        /* =====================================================
-           SAVE NOTES
-        ===================================================== */
-
-        async function saveNotes(
-            id,
-            notes
-        ) {
-
-            try {
-
-                const orderRef =
-                    doc(
-                        db,
-                        "orders",
-                        id
-                    );
+        bulkDeleteBtn.disabled=false;
 
 
-                const snapshot =
-                    await getDoc(
-                        orderRef
-                    );
+        if(failedCount>0){
 
-
-                if (
-                    !snapshot.exists()
-                ) {
-
-                    alert(
-                        "الطلب غير موجود."
-                    );
-
-                    return;
-                }
-
-
-                const data =
-                    snapshot.data();
-
-
-                if (
-                    data.ownerUid !==
-                    currentOwnerUid
-                ) {
-
-                    alert(
-                        "لا يمكنك تعديل هذا الطلب."
-                    );
-
-                    return;
-                }
-
-
-                await updateDoc(
-                    orderRef,
-                    {
-                        notes:
-                            String(
-                                notes || ""
-                            ).trim()
-                    }
-                );
-
-
-                alert(
-                    "تم حفظ الملاحظة."
-                );
-
-            }
-            catch (error) {
-
-                console.error(
-                    "NOTES ERROR:",
-                    error
-                );
-
-
-                alert(
-                    "تعذر حفظ الملاحظة.\n\n" +
-                    (
-                        error.message ||
-                        error.code ||
-                        "خطأ غير معروف"
-                    )
-                );
-
-            }
+            alert(
+                "تم حذف " +
+                deletedCount +
+                " طلب.\n\n" +
+                "تعذر حذف " +
+                failedCount +
+                " طلب.\n\n" +
+                "سبب آخر خطأ:\n" +
+                lastError
+            );
 
         }
 
+        else{
 
-        /* =====================================================
-           PHONE MODAL
-        ===================================================== */
-
-        function openPhoneModal(
-            phone
-        ) {
-
-            if (!phone) {
-
-                alert(
-                    "رقم الهاتف غير موجود."
-                );
-
-                return;
-            }
-
-
-            let whatsappNumber =
-                phone.replace(
-                    /[^\d]/g,
-                    ""
-                );
-
-
-            /*
-             * إذا كان الرقم جزائريًا ويبدأ بـ 0
-             * نضيف كود الجزائر.
-             */
-
-            if (
-                whatsappNumber.startsWith(
-                    "0"
-                )
-            ) {
-
-                whatsappNumber =
-                    "213" +
-                    whatsappNumber.substring(
-                        1
-                    );
-
-            }
-
-
-            if (
-                whatsappNumber.startsWith(
-                    "213"
-                )
-            ) {
-
-                /* صحيح */
-
-            }
-
-
-            phoneOptions.innerHTML = `
-
-                <a
-                    class="phone-option call-option"
-                    href="tel:${escapeHtml(phone)}"
-                >
-
-                    <i class="fa-solid fa-phone"></i>
-
-                    اتصال بالزبون
-
-                </a>
-
-
-                <a
-                    class="phone-option whatsapp-option"
-                    href="https://wa.me/${escapeHtml(
-                        whatsappNumber
-                    )}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-
-                    <i class="fa-brands fa-whatsapp"></i>
-
-                    فتح WhatsApp
-
-                </a>
-
-            `;
-
-
-            phoneModal.classList.add(
-                "active"
+            alert(
+                "تم حذف الطلبات المحددة بنجاح."
             );
 
         }
 
 
-        /* =====================================================
-           PRODUCTS MODAL
-        ===================================================== */
+        selectAll.checked=false;
 
-        function openProductsModal(
-            products,
-            order = {}
-        ) {
 
-            productsModalBody.innerHTML =
-                "";
+        await loadOrders();
 
+    }
+);
 
-            if (
-                !Array.isArray(products) ||
-                !products.length
-            ) {
 
-                productsModalBody.innerHTML = `
+/* =========================
+   DELETE
+========================= */
 
-                    <div class="empty">
+async function deleteOrder(id){
 
-                        <i class="fa-solid fa-box-open"></i>
+    if(
+        !confirm(
+            "هل أنت متأكد من حذف هذه الطلبية؟\n\n" +
+            "لا يمكن التراجع عن الحذف."
+        )
+    ){
 
-                        <br>
+        return;
+    }
 
-                        لا توجد تفاصيل للمنتجات.
 
-                    </div>
+    try{
 
-                `;
-
-
-                productsModal.classList.add(
-                    "active"
-                );
-
-                return;
-            }
-
-
-            let totalItems = 0;
-
-            let totalProductsPrice = 0;
-
-
-            products.forEach(
-                product => {
-
-                    const quantity =
-                        Number(
-                            product.quantity ||
-                            1
-                        );
-
-
-                    const price =
-                        Number(
-                            product.price ||
-                            0
-                        );
-
-
-                    const total =
-                        price *
-                        quantity;
-
-
-                    totalItems +=
-                        quantity;
-
-
-                    totalProductsPrice +=
-                        total;
-
-
-                    const image =
-                        product.image ||
-                        (
-                            Array.isArray(
-                                product.images
-                            ) &&
-                            product.images.length
-                                ? product.images[0]
-                                : ""
-                        );
-
-
-                    const name =
-                        product.name ||
-                        product.title ||
-                        "منتج";
-
-
-                    const size =
-                        product.size ||
-                        product.selectedSize ||
-                        product.variantSize ||
-                        "";
-
-
-                    const color =
-                        product.color ||
-                        product.selectedColor ||
-                        product.variantColor ||
-                        "";
-
-
-                    const sku =
-                        product.sku ||
-                        product.SKU ||
-                        "";
-
-
-                    const variant =
-                        product.variant ||
-                        product.selectedVariant ||
-                        "";
-
-
-                    const div =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    div.className =
-                        "modal-product";
-
-
-                    let details = `
-
-                        الكمية:
-                        <strong>
-                            ${quantity}
-                        </strong>
-
-                        <br>
-
-                        سعر الوحدة:
-                        <strong>
-                            ${price} DA
-                        </strong>
-
-                    `;
-
-
-                    if (size) {
-
-                        details += `
-
-                            <br>
-
-                            المقاس:
-                            <strong>
-                                ${escapeHtml(size)}
-                            </strong>
-
-                        `;
-
-                    }
-
-
-                    if (color) {
-
-                        details += `
-
-                            <br>
-
-                            اللون:
-                            <strong>
-                                ${escapeHtml(color)}
-                            </strong>
-
-                        `;
-
-                    }
-
-
-                    if (sku) {
-
-                        details += `
-
-                            <br>
-
-                            SKU:
-                            <strong>
-                                ${escapeHtml(sku)}
-                            </strong>
-
-                        `;
-
-                    }
-
-
-                    if (variant) {
-
-                        details += `
-
-                            <br>
-
-                            الخيار:
-                            <strong>
-                                ${escapeHtml(variant)}
-                            </strong>
-
-                        `;
-
-                    }
-
-
-                    /*
-                     * إظهار الحقول الإضافية
-                     * الموجودة داخل المنتج.
-                     */
-
-                    const ignoredFields =
-                        new Set([
-                            "name",
-                            "title",
-                            "image",
-                            "images",
-                            "price",
-                            "quantity",
-                            "size",
-                            "selectedSize",
-                            "variantSize",
-                            "color",
-                            "selectedColor",
-                            "variantColor",
-                            "sku",
-                            "SKU",
-                            "variant",
-                            "selectedVariant"
-                        ]);
-
-
-                    Object.entries(
-                        product
-                    ).forEach(
-                        ([key, value]) => {
-
-                            if (
-                                ignoredFields.has(
-                                    key
-                                )
-                            ) {
-
-                                return;
-                            }
-
-
-                            if (
-                                value === null ||
-                                value === undefined ||
-                                value === ""
-                            ) {
-
-                                return;
-                            }
-
-
-                            if (
-                                typeof value ===
-                                "object"
-                            ) {
-
-                                return;
-                            }
-
-
-                            details += `
-
-                                <br>
-
-                                ${escapeHtml(key)}:
-
-                                <strong>
-
-                                    ${escapeHtml(value)}
-
-                                </strong>
-
-                            `;
-
-                        }
-                    );
-
-
-                    div.innerHTML = `
-
-                        <img
-                            class="modal-product-image"
-                            src="${escapeHtml(
-                                image ||
-                                "logotrans.png"
-                            )}"
-                            alt="${escapeHtml(
-                                name
-                            )}"
-                            onerror="
-                                this.onerror=null;
-                                this.src='logotrans.png';
-                            "
-                        >
-
-
-                        <div
-                            class="modal-product-info"
-                        >
-
-                            <div
-                                class="modal-product-name"
-                            >
-
-                                ${escapeHtml(
-                                    name
-                                )}
-
-                            </div>
-
-
-                            <div
-                                class="modal-product-detail"
-                            >
-
-                                ${details}
-
-                            </div>
-
-                        </div>
-
-
-                        <div
-                            class="modal-product-total"
-                        >
-
-                            ${total} DA
-
-                        </div>
-
-                    `;
-
-
-                    productsModalBody.appendChild(
-                        div
-                    );
-
-                }
+        const orderRef =
+            doc(
+                db,
+                "orders",
+                id
             );
 
 
-            /* =================================================
-               SUMMARY
-            ================================================= */
+        const snapshot =
+            await getDoc(
+                orderRef
+            );
 
-            const summary =
+
+        if(!snapshot.exists()){
+
+            alert(
+                "الطلب غير موجود في قاعدة البيانات."
+            );
+
+            await loadOrders();
+
+            return;
+        }
+
+
+        const data =
+            snapshot.data();
+
+
+        if(
+            data.ownerUid !==
+            currentOwnerUid
+        ){
+
+            alert(
+                "لا يمكنك حذف هذه الطلبية لأنها لا تخص متجرك."
+            );
+
+            return;
+        }
+
+
+        await deleteDoc(
+            orderRef
+        );
+
+
+        alert(
+            "تم حذف الطلبية بنجاح."
+        );
+
+
+        await loadOrders();
+
+    }
+
+    catch(error){
+
+        console.error(
+            "DELETE ERROR:",
+            error
+        );
+
+
+        alert(
+            "تعذر حذف الطلبية.\n\n" +
+            (
+                error.message ||
+                error.code ||
+                "خطأ غير معروف"
+            )
+        );
+
+    }
+
+}
+
+
+/* =========================
+   UPDATE STATUS
+========================= */
+
+async function updateStatus(
+    id,
+    newStatus
+){
+
+    try{
+
+        const orderRef =
+            doc(
+                db,
+                "orders",
+                id
+            );
+
+
+        const snapshot =
+            await getDoc(
+                orderRef
+            );
+
+
+        if(!snapshot.exists()){
+
+            alert(
+                "الطلب غير موجود."
+            );
+
+            return;
+        }
+
+
+        const data =
+            snapshot.data();
+
+
+        if(
+            data.ownerUid !==
+            currentOwnerUid
+        ){
+
+            alert(
+                "لا يمكنك تعديل طلب لا يخص متجرك."
+            );
+
+            return;
+        }
+
+
+        await updateDoc(
+            orderRef,
+            {
+                status:newStatus
+            }
+        );
+
+
+        await loadOrders();
+
+    }
+
+    catch(error){
+
+        console.error(
+            "STATUS ERROR:",
+            error
+        );
+
+
+        alert(
+            "تعذر تحديث حالة الطلب.\n\n" +
+            (
+                error.message ||
+                error.code ||
+                "خطأ غير معروف"
+            )
+        );
+
+    }
+
+}
+
+
+/* =========================
+   SAVE NOTES
+========================= */
+
+async function saveNotes(
+    id,
+    notes
+){
+
+    try{
+
+        const orderRef =
+            doc(
+                db,
+                "orders",
+                id
+            );
+
+
+        const snapshot =
+            await getDoc(
+                orderRef
+            );
+
+
+        if(!snapshot.exists()){
+
+            alert(
+                "الطلب غير موجود."
+            );
+
+            return;
+        }
+
+
+        const data =
+            snapshot.data();
+
+
+        if(
+            data.ownerUid !==
+            currentOwnerUid
+        ){
+
+            alert(
+                "لا يمكنك تعديل هذا الطلب."
+            );
+
+            return;
+        }
+
+
+        await updateDoc(
+            orderRef,
+            {
+                notes:
+                    String(
+                        notes || ""
+                    ).trim()
+            }
+        );
+
+
+        alert(
+            "تم حفظ الملاحظة."
+        );
+
+    }
+
+    catch(error){
+
+        console.error(
+            "NOTES ERROR:",
+            error
+        );
+
+
+        alert(
+            "تعذر حفظ الملاحظة.\n\n" +
+            (
+                error.message ||
+                error.code ||
+                "خطأ غير معروف"
+            )
+        );
+
+    }
+
+}
+
+
+/* =========================
+   PHONE
+========================= */
+
+function openPhoneModal(phone){
+
+    if(!phone){
+
+        alert(
+            "رقم الهاتف غير موجود."
+        );
+
+        return;
+    }
+
+
+    const whatsappNumber =
+        phone.replace("+","");
+
+
+    phoneOptions.innerHTML = `
+
+        <a
+            class="phone-option call-option"
+            href="tel:${escapeHtml(phone)}"
+        >
+
+            <i class="fa-solid fa-phone"></i>
+
+            اتصال بالزبون
+
+        </a>
+
+
+        <a
+            class="phone-option whatsapp-option"
+            href="https://wa.me/${escapeHtml(whatsappNumber)}"
+            target="_blank"
+            rel="noopener"
+        >
+
+            <i class="fa-brands fa-whatsapp"></i>
+
+            فتح WhatsApp
+
+        </a>
+
+    `;
+
+
+    phoneModal.classList.add(
+        "active"
+    );
+
+}
+
+
+/* =========================
+   PRODUCTS MODAL
+========================= */
+
+function openProductsModal(products){
+
+    productsModalBody.innerHTML="";
+
+
+    if(!products.length){
+
+        productsModalBody.innerHTML = `
+
+            <div class="empty">
+
+                <i class="fa-solid fa-box-open"></i>
+
+                <br>
+
+                لا توجد تفاصيل للمنتجات.
+
+            </div>
+
+        `;
+
+
+        productsModal.classList.add(
+            "active"
+        );
+
+        return;
+    }
+
+
+    let totalQuantity=0;
+
+    let totalProductsPrice=0;
+
+
+    products.forEach(
+        product=>{
+
+            const quantity =
+                Number(
+                    product.quantity || 1
+                );
+
+
+            const price =
+                Number(
+                    product.price || 0
+                );
+
+
+            totalQuantity +=
+                quantity;
+
+
+            totalProductsPrice +=
+                price*quantity;
+
+        }
+    );
+
+
+    const summary =
+        document.createElement("div");
+
+
+    summary.className =
+        "product-summary";
+
+
+    summary.innerHTML = `
+
+        <div class="summary-box">
+
+            <div class="summary-label">
+                عدد المنتجات
+            </div>
+
+            <div class="summary-value">
+                ${products.length}
+            </div>
+
+        </div>
+
+
+        <div class="summary-box">
+
+            <div class="summary-label">
+                مجموع القطع
+            </div>
+
+            <div class="summary-value">
+                ${totalQuantity}
+            </div>
+
+        </div>
+
+
+        <div class="summary-box">
+
+            <div class="summary-label">
+                مجموع المنتجات
+            </div>
+
+            <div class="summary-value">
+                ${totalProductsPrice} DA
+            </div>
+
+        </div>
+
+    `;
+
+
+    productsModalBody.appendChild(
+        summary
+    );
+
+
+    products.forEach(
+        (product,index)=>{
+
+            const quantity =
+                Number(
+                    product.quantity || 1
+                );
+
+
+            const price =
+                Number(
+                    product.price || 0
+                );
+
+
+            const total =
+                price*quantity;
+
+
+            const image =
+                product.image ||
+                (
+                    Array.isArray(
+                        product.images
+                    ) &&
+                    product.images.length
+                        ? product.images[0]
+                        : ""
+                );
+
+
+            const div =
                 document.createElement(
                     "div"
                 );
 
 
-            summary.className =
-                "products-summary";
+            div.className =
+                "modal-product";
 
 
-            const orderTotal =
-                Number(
-                    order.total || 0
+            /*
+             * عرض البيانات الإضافية
+             * الموجودة فعليًا داخل كائن المنتج.
+             */
+
+            const extraFields=[];
+
+
+            const ignoredFields = [
+                "name",
+                "image",
+                "images",
+                "price",
+                "quantity"
+            ];
+
+
+            Object.entries(product)
+                .forEach(
+                    ([key,value])=>{
+
+                        if(
+                            ignoredFields.includes(key) ||
+                            value === null ||
+                            value === undefined ||
+                            value === ""
+                        ){
+
+                            return;
+                        }
+
+
+                        if(
+                            typeof value === "object"
+                        ){
+
+                            return;
+                        }
+
+
+                        extraFields.push(`
+                            <div class="product-info-item">
+                                ${escapeHtml(key)}:
+                                <strong>
+                                    ${escapeHtml(value)}
+                                </strong>
+                            </div>
+                        `);
+
+                    }
                 );
 
 
-            summary.innerHTML = `
+            div.innerHTML = `
 
-                <div class="summary-item">
+                <img
+                    class="modal-product-image"
+                    src="${escapeHtml(image)}"
+                    alt="${escapeHtml(
+                        product.name ||
+                        "منتج"
+                    )}"
+                    onerror="this.src='logotrans.png';"
+                >
 
-                    <div class="summary-label">
 
-                        إجمالي القطع
+                <div class="modal-product-info">
+
+                    <div class="modal-product-name">
+
+                        ${escapeHtml(
+                            product.name ||
+                            "منتج " +
+                            (index+1)
+                        )}
 
                     </div>
 
-                    <div class="summary-value">
 
-                        ${totalItems}
+                    <div class="modal-product-detail">
+
+                        <div class="product-info-grid">
+
+                            <div class="product-info-item">
+
+                                الكمية:
+
+                                <strong>
+                                    ${quantity}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="product-info-item">
+
+                                سعر الوحدة:
+
+                                <strong>
+                                    ${price} DA
+                                </strong>
+
+                            </div>
+
+
+                            ${extraFields.join("")}
+
+                        </div>
 
                     </div>
 
                 </div>
 
 
-                <div class="summary-item">
+                <div class="modal-product-total">
 
-                    <div class="summary-label">
+                    إجمالي المنتج
 
-                        عدد المنتجات
+                    <br>
 
-                    </div>
-
-                    <div class="summary-value">
-
-                        ${products.length}
-
-                    </div>
-
-                </div>
-
-
-                <div class="summary-item">
-
-                    <div class="summary-label">
-
-                        مجموع المنتجات
-
-                    </div>
-
-                    <div class="summary-value">
-
-                        ${totalProductsPrice} DA
-
-                    </div>
+                    ${total} DA
 
                 </div>
 
@@ -5118,364 +4407,182 @@
 
 
             productsModalBody.appendChild(
-                summary
+                div
             );
 
-
-            /*
-             * إذا كان إجمالي الطلب مختلفًا
-             * عن مجموع المنتجات، نظهره.
-             */
-
-            if (
-                orderTotal &&
-                orderTotal !==
-                    totalProductsPrice
-            ) {
-
-                const totalBox =
-                    document.createElement(
-                        "div"
-                    );
+        }
+    );
 
 
-                totalBox.style.marginTop =
-                    "12px";
+    productsModal.classList.add(
+        "active"
+    );
+
+}
 
 
-                totalBox.style.padding =
-                    "14px";
+/* =========================
+   CLOSE MODALS
+========================= */
+
+document
+.getElementById("closeProductsModal")
+.addEventListener(
+    "click",
+    ()=>{
+        productsModal.classList.remove(
+            "active"
+        );
+    }
+);
 
 
-                totalBox.style.borderRadius =
-                    "12px";
+document
+.getElementById("closePhoneModal")
+.addEventListener(
+    "click",
+    ()=>{
+        phoneModal.classList.remove(
+            "active"
+        );
+    }
+);
 
 
-                totalBox.style.background =
-                    "#FFF1E6";
+productsModal.addEventListener(
+    "click",
+    event=>{
 
+        if(
+            event.target ===
+            productsModal
+        ){
 
-                totalBox.style.color =
-                    "#DF6810";
-
-
-                totalBox.style.textAlign =
-                    "center";
-
-
-                totalBox.style.fontWeight =
-                    "800";
-
-
-                totalBox.innerHTML = `
-
-                    إجمالي الطلب المسجل:
-
-                    ${orderTotal} DA
-
-                `;
-
-
-                productsModalBody.appendChild(
-                    totalBox
-                );
-
-            }
-
-
-            productsModal.classList.add(
+            productsModal.classList.remove(
                 "active"
             );
 
         }
 
+    }
+);
 
-        /* =====================================================
-           CLOSE PRODUCTS MODAL
-        ===================================================== */
 
-        document
-            .getElementById(
-                "closeProductsModal"
+phoneModal.addEventListener(
+    "click",
+    event=>{
+
+        if(
+            event.target ===
+            phoneModal
+        ){
+
+            phoneModal.classList.remove(
+                "active"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+document
+.getElementById("logoutBtn")
+.addEventListener(
+    "click",
+    async event=>{
+
+        event.preventDefault();
+
+
+        if(
+            !confirm(
+                "هل تريد تسجيل الخروج؟"
             )
-            .addEventListener(
-                "click",
-                () => {
+        ){
 
-                    productsModal.classList.remove(
-                        "active"
-                    );
+            return;
+        }
 
-                }
+
+        try{
+
+            await signOut(auth);
+
+
+            localStorage.removeItem(
+                "storeId"
             );
 
 
-        /* =====================================================
-           CLOSE PHONE MODAL
-        ===================================================== */
-
-        document
-            .getElementById(
-                "closePhoneModal"
-            )
-            .addEventListener(
-                "click",
-                () => {
-
-                    phoneModal.classList.remove(
-                        "active"
-                    );
-
-                }
+            localStorage.removeItem(
+                "storeDocumentId"
             );
 
 
-        /* =====================================================
-           CLOSE MODALS BY BACKDROP
-        ===================================================== */
-
-        productsModal.addEventListener(
-            "click",
-            event => {
-
-                if (
-                    event.target ===
-                    productsModal
-                ) {
-
-                    productsModal.classList.remove(
-                        "active"
-                    );
-
-                }
-
-            }
-        );
-
-
-        phoneModal.addEventListener(
-            "click",
-            event => {
-
-                if (
-                    event.target ===
-                    phoneModal
-                ) {
-
-                    phoneModal.classList.remove(
-                        "active"
-                    );
-
-                }
-
-            }
-        );
-
-
-        /* =====================================================
-           ESC KEY
-        ===================================================== */
-
-        document.addEventListener(
-            "keydown",
-            event => {
-
-                if (
-                    event.key ===
-                    "Escape"
-                ) {
-
-                    productsModal.classList.remove(
-                        "active"
-                    );
-
-
-                    phoneModal.classList.remove(
-                        "active"
-                    );
-
-                }
-
-            }
-        );
-
-
-        /* =====================================================
-           LOGOUT
-           
-           الخروج الحقيقي فقط عند الضغط على زر
-           تسجيل الخروج.
-        ===================================================== */
-
-        document
-            .getElementById(
-                "logoutBtn"
-            )
-            .addEventListener(
-                "click",
-                async event => {
-
-                    event.preventDefault();
-
-
-                    if (
-                        !confirm(
-                            "هل تريد تسجيل الخروج؟"
-                        )
-                    ) {
-
-                        return;
-                    }
-
-
-                    try {
-
-                        await signOut(
-                            auth
-                        );
-
-
-                        localStorage.removeItem(
-                            "storeId"
-                        );
-
-
-                        localStorage.removeItem(
-                            "storeDocumentId"
-                        );
-
-
-                        localStorage.removeItem(
-                            "storeOwnerUid"
-                        );
-
-
-                        localStorage.removeItem(
-                            "storeName"
-                        );
-
-
-                        window.location.href =
-                            "login.html";
-
-                    }
-                    catch (error) {
-
-                        console.error(
-                            "LOGOUT ERROR:",
-                            error
-                        );
-
-
-                        alert(
-                            "تعذر تسجيل الخروج."
-                        );
-
-                    }
-
-                }
+            localStorage.removeItem(
+                "storeOwnerUid"
             );
 
 
-        /* =====================================================
-           AUTH STATE
-
-           مهم جدًا:
-           
-           لا يوجد redirect مباشر إلى login.html
-           عندما تكون user = null.
-           
-           لأن Firebase قد يحتاج لحظات لاسترجاع
-           جلسة المستخدم من المتصفح.
-        ===================================================== */
-
-        onAuthStateChanged(
-            auth,
-            async user => {
-
-                console.log(
-                    "Firebase Auth user:",
-                    user
-                );
+            localStorage.removeItem(
+                "storeName"
+            );
 
 
-                if (!user) {
+            window.location.href =
+                "login.html";
 
-                    console.warn(
-                        "لا توجد جلسة Firebase نشطة حاليًا."
-                    );
+        }
 
+        catch(error){
 
-                    /*
-                     * لا نسجل الخروج.
-                     * لا نمسح localStorage.
-                     * لا نعيد التوجيه مباشرة.
-                     *
-                     * هذا يمنع مشكلة الضغط على
-                     * orders.html ثم الرجوع إلى login.html.
-                     */
+            alert(
+                "تعذر تسجيل الخروج."
+            );
 
-                    return;
-                }
+        }
+
+    }
+);
 
 
-                currentOwnerUid =
-                    user.uid;
+/* =========================
+   AUTH
+========================= */
+
+onAuthStateChanged(
+    auth,
+    async user=>{
+
+        if(!user){
+
+            window.location.href =
+                "login.html";
+
+            return;
+        }
 
 
-                currentOwnerEmail =
-                    user.email || "";
+        currentOwnerUid =
+            user.uid;
 
 
-                try {
-
-                    await loadStore();
-
-                }
-                catch (error) {
-
-                    console.error(
-                        "AUTH / STORE LOADING ERROR:",
-                        error
-                    );
+        currentOwnerEmail =
+            user.email || "";
 
 
-                    ordersBody.innerHTML = `
+        await loadStore();
 
-                        <tr>
+    }
+);
 
-                            <td colspan="13">
-
-                                <div class="empty">
-
-                                    <i class="fa-solid fa-circle-exclamation"></i>
-
-                                    <br>
-
-                                    حدث خطأ أثناء تحميل بيانات المتجر.
-
-                                    <br><br>
-
-                                    ${escapeHtml(
-                                        error.message ||
-                                        error.code ||
-                                        "خطأ غير معروف"
-                                    )}
-
-                                </div>
-
-                            </td>
-
-                        </tr>
-
-                    `;
-
-                }
-
-            }
-        );
-
-    </script>
+</script>
 
 </body>
 
