@@ -17,7 +17,6 @@
 
     <title>G-Glam | الطلبات</title>
 
-
     <link
         rel="preconnect"
         href="https://fonts.googleapis.com"
@@ -732,7 +731,7 @@
 
             overflow-x: auto;
 
-            border: 2px solid #CFCFCF;
+            border: 1px solid #CFCFCF;
 
             border-radius: 14px;
         }
@@ -829,53 +828,27 @@
         }
 
 
-        /* تناوب ألوان الصفوف */
-
-        .orders-table tbody tr:nth-child(odd) {
-
-            background: #FFFFFF;
-        }
-
-
-        .orders-table tbody tr:nth-child(even) {
-
-            background: #F8F9FA;
-        }
-
-
-        body.dark-mode .orders-table tbody tr:nth-child(odd) {
-
-            background: #0D1B2A;
-        }
-
-
-        body.dark-mode .orders-table tbody tr:nth-child(even) {
-
-            background: #101F30;
-        }
-
-
         .orders-table tbody tr:hover {
 
-            background: #FFF8F2;
+            background: #FAFAFA;
         }
 
 
         body.dark-mode .orders-table tbody tr:hover {
 
-            background: #172D42;
+            background: #13283B;
         }
 
 
         .orders-table tbody tr.selected {
 
-            background: #FFF0E4 !important;
+            background: #FFF5ED;
         }
 
 
         body.dark-mode .orders-table tbody tr.selected {
 
-            background: #2A211B !important;
+            background: #2A211B;
         }
 
 
@@ -1311,6 +1284,8 @@
         }
 
 
+        /* PRODUCT DETAILS */
+
         .modal-product {
 
             display: flex;
@@ -1325,19 +1300,35 @@
         }
 
 
+        .modal-product:last-child {
+
+            border-bottom: none;
+        }
+
+
         .modal-product-image {
 
-            width: 70px;
+            width: 78px;
 
-            height: 70px;
+            height: 78px;
 
-            border-radius: 12px;
+            min-width: 78px;
+
+            border-radius: 14px;
 
             object-fit: cover;
 
             background: #F1F1F1;
 
-            flex-shrink: 0;
+            border: 1px solid #E5E5E5;
+        }
+
+
+        body.dark-mode .modal-product-image {
+
+            background: #17283A;
+
+            border-color: var(--dark-border);
         }
 
 
@@ -1351,7 +1342,7 @@
 
         .modal-product-name {
 
-            margin-bottom: 5px;
+            margin-bottom: 7px;
 
             color: #222;
 
@@ -1373,7 +1364,33 @@
 
             font-size: 12px;
 
-            line-height: 1.8;
+            line-height: 2;
+        }
+
+
+        .modal-product-detail span {
+
+            color: #777;
+        }
+
+
+        body.dark-mode .modal-product-detail span {
+
+            color: #AAB7C7;
+        }
+
+
+        .modal-product-detail strong {
+
+            color: #333;
+
+            font-weight: 800;
+        }
+
+
+        body.dark-mode .modal-product-detail strong {
+
+            color: #F4F7FB;
         }
 
 
@@ -1381,11 +1398,13 @@
 
             color: var(--orange);
 
-            font-size: 14px;
+            font-size: 15px;
 
             font-weight: 800;
 
             white-space: nowrap;
+
+            text-align: left;
         }
 
 
@@ -1548,6 +1567,31 @@
 
                 grid-template-columns: 1fr;
             }
+
+
+            .modal-product {
+
+                align-items: flex-start;
+
+                gap: 10px;
+            }
+
+
+            .modal-product-image {
+
+                width: 65px;
+
+                height: 65px;
+
+                min-width: 65px;
+            }
+
+
+            .modal-product-total {
+
+                font-size: 13px;
+            }
+
         }
 
 
@@ -1572,6 +1616,47 @@
 
                 font-size: 23px;
             }
+
+
+            .modal {
+
+                max-height: 92vh;
+
+                border-radius: 15px;
+            }
+
+
+            .modal-body {
+
+                padding: 15px;
+            }
+
+
+            .modal-product {
+
+                flex-wrap: wrap;
+
+            }
+
+
+            .modal-product-info {
+
+                min-width: calc(100% - 80px);
+
+            }
+
+
+            .modal-product-total {
+
+                width: 100%;
+
+                text-align: right;
+
+                padding-right: 78px;
+
+                margin-top: -5px;
+            }
+
         }
 
     </style>
@@ -1953,6 +2038,8 @@
     </main>
 
 
+    <!-- PRODUCTS MODAL -->
+
     <div
         id="productsModal"
         class="modal-overlay"
@@ -1993,6 +2080,8 @@
 
     </div>
 
+
+    <!-- PHONE MODAL -->
 
     <div
         id="phoneModal"
@@ -2179,6 +2268,10 @@
         let currentStore = null;
 
 
+        /* =========================
+           THEME
+        ========================= */
+
         function applyTheme() {
 
             const darkMode =
@@ -2229,6 +2322,10 @@
 
         applyTheme();
 
+
+        /* =========================
+           HELPERS
+        ========================= */
 
         function escapeHtml(value) {
 
@@ -2339,18 +2436,9 @@
         }
 
 
-        /*
-         * =====================================================
-         * تحميل المتجر
-         *
-         * currentOwnerUid = UID المستخدم
-         *
-         * currentStoreId = ID وثيقة المتجر في Firestore
-         *
-         * رابط عرض المتجر يستخدم currentStoreId
-         * وليس currentOwnerUid.
-         * =====================================================
-         */
+        /* =========================
+           LOAD STORE
+        ========================= */
 
         async function loadStore() {
 
@@ -2377,12 +2465,6 @@
 
             let storeSnapshot = null;
 
-
-            /*
-             * 1
-             * إذا كان storeDocumentId محفوظًا سابقًا
-             * نجربه أولًا.
-             */
 
             const savedStoreDocumentId =
                 localStorage.getItem(
@@ -2445,11 +2527,6 @@
             }
 
 
-            /*
-             * 2
-             * نجرب أن يكون UID هو ID وثيقة المتجر.
-             */
-
             if (!storeSnapshot) {
 
                 try {
@@ -2488,11 +2565,6 @@
 
             }
 
-
-            /*
-             * 3
-             * البحث بواسطة ownerUid.
-             */
 
             if (!storeSnapshot) {
 
@@ -2538,11 +2610,6 @@
 
             }
 
-
-            /*
-             * 4
-             * البحث بواسطة البريد إذا كان موجودًا.
-             */
 
             if (
                 !storeSnapshot &&
@@ -2744,6 +2811,10 @@
 
         }
 
+
+        /* =========================
+           LOAD ORDERS
+        ========================= */
 
         async function loadOrders() {
 
@@ -2981,6 +3052,10 @@
 
         }
 
+
+        /* =========================
+           RENDER ORDER
+        ========================= */
 
         function renderOrder(
             id,
@@ -3377,6 +3452,10 @@
         }
 
 
+        /* =========================
+           BULK ACTIONS
+        ========================= */
+
         function updateBulkButtons() {
 
             const checks =
@@ -3602,6 +3681,10 @@
         );
 
 
+        /* =========================
+           DELETE ORDER
+        ========================= */
+
         async function deleteOrder(id) {
 
             if (
@@ -3710,6 +3793,10 @@
         }
 
 
+        /* =========================
+           UPDATE STATUS
+        ========================= */
+
         async function updateStatus(
             id,
             newStatus
@@ -3793,6 +3880,10 @@
 
         }
 
+
+        /* =========================
+           SAVE NOTES
+        ========================= */
 
         async function saveNotes(
             id,
@@ -3882,6 +3973,10 @@
         }
 
 
+        /* =========================
+           PHONE MODAL
+        ========================= */
+
         function openPhoneModal(phone) {
 
             if (!phone) {
@@ -3935,24 +4030,23 @@
         }
 
 
-        /*
-         * =====================================================
-         * تفاصيل المنتجات
-         *
-         * مهم:
-         *
-         * يتم عرض بيانات المنتج المفيدة فقط.
-         *
-         * لا يتم عرض:
-         *
-         * id
-         * storeId
-         * ownerUid
-         *
-         * هذه البيانات تبقى موجودة في Firestore
-         * ولا يتم حذفها أو تعديلها.
-         * =====================================================
-         */
+        /* =========================
+           PRODUCTS MODAL
+           
+           المعروض فقط:
+           صورة المنتج
+           اسم المنتج
+           اللون
+           القياس
+           الكمية
+           السعر
+           إجمالي المنتج
+
+           لا يتم عرض:
+           id
+           storeId
+           ownerUid
+        ========================= */
 
         function openProductsModal(products) {
 
@@ -4004,6 +4098,11 @@
                         price * quantity;
 
 
+                    /*
+                     * الصورة:
+                     * يدعم image و images
+                     */
+
                     const image =
                         product.image ||
                         (
@@ -4016,6 +4115,33 @@
                         );
 
 
+                    /*
+                     * اللون:
+                     * دعم عدة أسماء محتملة للحقل
+                     */
+
+                    const color =
+                        product.color ||
+                        product.colour ||
+                        product.selectedColor ||
+                        product.productColor ||
+                        product.variantColor ||
+                        "غير محدد";
+
+
+                    /*
+                     * القياس:
+                     * دعم عدة أسماء محتملة للحقل
+                     */
+
+                    const size =
+                        product.size ||
+                        product.selectedSize ||
+                        product.productSize ||
+                        product.variantSize ||
+                        "غير محدد";
+
+
                     const div =
                         document.createElement(
                             "div"
@@ -4024,18 +4150,6 @@
 
                     div.className =
                         "modal-product";
-
-
-                    /*
-                     * لا نعرض أيًا من:
-                     *
-                     * id
-                     * storeId
-                     * ownerUid
-                     *
-                     * ولا نعرض أي حقول تقنية
-                     * داخل معلومات المنتج.
-                     */
 
 
                     div.innerHTML = `
@@ -4065,15 +4179,45 @@
 
                             <div class="modal-product-detail">
 
-                                الكمية:
+                                <span>
+                                    اللون:
+                                </span>
+
+                                <strong>
+                                    ${escapeHtml(color)}
+                                </strong>
+
+
+                                <br>
+
+
+                                <span>
+                                    القياس:
+                                </span>
+
+                                <strong>
+                                    ${escapeHtml(size)}
+                                </strong>
+
+
+                                <br>
+
+
+                                <span>
+                                    الكمية:
+                                </span>
 
                                 <strong>
                                     ${quantity}
                                 </strong>
 
+
                                 <br>
 
-                                السعر:
+
+                                <span>
+                                    السعر:
+                                </span>
 
                                 <strong>
                                     ${price} DA
@@ -4108,8 +4252,14 @@
         }
 
 
+        /* =========================
+           CLOSE PRODUCTS MODAL
+        ========================= */
+
         document
-            .getElementById("closeProductsModal")
+            .getElementById(
+                "closeProductsModal"
+            )
             .addEventListener(
                 "click",
                 () => {
@@ -4122,8 +4272,14 @@
             );
 
 
+        /* =========================
+           CLOSE PHONE MODAL
+        ========================= */
+
         document
-            .getElementById("closePhoneModal")
+            .getElementById(
+                "closePhoneModal"
+            )
             .addEventListener(
                 "click",
                 () => {
@@ -4135,6 +4291,10 @@
                 }
             );
 
+
+        /* =========================
+           CLOSE MODALS ON OVERLAY
+        ========================= */
 
         productsModal.addEventListener(
             "click",
@@ -4173,6 +4333,10 @@
             }
         );
 
+
+        /* =========================
+           LOGOUT
+        ========================= */
 
         document
             .getElementById("logoutBtn")
@@ -4233,6 +4397,10 @@
                 }
             );
 
+
+        /* =========================
+           AUTH STATE
+        ========================= */
 
         onAuthStateChanged(
             auth,
