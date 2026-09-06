@@ -45,10 +45,14 @@
 
 <style>
 
+/* =====================================================
+   ROOT
+===================================================== */
+
 :root {
 
     --orange: #F47B20;
-    --orange-dark: #D9660D;
+    --orange-dark: #DF6810;
     --orange-light: #FFF1E6;
 
     --bg: #F5F6F8;
@@ -64,15 +68,31 @@
     --green: #198754;
     --red: #D92D20;
 
+    --dark-bg: #07111F;
+    --dark-sidebar: #0A1726;
+    --dark-card: #0D1B2A;
+    --dark-text: #F4F7FB;
+    --dark-muted: #AAB7C7;
+    --dark-border: #1D334A;
+
     --shadow:
         0 8px 30px rgba(0, 0, 0, .06);
 }
+
+
+/* =====================================================
+   RESET
+===================================================== */
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: "Tajawal", Arial, sans-serif;
+
+    font-family:
+        "Tajawal",
+        Arial,
+        sans-serif;
 }
 
 html {
@@ -81,8 +101,14 @@ html {
 
 body {
     min-height: 100vh;
+
     background: var(--bg);
+
     color: var(--text);
+
+    transition:
+        background .25s ease,
+        color .25s ease;
 }
 
 button,
@@ -92,48 +118,65 @@ select {
     font-family: inherit;
 }
 
-/* =========================
+
+/* =====================================================
    SIDEBAR
-========================= */
+===================================================== */
 
 .sidebar {
+
     position: fixed;
+
     top: 0;
     right: 0;
 
-    width: 76px;
+    width: 75px;
     height: 100vh;
 
     background: var(--sidebar);
-    border-left: 1px solid var(--border);
+
+    border-left:
+        1px solid var(--border);
 
     overflow: hidden;
 
     z-index: 1000;
 
-    transition: .3s;
+    transition:
+        width .3s ease,
+        background .25s ease,
+        border-color .25s ease;
 
     box-shadow:
         -4px 0 20px rgba(0, 0, 0, .04);
 }
 
 .sidebar:hover {
-    width: 235px;
+    width: 240px;
 }
 
+
+/* =====================================================
+   LOGO
+===================================================== */
+
 .logo {
+
     height: 78px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
-    border-bottom: 1px solid var(--border);
+    border-bottom:
+        1px solid var(--border);
 
     padding: 10px;
 }
 
 .logo img {
+
     width: 48px;
     height: 48px;
 
@@ -143,23 +186,34 @@ select {
 }
 
 .sidebar:hover .logo img {
+
     width: 130px;
     height: 56px;
 }
 
+
+/* =====================================================
+   MENU
+===================================================== */
+
 .menu {
-    padding: 18px 10px;
+
+    padding:
+        18px 10px;
 }
 
 .menu a {
+
     height: 52px;
 
     display: flex;
+
     align-items: center;
 
     gap: 15px;
 
-    padding: 0 10px;
+    padding:
+        0 10px;
 
     margin-bottom: 7px;
 
@@ -171,29 +225,39 @@ select {
 
     white-space: nowrap;
 
-    transition: .2s;
+    transition:
+        background .2s,
+        color .2s;
 }
 
 .menu a:hover {
+
     background: #F1F1F1;
+
     color: #222;
 }
 
 .menu a.active {
-    background: var(--orange);
+
+    background:
+        var(--orange);
+
     color: white;
 
     box-shadow:
-        0 6px 18px rgba(244, 123, 32, .22);
+        0 6px 18px
+        rgba(244, 123, 32, .22);
 }
 
 .icon {
+
     width: 35px;
     min-width: 35px;
 
     height: 35px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -201,49 +265,72 @@ select {
 }
 
 .text {
+
     opacity: 0;
 
     font-size: 14px;
+
     font-weight: 700;
 
-    transition: .25s;
+    transition:
+        opacity .25s;
 }
 
 .sidebar:hover .text {
     opacity: 1;
 }
 
-/* =========================
-   TOP BAR
-========================= */
+
+/* =====================================================
+   TOPBAR
+===================================================== */
 
 .topbar {
+
     position: fixed;
 
     top: 0;
-    right: 76px;
+
+    right: 75px;
+
     left: 0;
 
     height: 78px;
 
-    background: white;
+    background:
+        var(--card);
 
-    border-bottom: 1px solid var(--border);
+    border-bottom:
+        1px solid var(--border);
 
     display: flex;
+
     align-items: center;
     justify-content: space-between;
 
-    padding: 0 25px;
+    padding:
+        0 25px;
 
     z-index: 900;
 
     box-shadow:
-        0 2px 15px rgba(0, 0, 0, .04);
+        0 2px 15px
+        rgba(0, 0, 0, .04);
+
+    transition:
+        background .25s,
+        border-color .25s;
 }
 
+
+/* =====================================================
+   STORE TOP
+===================================================== */
+
 .store-top {
+
     display: flex;
+
     align-items: center;
 
     gap: 12px;
@@ -252,6 +339,7 @@ select {
 }
 
 .store-image {
+
     width: 48px;
     height: 48px;
 
@@ -259,39 +347,55 @@ select {
 
     object-fit: cover;
 
-    border: 2px solid #FFE0CA;
+    border:
+        2px solid #FFE0CA;
 
-    background: #F3F3F3;
+    background:
+        #F3F3F3;
 }
 
 .store-details {
+
     display: flex;
+
     flex-direction: column;
 
     min-width: 0;
 }
 
 .store-label {
+
     color: #999;
+
     font-size: 11px;
 }
 
 .store-top-name {
+
     max-width: 260px;
 
-    color: #222;
+    color: var(--text);
 
     font-size: 16px;
+
     font-weight: 800;
 
     white-space: nowrap;
 
     overflow: hidden;
+
     text-overflow: ellipsis;
 }
 
+
+/* =====================================================
+   TOP ACTIONS
+===================================================== */
+
 .top-actions {
+
     display: flex;
+
     align-items: center;
 
     gap: 9px;
@@ -299,11 +403,13 @@ select {
 
 .theme-btn,
 .view-store-btn {
+
     height: 44px;
 
     border-radius: 12px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -311,43 +417,61 @@ select {
 }
 
 .theme-btn {
+
     width: 44px;
 
-    border: 1px solid #1C4770;
+    border:
+        1px solid #1C4770;
 
-    background: #0B2542;
+    background:
+        #0B2542;
+
     color: white;
 
     font-size: 18px;
 }
 
 .view-store-btn {
+
     gap: 7px;
 
-    padding: 0 15px;
+    padding:
+        0 15px;
 
-    background: var(--orange-light);
-    color: var(--orange-dark);
+    background:
+        var(--orange-light);
 
-    border: 1px solid #FFE0CA;
+    color:
+        var(--orange-dark);
+
+    border:
+        1px solid #FFE0CA;
 
     text-decoration: none;
 
     font-size: 13px;
+
     font-weight: 700;
+
+    transition: .2s;
 }
 
 .view-store-btn:hover {
-    background: var(--orange);
+
+    background:
+        var(--orange);
+
     color: white;
 }
 
-/* =========================
+
+/* =====================================================
    CONTENT
-========================= */
+===================================================== */
 
 .content {
-    margin-right: 76px;
+
+    margin-right: 75px;
 
     padding:
         103px
@@ -355,25 +479,39 @@ select {
         30px;
 }
 
+
+/* =====================================================
+   PAGE HEADER
+===================================================== */
+
 .page-header {
+
     margin-bottom: 22px;
 
-    background: white;
+    background:
+        var(--card);
 
-    border: 1px solid var(--border);
+    border:
+        1px solid var(--border);
 
     border-radius: 20px;
 
     padding: 25px;
 
-    box-shadow: var(--shadow);
+    box-shadow:
+        var(--shadow);
 
     position: relative;
 
     overflow: hidden;
+
+    transition:
+        background .25s,
+        border-color .25s;
 }
 
 .page-header::before {
+
     content: "";
 
     position: absolute;
@@ -384,36 +522,46 @@ select {
     width: 5px;
     height: 100%;
 
-    background: var(--orange);
+    background:
+        var(--orange);
 }
 
 .page-header h1 {
+
     display: flex;
+
     align-items: center;
 
     gap: 10px;
 
     font-size: 27px;
+
     font-weight: 800;
 
     margin-bottom: 7px;
 }
 
 .page-header h1 i {
-    color: var(--orange);
+
+    color:
+        var(--orange);
 }
 
 .page-header p {
-    color: var(--muted);
+
+    color:
+        var(--muted);
 
     font-size: 14px;
 }
 
-/* =========================
-   MAIN GRID
-========================= */
+
+/* =====================================================
+   PRODUCT LAYOUT
+===================================================== */
 
 .product-layout {
+
     display: grid;
 
     grid-template-columns:
@@ -425,71 +573,104 @@ select {
     align-items: start;
 }
 
-/* =========================
-   PREVIEW
-========================= */
+
+/* =====================================================
+   PRODUCT PREVIEW
+===================================================== */
 
 .product-preview {
+
     position: sticky;
+
     top: 100px;
 
     min-height: 700px;
 
-    background: white;
+    background:
+        var(--card);
 
-    border: 1px solid var(--border);
+    border:
+        1px solid var(--border);
 
     border-radius: 22px;
 
     padding: 24px;
 
-    box-shadow: var(--shadow);
+    box-shadow:
+        var(--shadow);
+
+    transition:
+        background .25s,
+        border-color .25s;
 }
 
 .preview-title {
+
     display: flex;
+
     align-items: center;
 
     gap: 9px;
 
     padding-bottom: 17px;
 
-    border-bottom: 1px solid var(--border);
+    border-bottom:
+        1px solid var(--border);
 
     font-size: 17px;
+
     font-weight: 800;
 }
 
 .preview-title i {
-    color: var(--orange);
+
+    color:
+        var(--orange);
 }
 
+
+/* =====================================================
+   PRODUCT CARD
+===================================================== */
+
 .product-card {
+
     margin-top: 22px;
 
-    border: 1px solid #ECECEC;
+    border:
+        1px solid var(--border);
 
     border-radius: 20px;
 
     overflow: hidden;
 
-    background: white;
+    background:
+        var(--card);
 }
 
+
+/* =====================================================
+   MAIN PREVIEW IMAGE
+===================================================== */
+
 .preview-main-image {
+
     width: 100%;
     height: 300px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
-    background: #FAFAFA;
+    background:
+        var(--input);
 
     overflow: hidden;
 }
 
 .preview-main-image img {
+
     width: 100%;
     height: 100%;
 
@@ -499,24 +680,34 @@ select {
 }
 
 .preview-empty {
+
     text-align: center;
 
-    color: #AAA;
+    color:
+        #AAA;
 
     font-size: 13px;
 }
 
 .preview-empty i {
+
     display: block;
 
     margin-bottom: 10px;
 
-    color: #DDD;
+    color:
+        #DDD;
 
     font-size: 45px;
 }
 
+
+/* =====================================================
+   PREVIEW IMAGES
+===================================================== */
+
 .preview-images {
+
     display: flex;
 
     gap: 8px;
@@ -525,44 +716,60 @@ select {
 
     padding: 12px;
 
-    border-bottom: 1px solid var(--border);
+    border-bottom:
+        1px solid var(--border);
 }
 
 .preview-thumb {
+
     width: 62px;
     height: 62px;
 
-    flex: 0 0 62px;
+    flex:
+        0 0 62px;
 
     border-radius: 9px;
 
     overflow: hidden;
 
-    border: 1px solid var(--border);
+    border:
+        1px solid var(--border);
 
-    background: #F5F5F5;
+    background:
+        var(--input);
 }
 
 .preview-thumb img {
+
     width: 100%;
     height: 100%;
 
     object-fit: cover;
 }
 
+
+/* =====================================================
+   PREVIEW INFO
+===================================================== */
+
 .preview-info {
+
     padding: 20px;
 }
 
 .preview-product-name {
+
     font-size: 23px;
+
     font-weight: 800;
 
     margin-bottom: 8px;
 }
 
 .preview-short-description {
-    color: #777;
+
+    color:
+        var(--muted);
 
     font-size: 13px;
 
@@ -574,19 +781,23 @@ select {
 }
 
 .preview-price-old {
+
     display: none;
 
     color: #999;
 
     font-size: 14px;
 
-    text-decoration: line-through;
+    text-decoration:
+        line-through;
 
     margin-bottom: 3px;
 }
 
 .preview-price {
-    color: var(--orange);
+
+    color:
+        var(--orange);
 
     font-size: 23px;
 
@@ -594,17 +805,21 @@ select {
 }
 
 .preview-description-title {
+
     margin-top: 20px;
 
     padding-top: 17px;
 
-    border-top: 1px solid var(--border);
+    border-top:
+        1px solid var(--border);
 
     font-size: 14px;
+
     font-weight: 800;
 }
 
 .preview-description {
+
     margin-top: 10px;
 
     font-size: 14px;
@@ -613,29 +828,39 @@ select {
 
     min-height: 35px;
 
-    overflow-wrap: anywhere;
+    overflow-wrap:
+        anywhere;
 }
 
 .preview-description:empty::before {
-    content: "سيظهر الوصف المنسق هنا...";
-    color: #AAA;
+
+    content:
+        "سيظهر الوصف المنسق هنا...";
+
+    color:
+        #AAA;
 }
 
 .preview-descriptive-title {
+
     margin-top: 18px;
 
     padding-top: 15px;
 
-    border-top: 1px solid var(--border);
+    border-top:
+        1px solid var(--border);
 
     font-size: 13px;
+
     font-weight: 800;
 
     display: none;
 }
 
 .preview-descriptive-images {
+
     display: flex;
+
     flex-wrap: wrap;
 
     gap: 8px;
@@ -644,6 +869,7 @@ select {
 }
 
 .preview-descriptive-images img {
+
     width: 80px;
     height: 80px;
 
@@ -651,13 +877,16 @@ select {
 
     border-radius: 9px;
 
-    border: 1px solid var(--border);
+    border:
+        1px solid var(--border);
 
     display: none;
 }
 
 .preview-options {
+
     display: flex;
+
     flex-wrap: wrap;
 
     gap: 7px;
@@ -667,57 +896,86 @@ select {
 
 .preview-color,
 .preview-size {
-    padding: 6px 10px;
+
+    padding:
+        6px 10px;
 
     border-radius: 8px;
 
     font-size: 11px;
 
-    background: #F7F7F7;
+    background:
+        var(--input);
 
-    border: 1px solid #E5E5E5;
+    border:
+        1px solid var(--border);
 }
 
-/* =========================
-   FORM
-========================= */
+
+/* =====================================================
+   FORM PANEL
+===================================================== */
 
 .form-panel {
-    background: white;
 
-    border: 1px solid var(--border);
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
 
     border-radius: 22px;
 
     padding: 25px;
 
-    box-shadow: var(--shadow);
+    box-shadow:
+        var(--shadow);
+
+    transition:
+        background .25s,
+        border-color .25s;
 }
 
+
+/* =====================================================
+   LOADING
+===================================================== */
+
 .loading {
+
     text-align: center;
 
     padding: 70px 20px;
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
     font-size: 15px;
 }
 
 .loading i {
+
     display: block;
 
-    color: var(--orange);
+    color:
+        var(--orange);
 
     font-size: 28px;
 
     margin-bottom: 12px;
 }
 
+
+/* =====================================================
+   MESSAGES
+===================================================== */
+
 .message {
+
     display: none;
 
-    padding: 13px 15px;
+    padding:
+        13px 15px;
 
     border-radius: 11px;
 
@@ -729,38 +987,57 @@ select {
 }
 
 .success {
-    color: var(--green);
 
-    background: #EAF7EF;
+    color:
+        var(--green);
 
-    border: 1px solid #C9E8D5;
+    background:
+        #EAF7EF;
+
+    border:
+        1px solid #C9E8D5;
 }
 
 .error {
-    color: var(--red);
 
-    background: #FDECEC;
+    color:
+        var(--red);
 
-    border: 1px solid #F0CACA;
+    background:
+        #FDECEC;
+
+    border:
+        1px solid #F0CACA;
 }
 
+
+/* =====================================================
+   FORM SECTION
+===================================================== */
+
 .form-section {
+
     margin-bottom: 25px;
 
     padding-bottom: 24px;
 
-    border-bottom: 1px solid var(--border);
+    border-bottom:
+        1px solid var(--border);
 }
 
 .form-section:last-child {
+
     border-bottom: none;
 
     margin-bottom: 0;
+
     padding-bottom: 0;
 }
 
 .section-heading {
+
     display: flex;
+
     align-items: center;
 
     gap: 9px;
@@ -768,135 +1045,192 @@ select {
     margin-bottom: 16px;
 
     font-size: 16px;
+
     font-weight: 800;
 }
 
 .section-heading i {
-    color: var(--orange);
+
+    color:
+        var(--orange);
 }
 
+
+/* =====================================================
+   FORM GROUP
+===================================================== */
+
 .form-group {
+
     margin-bottom: 17px;
 }
 
 .form-group:last-child {
+
     margin-bottom: 0;
 }
 
 label {
+
     display: block;
 
     margin-bottom: 8px;
 
-    color: #333;
+    color:
+        var(--text);
 
     font-size: 13px;
+
     font-weight: 700;
 }
 
 .required {
-    color: var(--orange);
+
+    color:
+        var(--orange);
 }
+
+
+/* =====================================================
+   INPUTS
+===================================================== */
 
 input,
 textarea,
 select {
+
     width: 100%;
 
-    padding: 13px 14px;
+    padding:
+        13px 14px;
 
-    border: 1px solid var(--border);
+    border:
+        1px solid var(--border);
 
     border-radius: 11px;
 
     outline: none;
 
-    background: var(--input);
+    background:
+        var(--input);
 
-    color: #222;
+    color:
+        var(--text);
 
     font-size: 14px;
 
-    transition: .2s;
+    transition:
+        .2s;
+}
+
+input::placeholder,
+textarea::placeholder {
+
+    color:
+        #999;
 }
 
 input:focus,
 textarea:focus,
 select:focus {
-    border-color: var(--orange);
 
-    background: white;
+    border-color:
+        var(--orange);
+
+    background:
+        var(--card);
 
     box-shadow:
-        0 0 0 3px rgba(244, 123, 32, .10);
+        0 0 0 3px
+        rgba(244, 123, 32, .10);
 }
 
 textarea {
+
     resize: vertical;
 }
 
-/* =========================
+
+/* =====================================================
    PRICE
-========================= */
+===================================================== */
 
 .price-grid {
+
     display: grid;
 
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns:
+        1fr 1fr;
 
     gap: 12px;
 }
 
 .price-label {
+
     display: flex;
+
     align-items: center;
 
     gap: 6px;
 }
 
 .old-price-label {
-    color: #888;
+
+    color:
+        var(--muted);
 }
 
 .new-price-label {
-    color: var(--orange);
+
+    color:
+        var(--orange);
 }
 
-/* =========================
+
+/* =====================================================
    SHORT DESCRIPTION
-========================= */
+===================================================== */
 
 .short-help {
+
     margin-top: 6px;
 
-    color: #999;
+    color:
+        #999;
 
     font-size: 11px;
 }
 
-/* =========================
+
+/* =====================================================
    AI BUTTON
-========================= */
+===================================================== */
 
 .ai-button {
+
     width: 100%;
 
     min-height: 64px;
 
     display: flex;
+
     align-items: center;
 
     gap: 13px;
 
-    padding: 10px 15px;
+    padding:
+        10px 15px;
 
-    border: 1px solid #E5E5E5;
+    border:
+        1px solid var(--border);
 
     border-radius: 14px;
 
-    background: #FAFAFA;
+    background:
+        var(--input);
 
-    color: #222;
+    color:
+        var(--text);
 
     cursor: pointer;
 
@@ -906,14 +1240,19 @@ textarea {
 }
 
 .ai-button:hover {
-    border-color: var(--orange);
 
-    background: #FFF8F2;
+    border-color:
+        var(--orange);
 
-    transform: translateY(-1px);
+    background:
+        var(--orange-light);
+
+    transform:
+        translateY(-1px);
 }
 
 .ai-button img {
+
     width: 38px;
     height: 38px;
 
@@ -923,6 +1262,7 @@ textarea {
 }
 
 .ai-button strong {
+
     display: block;
 
     font-size: 14px;
@@ -931,54 +1271,70 @@ textarea {
 }
 
 .ai-button span {
-    color: #888;
+
+    color:
+        var(--muted);
 
     font-size: 11px;
 }
 
-/* =========================
+
+/* =====================================================
    RICH EDITOR
-========================= */
+===================================================== */
 
 .editor-wrapper {
-    border: 1px solid var(--border);
+
+    border:
+        1px solid var(--border);
 
     border-radius: 13px;
 
     overflow: hidden;
 
-    background: white;
+    background:
+        var(--card);
 }
 
 .editor-toolbar {
+
     display: flex;
+
     flex-wrap: wrap;
+
     align-items: center;
 
     gap: 5px;
 
     padding: 8px;
 
-    background: #F8F8F8;
+    background:
+        var(--input);
 
-    border-bottom: 1px solid var(--border);
+    border-bottom:
+        1px solid var(--border);
 }
 
 .editor-toolbar button,
 .editor-toolbar select {
+
     width: auto;
 
     height: 34px;
 
-    padding: 0 9px;
+    padding:
+        0 9px;
 
-    border: 1px solid #DDD;
+    border:
+        1px solid var(--border);
 
     border-radius: 7px;
 
-    background: white;
+    background:
+        var(--card);
 
-    color: #333;
+    color:
+        var(--text);
 
     cursor: pointer;
 
@@ -987,17 +1343,24 @@ textarea {
 
 .editor-toolbar button:hover,
 .editor-toolbar select:hover {
-    border-color: var(--orange);
+
+    border-color:
+        var(--orange);
 }
 
 .editor-toolbar button.active {
-    background: var(--orange);
+
+    background:
+        var(--orange);
+
     color: white;
 
-    border-color: var(--orange);
+    border-color:
+        var(--orange);
 }
 
 .color-wrapper input {
+
     width: 35px;
     height: 34px;
 
@@ -1005,15 +1368,19 @@ textarea {
 }
 
 .editor-divider {
+
     width: 1px;
     height: 24px;
 
-    background: #DDD;
+    background:
+        var(--border);
 
-    margin: 0 2px;
+    margin:
+        0 2px;
 }
 
 .description-editor {
+
     min-height: 170px;
 
     padding: 15px;
@@ -1021,24 +1388,35 @@ textarea {
     outline: none;
 
     direction: rtl;
+
     text-align: right;
 
     font-size: 14px;
 
     line-height: 2;
+
+    color:
+        var(--text);
 }
 
 .description-editor:empty::before {
-    content: "اكتب وصف المنتج بالتفصيل...";
-    color: #AAA;
+
+    content:
+        "اكتب وصف المنتج بالتفصيل...";
+
+    color:
+        #AAA;
 }
 
-/* =========================
+
+/* =====================================================
    IMAGE UPLOAD
-========================= */
+===================================================== */
 
 .image-upload-box {
+
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -1050,11 +1428,13 @@ textarea {
 
     padding: 20px;
 
-    border: 2px dashed #DADADA;
+    border:
+        2px dashed var(--border);
 
     border-radius: 15px;
 
-    background: #FAFAFA;
+    background:
+        var(--input);
 
     cursor: pointer;
 
@@ -1062,33 +1442,52 @@ textarea {
 }
 
 .image-upload-box:hover {
-    border-color: var(--orange);
 
-    background: #FFF9F5;
+    border-color:
+        var(--orange);
+
+    background:
+        var(--orange-light);
 }
 
 .image-upload-box i {
-    color: var(--orange);
+
+    color:
+        var(--orange);
 
     font-size: 31px;
 }
 
 .image-upload-box strong {
+
     font-size: 14px;
+
+    color:
+        var(--text);
 }
 
 .image-upload-box span {
-    color: #999;
+
+    color:
+        var(--muted);
 
     font-size: 11px;
 }
 
 .image-upload-box input {
+
     display: none;
 }
 
+
+/* =====================================================
+   IMAGE LIST
+===================================================== */
+
 .image-list {
+
     display: flex;
+
     flex-wrap: wrap;
 
     gap: 9px;
@@ -1097,6 +1496,7 @@ textarea {
 }
 
 .image-item {
+
     position: relative;
 
     width: 78px;
@@ -1106,10 +1506,15 @@ textarea {
 
     overflow: hidden;
 
-    border: 1px solid var(--border);
+    border:
+        1px solid var(--border);
+
+    background:
+        var(--input);
 }
 
 .image-item img {
+
     width: 100%;
     height: 100%;
 
@@ -1117,6 +1522,7 @@ textarea {
 }
 
 .image-remove {
+
     position: absolute;
 
     top: 4px;
@@ -1129,7 +1535,8 @@ textarea {
 
     border-radius: 50%;
 
-    background: #D92D20;
+    background:
+        #D92D20;
 
     color: white;
 
@@ -1137,6 +1544,7 @@ textarea {
 }
 
 .image-number {
+
     position: absolute;
 
     bottom: 4px;
@@ -1144,11 +1552,13 @@ textarea {
 
     min-width: 22px;
 
-    padding: 2px 5px;
+    padding:
+        2px 5px;
 
     border-radius: 10px;
 
-    background: rgba(0, 0, 0, .65);
+    background:
+        rgba(0, 0, 0, .65);
 
     color: white;
 
@@ -1157,8 +1567,15 @@ textarea {
     text-align: center;
 }
 
+
+/* =====================================================
+   VISIBILITY
+===================================================== */
+
 .visibility-row {
+
     display: flex;
+
     align-items: center;
 
     gap: 9px;
@@ -1169,24 +1586,31 @@ textarea {
 }
 
 .visibility-row input {
+
     width: 18px;
     height: 18px;
 
-    accent-color: var(--orange);
+    accent-color:
+        var(--orange);
 }
 
 .visibility-row span {
-    color: #666;
+
+    color:
+        var(--muted);
 
     font-size: 12px;
 }
 
-/* =========================
+
+/* =====================================================
    OPTIONS
-========================= */
+===================================================== */
 
 .option-header {
+
     display: flex;
+
     align-items: center;
     justify-content: space-between;
 
@@ -1196,68 +1620,90 @@ textarea {
 }
 
 .option-header label {
+
     margin: 0;
 }
 
 .add-option {
+
     display: inline-flex;
+
     align-items: center;
 
     gap: 5px;
 
-    padding: 7px 11px;
+    padding:
+        7px 11px;
 
-    border: 1px solid #FFD9BE;
+    border:
+        1px solid #FFD9BE;
 
     border-radius: 9px;
 
-    background: var(--orange-light);
+    background:
+        var(--orange-light);
 
-    color: var(--orange-dark);
+    color:
+        var(--orange-dark);
 
     cursor: pointer;
 
     font-size: 12px;
+
     font-weight: 700;
+
+    transition: .2s;
 }
 
 .add-option:hover {
-    background: var(--orange);
+
+    background:
+        var(--orange);
 
     color: white;
 }
 
 .options-list {
+
     display: flex;
+
     flex-wrap: wrap;
 
     gap: 8px;
 }
 
 .option-item {
+
     display: flex;
+
     align-items: center;
 
     gap: 7px;
 
     padding: 7px;
 
-    border: 1px solid var(--border);
+    border:
+        1px solid var(--border);
 
     border-radius: 10px;
 
-    background: #FAFAFA;
+    background:
+        var(--input);
 }
 
 .option-item input {
+
     width: 135px;
 
-    padding: 8px 9px;
+    padding:
+        8px 9px;
 
-    background: white;
+    background:
+        var(--card);
 }
 
 .delete-option {
+
     width: 28px;
     height: 28px;
 
@@ -1265,18 +1711,22 @@ textarea {
 
     border-radius: 50%;
 
-    background: #FDECEC;
+    background:
+        #FDECEC;
 
-    color: #C62828;
+    color:
+        #C62828;
 
     cursor: pointer;
 }
 
-/* =========================
+
+/* =====================================================
    SUBMIT
-========================= */
+===================================================== */
 
 .submit-btn {
+
     width: 100%;
 
     padding: 15px;
@@ -1285,46 +1735,373 @@ textarea {
 
     border-radius: 13px;
 
-    background: var(--orange);
+    background:
+        var(--orange);
 
     color: white;
 
     font-size: 16px;
+
     font-weight: 800;
 
     cursor: pointer;
 
     box-shadow:
-        0 7px 20px rgba(244, 123, 32, .20);
+        0 7px 20px
+        rgba(244, 123, 32, .20);
 
     transition: .2s;
 }
 
 .submit-btn:hover {
-    background: var(--orange-dark);
 
-    transform: translateY(-1px);
+    background:
+        var(--orange-dark);
+
+    transform:
+        translateY(-1px);
 }
 
 .submit-btn:disabled {
+
     opacity: .6;
 
-    cursor: not-allowed;
+    cursor:
+        not-allowed;
 
     transform: none;
 }
 
-/* =========================
+
+/* =====================================================
+   DARK MODE
+   نفس نظام orders.html
+===================================================== */
+
+body.dark-mode {
+
+    --bg:
+        var(--dark-bg);
+
+    --sidebar:
+        var(--dark-sidebar);
+
+    --card:
+        var(--dark-card);
+
+    --text:
+        var(--dark-text);
+
+    --muted:
+        var(--dark-muted);
+
+    --border:
+        var(--dark-border);
+
+    --input:
+        #0A1828;
+
+    background:
+        var(--dark-bg);
+
+    color:
+        var(--dark-text);
+}
+
+
+/* DARK SIDEBAR */
+
+body.dark-mode .sidebar {
+
+    background:
+        var(--dark-sidebar);
+
+    border-color:
+        var(--dark-border);
+
+    box-shadow:
+        -4px 0 20px
+        rgba(0, 0, 0, .20);
+}
+
+body.dark-mode .menu a {
+
+    color:
+        #B7C4D3;
+}
+
+body.dark-mode .menu a:hover {
+
+    background:
+        #102238;
+
+    color:
+        #FFFFFF;
+}
+
+body.dark-mode .menu a.active {
+
+    background:
+        var(--orange);
+
+    color:
+        white;
+}
+
+
+/* DARK TOPBAR */
+
+body.dark-mode .topbar {
+
+    background:
+        var(--dark-sidebar);
+
+    border-color:
+        var(--dark-border);
+
+    box-shadow:
+        0 2px 15px
+        rgba(0, 0, 0, .20);
+}
+
+body.dark-mode .store-label {
+
+    color:
+        #7F90A3;
+}
+
+body.dark-mode .store-top-name {
+
+    color:
+        var(--dark-text);
+}
+
+body.dark-mode .store-image {
+
+    border-color:
+        #27405A;
+
+    background:
+        #101F31;
+}
+
+
+/* DARK CARDS */
+
+body.dark-mode .page-header,
+body.dark-mode .form-panel,
+body.dark-mode .product-preview,
+body.dark-mode .product-card {
+
+    background:
+        var(--dark-card);
+
+    border-color:
+        var(--dark-border);
+}
+
+
+/* DARK INPUTS */
+
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+
+    background:
+        #0A1828;
+
+    color:
+        var(--dark-text);
+
+    border-color:
+        var(--dark-border);
+}
+
+body.dark-mode input:focus,
+body.dark-mode textarea:focus,
+body.dark-mode select:focus {
+
+    background:
+        #0D1D30;
+
+    border-color:
+        var(--orange);
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+
+    color:
+        #718197;
+}
+
+
+/* DARK EDITOR */
+
+body.dark-mode .editor-wrapper {
+
+    background:
+        var(--dark-card);
+
+    border-color:
+        var(--dark-border);
+}
+
+body.dark-mode .editor-toolbar {
+
+    background:
+        #0A1726;
+
+    border-color:
+        var(--dark-border);
+}
+
+body.dark-mode .editor-toolbar button,
+body.dark-mode .editor-toolbar select {
+
+    background:
+        #0D1B2A;
+
+    color:
+        var(--dark-text);
+
+    border-color:
+        var(--dark-border);
+}
+
+body.dark-mode .description-editor {
+
+    color:
+        var(--dark-text);
+}
+
+
+/* DARK AI */
+
+body.dark-mode .ai-button {
+
+    background:
+        #0A1828;
+
+    border-color:
+        var(--dark-border);
+
+    color:
+        var(--dark-text);
+}
+
+body.dark-mode .ai-button:hover {
+
+    background:
+        #182537;
+
+    border-color:
+        var(--orange);
+}
+
+
+/* DARK IMAGE UPLOAD */
+
+body.dark-mode .image-upload-box {
+
+    background:
+        #0A1828;
+
+    border-color:
+        #28445E;
+}
+
+body.dark-mode .image-upload-box:hover {
+
+    background:
+        #182537;
+
+    border-color:
+        var(--orange);
+}
+
+
+/* DARK OPTION */
+
+body.dark-mode .option-item {
+
+    background:
+        #0A1828;
+
+    border-color:
+        var(--dark-border);
+}
+
+body.dark-mode .option-item input {
+
+    background:
+        #0D1B2A;
+}
+
+
+/* DARK PREVIEW */
+
+body.dark-mode .preview-main-image {
+
+    background:
+        #0A1828;
+}
+
+body.dark-mode .preview-empty {
+
+    color:
+        #708197;
+}
+
+body.dark-mode .preview-empty i {
+
+    color:
+        #30445A;
+}
+
+body.dark-mode .preview-color,
+body.dark-mode .preview-size {
+
+    background:
+        #102238;
+
+    border-color:
+        var(--dark-border);
+
+    color:
+        var(--dark-text);
+}
+
+
+/* DARK DESCRIPTION */
+
+body.dark-mode .preview-description {
+
+    color:
+        var(--dark-text);
+}
+
+body.dark-mode .preview-short-description {
+
+    color:
+        var(--dark-muted);
+}
+
+
+/* =====================================================
    RESPONSIVE
-========================= */
+===================================================== */
 
 @media (max-width: 1050px) {
 
     .product-layout {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+            1fr;
     }
 
     .product-preview {
+
         position: relative;
 
         top: auto;
@@ -1333,26 +2110,32 @@ textarea {
     }
 
     .form-panel {
+
         order: 1;
     }
 
 }
 
-@media (max-width: 800px) {
+
+@media (max-width: 1000px) {
 
     .sidebar {
+
         width: 65px;
     }
 
     .sidebar:hover {
+
         width: 210px;
     }
 
     .topbar {
+
         right: 65px;
     }
 
     .content {
+
         margin-right: 65px;
 
         padding:
@@ -1363,17 +2146,21 @@ textarea {
 
 }
 
-@media (max-width: 600px) {
+
+@media (max-width: 700px) {
 
     .topbar {
+
         height: 68px;
 
         right: 60px;
 
-        padding: 0 10px;
+        padding:
+            0 10px;
     }
 
     .content {
+
         margin-right: 60px;
 
         padding:
@@ -1383,21 +2170,25 @@ textarea {
     }
 
     .store-image {
+
         width: 40px;
         height: 40px;
     }
 
     .store-top-name {
+
         max-width: 120px;
 
         font-size: 13px;
     }
 
     .store-label {
+
         display: none;
     }
 
     .view-store-btn {
+
         width: 40px;
         height: 40px;
 
@@ -1407,72 +2198,130 @@ textarea {
     }
 
     .view-store-btn i {
+
         font-size: 17px;
     }
 
     .theme-btn {
+
         width: 40px;
         height: 40px;
     }
 
     .page-header {
+
         padding: 20px;
     }
 
     .page-header h1 {
+
         font-size: 22px;
     }
 
     .form-panel,
     .product-preview {
+
         padding: 17px;
     }
 
     .price-grid {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+            1fr;
     }
 
     .preview-main-image {
+
         height: 240px;
     }
 
 }
 
-@media (max-width: 400px) {
 
-    .content {
-        margin-right: 58px;
-    }
+@media (max-width: 450px) {
 
     .sidebar {
-        width: 58px;
+
+        width: 60px;
     }
 
     .topbar {
-        right: 58px;
+
+        right: 60px;
+    }
+
+    .content {
+
+        margin-right: 60px;
     }
 
     .option-item {
+
         width: 100%;
     }
 
     .option-item input {
+
         flex: 1;
 
         width: auto;
     }
 
+    .page-header h1 {
+
+        font-size: 20px;
+    }
+
+    .page-header p {
+
+        font-size: 12px;
+    }
+
+}
+
+
+/* =====================================================
+   SCROLLBAR
+===================================================== */
+
+::-webkit-scrollbar {
+
+    width: 7px;
+    height: 7px;
+}
+
+::-webkit-scrollbar-track {
+
+    background:
+        transparent;
+}
+
+::-webkit-scrollbar-thumb {
+
+    background:
+        #C8CDD4;
+
+    border-radius:
+        10px;
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb {
+
+    background:
+        #29425B;
 }
 
 </style>
 
 </head>
 
+
 <body>
 
-<!-- =========================
+
+<!-- =====================================================
      SIDEBAR
-========================= -->
+===================================================== -->
 
 <aside class="sidebar">
 
@@ -1484,6 +2333,7 @@ textarea {
         >
 
     </div>
+
 
     <nav class="menu">
 
@@ -1499,6 +2349,7 @@ textarea {
 
         </a>
 
+
         <a href="orders.html">
 
             <span class="icon">
@@ -1511,6 +2362,7 @@ textarea {
 
         </a>
 
+
         <a href="products.html">
 
             <span class="icon">
@@ -1522,6 +2374,7 @@ textarea {
             </span>
 
         </a>
+
 
         <a
             href="add-product.html"
@@ -1538,6 +2391,7 @@ textarea {
 
         </a>
 
+
         <a href="delivery.html">
 
             <span class="icon">
@@ -1550,6 +2404,7 @@ textarea {
 
         </a>
 
+
         <a href="settings.html">
 
             <span class="icon">
@@ -1561,6 +2416,7 @@ textarea {
             </span>
 
         </a>
+
 
         <a
             href="#"
@@ -1581,9 +2437,11 @@ textarea {
 
 </aside>
 
-<!-- =========================
-     TOP BAR
-========================= -->
+
+
+<!-- =====================================================
+     TOPBAR
+===================================================== -->
 
 <header class="topbar">
 
@@ -1595,6 +2453,7 @@ textarea {
             src="logotrans.png"
             alt="المتجر"
         >
+
 
         <div class="store-details">
 
@@ -1613,6 +2472,7 @@ textarea {
 
     </div>
 
+
     <div class="top-actions">
 
         <button
@@ -1625,6 +2485,7 @@ textarea {
             <i class="fa-solid fa-moon"></i>
 
         </button>
+
 
         <a
             href="#"
@@ -1644,11 +2505,14 @@ textarea {
 
 </header>
 
-<!-- =========================
+
+
+<!-- =====================================================
      CONTENT
-========================= -->
+===================================================== -->
 
 <main class="content">
+
 
     <section class="page-header">
 
@@ -1666,11 +2530,14 @@ textarea {
 
     </section>
 
+
+
     <div class="product-layout">
 
-        <!-- =========================
+
+        <!-- =================================================
              PREVIEW
-        ========================= -->
+        ================================================= -->
 
         <section class="product-preview">
 
@@ -1682,7 +2549,9 @@ textarea {
 
             </div>
 
+
             <div class="product-card">
+
 
                 <div class="preview-main-image">
 
@@ -1690,6 +2559,7 @@ textarea {
                         id="previewMainImage"
                         alt="صورة المنتج"
                     >
+
 
                     <div
                         id="previewEmpty"
@@ -1704,12 +2574,15 @@ textarea {
 
                 </div>
 
+
                 <div
                     id="previewImages"
                     class="preview-images"
                 ></div>
 
+
                 <div class="preview-info">
+
 
                     <div
                         id="previewProductName"
@@ -1718,6 +2591,7 @@ textarea {
                         اسم المنتج
                     </div>
 
+
                     <div
                         id="previewShortDescription"
                         class="preview-short-description"
@@ -1725,10 +2599,12 @@ textarea {
                         الوصف المختصر للمنتج سيظهر هنا.
                     </div>
 
+
                     <div
                         id="previewOldPrice"
                         class="preview-price-old"
                     ></div>
+
 
                     <div
                         id="previewPrice"
@@ -1737,26 +2613,35 @@ textarea {
                         0 DA
                     </div>
 
+
                     <div class="preview-description-title">
+
                         وصف المنتج
+
                     </div>
+
 
                     <div
                         id="previewDescription"
                         class="preview-description"
                     ></div>
 
+
                     <div
                         id="previewDescriptiveTitle"
                         class="preview-descriptive-title"
                     >
+
                         صور وصفية للمنتج
+
                     </div>
+
 
                     <div
                         id="previewDescriptiveImages"
                         class="preview-descriptive-images"
                     ></div>
+
 
                     <div
                         id="previewOptions"
@@ -1769,11 +2654,14 @@ textarea {
 
         </section>
 
-        <!-- =========================
+
+
+        <!-- =================================================
              FORM
-        ========================= -->
+        ================================================= -->
 
         <section class="form-panel">
+
 
             <div
                 id="loadingMessage"
@@ -1786,10 +2674,14 @@ textarea {
 
             </div>
 
+
             <div
                 id="formContainer"
                 style="display:none;"
             >
+
+
+                <!-- SUCCESS -->
 
                 <div
                     id="success"
@@ -1802,6 +2694,9 @@ textarea {
 
                 </div>
 
+
+                <!-- ERROR -->
+
                 <div
                     id="error"
                     class="message error"
@@ -1813,7 +2708,11 @@ textarea {
 
                 </div>
 
-                <!-- PRODUCT BASIC -->
+
+
+                <!-- =================================================
+                     PRODUCT BASIC
+                ================================================= -->
 
                 <div class="form-section">
 
@@ -1825,6 +2724,7 @@ textarea {
 
                     </div>
 
+
                     <div class="form-group">
 
                         <label>
@@ -1835,6 +2735,7 @@ textarea {
 
                         </label>
 
+
                         <input
                             id="name"
                             type="text"
@@ -1843,11 +2744,13 @@ textarea {
 
                     </div>
 
+
                     <div class="form-group">
 
                         <label>
                             وصف مختصر
                         </label>
+
 
                         <textarea
                             id="shortDescription"
@@ -1855,11 +2758,15 @@ textarea {
                             placeholder="اكتب وصفًا قصيرًا وجذابًا يظهر أسفل اسم المنتج..."
                         ></textarea>
 
+
                         <div class="short-help">
+
                             اجعل الوصف المختصر واضحًا ومشجعًا للزبون.
+
                         </div>
 
                     </div>
+
 
                     <button
                         type="button"
@@ -1871,6 +2778,7 @@ textarea {
                             src="gemini.png"
                             alt="Gemini"
                         >
+
 
                         <div>
 
@@ -1888,7 +2796,11 @@ textarea {
 
                 </div>
 
-                <!-- PRICES -->
+
+
+                <!-- =================================================
+                     PRICES
+                ================================================= -->
 
                 <div class="form-section">
 
@@ -1900,13 +2812,18 @@ textarea {
 
                     </div>
 
+
                     <div class="price-grid">
+
 
                         <div class="form-group">
 
                             <label class="price-label old-price-label">
+
                                 السعر القديم
+
                             </label>
+
 
                             <input
                                 id="oldPrice"
@@ -1917,14 +2834,17 @@ textarea {
 
                         </div>
 
+
                         <div class="form-group">
 
                             <label class="price-label new-price-label">
 
                                 السعر الجديد
+
                                 <span class="required">*</span>
 
                             </label>
+
 
                             <input
                                 id="price"
@@ -1935,11 +2855,16 @@ textarea {
 
                         </div>
 
+
                     </div>
 
                 </div>
 
-                <!-- DESCRIPTION -->
+
+
+                <!-- =================================================
+                     DESCRIPTION
+                ================================================= -->
 
                 <div class="form-section">
 
@@ -1951,43 +2876,59 @@ textarea {
 
                     </div>
 
+
                     <div class="editor-wrapper">
 
+
                         <div class="editor-toolbar">
+
 
                             <button
                                 type="button"
                                 data-command="bold"
                                 title="غامق"
                             >
+
                                 <i class="fa-solid fa-bold"></i>
+
                             </button>
+
 
                             <button
                                 type="button"
                                 data-command="italic"
                                 title="مائل"
                             >
+
                                 <i class="fa-solid fa-italic"></i>
+
                             </button>
+
 
                             <button
                                 type="button"
                                 data-command="underline"
                                 title="تسطير"
                             >
+
                                 <i class="fa-solid fa-underline"></i>
+
                             </button>
+
 
                             <button
                                 type="button"
                                 data-command="strikeThrough"
                                 title="خط الإلغاء"
                             >
+
                                 <i class="fa-solid fa-strikethrough"></i>
+
                             </button>
 
+
                             <div class="editor-divider"></div>
+
 
                             <select
                                 id="fontSizeSelect"
@@ -2020,6 +2961,7 @@ textarea {
 
                             </select>
 
+
                             <div class="color-wrapper">
 
                                 <input
@@ -2031,59 +2973,81 @@ textarea {
 
                             </div>
 
+
                             <div class="editor-divider"></div>
+
 
                             <button
                                 type="button"
                                 data-command="justifyRight"
                                 title="يمين"
                             >
+
                                 <i class="fa-solid fa-align-right"></i>
+
                             </button>
+
 
                             <button
                                 type="button"
                                 data-command="justifyCenter"
                                 title="وسط"
                             >
+
                                 <i class="fa-solid fa-align-center"></i>
+
                             </button>
+
 
                             <button
                                 type="button"
                                 data-command="justifyLeft"
                                 title="يسار"
                             >
+
                                 <i class="fa-solid fa-align-left"></i>
+
                             </button>
 
+
                             <div class="editor-divider"></div>
+
 
                             <button
                                 type="button"
                                 data-command="insertUnorderedList"
                                 title="قائمة نقطية"
                             >
+
                                 <i class="fa-solid fa-list-ul"></i>
+
                             </button>
+
 
                             <button
                                 type="button"
                                 data-command="insertOrderedList"
                                 title="قائمة رقمية"
                             >
+
                                 <i class="fa-solid fa-list-ol"></i>
+
                             </button>
+
 
                             <button
                                 type="button"
                                 id="removeFormatBtn"
                                 title="حذف التنسيق"
                             >
+
                                 <i class="fa-solid fa-eraser"></i>
+
                             </button>
 
+
                         </div>
+
 
                         <div
                             id="description"
@@ -2091,11 +3055,16 @@ textarea {
                             contenteditable="true"
                         ></div>
 
+
                     </div>
 
                 </div>
 
-                <!-- ORIGINAL IMAGES -->
+
+
+                <!-- =================================================
+                     ORIGINAL IMAGES
+                ================================================= -->
 
                 <div class="form-section">
 
@@ -2107,6 +3076,7 @@ textarea {
 
                     </div>
 
+
                     <label
                         for="imageFile"
                         class="image-upload-box"
@@ -2114,13 +3084,16 @@ textarea {
 
                         <i class="fa-solid fa-cloud-arrow-up"></i>
 
+
                         <strong>
                             اختر صور المنتج
                         </strong>
 
+
                         <span>
                             يمكنك اختيار أكثر من صورة
                         </span>
+
 
                         <input
                             id="imageFile"
@@ -2131,6 +3104,7 @@ textarea {
 
                     </label>
 
+
                     <div
                         id="originalImageList"
                         class="image-list"
@@ -2138,7 +3112,11 @@ textarea {
 
                 </div>
 
-                <!-- DESCRIPTIVE IMAGES -->
+
+
+                <!-- =================================================
+                     DESCRIPTIVE IMAGES
+                ================================================= -->
 
                 <div class="form-section">
 
@@ -2150,6 +3128,7 @@ textarea {
 
                     </div>
 
+
                     <label
                         for="descriptiveImageFile"
                         class="image-upload-box"
@@ -2157,13 +3136,16 @@ textarea {
 
                         <i class="fa-solid fa-wand-magic-sparkles"></i>
 
+
                         <strong>
                             إضافة صور وصفية للمنتج
                         </strong>
 
+
                         <span>
                             صور تساعد الزبون على فهم المنتج والاقتناع به
                         </span>
+
 
                         <input
                             id="descriptiveImageFile"
@@ -2174,10 +3156,12 @@ textarea {
 
                     </label>
 
+
                     <div
                         id="descriptiveImageList"
                         class="image-list"
                     ></div>
+
 
                     <label class="visibility-row">
 
@@ -2195,7 +3179,11 @@ textarea {
 
                 </div>
 
-                <!-- COLORS -->
+
+
+                <!-- =================================================
+                     COLORS
+                ================================================= -->
 
                 <div class="form-section">
 
@@ -2207,11 +3195,13 @@ textarea {
 
                     </div>
 
+
                     <div class="option-header">
 
                         <label>
                             ألوان المنتج
                         </label>
+
 
                         <button
                             type="button"
@@ -2227,6 +3217,7 @@ textarea {
 
                     </div>
 
+
                     <div
                         id="colorsList"
                         class="options-list"
@@ -2234,7 +3225,11 @@ textarea {
 
                 </div>
 
-                <!-- SIZES -->
+
+
+                <!-- =================================================
+                     SIZES
+                ================================================= -->
 
                 <div class="form-section">
 
@@ -2246,11 +3241,13 @@ textarea {
 
                     </div>
 
+
                     <div class="option-header">
 
                         <label>
                             قياسات المنتج
                         </label>
+
 
                         <button
                             type="button"
@@ -2266,6 +3263,7 @@ textarea {
 
                     </div>
 
+
                     <div
                         id="sizesList"
                         class="options-list"
@@ -2273,7 +3271,11 @@ textarea {
 
                 </div>
 
-                <!-- SUBMIT -->
+
+
+                <!-- =================================================
+                     SUBMIT
+                ================================================= -->
 
                 <button
                     type="button"
@@ -2287,6 +3289,7 @@ textarea {
 
                 </button>
 
+
             </div>
 
         </section>
@@ -2295,7 +3298,10 @@ textarea {
 
 </main>
 
+
+
 <script type="module">
+
 
 /* =====================================================
    FIREBASE IMPORTS
@@ -2306,6 +3312,7 @@ import {
 }
 from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
 
 import {
     getFirestore,
@@ -2321,6 +3328,7 @@ import {
 from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
+
 import {
     getAuth,
     onAuthStateChanged,
@@ -2328,6 +3336,7 @@ import {
 }
 from
 "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
 
 
 /* =====================================================
@@ -2360,6 +3369,7 @@ const firebaseConfig = {
 };
 
 
+
 /* =====================================================
    INITIALIZE
 ===================================================== */
@@ -2374,6 +3384,7 @@ const auth =
     getAuth(app);
 
 
+
 /* =====================================================
    ELEMENTS
 ===================================================== */
@@ -2383,65 +3394,84 @@ const loadingMessage =
         "loadingMessage"
     );
 
+
 const formContainer =
     document.getElementById(
         "formContainer"
     );
+
 
 const topStoreName =
     document.getElementById(
         "topStoreName"
     );
 
+
 const topStoreImage =
     document.getElementById(
         "topStoreImage"
     );
+
 
 const viewStoreBtn =
     document.getElementById(
         "viewStoreBtn"
     );
 
+
 const imageFile =
     document.getElementById(
         "imageFile"
     );
+
 
 const descriptiveImageFile =
     document.getElementById(
         "descriptiveImageFile"
     );
 
+
 const originalImageList =
     document.getElementById(
         "originalImageList"
     );
+
 
 const descriptiveImageList =
     document.getElementById(
         "descriptiveImageList"
     );
 
+
 const colorsList =
     document.getElementById(
         "colorsList"
     );
+
 
 const sizesList =
     document.getElementById(
         "sizesList"
     );
 
+
 const addBtn =
     document.getElementById(
         "addBtn"
     );
 
+
 const descriptionEditor =
     document.getElementById(
         "description"
     );
+
+
+const themeBtn =
+    document.getElementById(
+        "themeBtn"
+    );
+
 
 
 /* =====================================================
@@ -2463,15 +3493,10 @@ let selectedImages = [];
 let selectedDescriptiveImages = [];
 
 
+
 /* =====================================================
    THEME
 ===================================================== */
-
-const themeBtn =
-    document.getElementById(
-        "themeBtn"
-    );
-
 
 function applyTheme() {
 
@@ -2481,30 +3506,26 @@ function applyTheme() {
         ) === "true";
 
 
-    if (dark) {
+    document.body.classList.toggle(
+        "dark-mode",
+        dark
+    );
 
-        document.body.style.background =
-            "#071426";
 
-        document.documentElement.style.setProperty(
-            "--bg",
-            "#071426"
-        );
+    themeBtn.innerHTML =
+        dark
+            ?
+            '<i class="fa-solid fa-sun"></i>'
+            :
+            '<i class="fa-solid fa-moon"></i>';
 
-        document.documentElement.style.setProperty(
-            "--text",
-            "#EAF3FF"
-        );
 
-        document.documentElement.style.setProperty(
-            "--border",
-            "#1D3854"
-        );
-
-        themeBtn.innerHTML =
-            '<i class="fa-solid fa-sun"></i>';
-
-    }
+    themeBtn.title =
+        dark
+            ?
+            "الوضع النهاري"
+            :
+            "الوضع الليلي";
 
 }
 
@@ -2521,63 +3542,18 @@ themeBtn.addEventListener(
 
         localStorage.setItem(
             "gGlamDarkMode",
-            !current
+            String(!current)
         );
 
 
-        if (!current) {
-
-            document.body.style.background =
-                "#071426";
-
-            document.documentElement.style.setProperty(
-                "--bg",
-                "#071426"
-            );
-
-            document.documentElement.style.setProperty(
-                "--text",
-                "#EAF3FF"
-            );
-
-            document.documentElement.style.setProperty(
-                "--border",
-                "#1D3854"
-            );
-
-            themeBtn.innerHTML =
-                '<i class="fa-solid fa-sun"></i>';
-
-        } else {
-
-            document.body.style.background =
-                "#F5F6F8";
-
-            document.documentElement.style.setProperty(
-                "--bg",
-                "#F5F6F8"
-            );
-
-            document.documentElement.style.setProperty(
-                "--text",
-                "#252525"
-            );
-
-            document.documentElement.style.setProperty(
-                "--border",
-                "#E5E7EB"
-            );
-
-            themeBtn.innerHTML =
-                '<i class="fa-solid fa-moon"></i>';
-
-        }
+        applyTheme();
 
     }
 );
 
 
 applyTheme();
+
 
 
 /* =====================================================
@@ -2617,6 +3593,7 @@ document
     );
 
 
+
 /* =====================================================
    RICH TEXT EDITOR
 ===================================================== */
@@ -2644,11 +3621,13 @@ document
 
                     descriptionEditor.focus();
 
+
                     document.execCommand(
                         this.dataset.command,
                         false,
                         null
                     );
+
 
                     updatePreview();
 
@@ -2657,6 +3636,7 @@ document
 
         }
     );
+
 
 
 document
@@ -2671,7 +3651,9 @@ document
                 return;
             }
 
+
             descriptionEditor.focus();
+
 
             document.execCommand(
                 "fontSize",
@@ -2679,12 +3661,15 @@ document
                 this.value
             );
 
+
             this.value = "";
+
 
             updatePreview();
 
         }
     );
+
 
 
 document
@@ -2697,16 +3682,19 @@ document
 
             descriptionEditor.focus();
 
+
             document.execCommand(
                 "foreColor",
                 false,
                 this.value
             );
 
+
             updatePreview();
 
         }
     );
+
 
 
 document
@@ -2719,16 +3707,19 @@ document
 
             descriptionEditor.focus();
 
+
             document.execCommand(
                 "removeFormat",
                 false,
                 null
             );
 
+
             updatePreview();
 
         }
     );
+
 
 
 /* =====================================================
@@ -2783,6 +3774,7 @@ document
     );
 
 
+
 /* =====================================================
    IMAGE SELECT
 ===================================================== */
@@ -2819,6 +3811,7 @@ imageFile.addEventListener(
 );
 
 
+
 descriptiveImageFile.addEventListener(
     "change",
     function () {
@@ -2851,6 +3844,7 @@ descriptiveImageFile.addEventListener(
 );
 
 
+
 /* =====================================================
    RENDER ORIGINAL IMAGES
 ===================================================== */
@@ -2868,6 +3862,7 @@ function renderOriginalImages() {
                     "div"
                 );
 
+
             item.className =
                 "image-item";
 
@@ -2883,11 +3878,14 @@ function renderOriginalImages() {
                     "button"
                 );
 
+
             remove.type =
                 "button";
 
+
             remove.className =
                 "image-remove";
+
 
             remove.innerHTML =
                 '<i class="fa-solid fa-xmark"></i>';
@@ -2902,6 +3900,7 @@ function renderOriginalImages() {
                         1
                     );
 
+
                     renderOriginalImages();
 
                     updatePreview();
@@ -2915,8 +3914,10 @@ function renderOriginalImages() {
                     "div"
                 );
 
+
             number.className =
                 "image-number";
+
 
             number.textContent =
                 index + 1;
@@ -2927,6 +3928,7 @@ function renderOriginalImages() {
             item.appendChild(remove);
 
             item.appendChild(number);
+
 
             originalImageList.appendChild(
                 item
@@ -2954,6 +3956,7 @@ function renderOriginalImages() {
 }
 
 
+
 /* =====================================================
    RENDER DESCRIPTIVE IMAGES
 ===================================================== */
@@ -2972,6 +3975,7 @@ function renderDescriptiveImages() {
                     "div"
                 );
 
+
             item.className =
                 "image-item";
 
@@ -2987,11 +3991,14 @@ function renderDescriptiveImages() {
                     "button"
                 );
 
+
             remove.type =
                 "button";
 
+
             remove.className =
                 "image-remove";
+
 
             remove.innerHTML =
                 '<i class="fa-solid fa-xmark"></i>';
@@ -3006,6 +4013,7 @@ function renderDescriptiveImages() {
                         1
                     );
 
+
                     renderDescriptiveImages();
 
                     updatePreview();
@@ -3017,6 +4025,7 @@ function renderDescriptiveImages() {
             item.appendChild(img);
 
             item.appendChild(remove);
+
 
             descriptiveImageList.appendChild(
                 item
@@ -3044,6 +4053,7 @@ function renderDescriptiveImages() {
 }
 
 
+
 /* =====================================================
    OPTIONS
 ===================================================== */
@@ -3063,6 +4073,7 @@ document
     );
 
 
+
 document
     .getElementById("addSizeBtn")
     .addEventListener(
@@ -3078,6 +4089,7 @@ document
     );
 
 
+
 function createOption(
     container,
     placeholder
@@ -3088,6 +4100,7 @@ function createOption(
             "div"
         );
 
+
     item.className =
         "option-item";
 
@@ -3097,8 +4110,10 @@ function createOption(
             "input"
         );
 
+
     input.type =
         "text";
+
 
     input.placeholder =
         placeholder;
@@ -3109,11 +4124,14 @@ function createOption(
             "button"
         );
 
+
     deleteButton.type =
         "button";
 
+
     deleteButton.className =
         "delete-option";
+
 
     deleteButton.innerHTML =
         '<i class="fa-solid fa-xmark"></i>';
@@ -3143,6 +4161,7 @@ function createOption(
         deleteButton
     );
 
+
     container.appendChild(
         item
     );
@@ -3151,6 +4170,7 @@ function createOption(
     input.focus();
 
 }
+
 
 
 function getOptions(container) {
@@ -3170,6 +4190,7 @@ function getOptions(container) {
     );
 
 }
+
 
 
 /* =====================================================
@@ -3247,6 +4268,7 @@ function updatePreview() {
         oldPriceElement.style.display =
             "block";
 
+
         oldPriceElement.textContent =
             oldPrice.toLocaleString(
                 "fr-DZ"
@@ -3268,8 +4290,12 @@ function updatePreview() {
         .textContent =
         (
             price > 0
-                ? price.toLocaleString("fr-DZ")
-                : "0"
+                ?
+                price.toLocaleString(
+                    "fr-DZ"
+                )
+                :
+                "0"
         ) +
         " DA";
 
@@ -3291,6 +4317,7 @@ function updatePreview() {
 }
 
 
+
 /* =====================================================
    PREVIEW ORIGINAL IMAGES
 ===================================================== */
@@ -3302,10 +4329,12 @@ function updatePreviewOriginalImages() {
             "previewImages"
         );
 
+
     const main =
         document.getElementById(
             "previewMainImage"
         );
+
 
     const empty =
         document.getElementById(
@@ -3321,8 +4350,10 @@ function updatePreviewOriginalImages() {
         main.style.display =
             "none";
 
+
         empty.style.display =
             "block";
+
 
         return;
 
@@ -3331,6 +4362,7 @@ function updatePreviewOriginalImages() {
 
     empty.style.display =
         "none";
+
 
     main.style.display =
         "block";
@@ -3359,6 +4391,7 @@ function updatePreviewOriginalImages() {
                             "div"
                         );
 
+
                     thumb.className =
                         "preview-thumb";
 
@@ -3367,6 +4400,7 @@ function updatePreviewOriginalImages() {
                         document.createElement(
                             "img"
                         );
+
 
                     img.src =
                         event.target.result;
@@ -3392,6 +4426,7 @@ function updatePreviewOriginalImages() {
 }
 
 
+
 /* =====================================================
    PREVIEW DESCRIPTIVE IMAGES
 ===================================================== */
@@ -3403,16 +4438,19 @@ function updatePreviewDescriptiveImages() {
             "previewDescriptiveTitle"
         );
 
+
     const container =
         document.getElementById(
             "previewDescriptiveImages"
         );
 
+
     const visible =
-        document.getElementById(
-            "descriptiveImagesVisible"
-        )
-        .checked;
+        document
+            .getElementById(
+                "descriptiveImagesVisible"
+            )
+            .checked;
 
 
     container.innerHTML = "";
@@ -3425,6 +4463,7 @@ function updatePreviewDescriptiveImages() {
 
         title.style.display =
             "none";
+
 
         return;
 
@@ -3450,11 +4489,14 @@ function updatePreviewDescriptiveImages() {
                             "img"
                         );
 
+
                     img.src =
                         event.target.result;
 
+
                     img.style.display =
                         "block";
+
 
                     container.appendChild(
                         img
@@ -3469,6 +4511,7 @@ function updatePreviewDescriptiveImages() {
     );
 
 }
+
 
 
 /* =====================================================
@@ -3506,12 +4549,15 @@ function updatePreviewOptions() {
                     "div"
                 );
 
+
             item.className =
                 "preview-color";
+
 
             item.textContent =
                 "اللون: " +
                 color;
+
 
             container.appendChild(
                 item
@@ -3529,12 +4575,15 @@ function updatePreviewOptions() {
                     "div"
                 );
 
+
             item.className =
                 "preview-size";
+
 
             item.textContent =
                 "المقاس: " +
                 size;
+
 
             container.appendChild(
                 item
@@ -3544,6 +4593,7 @@ function updatePreviewOptions() {
     );
 
 }
+
 
 
 /* =====================================================
@@ -3563,6 +4613,7 @@ async function loadStore() {
             window.location.href =
                 "login.html";
 
+
             return;
 
         }
@@ -3571,12 +4622,13 @@ async function loadStore() {
         currentUserUid =
             user.uid;
 
+
         currentUserEmail =
             user.email || "";
 
 
         /*
-         * البحث أولًا بوثيقة تحمل UID.
+         * البحث أولًا بواسطة UID
          */
 
         let storeSnapshot =
@@ -3590,7 +4642,7 @@ async function loadStore() {
 
 
         /*
-         * إذا لم توجد، نبحث بواسطة ownerUid.
+         * البحث بواسطة ownerUid
          */
 
         if (
@@ -3630,7 +4682,7 @@ async function loadStore() {
 
 
         /*
-         * البحث بواسطة البريد عند الحاجة.
+         * البريد كحل احتياطي فقط
          */
 
         if (
@@ -3686,7 +4738,7 @@ async function loadStore() {
 
 
         /*
-         * storeId = ID وثيقة المتجر الحقيقي.
+         * ID الحقيقي لوثيقة المتجر
          */
 
         currentStoreId =
@@ -3712,8 +4764,10 @@ async function loadStore() {
                 "متجرك مازال قيد المراجعة من طرف الإدارة."
             );
 
+
             window.location.href =
                 "dashboard.html";
+
 
             return;
 
@@ -3733,10 +4787,13 @@ async function loadStore() {
                 )
             );
 
+
             await signOut(auth);
+
 
             window.location.href =
                 "login.html";
+
 
             return;
 
@@ -3752,8 +4809,10 @@ async function loadStore() {
                 "متجرك غير نشط حاليًا."
             );
 
+
             window.location.href =
                 "dashboard.html";
+
 
             return;
 
@@ -3791,7 +4850,7 @@ async function loadStore() {
 
 
         /*
-         * عرض المتجر يعتمد على storeId.
+         * الرابط يعتمد على storeId
          */
 
         viewStoreBtn.href =
@@ -3802,7 +4861,7 @@ async function loadStore() {
 
 
         /*
-         * حفظ البيانات محليًا.
+         * حفظ البيانات محليًا
          */
 
         localStorage.setItem(
@@ -3810,25 +4869,30 @@ async function loadStore() {
             currentStoreId
         );
 
+
         localStorage.setItem(
             "storeDocumentId",
             currentStoreId
         );
+
 
         localStorage.setItem(
             "storeName",
             currentStoreName
         );
 
+
         localStorage.setItem(
             "ownerUid",
             currentUserUid
         );
 
+
         localStorage.setItem(
             "ownerEmail",
             currentUserEmail
         );
+
 
         localStorage.setItem(
             "storeOwnerEmail",
@@ -3838,6 +4902,7 @@ async function loadStore() {
 
         loadingMessage.style.display =
             "none";
+
 
         formContainer.style.display =
             "block";
@@ -3866,8 +4931,9 @@ async function loadStore() {
 }
 
 
+
 /* =====================================================
-   UPLOAD TO CLOUDINARY
+   CLOUDINARY
 ===================================================== */
 
 async function uploadImage(file) {
@@ -3892,8 +4958,11 @@ async function uploadImage(file) {
         await fetch(
             "https://api.cloudinary.com/v1_1/g82dvrkr/image/upload",
             {
-                method: "POST",
-                body: formData
+                method:
+                    "POST",
+
+                body:
+                    formData
             }
         );
 
@@ -3925,6 +4994,7 @@ async function uploadImage(file) {
 }
 
 
+
 /* =====================================================
    ADD PRODUCT
 ===================================================== */
@@ -3933,6 +5003,7 @@ addBtn.addEventListener(
     "click",
     addProduct
 );
+
 
 
 async function addProduct() {
@@ -3946,6 +5017,7 @@ async function addProduct() {
         showError(
             "انتهت جلسة تسجيل الدخول. يرجى تسجيل الدخول من جديد."
         );
+
 
         return;
 
@@ -3988,12 +5060,18 @@ async function addProduct() {
 
     const oldPrice =
         oldPriceInput === ""
-            ? null
-            : Number(oldPriceInput);
+            ?
+            null
+            :
+            Number(
+                oldPriceInput
+            );
 
 
     const price =
-        Number(priceInput);
+        Number(
+            priceInput
+        );
 
 
     const description =
@@ -4026,6 +5104,7 @@ async function addProduct() {
             "يرجى إدخال اسم المنتج."
         );
 
+
         return;
 
     }
@@ -4039,6 +5118,7 @@ async function addProduct() {
         showError(
             "يرجى إدخال السعر الجديد بشكل صحيح."
         );
+
 
         return;
 
@@ -4057,6 +5137,7 @@ async function addProduct() {
             "يرجى إدخال السعر القديم بشكل صحيح."
         );
 
+
         return;
 
     }
@@ -4071,6 +5152,7 @@ async function addProduct() {
             "يجب أن يكون السعر القديم أكبر من السعر الجديد."
         );
 
+
         return;
 
     }
@@ -4082,6 +5164,7 @@ async function addProduct() {
             "يرجى اختيار صورة واحدة على الأقل للمنتج."
         );
 
+
         return;
 
     }
@@ -4092,6 +5175,7 @@ async function addProduct() {
         showError(
             "لم يتم تحديد المتجر. يرجى إعادة تحميل الصفحة."
         );
+
 
         return;
 
@@ -4111,8 +5195,9 @@ async function addProduct() {
 
     try {
 
+
         /*
-         * رفع الصور الأصلية.
+         * رفع الصور الأصلية
          */
 
         const imageUrls = [];
@@ -4137,8 +5222,9 @@ async function addProduct() {
         }
 
 
+
         /*
-         * رفع الصور الوصفية.
+         * رفع الصور الوصفية
          */
 
         const descriptiveImageUrls =
@@ -4165,10 +5251,12 @@ async function addProduct() {
         }
 
 
+
         /*
-         * حفظ المنتج.
+         * حفظ المنتج
          *
-         * لا توجد أي حقول:
+         * لا توجد:
+         *
          * categoryId
          * categoryName
          */
@@ -4274,6 +5362,7 @@ async function addProduct() {
 }
 
 
+
 /* =====================================================
    CLEAR FORM
 ===================================================== */
@@ -4282,24 +5371,28 @@ function clearForm() {
 
     document
         .getElementById("name")
-        .value = "";
+        .value =
+        "";
 
 
     document
         .getElementById(
             "shortDescription"
         )
-        .value = "";
+        .value =
+        "";
 
 
     document
         .getElementById("oldPrice")
-        .value = "";
+        .value =
+        "";
 
 
     document
         .getElementById("price")
-        .value = "";
+        .value =
+        "";
 
 
     descriptionEditor.innerHTML =
@@ -4341,6 +5434,7 @@ function clearForm() {
     updatePreview();
 
 }
+
 
 
 /* =====================================================
@@ -4390,6 +5484,7 @@ function showSuccess(message) {
 }
 
 
+
 /* =====================================================
    ERROR
 ===================================================== */
@@ -4425,11 +5520,17 @@ function showError(message) {
 
 
     window.scrollTo({
-        top: 0,
-        behavior: "smooth"
+
+        top:
+            0,
+
+        behavior:
+            "smooth"
+
     });
 
 }
+
 
 
 /* =====================================================
@@ -4465,6 +5566,7 @@ function escapeHtml(value) {
 }
 
 
+
 /* =====================================================
    LOGOUT
 ===================================================== */
@@ -4493,28 +5595,35 @@ document
 
             try {
 
-                await signOut(auth);
+                await signOut(
+                    auth
+                );
 
 
                 localStorage.removeItem(
                     "storeId"
                 );
 
+
                 localStorage.removeItem(
                     "storeDocumentId"
                 );
+
 
                 localStorage.removeItem(
                     "ownerUid"
                 );
 
+
                 localStorage.removeItem(
                     "ownerEmail"
                 );
 
+
                 localStorage.removeItem(
                     "storeOwnerEmail"
                 );
+
 
                 localStorage.removeItem(
                     "storeName"
@@ -4543,6 +5652,7 @@ document
     );
 
 
+
 /* =====================================================
    AUTH STATE
 ===================================================== */
@@ -4556,6 +5666,7 @@ onAuthStateChanged(
             window.location.href =
                 "login.html";
 
+
             return;
 
         }
@@ -4563,6 +5674,7 @@ onAuthStateChanged(
 
         currentUserUid =
             user.uid;
+
 
         currentUserEmail =
             user.email || "";
@@ -4572,6 +5684,7 @@ onAuthStateChanged(
 
     }
 );
+
 
 
 /* =====================================================
