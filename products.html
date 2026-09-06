@@ -19,7 +19,12 @@
 
     <link
         rel="preconnect"
-        href="https://fonts.gstatic.com"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
         crossorigin
     >
 
@@ -2326,9 +2331,7 @@
             </div>
 
 
-            <!-- =================================================
-                 PRODUCT INFORMATION
-            ================================================== -->
+            <!-- PRODUCT INFORMATION -->
 
             <div class="form-group">
 
@@ -2351,9 +2354,7 @@
             </div>
 
 
-            <!-- =================================================
-                 SHORT DESCRIPTION
-            ================================================== -->
+            <!-- SHORT DESCRIPTION -->
 
             <div class="form-group">
 
@@ -2383,9 +2384,7 @@
             </div>
 
 
-            <!-- =================================================
-                 GEMINI
-            ================================================== -->
+            <!-- GEMINI -->
 
             <div
                 style="
@@ -2426,9 +2425,7 @@
             </div>
 
 
-            <!-- =================================================
-                 PRICES
-            ================================================== -->
+            <!-- PRICES -->
 
             <div class="form-group">
 
@@ -2491,9 +2488,7 @@
             </div>
 
 
-            <!-- =================================================
-                 DESCRIPTION
-            ================================================== -->
+            <!-- DESCRIPTION -->
 
             <div class="form-group">
 
@@ -2704,9 +2699,7 @@
             </div>
 
 
-            <!-- =================================================
-                 COLORS
-            ================================================== -->
+            <!-- COLORS -->
 
             <div class="form-group">
 
@@ -2763,9 +2756,7 @@
             </div>
 
 
-            <!-- =================================================
-                 SIZES
-            ================================================== -->
+            <!-- SIZES -->
 
             <div class="form-group">
 
@@ -2814,9 +2805,7 @@
             </div>
 
 
-            <!-- =================================================
-                 MAIN IMAGES
-            ================================================== -->
+            <!-- MAIN IMAGES -->
 
             <div class="form-group">
 
@@ -2880,9 +2869,7 @@
             </div>
 
 
-            <!-- =================================================
-                 DESCRIPTIVE IMAGES
-            ================================================== -->
+            <!-- DESCRIPTIVE IMAGES -->
 
             <div class="form-group">
 
@@ -2961,9 +2948,7 @@
             </div>
 
 
-            <!-- =================================================
-                 ACTIONS
-            ================================================== -->
+            <!-- ACTIONS -->
 
             <div class="modal-actions">
 
@@ -3594,6 +3579,7 @@
 
         /* =====================================================
            LOAD STORE
+           نفس نظام orders.html
         ===================================================== */
 
         async function loadStore() {
@@ -3613,37 +3599,99 @@
 
 
             /*
+             * =================================================
              * أولًا:
-             * stores/{ownerUid}
+             * استخدام storeDocumentId المحفوظ
+             * وهو معرف وثيقة المتجر الحقيقي.
+             * =================================================
              */
 
-            const directRef =
-                doc(
-                    db,
-                    "stores",
-                    currentOwnerUid
-                );
-
-
-            const directSnapshot =
-                await getDoc(
-                    directRef
+            const savedStoreId =
+                localStorage.getItem(
+                    "storeDocumentId"
                 );
 
 
             if (
-                directSnapshot.exists()
+                savedStoreId
             ) {
 
-                storeSnapshot =
-                    directSnapshot;
+                try {
+
+                    const savedStoreRef =
+                        doc(
+                            db,
+                            "stores",
+                            savedStoreId
+                        );
+
+
+                    const savedStoreSnapshot =
+                        await getDoc(
+                            savedStoreRef
+                        );
+
+
+                    if (
+                        savedStoreSnapshot.exists()
+                    ) {
+
+                        const savedData =
+                            savedStoreSnapshot.data();
+
+
+                        /*
+                         * حماية الملكية:
+                         * لا نقبل المتجر المحفوظ
+                         * إلا إذا كان مرتبطًا
+                         * بالمستخدم الحالي.
+                         */
+
+                        if (
+                            savedData.ownerUid ===
+                            currentOwnerUid
+                        ) {
+
+                            storeSnapshot =
+                                savedStoreSnapshot;
+
+                        }
+                        else if (
+                            savedData.ownerEmail &&
+                            currentOwnerEmail &&
+                            savedData.ownerEmail ===
+                            currentOwnerEmail
+                        ) {
+
+                            /*
+                             * البريد هنا Fallback فقط.
+                             */
+
+                            storeSnapshot =
+                                savedStoreSnapshot;
+
+                        }
+
+                    }
+
+                }
+                catch(error) {
+
+                    console.warn(
+                        "تعذر تحميل storeDocumentId المحفوظ:",
+                        error
+                    );
+
+                }
 
             }
 
 
             /*
+             * =================================================
              * ثانيًا:
-             * ownerUid
+             * البحث عن المتجر بواسطة ownerUid
+             * =================================================
              */
 
             if (
@@ -3683,8 +3731,10 @@
 
 
             /*
+             * =================================================
              * ثالثًا:
-             * email fallback فقط
+             * ownerEmail fallback فقط
+             * =================================================
              */
 
             if (
@@ -3724,6 +3774,12 @@
             }
 
 
+            /*
+             * =================================================
+             * لم يتم العثور على المتجر
+             * =================================================
+             */
+
             if (
                 !storeSnapshot
             ) {
@@ -3735,9 +3791,21 @@
             }
 
 
+            /*
+             * =================================================
+             * معرف وثيقة المتجر الحقيقي
+             * =================================================
+             */
+
             currentStoreId =
                 storeSnapshot.id;
 
+
+            /*
+             * =================================================
+             * بيانات المتجر
+             * =================================================
+             */
 
             currentStore =
                 {
@@ -3748,22 +3816,86 @@
                 };
 
 
+            /*
+             * =================================================
+             * حماية إضافية للملكية
+             * =================================================
+             */
+
+            if (
+                currentStore.ownerUid &&
+                currentStore.ownerUid !==
+                currentOwnerUid
+            ) {
+
+                throw new Error(
+                    "هذا المتجر غير مرتبط بالحساب الحالي."
+                );
+
+            }
+
+
+            /*
+             * =================================================
+             * حالة المتجر
+             * نفس منطق orders.html
+             * =================================================
+             */
+
+            const storeStatus =
+                String(
+                    currentStore.status ||
+                    ""
+                )
+                .trim()
+                .toLowerCase();
+
+
+            if (
+                storeStatus &&
+                storeStatus !== "approved" &&
+                storeStatus !== "active"
+            ) {
+
+                throw new Error(
+                    "حساب المتجر غير مفعّل حاليًا."
+                );
+
+            }
+
+
+            /*
+             * =================================================
+             * اسم المتجر
+             * =================================================
+             */
+
             currentStoreName =
                 currentStore.storeName ||
                 currentStore.name ||
-                currentStore.title ||
                 "G-Glam";
 
 
+            /*
+             * =================================================
+             * صورة المتجر
+             * نفس ترتيب orders.html
+             * =================================================
+             */
+
             const storeImage =
-                currentStore.logo ||
-                currentStore.logoUrl ||
-                currentStore.image ||
-                currentStore.imageUrl ||
                 currentStore.storeImage ||
+                currentStore.image ||
+                currentStore.logo ||
                 currentStore.photoURL ||
                 "logotrans.png";
 
+
+            /*
+             * =================================================
+             * عرض معلومات المتجر في Topbar
+             * =================================================
+             */
 
             topStoreName.textContent =
                 currentStoreName;
@@ -3773,8 +3905,15 @@
                 storeImage;
 
 
+            topStoreImage.alt =
+                currentStoreName;
+
+
             topStoreImage.onerror =
                 () => {
+
+                    topStoreImage.onerror =
+                        null;
 
                     topStoreImage.src =
                         "logotrans.png";
@@ -3782,12 +3921,60 @@
                 };
 
 
+            /*
+             * =================================================
+             * رابط عرض المتجر
+             *
+             * مهم:
+             * نفس orders.html:
+             *
+             * index.html?store=STORE_ID
+             * =================================================
+             */
+
             viewStoreBtn.href =
-                "index.html?storeId=" +
+                "index.html?store=" +
                 encodeURIComponent(
                     currentStoreId
                 );
 
+
+            /*
+             * =================================================
+             * حفظ معرفات المتجر الحالية
+             * =================================================
+             */
+
+            localStorage.setItem(
+                "storeId",
+                currentStoreId
+            );
+
+
+            localStorage.setItem(
+                "storeDocumentId",
+                currentStoreId
+            );
+
+
+            localStorage.setItem(
+                "storeOwnerUid",
+                currentOwnerUid
+            );
+
+
+            localStorage.setItem(
+                "storeName",
+                currentStoreName
+            );
+
+
+            /*
+             * =================================================
+             * بعد تحديد المتجر:
+             * تحميل منتجاته فقط
+             * =================================================
+             */
 
             await loadProducts();
 
@@ -6422,6 +6609,28 @@
                     );
 
 
+                    /*
+                     * تنظيف بيانات الجلسة الخاصة
+                     * بالمتجر الحالي
+                     */
+
+                    localStorage.removeItem(
+                        "storeId"
+                    );
+
+                    localStorage.removeItem(
+                        "storeDocumentId"
+                    );
+
+                    localStorage.removeItem(
+                        "storeOwnerUid"
+                    );
+
+                    localStorage.removeItem(
+                        "storeName"
+                    );
+
+
                     window.location.href =
                         "store-login.html";
 
@@ -6499,7 +6708,7 @@
 
 
         console.log(
-            "G-Glam Products Started - Edit Form Matched Add Product"
+            "G-Glam Products Started - Store Display Matched Orders"
         );
 
     </script>
