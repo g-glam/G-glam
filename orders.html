@@ -959,7 +959,7 @@
 
             line-height: 1.7;
 
-            min-width: 130px;
+            min-width: 150px;
         }
 
 
@@ -2438,29 +2438,33 @@
 
 
         /*
-         * =========================================
-         * نوع التوصيل
+         * ============================================
+         * DELIVERY TYPE
+         * ============================================
          *
-         * يتم تحويل القيمة المخزنة في Firestore
-         * إلى:
+         * توحيد طريقة عرض التوصيل داخل صفحة الطلبات.
          *
-         * إلى المنزل
+         * يدعم القيم العربية والإنجليزية والقيم
+         * المحتملة التي قد تكون محفوظة في Firestore.
+         *
+         * النتيجة النهائية:
+         *
          * إلى المكتب
+         * أو
+         * إلى باب المنزل
          *
-         * مع دعم عدة قيم محتملة.
-         *
-         * لا يتم تغيير القيمة داخل Firestore.
-         * التغيير فقط في طريقة العرض.
-         * =========================================
+         * بدون تغيير قيمة الطلب الأصلية في Firestore.
          */
 
         function normalizeDeliveryType(order) {
 
             const rawValue =
-                order.deliveryType ||
-                order.deliveryMethod ||
-                order.shippingType ||
-                order.shippingMethod ||
+                order.deliveryType ??
+                order.deliveryMethod ??
+                order.shippingType ??
+                order.shippingMethod ??
+                order.delivery ??
+                order.shipping ??
                 "";
 
 
@@ -2477,85 +2481,123 @@
 
 
             /*
-             * المنزل
+             * التوصيل إلى المكتب
              */
 
+            const officeValues = [
+
+                "office",
+                "to office",
+                "delivery office",
+                "deliveryoffice",
+                "office delivery",
+                "office_delivery",
+                "bureau",
+                "au bureau",
+                "vers bureau",
+                "pickup office",
+                "pickup_office",
+                "stop desk",
+                "stopdesk",
+                "stop desk delivery",
+                "relay",
+                "الى المكتب",
+                "إلى المكتب",
+                "التوصيل الى المكتب",
+                "التوصيل إلى المكتب",
+                "مكتب",
+                "المكتب"
+
+            ];
+
+
             if (
-
-                value === "home" ||
-
-                value === "home_delivery" ||
-
-                value === "home delivery" ||
-
-                value === "to_home" ||
-
-                value === "to home" ||
-
-                value === "house" ||
-
-                value === "domicile" ||
-
-                value === "domicile_delivery" ||
-
-                value === "الى المنزل" ||
-
-                value === "إلى المنزل" ||
-
-                value.includes("منزل") ||
-
-                value.includes("home") ||
-
-                value.includes("domicile")
-
+                officeValues.includes(value)
             ) {
 
-                return "إلى المنزل";
+                return "التوصيل إلى المكتب";
             }
 
 
             /*
-             * المكتب
+             * التوصيل إلى باب المنزل
+             */
+
+            const homeValues = [
+
+                "home",
+                "to home",
+                "delivery home",
+                "deliveryhome",
+                "home delivery",
+                "home_delivery",
+                "door",
+                "to door",
+                "door delivery",
+                "door_delivery",
+                "domicile",
+                "a domicile",
+                "à domicile",
+                "livraison domicile",
+                "home delivery",
+                "الى المنزل",
+                "إلى المنزل",
+                "التوصيل الى المنزل",
+                "التوصيل إلى المنزل",
+                "باب المنزل",
+                "إلى باب المنزل",
+                "الى باب المنزل",
+                "التوصيل الى باب المنزل",
+                "التوصيل إلى باب المنزل",
+                "منزل",
+                "المنزل"
+
+            ];
+
+
+            if (
+                homeValues.includes(value)
+            ) {
+
+                return "التوصيل إلى باب المنزل";
+            }
+
+
+            /*
+             * معالجة القيم التي تحتوي على الكلمات
+             * حتى لو كانت الجملة أطول من القيمة الأساسية.
              */
 
             if (
-
-                value === "office" ||
-
-                value === "office_delivery" ||
-
-                value === "office delivery" ||
-
-                value === "to_office" ||
-
-                value === "to office" ||
-
-                value === "bureau" ||
-
-                value === "bureau_delivery" ||
-
-                value === "الى المكتب" ||
-
-                value === "إلى المكتب" ||
-
-                value.includes("مكتب") ||
-
                 value.includes("office") ||
-
-                value.includes("bureau")
-
+                value.includes("bureau") ||
+                value.includes("مكتب") ||
+                value.includes("المكتب")
             ) {
 
-                return "إلى المكتب";
+                return "التوصيل إلى المكتب";
+            }
+
+
+            if (
+                value.includes("home") ||
+                value.includes("domicile") ||
+                value.includes("door") ||
+                value.includes("منزل") ||
+                value.includes("المنزل") ||
+                value.includes("باب المنزل")
+            ) {
+
+                return "التوصيل إلى باب المنزل";
             }
 
 
             /*
-             * إذا كانت القيمة بالفعل بالعربية
-             * أو قيمة غير معروفة، لا نحذفها.
+             * إذا كانت القيمة غير معروفة،
+             * نعرضها كما هي بدل حذف معلومة الطلب.
              */
 
-            return String(rawValue);
+            return String(rawValue).trim();
 
         }
 
@@ -3226,13 +3268,20 @@
 
 
             /*
-             * =====================================
-             * نوع التوصيل
-             * =====================================
+             * نوع التوصيل الموحد للعرض فقط.
+             * لا يتم تعديل بيانات Firestore.
              */
 
             const deliveryType =
                 normalizeDeliveryType(order);
+
+
+            const deliveryPrice =
+                Number(
+                    order.deliveryPrice ??
+                    order.shippingPrice ??
+                    0
+                );
 
 
             tr.innerHTML = `
@@ -3346,11 +3395,7 @@
 
                         <div class="delivery-price">
 
-                            ${Number(
-                                order.deliveryPrice ||
-                                order.shippingPrice ||
-                                0
-                            )} DA
+                            ${deliveryPrice} DA
 
                         </div>
 
