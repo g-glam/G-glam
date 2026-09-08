@@ -37,7 +37,6 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     >
 
-
     <style>
 
         :root {
@@ -969,6 +968,8 @@
             color: var(--dark);
 
             font-weight: 800;
+
+            white-space: nowrap;
         }
 
 
@@ -2436,6 +2437,129 @@
         }
 
 
+        /*
+         * =========================================
+         * نوع التوصيل
+         *
+         * يتم تحويل القيمة المخزنة في Firestore
+         * إلى:
+         *
+         * إلى المنزل
+         * إلى المكتب
+         *
+         * مع دعم عدة قيم محتملة.
+         *
+         * لا يتم تغيير القيمة داخل Firestore.
+         * التغيير فقط في طريقة العرض.
+         * =========================================
+         */
+
+        function normalizeDeliveryType(order) {
+
+            const rawValue =
+                order.deliveryType ||
+                order.deliveryMethod ||
+                order.shippingType ||
+                order.shippingMethod ||
+                "";
+
+
+            const value =
+                String(rawValue)
+                    .trim()
+                    .toLowerCase();
+
+
+            if (!value) {
+
+                return "غير محدد";
+            }
+
+
+            /*
+             * المنزل
+             */
+
+            if (
+
+                value === "home" ||
+
+                value === "home_delivery" ||
+
+                value === "home delivery" ||
+
+                value === "to_home" ||
+
+                value === "to home" ||
+
+                value === "house" ||
+
+                value === "domicile" ||
+
+                value === "domicile_delivery" ||
+
+                value === "الى المنزل" ||
+
+                value === "إلى المنزل" ||
+
+                value.includes("منزل") ||
+
+                value.includes("home") ||
+
+                value.includes("domicile")
+
+            ) {
+
+                return "إلى المنزل";
+            }
+
+
+            /*
+             * المكتب
+             */
+
+            if (
+
+                value === "office" ||
+
+                value === "office_delivery" ||
+
+                value === "office delivery" ||
+
+                value === "to_office" ||
+
+                value === "to office" ||
+
+                value === "bureau" ||
+
+                value === "bureau_delivery" ||
+
+                value === "الى المكتب" ||
+
+                value === "إلى المكتب" ||
+
+                value.includes("مكتب") ||
+
+                value.includes("office") ||
+
+                value.includes("bureau")
+
+            ) {
+
+                return "إلى المكتب";
+            }
+
+
+            /*
+             * إذا كانت القيمة بالفعل بالعربية
+             * أو قيمة غير معروفة، لا نحذفها.
+             */
+
+            return String(rawValue);
+
+        }
+
+
         /* =========================
            LOAD STORE
         ========================= */
@@ -3101,6 +3225,16 @@
                     .padStart(4, "0");
 
 
+            /*
+             * =====================================
+             * نوع التوصيل
+             * =====================================
+             */
+
+            const deliveryType =
+                normalizeDeliveryType(order);
+
+
             tr.innerHTML = `
 
                 <td class="check-cell">
@@ -3204,11 +3338,7 @@
                         <div class="delivery-type">
 
                             ${escapeHtml(
-                                order.deliveryType ||
-                                order.deliveryMethod ||
-                                order.shippingType ||
-                                order.shippingMethod ||
-                                "غير محدد"
+                                deliveryType
                             )}
 
                         </div>
