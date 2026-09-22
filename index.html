@@ -268,7 +268,8 @@ body.theme-custom-gradient .floating-cart{
     background:var(--theme-gradient);
 }
 
-body.theme-custom-gradient .cart-count{
+body.theme-custom-gradient .cart-count,
+body.theme-custom-gradient .floating-cart-count{
     background:var(--accent);
 }
 
@@ -465,11 +466,11 @@ header{
 }
 
 .store-banner h1{
-    font-size:34px;
+    font-size:38px;
     line-height:1.3;
     font-weight:800;
     color:var(--text);
-    margin-bottom:4px;
+    margin-bottom:3px;
 }
 
 .store-banner p{
@@ -576,18 +577,17 @@ header{
 
 /* =====================================================
    PRODUCT TITLE
-   أوضح وأثقل
 ===================================================== */
 
 .card h3{
     color:var(--text);
-    font-size:16px;
+    font-size:18px;
     font-weight:800;
-    line-height:1.55;
-    min-height:50px;
-    height:50px;
+    line-height:1.45;
+    min-height:48px;
+    height:48px;
     overflow:hidden;
-    margin-bottom:5px;
+    margin-bottom:0;
     text-align:center;
     display:-webkit-box;
     -webkit-line-clamp:2;
@@ -596,26 +596,25 @@ header{
 
 /* =====================================================
    PRICE
-   السعر الجديد واضح والسعر القديم رمادي ومشطوب
 ===================================================== */
 
 .price-box{
     width:100%;
-    min-height:34px;
+    min-height:36px;
     display:flex;
     align-items:center;
     justify-content:center;
-    gap:9px;
+    gap:8px;
     flex-wrap:wrap;
     margin-bottom:10px;
 }
 
 .price{
     color:var(--accent);
-    font-size:19px;
+    font-size:22px;
     font-weight:800;
     text-align:center;
-    line-height:1.4;
+    line-height:1.35;
     white-space:nowrap;
 }
 
@@ -627,7 +626,7 @@ header{
     text-decoration-thickness:1.5px;
     text-decoration-color:#6B7280;
     white-space:nowrap;
-    line-height:1.4;
+    line-height:1.35;
 }
 
 /* =====================================================
@@ -648,8 +647,6 @@ header{
         border-color .2s ease,
         transform .15s ease;
 }
-
-/* بطاقة عرض المنتج رمادية فاتحة */
 
 .details-btn{
     border:1px solid #D1D5DB;
@@ -813,38 +810,89 @@ header{
 }
 
 /* =====================================================
-   FLOATING CART
+   FLOATING CART - CIRCLE
 ===================================================== */
 
 .floating-cart{
     position:fixed;
-    bottom:18px;
-    left:50%;
-    transform:translateX(-50%);
-    width:calc(100% - 50px);
-    max-width:540px;
-    height:53px;
+    right:20px;
+    bottom:20px;
+
+    width:64px;
+    height:64px;
+
     background:var(--accent);
     color:#FFF;
+
     text-decoration:none;
-    border-radius:28px;
+
+    border-radius:50%;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    gap:9px;
-    font-size:16px;
-    font-weight:800;
-    box-shadow:0 8px 25px rgba(0,0,0,.18);
+
+    font-size:0;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.22);
+
     z-index:900;
+
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
 }
 
 .floating-cart:hover{
     background:var(--accent-dark);
+    transform:scale(1.06);
+    box-shadow:
+        0 10px 28px rgba(0,0,0,.26);
+}
+
+.floating-cart:active{
+    transform:scale(.95);
 }
 
 .floating-cart svg{
-    width:22px;
-    height:22px;
+    width:29px;
+    height:29px;
+    display:block;
+}
+
+/* =====================================================
+   FLOATING CART COUNT
+===================================================== */
+
+.floating-cart-count{
+    position:absolute;
+
+    top:-4px;
+    right:-4px;
+
+    min-width:23px;
+    height:23px;
+
+    padding:0 5px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:var(--accent);
+    color:#FFF;
+
+    border:2px solid var(--header);
+
+    border-radius:50%;
+
+    font-size:11px;
+    line-height:1;
+    font-weight:800;
+
+    box-shadow:0 3px 8px rgba(0,0,0,.18);
 }
 
 /* =====================================================
@@ -991,7 +1039,9 @@ header{
     }
 
     .store-banner h1{
-        font-size:25px;
+        font-size:28px;
+        line-height:1.3;
+        margin-bottom:2px;
     }
 
     .store-banner p{
@@ -1044,27 +1094,33 @@ header{
         padding:8px 7px 9px;
     }
 
-    /* عنوان أوضح على الهاتف */
+    /* =================================================
+       MOBILE PRODUCT TITLE
+    ================================================= */
 
     .card h3{
         width:100%;
-        font-size:13px;
+        font-size:14px;
         font-weight:800;
-        line-height:1.45;
+        line-height:1.4;
         min-height:38px;
         height:38px;
-        margin-bottom:4px;
+        margin-bottom:0;
         overflow:hidden;
     }
 
+    /* =================================================
+       MOBILE PRICE
+    ================================================= */
+
     .price-box{
-        min-height:30px;
+        min-height:32px;
         gap:5px;
         margin-bottom:7px;
     }
 
     .price{
-        font-size:15px;
+        font-size:17px;
         font-weight:800;
         line-height:1.3;
     }
@@ -1130,18 +1186,33 @@ header{
         height:19px;
     }
 
+    /* =================================================
+       MOBILE FLOATING CART
+    ================================================= */
+
     .floating-cart{
-        width:calc(100% - 24px);
-        max-width:none;
-        height:49px;
-        bottom:10px;
-        border-radius:25px;
-        font-size:14px;
+        right:14px;
+        bottom:12px;
+
+        width:57px;
+        height:57px;
+
+        border-radius:50%;
     }
 
     .floating-cart svg{
-        width:20px;
-        height:20px;
+        width:26px;
+        height:26px;
+    }
+
+    .floating-cart-count{
+        top:-3px;
+        right:-3px;
+
+        min-width:21px;
+        height:21px;
+
+        font-size:10px;
     }
 
     .sidebar{
@@ -1170,7 +1241,7 @@ header{
     }
 
     .card h3{
-        font-size:12px;
+        font-size:13px;
         font-weight:800;
         min-height:35px;
         height:35px;
@@ -1181,7 +1252,7 @@ header{
     }
 
     .price{
-        font-size:14px;
+        font-size:16px;
     }
 
     .old-price{
@@ -1201,11 +1272,23 @@ header{
     }
 
     .store-banner h1{
-        font-size:23px;
+        font-size:25px;
     }
 
     .logo span{
         font-size:18px;
+    }
+
+    .floating-cart{
+        right:12px;
+        bottom:10px;
+        width:54px;
+        height:54px;
+    }
+
+    .floating-cart svg{
+        width:25px;
+        height:25px;
     }
 }
 
@@ -1484,13 +1567,24 @@ Bienvenue dans notre boutique
 </section>
 
 <!-- FLOATING CART -->
-<a href="#" id="floatingCart" class="floating-cart">
+<a
+    href="#"
+    id="floatingCart"
+    class="floating-cart"
+    aria-label="عرض السلة"
+    title="عرض السلة"
+>
 
-<svg>
+<svg aria-hidden="true">
 <use href="#icon-cart"></use>
 </svg>
 
-<span>عرض السلة</span>
+<span
+    class="floating-cart-count"
+    id="floatingCartCount"
+>
+    0
+</span>
 
 </a>
 
@@ -1534,6 +1628,7 @@ const db=getFirestore(app);
 const productsContainer=document.getElementById("productsContainer");
 const searchInput=document.getElementById("searchInput");
 const cartCount=document.getElementById("cartCount");
+const floatingCartCount=document.getElementById("floatingCartCount");
 const storeNameElement=document.getElementById("storeName");
 const headerStoreName=document.getElementById("headerStoreName");
 const storeDescriptionElement=document.getElementById("storeDescription");
@@ -2890,6 +2985,10 @@ function updateCartCount(){
     });
 
     cartCount.textContent=total;
+
+    if(floatingCartCount){
+        floatingCartCount.textContent=total;
+    }
 }
 
 /* =====================================================
