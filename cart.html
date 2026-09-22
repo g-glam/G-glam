@@ -26,13 +26,21 @@
     href="icons/icon-192.png"
 >
 
-<title>G-Glam | سلة التسوق</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<title>السلة | G-Glam</title>
 
 <link
-    href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap"
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+>
+
+<link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
     rel="stylesheet"
 >
 
@@ -44,6 +52,18 @@
 <style>
 
 /* =====================================================
+   RESET
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Cairo",Arial,sans-serif;
+}
+
+
+/* =====================================================
    ROOT
 ===================================================== */
 
@@ -53,8 +73,11 @@
     --header:#F5F5F5;
 
     --card:#FFFFFF;
+    --card-soft:#FCFCFC;
 
     --text:#222222;
+    --text-soft:#444444;
+
     --muted:#777777;
 
     --border:#E8E8E8;
@@ -65,62 +88,48 @@
 
     --accent-rgb:244,123,32;
 
-    --gradient:
+    --theme-gradient:
         linear-gradient(
             135deg,
             #F47B20,
             #FF9B54
         );
 
-    --shadow:
-        0 5px 20px rgba(0,0,0,.06);
+    --sidebar-hover:#FFF1E6;
 
-    --radius:18px;
+    --danger:#D9534F;
+    --danger-bg:#FDECEC;
+
+    --success:#198754;
+    --success-bg:#EFFAF3;
+
+    --shadow:
+        0 6px 22px rgba(0,0,0,.07);
+
+    --shadow-soft:
+        0 4px 15px rgba(0,0,0,.05);
+
 }
 
 
 /* =====================================================
-   RESET
+   BODY
 ===================================================== */
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-html{
-    scroll-behavior:smooth;
-}
 
 body{
 
-    font-family:"Tajawal",sans-serif;
+    min-height:100vh;
 
     background:var(--bg);
 
     color:var(--text);
 
-    min-height:100vh;
+    padding-bottom:120px;
 
-    line-height:1.6;
-}
+    transition:
+        background .25s ease,
+        color .25s ease;
 
-button,
-input,
-select,
-textarea{
-
-    font-family:inherit;
-}
-
-button{
-    cursor:pointer;
-}
-
-a{
-    color:inherit;
-    text-decoration:none;
 }
 
 
@@ -134,13 +143,11 @@ header{
 
     top:0;
 
-    z-index:1000;
+    z-index:100;
 
-    height:70px;
+    width:100%;
 
-    background:var(--header);
-
-    border-bottom:1px solid var(--border);
+    min-height:78px;
 
     display:flex;
 
@@ -148,55 +155,16 @@ header{
 
     justify-content:space-between;
 
-    padding:0 18px;
+    padding:14px 22px;
 
-    transition:.25s;
+    background:var(--header);
+
+    border-bottom:1px solid var(--border);
+
 }
 
-.header-right,
-.header-left{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:10px;
-}
-
-.header-right{
-    min-width:0;
-}
 
 .logo{
-
-    font-size:21px;
-
-    font-weight:900;
-
-    color:var(--accent);
-
-    white-space:nowrap;
-
-    overflow:hidden;
-
-    text-overflow:ellipsis;
-
-    max-width:220px;
-}
-
-.icon-btn{
-
-    width:44px;
-
-    height:44px;
-
-    border:none;
-
-    border-radius:14px;
-
-    background:var(--card);
-
-    color:var(--text);
 
     display:flex;
 
@@ -204,20 +172,89 @@ header{
 
     justify-content:center;
 
+    min-width:120px;
+
+    max-width:240px;
+
+    text-align:center;
+
+}
+
+
+#storeOwnerName{
+
+    display:block;
+
+    max-width:220px;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    white-space:nowrap;
+
+    color:var(--text);
+
+    font-size:20px;
+
+    font-weight:800;
+
+}
+
+
+.menu-btn,
+.cart-icon{
+
+    width:46px;
+
+    height:46px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:14px;
+
+    color:var(--text);
+
+    cursor:pointer;
+
     position:relative;
 
-    box-shadow:0 2px 8px rgba(0,0,0,.04);
-
     transition:.2s;
+
 }
 
-.icon-btn:hover{
-    transform:translateY(-1px);
+
+.menu-btn{
+
+    font-size:21px;
+
 }
 
-.icon-btn i{
-    font-size:18px;
+
+.cart-icon{
+
+    font-size:21px;
+
 }
+
+
+.menu-btn:hover,
+.cart-icon:hover{
+
+    background:var(--accent-light);
+
+    color:var(--accent);
+
+}
+
+
+/* =====================================================
+   CART COUNT
+===================================================== */
 
 .cart-count{
 
@@ -225,23 +262,11 @@ header{
 
     top:-4px;
 
-    right:-4px;
+    left:-4px;
 
-    min-width:19px;
+    width:20px;
 
-    height:19px;
-
-    padding:0 5px;
-
-    border-radius:20px;
-
-    background:var(--accent);
-
-    color:#fff;
-
-    font-size:11px;
-
-    font-weight:800;
+    height:20px;
 
     display:flex;
 
@@ -249,71 +274,18 @@ header{
 
     justify-content:center;
 
-    border:2px solid var(--header);
-}
+    border-radius:50%;
 
+    background:var(--accent);
 
-/* =====================================================
-   PAGE
-===================================================== */
+    color:#fff;
 
-.page{
+    font-size:10px;
 
-    width:min(1200px,calc(100% - 28px));
+    font-weight:800;
 
-    margin:25px auto 50px;
-}
+    border:2px solid var(--bg);
 
-.page-top{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    gap:15px;
-
-    margin-bottom:22px;
-}
-
-.page-title{
-
-    font-size:31px;
-
-    font-weight:900;
-
-    color:var(--text);
-}
-
-.continue-btn{
-
-    display:inline-flex;
-
-    align-items:center;
-
-    gap:8px;
-
-    padding:11px 16px;
-
-    border-radius:13px;
-
-    background:var(--card);
-
-    border:1px solid var(--border);
-
-    color:var(--text);
-
-    font-weight:700;
-
-    transition:.2s;
-}
-
-.continue-btn:hover{
-
-    border-color:var(--accent);
-
-    color:var(--accent);
 }
 
 
@@ -323,124 +295,209 @@ header{
 
 .store-info{
 
+    width:calc(100% - 30px);
+
+    max-width:1000px;
+
+    margin:15px auto;
+
+    padding:13px 20px;
+
+    border-radius:17px;
+
     background:var(--card);
 
     border:1px solid var(--border);
 
-    border-radius:var(--radius);
-
-    padding:15px 18px;
-
-    margin-bottom:20px;
-
-    box-shadow:var(--shadow);
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-}
-
-.store-info-icon{
-
-    width:44px;
-
-    height:44px;
-
-    flex-shrink:0;
-
-    border-radius:14px;
-
-    background:var(--accent-light);
-
-    color:var(--accent);
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-}
-
-.store-info-text{
-
-    min-width:0;
-}
-
-.store-info-label{
+    box-shadow:var(--shadow-soft);
 
     color:var(--muted);
 
-    font-size:12px;
+    text-align:center;
 
-    margin-bottom:1px;
+    font-size:14px;
+
 }
 
-.store-info-name{
 
-    font-size:18px;
+.store-info strong{
 
-    font-weight:800;
+    color:var(--text);
 
-    overflow:hidden;
-
-    text-overflow:ellipsis;
-
-    white-space:nowrap;
 }
 
 
 /* =====================================================
-   MAIN GRID
+   CONTAINER
+===================================================== */
+
+.container{
+
+    width:calc(100% - 30px);
+
+    max-width:1180px;
+
+    margin:0 auto;
+
+}
+
+
+/* =====================================================
+   PAGE HEADER
+===================================================== */
+
+.page-header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    margin:20px 0 15px;
+
+}
+
+
+.page-title{
+
+    color:var(--text);
+
+    font-size:28px;
+
+    font-weight:800;
+
+}
+
+
+.back-store-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    min-height:44px;
+
+    padding:0 16px;
+
+    border:1px solid var(--border);
+
+    border-radius:13px;
+
+    background:var(--card);
+
+    color:var(--text);
+
+    text-decoration:none;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+
+.back-store-btn:hover{
+
+    background:var(--accent-light);
+
+    color:var(--accent-dark);
+
+    border-color:var(--accent);
+
+}
+
+
+/* =====================================================
+   CART LAYOUT
 ===================================================== */
 
 .cart-layout{
 
     display:grid;
 
-    grid-template-columns:minmax(0,1.6fr) minmax(320px,.9fr);
+    grid-template-columns:
+        minmax(0,1.7fr)
+        minmax(320px,.9fr);
 
-    gap:20px;
+    gap:25px;
 
     align-items:start;
+
 }
 
 
 /* =====================================================
-   CARD
+   CARDS
 ===================================================== */
 
-.card{
+.cart-card,
+.summary-card,
+.social-section{
 
     background:var(--card);
 
     border:1px solid var(--border);
 
-    border-radius:var(--radius);
+    border-radius:25px;
+
+    padding:25px;
 
     box-shadow:var(--shadow);
+
 }
 
-.card-title{
 
-    padding:18px 20px;
+/* =====================================================
+   ORDER FORM RED FRAME
+===================================================== */
 
-    border-bottom:1px solid var(--border);
+.summary-card{
 
-    font-size:18px;
+    border:2px solid #E53935;
 
-    font-weight:900;
+    border-radius:25px;
+
+}
+
+
+/* =====================================================
+   SECTION TITLE
+===================================================== */
+
+.section-title{
 
     display:flex;
 
     align-items:center;
 
-    gap:9px;
+    gap:10px;
+
+    margin-bottom:20px;
+
+    color:var(--text);
+
+    font-size:21px;
+
+    font-weight:800;
+
 }
 
-.card-title i{
+
+.section-title i{
+
     color:var(--accent);
+
 }
 
 
@@ -448,39 +505,74 @@ header{
    CART ITEMS
 ===================================================== */
 
-#cart-items{
-    padding:8px 18px 18px;
+.cart-items{
+
+    display:grid;
+
+    gap:14px;
+
 }
+
 
 .cart-item{
 
     display:grid;
 
-    grid-template-columns:105px minmax(0,1fr);
+    grid-template-columns:
+        105px
+        minmax(0,1fr)
+        auto;
 
     gap:15px;
 
-    padding:17px 0;
+    align-items:center;
 
-    border-bottom:1px solid var(--border);
+    padding:15px;
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    background:var(--card-soft);
+
+    transition:.2s;
+
 }
 
-.cart-item:last-child{
-    border-bottom:none;
+
+.cart-item:hover{
+
+    border-color:
+        rgba(
+            var(--accent-rgb),
+            .35
+        );
+
 }
+
 
 .cart-item-image{
 
     width:105px;
 
-    height:115px;
+    height:105px;
 
     border-radius:15px;
 
     overflow:hidden;
 
-    background:#f1f1f1;
+    background:var(--accent-light);
+
+    border:1px solid var(--border);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
 }
+
 
 .cart-item-image img{
 
@@ -489,33 +581,61 @@ header{
     height:100%;
 
     object-fit:cover;
+
+    display:block;
+
 }
 
-.cart-item-content{
-    min-width:0;
+
+.cart-item-image .no-image{
+
+    color:var(--muted);
+
+    font-size:30px;
+
 }
+
+
+/* =====================================================
+   CART CONTENT
+===================================================== */
+
+.cart-item-content{
+
+    min-width:0;
+
+}
+
 
 .cart-item-name{
 
-    font-size:18px;
-
-    font-weight:900;
-
-    line-height:1.4;
-
     margin-bottom:6px;
-}
 
-.cart-item-price{
+    color:var(--text);
 
-    color:var(--accent);
-
-    font-size:16px;
+    font-size:17px;
 
     font-weight:800;
 
-    margin-bottom:8px;
+    line-height:1.5;
+
+    word-break:break-word;
+
 }
+
+
+.cart-item-price{
+
+    margin-bottom:7px;
+
+    color:var(--accent-dark);
+
+    font-size:15px;
+
+    font-weight:800;
+
+}
+
 
 .cart-item-meta{
 
@@ -523,58 +643,61 @@ header{
 
     flex-wrap:wrap;
 
-    gap:6px;
+    gap:7px;
 
-    margin-bottom:12px;
 }
 
+
 .meta-tag{
+
+    padding:5px 9px;
+
+    border-radius:9px;
 
     background:var(--accent-light);
 
     color:var(--accent-dark);
 
-    border-radius:8px;
-
-    padding:4px 8px;
-
-    font-size:12px;
+    font-size:11px;
 
     font-weight:700;
+
 }
 
 
 /* =====================================================
-   QUANTITY
+   CART ACTIONS
 ===================================================== */
 
 .cart-item-actions{
 
     display:flex;
 
-    align-items:center;
+    flex-direction:column;
 
-    justify-content:space-between;
+    align-items:flex-end;
 
-    gap:12px;
+    gap:10px;
 
-    margin-top:5px;
 }
 
-.quantity-control{
+
+.quantity-controls{
 
     display:flex;
 
     align-items:center;
 
-    border:1px solid var(--border);
+    gap:10px;
 
-    border-radius:11px;
+    padding:5px;
 
-    overflow:hidden;
+    border-radius:13px;
 
-    background:var(--card);
+    background:var(--accent-light);
+
 }
+
 
 .quantity-btn{
 
@@ -582,86 +705,15 @@ header{
 
     height:34px;
 
-    border:none;
+    border:0;
 
-    background:transparent;
+    border-radius:50%;
 
-    color:var(--text);
+    background:var(--accent);
 
-    font-size:16px;
+    color:#fff;
 
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-}
-
-.quantity-btn:hover{
-
-    background:var(--accent-light);
-
-    color:var(--accent);
-}
-
-.quantity-number{
-
-    min-width:35px;
-
-    text-align:center;
-
-    font-size:14px;
-
-    font-weight:800;
-}
-
-
-/* =====================================================
-   ITEM BOTTOM
-   السعر + حذف المنتج
-===================================================== */
-
-.cart-item-bottom{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    gap:12px;
-
-    margin-top:13px;
-
-    width:100%;
-}
-
-.item-total{
-
-    font-size:19px;
-
-    font-weight:900;
-
-    color:var(--accent);
-
-    line-height:1.2;
-}
-
-.delete-item-btn{
-
-    width:38px;
-
-    height:38px;
-
-    flex-shrink:0;
-
-    border:none;
-
-    border-radius:11px;
-
-    background:#FFF1F1;
-
-    color:#E53935;
+    cursor:pointer;
 
     display:flex;
 
@@ -670,17 +722,108 @@ header{
     justify-content:center;
 
     transition:.2s;
+
 }
 
-.delete-item-btn:hover{
 
-    background:#FFE0E0;
+.quantity-btn:hover{
 
-    transform:scale(1.04);
+    transform:scale(1.05);
+
 }
 
-.delete-item-btn i{
-    font-size:15px;
+
+.quantity-value{
+
+    min-width:28px;
+
+    text-align:center;
+
+    color:var(--text);
+
+    font-size:14px;
+
+    font-weight:800;
+
+}
+
+
+.item-total{
+
+    color:var(--text);
+
+    font-size:14px;
+
+    font-weight:800;
+
+}
+
+
+.delete-btn{
+
+    width:38px;
+
+    height:38px;
+
+    border:0;
+
+    border-radius:11px;
+
+    background:var(--danger-bg);
+
+    color:var(--danger);
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    transition:.2s;
+
+}
+
+
+.delete-btn:hover{
+
+    background:var(--danger);
+
+    color:#fff;
+
+}
+
+
+/* =====================================================
+   PRODUCTS TOTAL
+===================================================== */
+
+.products-total{
+
+    margin-top:18px;
+
+    padding:15px;
+
+    border-radius:15px;
+
+    background:var(--accent-light);
+
+    color:var(--text);
+
+    text-align:center;
+
+    font-size:16px;
+
+    font-weight:800;
+
+}
+
+
+.products-total strong{
+
+    color:var(--accent-dark);
+
 }
 
 
@@ -690,10 +833,22 @@ header{
 
 .empty-cart{
 
+    min-height:300px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
     text-align:center;
 
-    padding:55px 20px;
+    color:var(--muted);
+
 }
+
 
 .empty-cart-icon{
 
@@ -701,7 +856,13 @@ header{
 
     height:80px;
 
-    margin:0 auto 15px;
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin-bottom:18px;
 
     border-radius:50%;
 
@@ -709,160 +870,185 @@ header{
 
     color:var(--accent);
 
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
     font-size:32px;
+
 }
+
 
 .empty-cart h3{
 
+    margin-bottom:8px;
+
+    color:var(--text);
+
     font-size:21px;
 
-    margin-bottom:6px;
 }
+
 
 .empty-cart p{
 
-    color:var(--muted);
-
     margin-bottom:20px;
-}
 
-.empty-cart-btn{
+    font-size:14px;
 
-    display:inline-flex;
-
-    align-items:center;
-
-    gap:8px;
-
-    padding:12px 20px;
-
-    background:var(--accent);
-
-    color:#fff;
-
-    border-radius:12px;
-
-    font-weight:800;
 }
 
 
 /* =====================================================
-   SUMMARY
+   SUMMARY CARD
 ===================================================== */
 
 .summary-card{
 
     position:sticky;
 
-    top:90px;
+    top:98px;
 
-    overflow:hidden;
 }
 
-.summary-body{
 
-    padding:18px;
-}
+.notice{
 
-.form-group{
+    margin-bottom:20px;
 
-    margin-bottom:14px;
-}
+    padding:13px 15px;
 
-.form-label{
+    border-radius:13px;
 
-    display:block;
+    background:var(--accent-light);
+
+    border:1px solid
+        rgba(
+            var(--accent-rgb),
+            .18
+        );
+
+    color:var(--accent-dark);
 
     font-size:13px;
 
-    font-weight:800;
+    line-height:1.9;
 
-    margin-bottom:6px;
 }
 
-.form-control{
+
+/* =====================================================
+   FORM
+===================================================== */
+
+.form-group{
+
+    margin-bottom:15px;
+
+}
+
+
+.form-group label{
+
+    display:block;
+
+    margin-bottom:7px;
+
+    color:var(--text-soft);
+
+    font-size:13px;
+
+    font-weight:700;
+
+}
+
+
+.required{
+
+    color:var(--accent);
+
+}
+
+
+.form-group input,
+.form-group select{
 
     width:100%;
 
-    height:46px;
+    padding:13px 14px;
+
+    border-radius:13px;
 
     border:1px solid var(--border);
 
-    border-radius:11px;
+    outline:none;
 
-    padding:0 13px;
-
-    background:var(--card);
+    background:var(--card-soft);
 
     color:var(--text);
 
-    outline:none;
+    font-size:14px;
 
     transition:.2s;
+
 }
 
-textarea.form-control{
 
-    height:85px;
-
-    resize:vertical;
-
-    padding-top:11px;
-}
-
-.form-control:focus{
+.form-group input:focus,
+.form-group select:focus{
 
     border-color:var(--accent);
 
+    background:var(--card);
+
     box-shadow:
         0 0 0 3px
-        rgba(var(--accent-rgb),.09);
+        rgba(
+            var(--accent-rgb),
+            .10
+        );
+
 }
 
-.delivery-row{
 
-    display:grid;
+.delivery-loading{
 
-    grid-template-columns:1fr 1fr;
+    display:none;
 
-    gap:10px;
-}
+    margin:-5px 0 12px;
 
-.delivery-message{
-
-    padding:10px 12px;
-
-    border-radius:10px;
+    color:var(--muted);
 
     font-size:12px;
 
-    margin-bottom:13px;
+}
+
+
+.delivery-loading i{
+
+    color:var(--accent);
+
+    margin-left:5px;
+
+}
+
+
+.delivery-error{
 
     display:none;
-}
 
-.delivery-message.loading{
+    margin-bottom:15px;
 
-    display:block;
+    padding:12px;
 
-    background:#f5f5f5;
+    border-radius:11px;
 
-    color:#777;
-}
+    background:var(--danger-bg);
 
-.delivery-message.error{
+    border:1px solid #F5D0D0;
 
-    display:block;
+    color:#B42318;
 
-    background:#FFF1F1;
+    text-align:center;
 
-    color:#D32F2F;
+    font-size:13px;
+
 }
 
 
@@ -870,125 +1056,116 @@ textarea.form-control{
    TOTALS
 ===================================================== */
 
-.totals{
+.order-totals{
 
-    border-top:1px solid var(--border);
+    margin-top:10px;
 
-    margin-top:16px;
+    display:grid;
 
-    padding-top:14px;
+    gap:10px;
+
 }
 
-.total-row{
 
-    display:flex;
+.total-box{
 
-    align-items:center;
+    padding:14px;
 
-    justify-content:space-between;
+    border-radius:14px;
 
-    gap:15px;
+    background:var(--accent-light);
 
-    margin-bottom:10px;
+    color:var(--text);
 
-    font-size:14px;
+    text-align:center;
+
+    font-size:15px;
+
+    font-weight:700;
+
 }
 
-.total-row span:first-child{
-    color:var(--muted);
+
+.total-box strong{
+
+    color:var(--accent-dark);
+
 }
 
-.total-row strong{
+
+.total-box.final{
+
+    background:var(--theme-gradient);
+
+    color:#fff;
+
+    font-size:19px;
+
     font-weight:800;
+
 }
 
-.final-total{
 
-    border-top:1px dashed var(--border);
+.total-box.final strong{
 
-    margin-top:12px;
+    color:#fff;
 
-    padding-top:13px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-}
-
-.final-total span{
-
-    font-size:16px;
-
-    font-weight:900;
-}
-
-.final-total strong{
-
-    font-size:24px;
-
-    color:var(--accent);
-
-    font-weight:900;
 }
 
 
 /* =====================================================
-   ORDER BUTTON
+   SEND ORDER
 ===================================================== */
 
-.order-btn{
+.send-order-btn{
 
     width:100%;
 
-    min-height:52px;
+    margin-top:15px;
 
-    border:none;
+    min-height:54px;
 
-    border-radius:13px;
+    border:0;
 
-    background:var(--gradient);
+    border-radius:16px;
+
+    background:var(--theme-gradient);
 
     color:#fff;
 
-    font-size:16px;
+    font-size:17px;
 
-    font-weight:900;
+    font-weight:800;
 
-    margin-top:17px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:9px;
+    cursor:pointer;
 
     box-shadow:
-        0 8px 20px
-        rgba(var(--accent-rgb),.20);
+        0 8px 24px
+        rgba(
+            var(--accent-rgb),
+            .22
+        );
 
     transition:.2s;
+
 }
 
-.order-btn:hover:not(:disabled){
 
-    transform:translateY(-1px);
+.send-order-btn:hover:not(:disabled){
 
-    box-shadow:
-        0 10px 24px
-        rgba(var(--accent-rgb),.28);
+    transform:translateY(-2px);
+
 }
 
-.order-btn:disabled{
 
-    opacity:.5;
+.send-order-btn:disabled{
+
+    background:#BDBDBD;
 
     cursor:not-allowed;
 
     box-shadow:none;
+
 }
 
 
@@ -998,40 +1175,26 @@ textarea.form-control{
 
 .social-section{
 
-    margin-top:20px;
+    margin-top:25px;
 
-    padding:20px;
-
-    text-align:center;
 }
 
-.social-title{
-
-    font-size:17px;
-
-    font-weight:900;
-
-    margin-bottom:13px;
-}
 
 .social-grid{
 
-    display:flex;
+    display:grid;
 
-    justify-content:center;
+    grid-template-columns:
+        repeat(4,1fr);
 
-    flex-wrap:wrap;
+    gap:10px;
 
-    gap:9px;
 }
+
 
 .social-link{
 
-    width:42px;
-
-    height:42px;
-
-    border-radius:12px;
+    min-height:48px;
 
     display:flex;
 
@@ -1039,20 +1202,33 @@ textarea.form-control{
 
     justify-content:center;
 
-    background:#f5f5f5;
+    gap:7px;
 
-    color:var(--text);
-
-    transition:.2s;
-}
-
-.social-link:hover{
+    border-radius:13px;
 
     background:var(--accent-light);
 
-    color:var(--accent);
+    color:var(--accent-dark);
 
-    transform:translateY(-2px);
+    text-decoration:none;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    transition:.2s;
+
+}
+
+
+.social-link:hover{
+
+    background:var(--accent);
+
+    color:#fff;
+
+    transform:translateY(-1px);
+
 }
 
 
@@ -1060,111 +1236,58 @@ textarea.form-control{
    SIDEBAR
 ===================================================== */
 
-.sidebar-overlay{
-
-    position:fixed;
-
-    inset:0;
-
-    background:rgba(0,0,0,.45);
-
-    z-index:1998;
-
-    opacity:0;
-
-    visibility:hidden;
-
-    transition:.25s;
-}
-
-.sidebar-overlay.active{
-
-    opacity:1;
-
-    visibility:visible;
-}
-
 .sidebar{
 
     position:fixed;
 
     top:0;
 
-    right:-310px;
+    right:-300px;
+
+    z-index:999;
 
     width:290px;
 
-    max-width:85vw;
-
     height:100vh;
+
+    padding-top:25px;
 
     background:var(--card);
 
-    z-index:1999;
+    box-shadow:
+        -5px 0 20px
+        rgba(0,0,0,.12);
 
-    box-shadow:-5px 0 25px rgba(0,0,0,.12);
+    transition:.3s;
 
-    transition:.28s;
-
-    padding:20px;
 }
+
 
 .sidebar.active{
+
     right:0;
+
 }
 
-.sidebar-head{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    gap:10px;
-
-    padding-bottom:18px;
-
-    border-bottom:1px solid var(--border);
-
-    margin-bottom:15px;
-}
 
 .sidebar-title{
 
-    font-size:20px;
+    padding:5px 25px 20px;
 
-    font-weight:900;
+    margin-bottom:5px;
 
-    color:var(--accent);
+    border-bottom:1px solid var(--border);
 
-    overflow:hidden;
+    color:var(--text);
 
-    text-overflow:ellipsis;
+    font-size:24px;
 
-    white-space:nowrap;
+    font-weight:800;
+
 }
 
-.sidebar-close{
 
-    width:40px;
-
-    height:40px;
-
-    border:none;
-
-    background:#f5f5f5;
-
-    border-radius:11px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-}
-
-.sidebar-link{
+.sidebar a{
 
     display:flex;
 
@@ -1172,29 +1295,64 @@ textarea.form-control{
 
     gap:12px;
 
-    padding:13px 12px;
+    padding:16px 25px;
 
-    border-radius:12px;
+    border-bottom:1px solid var(--border);
 
-    font-weight:700;
+    color:var(--text);
 
-    margin-bottom:5px;
+    text-decoration:none;
 
-    transition:.2s;
+    font-size:15px;
+
+    font-weight:600;
+
 }
 
-.sidebar-link:hover{
 
-    background:var(--accent-light);
+.sidebar a i{
 
-    color:var(--accent);
-}
-
-.sidebar-link i{
-
-    width:23px;
+    width:22px;
 
     text-align:center;
+
+    color:var(--accent);
+
+}
+
+
+.sidebar a:hover{
+
+    background:var(--sidebar-hover);
+
+    color:var(--accent-dark);
+
+}
+
+
+/* =====================================================
+   OVERLAY
+===================================================== */
+
+.overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:998;
+
+    display:none;
+
+    background:rgba(0,0,0,.40);
+
+}
+
+
+.overlay.active{
+
+    display:block;
+
 }
 
 
@@ -1202,15 +1360,9 @@ textarea.form-control{
    LOADING
 ===================================================== */
 
-.loading-screen{
+.loading{
 
-    position:fixed;
-
-    inset:0;
-
-    z-index:5000;
-
-    background:rgba(255,255,255,.92);
+    min-height:300px;
 
     display:flex;
 
@@ -1218,38 +1370,17 @@ textarea.form-control{
 
     justify-content:center;
 
-    flex-direction:column;
-
-    gap:12px;
-}
-
-.loading-spinner{
-
-    width:42px;
-
-    height:42px;
-
-    border:4px solid #eee;
-
-    border-top-color:var(--accent);
-
-    border-radius:50%;
-
-    animation:spin .8s linear infinite;
-}
-
-.loading-text{
-
     color:var(--muted);
 
-    font-weight:700;
 }
 
-@keyframes spin{
 
-    to{
-        transform:rotate(360deg);
-    }
+.loading i{
+
+    margin-left:7px;
+
+    color:var(--accent);
+
 }
 
 
@@ -1257,190 +1388,208 @@ textarea.form-control{
    THEMES
 ===================================================== */
 
-body.theme-orange{
+.theme-orange{
     --accent:#F47B20;
     --accent-dark:#DF6810;
     --accent-light:#FFF1E6;
     --accent-rgb:244,123,32;
-    --gradient:linear-gradient(135deg,#F47B20,#FF9B54);
 }
 
-body.theme-blue{
-    --accent:#1976D2;
-    --accent-dark:#125BA3;
-    --accent-light:#E8F2FF;
-    --accent-rgb:25,118,210;
-    --gradient:linear-gradient(135deg,#1976D2,#42A5F5);
+.theme-blue{
+    --accent:#1769AA;
+    --accent-dark:#0E4F84;
+    --accent-light:#EAF4FC;
+    --accent-rgb:23,105,170;
 }
 
-body.theme-green{
-    --accent:#2E8B57;
-    --accent-dark:#226B43;
-    --accent-light:#E8F7EF;
-    --accent-rgb:46,139,87;
-    --gradient:linear-gradient(135deg,#2E8B57,#5CBF82);
+.theme-green{
+    --accent:#198754;
+    --accent-dark:#12633D;
+    --accent-light:#EAF8F1;
+    --accent-rgb:25,135,84;
 }
 
-body.theme-purple{
-    --accent:#7E57C2;
-    --accent-dark:#5E3FA0;
-    --accent-light:#F0EAFE;
-    --accent-rgb:126,87,194;
-    --gradient:linear-gradient(135deg,#7E57C2,#AB7EEB);
+.theme-purple{
+    --accent:#7B3FC6;
+    --accent-dark:#5E2999;
+    --accent-light:#F3ECFB;
+    --accent-rgb:123,63,198;
 }
 
-body.theme-pink{
-    --accent:#E91E63;
-    --accent-dark:#C2185B;
-    --accent-light:#FDE8F0;
-    --accent-rgb:233,30,99;
-    --gradient:linear-gradient(135deg,#E91E63,#F06292);
+.theme-pink{
+    --accent:#D94F87;
+    --accent-dark:#AE3568;
+    --accent-light:#FCECF3;
+    --accent-rgb:217,79,135;
 }
 
-body.theme-dark{
-
-    --bg:#121212;
-    --header:#181818;
-
-    --card:#1F1F1F;
-
-    --text:#F5F5F5;
-    --muted:#AAAAAA;
-
-    --border:#333333;
-
-    --accent:#F47B20;
-    --accent-dark:#DF6810;
-    --accent-light:#332419;
-
-    --accent-rgb:244,123,32;
-
-    --gradient:linear-gradient(135deg,#F47B20,#FF9B54);
+.theme-red{
+    --accent:#E63946;
+    --accent-dark:#B92A35;
+    --accent-light:#FDECEE;
+    --accent-rgb:230,57,70;
 }
 
-body.theme-red{
-    --accent:#D32F2F;
-    --accent-dark:#A52222;
-    --accent-light:#FDECEC;
-    --accent-rgb:211,47,47;
-    --gradient:linear-gradient(135deg,#D32F2F,#EF5350);
+.theme-teal{
+    --accent:#00B4D8;
+    --accent-dark:#008BA8;
+    --accent-light:#E8FAFE;
+    --accent-rgb:0,180,216;
 }
 
-body.theme-teal{
-    --accent:#00897B;
-    --accent-dark:#00695C;
-    --accent-light:#E4F7F4;
-    --accent-rgb:0,137,123;
-    --gradient:linear-gradient(135deg,#00897B,#26A69A);
-}
-
-body.theme-gold{
-    --accent:#B8860B;
-    --accent-dark:#8C6508;
-    --accent-light:#FFF8DF;
-    --accent-rgb:184,134,11;
-    --gradient:linear-gradient(135deg,#B8860B,#E4B949);
-}
-
-body.theme-luxury{
-
-    --bg:#111111;
-    --header:#151515;
-
-    --card:#1B1B1B;
-
-    --text:#F5F5F5;
-    --muted:#BDBDBD;
-
-    --border:#363636;
-
+.theme-gold{
     --accent:#D4AF37;
-    --accent-dark:#A88720;
-    --accent-light:#2D291C;
-
+    --accent-dark:#A7861F;
+    --accent-light:#FBF6E6;
     --accent-rgb:212,175,55;
-
-    --gradient:
-        linear-gradient(
-            135deg,
-            #B8860B,
-            #F0D36A
-        );
 }
 
-body.theme-sunset{
-    --accent:#FF7043;
-    --accent-dark:#E45127;
-    --accent-light:#FFF0EB;
-    --accent-rgb:255,112,67;
-    --gradient:linear-gradient(135deg,#FF7043,#FFB74D);
+.theme-luxury{
+    --accent:#D4AF37;
+    --accent-dark:#A7861F;
+    --accent-light:#211E14;
+    --accent-rgb:212,175,55;
 }
 
-body.theme-emerald{
-    --accent:#00897B;
-    --accent-dark:#00695C;
-    --accent-light:#E4F7F4;
-    --accent-rgb:0,137,123;
-    --gradient:linear-gradient(135deg,#00897B,#66BB6A);
+.theme-sunset{
+    --accent:#FD1D1D;
+    --accent-dark:#C91010;
+    --accent-light:#FFF0E9;
+    --accent-rgb:253,29,29;
 }
 
-body.theme-navy{
-    --accent:#283593;
-    --accent-dark:#1A237E;
-    --accent-light:#E9EBFA;
-    --accent-rgb:40,53,147;
-    --gradient:linear-gradient(135deg,#283593,#5C6BC0);
+.theme-emerald{
+    --accent:#0F5132;
+    --accent-dark:#093D25;
+    --accent-light:#E9F5EF;
+    --accent-rgb:15,81,50;
 }
 
-body.theme-brown{
+.theme-navy{
+    --accent:#0B1F3A;
+    --accent-dark:#061426;
+    --accent-light:#EAF0F7;
+    --accent-rgb:11,31,58;
+}
+
+.theme-brown{
     --accent:#795548;
-    --accent-dark:#5D4037;
-    --accent-light:#F3ECE9;
+    --accent-dark:#563A31;
+    --accent-light:#F3EEEC;
     --accent-rgb:121,85,72;
-    --gradient:linear-gradient(135deg,#795548,#A1887F);
 }
 
-body.theme-rose{
-    --accent:#C2185B;
-    --accent-dark:#880E4F;
-    --accent-light:#FCE8F0;
-    --accent-rgb:194,24,91;
-    --gradient:linear-gradient(135deg,#C2185B,#EC407A);
+.theme-rose{
+    --accent:#BE185D;
+    --accent-dark:#971247;
+    --accent-light:#FBEAF2;
+    --accent-rgb:190,24,93;
 }
 
-body.theme-indigo{
-    --accent:#3949AB;
-    --accent-dark:#283593;
-    --accent-light:#EAECFA;
-    --accent-rgb:57,73,171;
-    --gradient:linear-gradient(135deg,#3949AB,#7986CB);
+.theme-indigo{
+    --accent:#4338CA;
+    --accent-dark:#31279B;
+    --accent-light:#EEF0FF;
+    --accent-rgb:67,56,202;
 }
 
 
 /* =====================================================
-   DARK SPECIAL
+   DARK
 ===================================================== */
 
-body.theme-dark .icon-btn,
-body.theme-luxury .icon-btn{
+.theme-dark{
 
-    background:#252525;
+    --bg:#07111F;
+    --header:#07111F;
 
-    color:#fff;
+    --card:#0D1B2A;
+    --card-soft:#102234;
+
+    --text:#F4F7FB;
+    --text-soft:#DCE5EE;
+
+    --muted:#AAB7C7;
+
+    --border:#1D334A;
+
+    --accent:#F47B20;
+    --accent-dark:#FF8C32;
+    --accent-light:#17283A;
+
+    --accent-rgb:244,123,32;
+
+    --danger:#EF6461;
+    --danger-bg:#351B20;
+
+    --sidebar-hover:#17283A;
+
 }
 
-body.theme-dark .form-control,
-body.theme-luxury .form-control{
 
-    background:#252525;
+.theme-dark body{
 
-    color:#fff;
+    background:#07111F;
+
+    color:#F4F7FB;
+
 }
 
-body.theme-dark .quantity-control,
-body.theme-luxury .quantity-control{
 
-    background:#252525;
+.theme-dark input,
+.theme-dark select{
+
+    background:#102234;
+
+}
+
+
+.theme-dark select option{
+
+    background:#0D1B2A;
+
+    color:#F4F7FB;
+
+}
+
+
+.theme-luxury body,
+.theme-dark body{
+
+    background:#07111F;
+
+}
+
+
+.theme-luxury header,
+.theme-dark header{
+
+    background:#07111F;
+
+    border-bottom-color:#172A40;
+
+}
+
+
+.theme-luxury .cart-card,
+.theme-luxury .summary-card,
+.theme-luxury .social-section,
+.theme-dark .cart-card,
+.theme-dark .summary-card,
+.theme-dark .social-section{
+
+    background:#0D1B2A;
+
+    border-color:#1D334A;
+
+}
+
+
+.theme-luxury .sidebar,
+.theme-dark .sidebar{
+
+    background:#0A1726;
+
 }
 
 
@@ -1453,187 +1602,215 @@ body.theme-luxury .quantity-control{
     .cart-layout{
 
         grid-template-columns:1fr;
+
     }
+
 
     .summary-card{
 
         position:static;
+
     }
 
 }
 
+
 @media(max-width:650px){
 
-    header{
-        height:64px;
+    body{
 
-        padding:0 12px;
+        padding-bottom:60px;
+
     }
+
+
+    header{
+
+        min-height:68px;
+
+        padding:11px 14px;
+
+    }
+
 
     .logo{
-        font-size:18px;
+
+        min-width:100px;
 
         max-width:170px;
+
     }
 
-    .icon-btn{
 
-        width:40px;
-        height:40px;
+    #storeOwnerName{
 
-        border-radius:12px;
+        max-width:160px;
+
+        font-size:17px;
+
     }
 
-    .page{
 
-        width:min(100% - 18px,1200px);
+    .menu-btn,
+    .cart-icon{
 
-        margin-top:18px;
+        width:43px;
+
+        height:43px;
+
     }
 
-    .page-top{
 
-        align-items:flex-start;
+    .container{
+
+        width:calc(100% - 20px);
+
     }
+
+
+    .store-info{
+
+        width:calc(100% - 20px);
+
+    }
+
+
+    .page-header{
+
+        align-items:stretch;
+
+        flex-direction:column;
+
+    }
+
 
     .page-title{
 
-        font-size:26px;
+        font-size:24px;
+
     }
 
-    .continue-btn{
 
-        padding:9px 11px;
+    .cart-card,
+    .summary-card,
+    .social-section{
 
-        font-size:12px;
+        padding:15px;
+
+        border-radius:20px;
+
     }
+
 
     .cart-item{
 
-        grid-template-columns:82px minmax(0,1fr);
+        grid-template-columns:
+            78px
+            minmax(0,1fr);
 
-        gap:11px;
+        gap:12px;
+
     }
+
 
     .cart-item-image{
 
-        width:82px;
+        width:78px;
 
-        height:98px;
+        height:78px;
+
     }
+
+
+    .cart-item-actions{
+
+        grid-column:1 / -1;
+
+        width:100%;
+
+        display:grid;
+
+        grid-template-columns:
+            1fr
+            auto;
+
+        align-items:center;
+
+        gap:10px;
+
+    }
+
+
+    .cart-item-actions
+    .quantity-controls{
+
+        justify-self:start;
+
+    }
+
+
+    .cart-item-actions
+    .delete-btn{
+
+        justify-self:end;
+
+    }
+
+
+    .item-total{
+
+        grid-column:1 / -1;
+
+        text-align:center;
+
+        padding:8px;
+
+        border-radius:10px;
+
+        background:var(--accent-light);
+
+    }
+
+
+    .social-grid{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+}
+
+
+@media(max-width:400px){
+
+    .container{
+
+        width:calc(100% - 16px);
+
+    }
+
 
     .cart-item-name{
 
-        font-size:16px;
+        font-size:15px;
+
     }
+
 
     .cart-item-price{
 
         font-size:14px;
+
     }
 
-    .item-total{
 
-        font-size:17px;
+    .social-link{
+
+        font-size:12px;
+
     }
 
-    .delivery-row{
-
-        grid-template-columns:1fr;
-    }
-
-}
-
-@media(max-width:400px){
-
-    .page-title{
-
-        font-size:23px;
-    }
-
-    .continue-btn span{
-
-        display:none;
-    }
-
-    .cart-item{
-
-        grid-template-columns:72px minmax(0,1fr);
-    }
-
-    .cart-item-image{
-
-        width:72px;
-
-        height:88px;
-    }
-
-    .cart-item-bottom{
-
-        gap:8px;
-    }
-
-}
-
-
-/* =====================================================
-   FLOATING CART
-===================================================== */
-
-.floating-cart{
-
-    position:fixed;
-
-    bottom:18px;
-
-    left:18px;
-
-    width:55px;
-
-    height:55px;
-
-    border:none;
-
-    border-radius:50%;
-
-    background:var(--gradient);
-
-    color:#fff;
-
-    z-index:1500;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    box-shadow:
-        0 8px 25px
-        rgba(var(--accent-rgb),.30);
-}
-
-.floating-cart i{
-
-    font-size:21px;
-}
-
-.floating-cart .cart-count{
-
-    top:-3px;
-
-    right:-3px;
-
-    border-color:var(--bg);
-}
-
-
-/* =====================================================
-   HIDE FLOATING CART ON EMPTY
-===================================================== */
-
-.floating-cart.hidden{
-    display:none;
 }
 
 </style>
@@ -1645,92 +1822,71 @@ body.theme-luxury .quantity-control{
 
 
 <!-- =====================================================
-     LOADING
+     OVERLAY
 ===================================================== -->
 
 <div
-    class="loading-screen"
-    id="loadingScreen"
->
-
-    <div class="loading-spinner"></div>
-
-    <div class="loading-text">
-        جاري تحميل السلة...
-    </div>
-
+    class="overlay"
+    id="overlay">
 </div>
-
-
-<!-- =====================================================
-     SIDEBAR OVERLAY
-===================================================== -->
-
-<div
-    class="sidebar-overlay"
-    id="sidebarOverlay"
-></div>
 
 
 <!-- =====================================================
      SIDEBAR
 ===================================================== -->
 
-<aside
+<div
     class="sidebar"
-    id="sidebar"
->
+    id="sidebar">
 
-    <div class="sidebar-head">
+    <div
+        class="sidebar-title"
+        id="sidebarOwnerName">
 
-        <div
-            class="sidebar-title"
-            id="sidebarStoreName"
-        >
-            G-Glam
-        </div>
-
-        <button
-            class="sidebar-close"
-            id="sidebarClose"
-            type="button"
-        >
-            <i class="fas fa-xmark"></i>
-        </button>
+        G-Glam
 
     </div>
 
 
     <a
         href="#"
-        class="sidebar-link"
-        id="homeLink"
-    >
-        <i class="fas fa-house"></i>
-        <span>الرئيسية</span>
+        id="homeLink">
+
+        <i class="fa-solid fa-house"></i>
+
+        <span>
+            الرئيسية
+        </span>
+
     </a>
 
 
     <a
         href="#"
-        class="sidebar-link"
-        id="cartLink"
-    >
-        <i class="fas fa-cart-shopping"></i>
-        <span>سلة التسوق</span>
+        id="cartLink">
+
+        <i class="fa-solid fa-cart-shopping"></i>
+
+        <span>
+            السلة
+        </span>
+
     </a>
 
 
     <a
-        href="#"
-        class="sidebar-link"
-        id="contactLink"
-    >
-        <i class="fas fa-phone"></i>
-        <span>تواصل معنا</span>
+        href="#socialSection"
+        id="contactLink">
+
+        <i class="fa-solid fa-phone"></i>
+
+        <span>
+            اتصل بنا
+        </span>
+
     </a>
 
-</aside>
+</div>
 
 
 <!-- =====================================================
@@ -1739,47 +1895,37 @@ body.theme-luxury .quantity-control{
 
 <header>
 
-    <div class="header-right">
+    <div
+        class="menu-btn"
+        id="menuBtn">
 
-        <button
-            class="icon-btn"
-            id="menuBtn"
-            type="button"
-            aria-label="القائمة"
-        >
-            <i class="fas fa-bars"></i>
-        </button>
-
-
-        <div
-            class="logo"
-            id="storeOwnerName"
-        >
-            G-Glam
-        </div>
+        <i class="fa-solid fa-bars"></i>
 
     </div>
 
 
-    <div class="header-left">
+    <div class="logo">
 
-        <button
-            class="icon-btn"
-            id="headerCartBtn"
-            type="button"
-            aria-label="السلة"
-        >
+        <span id="storeOwnerName">
+            G-Glam
+        </span>
 
-            <i class="fas fa-cart-shopping"></i>
+    </div>
 
-            <span
-                class="cart-count"
-                id="headerCartCount"
-            >
-                0
-            </span>
 
-        </button>
+    <div
+        class="cart-icon"
+        id="cartButton">
+
+        <i class="fa-solid fa-cart-shopping"></i>
+
+        <span
+            class="cart-count"
+            id="cartCount">
+
+            0
+
+        </span>
 
     </div>
 
@@ -1787,314 +1933,318 @@ body.theme-luxury .quantity-control{
 
 
 <!-- =====================================================
-     PAGE
+     STORE INFO
 ===================================================== -->
 
-<main class="page">
+<div
+    class="store-info"
+    id="storeInfo">
+
+    جاري تحميل المتجر...
+
+</div>
 
 
-    <!-- STORE INFO -->
+<!-- =====================================================
+     MAIN
+===================================================== -->
 
-    <div
-        class="store-info"
-        id="storeInfo"
-    >
-
-        <div class="store-info-icon">
-
-            <i class="fas fa-store"></i>
-
-        </div>
-
-        <div class="store-info-text">
-
-            <div class="store-info-label">
-                أنت تتسوق من متجر
-            </div>
-
-            <div
-                class="store-info-name"
-                id="storeInfoName"
-            >
-                G-Glam
-            </div>
-
-        </div>
-
-    </div>
+<main class="container">
 
 
-    <!-- PAGE TOP -->
-
-    <div class="page-top">
+    <div class="page-header">
 
         <h1 class="page-title">
+
             سلة التسوق
+
         </h1>
+
 
         <a
             href="#"
-            class="continue-btn"
-            id="continueShopping"
-        >
-            <i class="fas fa-arrow-right"></i>
-            <span>متابعة التسوق</span>
+            class="back-store-btn"
+            id="backToStoreTop">
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+            متابعة التسوق
+
         </a>
 
     </div>
 
 
-    <!-- =================================================
-         CART LAYOUT
-    ================================================== -->
-
     <div class="cart-layout">
 
 
         <!-- =================================================
-             PRODUCTS
+             CART
         ================================================== -->
 
-        <section class="card">
+        <section class="cart-card">
 
-            <div class="card-title">
 
-                <i class="fas fa-bag-shopping"></i>
+            <div class="section-title">
 
-                <span>المنتجات</span>
+                <i class="fa-solid fa-cart-shopping"></i>
+
+                المنتجات
 
             </div>
 
 
-            <div id="cart-items"></div>
+            <div
+                id="cart-items"
+                class="cart-items">
+
+            </div>
+
+
+            <div
+                id="productsTotal"
+                class="products-total">
+
+                مجموع المنتجات:
+
+                <strong>
+                    0 DA
+                </strong>
+
+            </div>
 
         </section>
 
 
         <!-- =================================================
-             SUMMARY
+             CUSTOMER / ORDER
         ================================================== -->
 
-        <section
-            class="card summary-card"
-            id="summaryCard"
-        >
+        <section class="summary-card">
 
-            <div class="card-title">
 
-                <i class="fas fa-receipt"></i>
+            <div class="section-title">
 
-                <span>تفاصيل الطلب</span>
+                <i class="fa-solid fa-user"></i>
+
+                معلومات الزبون
 
             </div>
 
 
-            <div class="summary-body">
+            <div class="notice">
 
+                <i class="fa-solid fa-circle-info"></i>
 
-                <!-- CUSTOMER NAME -->
+                يرجى إدخال معلوماتك بشكل صحيح حتى يتمكن المتجر من التواصل معك لتأكيد الطلب.
 
-                <div class="form-group">
+            </div>
 
-                    <label
-                        class="form-label"
-                        for="customerName"
-                    >
-                        الاسم الكامل
-                    </label>
 
-                    <input
-                        type="text"
-                        id="customerName"
-                        class="form-control"
-                        placeholder="أدخل اسمك الكامل"
-                        autocomplete="name"
-                    >
+            <div class="form-group">
 
-                </div>
+                <label>
 
+                    الاسم واللقب
 
-                <!-- PHONE -->
-
-                <div class="form-group">
-
-                    <label
-                        class="form-label"
-                        for="customerPhone"
-                    >
-                        رقم الهاتف
-                    </label>
-
-                    <input
-                        type="tel"
-                        id="customerPhone"
-                        class="form-control"
-                        placeholder="05xxxxxxxx"
-                        inputmode="tel"
-                        autocomplete="tel"
-                    >
-
-                </div>
-
-
-                <!-- WILAYA -->
-
-                <div class="form-group">
-
-                    <label
-                        class="form-label"
-                        for="wilaya"
-                    >
-                        الولاية
-                    </label>
-
-                    <select
-                        id="wilaya"
-                        class="form-control"
-                    >
-
-                        <option value="">
-                            اختر الولاية
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <!-- DELIVERY -->
-
-                <div class="form-group">
-
-                    <label class="form-label">
-                        طريقة التوصيل
-                    </label>
-
-                    <div class="delivery-row">
-
-                        <select
-                            id="deliveryType"
-                            class="form-control"
-                        >
-
-                            <option value="">
-                                اختر الطريقة
-                            </option>
-
-                            <option value="office">
-                                المكتب
-                            </option>
-
-                            <option value="home">
-                                إلى المنزل
-                            </option>
-
-                        </select>
-
-
-                        <input
-                            type="text"
-                            id="commune"
-                            class="form-control"
-                            placeholder="البلدية"
-                        >
-
-                    </div>
-
-                </div>
-
-
-                <!-- ADDRESS -->
-
-                <div class="form-group">
-
-                    <label
-                        class="form-label"
-                        for="address"
-                    >
-                        العنوان
-                    </label>
-
-                    <textarea
-                        id="address"
-                        class="form-control"
-                        placeholder="العنوان بالتفصيل"
-                    ></textarea>
-
-                </div>
-
-
-                <!-- DELIVERY MESSAGE -->
-
-                <div
-                    class="delivery-message"
-                    id="deliveryMessage"
-                ></div>
-
-
-                <!-- TOTALS -->
-
-                <div class="totals">
-
-                    <div class="total-row">
-
-                        <span>
-                            مجموع المنتجات
-                        </span>
-
-                        <strong id="productsTotal">
-                            0 دج
-                        </strong>
-
-                    </div>
-
-
-                    <div class="total-row">
-
-                        <span>
-                            التوصيل
-                        </span>
-
-                        <strong id="deliveryCost">
-                            0 دج
-                        </strong>
-
-                    </div>
-
-
-                    <div class="final-total">
-
-                        <span>
-                            المجموع النهائي
-                        </span>
-
-                        <strong id="finalTotal">
-                            0 دج
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <!-- ORDER BUTTON -->
-
-                <button
-                    class="order-btn"
-                    id="orderBtn"
-                    type="button"
-                    disabled
-                >
-
-                    <i class="fas fa-paper-plane"></i>
-
-                    <span>
-                        إرسال الطلب
+                    <span class="required">
+                        *
                     </span>
 
-                </button>
+                </label>
+
+
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="أدخل الاسم واللقب"
+                    autocomplete="name">
 
             </div>
+
+
+            <div class="form-group">
+
+                <label>
+
+                    رقم الهاتف
+
+                    <span class="required">
+                        *
+                    </span>
+
+                </label>
+
+
+                <input
+                    type="tel"
+                    id="phone"
+                    placeholder="أدخل رقم الهاتف"
+                    autocomplete="tel"
+                    inputmode="tel">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+
+                    الولاية
+
+                    <span class="required">
+                        *
+                    </span>
+
+                </label>
+
+
+                <select id="wilaya">
+
+                    <option value="">
+                        جاري تحميل الولايات...
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div
+                id="deliveryLoading"
+                class="delivery-loading">
+
+                <i class="fa-solid fa-spinner fa-spin"></i>
+
+                جاري تحميل أسعار التوصيل...
+
+            </div>
+
+
+            <div
+                id="deliveryError"
+                class="delivery-error">
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+
+                    نوع التوصيل
+
+                    <span class="required">
+                        *
+                    </span>
+
+                </label>
+
+
+                <select id="deliveryType">
+
+                    <option value="">
+                        اختر نوع التوصيل
+                    </option>
+
+                    <option value="إلى المكتب">
+                        إلى المكتب
+                    </option>
+
+                    <option value="إلى باب المنزل">
+                        إلى باب المنزل
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    البلدية
+                </label>
+
+
+                <input
+                    type="text"
+                    id="commune"
+                    placeholder="أدخل البلدية"
+                    autocomplete="address-level2">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    العنوان الكامل
+                </label>
+
+
+                <input
+                    type="text"
+                    id="address"
+                    placeholder="أدخل العنوان الكامل"
+                    autocomplete="street-address">
+
+            </div>
+
+
+            <div class="order-totals">
+
+
+                <div
+                    class="total-box"
+                    id="productsTotalSummary">
+
+                    مجموع المنتجات:
+
+                    <strong>
+                        0 DA
+                    </strong>
+
+                </div>
+
+
+                <div
+                    class="total-box"
+                    id="deliveryPrice">
+
+                    سعر التوصيل:
+
+                    --
+
+                </div>
+
+
+                <div
+                    class="total-box final"
+                    id="finalTotal">
+
+                    المجموع النهائي:
+
+                    <strong>
+                        0 DA
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                type="button"
+                class="send-order-btn"
+                id="orderBtn"
+                disabled>
+
+                <i class="fa-solid fa-box"></i>
+
+                إرسال الطلب
+
+            </button>
 
         </section>
 
@@ -2106,46 +2256,26 @@ body.theme-luxury .quantity-control{
     ================================================== -->
 
     <section
-        class="card social-section"
-        id="socialSection"
-        style="display:none;"
-    >
+        class="social-section"
+        id="socialSection">
 
-        <div class="social-title">
-            تابعنا وتواصل معنا
+        <div class="section-title">
+
+            <i class="fa-solid fa-share-nodes"></i>
+
+            تواصل معنا
+
         </div>
+
 
         <div
             class="social-grid"
-            id="socialGrid"
-        ></div>
+            id="socialGrid">
+        </div>
 
     </section>
 
 </main>
-
-
-<!-- =====================================================
-     FLOATING CART
-===================================================== -->
-
-<button
-    class="floating-cart"
-    id="floatingCart"
-    type="button"
-    aria-label="سلة التسوق"
->
-
-    <i class="fas fa-cart-shopping"></i>
-
-    <span
-        class="cart-count"
-        id="floatingCartCount"
-    >
-        0
-    </span>
-
-</button>
 
 
 <script type="module">
@@ -2178,94 +2308,103 @@ from
 const firebaseConfig = {
 
     apiKey:
-        "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+    "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
 
     authDomain:
-        "g-glam.firebaseapp.com",
+    "g-glam.firebaseapp.com",
 
     projectId:
-        "g-glam",
+    "g-glam",
 
     storageBucket:
-        "g-glam.firebasestorage.app",
+    "g-glam.firebasestorage.app",
 
     messagingSenderId:
-        "997228419719",
+    "997228419719",
 
     appId:
-        "1:997228419719:web:f9d88de7ea2c6f457e3622",
+    "1:997228419719:web:f9d88de7ea2c6f457e3622",
 
     measurementId:
-        "G-WX1K1F83F6"
+    "G-WX1K1F83F6"
+
 };
 
 
 const app =
-    initializeApp(firebaseConfig);
+initializeApp(
+    firebaseConfig
+);
 
 
 const db =
-    getFirestore(app);
+getFirestore(app);
 
 
 /* =====================================================
    META PIXEL
 ===================================================== */
 
-!function(f,b,e,v,n,t,s){
+(function(){
 
-    if(f.fbq)return;
+    if(
+        typeof window.fbq ===
+        "function"
+    ){
 
-    n=f.fbq=function(){
+        return;
 
-        n.callMethod ?
+    }
 
-        n.callMethod.apply(n,arguments) :
 
-        n.queue.push(arguments);
+    !function(f,b,e,v,n,t,s){
 
-    };
+        if(f.fbq)return;
 
-    if(!f._fbq)f._fbq=n;
+        n=f.fbq=function(){
 
-    n.push=n;
+            n.callMethod ?
+            n.callMethod.apply(
+                n,
+                arguments
+            )
+            :
+            n.queue.push(arguments);
 
-    n.loaded=!0;
+        };
 
-    n.version="2.0";
 
-    n.queue=[];
+        if(!f._fbq)f._fbq=n;
 
-    t=b.createElement(e);
+        n.push=n;
 
-    t.async=!0;
+        n.loaded=!0;
 
-    t.src=v;
+        n.version="2.0";
 
-    s=b.getElementsByTagName(e)[0];
+        n.queue=[];
 
-    s.parentNode.insertBefore(t,s);
+        t=b.createElement(e);
 
-}(
-    window,
-    document,
-    "script",
-    "https://connect.facebook.net/en_US/fbevents.js"
-);
+        t.async=!0;
 
-try{
+        t.src=v;
 
-    fbq(
-        "init",
-        "YOUR_META_PIXEL_ID"
+        s=b.getElementsByTagName(e)[0];
+
+        s.parentNode.insertBefore(
+            t,
+            s
+        );
+
+    }(
+        window,
+        document,
+        "script",
+        "https://connect.facebook.net/en_US/fbevents.js"
     );
 
-    fbq(
-        "track",
-        "PageView"
-    );
-
-}catch(e){}
+})();
 
 
 /* =====================================================
@@ -2294,6 +2433,7 @@ try{
         "disableCookie"
     ];
 
+
     ttq.setAndDefer=function(t,e){
 
         t[e]=function(){
@@ -2311,6 +2451,7 @@ try{
 
     };
 
+
     for(
         var i=0;
         i<ttq.methods.length;
@@ -2324,9 +2465,11 @@ try{
 
     }
 
+
     ttq.instance=function(t){
 
         var e=ttq._i[t]||[];
+
 
         for(
             var n=0;
@@ -2341,14 +2484,17 @@ try{
 
         }
 
+
         return e;
 
     };
 
+
     ttq.load=function(e,n){
 
         var i=
-            "https://analytics.tiktok.com/i18n/pixel/events.js";
+        "https://analytics.tiktok.com/i18n/pixel/events.js";
+
 
         ttq._i=ttq._i||{};
 
@@ -2358,11 +2504,12 @@ try{
 
         ttq._t=ttq._t||{};
 
-        ttq._t[e]=+new Date;
+        ttq._t[e]=+new Date();
 
         ttq._o=ttq._o||{};
 
         ttq._o[e]=n||{};
+
 
         n=d.createElement("script");
 
@@ -2370,68 +2517,242 @@ try{
 
         n.async=!0;
 
-        n.src=i+"?sdkid="+e+"&lib="+t;
+        n.src=
+        i+
+        "?sdkid="+
+        e+
+        "&lib="+
+        t;
 
-        e=d.getElementsByTagName("script")[0];
 
-        e.parentNode.insertBefore(n,e);
+        e=
+        d.getElementsByTagName(
+            "script"
+        )[0];
+
+
+        e.parentNode.insertBefore(
+            n,
+            e
+        );
 
     };
 
-}(
-    window,
-    document,
-    "ttq"
+}(window,document,"ttq");
+
+
+/* =====================================================
+   URL
+===================================================== */
+
+const params =
+new URLSearchParams(
+    window.location.search
+);
+
+
+const urlStoreId =
+params.get("store");
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const cartContainer =
+document.getElementById(
+    "cart-items"
+);
+
+
+const productsTotalElement =
+document.getElementById(
+    "productsTotal"
+);
+
+
+const productsTotalSummary =
+document.getElementById(
+    "productsTotalSummary"
+);
+
+
+const wilayaSelect =
+document.getElementById(
+    "wilaya"
+);
+
+
+const deliveryTypeSelect =
+document.getElementById(
+    "deliveryType"
+);
+
+
+const deliveryPriceElement =
+document.getElementById(
+    "deliveryPrice"
+);
+
+
+const finalTotalElement =
+document.getElementById(
+    "finalTotal"
+);
+
+
+const deliveryLoading =
+document.getElementById(
+    "deliveryLoading"
+);
+
+
+const deliveryError =
+document.getElementById(
+    "deliveryError"
+);
+
+
+const orderBtn =
+document.getElementById(
+    "orderBtn"
+);
+
+
+const storeInfo =
+document.getElementById(
+    "storeInfo"
+);
+
+
+const storeOwnerNameElement =
+document.getElementById(
+    "storeOwnerName"
+);
+
+
+const sidebarOwnerName =
+document.getElementById(
+    "sidebarOwnerName"
+);
+
+
+const cartCount =
+document.getElementById(
+    "cartCount"
+);
+
+
+const themeColorMeta =
+document.getElementById(
+    "themeColorMeta"
+);
+
+
+const sidebar =
+document.getElementById(
+    "sidebar"
+);
+
+
+const overlay =
+document.getElementById(
+    "overlay"
+);
+
+
+const menuBtn =
+document.getElementById(
+    "menuBtn"
+);
+
+
+const homeLink =
+document.getElementById(
+    "homeLink"
+);
+
+
+const cartLink =
+document.getElementById(
+    "cartLink"
+);
+
+
+const cartButton =
+document.getElementById(
+    "cartButton"
+);
+
+
+const contactLink =
+document.getElementById(
+    "contactLink"
+);
+
+
+const backToStoreTop =
+document.getElementById(
+    "backToStoreTop"
 );
 
 
 /* =====================================================
-   URL / STORE
-===================================================== */
-
-const urlStoreId =
-    new URLSearchParams(
-        window.location.search
-    ).get("store");
-
-
-/* =====================================================
-   STATE
+   VARIABLES
 ===================================================== */
 
 let cart =
-    getCart();
+getCart();
 
-let productsTotal = 0;
 
-let deliveryCost = 0;
+let productsTotal =
+0;
 
-let deliveryItems = [];
+
+let deliveryCost =
+0;
+
+
+let deliveryItems =
+[];
+
 
 let currentStoreId =
-    urlStoreId ||
-    localStorage.getItem("cartStoreId") ||
-    localStorage.getItem("storeId") ||
-    null;
+urlStoreId ||
+localStorage.getItem(
+    "cartStoreId"
+) ||
+localStorage.getItem(
+    "storeId"
+) ||
+null;
+
 
 let currentOwnerUid =
-    localStorage.getItem("ownerUid") ||
-    null;
+localStorage.getItem(
+    "ownerUid"
+) ||
+null;
+
 
 let currentStoreName =
-    "G-Glam";
+"G-Glam";
+
 
 let currentStoreOwnerName =
-    "";
+"";
+
 
 let currentStore =
-    null;
+null;
+
 
 let unsubscribeStore =
-    null;
+null;
+
 
 let listeningStoreId =
-    null;
+null;
 
 
 /* =====================================================
@@ -2463,60 +2784,60 @@ const validThemes = [
 const themeColors = {
 
     orange:"#F47B20",
-    blue:"#1976D2",
-    green:"#2E8B57",
-    purple:"#7E57C2",
-    pink:"#E91E63",
-    dark:"#F47B20",
-    red:"#D32F2F",
-    teal:"#00897B",
-    gold:"#B8860B",
+    blue:"#1769AA",
+    green:"#198754",
+    purple:"#7B3FC6",
+    pink:"#D94F87",
+    dark:"#0A1726",
+    red:"#E63946",
+    teal:"#00B4D8",
+    gold:"#D4AF37",
     luxury:"#D4AF37",
-    sunset:"#FF7043",
-    emerald:"#00897B",
-    navy:"#283593",
+    sunset:"#FD1D1D",
+    emerald:"#0F5132",
+    navy:"#0B1F3A",
     brown:"#795548",
-    rose:"#C2185B",
-    indigo:"#3949AB"
+    rose:"#BE185D",
+    indigo:"#4338CA"
 
 };
 
 
 /* =====================================================
-   COLOR HELPERS
+   THEME HELPERS
 ===================================================== */
 
-function normalizeHexColor(color){
+function normalizeHexColor(value){
+
+    const v =
+    String(value || "")
+        .trim();
+
 
     if(
-        typeof color !== "string"
+        /^#[0-9a-fA-F]{6}$/.test(v)
     ){
 
-        return null;
+        return v.toUpperCase();
 
     }
 
-    let value =
-        color.trim();
 
     if(
-        !/^#?[0-9a-fA-F]{6}$/.test(value)
+        /^#[0-9a-fA-F]{3}$/.test(v)
     ){
 
-        return null;
+        return (
+            "#" +
+            v[1] + v[1] +
+            v[2] + v[2] +
+            v[3] + v[3]
+        ).toUpperCase();
 
     }
 
-    if(
-        !value.startsWith("#")
-    ){
 
-        value =
-            "#" + value;
-
-    }
-
-    return value.toUpperCase();
+    return null;
 
 }
 
@@ -2524,7 +2845,8 @@ function normalizeHexColor(color){
 function hexToRgb(hex){
 
     const normalized =
-        normalizeHexColor(hex);
+    normalizeHexColor(hex);
+
 
     if(!normalized){
 
@@ -2532,19 +2854,23 @@ function hexToRgb(hex){
 
     }
 
+
     return {
 
-        r:parseInt(
+        r:
+        parseInt(
             normalized.slice(1,3),
             16
         ),
 
-        g:parseInt(
+        g:
+        parseInt(
             normalized.slice(3,5),
             16
         ),
 
-        b:parseInt(
+        b:
+        parseInt(
             normalized.slice(5,7),
             16
         )
@@ -2560,487 +2886,617 @@ function rgbaFromHex(
 ){
 
     const rgb =
-        hexToRgb(hex);
+    hexToRgb(hex);
+
 
     if(!rgb){
 
-        return `rgba(244,123,32,${alpha})`;
+        return `rgba(0,0,0,${alpha})`;
 
     }
 
-    return `rgba(
-        ${rgb.r},
-        ${rgb.g},
-        ${rgb.b},
-        ${alpha}
-    )`;
+
+    return `
+        rgba(
+            ${rgb.r},
+            ${rgb.g},
+            ${rgb.b},
+            ${alpha}
+        )
+    `;
 
 }
 
 
 function darkenColor(
     hex,
-    amount=0.15
+    amount=.18
 ){
 
     const rgb =
-        hexToRgb(hex);
+    hexToRgb(hex);
+
 
     if(!rgb){
 
-        return "#DF6810";
+        return "#333333";
 
     }
 
-    return "#"+
-        [rgb.r,rgb.g,rgb.b]
+
+    const factor =
+    Math.max(
+        0,
+        Math.min(
+            1,
+            1 - amount
+        )
+    );
+
+
+    const r =
+    Math.round(
+        rgb.r * factor
+    );
+
+
+    const g =
+    Math.round(
+        rgb.g * factor
+    );
+
+
+    const b =
+    Math.round(
+        rgb.b * factor
+    );
+
+
+    return (
+        "#" +
+        [r,g,b]
         .map(
-            value =>
-                Math.max(
-                    0,
-                    Math.round(
-                        value *
-                        (1-amount)
-                    )
-                )
-                .toString(16)
-                .padStart(2,"0")
+            x =>
+            x
+            .toString(16)
+            .padStart(2,"0")
         )
         .join("")
-        .toUpperCase();
+        .toUpperCase()
+    );
 
 }
 
 
 /* =====================================================
-   APPLY THEME
+   APPLY STORE THEME
 ===================================================== */
 
 function applyStoreTheme(
     themeOrStore
 ){
 
+    const oldClasses = [
+
+        "theme-orange",
+        "theme-blue",
+        "theme-green",
+        "theme-purple",
+        "theme-pink",
+        "theme-dark",
+        "theme-red",
+        "theme-teal",
+        "theme-gold",
+        "theme-luxury",
+        "theme-sunset",
+        "theme-emerald",
+        "theme-navy",
+        "theme-brown",
+        "theme-rose",
+        "theme-indigo",
+        "theme-custom-solid",
+        "theme-custom-gradient"
+
+    ];
+
+
     document.body.classList.remove(
-        ...validThemes.map(
-            theme =>
-                `theme-${theme}`
-        )
+        ...oldClasses
     );
 
 
-    let theme =
+    const root =
+    document.documentElement;
+
+
+    [
+        "--accent",
+        "--accent-dark",
+        "--accent-light",
+        "--accent-rgb",
+        "--theme-gradient",
+        "--sidebar-hover"
+    ].forEach(
+        property => {
+
+            root.style.removeProperty(
+                property
+            );
+
+        }
+    );
+
+
+    if(
+        typeof themeOrStore ===
+        "string"
+    ){
+
+        const theme =
+        validThemes.includes(
+            themeOrStore
+        )
+        ?
+        themeOrStore
+        :
         "orange";
 
 
-    let themeType =
-        null;
+        document.body.classList.add(
+            `theme-${theme}`
+        );
 
-    let colors =
-        null;
 
-    let direction =
-        "135deg";
-
-    let customColor =
-        null;
-
-
-    if(
-        typeof themeOrStore === "string"
-    ){
-
-        theme =
-            themeOrStore;
-
-    }else if(
-        themeOrStore &&
-        typeof themeOrStore === "object"
-    ){
-
-        theme =
-            themeOrStore.theme ||
-            themeOrStore.storeTheme ||
-            themeOrStore.themeName ||
-            "orange";
-
-        themeType =
-            themeOrStore.themeType ||
-            null;
-
-        colors =
-            Array.isArray(
-                themeOrStore.themeColors
-            )
-            ?
-            themeOrStore.themeColors
-            :
-            null;
-
-        direction =
-            themeOrStore.themeDirection ||
-            "135deg";
-
-        customColor =
-            themeOrStore.themeColor ||
-            null;
-
-    }
-
-
-    if(
-        themeType === "gradient" &&
-        colors &&
-        colors.length >= 2
-    ){
-
-        const c1 =
-            normalizeHexColor(
-                colors[0]
-            );
-
-        const c2 =
-            normalizeHexColor(
-                colors[1]
-            );
-
-        if(c1 && c2){
-
-            document.documentElement
-                .style
-                .setProperty(
-                    "--accent",
-                    c1
-                );
-
-            document.documentElement
-                .style
-                .setProperty(
-                    "--accent-dark",
-                    darkenColor(c1)
-                );
-
-            document.documentElement
-                .style
-                .setProperty(
-                    "--accent-light",
-                    rgbaFromHex(
-                        c1,
-                        .10
-                    )
-                );
-
-            const rgb =
-                hexToRgb(c1);
-
-            if(rgb){
-
-                document.documentElement
-                    .style
-                    .setProperty(
-                        "--accent-rgb",
-                        `${rgb.r},${rgb.g},${rgb.b}`
-                    );
-
-            }
-
-            document.documentElement
-                .style
-                .setProperty(
-                    "--gradient",
-                    `linear-gradient(
-                        ${direction},
-                        ${c1},
-                        ${c2}
-                    )`
-                );
-
-            localStorage.setItem(
-                "gglamStoreTheme",
-                "custom"
-            );
-
-            localStorage.setItem(
-                "gglamThemeType",
-                "gradient"
-            );
-
-            localStorage.setItem(
-                "gglamThemeColors",
-                JSON.stringify(colors)
-            );
-
-            localStorage.setItem(
-                "gglamThemeDirection",
-                direction
-            );
-
-            localStorage.removeItem(
-                "gglamThemeColor"
-            );
-
-            return;
-
-        }
-
-    }
-
-
-    if(
-        themeType === "solid"
-    ){
-
-        const color =
-            normalizeHexColor(
-                customColor ||
-                (
-                    colors &&
-                    colors[0]
-                )
-            );
-
-
-        if(color){
-
-            const rgb =
-                hexToRgb(color);
-
-            document.documentElement
-                .style
-                .setProperty(
-                    "--accent",
-                    color
-                );
-
-            document.documentElement
-                .style
-                .setProperty(
-                    "--accent-dark",
-                    darkenColor(color)
-                );
-
-            document.documentElement
-                .style
-                .setProperty(
-                    "--accent-light",
-                    rgbaFromHex(
-                        color,
-                        .10
-                    )
-                );
-
-            if(rgb){
-
-                document.documentElement
-                    .style
-                    .setProperty(
-                        "--accent-rgb",
-                        `${rgb.r},${rgb.g},${rgb.b}`
-                    );
-
-            }
-
-            document.documentElement
-                .style
-                .setProperty(
-                    "--gradient",
-                    `linear-gradient(
-                        135deg,
-                        ${color},
-                        ${color}
-                    )`
-                );
-
-
-            localStorage.setItem(
-                "gglamStoreTheme",
-                "custom"
-            );
-
-            localStorage.setItem(
-                "gglamThemeType",
-                "solid"
-            );
-
-            localStorage.setItem(
-                "gglamThemeColor",
-                color
-            );
-
-            localStorage.removeItem(
-                "gglamThemeColors"
-            );
-
-            return;
-
-        }
-
-    }
-
-
-    if(
-        !validThemes.includes(theme)
-    ){
-
-        theme =
-            "orange";
-
-    }
-
-
-    document.body.classList.add(
-        `theme-${theme}`
-    );
-
-
-    localStorage.setItem(
-        "gglamStoreTheme",
-        theme
-    );
-
-    localStorage.removeItem(
-        "gglamThemeType"
-    );
-
-    localStorage.removeItem(
-        "gglamThemeColors"
-    );
-
-    localStorage.removeItem(
-        "gglamThemeDirection"
-    );
-
-    localStorage.removeItem(
-        "gglamThemeColor"
-    );
-
-
-    const color =
+        themeColorMeta.content =
         themeColors[theme] ||
-        themeColors.orange;
+        "#FFFFFF";
 
 
-    document.documentElement
-        .style
-        .setProperty(
-            "--themeColor",
-            color
+        localStorage.setItem(
+            "gglamStoreTheme",
+            theme
         );
 
 
-    const themeMeta =
-        document.getElementById(
-            "themeColorMeta"
+        localStorage.setItem(
+            "gglamThemeType",
+            "legacy"
         );
 
-    if(themeMeta){
-
-        themeMeta.setAttribute(
-            "content",
-            color
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   RESTORE THEME
-===================================================== */
-
-(function restoreSavedTheme(){
-
-    const savedTheme =
-        localStorage.getItem(
-            "gglamStoreTheme"
-        );
-
-    const savedType =
-        localStorage.getItem(
-            "gglamThemeType"
-        );
-
-    const savedColors =
-        localStorage.getItem(
-            "gglamThemeColors"
-        );
-
-    const savedDirection =
-        localStorage.getItem(
-            "gglamThemeDirection"
-        );
-
-    const savedColor =
-        localStorage.getItem(
-            "gglamThemeColor"
-        );
-
-
-    if(
-        savedType === "gradient" &&
-        savedColors
-    ){
-
-        try{
-
-            applyStoreTheme({
-
-                themeType:"gradient",
-
-                themeColors:
-                    JSON.parse(savedColors),
-
-                themeDirection:
-                    savedDirection ||
-                    "135deg"
-
-            });
-
-            return;
-
-        }catch(e){}
-
-    }
-
-
-    if(
-        savedType === "solid" &&
-        savedColor
-    ){
-
-        applyStoreTheme({
-
-            themeType:"solid",
-
-            themeColor:
-                savedColor
-
-        });
 
         return;
 
     }
 
 
-    if(savedTheme){
+    const store =
+    themeOrStore ||
+    {};
 
-        applyStoreTheme(
-            savedTheme
-        );
 
-    }else{
+    if(
+        store.themeType === "gradient" &&
+        Array.isArray(
+            store.themeColors
+        )
+    ){
 
-        applyStoreTheme(
-            "orange"
-        );
+        const colors =
+        store.themeColors
+            .map(
+                normalizeHexColor
+            )
+            .filter(Boolean)
+            .slice(0,4);
+
+
+        if(
+            colors.length >= 2
+        ){
+
+            let direction =
+            store.themeDirection ||
+            "135deg";
+
+
+            if(
+                !/^(?:\d+(?:\.\d+)?deg|to\s+.+)$/i
+                .test(
+                    String(direction)
+                )
+            ){
+
+                direction =
+                "135deg";
+
+            }
+
+
+            const gradient =
+            `linear-gradient(
+                ${direction},
+                ${colors.join(",")}
+            )`;
+
+
+            document.body.classList.add(
+                "theme-custom-gradient"
+            );
+
+
+            root.style.setProperty(
+                "--theme-gradient",
+                gradient
+            );
+
+
+            root.style.setProperty(
+                "--accent",
+                colors[0]
+            );
+
+
+            root.style.setProperty(
+                "--accent-dark",
+                darkenColor(
+                    colors[0]
+                )
+            );
+
+
+            root.style.setProperty(
+                "--accent-light",
+                rgbaFromHex(
+                    colors[0],
+                    .10
+                )
+            );
+
+
+            const rgb =
+            hexToRgb(
+                colors[0]
+            );
+
+
+            if(rgb){
+
+                root.style.setProperty(
+                    "--accent-rgb",
+                    `${rgb.r},${rgb.g},${rgb.b}`
+                );
+
+            }
+
+
+            root.style.setProperty(
+                "--sidebar-hover",
+                rgbaFromHex(
+                    colors[0],
+                    .08
+                )
+            );
+
+
+            themeColorMeta.content =
+            colors[0];
+
+
+            localStorage.setItem(
+                "gglamThemeType",
+                "gradient"
+            );
+
+
+            localStorage.setItem(
+                "gglamThemeColors",
+                JSON.stringify(colors)
+            );
+
+
+            localStorage.setItem(
+                "gglamThemeDirection",
+                direction
+            );
+
+
+            return;
+
+        }
 
     }
+
+
+    if(
+        store.themeType === "solid"
+    ){
+
+        let solidColor =
+        normalizeHexColor(
+            Array.isArray(
+                store.themeColors
+            )
+            ?
+            store.themeColors[0]
+            :
+            null
+        );
+
+
+        if(!solidColor){
+
+            solidColor =
+            normalizeHexColor(
+                store.themeColor
+            );
+
+        }
+
+
+        const builtIn =
+        validThemes.includes(
+            store.theme
+        )
+        ?
+        store.theme
+        :
+        null;
+
+
+        if(builtIn){
+
+            document.body.classList.add(
+                `theme-${builtIn}`
+            );
+
+
+            themeColorMeta.content =
+            themeColors[builtIn];
+
+
+            localStorage.setItem(
+                "gglamStoreTheme",
+                builtIn
+            );
+
+
+            localStorage.setItem(
+                "gglamThemeType",
+                "solid"
+            );
+
+
+            return;
+
+        }
+
+
+        if(solidColor){
+
+            document.body.classList.add(
+                "theme-custom-solid"
+            );
+
+
+            const rgb =
+            hexToRgb(
+                solidColor
+            );
+
+
+            root.style.setProperty(
+                "--accent",
+                solidColor
+            );
+
+
+            root.style.setProperty(
+                "--accent-dark",
+                darkenColor(
+                    solidColor
+                )
+            );
+
+
+            root.style.setProperty(
+                "--accent-light",
+                rgbaFromHex(
+                    solidColor,
+                    .10
+                )
+            );
+
+
+            if(rgb){
+
+                root.style.setProperty(
+                    "--accent-rgb",
+                    `${rgb.r},${rgb.g},${rgb.b}`
+                );
+
+            }
+
+
+            root.style.setProperty(
+                "--sidebar-hover",
+                rgbaFromHex(
+                    solidColor,
+                    .08
+                )
+            );
+
+
+            themeColorMeta.content =
+            solidColor;
+
+
+            localStorage.setItem(
+                "gglamStoreTheme",
+                "custom-solid"
+            );
+
+
+            localStorage.setItem(
+                "gglamThemeType",
+                "solid"
+            );
+
+
+            localStorage.setItem(
+                "gglamThemeColor",
+                solidColor
+            );
+
+
+            return;
+
+        }
+
+    }
+
+
+    const fallback =
+    validThemes.includes(
+        store.theme
+    )
+    ?
+    store.theme
+    :
+    (
+        localStorage.getItem(
+            "gglamStoreTheme"
+        ) ||
+        "orange"
+    );
+
+
+    const finalTheme =
+    validThemes.includes(
+        fallback
+    )
+    ?
+    fallback
+    :
+    "orange";
+
+
+    document.body.classList.add(
+        `theme-${finalTheme}`
+    );
+
+
+    themeColorMeta.content =
+    themeColors[finalTheme] ||
+    "#FFFFFF";
+
+}
+
+
+/* =====================================================
+   RESTORE SAVED THEME
+===================================================== */
+
+(function(){
+
+    const type =
+    localStorage.getItem(
+        "gglamThemeType"
+    );
+
+
+    if(
+        type === "solid"
+    ){
+
+        const color =
+        localStorage.getItem(
+            "gglamThemeColor"
+        );
+
+
+        if(
+            color &&
+            normalizeHexColor(color)
+        ){
+
+            applyStoreTheme({
+
+                themeType:"solid",
+
+                themeColor:color
+
+            });
+
+
+            return;
+
+        }
+
+    }
+
+
+    if(
+        type === "gradient"
+    ){
+
+        try{
+
+            const colors =
+            JSON.parse(
+                localStorage.getItem(
+                    "gglamThemeColors"
+                ) ||
+                "[]"
+            );
+
+
+            if(
+                Array.isArray(colors) &&
+                colors.length >= 2
+            ){
+
+                applyStoreTheme({
+
+                    themeType:"gradient",
+
+                    themeColors:colors,
+
+                    themeDirection:
+                    localStorage.getItem(
+                        "gglamThemeDirection"
+                    ) ||
+                    "135deg"
+
+                });
+
+
+                return;
+
+            }
+
+        }catch(error){
+
+            console.warn(
+                error
+            );
+
+        }
+
+    }
+
+
+    applyStoreTheme(
+        localStorage.getItem(
+            "gglamStoreTheme"
+        ) ||
+        "orange"
+    );
 
 })();
 
 
 /* =====================================================
-   UTILS
+   ESCAPE HTML
 ===================================================== */
 
 function escapeHtml(value){
@@ -3072,68 +3528,76 @@ function escapeHtml(value){
 }
 
 
-function safeUrl(url){
+/* =====================================================
+   SAFE URL
+===================================================== */
+
+function safeUrl(value){
+
+    const url =
+    String(value || "")
+        .trim();
+
 
     if(
-        !url ||
-        typeof url !== "string"
+        /^https?:\/\//i.test(url)
     ){
 
-        return "#";
+        return url;
 
     }
 
-    const value =
-        url.trim();
 
     if(
-        /^(https?:\/\/|tel:|mailto:)/i
-            .test(value)
+        /^data:image\//i.test(url)
     ){
 
-        return value;
+        return url;
 
     }
 
-    return "#";
+
+    return "";
 
 }
 
 
-function formatPrice(
-    price
-){
+/* =====================================================
+   FORMAT PRICE
+===================================================== */
 
-    const number =
-        Number(price) || 0;
+function formatPrice(value){
 
-    return (
-        new Intl.NumberFormat(
-            "fr-DZ"
-        ).format(number)
-        + " دج"
+    return Number(
+        value || 0
+    ).toLocaleString(
+        "fr-FR"
     );
 
 }
 
 
 /* =====================================================
-   CART
+   GET CART
 ===================================================== */
 
 function getCart(){
 
     try{
 
-        const saved =
-            localStorage.getItem(
-                "cart"
-            );
+        const stored =
+        localStorage.getItem(
+            "cart"
+        );
 
-        if(saved){
+
+        if(stored){
 
             const parsed =
-                JSON.parse(saved);
+            JSON.parse(
+                stored
+            );
+
 
             if(
                 Array.isArray(parsed)
@@ -3146,21 +3610,33 @@ function getCart(){
         }
 
 
-        const old =
-            localStorage.getItem(
-                "gglamCart"
+        const oldCart =
+        localStorage.getItem(
+            "gglamCart"
+        );
+
+
+        if(oldCart){
+
+            const parsedOld =
+            JSON.parse(
+                oldCart
             );
 
-        if(old){
-
-            const parsed =
-                JSON.parse(old);
 
             if(
-                Array.isArray(parsed)
+                Array.isArray(parsedOld)
             ){
 
-                return parsed;
+                localStorage.setItem(
+                    "cart",
+                    JSON.stringify(
+                        parsedOld
+                    )
+                );
+
+
+                return parsedOld;
 
             }
 
@@ -3169,49 +3645,51 @@ function getCart(){
     }catch(error){
 
         console.error(
-            "Cart read error:",
+            "CART READ ERROR:",
             error
         );
 
     }
+
 
     return [];
 
 }
 
 
+/* =====================================================
+   SAVE CART
+===================================================== */
+
 function saveCart(){
 
-    try{
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(
+            cart
+        )
+    );
+
+
+    if(currentStoreId){
 
         localStorage.setItem(
-            "cart",
-            JSON.stringify(cart)
+            "cartStoreId",
+            String(
+                currentStoreId
+            )
         );
 
-        if(currentStoreId){
+    }
 
-            localStorage.setItem(
-                "cartStoreId",
-                currentStoreId
-            );
 
-        }
+    if(currentOwnerUid){
 
-        if(currentOwnerUid){
-
-            localStorage.setItem(
-                "ownerUid",
+        localStorage.setItem(
+            "ownerUid",
+            String(
                 currentOwnerUid
-            );
-
-        }
-
-    }catch(error){
-
-        console.error(
-            "Cart save error:",
-            error
+            )
         );
 
     }
@@ -3219,32 +3697,9 @@ function saveCart(){
 }
 
 
-function getItemStoreId(
-    item
-){
-
-    return (
-        item?.storeId ||
-        item?.storeUid ||
-        item?.storeID ||
-        ""
-    );
-
-}
-
-
-function getItemOwnerUid(
-    item
-){
-
-    return (
-        item?.ownerUid ||
-        item?.ownerId ||
-        ""
-    );
-
-}
-
+/* =====================================================
+   STORE CART
+===================================================== */
 
 function getCurrentStoreCart(){
 
@@ -3254,39 +3709,26 @@ function getCurrentStoreCart(){
 
     }
 
+
     return cart.filter(
         item => {
 
             const itemStore =
-                getItemStoreId(item);
+            String(
+                item?.storeId ||
+                item?.storeUid ||
+                item?.ownerUid ||
+                ""
+            );
 
-            const itemOwner =
-                getItemOwnerUid(item);
 
-
-            if(
-                itemStore &&
+            return (
+                !itemStore ||
                 itemStore ===
-                currentStoreId
-            ){
-
-                return true;
-
-            }
-
-
-            if(
-                itemOwner &&
-                itemOwner ===
-                currentStoreId
-            ){
-
-                return true;
-
-            }
-
-
-            return false;
+                String(
+                    currentStoreId
+                )
+            );
 
         }
     );
@@ -3294,65 +3736,111 @@ function getCurrentStoreCart(){
 }
 
 
+/* =====================================================
+   ITEM STORE ID
+===================================================== */
+
+function getItemStoreId(item){
+
+    return String(
+        item?.storeId ||
+        item?.storeUid ||
+        item?.ownerUid ||
+        ""
+    );
+
+}
+
+
+/* =====================================================
+   ITEM OWNER UID
+===================================================== */
+
+function getItemOwnerUid(item){
+
+    return String(
+        item?.ownerUid ||
+        item?.storeUid ||
+        item?.storeId ||
+        ""
+    );
+
+}
+
+
+/* =====================================================
+   STORE OWNER UID
+===================================================== */
+
 function getStoreOwnerUid(){
 
     if(currentOwnerUid){
+
+        return String(
+            currentOwnerUid
+        );
+
+    }
+
+
+    if(
+        currentStore?.ownerUid
+    ){
+
+        currentOwnerUid =
+        String(
+            currentStore.ownerUid
+        );
+
 
         return currentOwnerUid;
 
     }
 
 
+    const storeCart =
+    getCurrentStoreCart();
+
+
+    const matchingItem =
+    storeCart.find(
+        item =>
+        getItemStoreId(item) ===
+        String(
+            currentStoreId ||
+            ""
+        )
+    );
+
+
     if(
-        currentStore &&
-        (
-            currentStore.ownerUid ||
-            currentStore.ownerId
+        matchingItem &&
+        getItemOwnerUid(
+            matchingItem
         )
     ){
 
-        return (
-            currentStore.ownerUid ||
-            currentStore.ownerId
+        currentOwnerUid =
+        getItemOwnerUid(
+            matchingItem
+        );
+
+
+        return currentOwnerUid;
+
+    }
+
+
+    if(currentStoreId){
+
+        return String(
+            currentStoreId
         );
 
     }
 
 
-    const matching =
-        cart.find(
-            item => {
-
-                const itemStore =
-                    getItemStoreId(item);
-
-                return (
-                    itemStore ===
-                    currentStoreId
-                );
-
-            }
-        );
-
-
-    if(matching){
-
-        const owner =
-            getItemOwnerUid(
-                matching
-            );
-
-        if(owner){
-
-            return owner;
-
-        }
-
-    }
-
-
-    return currentStoreId ||
-        null;
+    return null;
 
 }
 
@@ -3364,145 +3852,268 @@ function getStoreOwnerUid(){
 async function loadStoreOwnerName(){
 
     currentStoreOwnerName =
-        currentStore?.ownerName ||
-        currentStore?.owner ||
-        currentStore?.sellerName ||
-        currentStore?.ownerDisplayName ||
-        "";
+    "";
 
 
-    if(
-        !currentStoreOwnerName &&
-        currentOwnerUid
-    ){
-
-        try{
-
-            const userRef =
-                doc(
-                    db,
-                    "users",
-                    currentOwnerUid
-                );
-
-            const userSnap =
-                await getDoc(
-                    userRef
-                );
-
-            if(userSnap.exists()){
-
-                const data =
-                    userSnap.data();
-
-                currentStoreOwnerName =
-                    data.name ||
-                    data.fullName ||
-                    data.displayName ||
-                    data.username ||
-                    "";
-
-            }
-
-        }catch(error){
-
-            console.warn(
-                "Owner name error:",
-                error
-            );
-
-        }
-
-    }
-
-
-    updateStoreNameUI();
-
-}
-
-
-/* =====================================================
-   STORE NAME UI
-===================================================== */
-
-function updateStoreNameUI(){
-
-    const name =
-        currentStoreName ||
-        "G-Glam";
-
-
-    const ownerName =
-        currentStoreOwnerName;
-
-
-    const headerName =
-        document.getElementById(
-            "storeOwnerName"
-        );
-
-    if(headerName){
-
-        headerName.textContent =
-            name;
-
-    }
-
-
-    const sidebarName =
-        document.getElementById(
-            "sidebarStoreName"
-        );
-
-    if(sidebarName){
-
-        sidebarName.textContent =
-            name;
-
-    }
-
-
-    const storeInfoName =
-        document.getElementById(
-            "storeInfoName"
-        );
-
-    if(storeInfoName){
-
-        storeInfoName.textContent =
-            name;
-
-    }
-
-
-    document.title =
-        `${name} | سلة التسوق`;
-
-}
-
-
-/* =====================================================
-   LOAD STORE
-===================================================== */
-
-async function loadStore(){
-
-    if(!currentStoreId){
-
-        applyStoreTheme("orange");
-
-        updateStoreNameUI();
+    if(!currentStore){
 
         return;
 
     }
 
 
+    let ownerName =
+
+        currentStore.ownerName ||
+
+        currentStore.ownerDisplayName ||
+
+        currentStore.accountName ||
+
+        currentStore.displayName ||
+
+        currentStore.username ||
+
+        currentStore.userName ||
+
+        currentStore.storeOwnerName ||
+
+        "";
+
+
+    if(!ownerName){
+
+        const firstName =
+        String(
+            currentStore.firstName ||
+            ""
+        ).trim();
+
+
+        const lastName =
+        String(
+            currentStore.lastName ||
+            ""
+        ).trim();
+
+
+        ownerName =
+        `${firstName} ${lastName}`
+            .trim();
+
+    }
+
+
+    if(ownerName){
+
+        currentStoreOwnerName =
+        String(
+            ownerName
+        );
+
+        return;
+
+    }
+
+
+    if(!currentOwnerUid){
+
+        return;
+
+    }
+
+
+    try{
+
+        const userSnap =
+        await getDoc(
+            doc(
+                db,
+                "users",
+                String(
+                    currentOwnerUid
+                )
+            )
+        );
+
+
+        if(
+            userSnap.exists()
+        ){
+
+            const userData =
+            userSnap.data();
+
+
+            ownerName =
+
+                userData.name ||
+
+                userData.fullName ||
+
+                userData.displayName ||
+
+                userData.username ||
+
+                userData.userName ||
+
+                userData.accountName ||
+
+                userData.ownerName ||
+
+                "";
+
+
+            if(!ownerName){
+
+                const firstName =
+                String(
+                    userData.firstName ||
+                    ""
+                ).trim();
+
+
+                const lastName =
+                String(
+                    userData.lastName ||
+                    ""
+                ).trim();
+
+
+                ownerName =
+                `${firstName} ${lastName}`
+                    .trim();
+
+            }
+
+
+            if(ownerName){
+
+                currentStoreOwnerName =
+                String(
+                    ownerName
+                );
+
+            }
+
+        }
+
+    }catch(error){
+
+        console.error(
+            "OWNER LOAD ERROR:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   UPDATE STORE NAME UI
+===================================================== */
+
+function updateStoreNameUI(){
+
+    const name =
+    String(
+        currentStoreName ||
+        "G-Glam"
+    ).trim() ||
+    "G-Glam";
+
+
+    storeOwnerNameElement.textContent =
+    name;
+
+
+    sidebarOwnerName.textContent =
+    name;
+
+
+    storeInfo.innerHTML = `
+
+        متجر:
+
+        <strong>
+            ${escapeHtml(
+                name
+            )}
+        </strong>
+
+    `;
+
+
+    document.title =
+    `${name} | السلة`;
+
+}
+
+
+/* =====================================================
+   LOAD STORE
+   REAL-TIME
+===================================================== */
+
+async function loadStore(){
+
+    if(!currentStoreId){
+
+        currentStore =
+        null;
+
+
+        currentStoreName =
+        "G-Glam";
+
+
+        currentOwnerUid =
+        null;
+
+
+        currentStoreOwnerName =
+        "";
+
+
+        updateStoreNameUI();
+
+
+        applyStoreTheme(
+            "orange"
+        );
+
+
+        updateNavigation();
+
+
+        loadSocialLinks();
+
+        return;
+
+    }
+
+
+    const storeId =
+    String(
+        currentStoreId
+    );
+
+
     if(
         unsubscribeStore &&
-        listeningStoreId ===
-        currentStoreId
+        listeningStoreId === storeId
     ){
+
+        if(currentStore){
+
+            updateStoreNameUI();
+
+            updateNavigation();
+
+            loadSocialLinks();
+
+        }
 
         return;
 
@@ -3511,131 +4122,225 @@ async function loadStore(){
 
     if(unsubscribeStore){
 
-        unsubscribeStore();
+        try{
+
+            unsubscribeStore();
+
+        }catch(error){
+
+            console.warn(
+                "OLD STORE LISTENER ERROR:",
+                error
+            );
+
+        }
+
 
         unsubscribeStore =
-            null;
+        null;
 
     }
 
 
     listeningStoreId =
-        currentStoreId;
+    storeId;
 
 
-    const storeRef =
-        doc(
-            db,
-            "stores",
-            currentStoreId
-        );
+    await new Promise(
+        resolve => {
+
+            let firstSnapshot =
+            true;
 
 
-    unsubscribeStore =
-        onSnapshot(
+            unsubscribeStore =
+            onSnapshot(
 
-            storeRef,
+                doc(
+                    db,
+                    "stores",
+                    storeId
+                ),
 
-            async snapshot => {
+                async storeSnap => {
 
-                if(
-                    snapshot.exists()
-                ){
+                    try{
 
-                    currentStore =
-                        {
-                            id:
-                                snapshot.id,
-                            ...snapshot.data()
-                        };
+                        if(
+                            storeSnap.exists()
+                        ){
 
-
-                    currentStoreName =
-                        currentStore.storeName ||
-                        currentStore.name ||
-                        "G-Glam";
+                            currentStore =
+                            storeSnap.data();
 
 
-                    currentOwnerUid =
-                        currentStore.ownerUid ||
-                        currentStore.ownerId ||
-                        currentStore.uid ||
-                        currentOwnerUid ||
-                        null;
+                            currentStoreName =
+
+                                String(
+                                    currentStore.storeName ||
+                                    currentStore.name ||
+                                    "G-Glam"
+                                ).trim() ||
+                                "G-Glam";
 
 
-                    if(currentOwnerUid){
+                            /*
+                             * storeId و ownerUid
+                             * معرفان مستقلان.
+                             */
+
+                            currentOwnerUid =
+
+                                currentStore.ownerUid ||
+
+                                currentStore.ownerId ||
+
+                                currentStore.uid ||
+
+                                currentOwnerUid ||
+
+                                null;
+
+
+                            applyStoreTheme(
+                                currentStore
+                            );
+
+
+                            await loadStoreOwnerName();
+
+
+                        }else{
+
+                            currentStore =
+                            null;
+
+
+                            currentStoreName =
+                            "G-Glam";
+
+
+                            currentStoreOwnerName =
+                            "";
+
+
+                            /*
+                             * fallback للتوافق مع
+                             * البنية القديمة فقط.
+                             */
+
+                            currentOwnerUid =
+                            currentOwnerUid ||
+                            storeId;
+
+
+                            applyStoreTheme(
+                                "orange"
+                            );
+
+                        }
+
 
                         localStorage.setItem(
-                            "ownerUid",
-                            currentOwnerUid
+                            "storeId",
+                            storeId
                         );
+
+
+                        localStorage.setItem(
+                            "storeDocumentId",
+                            storeId
+                        );
+
+
+                        if(currentOwnerUid){
+
+                            localStorage.setItem(
+                                "ownerUid",
+                                String(
+                                    currentOwnerUid
+                                )
+                            );
+
+                        }
+
+
+                        updateStoreNameUI();
+
+                        updateNavigation();
+
+                        loadSocialLinks();
+
+                        updateCartCount();
+
+
+                        if(firstSnapshot){
+
+                            firstSnapshot =
+                            false;
+
+                            resolve();
+
+                        }
+
+                    }catch(error){
+
+                        console.error(
+                            "STORE SNAPSHOT PROCESS ERROR:",
+                            error
+                        );
+
+
+                        if(firstSnapshot){
+
+                            firstSnapshot =
+                            false;
+
+                            resolve();
+
+                        }
 
                     }
 
+                },
 
-                    localStorage.setItem(
-                        "cartStoreId",
-                        currentStoreId
+                error => {
+
+                    console.error(
+                        "STORE SNAPSHOT ERROR:",
+                        error
                     );
 
 
-                    applyStoreTheme(
-                        currentStore
-                    );
+                    if(firstSnapshot){
 
+                        firstSnapshot =
+                        false;
 
-                    await loadStoreOwnerName();
-
-
-                    updateNavigation();
-
-                    updateCartCount();
-
-                    await loadDelivery();
-
-                    updateOrderButton();
-
-
-                    await loadSocialLinks();
-
-                }else{
-
-                    currentStore =
+                        currentStore =
                         null;
 
-                    currentStoreName =
+                        currentStoreName =
                         "G-Glam";
 
 
-                    applyStoreTheme(
-                        "orange"
-                    );
+                        updateStoreNameUI();
 
-                    updateStoreNameUI();
+                        applyStoreTheme(
+                            "orange"
+                        );
 
-                    updateNavigation();
+
+                        resolve();
+
+                    }
 
                 }
 
-            },
+            );
 
-            error => {
-
-                console.error(
-                    "Store listener error:",
-                    error
-                );
-
-                applyStoreTheme(
-                    "orange"
-                );
-
-                updateStoreNameUI();
-
-            }
-
-        );
+        }
+    );
 
 }
 
@@ -3646,71 +4351,42 @@ async function loadStore(){
 
 function updateNavigation(){
 
-    const storeParam =
-        currentStoreId
-        ?
-        `?store=${encodeURIComponent(currentStoreId)}`
-        :
-        "";
+    const targetStore =
+    currentStoreId
+    ?
+    "?store=" +
+    encodeURIComponent(
+        String(
+            currentStoreId
+        )
+    )
+    :
+    "";
 
 
-    const homeLink =
-        document.getElementById(
-            "homeLink"
-        );
-
-    if(homeLink){
-
-        homeLink.href =
-            `index.html${storeParam}`;
-
-    }
+    homeLink.href =
+    "index.html" +
+    targetStore;
 
 
-    const cartLink =
-        document.getElementById(
-            "cartLink"
-        );
-
-    if(cartLink){
-
-        cartLink.href =
-            `cart.html${storeParam}`;
-
-    }
+    cartLink.href =
+    "cart.html" +
+    targetStore;
 
 
-    const continueShopping =
-        document.getElementById(
-            "continueShopping"
-        );
+    cartButton.onclick =
+    function(){
 
-    if(continueShopping){
+        window.location.href =
+        "cart.html" +
+        targetStore;
 
-        continueShopping.href =
-            `index.html${storeParam}`;
-
-    }
+    };
 
 
-    const headerCartBtn =
-        document.getElementById(
-            "headerCartBtn"
-        );
-
-    if(headerCartBtn){
-
-        headerCartBtn.onclick =
-            () => {
-
-                window.scrollTo({
-                    top:0,
-                    behavior:"smooth"
-                });
-
-            };
-
-    }
+    backToStoreTop.href =
+    "index.html" +
+    targetStore;
 
 }
 
@@ -3724,131 +4400,118 @@ function normalizeSocialUrl(
     value
 ){
 
-    if(
-        !value ||
-        typeof value !== "string"
-    ){
+    const raw =
+    String(
+        value || ""
+    )
+    .trim();
 
-        return null;
+
+    if(!raw){
+
+        return "";
 
     }
 
-    let url =
-        value.trim();
-
 
     if(
-        type === "whatsapp" ||
-        type === "phone"
+        /^https?:\/\//i.test(raw)
     ){
 
-        if(
-            /^0(5|6|7)[0-9]{8}$/.test(
-                url.replace(
-                    /\s+/g,
-                    ""
-                )
-            )
-        ){
+        return raw;
 
-            url =
-                url.replace(
-                    /^0/,
-                    "213"
-                );
+    }
 
-        }
 
-        if(
-            type === "whatsapp"
-        ){
+    switch(type){
 
-            url =
-                url.replace(
-                    /[^0-9+]/g,
-                    ""
-                );
+        case "whatsapp":
 
             return (
                 "https://wa.me/" +
-                url.replace(
-                    /^\+/,
+                raw.replace(
+                    /[^0-9+]/g,
                     ""
                 )
             );
 
-        }
 
-        return "tel:" + url;
+        case "instagram":
+
+            return (
+                "https://instagram.com/" +
+                raw.replace(
+                    /^@/,
+                    ""
+                )
+            );
+
+
+        case "tiktok":
+
+            return (
+                "https://www.tiktok.com/@" +
+                raw.replace(
+                    /^@/,
+                    ""
+                )
+            );
+
+
+        case "telegram":
+
+            return (
+                "https://t.me/" +
+                raw.replace(
+                    /^@/,
+                    ""
+                )
+            );
+
+
+        case "facebook":
+
+            return (
+                "https://facebook.com/" +
+                raw.replace(
+                    /^@/,
+                    ""
+                )
+            );
+
+
+        case "youtube":
+
+            return (
+                "https://youtube.com/" +
+                raw
+            );
+
+
+        case "twitter":
+
+            return (
+                "https://x.com/" +
+                raw.replace(
+                    /^@/,
+                    ""
+                )
+            );
+
+
+        case "phone":
+
+            return (
+                "tel:" +
+                raw
+            );
+
+
+        default:
+
+            return raw;
 
     }
-
-
-    if(
-        /^https?:\/\//i.test(url)
-    ){
-
-        return url;
-
-    }
-
-
-    if(
-        type === "instagram"
-    ){
-
-        return `https://instagram.com/${url.replace(/^@/,"")}`;
-
-    }
-
-
-    if(
-        type === "tiktok"
-    ){
-
-        return `https://www.tiktok.com/@${url.replace(/^@/,"")}`;
-
-    }
-
-
-    if(
-        type === "telegram"
-    ){
-
-        return `https://t.me/${url.replace(/^@/,"")}`;
-
-    }
-
-
-    if(
-        type === "facebook"
-    ){
-
-        return `https://facebook.com/${url.replace(/^@/,"")}`;
-
-    }
-
-
-    if(
-        type === "youtube"
-    ){
-
-        return `https://youtube.com/${url}`;
-
-    }
-
-
-    if(
-        type === "twitter" ||
-        type === "x"
-    ){
-
-        return `https://x.com/${url.replace(/^@/,"")}`;
-
-    }
-
-
-    return null;
 
 }
 
@@ -3857,286 +4520,249 @@ function normalizeSocialUrl(
    SOCIAL LINKS
 ===================================================== */
 
-async function loadSocialLinks(){
-
-    const section =
-        document.getElementById(
-            "socialSection"
-        );
+function loadSocialLinks(){
 
     const grid =
-        document.getElementById(
-            "socialGrid"
-        );
+    document.getElementById(
+        "socialGrid"
+    );
 
 
-    if(
-        !section ||
-        !grid
-    ){
+    if(!grid){
 
         return;
 
     }
 
 
-    grid.innerHTML = "";
+    const data =
+    currentStore ||
+    {};
 
 
-    if(!currentStore){
-
-        section.style.display =
-            "none";
-
-        return;
-
-    }
-
-
-    const fields = [
+    const socials = [
 
         {
+            type:"whatsapp",
             key:"whatsapp",
-            icon:"fa-brands fa-whatsapp",
-            label:"واتساب"
+            label:"واتساب",
+            icon:"fa-brands fa-whatsapp"
         },
 
         {
-            key:"instagram",
-            icon:"fa-brands fa-instagram",
-            label:"Instagram"
-        },
-
-        {
-            key:"tiktok",
-            icon:"fa-brands fa-tiktok",
-            label:"TikTok"
-        },
-
-        {
-            key:"telegram",
-            icon:"fa-brands fa-telegram",
-            label:"Telegram"
-        },
-
-        {
+            type:"facebook",
             key:"facebook",
-            icon:"fa-brands fa-facebook",
-            label:"Facebook"
+            label:"فيسبوك",
+            icon:"fa-brands fa-facebook"
         },
 
         {
+            type:"instagram",
+            key:"instagram",
+            label:"إنستغرام",
+            icon:"fa-brands fa-instagram"
+        },
+
+        {
+            type:"tiktok",
+            key:"tiktok",
+            label:"تيك توك",
+            icon:"fa-brands fa-tiktok"
+        },
+
+        {
+            type:"youtube",
             key:"youtube",
-            icon:"fa-brands fa-youtube",
-            label:"YouTube"
+            label:"يوتيوب",
+            icon:"fa-brands fa-youtube"
         },
 
         {
+            type:"telegram",
+            key:"telegram",
+            label:"تيليغرام",
+            icon:"fa-brands fa-telegram"
+        },
+
+        {
+            type:"twitter",
             key:"twitter",
-            icon:"fa-brands fa-x-twitter",
-            label:"X"
+            label:"X",
+            icon:"fa-brands fa-x-twitter"
         },
 
         {
+            type:"phone",
             key:"phone",
-            icon:"fas fa-phone",
-            label:"الهاتف"
+            label:"الهاتف",
+            icon:"fa-solid fa-phone"
         }
 
     ];
 
 
-    let count = 0;
-
-
-    fields.forEach(
+    const html =
+    socials
+    .map(
         item => {
 
             const value =
-                currentStore[item.key] ||
-                currentStore.social?.[item.key] ||
-                currentStore.socialLinks?.[item.key] ||
-                "";
-
-
-            if(!value){
-
-                return;
-
-            }
+            data[item.key] ||
+            data.socials?.[item.key] ||
+            "";
 
 
             const url =
-                normalizeSocialUrl(
-                    item.key,
-                    value
-                );
+            normalizeSocialUrl(
+                item.type,
+                value
+            );
 
 
             if(!url){
 
-                return;
+                return "";
 
             }
 
 
-            const link =
-                document.createElement(
-                    "a"
-                );
+            return `
 
-            link.className =
-                "social-link";
+                <a
+                    class="social-link"
+                    href="${escapeHtml(
+                        url
+                    )}"
+                    target="_blank"
+                    rel="noopener noreferrer">
 
-            link.href =
-                safeUrl(url);
+                    <i class="${item.icon}"></i>
 
-            link.target =
-                "_blank";
+                    ${item.label}
 
-            link.rel =
-                "noopener noreferrer";
+                </a>
 
-            link.title =
-                item.label;
-
-            link.innerHTML =
-                `<i class="${item.icon}"></i>`;
-
-
-            grid.appendChild(
-                link
-            );
-
-            count++;
+            `;
 
         }
-    );
+    )
+    .join("");
 
 
-    section.style.display =
-        count > 0
-        ?
-        "block"
-        :
-        "none";
+    grid.innerHTML =
+    html;
 
 }
 
 
 /* =====================================================
-   DELIVERY
+   LOAD DELIVERY
 ===================================================== */
 
 async function loadDelivery(){
 
-    const wilayaSelect =
-        document.getElementById(
-            "wilaya"
-        );
-
-    const message =
-        document.getElementById(
-            "deliveryMessage"
-        );
+    deliveryLoading.style.display =
+    "block";
 
 
-    if(!wilayaSelect){
-
-        return;
-
-    }
+    deliveryError.style.display =
+    "none";
 
 
-    wilayaSelect.innerHTML =
-        `<option value="">
-            اختر الولاية
-        </option>`;
+    wilayaSelect.innerHTML = `
+
+        <option value="">
+            جاري تحميل الولايات...
+        </option>
+
+    `;
 
 
-    deliveryItems = [];
-
-
-    const ownerUid =
-        getStoreOwnerUid();
-
-
-    if(!ownerUid){
-
-        return;
-
-    }
-
-
-    if(message){
-
-        message.className =
-            "delivery-message loading";
-
-        message.textContent =
-            "جاري تحميل أسعار التوصيل...";
-
-    }
+    deliveryItems =
+    [];
 
 
     try{
 
-        const deliveryRef =
-            collection(
-                db,
-                "stores",
-                ownerUid,
-                "delivery"
+        const ownerUid =
+        getStoreOwnerUid();
+
+
+        if(!ownerUid){
+
+            throw new Error(
+                "تعذر تحديد صاحب المتجر."
             );
+
+        }
+
+
+        const deliveryRef =
+        collection(
+            db,
+            "stores",
+            String(
+                ownerUid
+            ),
+            "delivery"
+        );
 
 
         const snapshot =
-            await getDocs(
-                deliveryRef
-            );
+        await getDocs(
+            deliveryRef
+        );
 
 
         snapshot.forEach(
-            itemDoc => {
+            docSnap => {
 
                 const data =
-                    itemDoc.data() || {};
+                docSnap.data();
 
 
-                const office =
-                    Number(
-                        data.office ??
-                        data.officePrice ??
-                        data.bureau ??
-                        data.bureauPrice ??
-                        0
-                    ) || 0;
+                const wilayaName =
+                data.name ||
+                data.wilaya ||
+                data.title ||
+                docSnap.id;
 
 
-                const home =
-                    Number(
-                        data.home ??
-                        data.homePrice ??
-                        data.domicile ??
-                        data.homeDelivery ??
-                        0
-                    ) || 0;
+                const officeValue =
+                data.office ??
+                data.officePrice ??
+                data.bureau ??
+                data.bureauPrice ??
+                0;
+
+
+                const homeValue =
+                data.home ??
+                data.homePrice ??
+                data.domicile ??
+                data.homeDelivery ??
+                0;
 
 
                 deliveryItems.push({
 
                     id:
-                        itemDoc.id,
+                    docSnap.id,
 
                     name:
-                        data.name ||
-                        data.wilaya ||
-                        data.title ||
-                        itemDoc.id,
+                    String(
+                        wilayaName
+                    ),
 
-                    office,
+                    office:
+                    Number(
+                        officeValue
+                    ) || 0,
 
-                    home
+                    home:
+                    Number(
+                        homeValue
+                    ) || 0
 
                 });
 
@@ -4147,11 +4773,34 @@ async function loadDelivery(){
         deliveryItems.sort(
             (a,b) => {
 
+                const aMatch =
+                String(a.id)
+                    .match(/\d+/);
+
+
+                const bMatch =
+                String(b.id)
+                    .match(/\d+/);
+
+
                 const aNum =
-                    Number(a.id);
+                aMatch
+                ?
+                parseInt(
+                    aMatch[0]
+                )
+                :
+                NaN;
+
 
                 const bNum =
-                    Number(b.id);
+                bMatch
+                ?
+                parseInt(
+                    bMatch[0]
+                )
+                :
+                NaN;
 
 
                 if(
@@ -4159,74 +4808,113 @@ async function loadDelivery(){
                     !Number.isNaN(bNum)
                 ){
 
-                    return aNum-bNum;
+                    return aNum - bNum;
 
                 }
 
 
-                return String(a.name)
-                    .localeCompare(
-                        String(b.name),
-                        "ar"
-                    );
-
-            }
-        );
-
-
-        deliveryItems.forEach(
-            item => {
-
-                const option =
-                    document.createElement(
-                        "option"
-                    );
-
-                option.value =
-                    item.id;
-
-                option.textContent =
-                    item.name;
-
-                wilayaSelect.appendChild(
-                    option
+                return a.name.localeCompare(
+                    b.name,
+                    "ar"
                 );
 
             }
         );
 
 
-        if(message){
+        wilayaSelect.innerHTML = `
 
-            message.className =
-                "delivery-message";
+            <option value="">
+                اختر الولاية
+            </option>
 
-            message.textContent =
-                "";
+        `;
+
+
+        if(
+            deliveryItems.length === 0
+        ){
+
+            wilayaSelect.innerHTML = `
+
+                <option value="">
+                    لا توجد ولايات متاحة
+                </option>
+
+            `;
+
+
+            deliveryError.textContent =
+            "❌ لا توجد أسعار توصيل لهذا المتجر حاليًا.";
+
+
+            deliveryError.style.display =
+            "block";
+
+        }else{
+
+            deliveryItems.forEach(
+                item => {
+
+                    const option =
+                    document.createElement(
+                        "option"
+                    );
+
+
+                    option.value =
+                    item.id;
+
+
+                    option.textContent =
+                    item.name;
+
+
+                    wilayaSelect.appendChild(
+                        option
+                    );
+
+                }
+            );
 
         }
+
+
+        deliveryLoading.style.display =
+        "none";
 
 
         updateDelivery();
 
+        updateOrderButton();
 
     }catch(error){
 
         console.error(
-            "Delivery loading error:",
+            "DELIVERY LOAD ERROR:",
             error
         );
 
 
-        if(message){
+        wilayaSelect.innerHTML = `
 
-            message.className =
-                "delivery-message error";
+            <option value="">
+                تعذر تحميل الولايات
+            </option>
 
-            message.textContent =
-                "تعذر تحميل أسعار التوصيل.";
+        `;
 
-        }
+
+        deliveryError.textContent =
+        "❌ تعذر تحميل أسعار التوصيل لهذا المتجر.";
+
+
+        deliveryError.style.display =
+        "block";
+
+
+        deliveryLoading.style.display =
+        "none";
 
     }
 
@@ -4234,15 +4922,13 @@ async function loadDelivery(){
 
 
 /* =====================================================
-   GET DELIVERY ITEM
+   DELIVERY ITEM
 ===================================================== */
 
 function getDeliveryItem(){
 
     const wilaya =
-        document.getElementById(
-            "wilaya"
-        )?.value;
+    wilayaSelect.value;
 
 
     if(!wilaya){
@@ -4254,9 +4940,9 @@ function getDeliveryItem(){
 
     return deliveryItems.find(
         item =>
-            String(item.id) ===
-            String(wilaya)
-    ) || null;
+        String(item.id) ===
+        String(wilaya)
+    );
 
 }
 
@@ -4267,55 +4953,63 @@ function getDeliveryItem(){
 
 function updateDelivery(){
 
-    const deliveryType =
-        document.getElementById(
-            "deliveryType"
-        )?.value;
-
-
     const item =
-        getDeliveryItem();
+    getDeliveryItem();
 
 
-    deliveryCost = 0;
+    const type =
+    deliveryTypeSelect.value;
 
 
-    if(
-        item &&
-        deliveryType === "office"
-    ){
+    if(!item || !type){
 
         deliveryCost =
-            Number(item.office) || 0;
+        0;
+
+
+        deliveryPriceElement.textContent =
+        "سعر التوصيل: --";
+
+
+        updateFinalTotal();
+
+        return;
 
     }
 
 
     if(
-        item &&
-        deliveryType === "home"
+        type ===
+        "إلى المكتب"
     ){
 
         deliveryCost =
-            Number(item.home) || 0;
+        Number(
+            item.office
+        ) || 0;
+
+    }else{
+
+        deliveryCost =
+        Number(
+            item.home
+        ) || 0;
 
     }
 
 
-    const deliveryCostElement =
-        document.getElementById(
-            "deliveryCost"
-        );
+    deliveryPriceElement.innerHTML = `
 
+        سعر التوصيل:
 
-    if(deliveryCostElement){
-
-        deliveryCostElement.textContent =
-            formatPrice(
+        <strong>
+            ${formatPrice(
                 deliveryCost
-            );
+            )}
+            DA
+        </strong>
 
-    }
+    `;
 
 
     updateFinalTotal();
@@ -4324,28 +5018,32 @@ function updateDelivery(){
 
 
 /* =====================================================
-   FINAL TOTAL
+   UPDATE FINAL TOTAL
 ===================================================== */
 
 function updateFinalTotal(){
 
-    const final =
-        productsTotal +
-        deliveryCost;
+    const total =
+    Number(
+        productsTotal
+    ) +
+    Number(
+        deliveryCost
+    );
 
 
-    const finalElement =
-        document.getElementById(
-            "finalTotal"
-        );
+    finalTotalElement.innerHTML = `
 
+        المجموع النهائي:
 
-    if(finalElement){
+        <strong>
+            ${formatPrice(
+                total
+            )}
+            DA
+        </strong>
 
-        finalElement.textContent =
-            formatPrice(final);
-
-    }
+    `;
 
 }
 
@@ -4357,58 +5055,55 @@ function updateFinalTotal(){
 function displayCart(){
 
     cart =
-        getCart();
+    getCart();
 
 
-    const container =
-        document.getElementById(
-            "cart-items"
-        );
+    const storeCart =
+    getCurrentStoreCart();
 
 
-    if(!container){
-
-        return;
-
-    }
+    cartContainer.innerHTML =
+    "";
 
 
-    const currentItems =
-        getCurrentStoreCart();
-
-
-    productsTotal = 0;
+    productsTotal =
+    0;
 
 
     if(
-        !currentItems.length
+        storeCart.length === 0
     ){
 
-        container.innerHTML = `
+        cartContainer.innerHTML = `
 
             <div class="empty-cart">
 
                 <div class="empty-cart-icon">
 
-                    <i class="fas fa-cart-shopping"></i>
+                    <i class="fa-solid fa-cart-shopping"></i>
 
                 </div>
+
 
                 <h3>
                     السلة فارغة
                 </h3>
 
+
                 <p>
-                    لم تضف أي منتج إلى سلتك بعد.
+                    لم تقم بإضافة أي منتجات من هذا المتجر بعد.
                 </p>
+
 
                 <a
                     href="#"
-                    class="empty-cart-btn"
-                    id="emptyCartStoreLink"
-                >
-                    <i class="fas fa-store"></i>
-                    العودة إلى المتجر
+                    class="back-store-btn"
+                    id="backToStoreBtn">
+
+                    <i class="fa-solid fa-bag-shopping"></i>
+
+                    تصفح المنتجات
+
                 </a>
 
             </div>
@@ -4416,100 +5111,105 @@ function displayCart(){
         `;
 
 
-        const emptyLink =
-            document.getElementById(
-                "emptyCartStoreLink"
-            );
+        const emptyBack =
+        document.getElementById(
+            "backToStoreBtn"
+        );
 
 
-        if(emptyLink){
+        if(emptyBack){
 
-            const storeParam =
-                currentStoreId
-                ?
-                `?store=${encodeURIComponent(currentStoreId)}`
-                :
-                "";
+            const targetStore =
+            currentStoreId
+            ?
+            "?store=" +
+            encodeURIComponent(
+                String(
+                    currentStoreId
+                )
+            )
+            :
+            "";
 
-            emptyLink.href =
-                `index.html${storeParam}`;
+
+            emptyBack.href =
+            "index.html" +
+            targetStore;
 
         }
 
 
-        updateCartCount();
+        productsTotalElement.innerHTML = `
+
+            مجموع المنتجات:
+
+            <strong>
+                0 DA
+            </strong>
+
+        `;
+
+
+        productsTotalSummary.innerHTML = `
+
+            مجموع المنتجات:
+
+            <strong>
+                0 DA
+            </strong>
+
+        `;
+
+
+        deliveryCost =
+        0;
+
 
         updateFinalTotal();
 
         updateOrderButton();
 
-        const floating =
-            document.getElementById(
-                "floatingCart"
-            );
-
-        if(floating){
-
-            floating.classList.add(
-                "hidden"
-            );
-
-        }
+        updateCartCount();
 
         return;
 
     }
 
 
-    const floating =
-        document.getElementById(
-            "floatingCart"
-        );
-
-    if(floating){
-
-        floating.classList.remove(
-            "hidden"
-        );
-
-    }
-
-
-    let html = "";
-
-
-    currentItems.forEach(
+    storeCart.forEach(
         item => {
 
-            const realIndex =
-                cart.indexOf(item);
-
-
             const quantity =
-                Math.max(
-                    1,
-                    Number(
-                        item.quantity
-                    ) || 1
-                );
+            Math.max(
+                1,
+                Number(
+                    item.quantity ||
+                    1
+                )
+            );
 
 
             const price =
+            Math.max(
+                0,
                 Number(
-                    item.price
-                ) || 0;
+                    item.price ||
+                    0
+                )
+            );
 
 
-            const itemTotal =
-                price *
-                quantity;
+            const total =
+            price *
+            quantity;
 
 
             productsTotal +=
-                itemTotal;
+            total;
 
 
             const image =
+            safeUrl(
                 item.image ||
                 (
                     Array.isArray(
@@ -4519,108 +5219,137 @@ function displayCart(){
                     item.images[0]
                     :
                     ""
-                );
+                )
+            );
 
 
             const color =
-                item.color ||
-                "بدون لون";
+            item.color ||
+            "بدون لون";
 
 
             const size =
-                item.size ||
-                "بدون قياس";
+            item.size ||
+            "بدون قياس";
 
 
-            html += `
+            const realIndex =
+            cart.indexOf(
+                item
+            );
 
-                <article class="cart-item">
 
-                    <div class="cart-item-image">
+            const imageHtml =
+            image
+            ?
+            `
+                <img
+                    src="${escapeHtml(
+                        image
+                    )}"
+                    alt="${escapeHtml(
+                        item.name ||
+                        "منتج"
+                    )}"
+                    onerror="
+                        this.style.display='none';
+                        this.parentElement.innerHTML='<span class=&quot;no-image&quot;><i class=&quot;fa-regular fa-image&quot;></i></span>';
+                    "
+                >
+            `
+            :
+            `
+                <span class="no-image">
 
-                        ${
-                            image
-                            ?
-                            `
-                            <img
-                                src="${escapeHtml(image)}"
-                                alt="${escapeHtml(item.name || "منتج")}"
-                                loading="lazy"
-                            >
-                            `
-                            :
-                            `
-                            <div
-                                style="
-                                    width:100%;
-                                    height:100%;
-                                    display:flex;
-                                    align-items:center;
-                                    justify-content:center;
-                                    color:#aaa;
-                                "
-                            >
-                                <i class="fas fa-image"></i>
+                    <i class="fa-regular fa-image"></i>
+
+                </span>
+            `;
+
+
+            cartContainer.insertAdjacentHTML(
+                "beforeend",
+                `
+
+                    <div
+                        class="cart-item"
+                        data-index="${realIndex}">
+
+
+                        <div class="cart-item-image">
+
+                            ${imageHtml}
+
+                        </div>
+
+
+                        <div class="cart-item-content">
+
+                            <div class="cart-item-name">
+
+                                ${escapeHtml(
+                                    item.name ||
+                                    "منتج"
+                                )}
+
                             </div>
-                            `
-                        }
-
-                    </div>
 
 
-                    <div class="cart-item-content">
+                            <div class="cart-item-price">
 
-                        <div class="cart-item-name">
+                                ${formatPrice(
+                                    price
+                                )}
+                                DA
 
-                            ${escapeHtml(
-                                item.name ||
-                                "منتج"
-                            )}
-
-                        </div>
+                            </div>
 
 
-                        <div class="cart-item-price">
+                            <div class="cart-item-meta">
 
-                            ${formatPrice(price)}
+                                <span class="meta-tag">
 
-                        </div>
+                                    اللون:
+                                    ${escapeHtml(
+                                        color
+                                    )}
+
+                                </span>
 
 
-                        <div class="cart-item-meta">
+                                <span class="meta-tag">
 
-                            <span class="meta-tag">
+                                    القياس:
+                                    ${escapeHtml(
+                                        size
+                                    )}
 
-                                اللون:
-                                ${escapeHtml(color)}
+                                </span>
 
-                            </span>
-
-                            <span class="meta-tag">
-
-                                المقاس:
-                                ${escapeHtml(size)}
-
-                            </span>
+                            </div>
 
                         </div>
 
 
                         <div class="cart-item-actions">
 
-                            <div class="quantity-control">
+
+                            <div class="quantity-controls">
+
 
                                 <button
-                                    class="quantity-btn"
                                     type="button"
-                                    onclick="increaseItem(${realIndex})"
-                                    aria-label="زيادة الكمية"
-                                >
-                                    <i class="fas fa-plus"></i>
+                                    class="quantity-btn"
+                                    data-action="minus"
+                                    data-index="${realIndex}">
+
+                                    <i class="fa-solid fa-minus"></i>
+
                                 </button>
 
 
-                                <span class="quantity-number">
+                                <span
+                                    class="quantity-value">
 
                                     ${quantity}
 
@@ -4628,39 +5357,37 @@ function displayCart(){
 
 
                                 <button
-                                    class="quantity-btn"
                                     type="button"
-                                    onclick="decreaseItem(${realIndex})"
-                                    aria-label="إنقاص الكمية"
-                                >
-                                    <i class="fas fa-minus"></i>
+                                    class="quantity-btn"
+                                    data-action="plus"
+                                    data-index="${realIndex}">
+
+                                    <i class="fa-solid fa-plus"></i>
+
                                 </button>
+
 
                             </div>
 
-                        </div>
-
-
-                        <!-- السعر الإجمالي + زر الحذف في نفس المحاذاة -->
-
-                        <div class="cart-item-bottom">
 
                             <div class="item-total">
 
-                                ${formatPrice(itemTotal)}
+                                ${formatPrice(
+                                    total
+                                )}
+                                DA
 
                             </div>
 
 
                             <button
-                                class="delete-item-btn"
                                 type="button"
-                                onclick="deleteItem(${realIndex})"
-                                aria-label="حذف المنتج"
+                                class="delete-btn"
                                 title="حذف المنتج"
-                            >
+                                data-action="delete"
+                                data-index="${realIndex}">
 
-                                <i class="fas fa-trash"></i>
+                                <i class="fa-solid fa-trash"></i>
 
                             </button>
 
@@ -4668,178 +5395,177 @@ function displayCart(){
 
                     </div>
 
-                </article>
-
-            `;
+                `
+            );
 
         }
     );
 
 
-    container.innerHTML =
-        html;
+    productsTotalElement.innerHTML = `
 
+        مجموع المنتجات:
 
-    const totalElement =
-        document.getElementById(
-            "productsTotal"
-        );
-
-
-    if(totalElement){
-
-        totalElement.textContent =
-            formatPrice(
+        <strong>
+            ${formatPrice(
                 productsTotal
-            );
+            )}
+            DA
+        </strong>
 
-    }
+    `;
 
 
-    updateDelivery();
+    productsTotalSummary.innerHTML = `
+
+        مجموع المنتجات:
+
+        <strong>
+            ${formatPrice(
+                productsTotal
+            )}
+            DA
+        </strong>
+
+    `;
+
 
     updateFinalTotal();
 
-    updateCartCount();
-
     updateOrderButton();
+
+    updateCartCount();
 
 }
 
 
 /* =====================================================
-   INCREASE
+   CART ACTIONS
 ===================================================== */
 
-window.increaseItem =
-function(index){
+cartContainer.addEventListener(
+    "click",
+    function(event){
 
-    if(
-        !cart[index]
-    ){
-
-        return;
-
-    }
-
-
-    const item =
-        cart[index];
-
-
-    const current =
-        Math.max(
-            1,
-            Number(
-                item.quantity
-            ) || 1
+        const button =
+        event.target.closest(
+            "[data-action]"
         );
 
 
-    const stock =
+        if(!button){
+
+            return;
+
+        }
+
+
+        const action =
+        button.dataset.action;
+
+
+        const index =
         Number(
-            item.stock
+            button.dataset.index
         );
 
 
-    if(
-        Number.isFinite(stock) &&
-        stock > 0 &&
-        current >= stock
-    ){
+        if(
+            Number.isNaN(index) ||
+            !cart[index]
+        ){
 
-        alert(
-            `الكمية المتوفرة من هذا المنتج هي ${stock} فقط.`
-        );
+            return;
 
-        return;
+        }
+
+
+        if(action === "plus"){
+
+            const currentQuantity =
+            Math.max(
+                1,
+                Number(
+                    cart[index].quantity ||
+                    1
+                )
+            );
+
+
+            const stock =
+            cart[index].stock;
+
+
+            if(
+                stock !== null &&
+                stock !== undefined &&
+                stock !== "" &&
+                !Number.isNaN(
+                    Number(stock)
+                )
+            ){
+
+                if(
+                    currentQuantity >=
+                    Number(stock)
+                ){
+
+                    alert(
+                        "❌ لا توجد كمية إضافية متوفرة."
+                    );
+
+                    return;
+
+                }
+
+            }
+
+
+            cart[index].quantity =
+            currentQuantity + 1;
+
+        }
+
+
+        if(action === "minus"){
+
+            const currentQuantity =
+            Math.max(
+                1,
+                Number(
+                    cart[index].quantity ||
+                    1
+                )
+            );
+
+
+            cart[index].quantity =
+            Math.max(
+                1,
+                currentQuantity - 1
+            );
+
+        }
+
+
+        if(action === "delete"){
+
+            cart.splice(
+                index,
+                1
+            );
+
+        }
+
+
+        saveCart();
+
+        displayCart();
+
+        updateCartCount();
 
     }
-
-
-    item.quantity =
-        current + 1;
-
-
-    saveCart();
-
-    displayCart();
-
-};
-
-
-/* =====================================================
-   DECREASE
-===================================================== */
-
-window.decreaseItem =
-function(index){
-
-    if(
-        !cart[index]
-    ){
-
-        return;
-
-    }
-
-
-    const current =
-        Math.max(
-            1,
-            Number(
-                cart[index].quantity
-            ) || 1
-        );
-
-
-    if(current <= 1){
-
-        return;
-
-    }
-
-
-    cart[index].quantity =
-        current - 1;
-
-
-    saveCart();
-
-    displayCart();
-
-};
-
-
-/* =====================================================
-   DELETE
-===================================================== */
-
-window.deleteItem =
-function(index){
-
-    if(
-        !cart[index]
-    ){
-
-        return;
-
-    }
-
-
-    cart.splice(
-        index,
-        1
-    );
-
-
-    saveCart();
-
-    displayCart();
-
-    updateCartCount();
-
-};
+);
 
 
 /* =====================================================
@@ -4848,56 +5574,32 @@ function(index){
 
 function updateCartCount(){
 
-    const currentItems =
-        getCurrentStoreCart();
+    const storeCart =
+    getCurrentStoreCart();
 
 
-    const count =
-        currentItems.reduce(
-            (
-                total,
-                item
-            ) => {
-
-                return total +
-                    Math.max(
-                        1,
-                        Number(
-                            item.quantity
-                        ) || 1
-                    );
-
-            },
-            0
-        );
+    let total =
+    0;
 
 
-    const headerCount =
-        document.getElementById(
-            "headerCartCount"
-        );
+    storeCart.forEach(
+        item => {
+
+            total +=
+            Math.max(
+                1,
+                Number(
+                    item.quantity ||
+                    1
+                )
+            );
+
+        }
+    );
 
 
-    const floatingCount =
-        document.getElementById(
-            "floatingCartCount"
-        );
-
-
-    if(headerCount){
-
-        headerCount.textContent =
-            count;
-
-    }
-
-
-    if(floatingCount){
-
-        floatingCount.textContent =
-            count;
-
-    }
+    cartCount.textContent =
+    total;
 
 }
 
@@ -4906,81 +5608,66 @@ function updateCartCount(){
    PHONE VALIDATION
 ===================================================== */
 
-function isValidPhone(
-    phone
-){
+function validatePhone(phone){
 
     const normalized =
-        String(phone || "")
-            .replace(
-                /[\s\-\(\)\.]/g,
-                ""
-            );
+    String(phone)
+        .replace(
+            /[\s\-().]/g,
+            ""
+        );
 
 
     return /^0(5|6|7)[0-9]{8}$/
-        .test(normalized);
+        .test(
+            normalized
+        );
 
 }
 
 
 /* =====================================================
-   ORDER BUTTON
+   ORDER BUTTON STATE
 ===================================================== */
 
 function updateOrderButton(){
 
-    const button =
-        document.getElementById(
-            "orderBtn"
-        );
-
-
-    if(!button){
-
-        return;
-
-    }
-
-
-    const items =
-        getCurrentStoreCart();
+    const storeCart =
+    getCurrentStoreCart();
 
 
     const name =
-        document.getElementById(
-            "customerName"
-        )?.value
-        .trim();
+    document.getElementById(
+        "name"
+    )?.value
+    .trim();
 
 
     const phone =
-        document.getElementById(
-            "customerPhone"
-        )?.value
-        .trim();
+    document.getElementById(
+        "phone"
+    )?.value
+    .trim();
 
 
     const wilaya =
-        document.getElementById(
-            "wilaya"
-        )?.value;
+    wilayaSelect.value;
 
 
     const delivery =
-        document.getElementById(
-            "deliveryType"
-        )?.value;
+    deliveryTypeSelect.value;
 
 
-    button.disabled =
-        !(
-            items.length &&
-            name &&
-            phone &&
-            wilaya &&
-            delivery
-        );
+    const valid =
+        storeCart.length > 0 &&
+        name &&
+        phone &&
+        wilaya &&
+        delivery;
+
+
+    orderBtn.disabled =
+    !valid;
 
 }
 
@@ -4991,12 +5678,12 @@ function updateOrderButton(){
 
 async function sendOrder(){
 
-    const items =
-        getCurrentStoreCart();
+    const storeCart =
+    getCurrentStoreCart();
 
 
     if(
-        !items.length
+        storeCart.length === 0
     ){
 
         alert(
@@ -5009,47 +5696,47 @@ async function sendOrder(){
 
 
     const name =
-        document.getElementById(
-            "customerName"
-        )?.value
-        .trim();
+    document.getElementById(
+        "name"
+    )
+    .value
+    .trim();
 
 
     const phone =
-        document.getElementById(
-            "customerPhone"
-        )?.value
-        .trim();
-
-
-    const wilayaSelect =
-        document.getElementById(
-            "wilaya"
-        );
+    document.getElementById(
+        "phone"
+    )
+    .value
+    .trim();
 
 
     const wilaya =
-        wilayaSelect?.value;
-
-
-    const delivery =
-        document.getElementById(
-            "deliveryType"
-        )?.value;
+    wilayaSelect.value;
 
 
     const commune =
-        document.getElementById(
-            "commune"
-        )?.value
-        .trim();
+    document.getElementById(
+        "commune"
+    )
+    .value
+    .trim();
 
 
     const address =
-        document.getElementById(
-            "address"
-        )?.value
-        .trim();
+    document.getElementById(
+        "address"
+    )
+    .value
+    .trim();
+
+
+    const delivery =
+    deliveryTypeSelect.value;
+
+
+    const ownerUid =
+    getStoreOwnerUid();
 
 
     if(
@@ -5069,11 +5756,13 @@ async function sendOrder(){
 
 
     if(
-        !isValidPhone(phone)
+        !validatePhone(
+            phone
+        )
     ){
 
         alert(
-            "يرجى إدخال رقم هاتف جزائري صحيح."
+            "❌ يرجى إدخال رقم هاتف جزائري صحيح."
         );
 
         return;
@@ -5081,14 +5770,11 @@ async function sendOrder(){
     }
 
 
-    const ownerUid =
-        getStoreOwnerUid();
-
-
     if(!ownerUid){
 
         alert(
-            "تعذر تحديد صاحب المتجر."
+            "تعذر تحديد صاحب المتجر.\n\n" +
+            "يرجى العودة إلى صفحة المتجر وإعادة المحاولة."
         );
 
         return;
@@ -5097,13 +5783,13 @@ async function sendOrder(){
 
 
     const deliveryItem =
-        getDeliveryItem();
+    getDeliveryItem();
 
 
     if(!deliveryItem){
 
         alert(
-            "يرجى اختيار الولاية."
+            "تعذر العثور على سعر التوصيل لهذه الولاية."
         );
 
         return;
@@ -5111,225 +5797,305 @@ async function sendOrder(){
     }
 
 
-    const deliveryPrice =
-        delivery === "home"
-        ?
-        Number(
-            deliveryItem.home
-        ) || 0
-        :
-        Number(
-            deliveryItem.office
-        ) || 0;
+    updateDelivery();
+
+
+    if(
+        deliveryCost < 0 ||
+        Number.isNaN(
+            deliveryCost
+        )
+    ){
+
+        alert(
+            "تعذر حساب سعر التوصيل."
+        );
+
+        return;
+
+    }
 
 
     const orderProducts =
-        items.map(
-            item => {
+    storeCart.map(
+        item => {
 
-                const quantity =
-                    Math.max(
-                        1,
-                        Number(
-                            item.quantity
-                        ) || 1
-                    );
-
-
-                const price =
-                    Number(
-                        item.price
-                    ) || 0;
+            const price =
+            Math.max(
+                0,
+                Number(
+                    item.price ||
+                    0
+                )
+            );
 
 
-                return {
+            const quantity =
+            Math.max(
+                1,
+                Number(
+                    item.quantity ||
+                    1
+                )
+            );
 
-                    id:
-                        item.id ||
-                        item.productId ||
-                        "",
 
-                    productId:
-                        item.productId ||
-                        item.id ||
-                        "",
+            return {
 
-                    name:
-                        item.name ||
-                        "منتج",
+                id:
+                String(
+                    item.id ||
+                    item.productId ||
+                    ""
+                ),
 
-                    price,
+                productId:
+                String(
+                    item.productId ||
+                    item.id ||
+                    ""
+                ),
 
-                    quantity,
+                name:
+                String(
+                    item.name ||
+                    "منتج"
+                ),
 
-                    total:
-                        price *
-                        quantity,
+                price:
+                price,
 
-                    image:
+                quantity:
+                quantity,
+
+                total:
+                price *
+                quantity,
+
+                image:
+                String(
+                    safeUrl(
                         item.image ||
                         (
                             Array.isArray(
                                 item.images
                             )
                             ?
-                            item.images[0] ||
-                            ""
+                            item.images[0]
                             :
                             ""
-                        ),
+                        )
+                    )
+                ),
 
-                    color:
-                        item.color ||
-                        "بدون لون",
+                color:
+                String(
+                    item.color ||
+                    "بدون لون"
+                ),
 
-                    size:
-                        item.size ||
-                        "بدون قياس",
+                size:
+                String(
+                    item.size ||
+                    "بدون قياس"
+                ),
 
-                    ownerUid,
+                ownerUid:
+                String(
+                    getItemOwnerUid(item) ||
+                    ownerUid
+                ),
 
-                    storeId:
-                        getItemStoreId(item) ||
-                        currentStoreId ||
-                        ""
+                storeId:
+                String(
+                    item.storeId ||
+                    currentStoreId ||
+                    ""
+                )
 
-                };
+            };
 
-            }
-        );
-
-
-    const total =
-        productsTotal +
-        deliveryPrice;
-
-
-    const button =
-        document.getElementById(
-            "orderBtn"
-        );
-
-
-    const oldButtonHTML =
-        button?.innerHTML ||
-        "";
+        }
+    );
 
 
-    if(button){
+    const orderProductsTotal =
+    orderProducts.reduce(
+        (
+            sum,
+            item
+        ) =>
+        sum +
+        Number(
+            item.total ||
+            0
+        ),
+        0
+    );
 
-        button.disabled =
-            true;
 
-        button.innerHTML = `
+    const orderTotal =
+    orderProductsTotal +
+    Number(
+        deliveryCost
+    );
 
-            <i class="fas fa-spinner fa-spin"></i>
 
-            <span>
-                جاري إرسال الطلب...
-            </span>
+    orderBtn.disabled =
+    true;
 
-        `;
 
-    }
+    orderBtn.innerHTML = `
+
+        <i class="fa-solid fa-spinner fa-spin"></i>
+
+        جاري إرسال الطلب...
+
+    `;
 
 
     try{
+
+        const orderData = {
+
+            ownerUid:
+            String(
+                ownerUid
+            ),
+
+            storeId:
+            String(
+                currentStoreId ||
+                ""
+            ),
+
+            storeName:
+            String(
+                currentStoreName ||
+                "G-Glam"
+            ),
+
+            ownerName:
+            String(
+                currentStoreOwnerName ||
+                ""
+            ),
+
+            name:
+            name,
+
+            phone:
+            phone,
+
+            wilaya:
+            wilaya,
+
+            commune:
+            commune,
+
+            address:
+            address,
+
+            delivery:
+            delivery,
+
+            deliveryPrice:
+            Number(
+                deliveryCost
+            ),
+
+            deliveryWilaya:
+            deliveryItem?.name ||
+            wilaya,
+
+            products:
+            orderProducts,
+
+            productsTotal:
+            Number(
+                orderProductsTotal
+            ),
+
+            total:
+            Number(
+                orderTotal
+            ),
+
+            status:
+            "قيد المعالجة",
+
+            note:
+            "",
+
+            date:
+            new Date()
+                .toLocaleString(
+                    "ar-DZ"
+                ),
+
+            createdAt:
+            serverTimestamp()
+
+        };
+
 
         await addDoc(
             collection(
                 db,
                 "orders"
             ),
-            {
-
-                ownerUid,
-
-                storeId:
-                    currentStoreId ||
-                    ownerUid,
-
-                storeName:
-                    currentStoreName ||
-                    "G-Glam",
-
-                ownerName:
-                    currentStoreOwnerName ||
-                    "",
-
-                name,
-
-                phone,
-
-                wilaya,
-
-                commune,
-
-                address,
-
-                delivery,
-
-                deliveryPrice,
-
-                deliveryWilaya:
-                    deliveryItem.name,
-
-                products:
-                    orderProducts,
-
-                productsTotal,
-
-                total,
-
-                status:
-                    "قيد المعالجة",
-
-                note:
-                    "",
-
-                date:
-                    new Date()
-                        .toLocaleString(
-                            "ar-DZ"
-                        ),
-
-                createdAt:
-                    serverTimestamp()
-
-            }
+            orderData
         );
 
+
+        /* =============================================
+           META PURCHASE
+        ============================================== */
 
         try{
 
             if(
-                typeof fbq ===
+                typeof window.fbq ===
                 "function"
             ){
 
-                fbq(
+                window.fbq(
                     "track",
                     "Purchase",
                     {
+
                         value:
-                            total,
+                        Number(
+                            orderTotal
+                        ),
 
                         currency:
-                            "DZD"
+                        "DZD"
+
                     }
                 );
 
             }
 
-        }catch(e){}
+        }catch(error){
 
+            console.warn(
+                "Meta tracking error:",
+                error
+            );
+
+        }
+
+
+        /* =============================================
+           TIKTOK
+        ============================================== */
 
         try{
 
             if(
                 window.ttq &&
-                typeof
-                window.ttq.track ===
+                typeof window.ttq.track ===
                 "function"
             ){
 
@@ -5338,118 +6104,126 @@ async function sendOrder(){
                     {
 
                         value:
-                            total,
+                        Number(
+                            orderTotal
+                        ),
 
                         currency:
-                            "DZD"
+                        "DZD"
 
                     }
                 );
 
             }
 
-        }catch(e){}
+        }catch(error){
+
+            console.warn(
+                "TikTok tracking error:",
+                error
+            );
+
+        }
 
 
         /*
-         * حذف منتجات المتجر الحالي فقط
-         * مع الحفاظ على منتجات المتاجر الأخرى
+         * حذف منتجات هذا المتجر فقط
+         * مع الحفاظ على منتجات أي متجر آخر.
          */
 
         cart =
-            cart.filter(
-                item => {
+        cart.filter(
+            item => {
 
-                    const itemStore =
-                        getItemStoreId(item);
-
-
-                    const itemOwner =
-                        getItemOwnerUid(item);
+                const itemStore =
+                getItemStoreId(
+                    item
+                );
 
 
-                    if(
-                        currentStoreId &&
-                        itemStore
-                    ){
+                return (
+                    itemStore &&
+                    currentStoreId &&
+                    itemStore !==
+                    String(
+                        currentStoreId
+                    )
+                );
 
-                        return (
-                            itemStore !==
-                            currentStoreId
-                        );
-
-                    }
-
-
-                    if(
-                        currentOwnerUid &&
-                        itemOwner
-                    ){
-
-                        return (
-                            itemOwner !==
-                            currentOwnerUid
-                        );
-
-                    }
-
-
-                    return false;
-
-                }
-            );
+            }
+        );
 
 
         saveCart();
 
-        displayCart();
 
-        updateCartCount();
-
-
-        alert(
-            "تم إرسال طلبك بنجاح، شكرًا لتسوقك معنا."
+        localStorage.removeItem(
+            "cartStoreId"
         );
 
 
-        const storeParam =
-            currentStoreId
-            ?
-            `?store=${encodeURIComponent(currentStoreId)}`
-            :
-            "";
+        const remainingStore =
+        cart.length
+        ?
+        getItemStoreId(
+            cart[0]
+        )
+        :
+        "";
+
+
+        if(remainingStore){
+
+            localStorage.setItem(
+                "cartStoreId",
+                remainingStore
+            );
+
+        }
+
+
+        alert(
+            "تم إرسال الطلب بنجاح ✅"
+        );
 
 
         window.location.href =
-            `index.html${storeParam}`;
+        "index.html?store=" +
+        encodeURIComponent(
+            currentStoreId ||
+            ownerUid
+        );
 
 
     }catch(error){
 
         console.error(
-            "Order error:",
+            "ORDER ERROR:",
             error
         );
 
 
         alert(
-            "حدث خطأ أثناء إرسال الطلب. يرجى المحاولة مرة أخرى."
+            "❌ فشل إرسال الطلب.\n\n" +
+            "السبب:\n" +
+            (
+                error?.message ||
+                "خطأ غير معروف"
+            )
         );
 
 
-        if(button){
+        orderBtn.disabled =
+        false;
 
-            button.disabled =
-                false;
 
-            button.innerHTML =
-                oldButtonHTML ||
-                `
-                    <i class="fas fa-paper-plane"></i>
-                    <span>إرسال الطلب</span>
-                `;
+        orderBtn.innerHTML = `
 
-        }
+            <i class="fa-solid fa-box"></i>
+
+            إرسال الطلب
+
+        `;
 
     }
 
@@ -5460,90 +6234,84 @@ async function sendOrder(){
    EVENTS
 ===================================================== */
 
-document
-    .getElementById(
-        "wilaya"
-    )
-    ?.addEventListener(
-        "change",
-        () => {
+wilayaSelect.addEventListener(
+    "change",
+    function(){
 
-            updateDelivery();
+        updateDelivery();
 
-            updateOrderButton();
-
-        }
-    );
-
-
-document
-    .getElementById(
-        "deliveryType"
-    )
-    ?.addEventListener(
-        "change",
-        () => {
-
-            updateDelivery();
-
-            updateOrderButton();
-
-        }
-    );
-
-
-[
-    "customerName",
-    "customerPhone",
-    "commune",
-    "address"
-]
-.forEach(
-    id => {
-
-        document
-            .getElementById(id)
-            ?.addEventListener(
-                "input",
-                updateOrderButton
-            );
+        updateOrderButton();
 
     }
 );
 
 
-document
-    .getElementById(
-        "orderBtn"
-    )
-    ?.addEventListener(
-        "click",
-        sendOrder
-    );
+deliveryTypeSelect.addEventListener(
+    "change",
+    function(){
+
+        updateDelivery();
+
+        updateOrderButton();
+
+    }
+);
 
 
 /* =====================================================
-   SIDEBAR EVENTS
+   CUSTOMER INPUT
 ===================================================== */
 
-const sidebar =
-    document.getElementById(
-        "sidebar"
-    );
+[
+    "name",
+    "phone",
+    "commune",
+    "address"
 
-const sidebarOverlay =
-    document.getElementById(
-        "sidebarOverlay"
-    );
+].forEach(
+    id => {
 
+        const element =
+        document.getElementById(
+            id
+        );
+
+
+        if(element){
+
+            element.addEventListener(
+                "input",
+                updateOrderButton
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   SEND ORDER BUTTON
+===================================================== */
+
+orderBtn.addEventListener(
+    "click",
+    sendOrder
+);
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
 
 function openSidebar(){
 
-    sidebar?.classList.add(
+    sidebar.classList.add(
         "active"
     );
 
-    sidebarOverlay?.classList.add(
+
+    overlay.classList.add(
         "active"
     );
 
@@ -5552,71 +6320,91 @@ function openSidebar(){
 
 function closeSidebar(){
 
-    sidebar?.classList.remove(
+    sidebar.classList.remove(
         "active"
     );
 
-    sidebarOverlay?.classList.remove(
+
+    overlay.classList.remove(
         "active"
     );
 
 }
 
 
-document
-    .getElementById(
-        "menuBtn"
-    )
-    ?.addEventListener(
-        "click",
-        openSidebar
-    );
+menuBtn.addEventListener(
+    "click",
+    openSidebar
+);
 
 
-document
-    .getElementById(
-        "sidebarClose"
-    )
-    ?.addEventListener(
-        "click",
-        closeSidebar
-    );
+overlay.addEventListener(
+    "click",
+    closeSidebar
+);
 
 
-sidebarOverlay
-    ?.addEventListener(
-        "click",
-        closeSidebar
-    );
+[
+    homeLink,
+    cartLink
+].forEach(
+    link => {
 
+        if(link){
 
-document
-    .getElementById(
-        "contactLink"
-    )
-    ?.addEventListener(
-        "click",
-        event => {
-
-            event.preventDefault();
-
-            closeSidebar();
-
-            document
-                .getElementById(
-                    "socialSection"
-                )
-                ?.scrollIntoView({
-                    behavior:"smooth"
-                });
+            link.addEventListener(
+                "click",
+                closeSidebar
+            );
 
         }
-    );
 
+    }
+);
+
+
+contactLink.addEventListener(
+    "click",
+    function(event){
+
+        event.preventDefault();
+
+        closeSidebar();
+
+
+        const social =
+        document.getElementById(
+            "socialSection"
+        );
+
+
+        if(social){
+
+            setTimeout(
+                function(){
+
+                    social.scrollIntoView({
+                        behavior:"smooth",
+                        block:"start"
+                    });
+
+                },
+                150
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ESC
+===================================================== */
 
 document.addEventListener(
     "keydown",
-    event => {
+    function(event){
 
         if(
             event.key ===
@@ -5632,105 +6420,87 @@ document.addEventListener(
 
 
 /* =====================================================
-   FLOATING CART
-===================================================== */
-
-document
-    .getElementById(
-        "floatingCart"
-    )
-    ?.addEventListener(
-        "click",
-        () => {
-
-            window.scrollTo({
-
-                top:0,
-
-                behavior:"smooth"
-
-            });
-
-        }
-    );
-
-
-/* =====================================================
    START
 ===================================================== */
 
-async function start(){
+await loadStore();
 
-    try{
+updateNavigation();
 
-        await loadStore();
+displayCart();
 
-        updateNavigation();
+updateCartCount();
 
-        displayCart();
+await loadDelivery();
 
-        updateCartCount();
-
-        await loadDelivery();
-
-        updateOrderButton();
-
-    }catch(error){
-
-        console.error(
-            "Startup error:",
-            error
-        );
-
-    }finally{
-
-        const loading =
-            document.getElementById(
-                "loadingScreen"
-            );
-
-        if(loading){
-
-            loading.style.display =
-                "none";
-
-        }
-
-    }
-
-}
+updateOrderButton();
 
 
-start();
+console.log(
+    "G-Glam Cart Started"
+);
 
+
+console.log(
+    "Current Store ID:",
+    currentStoreId
+);
+
+
+console.log(
+    "Current Store Name:",
+    currentStoreName
+);
+
+
+console.log(
+    "Current Owner UID:",
+    currentOwnerUid
+);
+
+
+</script>
+
+
+<script>
 
 /* =====================================================
    SERVICE WORKER
 ===================================================== */
 
 if(
-    "serviceWorker"
-    in navigator
+    "serviceWorker" in navigator
 ){
 
     window.addEventListener(
         "load",
-        () => {
+        function(){
 
             navigator.serviceWorker
-                .register(
-                    "service-worker.js"
-                )
-                .catch(
-                    error => {
+            .register(
+                "service-worker.js"
+            )
 
-                        console.warn(
-                            "Service worker error:",
-                            error
-                        );
+            .then(
+                function(){
 
-                    }
-                );
+                    console.log(
+                        "G-Glam PWA جاهز"
+                    );
+
+                }
+            )
+
+            .catch(
+                function(error){
+
+                    console.log(
+                        "خطأ في PWA:",
+                        error
+                    );
+
+                }
+            );
 
         }
     );
@@ -5739,5 +6509,7 @@ if(
 
 </script>
 
+
 </body>
+
 </html>
