@@ -76,9 +76,9 @@
 <body class="bg-shopify-bg dark:bg-shopify-darkBg text-shopify-text dark:text-gray-100 font-sans antialiased min-h-screen flex flex-col transition-colors duration-200">
 
     <!-- =====================================================
-         TOPBAR (SHOPIFY MODERN BLACK TOP HEADER)
+         TOPBAR (FULL WIDTH SHOPIFY MODERN BLACK TOP HEADER)
     ===================================================== -->
-    <header class="h-14 bg-shopify-topbar text-white px-4 flex items-center justify-between sticky top-0 z-50 shadow-md">
+    <header class="h-14 bg-shopify-topbar text-white px-4 flex items-center justify-between sticky top-0 z-50 shadow-md w-full">
         <div class="flex items-center gap-4 flex-1 max-w-2xl">
             <div class="flex items-center gap-2 font-bold text-lg tracking-tight pl-2 border-l border-gray-700">
                 <div class="w-7 h-7 rounded-lg bg-emerald-600 text-white font-black flex items-center justify-center text-sm shadow-sm">
@@ -98,6 +98,13 @@
         </div>
 
         <div class="flex items-center gap-2">
+            <!-- Language Switcher Button -->
+            <button type="button" id="langToggleBtn" title="تغيير اللغة / Change Language"
+                class="px-2.5 py-1.5 rounded-lg bg-[#2A2A2A] hover:bg-[#333] text-gray-300 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition-colors border border-gray-700">
+                <i class="fa-solid fa-globe text-emerald-400 text-xs"></i>
+                <span id="currentLangLabel">AR</span>
+            </button>
+
             <!-- Theme Toggle -->
             <button type="button" id="themeToggle" title="تغيير المظهر"
                 class="w-9 h-9 rounded-lg hover:bg-[#2A2A2A] flex items-center justify-center text-gray-300 hover:text-white transition-colors">
@@ -130,36 +137,36 @@
                 <nav class="space-y-1">
                     <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold text-shopify-subtext dark:text-gray-400 hover:bg-shopify-hover dark:hover:bg-[#262626] hover:text-shopify-text dark:hover:text-white transition-colors">
                         <i class="fa-solid fa-house text-base w-5 text-center"></i>
-                        <span class="hidden md:inline">الرئيسية</span>
+                        <span class="hidden md:inline" data-i18n="navDashboard">الرئيسية</span>
                     </a>
 
                     <a href="orders.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold bg-shopify-hover dark:bg-[#262626] text-shopify-text dark:text-white">
                         <i class="fa-solid fa-clipboard-list text-base w-5 text-center text-shopify-green"></i>
-                        <span class="hidden md:inline">الطلبات</span>
+                        <span class="hidden md:inline" data-i18n="navOrders">الطلبات</span>
                     </a>
 
                     <a href="products.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold text-shopify-subtext dark:text-gray-400 hover:bg-shopify-hover dark:hover:bg-[#262626] hover:text-shopify-text dark:hover:text-white transition-colors">
                         <i class="fa-solid fa-bag-shopping text-base w-5 text-center"></i>
-                        <span class="hidden md:inline">المنتجات</span>
+                        <span class="hidden md:inline" data-i18n="navProducts">المنتجات</span>
                     </a>
 
                     <a href="add-product.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold text-shopify-subtext dark:text-gray-400 hover:bg-shopify-hover dark:hover:bg-[#262626] hover:text-shopify-text dark:hover:text-white transition-colors">
                         <i class="fa-solid fa-circle-plus text-base w-5 text-center"></i>
-                        <span class="hidden md:inline">إضافة منتج</span>
+                        <span class="hidden md:inline" data-i18n="navAddProduct">إضافة منتج</span>
                     </a>
 
                     <a href="delivery.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold text-shopify-subtext dark:text-gray-400 hover:bg-shopify-hover dark:hover:bg-[#262626] hover:text-shopify-text dark:hover:text-white transition-colors">
                         <i class="fa-solid fa-location-dot text-base w-5 text-center"></i>
-                        <span class="hidden md:inline">أسعار التوصيل</span>
+                        <span class="hidden md:inline" data-i18n="navDelivery">أسعار التوصيل</span>
                     </a>
 
                     <div class="pt-4 pb-1">
-                        <div class="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-wider hidden md:block">الإعدادات</div>
+                        <div class="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-wider hidden md:block" data-i18n="navSettingsTitle">الإعدادات</div>
                     </div>
 
                     <a href="settings.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold text-shopify-subtext dark:text-gray-400 hover:bg-shopify-hover dark:hover:bg-[#262626] hover:text-shopify-text dark:hover:text-white transition-colors">
                         <i class="fa-solid fa-gear text-base w-5 text-center"></i>
-                        <span class="hidden md:inline">إعدادات المتجر</span>
+                        <span class="hidden md:inline" data-i18n="navSettings">إعدادات المتجر</span>
                     </a>
                 </nav>
             </div>
@@ -167,20 +174,20 @@
             <div class="p-2 border-t border-shopify-border dark:border-shopify-darkBorder">
                 <a href="#" id="logoutBtn" class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors">
                     <i class="fa-solid fa-right-from-bracket text-base w-5 text-center"></i>
-                    <span class="hidden md:inline">تسجيل الخروج</span>
+                    <span class="hidden md:inline" data-i18n="navLogout">تسجيل الخروج</span>
                 </a>
             </div>
         </aside>
 
 
         <!-- MAIN CONTENT CONTAINER -->
-        <main class="flex-1 p-4 md:p-8 max-w-7xl mx-auto w-full space-y-6">
+        <main class="flex-1 p-4 md:p-6 max-w-[1600px] mx-auto w-full space-y-6">
 
             <!-- STATS CARDS -->
             <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                 <div class="bg-shopify-surface dark:bg-shopify-darkSurface p-4 rounded-xl border border-shopify-border dark:border-shopify-darkBorder shopify-card-shadow">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-semibold text-shopify-subtext dark:text-gray-400">إجمالي الطلبات</span>
+                        <span class="text-xs font-semibold text-shopify-subtext dark:text-gray-400" data-i18n="statTotal">إجمالي الطلبات</span>
                         <div class="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-shopify-green flex items-center justify-center text-sm">
                             <i class="fa-solid fa-box"></i>
                         </div>
@@ -192,7 +199,7 @@
 
                 <div class="bg-shopify-surface dark:bg-shopify-darkSurface p-4 rounded-xl border border-shopify-border dark:border-shopify-darkBorder shopify-card-shadow">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-semibold text-shopify-subtext dark:text-gray-400">تم التأكيد</span>
+                        <span class="text-xs font-semibold text-shopify-subtext dark:text-gray-400" data-i18n="statConfirmed">تم التأكيد</span>
                         <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/50 text-blue-600 flex items-center justify-center text-sm">
                             <i class="fa-solid fa-circle-check"></i>
                         </div>
@@ -204,7 +211,7 @@
 
                 <div class="bg-shopify-surface dark:bg-shopify-darkSurface p-4 rounded-xl border border-shopify-border dark:border-shopify-darkBorder shopify-card-shadow">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-semibold text-shopify-subtext dark:text-gray-400">تم الشحن</span>
+                        <span class="text-xs font-semibold text-shopify-subtext dark:text-gray-400" data-i18n="statShipped">تم الشحن</span>
                         <div class="w-8 h-8 rounded-lg bg-amber-50 dark:bg-amber-950/50 text-amber-600 flex items-center justify-center text-sm">
                             <i class="fa-solid fa-truck-fast"></i>
                         </div>
@@ -216,7 +223,7 @@
 
                 <div class="bg-shopify-surface dark:bg-shopify-darkSurface p-4 rounded-xl border border-shopify-border dark:border-shopify-darkBorder shopify-card-shadow">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-semibold text-shopify-subtext dark:text-gray-400">تم التسليم</span>
+                        <span class="text-xs font-semibold text-shopify-subtext dark:text-gray-400" data-i18n="statDelivered">تم التسليم</span>
                         <div class="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 flex items-center justify-center text-sm">
                             <i class="fa-solid fa-box-open"></i>
                         </div>
@@ -228,52 +235,53 @@
             </section>
 
 
-            <!-- ORDERS SECTION -->
+            <!-- ORDERS SECTION (COMPACT & FULLY VISIBLE TABLE) -->
             <section class="bg-shopify-surface dark:bg-shopify-darkSurface border border-shopify-border dark:border-shopify-darkBorder rounded-xl shopify-card-shadow overflow-hidden">
                 <div class="p-4 border-b border-shopify-border dark:border-shopify-darkBorder flex flex-col sm:flex-row items-center justify-between gap-4">
                     <h2 class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
                         <i class="fa-solid fa-clipboard-list text-shopify-green"></i>
-                        طلبات متجري
+                        <span data-i18n="sectionTitle">طلبات متجري</span>
                     </h2>
 
                     <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
                         <label class="flex items-center gap-2 text-xs font-semibold text-gray-600 dark:text-gray-300 cursor-pointer">
                             <input type="checkbox" id="selectAll" class="w-4 h-4 accent-emerald-600 cursor-pointer rounded">
-                            تحديد الكل
+                            <span data-i18n="selectAll">تحديد الكل</span>
                         </label>
 
                         <button type="button" id="bulkDeleteBtn" class="hidden items-center gap-1.5 px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-bold transition-all shadow-sm">
                             <i class="fa-solid fa-trash text-xs"></i>
-                            حذف المحدد
+                            <span data-i18n="bulkDelete">حذف المحدد</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="overflow-x-auto w-full">
-                    <table class="w-full text-right border-collapse min-w-[1250px]">
+                <!-- RESPONSIVE TABLE CONTAINER (NO SCROLL BAR FOR NORMAL SCREENS) -->
+                <div class="w-full">
+                    <table class="w-full text-right border-collapse text-[11px] md:text-xs">
                         <thead>
-                            <tr class="bg-gray-50 dark:bg-[#1A1A1A] border-b border-shopify-border dark:border-shopify-darkBorder text-[11px] font-bold text-gray-600 dark:text-gray-300">
-                                <th class="p-3 text-center w-10">تحديد</th>
-                                <th class="p-3">رقم الطلب</th>
-                                <th class="p-3">التاريخ</th>
-                                <th class="p-3">الزبون</th>
-                                <th class="p-3 text-center">الهاتف</th>
-                                <th class="p-3">الولاية</th>
-                                <th class="p-3">العنوان</th>
-                                <th class="p-3">التوصيل</th>
-                                <th class="p-3 text-center">المنتجات</th>
-                                <th class="p-3">المجموع</th>
-                                <th class="p-3">الملاحظات</th>
-                                <th class="p-3">الحالة</th>
-                                <th class="p-3 text-center">إجراء</th>
+                            <tr class="bg-gray-50 dark:bg-[#1A1A1A] border-b border-shopify-border dark:border-shopify-darkBorder font-bold text-gray-600 dark:text-gray-300">
+                                <th class="p-2.5 text-center w-8">تحديد</th>
+                                <th class="p-2.5" data-i18n="thOrder">رقم الطلب</th>
+                                <th class="p-2.5" data-i18n="thDate">التاريخ</th>
+                                <th class="p-2.5" data-i18n="thCustomer">الزبون</th>
+                                <th class="p-2.5 text-center" data-i18n="thPhone">الهاتف</th>
+                                <th class="p-2.5" data-i18n="thWilaya">الولاية</th>
+                                <th class="p-2.5" data-i18n="thAddress">العنوان</th>
+                                <th class="p-2.5" data-i18n="thDelivery">التوصيل</th>
+                                <th class="p-2.5 text-center" data-i18n="thProducts">المنتجات</th>
+                                <th class="p-2.5" data-i18n="thTotal">المجموع</th>
+                                <th class="p-2.5" data-i18n="thNotes">الملاحظات</th>
+                                <th class="p-2.5" data-i18n="thStatus">الحالة</th>
+                                <th class="p-2.5 text-center" data-i18n="thAction">إجراء</th>
                             </tr>
                         </thead>
-                        <tbody id="ordersBody" class="divide-y divide-shopify-border dark:divide-shopify-darkBorder text-xs">
+                        <tbody id="ordersBody" class="divide-y divide-shopify-border dark:divide-shopify-darkBorder">
                             <tr>
                                 <td colspan="13" class="p-8 text-center text-shopify-subtext dark:text-gray-400">
                                     <div class="loading">
                                         <i class="fa-solid fa-spinner fa-spin text-xl mb-2 text-shopify-green"></i>
-                                        <p class="text-xs">جاري تحميل طلبات متجرك...</p>
+                                        <p class="text-xs" data-i18n="loadingOrders">جاري تحميل طلبات متجرك...</p>
                                     </div>
                                 </td>
                             </tr>
@@ -355,6 +363,8 @@
         const selectAll = document.getElementById("selectAll");
         const bulkDeleteBtn = document.getElementById("bulkDeleteBtn");
         const themeToggle = document.getElementById("themeToggle");
+        const langToggleBtn = document.getElementById("langToggleBtn");
+        const currentLangLabel = document.getElementById("currentLangLabel");
         const productsModal = document.getElementById("productsModal");
         const productsModalBody = document.getElementById("productsModalBody");
         const phoneModal = document.getElementById("phoneModal");
@@ -365,6 +375,94 @@
         let currentOwnerEmail = "";
         let currentStoreId = "";
         let cachedOrders = [];
+        let currentLang = localStorage.getItem("gGlamLang") || "ar";
+
+        const translations = {
+            ar: {
+                navDashboard: "الرئيسية",
+                navOrders: "الطلبات",
+                navProducts: "المنتجات",
+                navAddProduct: "إضافة منتج",
+                navDelivery: "أسعار التوصيل",
+                navSettingsTitle: "الإعدادات",
+                navSettings: "إعدادات المتجر",
+                navLogout: "تسجيل الخروج",
+                statTotal: "إجمالي الطلبات",
+                statConfirmed: "تم التأكيد",
+                statShipped: "تم الشحن",
+                statDelivered: "تم التسليم",
+                sectionTitle: "طلبات متجري",
+                selectAll: "تحديد الكل",
+                bulkDelete: "حذف المحدد",
+                thOrder: "رقم الطلب",
+                thDate: "التاريخ",
+                thCustomer: "الزبون",
+                thPhone: "الهاتف",
+                thWilaya: "الولاية",
+                thAddress: "العنوان",
+                thDelivery: "التوصيل",
+                thProducts: "المنتجات",
+                thTotal: "المجموع",
+                thNotes: "الملاحظات",
+                thStatus: "الحالة",
+                thAction: "إجراء",
+                loadingOrders: "جاري تحميل طلبات متجرك...",
+                noOrders: "لا توجد طلبات متوفرة حالياً."
+            },
+            en: {
+                navDashboard: "Dashboard",
+                navOrders: "Orders",
+                navProducts: "Products",
+                navAddProduct: "Add Product",
+                navDelivery: "Delivery Rates",
+                navSettingsTitle: "Settings",
+                navSettings: "Store Settings",
+                navLogout: "Log out",
+                statTotal: "Total Orders",
+                statConfirmed: "Confirmed",
+                statShipped: "Shipped",
+                statDelivered: "Delivered",
+                sectionTitle: "Store Orders",
+                selectAll: "Select All",
+                bulkDelete: "Delete Selected",
+                thOrder: "Order ID",
+                thDate: "Date",
+                thCustomer: "Customer",
+                thPhone: "Phone",
+                thWilaya: "State",
+                thAddress: "Address",
+                thDelivery: "Delivery",
+                thProducts: "Products",
+                thTotal: "Total",
+                thNotes: "Notes",
+                thStatus: "Status",
+                thAction: "Action",
+                loadingOrders: "Loading store orders...",
+                noOrders: "No orders available right now."
+            }
+        };
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem("gGlamLang", lang);
+            currentLangLabel.textContent = lang.toUpperCase();
+            document.documentElement.setAttribute("lang", lang);
+            document.documentElement.setAttribute("dir", lang === "ar" ? "rtl" : "ltr");
+
+            document.querySelectorAll("[data-i18n]").forEach(el => {
+                const key = el.getAttribute("data-i18n");
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+        }
+
+        langToggleBtn.addEventListener("click", () => {
+            setLanguage(currentLang === "ar" ? "en" : "ar");
+            renderOrdersTable(cachedOrders);
+        });
+
+        setLanguage(currentLang);
 
         /* =========================
            THEME
@@ -494,7 +592,7 @@
            LOAD ORDERS
         ========================= */
         async function loadOrders() {
-            ordersBody.innerHTML = `<tr><td colspan="13" class="p-8 text-center text-shopify-subtext dark:text-gray-400"><i class="fa-solid fa-spinner fa-spin text-xl mb-2 text-shopify-green"></i><p class="text-xs">جاري تحميل طلبات متجرك...</p></td></tr>`;
+            ordersBody.innerHTML = `<tr><td colspan="13" class="p-8 text-center text-shopify-subtext dark:text-gray-400"><i class="fa-solid fa-spinner fa-spin text-xl mb-2 text-shopify-green"></i><p class="text-xs">${translations[currentLang].loadingOrders}</p></td></tr>`;
 
             try {
                 const snapshot = await getDocs(query(collection(db, "orders"), where("ownerUid", "==", currentOwnerUid)));
@@ -524,7 +622,7 @@
             deliveredOrders.textContent = delivered;
 
             if (!orders.length) {
-                ordersBody.innerHTML = `<tr><td colspan="13" class="p-12 text-center text-shopify-subtext dark:text-gray-400"><i class="fa-solid fa-box-open text-3xl mb-3 text-gray-400"></i><p class="text-xs font-semibold">لا توجد طلبات متوفرة حالياً.</p></td></tr>`;
+                ordersBody.innerHTML = `<tr><td colspan="13" class="p-12 text-center text-shopify-subtext dark:text-gray-400"><i class="fa-solid fa-box-open text-3xl mb-3 text-gray-400"></i><p class="text-xs font-semibold">${translations[currentLang].noOrders}</p></td></tr>`;
                 return;
             }
 
@@ -536,7 +634,7 @@
         }
 
         /* =========================
-           RENDER ORDER ROW
+           RENDER ORDER ROW (COMPACT CELLS)
         ========================= */
         function renderOrderRow(id, order, orderNumber) {
             const tr = document.createElement("tr");
@@ -550,39 +648,39 @@
             const deliveryPrice = Number(order.deliveryPrice ?? order.shippingPrice ?? 0);
 
             tr.innerHTML = `
-                <td class="p-3 text-center">
-                    <input type="checkbox" class="order-check w-4 h-4 accent-emerald-600 cursor-pointer rounded" data-id="${escapeHtml(id)}">
+                <td class="p-2 text-center">
+                    <input type="checkbox" class="order-check w-3.5 h-3.5 accent-emerald-600 cursor-pointer rounded" data-id="${escapeHtml(id)}">
                 </td>
-                <td class="p-3 font-bold text-shopify-green" dir="ltr">#${formattedNumber}</td>
-                <td class="p-3 text-gray-500 dark:text-gray-400 whitespace-nowrap">${formatDate(order.createdAt)}</td>
-                <td class="p-3 font-bold text-gray-900 dark:text-white">${escapeHtml(order.name || order.customerName || "غير محدد")}</td>
-                <td class="p-3 text-center">
-                    <button type="button" class="customer-phone px-2.5 py-1 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-lg text-xs font-bold inline-flex items-center gap-1.5 transition-colors">
+                <td class="p-2 font-bold text-shopify-green" dir="ltr">#${formattedNumber}</td>
+                <td class="p-2 text-gray-500 dark:text-gray-400 whitespace-nowrap text-[10px]">${formatDate(order.createdAt)}</td>
+                <td class="p-2 font-bold text-gray-900 dark:text-white truncate max-w-[100px]">${escapeHtml(order.name || order.customerName || "غير محدد")}</td>
+                <td class="p-2 text-center">
+                    <button type="button" class="customer-phone px-2 py-0.5 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 rounded text-[11px] font-bold inline-flex items-center gap-1 transition-colors">
                         <i class="fa-solid fa-phone text-emerald-600"></i>
                         ${escapeHtml(order.phone || "غير محدد")}
                     </button>
                 </td>
-                <td class="p-3">${escapeHtml(order.wilaya || "غير محدد")}</td>
-                <td class="p-3 max-w-[160px] truncate" title="${escapeHtml(order.address || order.commune || "غير محدد")}">${escapeHtml(order.address || order.commune || "غير محدد")}</td>
-                <td class="p-3">
-                    <div class="font-bold">${escapeHtml(deliveryType)}</div>
-                    <div class="text-[10px] text-gray-400">${deliveryPrice} DA</div>
+                <td class="p-2 truncate max-w-[80px]">${escapeHtml(order.wilaya || "غير محدد")}</td>
+                <td class="p-2 truncate max-w-[110px]" title="${escapeHtml(order.address || order.commune || "غير محدد")}">${escapeHtml(order.address || order.commune || "غير محدد")}</td>
+                <td class="p-2">
+                    <div class="font-bold text-[10px] truncate max-w-[90px]">${escapeHtml(deliveryType)}</div>
+                    <div class="text-[9px] text-gray-400">${deliveryPrice} DA</div>
                 </td>
-                <td class="p-3 text-center">
-                    <button type="button" class="products-btn px-2.5 py-1 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 rounded-lg text-xs font-bold inline-flex items-center gap-1 transition-colors">
+                <td class="p-2 text-center">
+                    <button type="button" class="products-btn px-2 py-0.5 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 rounded text-[11px] font-bold inline-flex items-center gap-1 transition-colors">
                         <i class="fa-solid fa-bag-shopping"></i>
-                        <span>عرض (${productsCount})</span>
+                        <span>(${productsCount})</span>
                     </button>
                 </td>
-                <td class="p-3 font-bold text-shopify-green">${Number(order.total || 0).toLocaleString("fr-DZ")} DA</td>
-                <td class="p-3">
-                    <div class="flex items-center gap-1.5">
-                        <input type="text" class="notes-input w-28 bg-gray-50 dark:bg-[#252525] border border-shopify-border dark:border-shopify-darkBorder px-2 py-1 rounded-lg text-xs outline-none focus:border-shopify-green" value="${escapeHtml(order.notes || "")}" placeholder="ملاحظة...">
-                        <button type="button" class="notes-save p-1.5 bg-shopify-green hover:bg-emerald-700 text-white rounded-lg text-xs transition-colors"><i class="fa-solid fa-floppy-disk"></i></button>
+                <td class="p-2 font-bold text-shopify-green whitespace-nowrap">${Number(order.total || 0).toLocaleString("fr-DZ")} DA</td>
+                <td class="p-2">
+                    <div class="flex items-center gap-1">
+                        <input type="text" class="notes-input w-20 bg-gray-50 dark:bg-[#252525] border border-shopify-border dark:border-shopify-darkBorder px-1.5 py-0.5 rounded text-[11px] outline-none focus:border-shopify-green" value="${escapeHtml(order.notes || "")}" placeholder="ملاحظة">
+                        <button type="button" class="notes-save p-1 bg-shopify-green hover:bg-emerald-700 text-white rounded text-[10px] transition-colors"><i class="fa-solid fa-floppy-disk"></i></button>
                     </div>
                 </td>
-                <td class="p-3">
-                    <select class="status-select bg-shopify-surface dark:bg-[#252525] border border-shopify-border dark:border-shopify-darkBorder px-2.5 py-1 rounded-lg text-xs font-semibold outline-none cursor-pointer">
+                <td class="p-2">
+                    <select class="status-select bg-shopify-surface dark:bg-[#252525] border border-shopify-border dark:border-shopify-darkBorder px-1.5 py-0.5 rounded text-[11px] font-semibold outline-none cursor-pointer">
                         <option value="قيد المعالجة" ${status === "قيد المعالجة" ? "selected" : ""}>قيد المعالجة</option>
                         <option value="قيد المراجعة" ${status === "قيد المراجعة" ? "selected" : ""}>قيد المراجعة</option>
                         <option value="تم التأكيد" ${status === "تم التأكيد" ? "selected" : ""}>تم التأكيد</option>
@@ -591,8 +689,8 @@
                         <option value="إلغاء" ${status === "إلغاء" ? "selected" : ""}>إلغاء</option>
                     </select>
                 </td>
-                <td class="p-3 text-center">
-                    <button type="button" class="delete-btn px-2.5 py-1 bg-red-50 hover:bg-red-100 dark:bg-red-950/40 text-red-600 dark:text-red-400 rounded-lg text-xs font-bold transition-colors">
+                <td class="p-2 text-center">
+                    <button type="button" class="delete-btn px-2 py-0.5 bg-red-50 hover:bg-red-100 dark:bg-red-950/40 text-red-600 dark:text-red-400 rounded text-[11px] font-bold transition-colors">
                         <i class="fa-solid fa-trash"></i>
                     </button>
                 </td>
