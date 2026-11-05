@@ -102,7 +102,7 @@
             </div>
         </div>
 
-        <!-- Left Side Actions (Store Switcher & User) -->
+        <!-- Left Side Actions (Theme Toggle & User Profile Link) -->
         <div class="flex items-center gap-2">
             <!-- Theme Toggle -->
             <button type="button" id="themeBtn" title="تغيير المظهر"
@@ -110,21 +110,17 @@
                 <i class="fa-solid fa-moon"></i>
             </button>
 
-            <!-- View Store Button -->
-            <a href="#" id="viewStoreBtn" target="_blank" title="عرض المتجر"
-                class="hidden sm:flex items-center gap-1.5 text-xs bg-[#2A2A2A] hover:bg-[#383838] text-gray-200 px-3 py-1.5 rounded-lg border border-gray-700 transition-colors">
-                <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
-                <span>عرض المتجر</span>
-            </a>
-
-            <!-- Store Profile Badge -->
-            <div class="flex items-center gap-2 pl-2 border-r border-gray-700 mr-1">
-                <img idtopStoreImage class="w-7 h-7 rounded-full object-cover border border-gray-600 bg-gray-800" id="topStoreImage" src="logotrans.png" alt="صورة المتجر">
+            <!-- Store Profile Badge (Clickable: Opens Store View) -->
+            <a href="#" id="userProfileLink" target="_blank" title="عرض المتجر" class="flex items-center gap-2 pl-2 border-r border-gray-700 mr-1 p-1 rounded-lg hover:bg-[#2A2A2A] transition-colors cursor-pointer">
+                <img class="w-7 h-7 rounded-full object-cover border border-gray-600 bg-gray-800" id="topStoreImage" src="logotrans.png" alt="صورة المتجر">
                 <div class="hidden md:flex flex-col text-right">
                     <span id="topStoreName" class="text-xs font-bold leading-tight text-gray-200 truncate max-w-[120px]">جاري التحميل...</span>
-                    <span class="text-[10px] text-gray-400">G-Glam Admin</span>
+                    <span class="text-[10px] text-gray-400 flex items-center gap-1">
+                        <span>G-Glam Admin</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                    </span>
                 </div>
-            </div>
+            </a>
         </div>
     </header>
 
@@ -351,7 +347,7 @@
         const productsContainer = document.getElementById("productsContainer");
         const topStoreName = document.getElementById("topStoreName");
         const topStoreImage = document.getElementById("topStoreImage");
-        const viewStoreBtn = document.getElementById("viewStoreBtn");
+        const userProfileLink = document.getElementById("userProfileLink");
 
         /* =====================================================
            VARIABLES
@@ -474,8 +470,8 @@
                 storeNameStat.textContent = currentStoreName;
                 topStoreName.textContent = currentStoreName;
 
-                /* VIEW STORE LINK */
-                viewStoreBtn.href = "index.html?store=" + encodeURIComponent(currentStoreId);
+                /* SET STORE VIEW LINK ON USER PROFILE BADGE */
+                userProfileLink.href = "index.html?store=" + encodeURIComponent(currentStoreId);
 
                 /* LOCAL STORAGE SAVING */
                 localStorage.setItem("storeId", currentStoreId);
