@@ -2,4609 +2,780 @@
 <html lang="ar" dir="rtl">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1A1A1A">
+    <title>G-Glam | إدارة الطلبات (Shopify Admin Style)</title>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <meta
-        name="theme-color"
-        content="#F47B20"
-    >
-
-    <title>G-Glam | الطلبات</title>
-
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
-
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-    >
-
-    <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800&display=swap"
-    >
-
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    >
+    <!-- Google Fonts & FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        shopify: {
+                            bg: '#F1F2F4',
+                            darkBg: '#0F0F0F',
+                            surface: '#FFFFFF',
+                            darkSurface: '#1A1A1A',
+                            border: '#E1E3E5',
+                            darkBorder: '#2E2E2E',
+                            green: '#008060',
+                            greenLight: '#E3F1DF',
+                            greenBadge: '#AEE9D1',
+                            greenBadgeText: '#004B36',
+                            topbar: '#1A1A1A',
+                            text: '#303030',
+                            subtext: '#616161',
+                            hover: '#EDEEF0'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Tajawal', 'Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
 
     <style>
-
-        :root {
-
-            --orange: #F47B20;
-            --orange-dark: #DF6810;
-
-            --bg: #F4F5F7;
-            --sidebar: #EEEEEE;
-
-            --card: #FFFFFF;
-
-            --text: #333333;
-            --dark: #222222;
-            --muted: #777777;
-
-            --border: #DCDCDC;
-
-            --success: #198754;
-            --success-bg: #E8F7EE;
-
-            --danger: #DC3545;
-            --danger-bg: #FDEBEC;
-
-            --blue: #2563EB;
-            --blue-bg: #EAF1FF;
-
-            --shadow:
-                0 5px 20px rgba(0, 0, 0, 0.06);
-
-            --dark-bg: #07111F;
-            --dark-sidebar: #0A1726;
-            --dark-card: #0D1B2A;
-            --dark-text: #F4F7FB;
-            --dark-muted: #AAB7C7;
-            --dark-border: #1D334A;
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
         }
-
-
-        * {
-
-            box-sizing: border-box;
-
-            margin: 0;
-
-            padding: 0;
-
-            font-family: "Tajawal", sans-serif;
+        ::-webkit-scrollbar-track {
+            background: transparent;
         }
-
-
-        body {
-
-            background: var(--bg);
-
-            color: var(--text);
-
-            min-height: 100vh;
-
-            transition: 0.25s;
-        }
-
-
-        body.dark-mode {
-
-            background: var(--dark-bg);
-
-            color: var(--dark-text);
-        }
-
-
-        /* SIDEBAR */
-
-        .sidebar {
-
-            position: fixed;
-
-            top: 0;
-
-            right: 0;
-
-            width: 75px;
-
-            height: 100vh;
-
-            background: var(--sidebar);
-
-            border-left: 1px solid var(--border);
-
-            overflow: hidden;
-
-            z-index: 1200;
-
-            transition: 0.3s;
-
-            box-shadow:
-                -3px 0 15px rgba(0, 0, 0, 0.04);
-        }
-
-
-        .sidebar:hover {
-
-            width: 240px;
-        }
-
-
-        body.dark-mode .sidebar {
-
-            background: var(--dark-sidebar);
-
-            border-left-color: var(--dark-border);
-        }
-
-
-        .logo {
-
-            height: 78px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            border-bottom: 1px solid var(--border);
-
-            padding: 10px;
-        }
-
-
-        .logo img {
-
-            width: 48px;
-
-            height: 48px;
-
-            object-fit: contain;
-        }
-
-
-        .sidebar:hover .logo img {
-
-            width: 130px;
-
-            height: 55px;
-        }
-
-
-        .menu {
-
-            margin-top: 18px;
-
-            padding: 0 10px;
-        }
-
-
-        .menu a {
-
-            position: relative;
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 15px;
-
-            height: 52px;
-
-            padding: 0 10px;
-
-            margin-bottom: 7px;
-
-            border-radius: 12px;
-
-            color: #555;
-
-            text-decoration: none;
-
-            white-space: nowrap;
-
-            transition: 0.2s;
-        }
-
-
-        .menu a:hover {
-
-            background: #E2E2E2;
-
-            color: #222;
-        }
-
-
-        body.dark-mode .menu a {
-
-            color: #C9D4DF;
-        }
-
-
-        body.dark-mode .menu a:hover {
-
-            background: #17283A;
-
-            color: #FFFFFF;
-        }
-
-
-        .menu a.active {
-
-            background: var(--orange);
-
-            color: white;
-
-            box-shadow:
-                0 5px 15px rgba(244, 123, 32, 0.20);
-        }
-
-
-        .icon {
-
-            width: 35px;
-
-            min-width: 35px;
-
-            height: 35px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            font-size: 18px;
-        }
-
-
-        .text {
-
-            opacity: 0;
-
-            font-size: 14px;
-
-            font-weight: 700;
-
-            transition: 0.25s;
-        }
-
-
-        .sidebar:hover .text {
-
-            opacity: 1;
-        }
-
-
-        /* TOPBAR */
-
-        .topbar {
-
-            position: fixed;
-
-            top: 0;
-
-            right: 75px;
-
-            left: 0;
-
-            height: 78px;
-
-            background: white;
-
-            border-bottom: 1px solid var(--border);
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            gap: 15px;
-
-            padding: 0 25px;
-
-            z-index: 1100;
-
-            box-shadow:
-                0 2px 12px rgba(0, 0, 0, 0.04);
-        }
-
-
-        body.dark-mode .topbar {
-
-            background: var(--dark-card);
-
-            border-bottom-color: var(--dark-border);
-        }
-
-
-        .store-top {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 12px;
-
-            min-width: 0;
-        }
-
-
-        .store-image {
-
-            width: 48px;
-
-            height: 48px;
-
-            border-radius: 50%;
-
-            object-fit: cover;
-
-            background: #F1F1F1;
-
-            border: 2px solid #FFE0C8;
-
-            flex-shrink: 0;
-        }
-
-
-        .store-details {
-
-            display: flex;
-
-            flex-direction: column;
-
-            min-width: 0;
-        }
-
-
-        .store-label {
-
-            color: #999;
-
-            font-size: 11px;
-
-            margin-bottom: 2px;
-        }
-
-
-        .store-top-name {
-
-            color: #222;
-
-            font-size: 16px;
-
-            font-weight: 800;
-
-            white-space: nowrap;
-
-            overflow: hidden;
-
-            text-overflow: ellipsis;
-
-            max-width: 250px;
-        }
-
-
-        body.dark-mode .store-top-name {
-
-            color: white;
-        }
-
-
-        .top-actions {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 10px;
-        }
-
-
-        .theme-toggle {
-
-            width: 42px;
-
-            height: 42px;
-
-            border: 1px solid var(--border);
-
-            border-radius: 12px;
-
-            background: #F5F5F5;
-
-            color: #333;
-
-            cursor: pointer;
-
-            font-size: 18px;
-        }
-
-
-        .view-store-btn {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 7px;
-
-            padding: 10px 15px;
-
-            border-radius: 11px;
-
-            background: #FFF1E6;
-
-            border: 1px solid #FFE0CA;
-
-            color: var(--orange-dark);
-
-            text-decoration: none;
-
-            font-size: 13px;
-
-            font-weight: 700;
-        }
-
-
-        /* CONTENT */
-
-        .content {
-
-            margin-right: 75px;
-
-            padding: 103px 25px 30px;
-        }
-
-
-        /* STATS */
-
-        .stats {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(4, 1fr);
-
-            gap: 18px;
-
-            margin-bottom: 22px;
-        }
-
-
-        .stat {
-
-            position: relative;
-
-            background: white;
-
-            border: 1px solid var(--border);
-
-            border-radius: 16px;
-
-            padding: 22px;
-
-            box-shadow: var(--shadow);
-
-            overflow: hidden;
-        }
-
-
-        body.dark-mode .stat {
-
-            background: var(--dark-card);
-
-            border-color: var(--dark-border);
-        }
-
-
-        .stat::after {
-
-            content: "";
-
-            position: absolute;
-
-            right: 0;
-
-            bottom: 0;
-
-            width: 100%;
-
-            height: 3px;
-
-            background: var(--orange);
-        }
-
-
-        .stat-title {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 8px;
-
-            color: var(--muted);
-
-            font-size: 14px;
-
-            font-weight: 600;
-
-            margin-bottom: 10px;
-        }
-
-
-        .stat-title i {
-
-            color: var(--orange);
-
-            font-size: 17px;
-        }
-
-
-        .stat-value {
-
-            color: var(--dark);
-
-            font-size: 28px;
-
-            font-weight: 800;
-        }
-
-
-        body.dark-mode .stat-value {
-
-            color: white;
-        }
-
-
-        /* SECTION */
-
-        .section {
-
-            background: white;
-
-            border: 1px solid var(--border);
-
-            border-radius: 18px;
-
-            padding: 22px;
-
-            box-shadow: var(--shadow);
-        }
-
-
-        body.dark-mode .section {
-
-            background: var(--dark-card);
-
-            border-color: var(--dark-border);
-        }
-
-
-        .section-header {
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            gap: 15px;
-
-            margin-bottom: 20px;
-        }
-
-
-        .section-title {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 9px;
-
-            color: var(--dark);
-
-            font-size: 21px;
-
-            font-weight: 800;
-        }
-
-
-        body.dark-mode .section-title {
-
-            color: white;
-        }
-
-
-        .section-title i {
-
-            color: var(--orange);
-        }
-
-
-        /* BULK */
-
-        .bulk-actions {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 10px;
-        }
-
-
-        .select-all-box {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 7px;
-
-            color: #666;
-
-            font-size: 13px;
-
-            font-weight: 700;
-
-            cursor: pointer;
-        }
-
-
-        body.dark-mode .select-all-box {
-
-            color: #C8D3DF;
-        }
-
-
-        .select-all-box input {
-
-            width: 18px;
-
-            height: 18px;
-
-            accent-color: var(--orange);
-
-            cursor: pointer;
-        }
-
-
-        .bulk-delete-btn {
-
-            display: none;
-
-            align-items: center;
-
-            gap: 7px;
-
-            border: none;
-
+        ::-webkit-scrollbar-thumb {
+            background: #D2D5D8;
             border-radius: 10px;
-
-            padding: 10px 14px;
-
-            background: var(--danger);
-
-            color: white;
-
-            font-family: "Tajawal", sans-serif;
-
-            font-size: 12px;
-
-            font-weight: 800;
-
-            cursor: pointer;
         }
-
-
-        .bulk-delete-btn.show {
-
-            display: flex;
+        .dark ::-webkit-scrollbar-thumb {
+            background: #3A3A3A;
         }
-
-
-        /* TABLE */
-
-        .table-wrapper {
-
-            width: 100%;
-
-            overflow-x: auto;
-
-            border: 1px solid #CFCFCF;
-
-            border-radius: 14px;
+        .shopify-shadow {
+            box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.05), 0px 2px 4px rgba(0, 0, 0, 0.05);
         }
-
-
-        body.dark-mode .table-wrapper {
-
-            border-color: var(--dark-border);
+        .shopify-card-shadow {
+            box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px 0 rgba(63, 63, 68, 0.15);
         }
-
-
-        .orders-table {
-
-            width: 100%;
-
-            min-width: 1350px;
-
-            border-collapse: separate;
-
-            border-spacing: 0;
-
-            background: white;
+        .dark .shopify-card-shadow {
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 1px 3px 0 rgba(0, 0, 0, 0.4);
         }
-
-
-        body.dark-mode .orders-table {
-
-            background: var(--dark-card);
-        }
-
-
-        .orders-table th {
-
-            padding: 15px 12px;
-
-            background: #F0F1F3;
-
-            color: #333;
-
-            border-left: 1px solid #D8D8D8;
-
-            border-bottom: 2px solid #CFCFCF;
-
-            font-size: 13px;
-
-            font-weight: 800;
-
-            text-align: center;
-
-            white-space: nowrap;
-        }
-
-
-        body.dark-mode .orders-table th {
-
-            background: #17283A;
-
-            color: white;
-
-            border-color: var(--dark-border);
-        }
-
-
-        .orders-table td {
-
-            padding: 13px 10px;
-
-            color: #333;
-
-            border-left: 1px solid #E1E1E1;
-
-            border-bottom: 1px solid #DCDCDC;
-
-            font-size: 13px;
-
-            text-align: center;
-
-            vertical-align: middle;
-        }
-
-
-        body.dark-mode .orders-table td {
-
-            color: #E8EEF5;
-
-            border-color: var(--dark-border);
-        }
-
-
-        .orders-table th:last-child,
-        .orders-table td:last-child {
-
-            border-left: none;
-        }
-
-
-        .orders-table tbody tr:hover {
-
-            background: #FAFAFA;
-        }
-
-
-        body.dark-mode .orders-table tbody tr:hover {
-
-            background: #13283B;
-        }
-
-
-        .orders-table tbody tr.selected {
-
-            background: #FFF5ED;
-        }
-
-
-        body.dark-mode .orders-table tbody tr.selected {
-
-            background: #2A211B;
-        }
-
-
-        .check-cell input {
-
-            width: 18px;
-
-            height: 18px;
-
-            accent-color: var(--orange);
-
-            cursor: pointer;
-        }
-
-
-        .order-number {
-
-            color: var(--orange);
-
-            font-size: 15px;
-
-            font-weight: 800;
-
-            direction: ltr;
-
-            white-space: nowrap;
-        }
-
-
-        .date-cell {
-
-            white-space: nowrap;
-
-            color: #555;
-
-            font-size: 12px;
-        }
-
-
-        body.dark-mode .date-cell {
-
-            color: #B7C3D0;
-        }
-
-
-        .customer-name {
-
-            color: var(--dark);
-
-            font-weight: 700;
-        }
-
-
-        body.dark-mode .customer-name {
-
-            color: white;
-        }
-
-
-        .customer-phone {
-
-            display: inline-flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            gap: 5px;
-
-            border: none;
-
-            border-radius: 9px;
-
-            padding: 8px 10px;
-
-            background: #F1F1F1;
-
-            color: #333;
-
-            font-family: "Tajawal", sans-serif;
-
-            font-size: 12px;
-
-            font-weight: 700;
-
-            cursor: pointer;
-        }
-
-
-        body.dark-mode .customer-phone {
-
-            background: #17283A;
-
-            color: white;
-        }
-
-
-        .address-cell {
-
-            max-width: 190px;
-
-            line-height: 1.7;
-
-            white-space: normal;
-        }
-
-
-        .delivery-cell {
-
-            line-height: 1.7;
-
-            min-width: 150px;
-        }
-
-
-        .delivery-type {
-
-            color: var(--dark);
-
-            font-weight: 800;
-
-            white-space: nowrap;
-        }
-
-
-        body.dark-mode .delivery-type {
-
-            color: white;
-        }
-
-
-        .delivery-price {
-
-            color: var(--muted);
-
-            font-size: 11px;
-        }
-
-
-        .products-btn {
-
-            border: none;
-
-            border-radius: 9px;
-
-            padding: 9px 13px;
-
-            background: #FFF4E8;
-
-            color: var(--orange-dark);
-
-            font-family: "Tajawal", sans-serif;
-
-            font-size: 12px;
-
-            font-weight: 700;
-
-            cursor: pointer;
-        }
-
-
-        body.dark-mode .products-btn {
-
-            background: #17283A;
-
-            color: #FF9A4D;
-        }
-
-
-        .total-cell {
-
-            color: var(--orange);
-
-            font-size: 15px;
-
-            font-weight: 800;
-
-            white-space: nowrap;
-        }
-
-
-        .notes-box {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 6px;
-
-            min-width: 190px;
-        }
-
-
-        .notes-input {
-
-            width: 140px;
-
-            padding: 9px 10px;
-
-            border: 1px solid var(--border);
-
-            border-radius: 9px;
-
-            outline: none;
-
-            background: #FAFAFA;
-
-            font-family: "Tajawal", sans-serif;
-
-            font-size: 12px;
-        }
-
-
-        body.dark-mode .notes-input {
-
-            background: #17283A;
-
-            color: white;
-
-            border-color: #29425B;
-        }
-
-
-        .notes-save {
-
-            border: none;
-
-            border-radius: 9px;
-
-            padding: 9px 10px;
-
-            background: var(--orange);
-
-            color: white;
-
-            cursor: pointer;
-        }
-
-
-        .status-select {
-
-            min-width: 135px;
-
-            padding: 9px 10px;
-
-            border: 1px solid var(--border);
-
-            border-radius: 9px;
-
-            background: white;
-
-            color: #333;
-
-            font-family: "Tajawal", sans-serif;
-
-            font-size: 12px;
-
-            font-weight: 700;
-
-            outline: none;
-
-            cursor: pointer;
-        }
-
-
-        body.dark-mode .status-select {
-
-            background: #17283A;
-
-            color: white;
-
-            border-color: #29425B;
-        }
-
-
-        .delete-btn {
-
-            border: none;
-
-            border-radius: 9px;
-
-            padding: 9px 12px;
-
-            background: var(--danger-bg);
-
-            color: var(--danger);
-
-            font-family: "Tajawal", sans-serif;
-
-            font-size: 12px;
-
-            font-weight: 700;
-
-            cursor: pointer;
-        }
-
-
-        .delete-btn:disabled {
-
-            opacity: 0.6;
-
-            cursor: not-allowed;
-        }
-
-
-        .empty,
-        .loading {
-
-            padding: 55px 20px;
-
-            text-align: center;
-
-            color: var(--muted);
-
-            line-height: 2;
-        }
-
-
-        /* MODALS */
-
-        .modal-overlay {
-
-            position: fixed;
-
-            inset: 0;
-
-            display: none;
-
-            align-items: center;
-
-            justify-content: center;
-
-            padding: 20px;
-
-            background: rgba(0, 0, 0, 0.45);
-
-            z-index: 3000;
-        }
-
-
-        .modal-overlay.active {
-
-            display: flex;
-        }
-
-
-        .modal {
-
-            width: 100%;
-
-            max-width: 650px;
-
-            max-height: 90vh;
-
-            overflow-y: auto;
-
-            background: white;
-
-            border-radius: 18px;
-
-            box-shadow:
-                0 15px 50px rgba(0, 0, 0, 0.20);
-        }
-
-
-        body.dark-mode .modal {
-
-            background: var(--dark-card);
-
-            color: white;
-        }
-
-
-        .modal-header {
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            padding: 18px 20px;
-
-            border-bottom: 1px solid var(--border);
-        }
-
-
-        .modal-header h3 {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 9px;
-
-            color: #222;
-
-            font-size: 19px;
-
-            font-weight: 800;
-        }
-
-
-        body.dark-mode .modal-header h3 {
-
-            color: white;
-        }
-
-
-        .modal-header h3 i {
-
-            color: var(--orange);
-        }
-
-
-        .close-modal {
-
-            width: 35px;
-
-            height: 35px;
-
-            border: none;
-
-            border-radius: 50%;
-
-            background: #F1F1F1;
-
-            cursor: pointer;
-        }
-
-
-        .modal-body {
-
-            padding: 20px;
-        }
-
-
-        /* PRODUCT DETAILS */
-
-        .modal-product {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 14px;
-
-            padding: 15px 0;
-
-            border-bottom: 1px solid #EEEEEE;
-        }
-
-
-        .modal-product:last-child {
-
-            border-bottom: none;
-        }
-
-
-        .modal-product-image {
-
-            width: 78px;
-
-            height: 78px;
-
-            min-width: 78px;
-
-            border-radius: 14px;
-
-            object-fit: cover;
-
-            background: #F1F1F1;
-
-            border: 1px solid #E5E5E5;
-        }
-
-
-        body.dark-mode .modal-product-image {
-
-            background: #17283A;
-
-            border-color: var(--dark-border);
-        }
-
-
-        .modal-product-info {
-
-            flex: 1;
-
-            min-width: 0;
-        }
-
-
-        .modal-product-name {
-
-            margin-bottom: 7px;
-
-            color: #222;
-
-            font-size: 15px;
-
-            font-weight: 800;
-        }
-
-
-        body.dark-mode .modal-product-name {
-
-            color: white;
-        }
-
-
-        .modal-product-detail {
-
-            color: var(--muted);
-
-            font-size: 12px;
-
-            line-height: 2;
-        }
-
-
-        .modal-product-detail span {
-
-            color: #777;
-        }
-
-
-        body.dark-mode .modal-product-detail span {
-
-            color: #AAB7C7;
-        }
-
-
-        .modal-product-detail strong {
-
-            color: #333;
-
-            font-weight: 800;
-        }
-
-
-        body.dark-mode .modal-product-detail strong {
-
-            color: #F4F7FB;
-        }
-
-
-        .modal-product-total {
-
-            color: var(--orange);
-
-            font-size: 15px;
-
-            font-weight: 800;
-
-            white-space: nowrap;
-
-            text-align: left;
-        }
-
-
-        .phone-options {
-
-            display: grid;
-
-            grid-template-columns: 1fr 1fr;
-
-            gap: 12px;
-        }
-
-
-        .phone-option {
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            gap: 8px;
-
-            padding: 15px;
-
-            border-radius: 12px;
-
-            text-decoration: none;
-
-            font-weight: 800;
-        }
-
-
-        .call-option {
-
-            background: #E8F5E9;
-
-            color: #2E7D32;
-        }
-
-
-        .whatsapp-option {
-
-            background: #E8F7EE;
-
-            color: #16833A;
-        }
-
-
-        @media (max-width: 1000px) {
-
-            .stats {
-
-                grid-template-columns:
-                    repeat(2, 1fr);
-            }
-        }
-
-
-        @media (max-width: 700px) {
-
-            .sidebar {
-
-                width: 60px;
-            }
-
-
-            .sidebar:hover {
-
-                width: 200px;
-            }
-
-
-            .topbar {
-
-                right: 60px;
-
-                height: 68px;
-
-                padding: 0 12px;
-            }
-
-
-            .content {
-
-                margin-right: 60px;
-
-                padding:
-                    83px 12px 20px;
-            }
-
-
-            .store-image {
-
-                width: 42px;
-
-                height: 42px;
-            }
-
-
-            .store-top-name {
-
-                font-size: 14px;
-
-                max-width: 140px;
-            }
-
-
-            .view-store-btn {
-
-                width: 40px;
-
-                height: 40px;
-
-                padding: 0;
-
-                justify-content: center;
-
-                font-size: 0;
-            }
-
-
-            .view-store-btn i {
-
-                font-size: 17px;
-            }
-
-
-            .theme-toggle {
-
-                width: 40px;
-
-                height: 40px;
-            }
-
-
-            .section {
-
-                padding: 14px;
-            }
-
-
-            .section-header {
-
-                align-items: flex-start;
-
-                flex-direction: column;
-            }
-
-
-            .bulk-actions {
-
-                width: 100%;
-
-                justify-content: space-between;
-            }
-
-
-            .phone-options {
-
-                grid-template-columns: 1fr;
-            }
-
-
-            .modal-product {
-
-                align-items: flex-start;
-
-                gap: 10px;
-            }
-
-
-            .modal-product-image {
-
-                width: 65px;
-
-                height: 65px;
-
-                min-width: 65px;
-            }
-
-
-            .modal-product-total {
-
-                font-size: 13px;
-            }
-
-        }
-
-
-        @media (max-width: 450px) {
-
-            .stats {
-
-                grid-template-columns:
-                    repeat(2, 1fr);
-
-                gap: 10px;
-            }
-
-
-            .stat {
-
-                padding: 15px;
-            }
-
-
-            .stat-value {
-
-                font-size: 23px;
-            }
-
-
-            .modal {
-
-                max-height: 92vh;
-
-                border-radius: 15px;
-            }
-
-
-            .modal-body {
-
-                padding: 15px;
-            }
-
-
-            .modal-product {
-
-                flex-wrap: wrap;
-
-            }
-
-
-            .modal-product-info {
-
-                min-width: calc(100% - 80px);
-
-            }
-
-
-            .modal-product-total {
-
-                width: 100%;
-
-                text-align: right;
-
-                padding-right: 78px;
-
-                margin-top: -5px;
-            }
-
-        }
-
     </style>
-
 </head>
 
+<body class="bg-shopify-bg dark:bg-shopify-darkBg text-shopify-text dark:text-gray-100 font-sans antialiased min-h-screen flex flex-col transition-colors duration-200">
 
-<body>
-
-
-    <aside class="sidebar">
-
-        <div class="logo">
-
-            <img
-                src="logotrans.png"
-                alt="G-Glam"
-            >
-
-        </div>
-
-
-        <nav class="menu">
-
-            <a href="dashboard.html">
-
-                <span class="icon">
-                    <i class="fa-solid fa-house"></i>
-                </span>
-
-                <span class="text">
-                    الرئيسية
-                </span>
-
-            </a>
-
-
-            <a
-                href="orders.html"
-                class="active"
-            >
-
-                <span class="icon">
-                    <i class="fa-solid fa-clipboard-list"></i>
-                </span>
-
-                <span class="text">
-                    الطلبات
-                </span>
-
-            </a>
-
-
-            <a href="products.html">
-
-                <span class="icon">
-                    <i class="fa-solid fa-bag-shopping"></i>
-                </span>
-
-                <span class="text">
-                    المنتجات
-                </span>
-
-            </a>
-
-
-            <a href="add-product.html">
-
-                <span class="icon">
-                    <i class="fa-solid fa-circle-plus"></i>
-                </span>
-
-                <span class="text">
-                    إضافة منتج
-                </span>
-
-            </a>
-
-
-            <a href="delivery.html">
-
-                <span class="icon">
-                    <i class="fa-solid fa-location-dot"></i>
-                </span>
-
-                <span class="text">
-                    أسعار التوصيل
-                </span>
-
-            </a>
-
-
-            <a href="settings.html">
-
-                <span class="icon">
-                    <i class="fa-solid fa-gear"></i>
-                </span>
-
-                <span class="text">
-                    الإعدادات
-                </span>
-
-            </a>
-
-
-            <a
-                href="#"
-                id="logoutBtn"
-            >
-
-                <span class="icon">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                </span>
-
-                <span class="text">
-                    تسجيل الخروج
-                </span>
-
-            </a>
-
-        </nav>
-
-    </aside>
-
-
-    <header class="topbar">
-
-        <div class="store-top">
-
-            <img
-                id="topStoreImage"
-                class="store-image"
-                src="logotrans.png"
-                alt="صورة المتجر"
-            >
-
-
-            <div class="store-details">
-
-                <div class="store-label">
-                    متجرك
+    <!-- =====================================================
+         TOPBAR (SHOPIFY MODERN BLACK TOP HEADER)
+    ===================================================== -->
+    <header class="h-14 bg-shopify-topbar text-white px-4 flex items-center justify-between sticky top-0 z-50 shadow-md">
+        <div class="flex items-center gap-4 flex-1 max-w-2xl">
+            <div class="flex items-center gap-2 font-bold text-lg tracking-tight pl-2 border-l border-gray-700">
+                <div class="w-7 h-7 rounded-lg bg-emerald-600 text-white font-black flex items-center justify-center text-sm shadow-sm">
+                    G
                 </div>
-
-
-                <div
-                    id="topStoreName"
-                    class="store-top-name"
-                >
-                    جاري التحميل...
-                </div>
-
+                <span class="hidden sm:inline">G-Glam</span>
             </div>
-
+            
+            <!-- Global Search Box -->
+            <div class="relative flex-1 max-w-md">
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400">
+                    <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                </div>
+                <input type="text" id="orderSearchInput" placeholder="بحث برقم الطلب أو اسم الزبون..." 
+                    class="w-full bg-[#2A2A2A] text-gray-200 text-xs rounded-lg pr-9 pl-4 py-1.5 border border-transparent focus:border-gray-500 focus:outline-none transition-all placeholder-gray-400">
+            </div>
         </div>
 
-
-        <div class="top-actions">
-
-            <button
-                id="themeToggle"
-                class="theme-toggle"
-                type="button"
-                title="الوضع الليلي"
-            >
-
+        <div class="flex items-center gap-2">
+            <!-- Theme Toggle -->
+            <button type="button" id="themeToggle" title="تغيير المظهر"
+                class="w-9 h-9 rounded-lg hover:bg-[#2A2A2A] flex items-center justify-center text-gray-300 hover:text-white transition-colors">
                 <i class="fa-solid fa-moon"></i>
-
             </button>
 
-
-            <a
-                href="#"
-                id="viewStoreBtn"
-                class="view-store-btn"
-            >
-
-                <i class="fa-solid fa-eye"></i>
-
-                <span>
-                    عرض المتجر
-                </span>
-
+            <!-- Store Profile Badge -->
+            <a href="#" id="viewStoreBtn" target="_blank" title="عرض المتجر" class="flex items-center gap-2 pl-2 border-r border-gray-700 mr-1 p-1 rounded-lg hover:bg-[#2A2A2A] transition-colors cursor-pointer">
+                <img class="w-7 h-7 rounded-full object-cover border border-gray-600 bg-gray-800" id="topStoreImage" src="logotrans.png" alt="صورة المتجر">
+                <div class="hidden md:flex flex-col text-right">
+                    <span id="topStoreName" class="text-xs font-bold leading-tight text-gray-200 truncate max-w-[120px]">جاري التحميل...</span>
+                    <span class="text-[10px] text-gray-400 flex items-center gap-1">
+                        <span>G-Glam Admin</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                    </span>
+                </div>
             </a>
-
         </div>
-
     </header>
 
 
-    <main class="content">
+    <!-- =====================================================
+         MAIN LAYOUT (SIDEBAR + MAIN CONTENT)
+    ===================================================== -->
+    <div class="flex flex-1">
 
+        <!-- SIDEBAR -->
+        <aside class="w-16 md:w-60 bg-shopify-surface dark:bg-shopify-darkSurface border-l border-shopify-border dark:border-shopify-darkBorder flex flex-col justify-between transition-all duration-200 shrink-0">
+            <div class="p-2 space-y-1">
+                <nav class="space-y-1">
+                    <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold text-shopify-subtext dark:text-gray-400 hover:bg-shopify-hover dark:hover:bg-[#262626] hover:text-shopify-text dark:hover:text-white transition-colors">
+                        <i class="fa-solid fa-house text-base w-5 text-center"></i>
+                        <span class="hidden md:inline">الرئيسية</span>
+                    </a>
 
-        <div class="stats">
+                    <a href="orders.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold bg-shopify-hover dark:bg-[#262626] text-shopify-text dark:text-white">
+                        <i class="fa-solid fa-clipboard-list text-base w-5 text-center text-shopify-green"></i>
+                        <span class="hidden md:inline">الطلبات</span>
+                    </a>
 
+                    <a href="products.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold text-shopify-subtext dark:text-gray-400 hover:bg-shopify-hover dark:hover:bg-[#262626] hover:text-shopify-text dark:hover:text-white transition-colors">
+                        <i class="fa-solid fa-bag-shopping text-base w-5 text-center"></i>
+                        <span class="hidden md:inline">المنتجات</span>
+                    </a>
 
-            <div class="stat">
+                    <a href="add-product.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold text-shopify-subtext dark:text-gray-400 hover:bg-shopify-hover dark:hover:bg-[#262626] hover:text-shopify-text dark:hover:text-white transition-colors">
+                        <i class="fa-solid fa-circle-plus text-base w-5 text-center"></i>
+                        <span class="hidden md:inline">إضافة منتج</span>
+                    </a>
 
-                <div class="stat-title">
+                    <a href="delivery.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold text-shopify-subtext dark:text-gray-400 hover:bg-shopify-hover dark:hover:bg-[#262626] hover:text-shopify-text dark:hover:text-white transition-colors">
+                        <i class="fa-solid fa-location-dot text-base w-5 text-center"></i>
+                        <span class="hidden md:inline">أسعار التوصيل</span>
+                    </a>
 
-                    <i class="fa-solid fa-box"></i>
+                    <div class="pt-4 pb-1">
+                        <div class="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-wider hidden md:block">الإعدادات</div>
+                    </div>
 
-                    إجمالي الطلبات
-
-                </div>
-
-
-                <div
-                    id="totalOrders"
-                    class="stat-value"
-                >
-                    0
-                </div>
-
+                    <a href="settings.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold text-shopify-subtext dark:text-gray-400 hover:bg-shopify-hover dark:hover:bg-[#262626] hover:text-shopify-text dark:hover:text-white transition-colors">
+                        <i class="fa-solid fa-gear text-base w-5 text-center"></i>
+                        <span class="hidden md:inline">إعدادات المتجر</span>
+                    </a>
+                </nav>
             </div>
 
-
-            <div class="stat">
-
-                <div class="stat-title">
-
-                    <i class="fa-solid fa-circle-check"></i>
-
-                    تم التأكيد
-
-                </div>
-
-
-                <div
-                    id="confirmedOrders"
-                    class="stat-value"
-                >
-                    0
-                </div>
-
+            <div class="p-2 border-t border-shopify-border dark:border-shopify-darkBorder">
+                <a href="#" id="logoutBtn" class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors">
+                    <i class="fa-solid fa-right-from-bracket text-base w-5 text-center"></i>
+                    <span class="hidden md:inline">تسجيل الخروج</span>
+                </a>
             </div>
+        </aside>
 
 
-            <div class="stat">
+        <!-- MAIN CONTENT CONTAINER -->
+        <main class="flex-1 p-4 md:p-8 max-w-7xl mx-auto w-full space-y-6">
 
-                <div class="stat-title">
-
-                    <i class="fa-solid fa-truck-fast"></i>
-
-                    تم الشحن
-
+            <!-- STATS CARDS -->
+            <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-shopify-surface dark:bg-shopify-darkSurface p-4 rounded-xl border border-shopify-border dark:border-shopify-darkBorder shopify-card-shadow">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold text-shopify-subtext dark:text-gray-400">إجمالي الطلبات</span>
+                        <div class="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-shopify-green flex items-center justify-center text-sm">
+                            <i class="fa-solid fa-box"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <span id="totalOrders" class="text-2xl font-bold text-gray-900 dark:text-white">0</span>
+                    </div>
                 </div>
 
-
-                <div
-                    id="shippedOrders"
-                    class="stat-value"
-                >
-                    0
+                <div class="bg-shopify-surface dark:bg-shopify-darkSurface p-4 rounded-xl border border-shopify-border dark:border-shopify-darkBorder shopify-card-shadow">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold text-shopify-subtext dark:text-gray-400">تم التأكيد</span>
+                        <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/50 text-blue-600 flex items-center justify-center text-sm">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <span id="confirmedOrders" class="text-2xl font-bold text-gray-900 dark:text-white">0</span>
+                    </div>
                 </div>
 
-            </div>
-
-
-            <div class="stat">
-
-                <div class="stat-title">
-
-                    <i class="fa-solid fa-box-open"></i>
-
-                    تم التسليم
-
+                <div class="bg-shopify-surface dark:bg-shopify-darkSurface p-4 rounded-xl border border-shopify-border dark:border-shopify-darkBorder shopify-card-shadow">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold text-shopify-subtext dark:text-gray-400">تم الشحن</span>
+                        <div class="w-8 h-8 rounded-lg bg-amber-50 dark:bg-amber-950/50 text-amber-600 flex items-center justify-center text-sm">
+                            <i class="fa-solid fa-truck-fast"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <span id="shippedOrders" class="text-2xl font-bold text-gray-900 dark:text-white">0</span>
+                    </div>
                 </div>
 
+                <div class="bg-shopify-surface dark:bg-shopify-darkSurface p-4 rounded-xl border border-shopify-border dark:border-shopify-darkBorder shopify-card-shadow">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold text-shopify-subtext dark:text-gray-400">تم التسليم</span>
+                        <div class="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 flex items-center justify-center text-sm">
+                            <i class="fa-solid fa-box-open"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <span id="deliveredOrders" class="text-2xl font-bold text-gray-900 dark:text-white">0</span>
+                    </div>
+                </div>
+            </section>
 
-                <div
-                    id="deliveredOrders"
-                    class="stat-value"
-                >
-                    0
+
+            <!-- ORDERS SECTION -->
+            <section class="bg-shopify-surface dark:bg-shopify-darkSurface border border-shopify-border dark:border-shopify-darkBorder rounded-xl shopify-card-shadow overflow-hidden">
+                <div class="p-4 border-b border-shopify-border dark:border-shopify-darkBorder flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <h2 class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-clipboard-list text-shopify-green"></i>
+                        طلبات متجري
+                    </h2>
+
+                    <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+                        <label class="flex items-center gap-2 text-xs font-semibold text-gray-600 dark:text-gray-300 cursor-pointer">
+                            <input type="checkbox" id="selectAll" class="w-4 h-4 accent-emerald-600 cursor-pointer rounded">
+                            تحديد الكل
+                        </label>
+
+                        <button type="button" id="bulkDeleteBtn" class="hidden items-center gap-1.5 px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-bold transition-all shadow-sm">
+                            <i class="fa-solid fa-trash text-xs"></i>
+                            حذف المحدد
+                        </button>
+                    </div>
                 </div>
 
-            </div>
-
-        </div>
-
-
-        <section class="section">
-
-            <div class="section-header">
-
-                <h2 class="section-title">
-
-                    <i class="fa-solid fa-clipboard-list"></i>
-
-                    طلبات متجري
-
-                </h2>
-
-
-                <div class="bulk-actions">
-
-                    <label class="select-all-box">
-
-                        <input
-                            type="checkbox"
-                            id="selectAll"
-                        >
-
-                        تحديد الكل
-
-                    </label>
-
-
-                    <button
-                        type="button"
-                        id="bulkDeleteBtn"
-                        class="bulk-delete-btn"
-                    >
-
-                        <i class="fa-solid fa-trash"></i>
-
-                        حذف المحدد
-
-                    </button>
-
+                <div class="overflow-x-auto w-full">
+                    <table class="w-full text-right border-collapse min-w-[1250px]">
+                        <thead>
+                            <tr class="bg-gray-50 dark:bg-[#1A1A1A] border-b border-shopify-border dark:border-shopify-darkBorder text-[11px] font-bold text-gray-600 dark:text-gray-300">
+                                <th class="p-3 text-center w-10">تحديد</th>
+                                <th class="p-3">رقم الطلب</th>
+                                <th class="p-3">التاريخ</th>
+                                <th class="p-3">الزبون</th>
+                                <th class="p-3 text-center">الهاتف</th>
+                                <th class="p-3">الولاية</th>
+                                <th class="p-3">العنوان</th>
+                                <th class="p-3">التوصيل</th>
+                                <th class="p-3 text-center">المنتجات</th>
+                                <th class="p-3">المجموع</th>
+                                <th class="p-3">الملاحظات</th>
+                                <th class="p-3">الحالة</th>
+                                <th class="p-3 text-center">إجراء</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersBody" class="divide-y divide-shopify-border dark:divide-shopify-darkBorder text-xs">
+                            <tr>
+                                <td colspan="13" class="p-8 text-center text-shopify-subtext dark:text-gray-400">
+                                    <div class="loading">
+                                        <i class="fa-solid fa-spinner fa-spin text-xl mb-2 text-shopify-green"></i>
+                                        <p class="text-xs">جاري تحميل طلبات متجرك...</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+            </section>
 
-            </div>
-
-
-            <div class="table-wrapper">
-
-                <table class="orders-table">
-
-                    <thead>
-
-                        <tr>
-
-                            <th>تحديد</th>
-                            <th>رقم الطلب</th>
-                            <th>التاريخ</th>
-                            <th>الزبون</th>
-                            <th>الهاتف</th>
-                            <th>الولاية</th>
-                            <th>العنوان</th>
-                            <th>التوصيل</th>
-                            <th>المنتجات</th>
-                            <th>المجموع</th>
-                            <th>الملاحظات</th>
-                            <th>الحالة</th>
-                            <th>إجراء</th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody id="ordersBody">
-
-                        <tr>
-
-                            <td colspan="13">
-
-                                <div class="loading">
-
-                                    <i class="fa-solid fa-spinner fa-spin"></i>
-
-                                    جاري تحميل الطلبات...
-
-                                </div>
-
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
-    </main>
+        </main>
+    </div>
 
 
     <!-- PRODUCTS MODAL -->
-
-    <div
-        id="productsModal"
-        class="modal-overlay"
-    >
-
-        <div class="modal">
-
-            <div class="modal-header">
-
-                <h3>
-
-                    <i class="fa-solid fa-bag-shopping"></i>
-
+    <div id="productsModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="bg-shopify-surface dark:bg-shopify-darkSurface border border-shopify-border dark:border-shopify-darkBorder rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden">
+            <div class="p-4 border-b border-shopify-border dark:border-shopify-darkBorder flex items-center justify-between">
+                <h3 class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                    <i class="fa-solid fa-bag-shopping text-shopify-green"></i>
                     تفاصيل المنتجات
-
                 </h3>
-
-
-                <button
-                    id="closeProductsModal"
-                    class="close-modal"
-                    type="button"
-                >
-
-                    <i class="fa-solid fa-xmark"></i>
-
+                <button id="closeProductsModal" class="w-8 h-8 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 flex items-center justify-center">
+                    <i class="fa-solid fa-xmark text-sm"></i>
                 </button>
-
             </div>
-
-
-            <div
-                id="productsModalBody"
-                class="modal-body"
-            ></div>
-
+            <div id="productsModalBody" class="p-4 space-y-3 max-h-[70vh] overflow-y-auto"></div>
         </div>
-
     </div>
 
 
     <!-- PHONE MODAL -->
-
-    <div
-        id="phoneModal"
-        class="modal-overlay"
-    >
-
-        <div class="modal">
-
-            <div class="modal-header">
-
-                <h3>
-
-                    <i class="fa-solid fa-phone"></i>
-
+    <div id="phoneModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="bg-shopify-surface dark:bg-shopify-darkSurface border border-shopify-border dark:border-shopify-darkBorder rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden">
+            <div class="p-4 border-b border-shopify-border dark:border-shopify-darkBorder flex items-center justify-between">
+                <h3 class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                    <i class="fa-solid fa-phone text-shopify-green"></i>
                     التواصل مع الزبون
-
                 </h3>
-
-
-                <button
-                    id="closePhoneModal"
-                    class="close-modal"
-                    type="button"
-                >
-
-                    <i class="fa-solid fa-xmark"></i>
-
+                <button id="closePhoneModal" class="w-8 h-8 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 flex items-center justify-center">
+                    <i class="fa-solid fa-xmark text-sm"></i>
                 </button>
-
             </div>
-
-
-            <div class="modal-body">
-
-                <div
-                    id="phoneOptions"
-                    class="phone-options"
-                ></div>
-
+            <div class="p-4">
+                <div id="phoneOptions" class="grid grid-cols-2 gap-3"></div>
             </div>
-
         </div>
-
     </div>
 
 
+    <!-- =====================================================
+         FIREBASE & SYSTEM SCRIPT
+    ===================================================== -->
     <script type="module">
-
-        import {
-            initializeApp
-        }
-        from
-        "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-
-
-        import {
-            getFirestore,
-            collection,
-            getDocs,
-            query,
-            where,
-            doc,
-            getDoc,
-            updateDoc,
-            deleteDoc
-        }
-        from
-        "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-
-
-        import {
-            getAuth,
-            onAuthStateChanged,
-            signOut
-        }
-        from
-        "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, query, where, doc, getDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
         const firebaseConfig = {
-
-            apiKey:
-                "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
-
-            authDomain:
-                "g-glam.firebaseapp.com",
-
-            projectId:
-                "g-glam",
-
-            storageBucket:
-                "g-glam.firebasestorage.app",
-
-            messagingSenderId:
-                "997228419719",
-
-            appId:
-                "1:997228419719:web:f9d88de7ea2c6f457e3622",
-
-            measurementId:
-                "G-WX1K1F83F6"
-
+            apiKey: "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
+            authDomain: "g-glam.firebaseapp.com",
+            projectId: "g-glam",
+            storageBucket: "g-glam.firebasestorage.app",
+            messagingSenderId: "997228419719",
+            appId: "1:997228419719:web:f9d88de7ea2c6f457e3622",
+            measurementId: "G-WX1K1F83F6"
         };
 
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
 
-        const app =
-            initializeApp(firebaseConfig);
-
-
-        const db =
-            getFirestore(app);
-
-
-        const auth =
-            getAuth(app);
-
-
-        const ordersBody =
-            document.getElementById("ordersBody");
-
-
-        const totalOrders =
-            document.getElementById("totalOrders");
-
-
-        const confirmedOrders =
-            document.getElementById("confirmedOrders");
-
-
-        const shippedOrders =
-            document.getElementById("shippedOrders");
-
-
-        const deliveredOrders =
-            document.getElementById("deliveredOrders");
-
-
-        const topStoreName =
-            document.getElementById("topStoreName");
-
-
-        const topStoreImage =
-            document.getElementById("topStoreImage");
-
-
-        const viewStoreBtn =
-            document.getElementById("viewStoreBtn");
-
-
-        const selectAll =
-            document.getElementById("selectAll");
-
-
-        const bulkDeleteBtn =
-            document.getElementById("bulkDeleteBtn");
-
-
-        const themeToggle =
-            document.getElementById("themeToggle");
-
-
-        const productsModal =
-            document.getElementById("productsModal");
-
-
-        const productsModalBody =
-            document.getElementById("productsModalBody");
-
-
-        const phoneModal =
-            document.getElementById("phoneModal");
-
-
-        const phoneOptions =
-            document.getElementById("phoneOptions");
-
+        const ordersBody = document.getElementById("ordersBody");
+        const totalOrders = document.getElementById("totalOrders");
+        const confirmedOrders = document.getElementById("confirmedOrders");
+        const shippedOrders = document.getElementById("shippedOrders");
+        const deliveredOrders = document.getElementById("deliveredOrders");
+        const topStoreName = document.getElementById("topStoreName");
+        const topStoreImage = document.getElementById("topStoreImage");
+        const viewStoreBtn = document.getElementById("viewStoreBtn");
+        const selectAll = document.getElementById("selectAll");
+        const bulkDeleteBtn = document.getElementById("bulkDeleteBtn");
+        const themeToggle = document.getElementById("themeToggle");
+        const productsModal = document.getElementById("productsModal");
+        const productsModalBody = document.getElementById("productsModalBody");
+        const phoneModal = document.getElementById("phoneModal");
+        const phoneOptions = document.getElementById("phoneOptions");
+        const orderSearchInput = document.getElementById("orderSearchInput");
 
         let currentOwnerUid = "";
-
         let currentOwnerEmail = "";
-
         let currentStoreId = "";
-
-        let currentStore = null;
-
+        let cachedOrders = [];
 
         /* =========================
            THEME
         ========================= */
-
         function applyTheme() {
-
-            const darkMode =
-                localStorage.getItem("gGlamDarkMode")
-                === "true";
-
-
-            document.body.classList.toggle(
-                "dark-mode",
-                darkMode
-            );
-
-
-            themeToggle.innerHTML =
-                darkMode
-                    ? '<i class="fa-solid fa-sun"></i>'
-                    : '<i class="fa-solid fa-moon"></i>';
-
+            const darkMode = localStorage.getItem("gGlamDarkMode") === "true";
+            document.documentElement.classList.toggle("dark", darkMode);
+            themeToggle.innerHTML = darkMode ? '<i class="fa-solid fa-sun text-yellow-400"></i>' : '<i class="fa-solid fa-moon text-gray-300"></i>';
         }
 
-
-        themeToggle.addEventListener(
-            "click",
-            () => {
-
-                const darkMode =
-                    document.body.classList.toggle(
-                        "dark-mode"
-                    );
-
-
-                localStorage.setItem(
-                    "gGlamDarkMode",
-                    darkMode
-                        ? "true"
-                        : "false"
-                );
-
-
-                themeToggle.innerHTML =
-                    darkMode
-                        ? '<i class="fa-solid fa-sun"></i>'
-                        : '<i class="fa-solid fa-moon"></i>';
-
-            }
-        );
-
+        themeToggle.addEventListener("click", () => {
+            const darkMode = document.documentElement.classList.toggle("dark");
+            localStorage.setItem("gGlamDarkMode", darkMode ? "true" : "false");
+            themeToggle.innerHTML = darkMode ? '<i class="fa-solid fa-sun text-yellow-400"></i>' : '<i class="fa-solid fa-moon text-gray-300"></i>';
+        });
 
         applyTheme();
-
 
         /* =========================
            HELPERS
         ========================= */
-
         function escapeHtml(value) {
-
-            return String(value ?? "")
-
-                .replace(/&/g, "&amp;")
-
-                .replace(/</g, "&lt;")
-
-                .replace(/>/g, "&gt;")
-
-                .replace(/"/g, "&quot;")
-
-                .replace(/'/g, "&#039;");
-
+            return String(value ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
         }
-
 
         function formatDate(timestamp) {
-
-            if (!timestamp) {
-
-                return "غير محدد";
-            }
-
-
+            if (!timestamp) return "غير محدد";
             try {
-
                 let date;
-
-
-                if (timestamp.toDate) {
-
-                    date =
-                        timestamp.toDate();
-
-                }
-                else if (
-                    timestamp.seconds
-                ) {
-
-                    date =
-                        new Date(
-                            timestamp.seconds * 1000
-                        );
-
-                }
-                else {
-
-                    date =
-                        new Date(timestamp);
-                }
-
-
-                if (
-                    isNaN(
-                        date.getTime()
-                    )
-                ) {
-
-                    return "غير محدد";
-                }
-
-
-                return date.toLocaleDateString(
-                    "ar-DZ",
-                    {
-                        year: "numeric",
-                        month: "2-digit",
-                        day: "2-digit"
-                    }
-                );
-
-            }
-            catch {
-
+                if (timestamp.toDate) date = timestamp.toDate();
+                else if (timestamp.seconds) date = new Date(timestamp.seconds * 1000);
+                else date = new Date(timestamp);
+                if (isNaN(date.getTime())) return "غير محدد";
+                return date.toLocaleDateString("ar-DZ", { year: "numeric", month: "2-digit", day: "2-digit" });
+            } catch {
                 return "غير محدد";
             }
-
         }
-
 
         function cleanPhone(phone) {
-
-            return String(phone || "")
-                .replace(/[^\d+]/g, "");
-
+            return String(phone || "").replace(/[^\d+]/g, "");
         }
-
 
         function normalizeStatus(order) {
-
-            const value =
-                String(
-                    order.status || ""
-                )
-                .trim();
-
-
-            if (!value) {
-
-                return "قيد المعالجة";
-            }
-
-
-            return value;
-
+            return String(order.status || "").trim() || "قيد المعالجة";
         }
-
-
-        /*
-         * ============================================
-         * DELIVERY TYPE
-         * ============================================
-         *
-         * توحيد طريقة عرض التوصيل داخل صفحة الطلبات.
-         *
-         * يدعم القيم العربية والإنجليزية والقيم
-         * المحتملة التي قد تكون محفوظة في Firestore.
-         *
-         * النتيجة النهائية:
-         *
-         * إلى المكتب
-         * أو
-         * إلى باب المنزل
-         *
-         * بدون تغيير قيمة الطلب الأصلية في Firestore.
-         */
 
         function normalizeDeliveryType(order) {
+            const rawValue = order.deliveryType ?? order.deliveryMethod ?? order.shippingType ?? order.shippingMethod ?? order.delivery ?? order.shipping ?? "";
+            const value = String(rawValue).trim().toLowerCase();
+            if (!value) return "غير محدد";
 
-            const rawValue =
-                order.deliveryType ??
-                order.deliveryMethod ??
-                order.shippingType ??
-                order.shippingMethod ??
-                order.delivery ??
-                order.shipping ??
-                "";
-
-
-            const value =
-                String(rawValue)
-                    .trim()
-                    .toLowerCase();
-
-
-            if (!value) {
-
-                return "غير محدد";
-            }
-
-
-            /*
-             * التوصيل إلى المكتب
-             */
-
-            const officeValues = [
-
-                "office",
-                "to office",
-                "delivery office",
-                "deliveryoffice",
-                "office delivery",
-                "office_delivery",
-                "bureau",
-                "au bureau",
-                "vers bureau",
-                "pickup office",
-                "pickup_office",
-                "stop desk",
-                "stopdesk",
-                "stop desk delivery",
-                "relay",
-                "الى المكتب",
-                "إلى المكتب",
-                "التوصيل الى المكتب",
-                "التوصيل إلى المكتب",
-                "مكتب",
-                "المكتب"
-
-            ];
-
-
-            if (
-                officeValues.includes(value)
-            ) {
-
-                return "التوصيل إلى المكتب";
-            }
-
-
-            /*
-             * التوصيل إلى باب المنزل
-             */
-
-            const homeValues = [
-
-                "home",
-                "to home",
-                "delivery home",
-                "deliveryhome",
-                "home delivery",
-                "home_delivery",
-                "door",
-                "to door",
-                "door delivery",
-                "door_delivery",
-                "domicile",
-                "a domicile",
-                "à domicile",
-                "livraison domicile",
-                "home delivery",
-                "الى المنزل",
-                "إلى المنزل",
-                "التوصيل الى المنزل",
-                "التوصيل إلى المنزل",
-                "باب المنزل",
-                "إلى باب المنزل",
-                "الى باب المنزل",
-                "التوصيل الى باب المنزل",
-                "التوصيل إلى باب المنزل",
-                "منزل",
-                "المنزل"
-
-            ];
-
-
-            if (
-                homeValues.includes(value)
-            ) {
-
-                return "التوصيل إلى باب المنزل";
-            }
-
-
-            /*
-             * معالجة القيم التي تحتوي على الكلمات
-             * حتى لو كانت الجملة أطول من القيمة الأساسية.
-             */
-
-            if (
-                value.includes("office") ||
-                value.includes("bureau") ||
-                value.includes("مكتب") ||
-                value.includes("المكتب")
-            ) {
-
-                return "التوصيل إلى المكتب";
-            }
-
-
-            if (
-                value.includes("home") ||
-                value.includes("domicile") ||
-                value.includes("door") ||
-                value.includes("منزل") ||
-                value.includes("المنزل") ||
-                value.includes("باب المنزل")
-            ) {
-
-                return "التوصيل إلى باب المنزل";
-            }
-
-
-            /*
-             * إذا كانت القيمة غير معروفة،
-             * نعرضها كما هي بدل حذف معلومة الطلب.
-             */
-
+            if (value.includes("office") || value.includes("bureau") || value.includes("مكتب") || value.includes("المكتب")) return "التوصيل إلى المكتب";
+            if (value.includes("home") || value.includes("domicile") || value.includes("door") || value.includes("منزل") || value.includes("المنزل") || value.includes("باب المنزل")) return "التوصيل إلى باب المنزل";
             return String(rawValue).trim();
-
         }
-
 
         /* =========================
            LOAD STORE
         ========================= */
-
         async function loadStore() {
-
-            const user =
-                auth.currentUser;
-
-
+            const user = auth.currentUser;
             if (!user) {
-
-                window.location.href =
-                    "login.html";
-
+                window.location.href = "login.html";
                 return;
             }
 
-
-            currentOwnerUid =
-                user.uid;
-
-
-            currentOwnerEmail =
-                user.email || "";
-
-
+            currentOwnerUid = user.uid;
+            currentOwnerEmail = user.email || "";
             let storeSnapshot = null;
 
-
-            const savedStoreDocumentId =
-                localStorage.getItem(
-                    "storeDocumentId"
-                );
-
-
-            if (
-                savedStoreDocumentId
-            ) {
-
+            const savedStoreDocumentId = localStorage.getItem("storeDocumentId");
+            if (savedStoreDocumentId) {
                 try {
-
-                    const savedRef =
-                        doc(
-                            db,
-                            "stores",
-                            savedStoreDocumentId
-                        );
-
-
-                    const savedSnapshot =
-                        await getDoc(
-                            savedRef
-                        );
-
-
-                    if (
-                        savedSnapshot.exists()
-                    ) {
-
-                        const savedData =
-                            savedSnapshot.data();
-
-
-                        if (
-                            savedData.ownerUid ===
-                            currentOwnerUid
-                            ||
-                            savedData.ownerEmail ===
-                            currentOwnerEmail
-                        ) {
-
-                            storeSnapshot =
-                                savedSnapshot;
-                        }
-
+                    const savedSnapshot = await getDoc(doc(db, "stores", savedStoreDocumentId));
+                    if (savedSnapshot.exists() && (savedSnapshot.data().ownerUid === currentOwnerUid || savedSnapshot.data().ownerEmail === currentOwnerEmail)) {
+                        storeSnapshot = savedSnapshot;
                     }
-
-                }
-                catch (error) {
-
-                    console.warn(
-                        "Saved store lookup failed:",
-                        error
-                    );
-
-                }
-
+                } catch (e) {}
             }
-
 
             if (!storeSnapshot) {
-
                 try {
-
-                    const directRef =
-                        doc(
-                            db,
-                            "stores",
-                            currentOwnerUid
-                        );
-
-
-                    const directSnapshot =
-                        await getDoc(
-                            directRef
-                        );
-
-
-                    if (
-                        directSnapshot.exists()
-                    ) {
-
-                        storeSnapshot =
-                            directSnapshot;
-                    }
-
-                }
-                catch (error) {
-
-                    console.warn(
-                        "Direct store lookup failed:",
-                        error
-                    );
-
-                }
-
+                    const directSnapshot = await getDoc(doc(db, "stores", currentOwnerUid));
+                    if (directSnapshot.exists()) storeSnapshot = directSnapshot;
+                } catch (e) {}
             }
-
 
             if (!storeSnapshot) {
-
                 try {
-
-                    const ownerQuery =
-                        query(
-                            collection(
-                                db,
-                                "stores"
-                            ),
-                            where(
-                                "ownerUid",
-                                "==",
-                                currentOwnerUid
-                            )
-                        );
-
-
-                    const ownerSnapshot =
-                        await getDocs(
-                            ownerQuery
-                        );
-
-
-                    if (
-                        !ownerSnapshot.empty
-                    ) {
-
-                        storeSnapshot =
-                            ownerSnapshot.docs[0];
-                    }
-
-                }
-                catch (error) {
-
-                    console.error(
-                        "Owner store query error:",
-                        error
-                    );
-
-                }
-
+                    const ownerQuery = query(collection(db, "stores"), where("ownerUid", "==", currentOwnerUid));
+                    const ownerSnapshot = await getDocs(ownerQuery);
+                    if (!ownerSnapshot.empty) storeSnapshot = ownerSnapshot.docs[0];
+                } catch (e) {}
             }
 
-
-            if (
-                !storeSnapshot &&
-                currentOwnerEmail
-            ) {
-
+            if (!storeSnapshot && currentOwnerEmail) {
                 try {
-
-                    const emailQuery =
-                        query(
-                            collection(
-                                db,
-                                "stores"
-                            ),
-                            where(
-                                "ownerEmail",
-                                "==",
-                                currentOwnerEmail
-                            )
-                        );
-
-
-                    const emailSnapshot =
-                        await getDocs(
-                            emailQuery
-                        );
-
-
-                    if (
-                        !emailSnapshot.empty
-                    ) {
-
-                        storeSnapshot =
-                            emailSnapshot.docs[0];
-                    }
-
-                }
-                catch (error) {
-
-                    console.error(
-                        "Email store query error:",
-                        error
-                    );
-
-                }
-
+                    const emailQuery = query(collection(db, "stores"), where("ownerEmail", "==", currentOwnerEmail));
+                    const emailSnapshot = await getDocs(emailQuery);
+                    if (!emailSnapshot.empty) storeSnapshot = emailSnapshot.docs[0];
+                } catch (e) {}
             }
-
 
             if (!storeSnapshot) {
-
-                console.error(
-                    "STORE NOT FOUND",
-                    {
-                        ownerUid:
-                            currentOwnerUid,
-
-                        email:
-                            currentOwnerEmail
-                    }
-                );
-
-
-                alert(
-                    "لم يتم العثور على متجر مرتبط بهذا الحساب.\n\n" +
-                    "UID:\n" +
-                    currentOwnerUid
-                );
-
-
+                alert("لم يتم العثور على متجر مرتبط بهذا الحساب.");
                 return;
             }
 
+            currentStoreId = storeSnapshot.id;
+            const currentStore = storeSnapshot.data();
+            const storeName = currentStore.storeName || currentStore.name || "G-Glam";
+            const storeImage = currentStore.storeImage || currentStore.image || currentStore.logo || "";
 
-            currentStoreId =
-                storeSnapshot.id;
+            topStoreName.textContent = storeName;
+            topStoreImage.src = storeImage || "logotrans.png";
+            viewStoreBtn.href = "index.html?store=" + encodeURIComponent(currentStoreId);
 
-
-            currentStore =
-                storeSnapshot.data();
-
-
-            const storeOwnerUid =
-                String(
-                    currentStore.ownerUid ||
-                    ""
-                );
-
-
-            if (
-                storeOwnerUid &&
-                storeOwnerUid !==
-                    currentOwnerUid
-            ) {
-
-                console.error(
-                    "STORE OWNER MISMATCH",
-                    {
-                        storeId:
-                            currentStoreId,
-
-                        storeOwnerUid:
-                            storeOwnerUid,
-
-                        currentOwnerUid:
-                            currentOwnerUid
-                    }
-                );
-
-
-                alert(
-                    "تم العثور على المتجر، ولكن المتجر غير مرتبط بهذا الحساب."
-                );
-
-
-                return;
-            }
-
-
-            const storeStatus =
-                String(
-                    currentStore.status ||
-                    ""
-                )
-                .toLowerCase()
-                .trim();
-
-
-            if (
-                storeStatus &&
-                storeStatus !== "approved" &&
-                storeStatus !== "active"
-            ) {
-
-                alert(
-                    "المتجر غير نشط حاليًا."
-                );
-
-
-                return;
-            }
-
-
-            const storeName =
-                currentStore.storeName ||
-                currentStore.name ||
-                "G-Glam";
-
-
-            const storeImage =
-                currentStore.storeImage ||
-                currentStore.image ||
-                currentStore.logo ||
-                currentStore.photoURL ||
-                "";
-
-
-            topStoreName.textContent =
-                storeName;
-
-
-            topStoreImage.src =
-                storeImage ||
-                "logotrans.png";
-
-
-            viewStoreBtn.href =
-                "index.html?store=" +
-                encodeURIComponent(
-                    currentStoreId
-                );
-
-
-            localStorage.setItem(
-                "storeId",
-                currentStoreId
-            );
-
-
-            localStorage.setItem(
-                "storeDocumentId",
-                currentStoreId
-            );
-
-
-            localStorage.setItem(
-                "storeOwnerUid",
-                currentOwnerUid
-            );
-
-
-            localStorage.setItem(
-                "storeName",
-                storeName
-            );
-
+            localStorage.setItem("storeId", currentStoreId);
+            localStorage.setItem("storeDocumentId", currentStoreId);
+            localStorage.setItem("storeName", storeName);
 
             await loadOrders();
-
         }
-
 
         /* =========================
            LOAD ORDERS
         ========================= */
-
         async function loadOrders() {
-
-            ordersBody.innerHTML = `
-
-                <tr>
-
-                    <td colspan="13">
-
-                        <div class="loading">
-
-                            <i class="fa-solid fa-spinner fa-spin"></i>
-
-                            جاري تحميل طلبات متجرك...
-
-                        </div>
-
-                    </td>
-
-                </tr>
-
-            `;
-
+            ordersBody.innerHTML = `<tr><td colspan="13" class="p-8 text-center text-shopify-subtext dark:text-gray-400"><i class="fa-solid fa-spinner fa-spin text-xl mb-2 text-shopify-green"></i><p class="text-xs">جاري تحميل طلبات متجرك...</p></td></tr>`;
 
             try {
-
-                const ownerQuery =
-                    query(
-                        collection(
-                            db,
-                            "orders"
-                        ),
-                        where(
-                            "ownerUid",
-                            "==",
-                            currentOwnerUid
-                        )
-                    );
-
-
-                const snapshot =
-                    await getDocs(
-                        ownerQuery
-                    );
-
-
-                const orders =
-                    snapshot.docs.map(
-                        orderDoc => ({
-
-                            id:
-                                orderDoc.id,
-
-                            data:
-                                orderDoc.data()
-
-                        })
-                    );
-
-
-                orders.sort(
-                    (a, b) => {
-
-                        const aTime =
-                            a.data.createdAt?.seconds ||
-                            0;
-
-
-                        const bTime =
-                            b.data.createdAt?.seconds ||
-                            0;
-
-
-                        return bTime - aTime;
-
-                    }
-                );
-
-
-                totalOrders.textContent =
-                    orders.length;
-
-
-                let confirmed = 0;
-
-                let shipped = 0;
-
-                let delivered = 0;
-
-
-                orders.forEach(
-                    item => {
-
-                        const status =
-                            normalizeStatus(
-                                item.data
-                            );
-
-
-                        if (
-                            status ===
-                            "تم التأكيد"
-                        ) {
-
-                            confirmed++;
-                        }
-
-
-                        if (
-                            status ===
-                            "تم الشحن" ||
-                            status ===
-                            "قيد الشحن"
-                        ) {
-
-                            shipped++;
-                        }
-
-
-                        if (
-                            status ===
-                            "تم التسليم" ||
-                            status ===
-                            "تم التوصيل"
-                        ) {
-
-                            delivered++;
-                        }
-
-                    }
-                );
-
-
-                confirmedOrders.textContent =
-                    confirmed;
-
-
-                shippedOrders.textContent =
-                    shipped;
-
-
-                deliveredOrders.textContent =
-                    delivered;
-
-
-                if (
-                    orders.length === 0
-                ) {
-
-                    ordersBody.innerHTML = `
-
-                        <tr>
-
-                            <td colspan="13">
-
-                                <div class="empty">
-
-                                    <i class="fa-solid fa-box-open"></i>
-
-                                    <br>
-
-                                    لا توجد طلبات في متجرك حاليًا.
-
-                                </div>
-
-                            </td>
-
-                        </tr>
-
-                    `;
-
-                    return;
-                }
-
-
-                ordersBody.innerHTML =
-                    "";
-
-
-                orders.forEach(
-                    (item, index) => {
-
-                        renderOrder(
-                            item.id,
-                            item.data,
-                            index + 1
-                        );
-
-                    }
-                );
-
-
-                updateBulkButtons();
-
+                const snapshot = await getDocs(query(collection(db, "orders"), where("ownerUid", "==", currentOwnerUid)));
+                cachedOrders = snapshot.docs.map(d => ({ id: d.id, data: d.data() }));
+
+                cachedOrders.sort((a, b) => (b.data.createdAt?.seconds || 0) - (a.data.createdAt?.seconds || 0));
+                renderOrdersTable(cachedOrders);
+            } catch (error) {
+                console.error("ORDERS ERROR:", error);
+                ordersBody.innerHTML = `<tr><td colspan="13" class="p-8 text-center text-red-500 text-xs">تعذر تحميل الطلبات.</td></tr>`;
             }
-            catch (error) {
-
-                console.error(
-                    "ORDERS ERROR:",
-                    error
-                );
-
-
-                ordersBody.innerHTML = `
-
-                    <tr>
-
-                        <td colspan="13">
-
-                            <div class="empty">
-
-                                <i class="fa-solid fa-circle-exclamation"></i>
-
-                                <br>
-
-                                تعذر تحميل الطلبات.
-
-                                <br><br>
-
-                                ${escapeHtml(
-                                    error.message ||
-                                    error.code ||
-                                    "خطأ غير معروف"
-                                )}
-
-                            </div>
-
-                        </td>
-
-                    </tr>
-
-                `;
-
-            }
-
         }
 
+        function renderOrdersTable(orders) {
+            totalOrders.textContent = orders.length;
+
+            let confirmed = 0, shipped = 0, delivered = 0;
+            orders.forEach(item => {
+                const status = normalizeStatus(item.data);
+                if (status === "تم التأكيد") confirmed++;
+                if (status === "تم الشحن" || status === "قيد الشحن") shipped++;
+                if (status === "تم التسليم" || status === "تم التوصيل") delivered++;
+            });
+
+            confirmedOrders.textContent = confirmed;
+            shippedOrders.textContent = shipped;
+            deliveredOrders.textContent = delivered;
+
+            if (!orders.length) {
+                ordersBody.innerHTML = `<tr><td colspan="13" class="p-12 text-center text-shopify-subtext dark:text-gray-400"><i class="fa-solid fa-box-open text-3xl mb-3 text-gray-400"></i><p class="text-xs font-semibold">لا توجد طلبات متوفرة حالياً.</p></td></tr>`;
+                return;
+            }
+
+            ordersBody.innerHTML = "";
+            orders.forEach((item, index) => {
+                renderOrderRow(item.id, item.data, index + 1);
+            });
+            updateBulkButtons();
+        }
 
         /* =========================
-           RENDER ORDER
+           RENDER ORDER ROW
         ========================= */
-
-        function renderOrder(
-            id,
-            order,
-            orderNumber
-        ) {
-
-            const tr =
-                document.createElement("tr");
-
-
-            const status =
-                normalizeStatus(order);
-
-
-            const phone =
-                cleanPhone(order.phone);
-
-
-            const products =
-                Array.isArray(order.products)
-                    ? order.products
-                    : [];
-
-
-            let productsCount = 0;
-
-
-            products.forEach(
-                product => {
-
-                    productsCount +=
-                        Number(
-                            product.quantity || 1
-                        );
-
-                }
-            );
-
-
-            const formattedNumber =
-                String(orderNumber)
-                    .padStart(4, "0");
-
-
-            /*
-             * نوع التوصيل الموحد للعرض فقط.
-             * لا يتم تعديل بيانات Firestore.
-             */
-
-            const deliveryType =
-                normalizeDeliveryType(order);
-
-
-            const deliveryPrice =
-                Number(
-                    order.deliveryPrice ??
-                    order.shippingPrice ??
-                    0
-                );
-
+        function renderOrderRow(id, order, orderNumber) {
+            const tr = document.createElement("tr");
+            tr.className = "hover:bg-shopify-hover dark:hover:bg-[#1E1E1E] transition-colors";
+            const status = normalizeStatus(order);
+            const phone = cleanPhone(order.phone);
+            const products = Array.isArray(order.products) ? order.products : [];
+            let productsCount = products.reduce((acc, p) => acc + Number(p.quantity || 1), 0);
+            const formattedNumber = String(orderNumber).padStart(4, "0");
+            const deliveryType = normalizeDeliveryType(order);
+            const deliveryPrice = Number(order.deliveryPrice ?? order.shippingPrice ?? 0);
 
             tr.innerHTML = `
-
-                <td class="check-cell">
-
-                    <input
-                        type="checkbox"
-                        class="order-check"
-                        data-id="${escapeHtml(id)}"
-                    >
-
+                <td class="p-3 text-center">
+                    <input type="checkbox" class="order-check w-4 h-4 accent-emerald-600 cursor-pointer rounded" data-id="${escapeHtml(id)}">
                 </td>
-
-
-                <td>
-
-                    <div class="order-number">
-
-                        #${formattedNumber}
-
-                    </div>
-
-                </td>
-
-
-                <td>
-
-                    <div class="date-cell">
-
-                        ${formatDate(
-                            order.createdAt
-                        )}
-
-                    </div>
-
-                </td>
-
-
-                <td>
-
-                    <div class="customer-name">
-
-                        ${escapeHtml(
-                            order.name ||
-                            order.customerName ||
-                            "غير محدد"
-                        )}
-
-                    </div>
-
-                </td>
-
-
-                <td>
-
-                    <button
-                        type="button"
-                        class="customer-phone"
-                    >
-
-                        <i class="fa-solid fa-phone"></i>
-
-                        ${escapeHtml(
-                            order.phone ||
-                            "غير محدد"
-                        )}
-
+                <td class="p-3 font-bold text-shopify-green" dir="ltr">#${formattedNumber}</td>
+                <td class="p-3 text-gray-500 dark:text-gray-400 whitespace-nowrap">${formatDate(order.createdAt)}</td>
+                <td class="p-3 font-bold text-gray-900 dark:text-white">${escapeHtml(order.name || order.customerName || "غير محدد")}</td>
+                <td class="p-3 text-center">
+                    <button type="button" class="customer-phone px-2.5 py-1 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-lg text-xs font-bold inline-flex items-center gap-1.5 transition-colors">
+                        <i class="fa-solid fa-phone text-emerald-600"></i>
+                        ${escapeHtml(order.phone || "غير محدد")}
                     </button>
-
                 </td>
-
-
-                <td>
-
-                    ${escapeHtml(
-                        order.wilaya ||
-                        "غير محدد"
-                    )}
-
+                <td class="p-3">${escapeHtml(order.wilaya || "غير محدد")}</td>
+                <td class="p-3 max-w-[160px] truncate" title="${escapeHtml(order.address || order.commune || "غير محدد")}">${escapeHtml(order.address || order.commune || "غير محدد")}</td>
+                <td class="p-3">
+                    <div class="font-bold">${escapeHtml(deliveryType)}</div>
+                    <div class="text-[10px] text-gray-400">${deliveryPrice} DA</div>
                 </td>
-
-
-                <td>
-
-                    <div class="address-cell">
-
-                        ${escapeHtml(
-                            order.address ||
-                            order.commune ||
-                            "غير محدد"
-                        )}
-
-                    </div>
-
-                </td>
-
-
-                <td>
-
-                    <div class="delivery-cell">
-
-                        <div class="delivery-type">
-
-                            ${escapeHtml(
-                                deliveryType
-                            )}
-
-                        </div>
-
-
-                        <div class="delivery-price">
-
-                            ${deliveryPrice} DA
-
-                        </div>
-
-                    </div>
-
-                </td>
-
-
-                <td>
-
-                    <button
-                        type="button"
-                        class="products-btn"
-                    >
-
+                <td class="p-3 text-center">
+                    <button type="button" class="products-btn px-2.5 py-1 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 rounded-lg text-xs font-bold inline-flex items-center gap-1 transition-colors">
                         <i class="fa-solid fa-bag-shopping"></i>
-
-                        عرض المنتجات
-
-                        <br>
-
-                        <small>
-
-                            ${productsCount} قطعة
-
-                        </small>
-
+                        <span>عرض (${productsCount})</span>
                     </button>
-
                 </td>
-
-
-                <td>
-
-                    <div class="total-cell">
-
-                        ${Number(
-                            order.total || 0
-                        )} DA
-
+                <td class="p-3 font-bold text-shopify-green">${Number(order.total || 0).toLocaleString("fr-DZ")} DA</td>
+                <td class="p-3">
+                    <div class="flex items-center gap-1.5">
+                        <input type="text" class="notes-input w-28 bg-gray-50 dark:bg-[#252525] border border-shopify-border dark:border-shopify-darkBorder px-2 py-1 rounded-lg text-xs outline-none focus:border-shopify-green" value="${escapeHtml(order.notes || "")}" placeholder="ملاحظة...">
+                        <button type="button" class="notes-save p-1.5 bg-shopify-green hover:bg-emerald-700 text-white rounded-lg text-xs transition-colors"><i class="fa-solid fa-floppy-disk"></i></button>
                     </div>
-
                 </td>
-
-
-                <td>
-
-                    <div class="notes-box">
-
-                        <input
-                            type="text"
-                            class="notes-input"
-                            value="${escapeHtml(
-                                order.notes || ""
-                            )}"
-                            placeholder="اكتب ملاحظة..."
-                        >
-
-
-                        <button
-                            type="button"
-                            class="notes-save"
-                        >
-
-                            <i class="fa-solid fa-floppy-disk"></i>
-
-                        </button>
-
-                    </div>
-
-                </td>
-
-
-                <td>
-
-                    <select
-                        class="status-select"
-                    >
-
-                        <option value="قيد المعالجة"
-                            ${status === "قيد المعالجة" ? "selected" : ""}>
-                            قيد المعالجة
-                        </option>
-
-                        <option value="قيد المراجعة"
-                            ${status === "قيد المراجعة" ? "selected" : ""}>
-                            قيد المراجعة
-                        </option>
-
-                        <option value="تم التأكيد"
-                            ${status === "تم التأكيد" ? "selected" : ""}>
-                            تم التأكيد
-                        </option>
-
-                        <option value="تم الشحن"
-                            ${status === "تم الشحن" ? "selected" : ""}>
-                            تم الشحن
-                        </option>
-
-                        <option value="تم التسليم"
-                            ${status === "تم التسليم" ? "selected" : ""}>
-                            تم التسليم
-                        </option>
-
-                        <option value="إلغاء"
-                            ${status === "إلغاء" ? "selected" : ""}>
-                            إلغاء
-                        </option>
-
+                <td class="p-3">
+                    <select class="status-select bg-shopify-surface dark:bg-[#252525] border border-shopify-border dark:border-shopify-darkBorder px-2.5 py-1 rounded-lg text-xs font-semibold outline-none cursor-pointer">
+                        <option value="قيد المعالجة" ${status === "قيد المعالجة" ? "selected" : ""}>قيد المعالجة</option>
+                        <option value="قيد المراجعة" ${status === "قيد المراجعة" ? "selected" : ""}>قيد المراجعة</option>
+                        <option value="تم التأكيد" ${status === "تم التأكيد" ? "selected" : ""}>تم التأكيد</option>
+                        <option value="تم الشحن" ${status === "تم الشحن" ? "selected" : ""}>تم الشحن</option>
+                        <option value="تم التسليم" ${status === "تم التسليم" ? "selected" : ""}>تم التسليم</option>
+                        <option value="إلغاء" ${status === "إلغاء" ? "selected" : ""}>إلغاء</option>
                     </select>
-
                 </td>
-
-
-                <td>
-
-                    <button
-                        type="button"
-                        class="delete-btn"
-                    >
-
+                <td class="p-3 text-center">
+                    <button type="button" class="delete-btn px-2.5 py-1 bg-red-50 hover:bg-red-100 dark:bg-red-950/40 text-red-600 dark:text-red-400 rounded-lg text-xs font-bold transition-colors">
                         <i class="fa-solid fa-trash"></i>
-
-                        حذف
-
                     </button>
-
                 </td>
-
             `;
 
+            const check = tr.querySelector(".order-check");
+            check.addEventListener("change", () => {
+                tr.classList.toggle("bg-emerald-50/50", check.checked);
+                tr.classList.toggle("dark:bg-emerald-950/20", check.checked);
+                updateBulkButtons();
+            });
 
-            const check =
-                tr.querySelector(
-                    ".order-check"
-                );
-
-
-            check.addEventListener(
-                "change",
-                () => {
-
-                    tr.classList.toggle(
-                        "selected",
-                        check.checked
-                    );
-
-
-                    updateBulkButtons();
-
-                }
-            );
-
-
-            tr.querySelector(
-                ".customer-phone"
-            ).addEventListener(
-                "click",
-                () => {
-
-                    openPhoneModal(phone);
-
-                }
-            );
-
-
-            tr.querySelector(
-                ".products-btn"
-            ).addEventListener(
-                "click",
-                () => {
-
-                    openProductsModal(products);
-
-                }
-            );
-
-
-            tr.querySelector(
-                ".notes-save"
-            ).addEventListener(
-                "click",
-                () => {
-
-                    const input =
-                        tr.querySelector(
-                            ".notes-input"
-                        );
-
-
-                    saveNotes(
-                        id,
-                        input.value
-                    );
-
-                }
-            );
-
-
-            tr.querySelector(
-                ".status-select"
-            ).addEventListener(
-                "change",
-                event => {
-
-                    updateStatus(
-                        id,
-                        event.target.value
-                    );
-
-                }
-            );
-
-
-            tr.querySelector(
-                ".delete-btn"
-            ).addEventListener(
-                "click",
-                () => {
-
-                    deleteOrder(id);
-
-                }
-            );
-
+            tr.querySelector(".customer-phone").addEventListener("click", () => openPhoneModal(phone));
+            tr.querySelector(".products-btn").addEventListener("click", () => openProductsModal(products));
+            tr.querySelector(".notes-save").addEventListener("click", () => saveNotes(id, tr.querySelector(".notes-input").value));
+            tr.querySelector(".status-select").addEventListener("change", (e) => updateStatus(id, e.target.value));
+            tr.querySelector(".delete-btn").addEventListener("click", () => deleteOrder(id));
 
             ordersBody.appendChild(tr);
-
         }
 
+        /* =========================
+           SEARCH ORDERS
+        ========================= */
+        orderSearchInput.addEventListener("input", (e) => {
+            const term = e.target.value.toLowerCase().trim();
+            const filtered = cachedOrders.filter(item => {
+                const name = (item.data.name || item.data.customerName || "").toLowerCase();
+                const phone = (item.data.phone || "").toLowerCase();
+                return name.includes(term) || phone.includes(term) || item.id.toLowerCase().includes(term);
+            });
+            renderOrdersTable(filtered);
+        });
 
         /* =========================
            BULK ACTIONS
         ========================= */
-
         function updateBulkButtons() {
-
-            const checks =
-                document.querySelectorAll(
-                    ".order-check"
-                );
-
-
-            const checked =
-                document.querySelectorAll(
-                    ".order-check:checked"
-                );
-
-
-            bulkDeleteBtn.classList.toggle(
-                "show",
-                checked.length > 0
-            );
-
-
-            selectAll.checked =
-                checks.length > 0 &&
-                checked.length === checks.length;
-
+            const checks = document.querySelectorAll(".order-check");
+            const checked = document.querySelectorAll(".order-check:checked");
+            bulkDeleteBtn.classList.toggle("hidden", checked.length === 0);
+            bulkDeleteBtn.classList.toggle("inline-flex", checked.length > 0);
+            selectAll.checked = checks.length > 0 && checked.length === checks.length;
         }
 
+        selectAll.addEventListener("change", () => {
+            const checks = document.querySelectorAll(".order-check");
+            checks.forEach(check => {
+                check.checked = selectAll.checked;
+                const tr = check.closest("tr");
+                tr.classList.toggle("bg-emerald-50/50", check.checked);
+                tr.classList.toggle("dark:bg-emerald-950/20", check.checked);
+            });
+            updateBulkButtons();
+        });
 
-        selectAll.addEventListener(
-            "change",
-            () => {
+        bulkDeleteBtn.addEventListener("click", async () => {
+            const selected = Array.from(document.querySelectorAll(".order-check:checked"));
+            if (!selected.length || !confirm(`هل أنت متأكد من حذف ${selected.length} طلبات نهائياً؟`)) return;
 
-                const checks =
-                    document.querySelectorAll(
-                        ".order-check"
-                    );
-
-
-                checks.forEach(
-                    check => {
-
-                        check.checked =
-                            selectAll.checked;
-
-
-                        check.closest("tr")
-                            ?.classList.toggle(
-                                "selected",
-                                check.checked
-                            );
-
-                    }
-                );
-
-
-                updateBulkButtons();
-
+            bulkDeleteBtn.disabled = true;
+            for (const checkbox of selected) {
+                try {
+                    await deleteDoc(doc(db, "orders", checkbox.dataset.id));
+                } catch (e) {}
             }
-        );
-
-
-        bulkDeleteBtn.addEventListener(
-            "click",
-            async () => {
-
-                const selected =
-                    Array.from(
-                        document.querySelectorAll(
-                            ".order-check:checked"
-                        )
-                    );
-
-
-                if (!selected.length) {
-
-                    alert(
-                        "حدد الطلبات التي تريد حذفها أولًا."
-                    );
-
-                    return;
-                }
-
-
-                if (
-                    !confirm(
-                        "هل أنت متأكد من حذف " +
-                        selected.length +
-                        " طلبات؟\n\n" +
-                        "لا يمكن التراجع عن الحذف."
-                    )
-                ) {
-
-                    return;
-                }
-
-
-                bulkDeleteBtn.disabled =
-                    true;
-
-
-                let deletedCount = 0;
-
-                let failedCount = 0;
-
-                let lastError = "";
-
-
-                for (
-                    const checkbox of selected
-                ) {
-
-                    const id =
-                        checkbox.dataset.id;
-
-
-                    try {
-
-                        const orderRef =
-                            doc(
-                                db,
-                                "orders",
-                                id
-                            );
-
-
-                        const snapshot =
-                            await getDoc(
-                                orderRef
-                            );
-
-
-                        if (
-                            !snapshot.exists()
-                        ) {
-
-                            failedCount++;
-
-                            lastError =
-                                "الطلب غير موجود.";
-
-                            continue;
-                        }
-
-
-                        const data =
-                            snapshot.data();
-
-
-                        if (
-                            data.ownerUid !==
-                            currentOwnerUid
-                        ) {
-
-                            failedCount++;
-
-                            lastError =
-                                "الطلب لا يخص هذا المتجر.";
-
-                            continue;
-                        }
-
-
-                        await deleteDoc(
-                            orderRef
-                        );
-
-
-                        deletedCount++;
-
-                    }
-                    catch (error) {
-
-                        failedCount++;
-
-                        lastError =
-                            error.message ||
-                            error.code ||
-                            "خطأ غير معروف";
-
-                        console.error(
-                            "BULK DELETE ERROR:",
-                            error
-                        );
-
-                    }
-
-                }
-
-
-                bulkDeleteBtn.disabled =
-                    false;
-
-
-                if (failedCount > 0) {
-
-                    alert(
-                        "تم حذف " +
-                        deletedCount +
-                        " طلب.\n\n" +
-                        "تعذر حذف " +
-                        failedCount +
-                        " طلب.\n\n" +
-                        "سبب آخر خطأ:\n" +
-                        lastError
-                    );
-
-                }
-                else {
-
-                    alert(
-                        "تم حذف الطلبات المحددة بنجاح."
-                    );
-
-                }
-
-
-                selectAll.checked =
-                    false;
-
-
-                await loadOrders();
-
-            }
-        );
-
+            bulkDeleteBtn.disabled = false;
+            await loadOrders();
+        });
 
         /* =========================
-           DELETE ORDER
+           ACTIONS (DELETE, STATUS, NOTES)
         ========================= */
-
         async function deleteOrder(id) {
-
-            if (
-                !confirm(
-                    "هل أنت متأكد من حذف هذه الطلبية؟\n\n" +
-                    "لا يمكن التراجع عن الحذف."
-                )
-            ) {
-
-                return;
-            }
-
-
+            if (!confirm("هل أنت متأكد من حذف هذه الطلبية؟")) return;
             try {
-
-                const orderRef =
-                    doc(
-                        db,
-                        "orders",
-                        id
-                    );
-
-
-                const snapshot =
-                    await getDoc(
-                        orderRef
-                    );
-
-
-                if (
-                    !snapshot.exists()
-                ) {
-
-                    alert(
-                        "الطلب غير موجود في قاعدة البيانات."
-                    );
-
-                    await loadOrders();
-
-                    return;
-                }
-
-
-                const data =
-                    snapshot.data();
-
-
-                if (
-                    data.ownerUid !==
-                    currentOwnerUid
-                ) {
-
-                    alert(
-                        "لا يمكنك حذف هذه الطلبية لأنها لا تخص متجرك."
-                    );
-
-                    return;
-                }
-
-
-                await deleteDoc(
-                    orderRef
-                );
-
-
-                alert(
-                    "تم حذف الطلبية بنجاح."
-                );
-
-
+                await deleteDoc(doc(db, "orders", id));
                 await loadOrders();
-
+            } catch (error) {
+                alert("تعذر حذف الطلبية.");
             }
-            catch (error) {
-
-                console.error(
-                    "DELETE ERROR:",
-                    error
-                );
-
-
-                let message =
-                    error.message ||
-                    error.code ||
-                    "خطأ غير معروف";
-
-
-                if (
-                    error.code ===
-                    "permission-denied"
-                ) {
-
-                    message =
-                        "تم رفض العملية من Firestore Rules. تأكد من أن ownerUid داخل الطلب يساوي UID للحساب الحالي.";
-
-                }
-
-
-                alert(
-                    "تعذر حذف الطلبية.\n\n" +
-                    message
-                );
-
-            }
-
         }
 
-
-        /* =========================
-           UPDATE STATUS
-        ========================= */
-
-        async function updateStatus(
-            id,
-            newStatus
-        ) {
-
+        async function updateStatus(id, newStatus) {
             try {
-
-                const orderRef =
-                    doc(
-                        db,
-                        "orders",
-                        id
-                    );
-
-
-                const snapshot =
-                    await getDoc(
-                        orderRef
-                    );
-
-
-                if (
-                    !snapshot.exists()
-                ) {
-
-                    alert(
-                        "الطلب غير موجود."
-                    );
-
-                    return;
-                }
-
-
-                const data =
-                    snapshot.data();
-
-
-                if (
-                    data.ownerUid !==
-                    currentOwnerUid
-                ) {
-
-                    alert(
-                        "لا يمكنك تعديل طلب لا يخص متجرك."
-                    );
-
-                    return;
-                }
-
-
-                await updateDoc(
-                    orderRef,
-                    {
-                        status:
-                            newStatus
-                    }
-                );
-
-
+                await updateDoc(doc(db, "orders", id), { status: newStatus });
                 await loadOrders();
-
+            } catch (error) {
+                alert("تعذر تحديث الحالة.");
             }
-            catch (error) {
-
-                console.error(
-                    "STATUS ERROR:",
-                    error
-                );
-
-
-                alert(
-                    "تعذر تحديث حالة الطلب.\n\n" +
-                    (
-                        error.message ||
-                        error.code ||
-                        "خطأ غير معروف"
-                    )
-                );
-
-            }
-
         }
 
-
-        /* =========================
-           SAVE NOTES
-        ========================= */
-
-        async function saveNotes(
-            id,
-            notes
-        ) {
-
+        async function saveNotes(id, notes) {
             try {
-
-                const orderRef =
-                    doc(
-                        db,
-                        "orders",
-                        id
-                    );
-
-
-                const snapshot =
-                    await getDoc(
-                        orderRef
-                    );
-
-
-                if (
-                    !snapshot.exists()
-                ) {
-
-                    alert(
-                        "الطلب غير موجود."
-                    );
-
-                    return;
-                }
-
-
-                const data =
-                    snapshot.data();
-
-
-                if (
-                    data.ownerUid !==
-                    currentOwnerUid
-                ) {
-
-                    alert(
-                        "لا يمكنك تعديل هذا الطلب."
-                    );
-
-                    return;
-                }
-
-
-                await updateDoc(
-                    orderRef,
-                    {
-                        notes:
-                            String(
-                                notes || ""
-                            ).trim()
-                    }
-                );
-
-
-                alert(
-                    "تم حفظ الملاحظة."
-                );
-
+                await updateDoc(doc(db, "orders", id), { notes: String(notes || "").trim() });
+                alert("تم حفظ الملاحظة بنجاح.");
+            } catch (error) {
+                alert("تعذر حفظ الملاحظة.");
             }
-            catch (error) {
-
-                console.error(
-                    "NOTES ERROR:",
-                    error
-                );
-
-
-                alert(
-                    "تعذر حفظ الملاحظة.\n\n" +
-                    (
-                        error.message ||
-                        error.code ||
-                        "خطأ غير معروف"
-                    )
-                );
-
-            }
-
         }
 
-
         /* =========================
-           PHONE MODAL
+           MODALS (PHONE & PRODUCTS)
         ========================= */
-
         function openPhoneModal(phone) {
-
-            if (!phone) {
-
-                alert(
-                    "رقم الهاتف غير موجود."
-                );
-
-                return;
-            }
-
-
-            const whatsappNumber =
-                phone.replace("+", "");
-
-
+            if (!phone) return alert("رقم الهاتف غير موجود.");
+            const whatsappNumber = phone.replace("+", "");
             phoneOptions.innerHTML = `
-
-                <a
-                    class="phone-option call-option"
-                    href="tel:${escapeHtml(phone)}"
-                >
-
-                    <i class="fa-solid fa-phone"></i>
-
-                    اتصال بالزبون
-
+                <a class="flex items-center justify-center gap-2 p-3 bg-green-50 hover:bg-green-100 text-green-700 rounded-xl font-bold text-xs transition-colors" href="tel:${escapeHtml(phone)}">
+                    <i class="fa-solid fa-phone"></i> اتصال
                 </a>
-
-
-                <a
-                    class="phone-option whatsapp-option"
-                    href="https://wa.me/${escapeHtml(whatsappNumber)}"
-                    target="_blank"
-                    rel="noopener"
-                >
-
-                    <i class="fa-brands fa-whatsapp"></i>
-
-                    فتح WhatsApp
-
+                <a class="flex items-center justify-center gap-2 p-3 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl font-bold text-xs transition-colors" href="https://wa.me/${escapeHtml(whatsappNumber)}" target="_blank">
+                    <i class="fa-brands fa-whatsapp text-sm"></i> واتساب
                 </a>
-
             `;
-
-
-            phoneModal.classList.add(
-                "active"
-            );
-
+            phoneModal.classList.remove("hidden");
+            phoneModal.classList.add("flex");
         }
-
-
-        /* =========================
-           PRODUCTS MODAL
-           
-           المعروض فقط:
-           صورة المنتج
-           اسم المنتج
-           اللون
-           القياس
-           الكمية
-           السعر
-           إجمالي المنتج
-
-           لا يتم عرض:
-           id
-           storeId
-           ownerUid
-        ========================= */
 
         function openProductsModal(products) {
-
-            productsModalBody.innerHTML =
-                "";
-
-
+            productsModalBody.innerHTML = "";
             if (!products.length) {
-
-                productsModalBody.innerHTML = `
-
-                    <div class="empty">
-
-                        <i class="fa-solid fa-box-open"></i>
-
-                        <br>
-
-                        لا توجد تفاصيل للمنتجات.
-
-                    </div>
-
-                `;
-
-
-                productsModal.classList.add(
-                    "active"
-                );
-
+                productsModalBody.innerHTML = `<p class="text-center text-gray-500 py-4 text-xs">لا توجد منتجات.</p>`;
+                productsModal.classList.remove("hidden");
+                productsModal.classList.add("flex");
                 return;
             }
 
+            products.forEach(p => {
+                const qty = Number(p.quantity || 1);
+                const price = Number(p.price || 0);
+                const image = p.image || (Array.isArray(p.images) && p.images[0]) || "logotrans.png";
 
-            products.forEach(
-                product => {
-
-                    const quantity =
-                        Number(
-                            product.quantity || 1
-                        );
-
-
-                    const price =
-                        Number(
-                            product.price || 0
-                        );
-
-
-                    const total =
-                        price * quantity;
-
-
-                    /*
-                     * الصورة:
-                     * يدعم image و images
-                     */
-
-                    const image =
-                        product.image ||
-                        (
-                            Array.isArray(
-                                product.images
-                            ) &&
-                            product.images.length
-                                ? product.images[0]
-                                : ""
-                        );
-
-
-                    /*
-                     * اللون:
-                     * دعم عدة أسماء محتملة للحقل
-                     */
-
-                    const color =
-                        product.color ||
-                        product.colour ||
-                        product.selectedColor ||
-                        product.productColor ||
-                        product.variantColor ||
-                        "غير محدد";
-
-
-                    /*
-                     * القياس:
-                     * دعم عدة أسماء محتملة للحقل
-                     */
-
-                    const size =
-                        product.size ||
-                        product.selectedSize ||
-                        product.productSize ||
-                        product.variantSize ||
-                        "غير محدد";
-
-
-                    const div =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    div.className =
-                        "modal-product";
-
-
-                    div.innerHTML = `
-
-                        <img
-                            class="modal-product-image"
-                            src="${escapeHtml(image)}"
-                            alt="${escapeHtml(
-                                product.name ||
-                                "منتج"
-                            )}"
-                            onerror="this.style.display='none';"
-                        >
-
-
-                        <div class="modal-product-info">
-
-                            <div class="modal-product-name">
-
-                                ${escapeHtml(
-                                    product.name ||
-                                    "منتج"
-                                )}
-
-                            </div>
-
-
-                            <div class="modal-product-detail">
-
-                                <span>
-                                    اللون:
-                                </span>
-
-                                <strong>
-                                    ${escapeHtml(color)}
-                                </strong>
-
-
-                                <br>
-
-
-                                <span>
-                                    القياس:
-                                </span>
-
-                                <strong>
-                                    ${escapeHtml(size)}
-                                </strong>
-
-
-                                <br>
-
-
-                                <span>
-                                    الكمية:
-                                </span>
-
-                                <strong>
-                                    ${quantity}
-                                </strong>
-
-
-                                <br>
-
-
-                                <span>
-                                    السعر:
-                                </span>
-
-                                <strong>
-                                    ${price} DA
-                                </strong>
-
-                            </div>
-
+                const div = document.createElement("div");
+                div.className = "flex items-center gap-3 p-2.5 bg-gray-50 dark:bg-[#222] rounded-xl border border-shopify-border dark:border-shopify-darkBorder";
+                div.innerHTML = `
+                    <img src="${escapeHtml(image)}" class="w-12 h-12 rounded-lg object-cover bg-gray-200" onerror="this.src='logotrans.png';">
+                    <div class="flex-1 min-w-0">
+                        <div class="font-bold text-gray-900 dark:text-white truncate text-xs">${escapeHtml(p.name || "منتج")}</div>
+                        <div class="text-[11px] text-gray-500 mt-0.5">
+                            اللون: <strong>${escapeHtml(p.color || "غير محدد")}</strong> | القياس: <strong>${escapeHtml(p.size || "غير محدد")}</strong><br>
+                            الكمية: <strong>${qty}</strong> × ${price.toLocaleString("fr-DZ")} DA
                         </div>
+                    </div>
+                    <div class="font-bold text-shopify-green text-xs">${(price * qty).toLocaleString("fr-DZ")} DA</div>
+                `;
+                productsModalBody.appendChild(div);
+            });
 
-
-                        <div class="modal-product-total">
-
-                            ${total} DA
-
-                        </div>
-
-                    `;
-
-
-                    productsModalBody.appendChild(
-                        div
-                    );
-
-                }
-            );
-
-
-            productsModal.classList.add(
-                "active"
-            );
-
+            productsModal.classList.remove("hidden");
+            productsModal.classList.add("flex");
         }
 
+        document.getElementById("closeProductsModal").addEventListener("click", () => productsModal.classList.add("hidden"));
+        document.getElementById("closePhoneModal").addEventListener("click", () => phoneModal.classList.add("hidden"));
+
+        [productsModal, phoneModal].forEach(modal => {
+            modal.addEventListener("click", (e) => {
+                if (e.target === modal) modal.classList.add("hidden");
+            });
+        });
 
         /* =========================
-           CLOSE PRODUCTS MODAL
+           LOGOUT & AUTH
         ========================= */
+        document.getElementById("logoutBtn").addEventListener("click", async (e) => {
+            e.preventDefault();
+            if (!confirm("هل تريد تسجيل الخروج؟")) return;
+            await signOut(auth);
+            localStorage.clear();
+            window.location.href = "login.html";
+        });
 
-        document
-            .getElementById(
-                "closeProductsModal"
-            )
-            .addEventListener(
-                "click",
-                () => {
-
-                    productsModal.classList.remove(
-                        "active"
-                    );
-
-                }
-            );
-
-
-        /* =========================
-           CLOSE PHONE MODAL
-        ========================= */
-
-        document
-            .getElementById(
-                "closePhoneModal"
-            )
-            .addEventListener(
-                "click",
-                () => {
-
-                    phoneModal.classList.remove(
-                        "active"
-                    );
-
-                }
-            );
-
-
-        /* =========================
-           CLOSE MODALS ON OVERLAY
-        ========================= */
-
-        productsModal.addEventListener(
-            "click",
-            event => {
-
-                if (
-                    event.target ===
-                    productsModal
-                ) {
-
-                    productsModal.classList.remove(
-                        "active"
-                    );
-
-                }
-
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                window.location.href = "login.html";
+                return;
             }
-        );
-
-
-        phoneModal.addEventListener(
-            "click",
-            event => {
-
-                if (
-                    event.target ===
-                    phoneModal
-                ) {
-
-                    phoneModal.classList.remove(
-                        "active"
-                    );
-
-                }
-
-            }
-        );
-
-
-        /* =========================
-           LOGOUT
-        ========================= */
-
-        document
-            .getElementById("logoutBtn")
-            .addEventListener(
-                "click",
-                async event => {
-
-                    event.preventDefault();
-
-
-                    if (
-                        !confirm(
-                            "هل تريد تسجيل الخروج؟"
-                        )
-                    ) {
-
-                        return;
-                    }
-
-
-                    try {
-
-                        await signOut(auth);
-
-
-                        localStorage.removeItem(
-                            "storeId"
-                        );
-
-
-                        localStorage.removeItem(
-                            "storeDocumentId"
-                        );
-
-
-                        localStorage.removeItem(
-                            "storeOwnerUid"
-                        );
-
-
-                        localStorage.removeItem(
-                            "storeName"
-                        );
-
-
-                        window.location.href =
-                            "login.html";
-
-                    }
-                    catch (error) {
-
-                        alert(
-                            "تعذر تسجيل الخروج."
-                        );
-
-                    }
-
-                }
-            );
-
-
-        /* =========================
-           AUTH STATE
-        ========================= */
-
-        onAuthStateChanged(
-            auth,
-            async user => {
-
-                if (!user) {
-
-                    window.location.href =
-                        "login.html";
-
-                    return;
-                }
-
-
-                currentOwnerUid =
-                    user.uid;
-
-
-                currentOwnerEmail =
-                    user.email || "";
-
-
-                await loadStore();
-
-            }
-        );
-
+            currentOwnerUid = user.uid;
+            currentOwnerEmail = user.email || "";
+            await loadStore();
+        });
     </script>
-
 </body>
 
 </html>
