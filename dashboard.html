@@ -102,7 +102,7 @@
             </div>
         </div>
 
-        <!-- Left Side Actions (Theme Toggle & Store Profile Link) -->
+        <!-- Left Side Actions (Store Switcher & User) -->
         <div class="flex items-center gap-2">
             <!-- Theme Toggle -->
             <button type="button" id="themeBtn" title="تغيير المظهر"
@@ -110,14 +110,21 @@
                 <i class="fa-solid fa-moon"></i>
             </button>
 
-            <!-- Store Profile Badge (Now acts as View Store Link) -->
-            <a href="#" id="viewStoreBtn" target="_blank" title="عرض المتجر" class="flex items-center gap-2 pl-2 border-r border-gray-700 mr-1 hover:opacity-85 transition-opacity">
-                <img class="w-7 h-7 rounded-full object-cover border border-gray-600 bg-gray-800" id="topStoreImage" src="logotrans.png" alt="صورة المتجر">
+            <!-- View Store Button -->
+            <a href="#" id="viewStoreBtn" target="_blank" title="عرض المتجر"
+                class="hidden sm:flex items-center gap-1.5 text-xs bg-[#2A2A2A] hover:bg-[#383838] text-gray-200 px-3 py-1.5 rounded-lg border border-gray-700 transition-colors">
+                <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
+                <span>عرض المتجر</span>
+            </a>
+
+            <!-- Store Profile Badge -->
+            <div class="flex items-center gap-2 pl-2 border-r border-gray-700 mr-1">
+                <img idtopStoreImage class="w-7 h-7 rounded-full object-cover border border-gray-600 bg-gray-800" id="topStoreImage" src="logotrans.png" alt="صورة المتجر">
                 <div class="hidden md:flex flex-col text-right">
                     <span id="topStoreName" class="text-xs font-bold leading-tight text-gray-200 truncate max-w-[120px]">جاري التحميل...</span>
                     <span class="text-[10px] text-gray-400">G-Glam Admin</span>
                 </div>
-            </a>
+            </div>
         </div>
     </header>
 
@@ -309,14 +316,14 @@
 
         /* =====================================================
            FIREBASE IMPORTS
-        ===================================================== -->
+        ===================================================== */
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
         import { getFirestore, collection, getDocs, query, where, deleteDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
         /* =====================================================
            FIREBASE CONFIG
-        ===================================================== -->
+        ===================================================== */
         const firebaseConfig = {
             apiKey: "AIzaSyBqt5JH9AR1n4vdZlImLKB_jZi1jTe63Jo",
             authDomain: "g-glam.firebaseapp.com",
@@ -329,14 +336,14 @@
 
         /* =====================================================
            INITIALIZE
-        ===================================================== -->
+        ===================================================== */
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
 
         /* =====================================================
            ELEMENTS
-        ===================================================== -->
+        ===================================================== */
         const themeBtn = document.getElementById("themeBtn");
         const storeNameStat = document.getElementById("storeNameStat");
         const productsCount = document.getElementById("productsCount");
@@ -348,7 +355,7 @@
 
         /* =====================================================
            VARIABLES
-        ===================================================== -->
+        ===================================================== */
         let currentOwnerUid = "";
         let currentOwnerEmail = "";
         let currentStoreId = "";
@@ -357,7 +364,7 @@
 
         /* =====================================================
            THEME TOGGLING (DARK / LIGHT MODE)
-        ===================================================== -->
+        ===================================================== */
         function updateThemeIcon() {
             const isDark = document.documentElement.classList.contains("dark");
             themeBtn.innerHTML = isDark 
@@ -382,7 +389,7 @@
 
         /* =====================================================
            LOAD STORE
-        ===================================================== -->
+        ===================================================== */
         async function loadStore() {
             try {
                 const user = auth.currentUser;
@@ -635,7 +642,7 @@
 
         /* =====================================================
            LOAD ORDERS
-        ===================================================== -->
+        ===================================================== */
         async function loadOrders() {
             try {
                 let snapshot;
@@ -660,7 +667,7 @@
 
         /* =====================================================
            DELETE PRODUCT
-        ===================================================== -->
+        ===================================================== */
         async function deleteProduct(id) {
             const modalConfirm = confirm("هل أنت تأكد من رغبتك في حذف هذا المنتج نهائياً من المتجر؟");
             if (!modalConfirm) return;
@@ -677,7 +684,7 @@
 
         /* =====================================================
            NAVIGATION HELPERS
-        ===================================================== -->
+        ===================================================== */
         window.goAddProduct = function() {
             window.location.href = "add-product.html";
         };
@@ -688,7 +695,7 @@
 
         /* =====================================================
            LOGOUT HANDLER
-        ===================================================== -->
+        ===================================================== */
         document.getElementById("logoutBtn").addEventListener("click", async function(event) {
             event.preventDefault();
             const modalConfirm = confirm("هل تريد تسجيل الخروج من لوحة التحكم؟");
@@ -715,7 +722,7 @@
 
         /* =====================================================
            ALERT MESSAGES HELPERS
-        ===================================================== -->
+        ===================================================== */
         function showSuccess(text) {
             const box = document.getElementById("successMessage");
             box.textContent = text;
@@ -732,7 +739,7 @@
 
         /* =====================================================
            ESCAPE HTML SAFETY
-        ===================================================== -->
+        ===================================================== */
         function escapeHtml(value) {
             return String(value ?? "")
                 .replace(/&/g, "&amp;")
@@ -744,7 +751,7 @@
 
         /* =====================================================
            AUTH STATE LISTENERS
-        ===================================================== -->
+        ===================================================== */
         onAuthStateChanged(auth, async function(user) {
             if (!user) {
                 window.location.href = "login.html";
