@@ -78,7 +78,7 @@
     <!-- =====================================================
          TOPBAR (FULL WIDTH SHOPIFY MODERN BLACK TOP HEADER)
     ===================================================== -->
-    <header class="h-14 bg-shopify-topbar text-white px-4 flex items-center justify-between sticky top-0 z-50 shadow-md w-full">
+    <header class="w-full h-14 bg-shopify-topbar text-white px-4 flex items-center justify-between sticky top-0 z-50 shadow-md">
         <div class="flex items-center gap-4 flex-1 max-w-2xl">
             <div class="flex items-center gap-2 font-bold text-lg tracking-tight pl-2 border-l border-gray-700">
                 <div class="w-7 h-7 rounded-lg bg-emerald-600 text-white font-black flex items-center justify-center text-sm shadow-sm">
@@ -235,7 +235,7 @@
             </section>
 
 
-            <!-- ORDERS SECTION (COMPACT & FULLY VISIBLE TABLE) -->
+            <!-- ORDERS SECTION WITH HORIZONTAL SCROLL FOR MOBILE -->
             <section class="bg-shopify-surface dark:bg-shopify-darkSurface border border-shopify-border dark:border-shopify-darkBorder rounded-xl shopify-card-shadow overflow-hidden">
                 <div class="p-4 border-b border-shopify-border dark:border-shopify-darkBorder flex flex-col sm:flex-row items-center justify-between gap-4">
                     <h2 class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
@@ -256,24 +256,24 @@
                     </div>
                 </div>
 
-                <!-- RESPONSIVE TABLE CONTAINER (NO SCROLL BAR FOR NORMAL SCREENS) -->
-                <div class="w-full">
-                    <table class="w-full text-right border-collapse text-[11px] md:text-xs">
+                <!-- SCROLLABLE TABLE CONTAINER FOR MOBILE & DESKTOP -->
+                <div class="w-full overflow-x-auto">
+                    <table class="w-full text-right border-collapse text-xs min-w-[1200px]">
                         <thead>
                             <tr class="bg-gray-50 dark:bg-[#1A1A1A] border-b border-shopify-border dark:border-shopify-darkBorder font-bold text-gray-600 dark:text-gray-300">
-                                <th class="p-2.5 text-center w-8">تحديد</th>
-                                <th class="p-2.5" data-i18n="thOrder">رقم الطلب</th>
-                                <th class="p-2.5" data-i18n="thDate">التاريخ</th>
-                                <th class="p-2.5" data-i18n="thCustomer">الزبون</th>
-                                <th class="p-2.5 text-center" data-i18n="thPhone">الهاتف</th>
-                                <th class="p-2.5" data-i18n="thWilaya">الولاية</th>
-                                <th class="p-2.5" data-i18n="thAddress">العنوان</th>
-                                <th class="p-2.5" data-i18n="thDelivery">التوصيل</th>
-                                <th class="p-2.5 text-center" data-i18n="thProducts">المنتجات</th>
-                                <th class="p-2.5" data-i18n="thTotal">المجموع</th>
-                                <th class="p-2.5" data-i18n="thNotes">الملاحظات</th>
-                                <th class="p-2.5" data-i18n="thStatus">الحالة</th>
-                                <th class="p-2.5 text-center" data-i18n="thAction">إجراء</th>
+                                <th class="p-3 text-center w-10">تحديد</th>
+                                <th class="p-3" data-i18n="thOrder">رقم الطلب</th>
+                                <th class="p-3" data-i18n="thDate">التاريخ</th>
+                                <th class="p-3" data-i18n="thCustomer">الزبون</th>
+                                <th class="p-3 text-center" data-i18n="thPhone">الهاتف</th>
+                                <th class="p-3" data-i18n="thWilaya">الولاية</th>
+                                <th class="p-3" data-i18n="thAddress">العنوان</th>
+                                <th class="p-3" data-i18n="thDelivery">التوصيل</th>
+                                <th class="p-3 text-center" data-i18n="thProducts">المنتجات</th>
+                                <th class="p-3" data-i18n="thTotal">المجموع</th>
+                                <th class="p-3" data-i18n="thNotes">الملاحظات</th>
+                                <th class="p-3" data-i18n="thStatus">الحالة</th>
+                                <th class="p-3 text-center" data-i18n="thAction">إجراء</th>
                             </tr>
                         </thead>
                         <tbody id="ordersBody" class="divide-y divide-shopify-border dark:divide-shopify-darkBorder">
@@ -634,7 +634,7 @@
         }
 
         /* =========================
-           RENDER ORDER ROW (COMPACT CELLS)
+           RENDER ORDER ROW
         ========================= */
         function renderOrderRow(id, order, orderNumber) {
             const tr = document.createElement("tr");
@@ -648,39 +648,39 @@
             const deliveryPrice = Number(order.deliveryPrice ?? order.shippingPrice ?? 0);
 
             tr.innerHTML = `
-                <td class="p-2 text-center">
-                    <input type="checkbox" class="order-check w-3.5 h-3.5 accent-emerald-600 cursor-pointer rounded" data-id="${escapeHtml(id)}">
+                <td class="p-3 text-center">
+                    <input type="checkbox" class="order-check w-4 h-4 accent-emerald-600 cursor-pointer rounded" data-id="${escapeHtml(id)}">
                 </td>
-                <td class="p-2 font-bold text-shopify-green" dir="ltr">#${formattedNumber}</td>
-                <td class="p-2 text-gray-500 dark:text-gray-400 whitespace-nowrap text-[10px]">${formatDate(order.createdAt)}</td>
-                <td class="p-2 font-bold text-gray-900 dark:text-white truncate max-w-[100px]">${escapeHtml(order.name || order.customerName || "غير محدد")}</td>
-                <td class="p-2 text-center">
-                    <button type="button" class="customer-phone px-2 py-0.5 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 rounded text-[11px] font-bold inline-flex items-center gap-1 transition-colors">
+                <td class="p-3 font-bold text-shopify-green whitespace-nowrap" dir="ltr">#${formattedNumber}</td>
+                <td class="p-3 text-gray-500 dark:text-gray-400 whitespace-nowrap">${formatDate(order.createdAt)}</td>
+                <td class="p-3 font-bold text-gray-900 dark:text-white whitespace-nowrap">${escapeHtml(order.name || order.customerName || "غير محدد")}</td>
+                <td class="p-3 text-center whitespace-nowrap">
+                    <button type="button" class="customer-phone px-2.5 py-1 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-lg text-xs font-bold inline-flex items-center gap-1.5 transition-colors">
                         <i class="fa-solid fa-phone text-emerald-600"></i>
                         ${escapeHtml(order.phone || "غير محدد")}
                     </button>
                 </td>
-                <td class="p-2 truncate max-w-[80px]">${escapeHtml(order.wilaya || "غير محدد")}</td>
-                <td class="p-2 truncate max-w-[110px]" title="${escapeHtml(order.address || order.commune || "غير محدد")}">${escapeHtml(order.address || order.commune || "غير محدد")}</td>
-                <td class="p-2">
-                    <div class="font-bold text-[10px] truncate max-w-[90px]">${escapeHtml(deliveryType)}</div>
-                    <div class="text-[9px] text-gray-400">${deliveryPrice} DA</div>
+                <td class="p-3 whitespace-nowrap">${escapeHtml(order.wilaya || "غير محدد")}</td>
+                <td class="p-3 whitespace-nowrap" title="${escapeHtml(order.address || order.commune || "غير محدد")}">${escapeHtml(order.address || order.commune || "غير محدد")}</td>
+                <td class="p-3 whitespace-nowrap">
+                    <div class="font-bold">${escapeHtml(deliveryType)}</div>
+                    <div class="text-[10px] text-gray-400">${deliveryPrice} DA</div>
                 </td>
-                <td class="p-2 text-center">
-                    <button type="button" class="products-btn px-2 py-0.5 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 rounded text-[11px] font-bold inline-flex items-center gap-1 transition-colors">
+                <td class="p-3 text-center whitespace-nowrap">
+                    <button type="button" class="products-btn px-2.5 py-1 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 rounded-lg text-xs font-bold inline-flex items-center gap-1 transition-colors">
                         <i class="fa-solid fa-bag-shopping"></i>
-                        <span>(${productsCount})</span>
+                        <span>عرض (${productsCount})</span>
                     </button>
                 </td>
-                <td class="p-2 font-bold text-shopify-green whitespace-nowrap">${Number(order.total || 0).toLocaleString("fr-DZ")} DA</td>
-                <td class="p-2">
-                    <div class="flex items-center gap-1">
-                        <input type="text" class="notes-input w-20 bg-gray-50 dark:bg-[#252525] border border-shopify-border dark:border-shopify-darkBorder px-1.5 py-0.5 rounded text-[11px] outline-none focus:border-shopify-green" value="${escapeHtml(order.notes || "")}" placeholder="ملاحظة">
-                        <button type="button" class="notes-save p-1 bg-shopify-green hover:bg-emerald-700 text-white rounded text-[10px] transition-colors"><i class="fa-solid fa-floppy-disk"></i></button>
+                <td class="p-3 font-bold text-shopify-green whitespace-nowrap">${Number(order.total || 0).toLocaleString("fr-DZ")} DA</td>
+                <td class="p-3 whitespace-nowrap">
+                    <div class="flex items-center gap-1.5">
+                        <input type="text" class="notes-input w-28 bg-gray-50 dark:bg-[#252525] border border-shopify-border dark:border-shopify-darkBorder px-2 py-1 rounded-lg text-xs outline-none focus:border-shopify-green" value="${escapeHtml(order.notes || "")}" placeholder="ملاحظة...">
+                        <button type="button" class="notes-save p-1.5 bg-shopify-green hover:bg-emerald-700 text-white rounded-lg text-xs transition-colors"><i class="fa-solid fa-floppy-disk"></i></button>
                     </div>
                 </td>
-                <td class="p-2">
-                    <select class="status-select bg-shopify-surface dark:bg-[#252525] border border-shopify-border dark:border-shopify-darkBorder px-1.5 py-0.5 rounded text-[11px] font-semibold outline-none cursor-pointer">
+                <td class="p-3 whitespace-nowrap">
+                    <select class="status-select bg-shopify-surface dark:bg-[#252525] border border-shopify-border dark:border-shopify-darkBorder px-2.5 py-1 rounded-lg text-xs font-semibold outline-none cursor-pointer">
                         <option value="قيد المعالجة" ${status === "قيد المعالجة" ? "selected" : ""}>قيد المعالجة</option>
                         <option value="قيد المراجعة" ${status === "قيد المراجعة" ? "selected" : ""}>قيد المراجعة</option>
                         <option value="تم التأكيد" ${status === "تم التأكيد" ? "selected" : ""}>تم التأكيد</option>
@@ -689,8 +689,8 @@
                         <option value="إلغاء" ${status === "إلغاء" ? "selected" : ""}>إلغاء</option>
                     </select>
                 </td>
-                <td class="p-2 text-center">
-                    <button type="button" class="delete-btn px-2 py-0.5 bg-red-50 hover:bg-red-100 dark:bg-red-950/40 text-red-600 dark:text-red-400 rounded text-[11px] font-bold transition-colors">
+                <td class="p-3 text-center whitespace-nowrap">
+                    <button type="button" class="delete-btn px-2.5 py-1 bg-red-50 hover:bg-red-100 dark:bg-red-950/40 text-red-600 dark:text-red-400 rounded-lg text-xs font-bold transition-colors">
                         <i class="fa-solid fa-trash"></i>
                     </button>
                 </td>
