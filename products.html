@@ -26,7 +26,7 @@
 <style>
 
 /* =====================================================
-   VARIABLES (Shopify Theme Style)
+   VARIABLES
 ===================================================== */
 
 :root {
@@ -109,7 +109,7 @@ select {
 
 
 /* =====================================================
-   SIDEBAR
+   SIDEBAR (Right Side)
 ===================================================== */
 
 .sidebar {
@@ -566,10 +566,27 @@ select {
 
 
 /* =====================================================
-   PAGE HEADER & TOOLBAR
+   SECTION & HEADER
 ===================================================== */
 
-.page-header {
+.section {
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    padding: 22px;
+
+    border-radius: 18px;
+
+    box-shadow: var(--shadow);
+
+    margin-bottom: 22px;
+
+    transition: background .3s, border-color .3s;
+}
+
+.section-header {
 
     display: flex;
 
@@ -582,22 +599,24 @@ select {
     margin-bottom: 20px;
 }
 
-.page-title h1 {
+.section-header h2 {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
 
     color: var(--dark);
 
-    font-size: 24px;
-
-    font-weight: 800;
-
-    margin-bottom: 4px;
+    font-size: 21px;
 }
 
-.page-title p {
+.section-header h2 i {
 
-    color: var(--muted);
+    color: var(--orange);
 
-    font-size: 13px;
+    font-size: 20px;
 }
 
 .add-btn {
@@ -711,263 +730,165 @@ select {
 
 
 /* =====================================================
-   PRODUCTS GRID (4 per row)
+   PRODUCTS LIST CONTAINER (Matched to image design style)
 ===================================================== */
 
-.products {
-
-    display: grid;
-
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-
-    gap: 18px;
-
-    align-items: stretch;
-}
-
-
-/* =====================================================
-   PRODUCT CARD
-===================================================== */
-
-.product {
-
-    position: relative;
+.products-list {
 
     display: flex;
 
     flex-direction: column;
+
+    gap: 12px;
+}
+
+.product-row-item {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
 
     background: var(--card);
 
     border: 1px solid var(--border);
 
-    border-radius: 17px;
+    border-radius: 14px;
 
-    padding: 10px;
+    padding: 14px 18px;
 
-    overflow: hidden;
+    gap: 15px;
 
-    box-shadow: var(--shadow);
+    transition: .2s;
+}
 
-    transition:
-        transform .25s,
-        box-shadow .25s,
-        border-color .25s;
+.product-row-item:hover {
+
+    border-color: #FFD2B0;
+
+    box-shadow: 0 6px 20px rgba(0,0,0,.04);
+}
+
+.product-row-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
 
     min-width: 0;
 }
 
-.product:hover {
+.product-row-img {
 
-    transform: translateY(-4px);
+    width: 55px;
 
-    box-shadow: 0 12px 30px rgba(0,0,0,.10);
+    height: 55px;
 
-    border-color: #FFD2B0;
-}
-
-
-/* =====================================================
-   PRODUCT IMAGE
-===================================================== */
-
-.product-image-wrap {
-
-    position: relative;
-
-    width: 100%;
-
-    height: 190px;
-
-    overflow: hidden;
-
-    border-radius: 13px;
-
-    background: #F2F2F2;
-}
-
-.product img {
-
-    width: 100%;
-    height: 100%;
+    border-radius: 10px;
 
     object-fit: cover;
 
-    display: block;
+    background: #F2F2F2;
 
-    transition: transform .35s;
+    border: 1px solid var(--border);
+
+    flex-shrink: 0;
 }
 
-.product:hover img {
-
-    transform: scale(1.035);
-}
-
-.no-image {
-
-    height: 100%;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    color: var(--muted);
-
-    font-size: 28px;
-}
-
-
-/* =====================================================
-   IMAGE BADGE
-===================================================== */
-
-.image-count {
-
-    position: absolute;
-
-    top: 10px;
-    left: 10px;
-
-    background: rgba(0,0,0,.65);
-
-    color: white;
-
-    padding: 4px 8px;
-
-    border-radius: 8px;
-
-    font-size: 10px;
-
-    font-weight: 700;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 5px;
-}
-
-
-/* =====================================================
-   PRODUCT INFO
-===================================================== */
-
-.product-info {
+.product-row-info {
 
     display: flex;
 
     flex-direction: column;
 
-    flex: 1;
+    gap: 4px;
 
-    padding: 0 2px;
+    min-width: 0;
 }
 
-.product h3 {
+.product-row-info h3 {
+
+    font-size: 15px;
+
+    font-weight: 700;
 
     color: var(--dark);
 
-    font-size: 16px;
-
-    margin: 12px 6px 7px;
-
-    line-height: 1.5;
-
-    min-height: 24px;
-
-    display: -webkit-box;
-
-    -webkit-line-clamp: 2;
-
-    -webkit-box-orient: vertical;
+    white-space: nowrap;
 
     overflow: hidden;
+
+    text-overflow: ellipsis;
 }
 
-.product-price {
+.product-row-meta {
 
-    color: var(--orange);
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    font-size: 12px;
+
+    color: var(--muted);
+}
+
+.badge-active {
+
+    color: var(--success);
+
+    background: var(--success-bg);
+
+    padding: 2px 8px;
+
+    border-radius: 6px;
+
+    font-weight: 700;
+
+    font-size: 11px;
+}
+
+.product-row-left {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+}
+
+.product-row-price {
 
     font-size: 16px;
 
     font-weight: 800;
 
-    margin: 0 6px 7px;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-}
-
-.old-price-display {
-
-    color: var(--muted);
-
-    font-size: 12px;
-
-    text-decoration: line-through;
-
-    font-weight: 500;
-}
-
-.product-colors,
-.product-sizes {
-
-    color: var(--muted);
-
-    font-size: 12px;
-
-    margin: 0 6px 5px;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 6px;
-}
-
-.product-colors i,
-.product-sizes i {
-
     color: var(--orange);
+
+    white-space: nowrap;
 }
 
+.product-row-actions {
 
-/* =====================================================
-   PRODUCT BUTTONS
-===================================================== */
+    display: flex;
 
-.product-buttons {
-
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
+    align-items: center;
 
     gap: 8px;
-
-    margin-top: auto;
-
-    padding-top: 8px;
 }
 
-.product-buttons button {
+.row-action-btn {
 
-    min-height: 40px;
+    width: 38px;
 
-    border: 1px solid transparent;
+    height: 38px;
 
-    border-radius: 11px;
-
-    cursor: pointer;
-
-    font-size: 12px;
-
-    font-weight: 800;
+    border-radius: 10px;
 
     display: flex;
 
@@ -975,56 +896,41 @@ select {
 
     justify-content: center;
 
-    gap: 6px;
+    cursor: pointer;
+
+    border: 1px solid transparent;
 
     transition: .2s;
+
+    font-size: 14px;
 }
 
-.product-buttons button:active {
-
-    transform: scale(.97);
-}
-
-
-/* =====================================================
-   EDIT BUTTON
-===================================================== */
-
-.edit-btn {
+.row-edit {
 
     background: linear-gradient(135deg, #FFF5EC, #FFE9D6);
 
     color: var(--orange-dark);
 
-    border-color: #FFD8B8 !important;
+    border-color: #FFD8B8;
 }
 
-.edit-btn:hover {
+.row-edit:hover {
 
-    background: linear-gradient(135deg, #FFE9D6, #FFDDBF);
-
-    box-shadow: 0 4px 12px rgba(244,123,32,.15);
+    background: #FFE9D6;
 }
 
-
-/* =====================================================
-   DELETE BUTTON
-===================================================== */
-
-.delete-btn {
+.row-delete {
 
     background: linear-gradient(135deg, #FFF2F2, #FDE7E8);
 
     color: #C62835;
 
-    border-color: #F3C8CC !important;
+    border-color: #F3C8CC;
 }
 
-.delete-btn:hover {
+.row-delete:hover {
 
-    background: linear-gradient(135deg, #FDE7E8, #F9D8DB);
-
-    box-shadow: 0 4px 12px rgba(217,45,32,.12);
+    background: #FDE7E8;
 }
 
 
@@ -1033,8 +939,6 @@ select {
 ===================================================== */
 
 .empty {
-
-    grid-column: 1 / -1;
 
     background: var(--card);
 
@@ -1907,70 +1811,35 @@ body.dark-mode .section {
 
 body.dark-mode .search-box input {
 
-    background: var(--dark-input);
+    background: #102234;
 
     border-color: var(--dark-border);
 
     color: var(--dark-text);
 }
 
-body.dark-mode .search-box input:focus {
-
-    background: var(--dark-card-2);
-}
-
-body.dark-mode .product {
+body.dark-mode .product-row-item {
 
     background: var(--dark-card-2);
 
     border-color: var(--dark-border);
 }
 
-body.dark-mode .product:hover {
+body.dark-mode .product-row-item:hover {
 
     background: #13283B;
 
     border-color: #36536E;
-
-    box-shadow: 0 12px 30px rgba(0,0,0,.35);
 }
 
-body.dark-mode .product-image-wrap {
-
-    background: #142538;
-}
-
-body.dark-mode .product h3 {
+body.dark-mode .product-row-info h3 {
 
     color: var(--dark-text);
 }
 
-body.dark-mode .product-price {
+body.dark-mode .product-row-price {
 
     color: #FF8C32;
-}
-
-body.dark-mode .product-stock {
-
-    color: var(--dark-muted);
-}
-
-body.dark-mode .edit-btn {
-
-    background: linear-gradient(135deg, #17283A, #1C3045);
-
-    color: #FF9A4D;
-
-    border-color: #5A3A22 !important;
-}
-
-body.dark-mode .delete-btn {
-
-    background: linear-gradient(135deg, #351B20, #402026);
-
-    color: #FF8B86;
-
-    border-color: #5A292E !important;
 }
 
 body.dark-mode .empty {
@@ -2016,33 +1885,7 @@ body.dark-mode .editor-wrapper,
 body.dark-mode .tag-section,
 body.dark-mode .images-section {
 
-    background: var(--dark-input);
-
-    border-color: var(--dark-border);
-
-    color: var(--dark-text);
-}
-
-body.dark-mode .editor-toolbar {
-
-    background: var(--dark-card-2);
-
-    border-bottom-color: var(--dark-border);
-}
-
-body.dark-mode .editor-toolbar button,
-body.dark-mode .editor-toolbar select {
-
-    background: var(--dark-card);
-
-    border-color: var(--dark-border);
-
-    color: var(--dark-text);
-}
-
-body.dark-mode .tag {
-
-    background: var(--dark-card);
+    background: #102234;
 
     border-color: var(--dark-border);
 
@@ -2051,174 +1894,29 @@ body.dark-mode .tag {
 
 
 /* =====================================================
-   RESPONSIVE QUERIES
+   RESPONSIVE
 ===================================================== */
 
-@media (max-width: 1100px) {
+@media (max-width: 768px) {
 
-    .products {
-
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-}
-
-@media (max-width: 850px) {
-
-    .sidebar {
-
-        width: 65px;
-    }
-
-    .sidebar:hover {
-
-        width: 210px;
-    }
-
-    .topbar {
-
-        right: 65px;
-    }
-
-    .content {
-
-        margin-right: 65px;
-    }
-
-    .products {
-
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .form-row-2 {
-
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 550px) {
-
-    .sidebar {
-
-        width: 60px;
-    }
-
-    .sidebar:hover {
-
-        width: 200px;
-    }
-
-    .topbar {
-
-        right: 60px;
-
-        height: 68px;
-
-        padding: 0 12px;
-    }
-
-    .content {
-
-        margin-right: 60px;
-
-        padding: 83px 12px 20px;
-    }
-
-    .store-label {
-
-        display: none;
-    }
-
-    .store-top-name {
-
-        max-width: 120px;
-
-        font-size: 14px;
-    }
-
-    .theme-btn {
-
-        width: 40px;
-        height: 40px;
-    }
-
-    .view-store-btn {
-
-        width: 40px;
-        height: 40px;
-
-        padding: 0;
-
-        font-size: 0;
-    }
-
-    .view-store-btn span {
-
-        display: none;
-    }
-
-    .page-header {
+    .product-row-item {
 
         flex-direction: column;
 
-        align-items: stretch;
+        align-items: flex-start;
 
         gap: 12px;
     }
 
-    .add-btn {
+    .product-row-left {
 
         width: 100%;
 
-        justify-content: center;
-    }
+        justify-content: space-between;
 
-    .products {
+        border-top: 1px solid var(--border);
 
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-
-        gap: 10px;
-    }
-
-    .product {
-
-        padding: 8px;
-    }
-
-    .product-image-wrap {
-
-        height: 150px;
-    }
-
-    .product h3 {
-
-        font-size: 14px;
-
-        margin: 10px 4px 6px;
-    }
-
-    .product-price {
-
-        font-size: 14px;
-
-        margin: 0 4px 6px;
-    }
-
-    .edit-images {
-
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .modal-actions {
-
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 380px) {
-
-    .products {
-
-        grid-template-columns: 1fr;
+        padding-top: 10px;
     }
 }
 
@@ -2388,22 +2086,6 @@ body.dark-mode .tag {
 
 <main class="content">
 
-    <div class="page-header">
-
-        <div class="page-title">
-            <h1>إدارة المنتجات</h1>
-            <p>عرض وتعديل والتحكم في جميع منتجات متجرك</p>
-        </div>
-
-        <button type="button"
-                class="add-btn"
-                onclick="goAddProduct()">
-            <i class="fa-solid fa-plus"></i>
-            إضافة منتج جديد
-        </button>
-
-    </div>
-
     <div class="toolbar">
 
         <div class="search-box">
@@ -2412,7 +2094,7 @@ body.dark-mode .tag {
 
             <input id="searchInput"
                    type="text"
-                   placeholder="ابحث عن منتج بالاسم أو الوصف..."
+                   placeholder="ابحث في المنتجات..."
                    autocomplete="off">
 
         </div>
@@ -2421,7 +2103,23 @@ body.dark-mode .tag {
 
     <section class="section">
 
-        <div id="productsContainer" class="products">
+        <div class="section-header">
+
+            <h2>
+                <i class="fa-solid fa-bag-shopping"></i>
+                إدارة المنتجات
+            </h2>
+
+            <button type="button"
+                    class="add-btn"
+                    onclick="goAddProduct()">
+                <i class="fa-solid fa-plus"></i>
+                إضافة منتج جديد
+            </button>
+
+        </div>
+
+        <div id="productsContainer" class="products-list">
 
             <div class="empty">
 
@@ -2932,10 +2630,6 @@ function formatPrice(val) {
     return Number(val || 0).toLocaleString("ar-DZ") + " DA";
 }
 
-function normalizeText(val) {
-    return String(val || "").trim().toLowerCase();
-}
-
 
 /* =====================================================
    LOAD PRODUCTS
@@ -2967,7 +2661,7 @@ async function loadProducts() {
 
 
 /* =====================================================
-   RENDER PRODUCTS GRID
+   RENDER PRODUCTS LIST (Row layout matching reference image)
 ===================================================== */
 
 function renderProducts(products) {
@@ -2989,64 +2683,46 @@ function renderProducts(products) {
     productsContainer.innerHTML = products.map(product => {
         const images = getProductImages(product);
         const firstImage = images[0] || "";
-        const colors = Array.isArray(product.colors) ? product.colors : [];
-        const sizes = Array.isArray(product.sizes) ? product.sizes : [];
-
-        const colorNames = colors.map(c => typeof c === "object" ? c.name : c).filter(Boolean).join("، ");
-        const sizeNames = sizes.map(s => typeof s === "object" ? s.name : s).filter(Boolean).join("، ");
 
         return `
-            <div class="product" data-id="${escapeHtml(product.id)}">
-                <div class="product-image-wrap">
+            <div class="product-row-item" data-id="${escapeHtml(product.id)}">
+                
+                <div class="product-row-right">
                     ${firstImage ? `
-                        <img src="${escapeHtml(firstImage)}"
+                        <img class="product-row-img"
+                             src="${escapeHtml(firstImage)}"
                              alt="${escapeHtml(product.name || "منتج")}"
                              onerror="this.src='logotrans.png';">
                     ` : `
-                        <div class="no-image"><i class="fa-solid fa-image"></i></div>
+                        <div class="product-row-img" style="display:flex;align-items:center;justify-content:center;color:#777;"><i class="fa-solid fa-image"></i></div>
                     `}
-                    ${images.length > 1 ? `
-                        <div class="image-count">
-                            <i class="fa-solid fa-images"></i> ${images.length}
+
+                    <div class="product-row-info">
+                        <h3 title="${escapeHtml(product.name || "")}">
+                            ${escapeHtml(product.name || "بدون اسم")}
+                        </h3>
+                        <div class="product-row-meta">
+                            <span>المخزون: ${Number(product.stock || 0)}</span>
+                            <span class="badge-active">نشط</span>
                         </div>
-                    ` : ""}
+                    </div>
                 </div>
 
-                <div class="product-info">
-                    <h3 title="${escapeHtml(product.name || "")}">
-                        ${escapeHtml(product.name || "بدون اسم")}
-                    </h3>
-
-                    <div class="product-price">
+                <div class="product-row-left">
+                    <div class="product-row-price">
                         ${formatPrice(product.price)}
-                        ${Number(product.oldPrice) > 0 ? `
-                            <span class="old-price-display">${formatPrice(product.oldPrice)}</span>
-                        ` : ""}
                     </div>
 
-                    ${colorNames ? `
-                        <div class="product-colors">
-                            <i class="fa-solid fa-palette"></i>
-                            <span>${escapeHtml(colorNames)}</span>
-                        </div>
-                    ` : ""}
-
-                    ${sizeNames ? `
-                        <div class="product-sizes">
-                            <i class="fa-solid fa-ruler-combined"></i>
-                            <span>${escapeHtml(sizeNames)}</span>
-                        </div>
-                    ` : ""}
-
-                    <div class="product-buttons">
-                        <button type="button" class="edit-btn" data-action="edit" data-id="${escapeHtml(product.id)}">
-                            <i class="fa-solid fa-pen-to-square"></i> تعديل
+                    <div class="product-row-actions">
+                        <button type="button" class="row-action-btn row-edit" data-action="edit" data-id="${escapeHtml(product.id)}" title="تعديل">
+                            <i class="fa-solid fa-pen-to-square"></i>
                         </button>
-                        <button type="button" class="delete-btn" data-action="delete" data-id="${escapeHtml(product.id)}">
-                            <i class="fa-solid fa-trash-can"></i> حذف
+                        <button type="button" class="row-action-btn row-delete" data-action="delete" data-id="${escapeHtml(product.id)}" title="حذف">
+                            <i class="fa-solid fa-trash-can"></i>
                         </button>
                     </div>
                 </div>
+
             </div>
         `;
     }).join("");
@@ -3519,7 +3195,7 @@ onAuthStateChanged(auth, async (user) => {
     await loadStore();
 });
 
-console.log("G-Glam Products Shopify UI Loaded Successfully");
+console.log("G-Glam Products List Layout Loaded Successfully");
 
 </script>
 
